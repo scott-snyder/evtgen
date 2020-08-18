@@ -31,7 +31,15 @@ class EvtSSSCPT : public EvtDecayAmp {
     EvtDecayBase* clone() override;
 
     void init() override;
+    void initProbMax() override;
     void decay( EvtParticle* p ) override;
+
+  private:
+    // Amplitude coeffs
+    EvtComplex A, Abar;
+    EvtComplex P, Q, D, Im;
+    // Set amplitude coeffs from decay model params
+    void setAmpCoeffs();
 };
 
 #endif

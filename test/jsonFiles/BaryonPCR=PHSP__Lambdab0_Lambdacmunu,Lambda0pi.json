@@ -1,0 +1,20 @@
+{
+    "parent" : "Lambda_b0",
+    "daughters" : ["Lambda_c+", "mu-", "anti-nu_mu"],
+    "grand_daughters" : [["Lambda0", "pi+"], [], []],
+    "models" : ["BaryonPCR", "PHSP", ""],
+    "parameters" : [["1", "1", "1", "1"], [], []],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob(BaryonPCR)",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "parMass", "title" : "m(#Lambda^{0}_{b})", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 5.5, "xmax" : 5.7},
+        {"variable" : "mass", "title" : "m(#Lambda^{+}_{c})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 2.0, "xmax" : 2.5},
+        {"variable" : "mass", "title" : "m(#Lambda^{+}_{c},#mu^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 2.0, "xmax" : 6.0},
+        {"variable" : "mass", "title" : "m(#mu^{-},anti-#nu_{#mu})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 4.0},
+        {"variable" : "mass", "title" : "m(#Lambda^{+}_{c},anti-#nu_{#mu})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 2.0, "xmax" : 6.0},
+        {"variable" : "pSumSq", "title" : "qSq(#mu^{-},anti-#nu_{#mu})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 12.0},
+        {"variable" : "cosHel", "title" : "cosHel(#Lambda^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "BaryonPCR=PHSP__Lambdab0_Lambdacmunu,Lambda0pi.root",
+    "reference" : "RefBaryonPCR=PHSP__Lambdab0_Lambdacmunu,Lambda0pi.root"
+}

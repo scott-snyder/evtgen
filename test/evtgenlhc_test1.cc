@@ -64,8 +64,8 @@
 #include "TH1.h"
 #include "TH2.h"
 #include "TROOT.h"
-#include "TTree.h"
 #include "TString.h"
+#include "TTree.h"
 
 #include <cmath>
 #include <cstdio>
@@ -158,7 +158,6 @@ int countInclusiveSubTree( std::string name, EvtParticle* root, EvtIdSet setIds,
                            TH1F* mom = 0 );
 void runBaryonic( int nEvent, EvtGen& myGenerator );
 void run3BPhspRegion( int nEvent, EvtGen& myGenerator );
-void runFlatSqDalitz( int nEvent, EvtGen& myGenerator );
 void runFourBody( int nevent, EvtGen& myGenerator );
 
 int main( int argc, char* argv[] )
@@ -535,12 +534,6 @@ int main( int argc, char* argv[] )
         int nevent = atoi( argv[2] );
         EvtRadCorr::setNeverRadCorr();
         run3BPhspRegion( nevent, myGenerator );
-    }
-
-    if ( !strcmp( argv[1], "flatSqDalitz" ) ) {
-        int nevent = atoi( argv[2] );
-        EvtRadCorr::setNeverRadCorr();
-        runFlatSqDalitz( nevent, myGenerator );
     }
 
     if ( !strcmp( argv[1], "4bodyPhsp" ) ) {
@@ -5769,65 +5762,6 @@ void run3BPhspRegion( int nevent, EvtGen& myGenerator )
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
 }
 
-void runFlatSqDalitz( int nevent, EvtGen& myGenerator )
-{
-    TFile* file = new TFile( "flatSqDalitz.root", "RECREATE" );
-
-    TH2F* dalitz = new TH2F( "h4", "Dalitz", 50, 0.0, 1.0, 50, 0.0, 1.0 );
-
-    int count = 1;
-
-    char udecay_name[100];
-    strcpy( udecay_name, "exampleFiles/flatSqDalitz.dec" );
-    myGenerator.readUDecay( udecay_name );
-
-    static EvtId B = EvtPDL::getId( std::string( "Lambda_b0" ) );
-
-    do {
-        EvtVector4R pinit( EvtPDL::getMass( B ), 0.0, 0.0, 0.0 );
-
-        EvtParticle* root_part = EvtParticleFactory::particleFactory( B, pinit );
-
-        myGenerator.generateDecay( root_part );
-
-        double mB = root_part->mass();
-        double m1 = root_part->getDaug( 0 )->mass();
-        double m2 = root_part->getDaug( 1 )->mass();
-        double m3 = root_part->getDaug( 2 )->mass();
-        double mBSq{ mB * mB };
-        double m1Sq{ m1 * m1 };
-        double m2Sq{ m2 * m2 };
-        double m3Sq{ m3 * m3 };
-
-        EvtParticle* daug1 = root_part->getDaug( 0 );
-        EvtParticle* daug2 = root_part->getDaug( 1 );
-        EvtParticle* daug3 = root_part->getDaug( 2 );
-        double m12 = ( daug1->getP4() + daug2->getP4() ).mass();
-        double m13 = ( daug1->getP4() + daug3->getP4() ).mass();
-        double m12Sq{ m12 * m12 };
-        double m13Sq{ m13 * m13 };
-
-        double m12norm =
-            2 * ( ( m12 - ( m1 + m2 ) ) / ( mB - ( m1 + m2 + m3 ) ) ) - 1;
-        double mPrime = acos( m12norm ) / EvtConst::pi;
-        double en1 = ( m12Sq - m2Sq + m1Sq ) / ( 2.0 * m12 );
-        double en3 = ( mBSq - m12Sq - m3Sq ) / ( 2.0 * m12 );
-        double p1 = std::sqrt( en1 * en1 - m1Sq );
-        double p3 = std::sqrt( en3 * en3 - m3Sq );
-        double cosTheta = ( -m13Sq + m1Sq + m3Sq + 2. * en1 * en3 ) /
-                          ( 2. * p1 * p3 );
-        double thPrime = acos( cosTheta ) / EvtConst::pi;
-
-        dalitz->Fill( mPrime, thPrime );
-
-        root_part->deleteTree();
-    } while ( count++ < nevent );
-
-    file->Write();
-    file->Close();
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
-}
-
 void runFourBody( int nevent, EvtGen& myGenerator )
 {
     TFile* file = new TFile( "fourBody.root", "RECREATE" );
@@ -5840,44 +5774,44 @@ void runFourBody( int nevent, EvtGen& myGenerator )
     double p3e, p3x, p3y, p3z;
     double p4e, p4x, p4y, p4z;
     double theta1, theta3, chi;
-    TTree* tree = new TTree( "tree", "");
-    tree->Branch("m12", &m12, "m12/D");
-    tree->Branch("m13", &m13, "m13/D");
-    tree->Branch("m14", &m14, "m14/D");
-    tree->Branch("m23", &m23, "m23/D");
-    tree->Branch("m24", &m24, "m24/D");
-    tree->Branch("m34", &m34, "m34/D");
-    tree->Branch("m123", &m123, "m123/D");
-    tree->Branch("m124", &m124, "m124/D");
-    tree->Branch("m234", &m234, "m234/D");
-    tree->Branch("mB", &mB, "mB/D");
-    tree->Branch("m1", &m1, "m1/D");
-    tree->Branch("m2", &m2, "m2/D");
-    tree->Branch("m3", &m3, "m3/D");
-    tree->Branch("m4", &m4, "m4/D");
-    tree->Branch("pBe", &pBe, "pBe/D");
-    tree->Branch("pBx", &pBx, "pBx/D");
-    tree->Branch("pBy", &pBy, "pBy/D");
-    tree->Branch("pBz", &pBz, "pBz/D");
-    tree->Branch("p1e", &p1e, "p1e/D");
-    tree->Branch("p1x", &p1x, "p1x/D");
-    tree->Branch("p1y", &p1y, "p1y/D");
-    tree->Branch("p1z", &p1z, "p1z/D");
-    tree->Branch("p2e", &p2e, "p2e/D");
-    tree->Branch("p2x", &p2x, "p2x/D");
-    tree->Branch("p2y", &p2y, "p2y/D");
-    tree->Branch("p2z", &p2z, "p2z/D");
-    tree->Branch("p3e", &p3e, "p3e/D");
-    tree->Branch("p3x", &p3x, "p3x/D");
-    tree->Branch("p3y", &p3y, "p3y/D");
-    tree->Branch("p3z", &p3z, "p3z/D");
-    tree->Branch("p4e", &p4e, "p4e/D");
-    tree->Branch("p4x", &p4x, "p4x/D");
-    tree->Branch("p4y", &p4y, "p4y/D");
-    tree->Branch("p4z", &p4z, "p4z/D");
-    tree->Branch("theta1", &theta1, "theta1/D");
-    tree->Branch("theta3", &theta3, "theta3/D");
-    tree->Branch("chi", &chi, "chi/D");
+    TTree* tree = new TTree( "tree", "" );
+    tree->Branch( "m12", &m12, "m12/D" );
+    tree->Branch( "m13", &m13, "m13/D" );
+    tree->Branch( "m14", &m14, "m14/D" );
+    tree->Branch( "m23", &m23, "m23/D" );
+    tree->Branch( "m24", &m24, "m24/D" );
+    tree->Branch( "m34", &m34, "m34/D" );
+    tree->Branch( "m123", &m123, "m123/D" );
+    tree->Branch( "m124", &m124, "m124/D" );
+    tree->Branch( "m234", &m234, "m234/D" );
+    tree->Branch( "mB", &mB, "mB/D" );
+    tree->Branch( "m1", &m1, "m1/D" );
+    tree->Branch( "m2", &m2, "m2/D" );
+    tree->Branch( "m3", &m3, "m3/D" );
+    tree->Branch( "m4", &m4, "m4/D" );
+    tree->Branch( "pBe", &pBe, "pBe/D" );
+    tree->Branch( "pBx", &pBx, "pBx/D" );
+    tree->Branch( "pBy", &pBy, "pBy/D" );
+    tree->Branch( "pBz", &pBz, "pBz/D" );
+    tree->Branch( "p1e", &p1e, "p1e/D" );
+    tree->Branch( "p1x", &p1x, "p1x/D" );
+    tree->Branch( "p1y", &p1y, "p1y/D" );
+    tree->Branch( "p1z", &p1z, "p1z/D" );
+    tree->Branch( "p2e", &p2e, "p2e/D" );
+    tree->Branch( "p2x", &p2x, "p2x/D" );
+    tree->Branch( "p2y", &p2y, "p2y/D" );
+    tree->Branch( "p2z", &p2z, "p2z/D" );
+    tree->Branch( "p3e", &p3e, "p3e/D" );
+    tree->Branch( "p3x", &p3x, "p3x/D" );
+    tree->Branch( "p3y", &p3y, "p3y/D" );
+    tree->Branch( "p3z", &p3z, "p3z/D" );
+    tree->Branch( "p4e", &p4e, "p4e/D" );
+    tree->Branch( "p4x", &p4x, "p4x/D" );
+    tree->Branch( "p4y", &p4y, "p4y/D" );
+    tree->Branch( "p4z", &p4z, "p4z/D" );
+    tree->Branch( "theta1", &theta1, "theta1/D" );
+    tree->Branch( "theta3", &theta3, "theta3/D" );
+    tree->Branch( "chi", &chi, "chi/D" );
 
     int count = 1;
 
@@ -5935,9 +5869,9 @@ void runFourBody( int nevent, EvtGen& myGenerator )
         p4z = daug4->getP4().get( 3 );
 
         theta1 = EvtDecayAngle( root_part->getP4(),
-                              daug1->getP4() + daug2->getP4(), daug1->getP4() );
+                                daug1->getP4() + daug2->getP4(), daug1->getP4() );
         theta3 = EvtDecayAngle( root_part->getP4(),
-                              daug3->getP4() + daug4->getP4(), daug3->getP4() );
+                                daug3->getP4() + daug4->getP4(), daug3->getP4() );
         chi = EvtDecayAngleChi( root_part->getP4(), daug1->getP4(),
                                 daug2->getP4(), daug3->getP4(), daug4->getP4() );
         tree->Fill();

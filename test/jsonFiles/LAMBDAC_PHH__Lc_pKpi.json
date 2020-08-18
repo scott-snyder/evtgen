@@ -1,0 +1,20 @@
+{
+    "parent" : "Lambda_c+",
+    "daughters" : ["p+", "K-", "pi+"],
+    "do_conjugate_decay" : [ true, true, true, true ],
+    "models" : ["LAMBDAC_PHH"],
+    "parameters" : [[]],
+    "extras" : ["noPhotos"],
+    "events" : 100000,
+    "histograms" : [
+	{"variable" : "mass", "title" : "mPK", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.4, "xmax" : 2.2},
+	{"variable" : "mass", "title" : "mPPi", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 1.05, "xmax" : 1.85},
+	{"variable" : "mass", "title" : "mKpi", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.6, "xmax" : 1.4},
+	{"variable" : "cosHel", "title" : "cosTheta1", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosTheta2", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosTheta3", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "massSq", "title" : "Dalitz", "d1" : 1, "d2" : 2, "nbins" : 25, "xmin" : 1.9, "xmax" : 4.8, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 3, "nbinsY" : 25, "ymin" : 1.0, "ymax" : 3.4}
+    ],
+    "outfile" : "LAMBDAC_PHH__Lc_pKpi.root",
+    "reference" : "RefLAMBDAC_PHH__Lc_pKpi.root"
+}

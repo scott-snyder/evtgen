@@ -1,0 +1,67 @@
+#!/bin/bash
+
+########################################################################
+# Copyright 1998-2022 CERN for the benefit of the EvtGen authors       #
+#                                                                      #
+# This file is part of EvtGen.                                         #
+#                                                                      #
+# EvtGen is free software: you can redistribute it and/or modify       #
+# it under the terms of the GNU General Public License as published by #
+# the Free Software Foundation, either version 3 of the License, or    #
+# (at your option) any later version.                                  #
+#                                                                      #
+# EvtGen is distributed in the hope that it will be useful,            #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
+# GNU General Public License for more details.                         #
+#                                                                      #
+# You should have received a copy of the GNU General Public License    #
+# along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     #
+########################################################################
+
+# Script to find all active decay models and create a JSON file that contains fields for:
+# class name, header file name, source file name
+# for each model, keyed by the model name
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: makeModelsJson <project source dir>"
+    exit 1
+fi
+
+sourceDir=$1
+
+declare -a modelClasses
+
+cd $sourceDir
+
+modelClasses=(`grep registerModel src/EvtGenModels/EvtModelReg.cpp | grep " new " |  awk '{print $3}' | sed -e 's/[\(\)]\{1,2\}//' | sort`)
+
+declare -i nModels=${#modelClasses[@]}
+declare -i lastIndex=$nModels-1
+
+echo "{"
+for i in `seq 0 $lastIndex`
+do
+    modelClass=${modelClasses[$i]}
+    modelHeaderFile=`grep -rl "\<class[ ]\+$modelClass\>" EvtGenModels`
+    modelSourceFile="src/`echo $modelHeaderFile | sed -e 's/\.hh/.cpp/'`"
+    modelName=`grep getName $modelHeaderFile | grep " return " | awk -F'"' '{print $2}'`
+    if [ "x$modelName" == "x" ]
+    then
+        modelName=`grep -A3 "${modelClass}::getName" $modelSourceFile | grep " return " | awk -F'"' '{print $2}'`
+    fi
+
+    echo "    \"${modelName}\" : {"
+    echo "        \"class\" : \"${modelClass}\","
+    echo "        \"header\" : \"${modelHeaderFile}\","
+    echo "        \"source\" : \"${modelSourceFile}\""
+    if [ $i -eq $lastIndex ]
+    then
+        echo "    }"
+    else
+        echo "    },"
+    fi
+
+done
+echo "}"

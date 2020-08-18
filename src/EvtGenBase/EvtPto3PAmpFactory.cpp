@@ -309,7 +309,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
     assert( amp );
     assert( pdf );
 
-    double scale = matchIsobarCoef( *_amp, *pdf, pairRes );
+    double scale = matchIsobarCoef( *amp, *pdf, pairRes );
 
     if ( !conj ) {
         _amp->addOwnedTerm( c, std::move( amp ) );

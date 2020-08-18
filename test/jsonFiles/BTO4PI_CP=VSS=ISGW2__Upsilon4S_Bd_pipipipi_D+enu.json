@@ -1,0 +1,22 @@
+{
+    "parent" : "Upsilon(4S)",
+    "daughters" : ["B0", "anti-B0"],
+    "grand_daughters" : [["pi+","pi-","pi+","pi-"], ["D+","e-","anti-nu_e"]],
+    "models" : ["VSS", "BTO4PI_CP", "ISGW2"],
+    "parameters" : [[], ["0.4", "0.51e12", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0"], []],
+    "do_conjugate_decay" : [false, true, true],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob_daug1", "title" : "Prob(BTO4PI_CP)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "lifetime", "title" : "tau1", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 12.0},
+        {"variable" : "lifetime", "title" : "tau2", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 12.0},
+        {"variable" : "id", "title" : "ID1", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1000.0, "xmax" : 1000.0},
+        {"variable" : "id", "title" : "ID2", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1000.0, "xmax" : 1000.0},
+        {"variable" : "mass_daug1", "title" : "mass(pi1pi2)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 6.0},
+        {"variable" : "mass3_daug1", "title" : "mass(pi1pi2pi3)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 6.0},
+        {"variable" : "decayangle3_daug1", "title" : "theta(rho+=pi1+pi2,pi3) B0 as parent", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 200.0},
+        {"variable" : "decayangle_BTO4PI_daug1", "title" : "theta(pi1,pi2) a2=pi1+pi2+pi3 as parent", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 200.0}
+    ],
+    "outfile" :"BTO4PI_CP=VSS=ISGW2__Upsilon4S_Bd_pipipipi_D+enu.root",
+    "reference" : "RefBTO4PI_CP=VSS=ISGW2__Upsilon4S_Bd_pipipipi_D+enu.root"
+}

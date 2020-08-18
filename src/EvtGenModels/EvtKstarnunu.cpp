@@ -59,6 +59,11 @@ void EvtKstarnunu::init()
     checkSpinDaughter( 2, EvtSpinType::NEUTRINO );
 }
 
+void EvtKstarnunu::initProbMax()
+{
+    setProbMax( 7000.0 );
+}
+
 void EvtKstarnunu::decay( EvtParticle* p )
 {
     static EvtId NUE = EvtPDL::getId( "nu_e" );

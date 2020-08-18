@@ -54,6 +54,41 @@ void EvtSll::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
 }
 
+void EvtSll::initProbMax()
+{
+    const int eID = abs( EvtPDL::getStdHep( EvtPDL::getId( "e-" ) ) );
+    const int muID = abs( EvtPDL::getStdHep( EvtPDL::getId( "mu-" ) ) );
+    const int tauID = abs( EvtPDL::getStdHep( EvtPDL::getId( "tau-" ) ) );
+
+    const int lep1 = abs( EvtPDL::getStdHep( getDaug( 0 ) ) );
+    const int lep2 = abs( EvtPDL::getStdHep( getDaug( 1 ) ) );
+
+    // tau tau mode
+    double maxProb{ 1000.0 };
+
+    // Modify probability based on lepton pair (including lepton violation modes)
+    if ( ( lep1 == tauID && lep2 == muID ) || ( lep1 == muID && lep2 == tauID ) ) {
+        // tau mu or mu tau
+        maxProb = 400.0;
+    } else if ( ( lep1 == tauID && lep2 == eID ) ||
+                ( lep1 == eID && lep2 == tauID ) ) {
+        // tau e or e tau
+        maxProb = 400.0;
+    } else if ( lep1 == muID && lep2 == muID ) {
+        // mu mu
+        maxProb = 4.0;
+    } else if ( ( lep1 == muID && lep2 == eID ) ||
+                ( lep1 == eID && lep2 == muID ) ) {
+        // mu e or e mu
+        maxProb = 2.0;
+    } else if ( lep1 == eID && lep2 == eID ) {
+        // e e
+        maxProb = 1e-4;
+    }
+
+    setProbMax( maxProb );
+}
+
 void EvtSll::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );

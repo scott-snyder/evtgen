@@ -105,7 +105,7 @@ void EvtParticle::setLifetime()
     }
 }
 
-double EvtParticle::getLifetime()
+double EvtParticle::getLifetime() const
 {
     return _t;
 }
@@ -1275,7 +1275,7 @@ void EvtParticle::setDecayProb( double prob )
     *_decayProb = prob;
 }
 
-std::string EvtParticle::getName()
+std::string EvtParticle::getName() const
 {
     std::string theName = _id.getName();
     return theName;

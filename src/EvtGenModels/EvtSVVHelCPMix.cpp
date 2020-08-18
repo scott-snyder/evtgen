@@ -225,28 +225,18 @@ void EvtSVVHelCPMix::decay( EvtParticle* p )
                     ( fplus * ( 1.0 / weakdirectphase ) * t2 * eps2 );
     }
 
-    // Now set the amplitude
-
+    // Now set the amplitudes
     amp.vertex( 0, 0, amplSum00 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "00: " << amplSum00 << std::endl;
     amp.vertex( 0, 1, amplSum01 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "01: " << amplSum01 << std::endl;
     amp.vertex( 0, 2, amplSum02 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "02: " << amplSum02 << std::endl;
 
     amp.vertex( 1, 0, amplSum10 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "10: " << amplSum10 << std::endl;
     amp.vertex( 1, 1, amplSum11 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "11: " << amplSum11 << std::endl;
     amp.vertex( 1, 2, amplSum12 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "12: " << amplSum12 << std::endl;
 
     amp.vertex( 2, 0, amplSum20 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "20: " << amplSum20 << std::endl;
     amp.vertex( 2, 1, amplSum21 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "21: " << amplSum21 << std::endl;
     amp.vertex( 2, 2, amplSum22 );
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "22: " << amplSum22 << std::endl;
 
     return;
 }

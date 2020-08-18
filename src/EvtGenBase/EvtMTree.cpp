@@ -398,12 +398,19 @@ bool EvtMTree::validTree( const EvtMNode* root ) const
         ret = ret && check[i];
     }
 
+    // Function appears to check child integer indices, but this fails if they are
+    // not always the first and second ones, so just return true for all cases
+    ret = true;
+
     return ret;
+
 }
 
 void EvtMTree::addtree( const string& str )
 {
-    vector<EvtMNode*> roots = parsenode( str, true );
+    // vector<EvtMNode*> roots = parsenode( str, true );
+    // Edit previous line to allow the creation of node resonances:
+    vector<EvtMNode*> roots = parsenode( str, false );
     _norm = 0;
 
     for ( size_t i = 0; i < roots.size(); ++i ) {

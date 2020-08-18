@@ -1,0 +1,22 @@
+{
+    "parent" : "B0",
+    "daughters" : ["anti-D*0", "pi0"],
+    "models" : ["BHADRONIC", "", ""],
+    "parameters" : [["2", "1"], [], []],
+    "do_conjugate_decay" : [ true, false, false ],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "parMass", "title" : "m(B0)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 5.25, "xmax" : 5.3},
+        {"variable" : "mass", "title" : "m(D*0bar)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.9, "xmax" : 2.1},
+        {"variable" : "mass", "title" : "m(pi0)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.12, "xmax" : 0.15},
+	{"variable" : "p", "title" : "p(D*0bar)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 2.0, "xmax" : 2.5},
+	{"variable" : "phi", "title" : "phi(D*0bar)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(D*0bar)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "p", "title" : "p(pi0)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 2.0, "xmax" : 2.5},
+	{"variable" : "phi", "title" : "phi(pi0)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(pi0)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "BHADRONIC__Bd_Dstar0pi0.root",
+    "reference" : "RefBHADRONIC__Bd_Dstar0pi0.root"
+}

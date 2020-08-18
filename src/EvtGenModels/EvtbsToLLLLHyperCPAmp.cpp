@@ -390,13 +390,13 @@ void EvtbsToLLLLHyperCPAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
             // l^+(k_3) && lep2Plus  && k_3 && i3
             // l^-(k_4) && lep2Minus && k_4 && i4
 
-            for ( i2 = 1; i2 < 0; i2-- ) {
+            for ( i2 = 1; i2 > -1; i2-- ) {
                 leptonicspin[0] = i2;
-                for ( i1 = 1; i1 < 0; i1-- ) {
+                for ( i1 = 1; i1 > -1; i1-- ) {
                     leptonicspin[1] = i1;
-                    for ( i4 = 1; i4 < 0; i4-- ) {
+                    for ( i4 = 1; i4 > -1; i4-- ) {
                         leptonicspin[2] = i4;
-                        for ( i3 = 1; i3 < 0; i3-- ) {
+                        for ( i3 = 1; i3 > -1; i3-- ) {
                             leptonicspin[3] = i3;
 
                             EvtComplex SL2L1, PL4L3;

@@ -1,0 +1,31 @@
+{
+    "parent" : "B+",
+    "daughters" : ["Xsu", "eta'"],
+    "grand_daughters" : [[], ["rho0", "gamma"], []],
+    "models" : ["BTOXSETAP", "", "SVP_HELAMP"],
+    "parameters" : [[], [], ["1.0", "0.0", "1.0", "0.0"]],
+    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins": 100, "xmin" : 0.0, "xmax" : 2.0},
+        {"variable" : "mass", "title" : "m(Xsu)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : 0.0, "xmax" : 5.0},
+        {"variable" : "mass", "title" : "m(eta')", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : 0.8, "xmax" : 1.1},
+        {"variable" : "p", "title" : "p(Xsu)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "pSq", "title" : "pSq(Xsu)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : 0.0, "xmax" : 8.0},
+        {"variable" : "pz", "title" : "pz(Xsu)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : -3.0, "xmax" : 3.0},
+        {"variable" : "cosHel_daug2", "title" : "cosHel(rho0)", "d1" : 1, "d2" : 2, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel_daug2", "title" : "cosHel(gamma)", "d1" : 2, "d2" : 1, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(Xsu)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosAcoplanarityAngle", "title" : "cosAcopl", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "acoplanarityAngle", "title" : "acopl", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0},
+        {"variable" : "phi", "title" : "phi(Xsu)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "pLab_daug2", "title" : "pLab(rho0)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "cosTheta_daug2", "title" : "cosTheta(rho0)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi_daug2", "title" : "phi(rho0)", "d1" : 1, "d2" : 0, "nbins": 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "E_daug2", "title" : "E(gamma)", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : 0.0, "xmax" : 2.0},
+        {"variable" : "cosTheta_daug2", "title" : "cosTheta(gamma)", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi_daug2", "title" : "phi(gamma)", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : -180.0, "xmax" : 180.0}
+    ],
+    "outfile" :"BTOXSETAP=SVP_HELAMP__Bu_Xsuetap,rho0gamma.root",
+    "reference" : "RefBTOXSETAP=SVP_HELAMP__Bu_Xsuetap,rho0gamma.root"
+}

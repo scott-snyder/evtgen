@@ -41,8 +41,8 @@ EvtDecayBase* EvtBtoKpiCPiso::clone()
 
 void EvtBtoKpiCPiso::init()
 {
-    // check that there are 15 arguments
-    checkNArg( 15 );
+    // check that there are 14 arguments
+    checkNArg( 14 );
     checkNDaug( 2 );
 
     checkSpinParent( EvtSpinType::SCALAR );
@@ -58,7 +58,7 @@ void EvtBtoKpiCPiso::initProbMax()
     //added by Lange Jan4,2000
     static EvtId PI0 = EvtPDL::getId( "pi0" );
     static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi+" );
+    static EvtId PIM = EvtPDL::getId( "pi-" );
     static EvtId K0 = EvtPDL::getId( "K0" );
     static EvtId KB = EvtPDL::getId( "anti-K0" );
     static EvtId KP = EvtPDL::getId( "K+" );
@@ -119,7 +119,7 @@ void EvtBtoKpiCPiso::decay( EvtParticle* p )
     //added by Lange Jan4,2000
     static EvtId PI0 = EvtPDL::getId( "pi0" );
     static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi+" );
+    static EvtId PIM = EvtPDL::getId( "pi-" );
     static EvtId K0 = EvtPDL::getId( "K0" );
     static EvtId KB = EvtPDL::getId( "anti-K0" );
     static EvtId KP = EvtPDL::getId( "K+" );

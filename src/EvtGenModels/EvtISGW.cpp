@@ -80,3 +80,8 @@ void EvtISGW::init()
         default:;
     }
 }
+
+void EvtISGW::initProbMax()
+{
+    setProbMax( 10000.0 );
+}

@@ -51,9 +51,7 @@ void EvtBsquark::init()
 
 void EvtBsquark::initProbMax()
 {
-    //For now do not set a maximum.
-
-    //SetProbMax(0.000000000005);
+    setProbMax( 1e-6 );
 }
 
 void EvtBsquark::decay( EvtParticle* p )

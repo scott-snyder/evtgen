@@ -1,0 +1,17 @@
+{
+    "parent" : "Upsilon(4S)",
+    "daughters" : ["B0", "anti-B0", "B0", "anti-B0"],
+    "models" : ["VSS_BMIX"],
+    "parameters" : [["0.474e12", "0.5", "0.8", "0.0"]],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "id", "title" : "StdHep ID1", "d1" : 1, "d2" : 0, "nbins" : 2, "xmin" : -600.0, "xmax" : 600.0},
+        {"variable" : "id", "title" : "StdHep ID2", "d1" : 2, "d2" : 0, "nbins" : 2, "xmin" : -600.0, "xmax" : 600.0},
+	{"variable" : "lifetime", "title" : "tau1", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 12.0},
+	{"variable" : "lifetime", "title" : "tau2", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 12.0},
+	{"variable" : "deltaT", "title" : "deltaT", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -12.0, "xmax" : 12.0},
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0}
+    ],
+    "outfile" : "VSS_BMIX__Ups4S,Bd.root",
+    "reference" : "RefVSS_BMIX__Ups4S,Bd.root"
+}

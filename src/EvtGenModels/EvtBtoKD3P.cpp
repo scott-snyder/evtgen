@@ -96,7 +96,9 @@ void EvtBtoKD3P::decay( EvtParticle* p )
     EvtPto3P* model1 =
         (EvtPto3P*)( EvtDecayTable::getInstance()->getDecayFunc( theD ) );
 
-    // for the suppressed mode, re-initialize theD as the suppressed D alias:
+    // For the suppressed mode, re-initialize theD as the suppressed D alias.
+    // First set the id, then re-initialize (since it matches the expected id)
+    theD->setId( getDaug( D2IND ) );
     theD->init( getDaug( D2IND ), theD->getP4() );
     EvtPto3P* model2 =
         (EvtPto3P*)( EvtDecayTable::getInstance()->getDecayFunc( theD ) );
@@ -172,6 +174,10 @@ void EvtBtoKD3P::decay( EvtParticle* p )
             << "    Will terminate execution!" << endl;
         assert( 0 );
     }
+
+    // Reset the D id to the 1st D
+    theD->setId( getDaug( D1IND ) );
+    theD->init( getDaug( D1IND ), theD->getP4() );
 
     // get the cover function for each of the models and add them up.
     // They are summed with coefficients 1 because we are willing to

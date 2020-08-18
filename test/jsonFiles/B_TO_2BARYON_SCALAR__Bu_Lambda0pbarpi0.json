@@ -1,0 +1,19 @@
+{
+    "parent" : "B-",
+    "daughters" : ["Lambda0", "anti-p-", "pi0"],
+    "models" : ["B_TO_2BARYON_SCALAR"],
+    "parameters" : [[]],
+    "extras" : ["noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "mass", "title" : "M(#it{#Lambda}#bar{#it{p}})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.5, "xmax" : 5.5},
+	{"variable" : "mass", "title" : "M(#bar{#it{p}}#it{#pi}^{0})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 1.0, "xmax" : 5.0},
+	{"variable" : "mass", "title" : "M(#it{#Lambda}#it{#pi}^{0})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 1.0, "xmax" : 5.0},
+	{"variable" : "cosHel", "title" : "cosHel(#it{#Lambda},#bar{#it{p}})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosHel(#bar{#it{p}},#it{#pi}^{0})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosHel(#it{#Lambda},#it{#pi}^{0})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "B_TO_2BARYON_SCALAR__Bu_Lambda0pbarpi0.root",
+    "reference" : "RefB_TO_2BARYON_SCALAR__Bu_Lambda0pbarpi0.root"
+}

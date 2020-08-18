@@ -1,0 +1,21 @@
+{
+    "parent" : "B0",
+    "daughters" : ["Xsd", "gamma"],
+    "models" : ["BTOXSGAMMA", "", ""],
+    "parameters" : [["1"], [], []],
+    "do_conjugate_decay" : [ true, false, false ],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "parMass", "title" : "m(B0)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 5.25, "xmax" : 5.3},
+        {"variable" : "mass", "title" : "m(Xsd)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 5.0},
+	{"variable" : "p", "title" : "p(Xsd)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+	{"variable" : "phi", "title" : "phi(Xsd)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(Xsd)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "p", "title" : "p(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 3.0},
+	{"variable" : "phi", "title" : "phi(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "BTOXSGAMMA__Bd_Xsdgamma.root",
+    "reference" : "RefBTOXSGAMMA__Bd_Xsdgamma.root"
+}

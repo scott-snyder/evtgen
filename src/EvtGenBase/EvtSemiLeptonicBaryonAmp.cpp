@@ -405,7 +405,7 @@ void EvtSemiLeptonicBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
 
     EvtVector4R vector4P = parent->getP4Lab();
     double pmag = vector4P.d3mag();
-    double cosTheta = vector4P.get( 3 ) / pmag;
+    double cosTheta = pmag > 0.0 ? vector4P.get( 3 ) / pmag : 0.0;
 
     double theta = acos( cosTheta );
     double phi = atan2( vector4P.get( 2 ), vector4P.get( 1 ) );

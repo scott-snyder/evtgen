@@ -1,0 +1,18 @@
+{
+    "parent" : "eta'",
+    "daughters" : ["mu+", "mu-", "pi+", "pi-"],
+    "models" : ["ETA_LLPIPI"],
+    "parameters" : [[]],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "mass", "title" : "mPiPi", "d1" : 3, "d2" : 4, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "mass", "title" : "mLL"  , "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.1, "xmax" : 0.75},
+	{"variable" : "mass", "title" : "mPiL1", "d1" : 1, "d2" : 4, "nbins" : 100, "xmin" : 0.1, "xmax" : 0.8},
+	{"variable" : "mass", "title" : "mPiL2", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.1, "xmax" : 0.8},
+	{"variable" : "cosHel", "title" : "cosL", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosPi", "d1" : 3, "d2" : 4, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "ETA_LLPIPI__etap_mumupipi.root",
+    "reference" : "RefETA_LLPIPI__etap_mumupipi.root"
+}

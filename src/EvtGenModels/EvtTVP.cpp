@@ -74,7 +74,7 @@ void EvtTVP::initProbMax()
         if ( parId == EvtPDL::getId( "chi_b2" ) ) {
             setProbMax( 15.0 );
         } else {
-            setProbMax( 2.0 );
+            setProbMax( 2.5 );
         }
 
     } else if ( getNDaug() == 3 ) {

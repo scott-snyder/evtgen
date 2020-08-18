@@ -1,0 +1,20 @@
+{
+    "parent" : "B_c+",
+    "daughters" : ["J/psi", "pi+", "pi-", "pi+"],
+    "grand_daughters" : [["e+", "e-"], [], [], []],
+    "models" : ["EvtBcToNPi", "VLL", "", "", ""],
+    "parameters" : [["0.9e5", "5.9", "0.049", "0.0015", "0.0", "0.0", "0.0", "-0.074", "0.049", "0.0015"], [], [], [], []],
+    "do_conjugate_decay" : [true, false, false, false, false],
+    "extras" : ["Define dm_incohMix_B_s0 0"],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob(EvtBcToNPi)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "prob_daug1", "title" : "Prob(VLL)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "parMass", "title" : "m(B_{c}^{+})", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 6.2, "xmax" : 6.3},
+	{"variable" : "mass", "title" : "m(J/#psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 3.0, "xmax" : 3.2},
+	{"variable" : "mass3", "title" : "m(#pi^{+}#pi^{-}#pi^{+})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.5},
+	{"variable" : "cosHel", "title" : "cosHel(e^{+}, J/#psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "EvtBcToNPi=VLL__Bc_Jpsi3pi,ee.root",
+    "reference" : "RefEvtBcToNPi=VLL__Bc_Jpsi3pi,ee.root"
+}

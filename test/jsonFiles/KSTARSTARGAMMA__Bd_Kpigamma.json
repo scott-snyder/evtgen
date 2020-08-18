@@ -1,0 +1,14 @@
+{
+    "parent" : "B0",
+    "daughters" : ["K+", "pi-", "gamma"],
+    "models" : ["KSTARSTARGAMMA"],
+    "parameters" : [[]],
+    "extras" : ["Define dm_incohMix_B0 0.0"],
+    "events" : 10000,
+    "histograms" : [
+    {"variable" : "mass", "title" : "m(K,pi)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.5, "xmax" : 2.5},
+    {"variable" : "cosHel", "title" : "cosHel(K,pi)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "KSTARSTARGAMMA__Bd_Kpigamma.root",
+    "reference" : "RefKSTARSTARGAMMA__Bd_Kpigamma.root"
+}

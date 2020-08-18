@@ -41,6 +41,11 @@ EvtDecayBase* EvtSingleParticle::clone()
     return new EvtSingleParticle();
 }
 
+void EvtSingleParticle::initProbMax()
+{
+    noProbMax();
+}
+
 void EvtSingleParticle::init()
 {
     //turn off checks for charge conservation

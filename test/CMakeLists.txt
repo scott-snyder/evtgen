@@ -21,13 +21,14 @@
 
 # the test executables require ROOT for histogramming etc.
 find_package(ROOT QUIET COMPONENTS Hist)
-if (ROOT_FOUND)
+find_package(nlohmann_json 3.6.1 QUIET)
+if (ROOT_FOUND AND nlohmann_json_FOUND)
     add_library(root_interface INTERFACE IMPORTED)
     target_include_directories(root_interface INTERFACE ${ROOT_INCLUDE_DIRS})
     target_link_libraries(root_interface INTERFACE ${ROOT_LIBRARIES})
 
     # build each of the executables
-    foreach( test_exe evt_dalitz evtgenlhc_test1 example1 exampleWriteHepMC )
+    foreach( test_exe evt_dalitz evtgenlhc_test1 example1 exampleWriteHepMC testDecayModel )
         add_executable(${test_exe} ${test_exe}.cc)
         target_link_libraries(${test_exe} PRIVATE EvtGen)
         if (EVTGEN_HEPMC3)
@@ -40,16 +41,20 @@ if (ROOT_FOUND)
         target_link_libraries(${test_exe} PRIVATE root_interface)
     endforeach()
 
+    # testDecayModel needs nlohmann_json as well
+    target_link_libraries(testDecayModel PRIVATE nlohmann_json::nlohmann_json)
+
     # install the executables
-    install(TARGETS evt_dalitz evtgenlhc_test1 example1 exampleWriteHepMC
+    install(TARGETS evt_dalitz evtgenlhc_test1 example1 exampleWriteHepMC testDecayModel
         DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/test
         )
 
     # install the decay files, macros, scripts, etc.
     install(DIRECTORY exampleFiles DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/test)
-    install(FILES do_tests
+    install(DIRECTORY jsonFiles DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/test)
+    install(FILES do_tests runTests.py makeSrcDepsJson makeModelsJson
         DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/test
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 else()
-    message(WARNING "Could not find ROOT, cannot build test executables")
+    message(WARNING "Could not find ROOT and/or nlohmann_json, cannot build test executables")
 endif()

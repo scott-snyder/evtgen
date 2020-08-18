@@ -21,7 +21,6 @@
 #ifndef EVTPARTICLE_HH
 #define EVTPARTICLE_HH
 
-//#include <iostream.h>
 #include "EvtGenBase/EvtId.hh"
 #include "EvtGenBase/EvtSpinDensity.hh"
 #include "EvtGenBase/EvtSpinType.hh"
@@ -171,8 +170,12 @@ class EvtParticle {
     /**
   * Get pointer the the i:th daugther.
   */
-    const EvtParticle* getDaug( const int i ) const { return _daug[i]; }
     EvtParticle* getDaug( const int i ) { return _daug[i]; }
+
+    /**
+  * Get const pointer the the i:th daugther.
+  */
+    const EvtParticle* getDaug( const int i ) const { return _daug[i]; }
 
     /**
   * Iterates over the particles in a decay chain.
@@ -320,7 +323,7 @@ class EvtParticle {
     /**
   * Returns the lifetime.
   */
-    double getLifetime();
+    double getLifetime() const;
 
     /** 
   * Set diagonal spindensity matrix.
@@ -411,7 +414,7 @@ class EvtParticle {
     void setDecayProb( double p );
 
     // Return the name of the particle (from the EvtId number)
-    std::string getName();
+    std::string getName() const;
 
     // Specify whether the particle has a special named attribute with
     // a set value. By default, nothing is set, but derived classes

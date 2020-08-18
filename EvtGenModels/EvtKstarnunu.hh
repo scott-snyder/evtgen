@@ -31,6 +31,7 @@ class EvtKstarnunu : public EvtDecayAmp {
     EvtDecayBase* clone() override;
 
     void init() override;
+    void initProbMax() override;
 
     void decay( EvtParticle* p ) override;
 };

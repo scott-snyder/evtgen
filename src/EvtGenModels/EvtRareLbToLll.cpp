@@ -50,7 +50,7 @@ EvtDecayBase* EvtRareLbToLll::clone()
 
 void EvtRareLbToLll::init()
 {
-    checkNArg( 1 );
+    checkNArg( 0, 1 );
 
     // check that there are 3 daughters
     checkNDaug( 3 );
@@ -77,7 +77,10 @@ void EvtRareLbToLll::init()
           << " EvtRareLbToLll has dielectron final state" << std::endl;
     }
 
-    std::string model = getArgStr( 0 );
+    std::string model{ "LQCD" };
+    if ( getNArg() == 1) {
+	model = getArgStr( 0 );
+    }
     if ( model == "Gutsche" ) {
         ffmodel_ = std::make_unique<EvtRareLbToLllFFGutsche>();
     } else if ( model == "LQCD" ) {
@@ -87,8 +90,8 @@ void EvtRareLbToLll::init()
     } else {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "  Unknown form-factor model, valid options are MR, LQCD, Gutsche."
-            << std::endl;
-        ::abort();
+            << "  Assuming LQCD form-factors... " << std::endl;
+        ffmodel_ = std::make_unique<EvtRareLbToLllFFlQCD>();
     }
     wcmodel_ = std::make_unique<EvtRareLbToLllWC>();
 

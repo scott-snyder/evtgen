@@ -36,6 +36,7 @@ class EvtSingleParticle : public EvtDecayIncoherent {
     void decay( EvtParticle* p ) override;
 
     void init() override;
+    void initProbMax() override;
 
   private:
     double pmin, pmax;

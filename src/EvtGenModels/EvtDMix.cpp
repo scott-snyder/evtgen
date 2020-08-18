@@ -42,7 +42,7 @@ EvtDecayBase* EvtDMix::clone()
 
 void EvtDMix::init()
 {
-    // check that there are 0 arguments
+    // check arguments
     checkNArg( 3 );
     _rd = getArg( 0 );
     _xpr = getArg( 1 );

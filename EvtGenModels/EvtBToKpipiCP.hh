@@ -47,6 +47,7 @@ class EvtBToKpipiCP : public EvtDecayAmp {
     EvtBToKpipiCP* clone() override;
 
     void init() override;
+    void initProbMax() override;
     void decay( EvtParticle* p ) override;
 
   private:

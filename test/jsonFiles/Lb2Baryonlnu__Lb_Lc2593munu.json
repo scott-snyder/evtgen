@@ -1,0 +1,15 @@
+{
+    "parent" : "Lambda_b0",
+    "daughters" : ["Lambda_c(2593)+", "mu-", "anti-nu_mu"],
+    "do_conjugate_decay" : [ true, true, true, true ],
+    "models" : ["Lb2Baryonlnu"],
+    "parameters" : [["1.0", "1.0", "1.0", "1.0"]],
+    "extras" : ["noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "massSq", "title" : "q2", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 9.5},
+	{"variable" : "cosHel", "title" : "cosTheta", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "Lb2Baryonlnu__Lb_Lc2593munu.root",
+    "reference" : "RefLb2Baryonlnu__Lb_Lc2593munu.root"
+}

@@ -1,0 +1,27 @@
+{
+    "parent" : "Upsilon(4S)",
+    "daughters" : ["psi(4160)", "gamma"],
+    "grand_daughters" : [["D+", "D-"], []],
+    "models" : ["VECTORISR", "VSS", ""],
+    "parameters" : [["0.9", "0.9"], [], []],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob_daug1", "title" : "Prob(VSS)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "parMass", "title" : "m(Upsilon4S)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 10.5, "xmax" : 11.0},
+        {"variable" : "mass", "title" : "m(psi4160)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 3.5, "xmax" : 5.5},
+        {"variable" : "mass_daug1", "title" : "m(D+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.85, "xmax" : 1.9},
+        {"variable" : "mass_daug1", "title" : "m(D-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.85, "xmax" : 1.9},
+	{"variable" : "cosHel", "title" : "cosHel(D+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "decayangle_daug1", "title" : "decayAngle(D+,D-)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0},
+	{"variable" : "p", "title" : "p(psi4160)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 5.0},
+	{"variable" : "phi", "title" : "phi(psi4160)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(psi4160)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "p", "title" : "p(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 5.0},
+	{"variable" : "phi", "title" : "phi(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "p_daug1", "title" : "p(D+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.6, "xmax" : 2.0},
+	{"variable" : "p_daug1", "title" : "p(D-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.6, "xmax" : 2.0}
+    ],
+    "outfile" : "VECTORISR=VSS__Upsilon4S_psi4160gamma,DD.root",
+    "reference" : "RefVECTORISR=VSS__Upsilon4S_psi4160gamma,DD.root"
+}

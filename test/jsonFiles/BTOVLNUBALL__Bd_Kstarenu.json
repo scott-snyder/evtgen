@@ -1,0 +1,26 @@
+{
+    "parent" : "B0",
+    "daughters" : ["K*+", "e-", "anti-nu_e"],
+    "models" : ["BTOVLNUBALL"],
+    "parameters" : [["0.290", "40.38", "-0.084", "0.342", "52.0", "0.923", "-0.511", "49.40"]],
+    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "mass", "title" : "m(K^{*+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.5, "xmax" : 1.8},
+        {"variable" : "mass", "title" : "m(K^{*+} e)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.5, "xmax" : 5.5},
+        {"variable" : "mass", "title" : "m(e #nu)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 5.0},
+        {"variable" : "mass", "title" : "m(K^{*+} #nu)", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.5, "xmax" : 5.5},
+        {"variable" : "pSumSq", "title" : "q^{2}(e #nu)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 21.0},
+        {"variable" : "p", "title" : "p(K^{*+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "p", "title" : "p(e)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "p", "title" : "p(#nu)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "cosHel", "title" : "cosHel(K^{*+},e)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel(e,#nu)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(K^{*+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(e)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(#nu)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "BTOVLNUBALL__Bd_Kstarenu.root",
+    "reference" : "RefBTOVLNUBALL__Bd_Kstarenu.root"
+}

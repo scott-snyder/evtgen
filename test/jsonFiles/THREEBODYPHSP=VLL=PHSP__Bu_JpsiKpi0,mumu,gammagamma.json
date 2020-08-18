@@ -1,0 +1,20 @@
+{
+    "parent" : "B+",
+    "daughters" : ["J/psi", "K+", "pi0"],
+    "grand_daughters" : [["mu+", "mu-"], [], ["gamma", "gamma"]],
+    "models" : ["THREEBODYPHSP", "VLL", "", "PHSP"],
+    "parameters" : [["15.0", "22.0", "1.5", "4.5"], [], [], []],
+    "do_conjugate_decay" : [true, false, false, false],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "px", "title" : "px(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -3.0, "xmax" : 3.0},
+        {"variable" : "py", "title" : "py(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -3.0, "xmax" : 3.0},
+        {"variable" : "pz", "title" : "pz(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -3.0, "xmax" : 3.0},
+        {"variable" : "px", "title" : "pxpy(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 50, "xmin" : -1.8, "xmax" : 1.8, "variableY" : "py", "d1Y" : 1, "d2Y" : 0, "nbinsY" : 50, "ymin" :-1.8, "ymax" : 1.8},
+        {"variable" : "px", "title" : "pxpz(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 50, "xmin" : -1.8, "xmax" : 1.8, "variableY" : "pz", "d1Y" : 1, "d2Y" : 0,  "nbinsY" : 50, "ymin" :-1.8, "ymax" : 1.8},
+        {"variable" : "py", "title" : "pypz(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 50, "xmin" : -1.8, "xmax" : 1.8, "variableY" : "pz", "d1Y" : 1, "d2Y" : 0,  "nbinsY" : 50, "ymin" :-1.8, "ymax" : 1.8},
+        {"variable" : "massSq", "title" : "dalitz", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 12.5, "xmax" : 27.0, "variableY" : "massSq", "d1Y" : 2, "d2Y" : 3, "nbinsY" : 50, "ymin" : 0.35, "ymax" : 4.8}
+    ],
+    "outfile" : "THREEBODYPHSP__Bu_JpsiKpi0,mumu,gammagamma.root",
+    "reference" : "RefTHREEBODYPHSP__Bu_JpsiKpi0,mumu,gammagamma.root"
+}

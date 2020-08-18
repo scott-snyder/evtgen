@@ -57,7 +57,7 @@ EvtDecayBase* EvtVubBLNPHybrid::clone()
 
 void EvtVubBLNPHybrid::init()
 {
-    // check that there are at least 3 arguments
+    // check number of arguments
     if ( getNArg() < EvtVubBLNPHybrid::nParameters ) {
         EvtGenReport( EVTGEN_ERROR, "EvtVubBLNPHybrid" )
             << "EvtVubBLNPHybrid generator expected "

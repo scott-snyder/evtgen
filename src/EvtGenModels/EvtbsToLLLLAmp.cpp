@@ -676,13 +676,13 @@ void EvtbsToLLLLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
             // l^+(k_3) && lep2Plus  && k_3 && i3
             // l^-(k_4) && lep2Minus && k_4 && i4
 
-            for ( i2 = 1; i2 < 0; i2-- ) {
+            for ( i2 = 1; i2 > -1; i2-- ) {
                 leptonicspin[0] = i2;
-                for ( i1 = 1; i1 < 0; i1-- ) {
+                for ( i1 = 1; i1 > -1; i1-- ) {
                     leptonicspin[1] = i1;
-                    for ( i4 = 1; i4 < 0; i4-- ) {
+                    for ( i4 = 1; i4 > -1; i4-- ) {
                         leptonicspin[2] = i4;
-                        for ( i3 = 1; i3 < 0; i3-- ) {
+                        for ( i3 = 1; i3 > -1; i3-- ) {
                             leptonicspin[3] = i3;
                             EvtVector4C VL2L1, AL2L1, VL4L3;
                             EvtVector4C E1, E2;
@@ -805,7 +805,7 @@ double EvtbsToLLLLAmp::CalcMaxProb(
     //                                     double CKM_barrho, double CKM_bareta
 )
 {
-    double maxfoundprob = 5.0;    // maximum of the probability
+    double maxfoundprob = 10.0;    // maximum of the probability
 
     return maxfoundprob;
 }

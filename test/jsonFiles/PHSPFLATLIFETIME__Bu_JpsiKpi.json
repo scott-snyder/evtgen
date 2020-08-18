@@ -1,0 +1,20 @@
+{
+    "parent" : "B+",
+    "daughters" : ["J/psi", "K+", "pi0"],
+    "do_conjugate_decay" : [ true, false, true, false ],
+    "models" : ["PHSPFLATLIFETIME"],
+    "parameters" : [["5.0"]],
+    "events" : 20000,
+    "histograms" : [
+  {"variable" : "lifetime", "title" : "tau", "d1" : 0, "d2" : 0, "nbins" : 110, "xmin" : 0.0, "xmax" : 5.5},
+	{"variable" : "mass", "title" : "mKPi", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.6, "xmax" : 2.25},
+	{"variable" : "mass", "title" : "mJpsiPi", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 3.2, "xmax" : 4.8},
+	{"variable" : "mass", "title" : "mJpsiK", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 3.5, "xmax" : 5.2},
+	{"variable" : "cosHel", "title" : "cosTheta1", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosTheta2", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosTheta3", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "massSq", "title" : "dalitz", "d1" : 2, "d2" : 3, "nbins" : 25, "xmin" : 0.30, "xmax" : 5.30, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 3, "nbinsY" : 25, "ymin" : 10.2, "ymax" : 23.2}
+    ],
+    "outfile" : "PHSPFLATLIFETIME__Bu_JpsiKpi.root",
+    "reference" : "RefPHSPFLATLIFETIME__Bu_JpsiKpi.root"
+}

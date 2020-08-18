@@ -284,7 +284,7 @@ void EvtLb2Lll::initProbMax()
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << " EvtLb2Lll is finding maximum probability ... " << std::endl;
 
-    if ( m_maxProbability == 0 ) {
+    if ( m_maxProbability < 1e-10 ) {
         EvtDiracParticle* parent = new EvtDiracParticle;
         parent->noLifeTime();
         parent->init( getParentId(),
@@ -366,6 +366,12 @@ void EvtLb2Lll::initProbMax()
         //m_poleSize = 0.04*q2min;
         m_maxProbability *= 1.2;
         delete parent;
+    }
+
+    if (m_maxProbability < 1e-10) {
+	EvtGenReport( EVTGEN_INFO, "EvtLb2Lll")
+	   << "EvtLb2Lll found zero max prob, setting to 1.5e6" << std::endl;
+	m_maxProbability = 1.5e6;
     }
 
     setProbMax( m_maxProbability );

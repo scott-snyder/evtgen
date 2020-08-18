@@ -21,6 +21,7 @@
 #ifndef EVTSVSCPISO_HH
 #define EVTSVSCPISO_HH
 
+#include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtDecayAmp.hh"
 
 class EvtParticle;
@@ -39,6 +40,24 @@ class EvtSVSCPiso : public EvtDecayAmp {
     void initProbMax() override;
 
     void decay( EvtParticle* p ) override;
+
+  private:
+    // Amplitude coefficients
+    EvtComplex Tp0, Tp0_bar, T0p, T0p_bar;
+    EvtComplex Tpm, Tpm_bar, Tmp, Tmp_bar;
+    EvtComplex P1, P1_bar, P0, P0_bar;
+
+    // Amplitudes
+    EvtComplex A_f, Abar_f;
+    EvtComplex A_fbar, Abar_fbar;
+    EvtComplex Apm, Apm_bar, Amp, Amp_bar;
+    // Charged mode flag
+    int charged{ 0 };
+
+    // Set amplitude coeffs from decay model pars
+    void setAmpCoeffs();
+    // Calculate amplitude terms
+    void calcAmpTerms();
 };
 
 #endif

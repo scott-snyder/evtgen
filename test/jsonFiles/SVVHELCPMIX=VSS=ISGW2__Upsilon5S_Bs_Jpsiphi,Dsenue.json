@@ -1,0 +1,33 @@
+{
+    "parent" : "Upsilon(5S)",
+    "daughters" : ["B_s0", "anti-B_s0"],
+    "grand_daughters" : [["J/psi", "phi"], ["D_s+","e-","anti-nu_e"]],
+    "models" : ["VSS", "SVVHELCPMIX", "ISGW2"],
+    "parameters" : [[], ["1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "8.15e24", "17.8e12", "65.78e10", "8.42e10", "0.0", "0.025"], []],
+    "do_conjugate_decay" : [false, true, true],
+    "extras" : ["Define dm_incohMix_B_s0 17.8e12", "Define qoverp_incohMix_B_s0 1.0", "noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob(VSS)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "prob_daug1", "title" : "Prob(SVVHELCPMIX)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.1},
+        {"variable" : "prob_daug2", "title" : "Prob(ISGW2)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "lifetime", "title" : "tau(B_{s})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 20.0},
+        {"variable" : "lifetime", "title" : "tau(anti-B_{s})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 20.0},
+        {"variable" : "deltaT", "title" : "deltaT", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -12.0, "xmax" : 12.0},
+        {"variable" : "mass", "title" : "m(B_{s})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 5.3, "xmax" : 5.4},
+        {"variable" : "mass", "title" : "m(anti-B_{s})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 5.3, "xmax" : 5.4},
+        {"variable" : "mass_daug1", "title" : "m(J/#psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 2.5, "xmax" : 3.5},
+        {"variable" : "mass_daug1", "title" : "m(#phi)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.95, "xmax" : 1.10},
+        {"variable" : "mass_daug2", "title" : "m(D_{s}^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.9, "xmax" : 2.1},
+        {"variable" : "pSumSq_daug2", "title" : "qSq(e^{-} anti-#nu_{e})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 12.0},
+	{"variable" : "cosHel_daug2", "title" : "cosHel(D_{s}^{+},e^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "decayangle_daug1", "title" : "decayAngle(J/#psi,#phi)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0},
+	{"variable" : "p_daug1", "title" : "p(J/#psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.5, "xmax" : 1.65},
+	{"variable" : "p_daug1", "title" : "p(#phi)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.5, "xmax" : 1.65},
+	{"variable" : "p_daug2", "title" : "p(D_s^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.5},
+	{"variable" : "p_daug2", "title" : "p(e^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.5},
+	{"variable" : "p_daug2", "title" : "p(anti-#nu_{e})", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.5}
+    ],
+    "outfile" : "SVVHELCPMIX=VSS=ISGW2__Upsilon5S_Bs_Jpsiphi,Dsenue.root",
+    "reference" : "RefSVVHELCPMIX=VSS=ISGW2__Upsilon5S_Bs_Jpsiphi,Dsenue.root"
+}

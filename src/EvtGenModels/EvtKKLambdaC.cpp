@@ -60,7 +60,7 @@ void EvtKKLambdaC::initProbMax()
 
     //double mymaxprob = _calcamp->CalcMaxProb(parnum,mesnum,
     //                           lnum,nunum,_ffmodel);
-    double mymaxprob = 100.;
+    double mymaxprob = 1e3;
     setProbMax( mymaxprob );
 }
 

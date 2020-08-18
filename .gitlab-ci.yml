@@ -1,0 +1,113 @@
+stages:
+  - build
+  - test
+
+variables:
+  LCG_VERSION: "LCG_98python3"
+  GCC_VERSION: "10"
+  CLANG_VERSION: "10"
+  BUILD_TYPE: "Release"
+  BUILD_TESTS: "OFF"
+  BUILD_DOXYGEN: "OFF"
+  USE_HEPMC3: "ON"
+
+.production_image:
+  variables:
+    LCG_OS: x86_64-centos7
+  image: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7
+  tags:
+    - cvmfs
+
+.lcg_setup:
+  before_script:
+    - set +e && source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh $LCG_VERSION $LCG_OS-$LCG_COMPILER; set -e
+
+.build_template:
+  stage: build
+  extends:
+    - .lcg_setup
+  script:
+    - mkdir install
+    - mkdir build && cd build
+    - cmake -DCMAKE_BUILD_TYPE:STRING=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX:PATH=$CI_PROJECT_DIR/install -DEVTGEN_HEPMC3:BOOL=$USE_HEPMC3 -DEVTGEN_PYTHIA:BOOL=ON -DEVTGEN_PHOTOS:BOOL=ON -DEVTGEN_TAUOLA:BOOL=ON -DEVTGEN_BUILD_TESTS:BOOL=$BUILD_TESTS -DEVTGEN_BUILD_VALIDATIONS:BOOL=$BUILD_TESTS -DEVTGEN_BUILD_DOXYGEN:BOOL=$BUILD_DOXYGEN $CI_PROJECT_DIR
+    - cmake --build .
+    - cmake --build . --target install
+
+build_clang_opt:
+  variables:
+    LCG_COMPILER: "clang$CLANG_VERSION-opt"
+  extends:
+    - .production_image
+    - .build_template
+
+build_gcc_opt:
+  variables:
+    LCG_COMPILER: "gcc$GCC_VERSION-opt"
+  extends:
+    - .production_image
+    - .build_template
+
+build_hepmc2_gcc_opt:
+  variables:
+    LCG_COMPILER: "gcc$GCC_VERSION-opt"
+    USE_HEPMC3: "OFF"
+  extends:
+    - .production_image
+    - .build_template
+
+build_gcc_dbg:
+  variables:
+    LCG_COMPILER: "gcc$GCC_VERSION-dbg"
+    BUILD_TYPE: "Debug"
+    BUILD_TESTS: "ON"
+    BUILD_DOXYGEN: "ON"
+  extends:
+    - .production_image
+    - .build_template
+  after_script:
+    - cd install/share/EvtGen/test
+    - ./makeModelsJson $CI_PROJECT_DIR > Models.json
+    - ./makeSrcDepsJson $CI_PROJECT_DIR $CI_PROJECT_DIR/build > SrcDeps.json
+  artifacts:
+    paths:
+      - install
+    expire_in: 1 day
+    when: always
+
+.test_template:
+  stage: test
+  variables:
+    LCG_COMPILER: "gcc$GCC_VERSION-dbg"
+  extends:
+    - .production_image
+    - .lcg_setup
+  dependencies:
+    - build_gcc_dbg
+  artifacts:
+    paths:
+      - install/share/EvtGen/test
+    expire_in: 1 day
+    when: always
+
+# TODO - need to copy in the appropriate files to act as references for this run
+#        and save the resulting files for possible future use as references
+#      - where to store the reference files? CI cache? EOS?
+#      - need to add a test case for merge requests
+
+test_on_push:
+  extends:
+    - .test_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+  script:
+    - cd install/share/EvtGen/test
+    - git diff --numstat $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | awk '{print $NF}' | xargs ./runTests.py Models.json SrcDeps.json
+
+test_on_schedule:
+  extends:
+    - .test_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == "master"'
+  script:
+    - cd install/share/EvtGen/test
+    - git diff --numstat `git tag --list 'R*' | tail -n 1` $CI_COMMIT_SHA | awk '{print $NF}' | xargs ./runTests.py Models.json SrcDeps.json

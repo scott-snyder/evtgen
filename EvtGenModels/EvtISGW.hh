@@ -35,6 +35,7 @@ class EvtISGW : public EvtDecayAmp {
 
     void decay( EvtParticle* p ) override;
     void init() override;
+    void initProbMax() override;
 
   private:
     std::unique_ptr<EvtSemiLeptonicFF> isgwffmodel;

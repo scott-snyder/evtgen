@@ -66,7 +66,7 @@ void EvtVubNLO::init()
     _lbar = -1000;
     _mupi2 = -1000;
 
-    // check that there are at least 6 arguments
+    // check number of arguments
     int npar = 8;
     if ( getNArg() < npar ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )

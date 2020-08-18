@@ -1,0 +1,26 @@
+{
+    "parent" : "B_s0",
+    "daughters" : ["J/psi", "phi"],
+    "grand_daughters" : [["e+", "e-"], ["K+", "K-"]],
+    "models" : ["SVV_CPLH", "VLL", "VSS"],
+    "parameters" : [["0.2", "2.0e12", "1.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0"], [], []],
+    "do_conjugate_decay" : [true, false, false],
+    "extras" : ["Define dm_incohMix_B_s0 0"],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob(SVV_CPLH)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "prob_daug1", "title" : "Prob(VLL)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "prob_daug2", "title" : "Prob(VSS)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "parMass", "title" : "m(B0s)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 5.2, "xmax" : 5.5},
+        {"variable" : "mass", "title" : "m(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 2.5, "xmax" : 3.5},
+        {"variable" : "mass", "title" : "m(phi)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.8, "xmax" : 1.2},
+	{"variable" : "cosHel", "title" : "cosHel(e)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosHel(K)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "decayangle_daug1", "title" : "DecayAngle(e)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0},
+	{"variable" : "decayangle_daug2", "title" : "DecayAngle(K)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0},
+	{"variable" : "p_daug1", "title" : "p(e)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 1.8},
+	{"variable" : "p_daug2", "title" : "p(K)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.3}
+    ],
+    "outfile" : "SVV_CPLH=VLL=VSS__Bs0_Jpsiphi,ee,KK.root",
+    "reference" : "RefSVV_CPLH=VLL=VSS__Bs0_Jpsiphi,ee,KK.root"
+}

@@ -1,0 +1,19 @@
+{
+    "parent" : "Lambda0",
+    "daughters" : ["p+", "pi-"],
+    "models" : ["HypNonLepton"],
+    "parameters" : [["0.642", "-6.5"]],
+    "extras" : ["noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "parMass", "title" : "m(#Lambda^{0})", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 1.2},
+	{"variable" : "mass", "title" : "m(p #pi)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.0, "xmax" : 1.2},
+	{"variable" : "cosTheta", "title" : "cosTheta(p)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(#pi)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "phi", "title" : "phi(p)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+	{"variable" : "phi", "title" : "phi(#pi)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
+    ],
+    "outfile" : "HypNonLepton__Lambda0_ppi.root",
+    "reference" : "RefHypNonLepton__Lambda0_ppi.root"
+}

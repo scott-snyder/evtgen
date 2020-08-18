@@ -1,0 +1,22 @@
+{
+    "parent" : "D0",
+    "daughters" : ["K-", "K+", "anti-K0"],
+    "models" : ["D_DALITZ"],
+    "parameters" : [[]],
+    "do_conjugate_decay" : [true],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "mass", "title" : "m(K^{-} K^{+})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.95, "xmax" : 1.4},
+        {"variable" : "mass", "title" : "m(K^{-} anti-K^{0})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.95, "xmax" : 1.4},
+        {"variable" : "mass", "title" : "m(K^{+} anti-K^{0})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.95, "xmax" : 1.4},
+        {"variable" : "massSq", "title" : "Dalitz m^{2}(K^{-} K^{+}) vs m^{2}(K^{-} anti-K^{0})", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 0.8, "xmax" : 2.0, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 3, "nbinsY" : 50, "ymin" : 0.8, "ymax" : 2.0},
+        {"variable" : "massSq", "title" : "Dalitz m^{2}(K^{+} anti-K^{0}) vs m^{2}(K^{-} K^{+})", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : 0.8, "xmax" : 2.0, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 50, "ymin" : 0.8, "ymax" : 2.0},
+        {"variable" : "mPrime", "title" : "sqDalitz", "d1" : 1, "d2" : 2, "nbins" : 25, "xmin" : 0.0, "xmax" : 1.00, "variableY" : "thetaPrime", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 25, "ymin" : 0.0, "ymax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosHel12", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel23", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "D_DALITZ__D0_KKanti-K0.root",
+    "reference" : "RefD_DALITZ__D0_KKanti-K0.root"
+}

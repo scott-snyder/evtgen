@@ -69,12 +69,9 @@ void EvtMultibody::init()
     }
 }
 
-// Set the maximum probability amplitude - if function is left blank then the
-// program will search for it.  This however is not deterministic and therefore
-// in the release cannot be in place.
 void EvtMultibody::initProbMax()
 {
-    // setProbMax(1.0);
+    setProbMax(1.0);
 }
 
 void EvtMultibody::decay( EvtParticle* p )

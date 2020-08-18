@@ -1,0 +1,103 @@
+#!/bin/bash
+
+########################################################################
+# Copyright 1998-2022 CERN for the benefit of the EvtGen authors       #
+#                                                                      #
+# This file is part of EvtGen.                                         #
+#                                                                      #
+# EvtGen is free software: you can redistribute it and/or modify       #
+# it under the terms of the GNU General Public License as published by #
+# the Free Software Foundation, either version 3 of the License, or    #
+# (at your option) any later version.                                  #
+#                                                                      #
+# EvtGen is distributed in the hope that it will be useful,            #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
+# GNU General Public License for more details.                         #
+#                                                                      #
+# You should have received a copy of the GNU General Public License    #
+# along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     #
+########################################################################
+
+# Script to find the dependencies for all source files and create a JSON file containing that information
+
+if [ $# -ne 2 ]
+then
+    echo "Usage: makeDepsJson <project source dir - full path> <project build dir - full path>"
+    exit 1
+fi
+sourceDir=$1
+buildDir=$2
+
+# get a list of all the object files that are built in the EvtGen lib
+declare -a objFiles=(`awk -F: '{print $1}' $buildDir/src/CMakeFiles/objlib.dir/depend.make | grep '\.cpp\.o$' | sort -u`)
+
+declare -i nObjFiles=${#objFiles[@]}
+declare -i lastIndex=$nObjFiles-1
+
+echo "{"
+for i in `seq 0 $lastIndex`
+do
+    objFile=${objFiles[$i]}
+    srcFile=`echo $objFile | sed -e 's%CMakeFiles/objlib\.dir/%%' -e 's%\.o$%%'`
+
+    declare -a depFiles=(`grep "${objFile}:" $buildDir/src/CMakeFiles/objlib.dir/depend.make | awk '{print $NF}' | sed -e "s%$sourceDir[/]\?%%" -e "s%\.\./%%"`)
+    declare -i nDepFiles=${#depFiles[@]}
+    declare -i lastDep=$nDepFiles-1
+
+    echo "    \"${srcFile}\" : ["
+    for j in `seq 0 $lastDep`
+    do
+        depFile=${depFiles[$j]}
+
+        if [[ $depFile =~ \.hh$ ]]
+        then
+            dephdr=$depFile
+            depsrc="src/`echo $depFile | sed -e 's/\.hh/.cpp/'`"
+            if [ ! -e $sourceDir/$depsrc ]
+            then
+                depsrc=""
+            fi
+        elif [[ $depFile =~ \.cpp$ ]]
+        then
+            depsrc=$depFile
+            dephdr=`echo $depFile | sed -e 's%src/%%' -e 's/\.cpp/.hh/'`
+            if [ ! -e $sourceDir/$dephdr ]
+            then
+                dephdr=""
+            fi
+        fi
+
+        if [ $j -eq $lastDep ]
+        then
+            if [ "x$dephdr" != "x" -a "x$depsrc" != "x" ]
+            then
+                echo "        \"${dephdr}\","
+                echo "        \"${depsrc}\""
+            elif [ "x$dephdr" != "x" ]
+            then
+                echo "        \"${dephdr}\""
+            elif [ "x$depsrc" != "x" ]
+            then
+                echo "        \"${depsrc}\""
+            fi
+        else
+            if [ "x$dephdr" != "x" ]
+            then
+                echo "        \"${dephdr}\","
+            fi
+            if [ "x$depsrc" != "x" ]
+            then
+                echo "        \"${depsrc}\","
+            fi
+        fi
+    done
+
+    if [ $i -eq $lastIndex ]
+    then
+        echo "    ]"
+    else
+        echo "    ],"
+    fi
+done
+echo "}"

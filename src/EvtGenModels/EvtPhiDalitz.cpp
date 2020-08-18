@@ -87,6 +87,11 @@ void EvtPhiDalitz::init()
     }
 }
 
+void EvtPhiDalitz::initProbMax()
+{
+    setProbMax( 150.0 );
+}
+
 void EvtPhiDalitz::decay( EvtParticle* p )
 {
     EvtId PIP = EvtPDL::getId( "pi+" );

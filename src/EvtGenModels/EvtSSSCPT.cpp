@@ -47,6 +47,29 @@ void EvtSSSCPT::init()
     // check that there are 8 arguments
     checkNArg( 8 );
     checkNDaug( 2 );
+
+    // Set amplitude coeffs
+    setAmpCoeffs();
+}
+
+void EvtSSSCPT::setAmpCoeffs()
+{
+    P = EvtComplex( cos( -getArg( 0 ) ), sin( -getArg( 0 ) ) );
+    Q = EvtComplex( cos( getArg( 0 ) ), sin( getArg( 0 ) ) );
+    D = EvtComplex( getArg( 6 ) * cos( getArg( 7 ) ),
+                    getArg( 6 ) * sin( getArg( 7 ) ) );
+    Im = EvtComplex( 0.0, 1.0 );
+
+    A = EvtComplex( getArg( 2 ) * cos( getArg( 3 ) ),
+                    getArg( 2 ) * sin( getArg( 3 ) ) );
+    Abar = EvtComplex( getArg( 4 ) * cos( getArg( 5 ) ),
+                       getArg( 4 ) * sin( getArg( 5 ) ) );
+}
+
+void EvtSSSCPT::initProbMax()
+{
+    const double maxProb = 2.0 * abs2( A ) + 4.0 * abs2( Abar ) * abs2( D );
+    setProbMax( maxProb );
 }
 
 void EvtSSSCPT::decay( EvtParticle* p )
@@ -63,20 +86,6 @@ void EvtSSSCPT::decay( EvtParticle* p )
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
     EvtComplex amp;
-
-    EvtComplex A, Abar;
-    EvtComplex P, Q, D, Im;
-
-    P = EvtComplex( cos( -getArg( 0 ) ), sin( -getArg( 0 ) ) );
-    Q = EvtComplex( cos( getArg( 0 ) ), sin( getArg( 0 ) ) );
-    D = EvtComplex( getArg( 6 ) * cos( getArg( 7 ) ),
-                    getArg( 6 ) * sin( getArg( 7 ) ) );
-    Im = EvtComplex( 0.0, 1.0 );
-
-    A = EvtComplex( getArg( 2 ) * cos( getArg( 3 ) ),
-                    getArg( 2 ) * sin( getArg( 3 ) ) );
-    Abar = EvtComplex( getArg( 4 ) * cos( getArg( 5 ) ),
-                       getArg( 4 ) * sin( getArg( 5 ) ) );
 
     if ( other_b == B0B ) {
         amp = A * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +

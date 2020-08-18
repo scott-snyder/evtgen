@@ -65,3 +65,8 @@ void EvtMelikhov::init()
     Melikhovffmodel = std::make_unique<EvtMelikhovFF>( getArg( 0 ) );
     calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
 }
+
+void EvtMelikhov::initProbMax()
+{
+    setProbMax( 10000.0 );
+}

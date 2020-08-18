@@ -57,7 +57,9 @@ void EvtSSSCPpng::init()
 
 void EvtSSSCPpng::initProbMax()
 {
-    setProbMax( getArg( 5 ) * getArg( 5 ) * ( 1 + getArg( 6 ) * getArg( 6 ) ) );
+    const double ASq = getArg( 5 ) * getArg( 5 ) + getArg( 6 ) * getArg( 6 );
+    const double max = ASq * ( 1.0 + getArg( 4 ) * getArg( 4 ) );
+    setProbMax( max );
 }
 
 void EvtSSSCPpng::decay( EvtParticle* p )
@@ -104,7 +106,7 @@ void EvtSSSCPpng::decay( EvtParticle* p )
     // get fraction of B0 tags with these amplitudes
 
     //double xd = 0.65;
-    double ratio = 1 / ( 1 + 0.65 * 0.65 );
+    const double ratio = 1 / ( 1 + 0.65 * 0.65 );
 
     EvtComplex rf, rbarf;
 
@@ -112,16 +114,18 @@ void EvtSSSCPpng::decay( EvtParticle* p )
          Abar / A;
     rbarf = EvtComplex( 1.0 ) / rf;
 
-    double A2 = real( A ) * real( A ) + imag( A ) * imag( A );
-    double Abar2 = real( Abar ) * real( Abar ) + imag( Abar ) * imag( Abar );
+    const double A2 = real( A ) * real( A ) + imag( A ) * imag( A );
+    const double Abar2 = real( Abar ) * real( Abar ) +
+                         imag( Abar ) * imag( Abar );
 
-    double rf2 = real( rf ) * real( rf ) + imag( rf ) * imag( rf );
-    double rbarf2 = real( rbarf ) * real( rbarf ) + imag( rbarf ) * imag( rbarf );
+    const double rf2 = real( rf ) * real( rf ) + imag( rf ) * imag( rf );
+    const double rbarf2 = real( rbarf ) * real( rbarf ) +
+                          imag( rbarf ) * imag( rbarf );
 
     //fraction of B0 _tags_
-    double fract = ( Abar2 * ( 1 + rbarf2 + ( 1 - rbarf2 ) * ratio ) ) /
-                   ( Abar2 * ( 1 + rbarf2 + ( 1 - rbarf2 ) * ratio ) +
-                     A2 * ( 1 + rf2 + ( 1 - rf2 ) * ratio ) );
+    const double fract = ( Abar2 * ( 1 + rbarf2 + ( 1 - rbarf2 ) * ratio ) ) /
+                         ( Abar2 * ( 1 + rbarf2 + ( 1 - rbarf2 ) * ratio ) +
+                           A2 * ( 1 + rf2 + ( 1 - rf2 ) * ratio ) );
 
     EvtCPUtil::getInstance()->OtherB( p, t, other_b, fract );
 

@@ -157,6 +157,11 @@ EvtBTo4piCP* EvtBTo4piCP::clone()
     return new EvtBTo4piCP;
 }
 
+void EvtBTo4piCP::initProbMax()
+{
+    setProbMax( 50.0 );
+}
+
 void EvtBTo4piCP::init()
 {
     // check that there are 18 arguments

@@ -54,62 +54,51 @@ void EvtSVSCPiso::init()
 
     checkSpinDaughter( 0, EvtSpinType::VECTOR );
     checkSpinDaughter( 1, EvtSpinType::SCALAR );
+
+    // Set amplitude coefficients
+    setAmpCoeffs();
+    // Calculate amplitude terms
+    calcAmpTerms();
+}
+
+void EvtSVSCPiso::setAmpCoeffs()
+{
+    Tp0 = EvtComplex( getArg( 3 ) * cos( getArg( 4 ) ),
+                      getArg( 3 ) * sin( getArg( 4 ) ) );
+    Tp0_bar = EvtComplex( getArg( 5 ) * cos( getArg( 6 ) ),
+                          getArg( 5 ) * sin( getArg( 6 ) ) );
+    T0p = EvtComplex( getArg( 7 ) * cos( getArg( 8 ) ),
+                      getArg( 7 ) * sin( getArg( 8 ) ) );
+    T0p_bar = EvtComplex( getArg( 9 ) * cos( getArg( 10 ) ),
+                          getArg( 9 ) * sin( getArg( 10 ) ) );
+    Tpm = EvtComplex( getArg( 11 ) * cos( getArg( 12 ) ),
+                      getArg( 11 ) * sin( getArg( 12 ) ) );
+    Tpm_bar = EvtComplex( getArg( 13 ) * cos( getArg( 14 ) ),
+                          getArg( 13 ) * sin( getArg( 14 ) ) );
+    Tmp = EvtComplex( getArg( 15 ) * cos( getArg( 16 ) ),
+                      getArg( 15 ) * sin( getArg( 16 ) ) );
+    Tmp_bar = EvtComplex( getArg( 17 ) * cos( getArg( 18 ) ),
+                          getArg( 17 ) * sin( getArg( 18 ) ) );
+    P0 = EvtComplex( getArg( 19 ) * cos( getArg( 20 ) ),
+                     getArg( 19 ) * sin( getArg( 20 ) ) );
+    P0_bar = EvtComplex( getArg( 21 ) * cos( getArg( 22 ) ),
+                         getArg( 21 ) * sin( getArg( 22 ) ) );
+    P1 = EvtComplex( getArg( 23 ) * cos( getArg( 24 ) ),
+                     getArg( 23 ) * sin( getArg( 24 ) ) );
+    P1_bar = EvtComplex( getArg( 25 ) * cos( getArg( 26 ) ),
+                         getArg( 25 ) * sin( getArg( 26 ) ) );
 }
 
 void EvtSVSCPiso::initProbMax()
 {
-    //this might need some revision..
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) > 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) == 0 ) ) {
-        setProbMax( 2.0 * ( getArg( 3 ) * getArg( 3 ) +
-                            4.0 * getArg( 23 ) * getArg( 23 ) ) );
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) < 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) == 0 ) ) {
-        setProbMax( 2.0 * ( getArg( 5 ) * getArg( 5 ) +
-                            4.0 * getArg( 25 ) * getArg( 25 ) ) );
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) == 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) > 0 ) ) {
-        setProbMax( 2.0 * ( getArg( 7 ) * getArg( 7 ) +
-                            4.0 * getArg( 23 ) * getArg( 23 ) ) );
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) == 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) < 0 ) ) {
-        setProbMax( 2.0 * ( getArg( 9 ) * getArg( 9 ) +
-                            4.0 * getArg( 25 ) * getArg( 25 ) ) );
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) > 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) < 0 ) ) {
-        setProbMax(
-            2.0 * ( getArg( 11 ) * getArg( 11 ) + getArg( 23 ) * getArg( 23 ) +
-                    getArg( 19 ) * getArg( 19 ) + getArg( 13 ) * getArg( 13 ) +
-                    getArg( 25 ) * getArg( 25 ) + getArg( 21 ) * getArg( 21 ) ) );
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) < 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) > 0 ) ) {
-        setProbMax(
-            2.0 * ( getArg( 15 ) * getArg( 15 ) + getArg( 23 ) * getArg( 23 ) +
-                    getArg( 19 ) * getArg( 19 ) + getArg( 17 ) * getArg( 17 ) +
-                    getArg( 25 ) * getArg( 25 ) + getArg( 21 ) * getArg( 21 ) ) );
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) == 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) == 0 ) ) {
-        setProbMax(
-            2.0 * ( getArg( 7 ) * getArg( 7 ) + getArg( 3 ) * getArg( 3 ) +
-                    getArg( 11 ) * getArg( 11 ) + getArg( 15 ) * getArg( 15 ) +
-                    4.0 * getArg( 19 ) * getArg( 19 ) +
-                    getArg( 9 ) * getArg( 9 ) + getArg( 5 ) * getArg( 5 ) +
-                    getArg( 13 ) * getArg( 13 ) + getArg( 17 ) * getArg( 17 ) +
-                    4.0 * getArg( 21 ) * getArg( 21 ) ) );
-    }
+    const double max1 = abs2( A_f ) + abs2( Abar_f );
+    const double max2 = abs2( A_fbar ) + abs2( Abar_fbar );
+    // Amplitude has momentum normalisation that roughly scales with (parent mass)/2
+    // so probability will scale with 0.25 * parenMassSq. Use 0.3 * parMassSq
+    // in case we get larger normalisation values
+    const double parMass = EvtPDL::getMeanMass( getParentId() );
+    const double max = 0.3 * parMass * parMass * ( max1 + max2 );
+    setProbMax( max );
 }
 
 void EvtSVSCPiso::decay( EvtParticle* p )
@@ -120,15 +109,13 @@ void EvtSVSCPiso::decay( EvtParticle* p )
 
     double t;
     EvtId other_b;
-    int charged( 0 );
 
     int first_time = 0;
     int flip = 0;
     EvtId ds[2];
 
-    //randomly generate the tag (B0 or B0B)
-
-    double tag = EvtRandom::Flat( 0.0, 1.0 );
+    // Randomly generate the tag (B0 or B0B)
+    const double tag = EvtRandom::Flat( 0.0, 1.0 );
     if ( tag < 0.5 ) {
         EvtCPUtil::getInstance()->OtherB( p, t, other_b, 1.0 );
         other_b = B0;
@@ -163,112 +150,6 @@ void EvtSVSCPiso::decay( EvtParticle* p )
     s = p->getDaug( 1 );
 
     EvtComplex amp;
-
-    EvtComplex A_f, Abar_f;
-    EvtComplex A_fbar, Abar_fbar;
-    EvtComplex Apm, Apm_bar, Amp, Amp_bar;
-
-    EvtComplex Tp0, Tp0_bar, T0p, T0p_bar, Tpm, Tpm_bar, Tmp, Tmp_bar;
-    EvtComplex P1, P1_bar, P0, P0_bar;
-
-    Tp0 = EvtComplex( getArg( 3 ) * cos( getArg( 4 ) ),
-                      getArg( 3 ) * sin( getArg( 4 ) ) );
-    Tp0_bar = EvtComplex( getArg( 5 ) * cos( getArg( 6 ) ),
-                          getArg( 5 ) * sin( getArg( 6 ) ) );
-    T0p = EvtComplex( getArg( 7 ) * cos( getArg( 8 ) ),
-                      getArg( 7 ) * sin( getArg( 8 ) ) );
-    T0p_bar = EvtComplex( getArg( 9 ) * cos( getArg( 10 ) ),
-                          getArg( 9 ) * sin( getArg( 10 ) ) );
-    Tpm = EvtComplex( getArg( 11 ) * cos( getArg( 12 ) ),
-                      getArg( 11 ) * sin( getArg( 12 ) ) );
-    Tpm_bar = EvtComplex( getArg( 13 ) * cos( getArg( 14 ) ),
-                          getArg( 13 ) * sin( getArg( 14 ) ) );
-    Tmp = EvtComplex( getArg( 15 ) * cos( getArg( 16 ) ),
-                      getArg( 15 ) * sin( getArg( 16 ) ) );
-    Tmp_bar = EvtComplex( getArg( 17 ) * cos( getArg( 18 ) ),
-                          getArg( 17 ) * sin( getArg( 18 ) ) );
-    P0 = EvtComplex( getArg( 19 ) * cos( getArg( 20 ) ),
-                     getArg( 19 ) * sin( getArg( 20 ) ) );
-    P0_bar = EvtComplex( getArg( 21 ) * cos( getArg( 22 ) ),
-                         getArg( 21 ) * sin( getArg( 22 ) ) );
-    P1 = EvtComplex( getArg( 23 ) * cos( getArg( 24 ) ),
-                     getArg( 23 ) * sin( getArg( 24 ) ) );
-    P1_bar = EvtComplex( getArg( 25 ) * cos( getArg( 26 ) ),
-                         getArg( 25 ) * sin( getArg( 26 ) ) );
-
-    //***********************charged modes****************************
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) > 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) == 0 ) ) {
-        //V+ S0, so T+0 + 2 P1
-
-        charged = 1;
-        A_f = Tp0 + 2.0 * P1;
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) < 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) == 0 ) ) {
-        //V- S0, so T+0_bar + 2P1_bar
-
-        charged = 1;
-        A_f = Tp0_bar + 2.0 * P1_bar;
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) == 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) > 0 ) ) {
-        //V0 S+, so T0+ - 2 P1
-
-        charged = 1;
-        A_f = T0p - 2.0 * P1;
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) == 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) < 0 ) ) {
-        //V0 S-, so T0+_bar - 2 P1_bar
-
-        charged = 1;
-        A_f = T0p_bar - 2.0 * P1_bar;
-    }
-
-    //***********************neutral modes***************************
-
-    //V+ S-, so Af = T+- + P1 + P0
-    Apm = Tpm + P1 + P0;
-    Apm_bar = Tpm_bar + P1_bar + P0_bar;
-
-    //V- S+, so Af = T-+ - P1 + P0
-    Amp = Tmp - P1 + P0;
-    Amp_bar = Tmp_bar - P1_bar + P0;
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) > 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) < 0 ) ) {
-        //V+ S-
-        charged = 0;
-        A_f = Apm;
-        Abar_f = Apm_bar;
-        A_fbar = Amp;
-        Abar_fbar = Amp_bar;
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) < 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) > 0 ) ) {
-        //V- S+
-        charged = 0;
-        A_f = Amp;
-        Abar_f = Amp_bar;
-        A_fbar = Apm;
-        Abar_fbar = Apm_bar;
-    }
-
-    if ( ( EvtPDL::chg3( getDaug( 0 ) ) == 0 ) &&
-         ( EvtPDL::chg3( getDaug( 1 ) ) == 0 ) ) {
-        //V0 S0
-        charged = 0;
-        A_f = T0p + Tp0 - Tpm - Tmp - 2.0 * P0;
-        Abar_f = T0p_bar + Tp0_bar - Tpm_bar - Tmp_bar - 2.0 * P0_bar;
-        A_fbar = A_f;
-        Abar_fbar = Abar_f;
-    }
 
     if ( charged == 0 ) {
         if ( !flip ) {
@@ -305,18 +186,89 @@ void EvtSVSCPiso::decay( EvtParticle* p )
             }
         }
 
-    } else
+    } else {
         amp = A_f;
+    }
 
-    EvtVector4R p4_parent;
-
-    p4_parent = v->getP4() + s->getP4();
-
-    double norm = 1.0 / v->getP4().d3mag();
+    const EvtVector4R p4_parent = v->getP4() + s->getP4();
+    const double norm = 1.0 / v->getP4().d3mag();
 
     vertex( 0, amp * norm * p4_parent * ( v->epsParent( 0 ) ) );
     vertex( 1, amp * norm * p4_parent * ( v->epsParent( 1 ) ) );
     vertex( 2, amp * norm * p4_parent * ( v->epsParent( 2 ) ) );
 
     return;
+}
+
+void EvtSVSCPiso::calcAmpTerms()
+{
+    const int Q1 = EvtPDL::chg3( getDaug( 0 ) );
+    const int Q2 = EvtPDL::chg3( getDaug( 1 ) );
+
+    //***********************charged modes****************************
+
+    if ( Q1 > 0 && Q2 == 0 ) {
+        //V+ S0, so T+0 + 2 P1
+
+        charged = 1;
+        A_f = Tp0 + 2.0 * P1;
+    }
+
+    if ( Q1 < 0 && Q2 == 0 ) {
+        //V- S0, so T+0_bar + 2P1_bar
+
+        charged = 1;
+        A_f = Tp0_bar + 2.0 * P1_bar;
+    }
+
+    if ( Q1 == 0 && Q2 > 0 ) {
+        //V0 S+, so T0+ - 2 P1
+
+        charged = 1;
+        A_f = T0p - 2.0 * P1;
+    }
+
+    if ( Q1 == 0 && Q2 < 0 ) {
+        //V0 S-, so T0+_bar - 2 P1_bar
+
+        charged = 1;
+        A_f = T0p_bar - 2.0 * P1_bar;
+    }
+
+    //***********************neutral modes***************************
+
+    //V+ S-, so Af = T+- + P1 + P0
+    Apm = Tpm + P1 + P0;
+    Apm_bar = Tpm_bar + P1_bar + P0_bar;
+
+    //V- S+, so Af = T-+ - P1 + P0
+    Amp = Tmp - P1 + P0;
+    Amp_bar = Tmp_bar - P1_bar + P0;
+
+    if ( Q1 > 0 && Q2 < 0 ) {
+        //V+ S-
+        charged = 0;
+        A_f = Apm;
+        Abar_f = Apm_bar;
+        A_fbar = Amp;
+        Abar_fbar = Amp_bar;
+    }
+
+    if ( Q1 < 0 && Q2 > 0 ) {
+        //V- S+
+        charged = 0;
+        A_f = Amp;
+        Abar_f = Amp_bar;
+        A_fbar = Apm;
+        Abar_fbar = Apm_bar;
+    }
+
+    if ( Q1 == 0 && Q2 == 0 ) {
+        //V0 S0
+        charged = 0;
+        A_f = T0p + Tp0 - Tpm - Tmp - 2.0 * P0;
+        Abar_f = T0p_bar + Tp0_bar - Tpm_bar - Tmp_bar - 2.0 * P0_bar;
+        A_fbar = A_f;
+        Abar_fbar = Abar_f;
+    }
 }

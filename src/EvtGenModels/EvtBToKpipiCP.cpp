@@ -67,6 +67,11 @@ void EvtBToKpipiCP::init()
                         realA, imgA, realbarA, imgbarA );
 }
 
+void EvtBToKpipiCP::initProbMax()
+{
+    setProbMax( 1.2 );
+}
+
 void EvtBToKpipiCP::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000

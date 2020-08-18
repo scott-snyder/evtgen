@@ -98,4 +98,3 @@ time ./evtgenlhc_test1 checkrotboost
 time ./evtgenlhc_test1 baryonic 1000
 time ./evtgenlhc_test1 phspdecaytimecut 10000
 time ./evtgenlhc_test1 3bodyPhsp 1000000
-time ./evtgenlhc_test1 flatSqDalitz 1000000

@@ -22,10 +22,8 @@
 #define EVTLAMBDAB2LAMBDAV_HH
 
 #include "EvtGenBase/EvtDecayProb.hh"
-#include "EvtGenBase/EvtGenKine.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtReport.hh"
 
 #include <stdlib.h>
 #include <string>

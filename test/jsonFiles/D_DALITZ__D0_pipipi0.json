@@ -1,0 +1,22 @@
+{
+    "parent" : "D0",
+    "daughters" : ["pi-", "pi+", "pi0"],
+    "models" : ["D_DALITZ"],
+    "parameters" : [[]],
+    "do_conjugate_decay" : [true],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "mass", "title" : "m(#pi^{-} #pi^{+})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.2, "xmax" : 1.8},
+        {"variable" : "mass", "title" : "m(#pi^{-} #pi^{0})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.2, "xmax" : 1.8},
+        {"variable" : "mass", "title" : "m(#pi^{+} #pi^{0})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.2, "xmax" : 1.8},
+        {"variable" : "massSq", "title" : "Dalitz m^{2}(#pi^{-} #pi^{+}) vs m^{2}(#pi^{-} #pi^{0})", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 0.0, "xmax" : 3.2, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 3, "nbinsY" : 50, "ymin" : 0.0, "ymax" : 3.2},
+        {"variable" : "massSq", "title" : "Dalitz m^{2}(#pi^{+} #pi^{0}) vs m^{2}(#pi^{-} #pi^{+})", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : 0.0, "xmax" : 3.2, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 50, "ymin" : 0.0, "ymax" : 3.2},
+        {"variable" : "mPrime", "title" : "sqDalitz", "d1" : 1, "d2" : 2, "nbins" : 25, "xmin" : 0.0, "xmax" : 1.00, "variableY" : "thetaPrime", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 25, "ymin" : 0.0, "ymax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosHel12", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel23", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "D_DALITZ__D0_pipipi0.root",
+    "reference" : "RefD_DALITZ__D0_pipipi0.root"
+}
