@@ -27,8 +27,9 @@
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
+
 using std::endl;
 
 void EvtBtoXsgammaAliGreub::init( int nArg, double* /*args*/ )

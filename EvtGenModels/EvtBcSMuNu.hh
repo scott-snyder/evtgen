@@ -25,9 +25,8 @@
 #include "EvtGenBase/EvtSemiLeptonicAmp.hh"
 #include "EvtGenBase/EvtSemiLeptonicFF.hh"
 
-#include <fstream>
 #include <memory>
-#include <stdio.h>
+#include <string>
 
 class EvtParticle;
 

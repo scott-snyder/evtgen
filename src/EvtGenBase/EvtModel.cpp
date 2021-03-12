@@ -28,14 +28,9 @@
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <assert.h>
-#include <ctype.h>
-#include <fstream>
-#include <iomanip>
+#include <cassert>
 #include <iostream>
-#include <stdlib.h>
 #include <string>
-using std::fstream;
 
 thread_local EvtModel* EvtModel::m_instance = nullptr;
 

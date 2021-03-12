@@ -22,10 +22,12 @@
 
 #include "EvtGenBase/EvtReport.hh"
 
+#include <cstring>
 #include <fstream>
 #include <sstream>
-#include <string.h>
-using namespace std;
+#include <string>
+
+using std::endl;
 
 #define MAXBUF 1024
 
@@ -60,7 +62,7 @@ int EvtParser::getLineofToken( int i )
 
 int EvtParser::read( const std::string filename )
 {
-    ifstream fin;
+    std::ifstream fin;
 
     fin.open( filename.c_str() );
     if ( !fin ) {
@@ -99,10 +101,10 @@ int EvtParser::read( const std::string filename )
             i++;
         } while ( buf[i - 1] != 0 );
 
-        string tmp( buf, strlen( buf ) );
+        std::string tmp( buf, strlen( buf ) );
 
         //read each token
-        istringstream ist( tmp );
+        std::istringstream ist( tmp );
         while ( ist >> buf2 ) {
             i = 0;
             int semicolon = 0;

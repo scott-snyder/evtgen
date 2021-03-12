@@ -26,10 +26,6 @@
 #include "EvtGenBase/EvtPhotonParticle.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 
-#include <stdlib.h>
-using std::cout;
-using std::endl;
-
 EvtLambdaP_BarGamma::EvtLambdaP_BarGamma() :
     m_mLambdab( 5.624 ),       // Lambda_b mass
     m_mLambda0( 1.115684 ),    // Lambda0 mass

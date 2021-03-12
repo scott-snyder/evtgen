@@ -23,8 +23,9 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 #include <string>
 
 EvtSLPoleFF::EvtSLPoleFF( int numarg, double* arglist )

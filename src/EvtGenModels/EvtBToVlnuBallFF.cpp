@@ -24,8 +24,9 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 #include <string>
 
 EvtBToVlnuBallFF::EvtBToVlnuBallFF( double r2_A1, double mfit2_A1, double r1_A2,

@@ -34,7 +34,7 @@
 #include "EvtGenModels/EvtRareLbToLllFFGutsche.hh"
 #include "EvtGenModels/EvtRareLbToLllFFlQCD.hh"
 
-#include <stdlib.h>
+#include <string>
 
 // The module name specification
 std::string EvtRareLbToLll::getName() const

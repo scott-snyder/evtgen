@@ -31,7 +31,6 @@
 
 #include "EvtGenModels/EvtSVVHelAmp.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtSVVNONCPEIGEN::getName() const

@@ -28,10 +28,8 @@
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <stdlib.h>
+#include <iostream>
 #include <string>
-
-using std::endl;
 
 std::string EvtVPHOtoVISRHi::getName() const
 {
@@ -261,23 +259,22 @@ void EvtVPHOtoVISRHi::decay( EvtParticle* p )
 
     if ( !sigmacomputed ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "VPHOTOVISRHI: This model requires daughters to be listed in a particular order."
-            << endl
-            << "The following are acceptable:" << endl
-            << "D0 anti-D0" << endl
-            << "D+ D-" << endl
-            << "D*0 anti-D0" << endl
-            << "anti-D*0 D0" << endl
-            << "D*+ D-" << endl
-            << "D*- D+" << endl
-            << "D*0 anti-D*0" << endl
-            << "D*+ D*-" << endl
-            << "D_s+ D_s-" << endl
-            << "D_s*+ D_s-" << endl
-            << "D_s*- D_s+" << endl
-            << "D_s*+ D_s*-" << endl
-            << "(D* D pi can be in any order)" << endl
-            << "Aborting..." << endl;
+            << "VPHOTOVISRHI: This model requires daughters to be listed in a particular order.\n"
+            << "The following are acceptable:\n"
+            << "D0 anti-D0\n"
+            << "D+ D-\n"
+            << "D*0 anti-D0\n"
+            << "anti-D*0 D0\n"
+            << "D*+ D-\n"
+            << "D*- D+\n"
+            << "D*0 anti-D*0\n"
+            << "D*+ D*-\n"
+            << "D_s+ D_s-\n"
+            << "D_s*+ D_s-\n"
+            << "D_s*- D_s+\n"
+            << "D_s*+ D_s*-\n"
+            << "(D* D pi can be in any order)\n"
+            << "Aborting..." << std::endl;
         assert( 0 );
     }
 

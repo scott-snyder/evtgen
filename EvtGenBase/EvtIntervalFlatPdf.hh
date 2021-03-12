@@ -24,8 +24,6 @@
 #include "EvtGenBase/EvtPdf.hh"
 #include "EvtGenBase/EvtPoint1D.hh"
 
-#include <assert.h>
-
 /*
  * Uniform PDF defined on a 1D interval.
  */

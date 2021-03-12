@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtPropBreitWignerRel.hh"
 
-#include <math.h>
-
 EvtPropBreitWignerRel::EvtPropBreitWignerRel( double m0, double g0 ) :
     EvtPropagator( m0, g0 )
 {

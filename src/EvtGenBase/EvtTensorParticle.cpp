@@ -27,9 +27,8 @@
 #include "EvtGenBase/EvtVector4R.hh"
 
 #include <cassert>
+#include <cmath>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
 
 void EvtTensorParticle::init( EvtId part_n, const EvtVector4R& p4 )
 {

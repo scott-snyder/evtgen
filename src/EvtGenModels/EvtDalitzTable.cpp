@@ -28,11 +28,8 @@
 #include "EvtGenBase/EvtSpinType.hh"
 
 #include <sstream>
-#include <stdlib.h>
 
 using std::endl;
-using std::fstream;
-using std::ifstream;
 
 EvtDalitzTable::EvtDalitzTable()
 {

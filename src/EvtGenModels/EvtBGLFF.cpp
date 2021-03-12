@@ -26,6 +26,7 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
 
 // BGL (N=3) for scalar meson i.e. B->Dlv  (l=e,mu,tau)
 EvtBGLFF::EvtBGLFF( double bglap_0, double bglap_1, double bglap_2,

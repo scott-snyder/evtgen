@@ -35,20 +35,20 @@
 #include "EvtGenBase/EvtSimpleRandomEngine.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <fstream>
-#include <stdio.h>
-#include <unistd.h>
-
 #ifdef EVTGEN_EXTERNAL
 #include "EvtGenExternal/EvtExternalGenList.hh"
 #endif
 
+#include <cstdio>
 #include <cstdlib>
+#include <fstream>
 #include <list>
 #include <string>
 
+// TODO needed for getopt function but not portable
+#include <unistd.h>
+
 using std::endl;
-using std::fstream;
 using std::ifstream;
 using std::ofstream;
 

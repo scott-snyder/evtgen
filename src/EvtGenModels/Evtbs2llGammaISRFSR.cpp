@@ -29,8 +29,9 @@
 #include "EvtGenModels/Evtbs2llGammaFFMNT.hh"
 #include "EvtGenModels/Evtbs2llGammaISRFSRAmp.hh"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <iostream>
+#include <string>
 
 Evtbs2llGammaISRFSR::~Evtbs2llGammaISRFSR()
 {

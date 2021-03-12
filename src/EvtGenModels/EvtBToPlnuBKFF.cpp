@@ -24,8 +24,8 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 #include <string>
 
 EvtBToPlnuBKFF::EvtBToPlnuBKFF( double alpha, double beta )

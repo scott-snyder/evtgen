@@ -28,11 +28,7 @@
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <fstream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string>
-using std::fstream;
 
 std::string EvtPi0Dalitz::getName() const
 {

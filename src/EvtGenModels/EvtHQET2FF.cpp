@@ -24,8 +24,9 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 #include <string>
 
 EvtHQET2FF::EvtHQET2FF( double hqetrho2, double hqetha1_1, double hqetr1_1,

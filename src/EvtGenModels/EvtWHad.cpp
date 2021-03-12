@@ -90,7 +90,7 @@ EvtComplex EvtWHad::BWKK( double s, int i ) const
 
     const EvtComplex rat = qs / qm;
     const EvtComplex rat3 = rat * rat * rat;
-    if ( abs( s ) < 1e-10 ) {
+    if ( std::abs( s ) < 1e-10 ) {
         return 0;
     }
 
@@ -117,7 +117,7 @@ EvtVector4C EvtWHad::WCurrent_KSK( const EvtVector4R& pKS,
 EvtComplex EvtWHad::pcm( double s ) const
 {
     const double mpi2 = 0.0196;    // 0.140*0.140
-    if ( abs( s ) < 1e-10 )
+    if ( std::abs( s ) < 1e-10 )
         return 0;
 
     const double pcm2 = 1.0 - 4.0 * mpi2 / s;

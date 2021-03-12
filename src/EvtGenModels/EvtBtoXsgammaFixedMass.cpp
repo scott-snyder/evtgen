@@ -24,10 +24,10 @@
 
 #include "EvtGenModels/EvtBtoXsgamma.hh"
 
-#include <fstream>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
+
 using std::endl;
-using std::fstream;
 
 void EvtBtoXsgammaFixedMass::init( int nArg, double* args )
 {

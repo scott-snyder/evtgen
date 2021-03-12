@@ -84,8 +84,10 @@ IncludeCategories:
     Priority:        6
   - Regex:           '^"T[[:alnum:]]+\.h"'
     Priority:        7
-  - Regex:           '^<[[:alnum:]._]+>'
+  - Regex:           '^<[[:alnum:]_]+>'
     Priority:        9
+  - Regex:           '^<[[:alnum:]_]+\.h>'
+    Priority:        10
   - Regex:           '.*'
     Priority:        8
 IncludeIsMainRegex: '(Test)?$'

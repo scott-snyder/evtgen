@@ -26,10 +26,9 @@
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <assert.h>
+#include <cassert>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
+
 using std::endl;
 using std::ostream;
 

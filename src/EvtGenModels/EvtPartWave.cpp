@@ -32,8 +32,8 @@
 #include "EvtGenBase/EvtVector4C.hh"
 
 #include <algorithm>
-#include <stdlib.h>
 #include <string>
+
 using std::endl;
 
 std::string EvtPartWave::getName() const

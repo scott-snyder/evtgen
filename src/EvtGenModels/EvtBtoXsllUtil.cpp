@@ -29,7 +29,7 @@
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <stdlib.h>
+#include <cmath>
 
 EvtComplex EvtBtoXsllUtil::GetC7Eff0( double sh, bool nnlo )
 {

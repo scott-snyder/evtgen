@@ -25,10 +25,10 @@
 
 #include "EvtGenModels/EvtBtoXsgamma.hh"
 
-#include <fstream>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+
 using std::endl;
-using std::fstream;
 
 void EvtBtoXsgammaFlatEnergy::init( int nArg, double* args )
 {

@@ -36,14 +36,13 @@
 #include "EvtGenBase/EvtPto3PAmp.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 
-#include <assert.h>
-#include <math.h>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
 #include <memory>
-#include <stdio.h>
-#include <stdlib.h>
 
 using namespace EvtCyclic3;
-#include <iostream>
 
 void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                                      bool conj )

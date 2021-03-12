@@ -25,8 +25,6 @@
 #include "EvtGenBase/EvtDecayMode.hh"
 #include "EvtGenBase/EvtTwoBodyVertex.hh"
 
-#include <assert.h>
-
 class EvtDalitzPlot {
   public:
     EvtDalitzPlot();

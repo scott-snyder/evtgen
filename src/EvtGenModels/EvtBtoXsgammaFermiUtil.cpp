@@ -27,8 +27,9 @@
 #include "EvtGenModels/EvtItgFunction.hh"
 #include "EvtGenModels/EvtItgTwoCoeffFcn.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
+
 using std::endl;
 
 double EvtBtoXsgammaFermiUtil::FermiExpFunc( double y,

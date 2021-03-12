@@ -28,7 +28,6 @@
 #include "EvtGenModels/EvtWilsonCoefficients.hh"
 
 #include <cmath>
-#include <stdlib.h>
 
 //-----------------------------------------------------------------------------
 // Implementation file for class : EvtRareLbToLllFFlQCD

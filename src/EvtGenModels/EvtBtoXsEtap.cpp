@@ -27,8 +27,8 @@
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <stdlib.h>
 #include <string>
+
 using std::endl;
 
 std::string EvtBtoXsEtap::getName() const

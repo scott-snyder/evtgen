@@ -29,9 +29,9 @@
 
 #include "EvtGenModels/EvtBToVlnuBallFF.hh"
 
-#include <assert.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
+
 using std::endl;
 
 std::string EvtBToVlnuBall::getName() const

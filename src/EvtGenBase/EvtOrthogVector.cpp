@@ -20,13 +20,6 @@
 
 #include "EvtGenBase/EvtOrthogVector.hh"
 
-#include <ctype.h>
-#include <fstream>
-#include <iostream>
-#include <stdlib.h>
-#include <string.h>
-using std::fstream;
-
 EvtOrthogVector::EvtOrthogVector( int n, std::vector<double>* vectors )
 {
     m_dimen = n;

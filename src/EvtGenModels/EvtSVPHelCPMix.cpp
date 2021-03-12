@@ -31,8 +31,8 @@
 
 #include "EvtGenModels/EvtSVPHelAmp.hh"
 
+#include <cstdlib>
 #include <iostream>
-#include <stdlib.h>
 
 std::string EvtSVPHelCPMix::getName() const
 {

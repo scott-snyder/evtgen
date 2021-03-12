@@ -23,7 +23,8 @@
 
 #include "EvtGenBase/EvtAmplitude.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cstdio>
 #include <memory>
 #include <vector>
 

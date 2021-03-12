@@ -22,9 +22,10 @@
 
 #include "EvtGenBase/EvtReport.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <iostream>
-#include <math.h>
+
 using std::endl;
 
 EvtBlattWeisskopf::EvtBlattWeisskopf( int LL, double R, double p0 ) :

@@ -31,10 +31,7 @@
 #include "EvtGenBase/EvtVector3R.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <ctype.h>
-#include <fstream>
-#include <iostream>
-#include <stdlib.h>
+#include <cmath>
 #include <string>
 
 std::string EvtSVVHelCPMix::getName() const

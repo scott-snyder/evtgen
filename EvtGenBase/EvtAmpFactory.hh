@@ -28,7 +28,7 @@
 #include "EvtGenBase/EvtPdfMax.hh"
 #include "EvtGenBase/EvtPdfSum.hh"
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <vector>
 

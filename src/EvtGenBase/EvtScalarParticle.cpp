@@ -22,9 +22,6 @@
 
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <iostream>
-#include <math.h>
-
 void EvtScalarParticle::init( EvtId part_n, double e, double px, double py,
                               double pz )
 {

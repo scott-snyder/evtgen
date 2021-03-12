@@ -25,9 +25,9 @@
 #include "EvtGenBase/EvtVector4R.hh"
 #include "EvtGenBase/EvtdFunction.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <iostream>
-#include <math.h>
 
 void EvtHighSpinParticle::init( EvtId id, const EvtVector4R& p4 )
 {

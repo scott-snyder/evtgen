@@ -45,8 +45,8 @@
 #include <string>
 
 #ifdef EVTGEN_HEPMC3
-#include <HepMC3/WriterAsciiHepMC2.h>
-typedef HepMC3::WriterAsciiHepMC2 output_writer;
+#include "HepMC3/WriterAsciiHepMC2.h"
+using output_writer = HepMC3::WriterAsciiHepMC2;
 #else
 class output_writer : public std::ofstream {
   public:

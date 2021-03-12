@@ -28,9 +28,9 @@
 #include "EvtGenBase/EvtScalarParticle.hh"
 #include "EvtGenBase/EvtSymTable.hh"
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cassert>
+#include <iostream>
+
 using std::endl;
 
 EvtCPUtil::EvtCPUtil( int mixingType )

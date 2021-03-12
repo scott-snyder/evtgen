@@ -20,7 +20,7 @@
 
 #include "EvtGenBase/EvtPropGounarisSakurai.hh"
 
-#include <math.h>
+#include <cmath>
 
 EvtPropGounarisSakurai::EvtPropGounarisSakurai( EvtDalitzPlot* dp,
                                                 EvtCyclic3::Pair pair,

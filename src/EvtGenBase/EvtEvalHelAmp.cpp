@@ -29,7 +29,9 @@
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtdFunction.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
+
 using std::endl;
 
 EvtEvalHelAmp::~EvtEvalHelAmp()

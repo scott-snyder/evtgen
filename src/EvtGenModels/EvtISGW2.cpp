@@ -32,7 +32,6 @@
 
 #include "EvtGenModels/EvtISGW2FF.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtISGW2::getName() const

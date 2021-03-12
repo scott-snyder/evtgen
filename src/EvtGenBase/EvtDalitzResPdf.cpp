@@ -24,8 +24,9 @@
 #include "EvtGenBase/EvtDalitzCoord.hh"
 #include "EvtGenBase/EvtRandom.hh"
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
+
 using namespace EvtCyclic3;
 
 EvtDalitzResPdf::EvtDalitzResPdf( const EvtDalitzPlot& dp, double m0, double g0,

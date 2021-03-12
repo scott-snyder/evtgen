@@ -23,7 +23,7 @@
 #include "EvtGenBase/EvtConst.hh"
 #include "EvtGenBase/EvtDiLog.hh"
 
-#include <math.h>
+#include <cmath>
 
 //----------------
 // Constructors --

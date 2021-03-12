@@ -25,7 +25,7 @@
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtPoint1D.hh"
 
-#include <assert.h>
+#include <cassert>
 
 // Defines propagator as a function of mass and width
 

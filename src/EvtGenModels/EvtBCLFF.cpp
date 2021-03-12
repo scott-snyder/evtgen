@@ -26,6 +26,7 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
 #include <string>
 
 EvtBCLFF::EvtBCLFF( int numarg, double* arglist ) :

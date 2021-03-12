@@ -26,13 +26,9 @@
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <ctype.h>
-#include <fstream>
-#include <iostream>
-#include <stdlib.h>
 #include <string>
 #include <vector>
-using std::fstream;
+
 void EvtParticleDecay::printSummary() const
 {
     if ( m_decay != nullptr ) {

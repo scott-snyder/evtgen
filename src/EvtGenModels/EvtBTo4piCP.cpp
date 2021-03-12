@@ -29,7 +29,6 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <stdlib.h>
 #include <string>
 
 EvtComplex EvtAmpA2( const EvtVector4R& p4pi1, const EvtVector4R& p4pi2,

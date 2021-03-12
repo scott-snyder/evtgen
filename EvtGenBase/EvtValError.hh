@@ -21,9 +21,9 @@
 #ifndef EVT_VAL_ERROR_HH
 #define EVT_VAL_ERROR_HH
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <iostream>
-#include <math.h>
 
 // Value and its associated error. E.g. this could be interval size and
 // the error associated with numerical integration.

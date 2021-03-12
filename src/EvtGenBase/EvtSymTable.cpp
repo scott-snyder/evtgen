@@ -22,13 +22,10 @@
 
 #include "EvtGenBase/EvtReport.hh"
 
-#include <ctype.h>
-#include <fstream>
 #include <iostream>
-#include <stdlib.h>
 #include <string>
+
 using std::endl;
-using std::fstream;
 
 thread_local std::map<std::string, std::string> EvtSymTable::m_symMap;
 

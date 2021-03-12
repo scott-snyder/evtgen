@@ -27,12 +27,10 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtTwoBodyVertex.hh"
 
-#include <ctype.h>
+#include <cmath>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
 
-using namespace std;
+using std::endl;
 
 EvtAbsLineShape::EvtAbsLineShape( double mass, double width, double maxRange,
                                   EvtSpinType::spintype sp )

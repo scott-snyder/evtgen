@@ -24,9 +24,9 @@
 #include "EvtGenBase/EvtId.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 
-#include <stdlib.h>
 #include <string>
 #include <vector>
+
 class EvtParticle;
 class EvtSpinType;
 

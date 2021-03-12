@@ -20,9 +20,9 @@
 
 #include "EvtGenBase/EvtDalitzPoint.hh"
 
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
+
 using namespace EvtCyclic3;
 
 EvtDalitzPoint::EvtDalitzPoint() :

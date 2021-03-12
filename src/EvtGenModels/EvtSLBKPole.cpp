@@ -30,7 +30,6 @@
 
 #include "EvtGenModels/EvtSLBKPoleFF.hh"    //modified
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtSLBKPole::getName() const

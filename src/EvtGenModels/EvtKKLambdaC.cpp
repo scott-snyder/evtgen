@@ -28,7 +28,6 @@
 
 #include "EvtGenModels/EvtKKLambdaCFF.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtKKLambdaC::getName() const

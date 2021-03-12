@@ -31,7 +31,6 @@
 #include "EvtGenBase/EvtVector4R.hh"
 
 #include <iostream>
-#include <stdlib.h>
 #include <string>
 
 std::string EvtLNuGamma::getName() const

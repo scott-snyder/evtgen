@@ -25,14 +25,10 @@
 #include "EvtGenModels/EvtItgSimpsonIntegrator.hh"
 #include "EvtGenModels/EvtItgTwoCoeffFcn.hh"
 
-#include <math.h>
-using std::endl;
+#include <cmath>
+#include <iostream>
 
-//-------------
-// C Headers --
-//-------------
-extern "C" {
-}
+using std::endl;
 
 //-----------------------------------------------------------------------
 // Local Macros, Typedefs, Structures, Unions and Forward Declarations --

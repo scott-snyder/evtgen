@@ -20,18 +20,12 @@
 
 #include "EvtGenModels/EvtItgAbsIntegrator.hh"
 
-//-------------
-// C Headers --
-//-------------
-extern "C" {
-}
-
 #include "EvtGenBase/EvtReport.hh"
 
 #include "EvtGenModels/EvtItgAbsFunction.hh"
 
 #include <iostream>
-#include <math.h>
+
 using std::endl;
 
 EvtItgAbsIntegrator::EvtItgAbsIntegrator( const EvtItgAbsFunction& theFunction ) :

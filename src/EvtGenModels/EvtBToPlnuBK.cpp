@@ -28,12 +28,10 @@
 
 #include "EvtGenModels/EvtBToPlnuBKFF.hh"
 
-#include <assert.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 
-using std::cout;
 using std::endl;
-using std::fstream;
 
 std::string EvtBToPlnuBK::getName() const
 {

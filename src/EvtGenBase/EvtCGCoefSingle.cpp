@@ -22,10 +22,9 @@
 
 #include "EvtGenBase/EvtOrthogVector.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
 
 void EvtCGCoefSingle::init( int j1, int j2 )
 {

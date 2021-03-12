@@ -30,8 +30,10 @@
 #include "EvtGenModels/EvtbTosllScalarAmp.hh"
 #include "EvtGenModels/EvtbTosllVectorAmp.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 #include <string>
+
 using std::endl;
 
 std::string EvtbTosllBall::getName() const

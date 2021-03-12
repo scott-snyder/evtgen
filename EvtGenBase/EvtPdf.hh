@@ -28,8 +28,8 @@
 #include "EvtGenBase/EvtStreamInputIterator.hh"
 #include "EvtGenBase/EvtValError.hh"
 
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdio>
 
 /*
  *  All classes are templated on the point type T

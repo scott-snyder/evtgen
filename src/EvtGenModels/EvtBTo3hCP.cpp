@@ -31,7 +31,6 @@
 #include "EvtGenBase/EvtVector4R.hh"
 
 #include <cmath>
-#include <stdlib.h>
 #include <string>
 
 #define square( x ) ( ( x ) * ( x ) )

@@ -24,7 +24,9 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtRandom.hh"
 
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 
 //-----------------------------------------------------------------------------
 // Implementation file for class : EvtIncoherentMixing

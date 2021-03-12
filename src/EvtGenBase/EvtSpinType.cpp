@@ -22,6 +22,8 @@
 
 #include "EvtGenBase/EvtReport.hh"
 
+#include <iostream>
+
 int EvtSpinType::getSpin2( spintype stype )
 {
     switch ( stype ) {

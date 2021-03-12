@@ -29,9 +29,9 @@
 
 #include "EvtGenModels/EvtHQET2FF.hh"
 
-#include <assert.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
+
 using std::endl;
 
 std::string EvtHQET2::getName() const

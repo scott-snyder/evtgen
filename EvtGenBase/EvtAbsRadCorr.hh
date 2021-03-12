@@ -21,8 +21,8 @@
 #ifndef EVTABSRADCORR_HH
 #define EVTABSRADCORR_HH
 
-#include <assert.h>
 #include <iostream>
+
 class EvtParticle;
 
 class EvtAbsRadCorr {

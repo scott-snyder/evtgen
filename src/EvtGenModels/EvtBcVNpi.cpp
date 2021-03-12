@@ -33,8 +33,10 @@
 #include "EvtGenModels/EvtTauHadnu.hh"
 #include "EvtGenModels/EvtWnPi.hh"
 
-#include <ctype.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
+
+using std::endl;
 
 std::string EvtBcVNpi::getName() const
 {

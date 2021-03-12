@@ -26,7 +26,7 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <math.h>
+#include <cmath>
 
 //operator
 

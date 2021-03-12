@@ -29,8 +29,10 @@
 
 #include "EvtGenModels/EvtPFermi.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 #include <string>
+
 using std::endl;
 
 std::string EvtVub::getName() const

@@ -23,7 +23,10 @@
 #include "EvtGenBase/EvtConst.hh"
 #include "EvtGenBase/EvtReport.hh"
 
+#include <cmath>
 #include <cstdlib>
+#include <iostream>
+#include <string>
 
 double li2spence( double );
 

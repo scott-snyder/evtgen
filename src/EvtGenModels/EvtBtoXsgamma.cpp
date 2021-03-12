@@ -31,8 +31,9 @@
 #include "EvtGenModels/EvtBtoXsgammaFlatEnergy.hh"
 #include "EvtGenModels/EvtBtoXsgammaKagan.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
+
 using std::endl;
 
 std::string EvtBtoXsgamma::getName() const

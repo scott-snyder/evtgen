@@ -22,8 +22,9 @@
 
 #include "EvtGenBase/EvtComplex.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
+
 using std::ostream;
 
 EvtVector3C::EvtVector3C()

@@ -22,7 +22,7 @@
 
 #include "EvtGenBase/EvtPDL.hh"
 
-#include <math.h>
+#include <cmath>
 
 EvtbTosllAliFF::EvtbTosllAliFF()
 {

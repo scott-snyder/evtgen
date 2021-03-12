@@ -23,10 +23,10 @@
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cstdlib>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
+
 using std::endl;
 using std::ostream;
 

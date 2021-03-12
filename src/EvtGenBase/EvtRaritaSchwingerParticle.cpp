@@ -26,9 +26,10 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
+#include <cmath>
+#include <cstdlib>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
+
 using std::endl;
 
 void EvtRaritaSchwingerParticle::init( EvtId id, const EvtVector4R& p4 )

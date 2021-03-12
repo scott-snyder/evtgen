@@ -26,9 +26,11 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 #include <string>
+
 using std::endl;
 
 void EvtISGW2FF::getscalarff( EvtId parent, EvtId daught, double t, double mass,

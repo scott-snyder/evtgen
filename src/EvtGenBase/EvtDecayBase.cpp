@@ -26,13 +26,11 @@
 #include "EvtGenBase/EvtSpinType.hh"
 #include "EvtGenBase/EvtStatus.hh"
 
-#include <ctype.h>
-#include <fstream>
 #include <iostream>
-#include <stdlib.h>
 #include <vector>
+
 using std::endl;
-using std::fstream;
+
 void EvtDecayBase::checkQ()
 {
     int i;

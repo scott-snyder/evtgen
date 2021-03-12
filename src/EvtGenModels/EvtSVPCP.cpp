@@ -33,7 +33,6 @@
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtSVPCP::getName() const

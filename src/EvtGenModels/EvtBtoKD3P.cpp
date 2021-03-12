@@ -30,7 +30,10 @@
 
 #include "EvtGenModels/EvtPto3P.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <iostream>
+#include <string>
+
 using std::endl;
 
 //------------------------------------------------------------------

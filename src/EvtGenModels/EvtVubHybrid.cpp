@@ -30,13 +30,11 @@
 #include "EvtGenModels/EvtPFermi.hh"
 #include "EvtGenModels/EvtVubdGamma.hh"
 
-#include <fstream>
+#include <cstdlib>
 #include <iostream>
-#include <stdlib.h>
 #include <string>
-using std::cout;
+
 using std::endl;
-using std::ifstream;
 
 std::string EvtVubHybrid::getName() const
 {

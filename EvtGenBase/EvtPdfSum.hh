@@ -21,10 +21,10 @@
 #ifndef EVT_PDF_SUM_HH
 #define EVT_PDF_SUM_HH
 
-#include <stdio.h>
-#include <vector>
-using std::vector;
 #include "EvtGenBase/EvtPdf.hh"
+
+#include <cassert>
+#include <vector>
 
 // Sum of PDF functions.
 
@@ -65,8 +65,8 @@ class EvtPdfSum : public EvtPdf<T> {
   protected:
     double pdf( const T& p ) const override;
 
-    vector<double> m_c;           // coefficients
-    vector<EvtPdf<T>*> m_term;    // pointers to pdfs
+    std::vector<double> m_c;           // coefficients
+    std::vector<EvtPdf<T>*> m_term;    // pointers to pdfs
 };
 
 template <class T>

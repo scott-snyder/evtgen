@@ -27,9 +27,9 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtSpinDensity.hh"
 
-#include <assert.h>
+#include <cassert>
 #include <iostream>
-#include <math.h>
+
 using std::endl;
 
 EvtAmp::EvtAmp()

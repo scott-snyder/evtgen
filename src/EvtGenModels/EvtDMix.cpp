@@ -26,7 +26,6 @@
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtDMix::getName() const

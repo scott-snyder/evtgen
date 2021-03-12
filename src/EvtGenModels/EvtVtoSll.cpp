@@ -31,7 +31,6 @@
 #include "EvtGenBase/EvtVectorParticle.hh"
 
 #include <iostream>
-#include <stdlib.h>
 #include <string>
 
 std::string EvtVtoSll::getName() const

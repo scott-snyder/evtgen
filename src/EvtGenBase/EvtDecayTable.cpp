@@ -33,13 +33,10 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtSymTable.hh"
 
-#include <ctype.h>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <stdlib.h>
-#include <string.h>
 
 using std::endl;
 using std::fstream;

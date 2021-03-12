@@ -20,8 +20,6 @@
 
 #include "EvtGenModels/EvtBtoXsgammaAbsModel.hh"
 
-#include <stdlib.h>
-
 void EvtBtoXsgammaAbsModel::init( int, double* )
 {
     //This default version of init does nothing;

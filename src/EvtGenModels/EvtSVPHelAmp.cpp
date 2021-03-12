@@ -31,7 +31,6 @@
 #include "EvtGenBase/EvtVector3R.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtSVPHelAmp::getName() const

@@ -26,8 +26,10 @@
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 #include <string>
+
 using std::endl;
 
 std::string EvtSingleParticle::getName() const

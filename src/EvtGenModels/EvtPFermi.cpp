@@ -22,8 +22,8 @@
 
 #include "EvtGenBase/EvtReport.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 //----------------
 // Constructors --

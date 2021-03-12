@@ -29,13 +29,15 @@
 
 #include "EvtGenModels/EvtLb2BaryonlnuFF.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
 
-using namespace std;
+using std::endl;
+
 #ifdef D0
 #undef D0
 #endif
+
 EvtLb2Baryonlnu::EvtLb2Baryonlnu() : m_ffmodel( nullptr ), m_calcamp( nullptr )
 {
 }

@@ -31,8 +31,9 @@
 #include "EvtGenModels/EvtbTosllVectorAmpNewExt.hh"
 #include "EvtGenModels/EvtbTosllWilsCoeffNLO.hh"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <iostream>
+#include <string>
 
 EvtbTosllMSExt::~EvtbTosllMSExt()
 {

@@ -24,8 +24,9 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector3C.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
+
 using std::endl;
 using std::ostream;
 

@@ -20,7 +20,7 @@
 
 #include "EvtGenModels/EvtBCVFF2.hh"
 
-using namespace std;
+#include <iostream>
 
 EvtBCVFF2::EvtBCVFF2( int idV, int fit )
 {

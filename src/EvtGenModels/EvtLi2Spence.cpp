@@ -18,7 +18,7 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
-#include <math.h>
+#include <cmath>
 
 const double a1 = -0.250000000000000;
 const double a2 = -0.111111111111111;

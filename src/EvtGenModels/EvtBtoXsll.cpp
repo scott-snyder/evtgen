@@ -31,7 +31,9 @@
 #include "EvtGenModels/EvtBtoXsllUtil.hh"
 #include "EvtGenModels/EvtbTosllAmp.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
+
 using std::endl;
 
 std::string EvtBtoXsll::getName() const

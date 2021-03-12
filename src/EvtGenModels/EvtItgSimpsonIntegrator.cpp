@@ -20,25 +20,13 @@
 
 #include "EvtGenModels/EvtItgSimpsonIntegrator.hh"
 
-//-------------
-// C Headers --
-//-------------
-extern "C" {
-}
-
-//---------------
-// C++ Headers --
-//---------------
-
-#include <math.h>
-
-//-------------------------------
-// Collaborating Class Headers --
-//-------------------------------
-
 #include "EvtGenBase/EvtReport.hh"
 
 #include "EvtGenModels/EvtItgAbsFunction.hh"
+
+#include <cmath>
+#include <iostream>
+
 using std::endl;
 
 EvtItgSimpsonIntegrator::EvtItgSimpsonIntegrator(

@@ -21,12 +21,6 @@
 #ifndef EVTITGABSFUNCTION_HH
 #define EVTITGABSFUNCTION_HH
 
-//-------------
-// C Headers --
-//-------------
-extern "C" {
-}
-
 // Description:
 //      Abstraction of a generic function for use in integration methods elsewhere
 //      in this package. (Stolen and modified from the BaBar IntegrationUtils package

@@ -23,8 +23,9 @@
 #include "EvtGenBase/EvtAbsRadCorr.hh"
 #include "EvtGenBase/EvtReport.hh"
 
+#include <cstdlib>
 #include <iostream>
-#include <stdlib.h>
+
 using std::endl;
 
 thread_local EvtAbsRadCorr* EvtRadCorr::m_fsrEngine = nullptr;

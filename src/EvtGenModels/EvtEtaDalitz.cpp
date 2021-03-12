@@ -25,7 +25,6 @@
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtEtaDalitz::getName() const

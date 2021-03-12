@@ -31,12 +31,11 @@
 #include "EvtGenModels/EvtItgSimpsonIntegrator.hh"
 #include "EvtGenModels/EvtPFermi.hh"
 
-#include <stdlib.h>
+#include <cmath>
+#include <csignal>
 #include <string>
 
 // For incomplete gamma function
-#include "math.h"
-#include "signal.h"
 #define ITMAX 100
 #define EPS 3.0e-7
 #define FPMIN 1.0e-30

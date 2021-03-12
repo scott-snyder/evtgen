@@ -20,11 +20,6 @@
 
 #include "EvtGenBase/EvtPropFlatte.hh"
 
-#include <iostream>
-#include <math.h>
-using std::cout;
-using std::endl;
-
 EvtPropFlatte::EvtPropFlatte( double m0, double g0, double m0a, double m0b,
                               double g1, double m1a, double m1b ) :
     EvtPropagator( m0, g0 ),

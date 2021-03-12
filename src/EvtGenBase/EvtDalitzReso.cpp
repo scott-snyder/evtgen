@@ -28,10 +28,9 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtdFunction.hh"
 
-#include <assert.h>
+#include <cassert>
 #include <cmath>
 #include <iostream>
-#include <stdlib.h>
 
 #define PRECISION ( 1.e-3 )
 

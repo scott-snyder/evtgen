@@ -34,11 +34,8 @@
 #include "EvtGenBase/EvtTensorParticle.hh"
 #include "EvtGenBase/EvtVectorParticle.hh"
 
-#include <sys/stat.h>
-
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
+
 using std::endl;
 
 EvtParticle* EvtParticleFactory::particleFactory( EvtSpinType::spintype spinType )

@@ -30,8 +30,10 @@
 
 #include "EvtGenModels/EvtSVVHelAmp.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 #include <string>
+
 using std::endl;
 
 std::string EvtSVVCPLH::getName() const

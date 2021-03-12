@@ -28,8 +28,10 @@
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 #include <string>
+
 using std::endl;
 
 std::string EvtYmSToYnSpipiCLEO::getName() const

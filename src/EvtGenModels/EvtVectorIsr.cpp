@@ -29,11 +29,8 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <iomanip>
+#include <cmath>
 #include <iostream>
-#include <math.h>
-#include <sstream>
-#include <stdlib.h>
 #include <string>
 
 std::string EvtVectorIsr::getName() const

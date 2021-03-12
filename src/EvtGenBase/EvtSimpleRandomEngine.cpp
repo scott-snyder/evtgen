@@ -20,10 +20,6 @@
 
 #include "EvtGenBase/EvtSimpleRandomEngine.hh"
 
-#include <iostream>
-#include <math.h>
-#include <stdio.h>
-
 double EvtSimpleRandomEngine::random()
 {
     m_next = m_next * 1103515245 + 123345;

@@ -24,8 +24,7 @@
 #include "EvtGenBase/EvtDecayAmp.hh"
 #include "EvtGenBase/EvtId.hh"
 
-#include <fstream>
-#include <stdio.h>
+#include <string>
 
 class EvtComplex;
 class EvtParticle;

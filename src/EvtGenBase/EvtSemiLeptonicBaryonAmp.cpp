@@ -34,7 +34,8 @@
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 
 using std::endl;
 

@@ -25,8 +25,6 @@
 #include "EvtGenBase/EvtDalitzPoint.hh"
 #include "EvtGenBase/EvtPdf.hh"
 
-#include <assert.h>
-
 /*
  * Uniform PDF defined on a Dalitz plot.
  */

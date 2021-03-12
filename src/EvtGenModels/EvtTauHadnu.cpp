@@ -29,10 +29,9 @@
 #include "EvtGenBase/EvtVector4C.hh"
 
 #include <iostream>
-#include <stdlib.h>
 #include <string>
 
-using namespace std;
+using std::endl;
 
 std::string EvtTauHadnu::getName() const
 {

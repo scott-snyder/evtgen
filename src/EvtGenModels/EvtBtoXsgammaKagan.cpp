@@ -37,11 +37,10 @@
 #include "EvtGenModels/EvtItgThreeCoeffFcn.hh"
 #include "EvtGenModels/EvtItgTwoCoeffFcn.hh"
 
-#include <fstream>
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
+
 using std::endl;
-using std::fstream;
 
 bool EvtBtoXsgammaKagan::m_bbprod = false;
 double EvtBtoXsgammaKagan::m_intervalMH = 0;

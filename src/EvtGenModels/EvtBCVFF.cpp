@@ -24,12 +24,10 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtReport.hh"
 
+#include <cmath>
+#include <cstdlib>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
 #include <string>
-
-using namespace std;
 
 EvtBCVFF::EvtBCVFF( int idV, int fit )
 {

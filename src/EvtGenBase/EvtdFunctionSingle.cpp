@@ -20,10 +20,8 @@
 
 #include "EvtGenBase/EvtdFunctionSingle.hh"
 
-#include <assert.h>
-#include <iostream>
-#include <math.h>
-#include <stdlib.h>
+#include <cassert>
+#include <cmath>
 
 EvtdFunctionSingle::EvtdFunctionSingle()
 {

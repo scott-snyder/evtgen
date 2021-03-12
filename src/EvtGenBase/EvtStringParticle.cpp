@@ -23,9 +23,8 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
+#include <cstdlib>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
 
 void EvtStringParticle::init( EvtId id, const EvtVector4R& p4 )
 {

@@ -34,7 +34,8 @@
 #include "EvtGenModels/EvtPFermi.hh"
 
 #include <array>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 #include <string>
 
 using std::cout;

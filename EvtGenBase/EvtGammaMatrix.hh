@@ -23,8 +23,9 @@
 
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtDiracSpinor.hh"    // needed for adjoint
-//#include <iostream.h>
+
 #include <iosfwd>
+
 class EvtGammaMatrix;
 class EvtVector4C;
 

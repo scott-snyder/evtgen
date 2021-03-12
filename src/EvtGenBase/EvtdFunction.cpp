@@ -22,10 +22,7 @@
 
 #include "EvtGenBase/EvtdFunctionSingle.hh"
 
-#include <assert.h>
-#include <iostream>
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
 
 double EvtdFunction::d( int j, int m1, int m2, double theta )
 {

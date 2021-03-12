@@ -29,8 +29,7 @@
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
 #include <string>
 
 // Implementation of KLOE measurement

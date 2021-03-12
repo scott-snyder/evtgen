@@ -24,10 +24,10 @@
 
 #include <fstream>
 #include <sstream>
-#include <stdlib.h>
-#include <string.h>
+#include <string>
 #include <vector>
-using namespace std;
+
+using std::endl;
 
 bool EvtParserXml::open( std::string filename )
 {

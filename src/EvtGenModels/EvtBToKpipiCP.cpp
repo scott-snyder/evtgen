@@ -28,7 +28,6 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtBToKpipiCP::getName() const

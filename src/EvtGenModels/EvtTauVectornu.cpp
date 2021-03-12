@@ -28,7 +28,6 @@
 #include "EvtGenBase/EvtVector4C.hh"
 
 #include <iostream>
-#include <stdlib.h>
 #include <string>
 
 std::string EvtTauVectornu::getName() const

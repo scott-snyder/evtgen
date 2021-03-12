@@ -18,29 +18,11 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
-#if !defined( TOOLBOX_FUNCTIONS_HH )
-#define TOOLBOX_FUNCTIONS_HH
+#ifndef EVTGEN_REPORT_HH
+#define EVTGEN_REPORT_HH
 
-#if !defined( FILENAME_ONLY ) /* relative path includes */
+#include <iosfwd>
 
-// system include files
-#include <iostream>
-
-// user include files
-
-#else /* filename-only includes */
-#include <iostream>
-#include <types.h>
-#endif /* filename-only includes */
-// system include files
-
-// user include files
-
-// forward declarations
-
-//
-// constants, enums and typedefs
-//
 enum EvtGenSeverity
 {
     EVTGEN_EMERGENCY,    // fatal
@@ -53,10 +35,7 @@ enum EvtGenSeverity
     EVTGEN_DEBUG      // debug
 };
 
-// function declaration
 std::ostream& EvtGenReport( EvtGenSeverity severity,
                             const char* facility = nullptr );
 
-// inline function definitions
-
-#endif /* TOOLBOX_FUNCTIONS_HH */
+#endif /* EVTGEN_REPORT_HH */

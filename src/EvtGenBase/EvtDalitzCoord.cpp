@@ -20,8 +20,8 @@
 
 #include "EvtGenBase/EvtDalitzCoord.hh"
 
-#include <assert.h>
 #include <iostream>
+
 using EvtCyclic3::Pair;
 using std::endl;
 using std::ostream;

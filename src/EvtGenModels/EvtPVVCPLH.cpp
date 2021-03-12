@@ -31,7 +31,7 @@
 
 #include "EvtGenModels/EvtSVVHelAmp.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
 
 std::string EvtPVVCPLH::getName() const

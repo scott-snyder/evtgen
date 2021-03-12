@@ -25,12 +25,8 @@
 #include "EvtGenBase/EvtManyDeltaFuncLineShape.hh"
 #include "EvtGenBase/EvtRelBreitWignerBarrierFact.hh"
 
-#include <ctype.h>
-#include <fstream>
-#include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
-using std::fstream;
 
 EvtPartProp::EvtPartProp() :
     m_id( -1, -1 ), m_idchgconj( -1, -1 ), m_chg3( 0 ), m_stdhep( 0 ), m_lundkc( 0 )

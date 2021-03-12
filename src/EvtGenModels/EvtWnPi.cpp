@@ -32,14 +32,7 @@
 
 #include "EvtGenModels/EvtTauHadnu.hh"
 
-#include <ctype.h>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <stdlib.h>
-#include <string.h>
-
-using namespace std;
+#include <cmath>
 
 // W+ -> pi_ current
 EvtVector4C EvtWnPi::WCurrent( EvtVector4R q1 )

@@ -26,7 +26,9 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include <math.h>
+#include <cmath>
+#include <iostream>
+
 using std::endl;
 
 EvtResonance& EvtResonance::operator=( const EvtResonance& n )

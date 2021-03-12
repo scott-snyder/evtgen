@@ -30,7 +30,6 @@
 
 #include "EvtGenModels/EvtSLPoleFF.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtSLPole::getName() const

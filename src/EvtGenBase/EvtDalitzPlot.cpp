@@ -24,9 +24,9 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtTwoBodyVertex.hh"
 
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
+#include <cassert>
+#include <cmath>
+#include <cstdio>
 
 using namespace EvtCyclic3;
 

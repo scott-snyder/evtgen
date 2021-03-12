@@ -21,10 +21,8 @@
 #include "EvtGenBase/EvtComplex.hh"
 
 #include <iostream>
-#include <math.h>
-using std::ostream;
 
-ostream& operator<<( ostream& s, const EvtComplex& c )
+std::ostream& operator<<( std::ostream& s, const EvtComplex& c )
 {
     s << "(" << c.m_rpart << "," << c.m_ipart << ")";
     return s;

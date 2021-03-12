@@ -20,8 +20,9 @@
 
 #include "EvtGenBase/EvtVector3R.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
+
 using std::ostream;
 
 EvtVector3R::EvtVector3R()

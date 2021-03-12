@@ -23,8 +23,8 @@
 
 #include "EvtGenBase/EvtConst.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
 
 class EvtComplex {
     inline friend EvtComplex operator*( double d, const EvtComplex& c );

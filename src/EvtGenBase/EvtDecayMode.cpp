@@ -22,8 +22,9 @@
 
 #include "EvtGenBase/EvtReport.hh"
 
-#include <assert.h>
+#include <cassert>
 #include <iostream>
+
 using std::endl;
 using std::ostream;
 

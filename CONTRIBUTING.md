@@ -32,7 +32,7 @@ As such, any new code should try to conform to these already.
 ## Code formatting, naming conventions, etc.
 
 EvtGen uses a `clang-format` style file for code formatting.
-Please run `clang-format` version 12 on all files that you have modified/created.
+Please run `clang-format` version 16 on all files that you have modified/created.
 
 EvtGen is licenced under the GNU GPL v3 (or later) and as such the appropriate
 copyright header should appear at the top of each source file.
@@ -47,6 +47,7 @@ The current guidelines are:
 * All enumeration states should also be UpperCamelCase
 * All function and variable names should be lowerCamelCase
 * All member variables should be prefixed with `m_`
+* When including headers, only includes of the C++ standard library headers should use the `#include <...>` form, all others should use the `#include "..."` form
 
 As specified in [T105](https://phab.hepforge.org/T105), the use of inclusive
 language is preferred and encouraged in the EvtGen project.

@@ -20,14 +20,10 @@
 
 #include "EvtGenModels/EvtItgAbsFunction.hh"
 
-//-------------
-// C Headers --
-//-------------
-extern "C" {
-}
 #include "EvtGenBase/EvtReport.hh"
 
-#include "assert.h"
+#include <iostream>
+
 using std::endl;
 
 EvtItgAbsFunction::EvtItgAbsFunction( double lowerRange, double upperRange ) :

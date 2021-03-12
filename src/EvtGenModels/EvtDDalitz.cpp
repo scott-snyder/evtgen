@@ -31,7 +31,6 @@
 #include "EvtGenBase/EvtResonance2.hh"
 
 #include <algorithm>
-#include <stdlib.h>
 #include <string>
 #include <utility>
 #include <vector>

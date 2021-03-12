@@ -26,8 +26,10 @@
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <assert.h>
-#include <math.h>
+#include <cassert>
+#include <cmath>
+#include <iostream>
+
 using std::ostream;
 
 EvtDiracSpinor::EvtDiracSpinor( const EvtComplex& sp0, const EvtComplex& sp1,

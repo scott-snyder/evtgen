@@ -22,7 +22,7 @@
 
 #include "EvtGenBase/EvtConst.hh"
 
-#include <math.h>
+#include <cmath>
 
 EvtPropBreitWigner::EvtPropBreitWigner( double m0, double g0 ) :
     EvtPropagator( m0, g0 )

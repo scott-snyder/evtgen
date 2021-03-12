@@ -40,7 +40,9 @@
 
 #include "TROOT.h"
 
-#include "tbb/tbb.h"
+#include "tbb/blocked_range.h"
+#include "tbb/global_control.h"
+#include "tbb/parallel_reduce.h"
 
 #include <chrono>
 #include <fstream>
@@ -496,10 +498,10 @@ TestHistos TestDecayModel::runTBBThreads() const
     tbb::global_control gc{ tbb::global_control::parameter::max_allowed_parallelism,
                             m_config.nThreads };
 
-    TestHistos init;
+    TestHistos null_hist;
 
     return tbb::parallel_reduce(
-        tbb::blocked_range<std::size_t>( 0, m_config.nEvents ), init,
+        tbb::blocked_range<std::size_t>( 0, m_config.nEvents ), null_hist,
         [this]( const tbb::blocked_range<std::size_t>& range,
                 const TestHistos& init ) -> TestHistos
         {

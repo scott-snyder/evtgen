@@ -25,9 +25,9 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
+
 using std::endl;
 
 void EvtNeutrinoParticle::init( EvtId part_n, const EvtVector4R& p4 )

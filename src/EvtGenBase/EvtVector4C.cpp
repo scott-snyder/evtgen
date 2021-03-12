@@ -22,9 +22,10 @@
 
 #include "EvtGenBase/EvtComplex.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <iostream>
-#include <math.h>
+
 using std::ostream;
 
 EvtVector4C::EvtVector4C()

@@ -59,7 +59,7 @@ class EvtIntervalDecayAmp : public EvtDecayAmp {
     {
         // Collect model parameters and parse them
 
-        vector<std::string> args;
+        std::vector<std::string> args;
         int i;
         for ( i = 0; i < getNArg(); i++ )
             args.push_back( getArgStr( i ) );

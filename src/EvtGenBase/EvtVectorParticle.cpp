@@ -25,9 +25,8 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
 
 void EvtVectorParticle::init( EvtId part_n, double e, double px, double py,
                               double pz )

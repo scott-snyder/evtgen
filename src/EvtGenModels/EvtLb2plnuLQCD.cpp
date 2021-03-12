@@ -29,13 +29,15 @@
 
 #include "EvtGenModels/EvtLb2plnuLQCDFF.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
 
-using namespace std;
+using std::endl;
+
 #ifdef D0
 #undef D0
 #endif
+
 EvtLb2plnuLQCD::EvtLb2plnuLQCD() : m_ffmodel( nullptr ), m_calcamp( nullptr )
 {
 }

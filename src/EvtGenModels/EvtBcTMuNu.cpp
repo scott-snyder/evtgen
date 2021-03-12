@@ -29,10 +29,9 @@
 #include "EvtGenModels/EvtBCTFF.hh"
 
 #include <iostream>
-#include <stdlib.h>
 #include <string>
 
-using namespace std;
+using std::endl;
 
 std::string EvtBcTMuNu::getName() const
 {

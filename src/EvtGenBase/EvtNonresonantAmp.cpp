@@ -25,9 +25,10 @@
 #include "EvtGenBase/EvtDalitzCoord.hh"
 #include "EvtGenBase/EvtdFunction.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <iostream>
-#include <math.h>
+
 using EvtCyclic3::Index;
 using EvtCyclic3::Pair;
 using std::endl;

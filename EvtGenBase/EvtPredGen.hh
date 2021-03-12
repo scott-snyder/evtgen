@@ -21,7 +21,7 @@
 #ifndef EVT_PRED_GEN_HH
 #define EVT_PRED_GEN_HH
 
-#include <stdio.h>
+#include <cstdio>
 
 // A predicate is applied to a generator to get another generator.
 // Accept-reject can be implemented in this way.

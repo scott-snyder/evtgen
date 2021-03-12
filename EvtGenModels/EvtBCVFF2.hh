@@ -26,11 +26,6 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtSemiLeptonicFF.hh"
 
-#include <iostream>
-#include <math.h>
-#include <stdlib.h>
-#include <string>
-
 class EvtId;
 
 // Description: form factors for B->Vlnu

@@ -26,12 +26,9 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtStatus.hh"
 
-#include <ctype.h>
-#include <fstream>
 #include <iostream>
-#include <stdlib.h>
+
 using std::endl;
-using std::fstream;
 
 EvtParticleDecayList::EvtParticleDecayList( const EvtParticleDecayList& o )
 {

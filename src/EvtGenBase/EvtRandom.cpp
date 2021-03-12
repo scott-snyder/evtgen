@@ -24,10 +24,9 @@
 #include "EvtGenBase/EvtRandomEngine.hh"
 #include "EvtGenBase/EvtReport.hh"
 
+#include <cmath>
+#include <cstdlib>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 using std::endl;
 

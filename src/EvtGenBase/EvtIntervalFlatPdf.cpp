@@ -22,7 +22,7 @@
 
 #include "EvtGenBase/EvtRandom.hh"
 
-#include <assert.h>
+#include <cassert>
 
 EvtIntervalFlatPdf::EvtIntervalFlatPdf( double min, double max ) :
     EvtPdf<EvtPoint1D>(), m_min( min ), m_max( max )

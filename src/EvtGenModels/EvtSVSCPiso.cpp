@@ -30,7 +30,7 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 
-#include <stdlib.h>
+#include <cmath>
 #include <string>
 
 std::string EvtSVSCPiso::getName() const

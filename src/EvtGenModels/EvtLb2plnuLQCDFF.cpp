@@ -26,9 +26,11 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 #include <string>
+
 using std::endl;
 
 void EvtLb2plnuLQCDFF::getdiracff( EvtId parent, EvtId daught, double q2,

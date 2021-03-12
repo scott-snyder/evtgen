@@ -28,7 +28,6 @@
 
 #include "EvtGenModels/EvtMelikhovFF.hh"
 
-#include <stdlib.h>
 #include <string>
 
 std::string EvtMelikhov::getName() const

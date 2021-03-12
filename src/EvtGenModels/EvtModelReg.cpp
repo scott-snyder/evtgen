@@ -156,17 +156,6 @@
 #include "EvtGenModels/Evtbs2llGammaISRFSR.hh"
 #include "EvtGenModels/Evtbs2llGammaMNT.hh"
 
-#include <assert.h>
-#include <ctype.h>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <stdlib.h>
-
-using std::cout;
-using std::endl;
-using std::fstream;
-
 EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
 {
     EvtModel& modelist = EvtModel::instance();

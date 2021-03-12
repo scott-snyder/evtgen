@@ -20,9 +20,10 @@
 
 #include "EvtGenBase/EvtCyclic3.hh"
 
-#include <assert.h>
+#include <cassert>
+#include <cstring>
 #include <iostream>
-#include <string.h>
+
 using std::ostream;
 
 using namespace EvtCyclic3;

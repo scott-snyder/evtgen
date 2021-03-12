@@ -20,7 +20,7 @@
 
 #include "EvtGenBase/EvtPoint1D.hh"
 
-#include <stdio.h>
+#include <cstdio>
 
 EvtPoint1D::EvtPoint1D() :
     m_min( 0. ), m_max( -1. ), m_value( 0. ), m_valid( false )

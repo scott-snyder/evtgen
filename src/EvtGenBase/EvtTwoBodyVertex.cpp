@@ -22,10 +22,11 @@
 
 #include "EvtGenBase/EvtMacros.hh"
 
-#include <assert.h>
+#include <cassert>
 #include <cmath>
 #include <iostream>
 #include <memory>
+
 using std::endl;
 using std::ostream;
 

@@ -398,7 +398,7 @@ int EvtSLDiBaryonAmp::checkDibaryonParity( const EvtId& id1, const EvtId& id2,
     int par2 = this->getBaryonParity( id2 );
 
     // mult should be either 0 or 1 for allowed Dirac/RS baryon pairs
-    int mult = static_cast<int>( pow( -1.0, 0.5 * fabs( J1 - J2 ) ) );
+    int mult = static_cast<int>( pow( -1.0, 0.5 * abs( J1 - J2 ) ) );
 
     int dbParity = par1 * par2 * mult;
 

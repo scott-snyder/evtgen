@@ -27,9 +27,9 @@
 #include "EvtGenBase/EvtSpinDensity.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
+#include <cmath>
 #include <iostream>
-#include <math.h>
-#include <stdlib.h>
+
 using std::endl;
 
 void EvtDiracParticle::init( EvtId part_n, const EvtVector4R& p4 )

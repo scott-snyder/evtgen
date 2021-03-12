@@ -25,6 +25,7 @@
 #include "EvtGenBase/EvtStringHash.hh"
 
 #include <map>
+#include <string>
 
 //Class to read in and handle the decays available
 //to EvtGen for each particle, and the model to be

@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R03-00-00-betaX
 
+2 Dec 2024 Thomas Latham
+* Remove or convert C headers to C++ equivalents
+
 18 Nov 2024 Thomas Latham
 * Update CI to use LCG\_105 on el9 with gcc13/clang16 by default
   - Also update CI to avoid spurious failure of test stage
