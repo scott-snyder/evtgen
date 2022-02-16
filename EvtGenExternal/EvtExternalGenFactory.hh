@@ -24,6 +24,7 @@
 #include "EvtGenModels/EvtAbsExternalGen.hh"
 
 #include <map>
+#include <mutex>
 
 // Description: A factory type method to create engines for external physics
 // generators like Pythia.
@@ -59,6 +60,8 @@ class EvtExternalGenFactory {
 
   private:
     EvtExternalGenFactory( const EvtExternalGenFactory& ){};
+
+    std::mutex m_factory_modification_mutex;
 
     ExtGenMap m_extGenMap;
     //ExtGenCommandMap m_extGenCommandMap;

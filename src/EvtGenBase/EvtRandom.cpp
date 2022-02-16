@@ -31,7 +31,7 @@
 
 using std::endl;
 
-EvtRandomEngine* EvtRandom::m_randomEngine = nullptr;
+thread_local EvtRandomEngine* EvtRandom::m_randomEngine = nullptr;
 
 void EvtRandom::setRandomEngine( EvtRandomEngine* randomEngine )
 {

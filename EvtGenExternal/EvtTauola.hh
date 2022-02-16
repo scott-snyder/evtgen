@@ -23,6 +23,8 @@
 
 #include "EvtGenBase/EvtDecayIncoherent.hh"
 
+#include <mutex>
+
 class EvtParticle;
 class EvtAbsExternalGen;
 class EvtDecayBase;
@@ -31,9 +33,9 @@ class EvtDecayBase;
 
 class EvtTauola : public EvtDecayIncoherent {
   public:
-    std::string getName() override;
+    std::string getName() const override;
 
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     void initProbMax() override;
     void init() override;
@@ -44,6 +46,7 @@ class EvtTauola : public EvtDecayIncoherent {
     EvtAbsExternalGen* m_tauolaEngine = nullptr;
 
   private:
+    static std::mutex m_engine_mutex;
 };
 
 #endif

@@ -82,7 +82,7 @@ EvtParticleDecayList::~EvtParticleDecayList()
         delete[] m_decaylist;
 }
 
-void EvtParticleDecayList::printSummary()
+void EvtParticleDecayList::printSummary() const
 {
     int i;
     for ( i = 0; i < m_nmode; i++ ) {

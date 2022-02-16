@@ -27,7 +27,7 @@
 #include <stdlib.h>
 using std::endl;
 
-EvtAbsRadCorr* EvtRadCorr::m_fsrEngine = nullptr;
+thread_local EvtAbsRadCorr* EvtRadCorr::m_fsrEngine = nullptr;
 bool EvtRadCorr::m_alwaysRadCorr = false;
 bool EvtRadCorr::m_neverRadCorr = false;
 

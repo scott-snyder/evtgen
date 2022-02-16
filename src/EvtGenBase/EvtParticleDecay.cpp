@@ -33,7 +33,7 @@
 #include <string>
 #include <vector>
 using std::fstream;
-void EvtParticleDecay::printSummary()
+void EvtParticleDecay::printSummary() const
 {
     if ( m_decay != nullptr ) {
         m_decay->printSummary();

@@ -37,7 +37,7 @@ EvtGammaMatrix::EvtGammaMatrix()
 {
     int i, j;
 
-    static EvtComplex zero( 0.0, 0.0 );
+    static const EvtComplex zero( 0.0, 0.0 );
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
@@ -107,7 +107,7 @@ void EvtGammaMatrix::init()
 {
     int i, j;
 
-    static EvtComplex zero( 0.0, 0.0 );
+    static const EvtComplex zero( 0.0, 0.0 );
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
@@ -118,8 +118,8 @@ void EvtGammaMatrix::init()
 
 const EvtGammaMatrix& EvtGammaMatrix::va0()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -146,8 +146,8 @@ const EvtGammaMatrix& EvtGammaMatrix::va0()
 
 const EvtGammaMatrix& EvtGammaMatrix::va1()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -174,8 +174,8 @@ const EvtGammaMatrix& EvtGammaMatrix::va1()
 
 const EvtGammaMatrix& EvtGammaMatrix::va2()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -202,8 +202,8 @@ const EvtGammaMatrix& EvtGammaMatrix::va2()
 
 const EvtGammaMatrix& EvtGammaMatrix::va3()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -230,8 +230,8 @@ const EvtGammaMatrix& EvtGammaMatrix::va3()
 
 const EvtGammaMatrix& EvtGammaMatrix::g0()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -255,8 +255,8 @@ const EvtGammaMatrix& EvtGammaMatrix::g0()
 
 const EvtGammaMatrix& EvtGammaMatrix::g1()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -279,8 +279,8 @@ const EvtGammaMatrix& EvtGammaMatrix::g1()
 
 const EvtGammaMatrix& EvtGammaMatrix::g2()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -303,8 +303,8 @@ const EvtGammaMatrix& EvtGammaMatrix::g2()
 
 const EvtGammaMatrix& EvtGammaMatrix::g3()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -327,8 +327,8 @@ const EvtGammaMatrix& EvtGammaMatrix::g3()
 
 const EvtGammaMatrix& EvtGammaMatrix::g5()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -371,8 +371,8 @@ const EvtGammaMatrix& EvtGammaMatrix::g( int index )
 
 const EvtGammaMatrix& EvtGammaMatrix::v0()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -395,8 +395,8 @@ const EvtGammaMatrix& EvtGammaMatrix::v0()
 
 const EvtGammaMatrix& EvtGammaMatrix::v1()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -419,8 +419,8 @@ const EvtGammaMatrix& EvtGammaMatrix::v1()
 
 const EvtGammaMatrix& EvtGammaMatrix::v2()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -443,8 +443,8 @@ const EvtGammaMatrix& EvtGammaMatrix::v2()
 
 const EvtGammaMatrix& EvtGammaMatrix::v3()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -467,8 +467,8 @@ const EvtGammaMatrix& EvtGammaMatrix::v3()
 
 const EvtGammaMatrix& EvtGammaMatrix::id()
 {
-    static EvtGammaMatrix g;
-    static int first = 1;
+    static thread_local EvtGammaMatrix g;
+    static thread_local int first = 1;
 
     if ( first ) {
         first = 0;
@@ -556,8 +556,8 @@ EvtDiracSpinor operator*( const EvtGammaMatrix& g, const EvtDiracSpinor& d )
 const EvtGammaMatrix& EvtGammaMatrix::sigmaUpper( unsigned int mu,
                                                   unsigned int nu )
 {
-    static EvtGammaMatrix sigma[4][4];
-    static bool hasBeenCalled = false;
+    static thread_local EvtGammaMatrix sigma[4][4];
+    static thread_local bool hasBeenCalled = false;
     if ( !hasBeenCalled ) {
         EvtComplex I( 0, 1 );
         for ( int i = 0; i < 4; ++i )
@@ -597,8 +597,8 @@ const EvtGammaMatrix& EvtGammaMatrix::sigmaLower( unsigned int mu,
 {
     const EvtComplex I( 0, 1 );
     EvtGammaMatrix a, b;
-    static EvtGammaMatrix sigma[4][4];
-    static bool hasBeenCalled = false;
+    static thread_local EvtGammaMatrix sigma[4][4];
+    static thread_local bool hasBeenCalled = false;
     static const EvtTensor4C eta = EvtTensor4C::g();
 
     if ( !hasBeenCalled )    // has to be initialized only at the first call

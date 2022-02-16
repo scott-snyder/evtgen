@@ -25,7 +25,6 @@
 #include "EvtGenBase/EvtStringHash.hh"
 
 #include <map>
-//#include <fstream.h>
 
 //Class to read in and handle the decays available
 //to EvtGen for each particle, and the model to be
@@ -47,7 +46,7 @@ class EvtModel {
   private:
     EvtModel();
 
-    static EvtModel* m_instance;
+    static thread_local EvtModel* m_instance;
 
     std::map<std::string, EvtDecayBase*> m_modelNameHash;
     std::map<std::string, EvtDecayBase*> m_commandNameHash;

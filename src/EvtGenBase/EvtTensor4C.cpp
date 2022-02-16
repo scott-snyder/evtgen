@@ -42,7 +42,7 @@ EvtTensor4C::EvtTensor4C( const EvtTensor4C& t1 )
 
 const EvtTensor4C& EvtTensor4C::g()
 {
-    static EvtTensor4C g_metric( 1.0, -1.0, -1.0, -1.0 );
+    static const EvtTensor4C g_metric( 1.0, -1.0, -1.0, -1.0 );
 
     return g_metric;
 }

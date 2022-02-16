@@ -37,7 +37,7 @@ class EvtStatus {
     }
     static int* rejectFlag()
     {
-        static int rejectEvent = 0;
+        static thread_local int rejectEvent = 0;
         return &rejectEvent;
     }
     static int getRejectFlag()

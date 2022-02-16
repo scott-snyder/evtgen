@@ -205,8 +205,8 @@ void EvtDecayBase::initProbMax()
 
 }    //initProbMax
 
-void EvtDecayBase::saveDecayInfo( EvtId ipar, int ndaug, EvtId* daug, int narg,
-                                  std::vector<std::string>& args,
+void EvtDecayBase::saveDecayInfo( EvtId ipar, int ndaug, const EvtId* daug,
+                                  int narg, std::vector<std::string>& args,
                                   std::string name, double brfr )
 {
     int i;

@@ -32,7 +32,8 @@ EvtTwoBodyKine::EvtTwoBodyKine() : m_mA( 0. ), m_mB( 0. ), m_mAB( 0. )
 {
 }
 
-EvtTwoBodyKine::EvtTwoBodyKine( double mA, double mB, double mAB ) :
+EvtTwoBodyKine::EvtTwoBodyKine( const double mA, const double mB,
+                                const double mAB ) :
     m_mA( mA ), m_mB( mB ), m_mAB( mAB )
 {
     if ( mAB < mA + mB ) {

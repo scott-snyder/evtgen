@@ -64,7 +64,7 @@ EvtAmp::EvtAmp( const EvtAmp& amp )
     }
 }
 
-void EvtAmp::init( EvtId p, int ndaugs, EvtId* daug )
+void EvtAmp::init( EvtId p, int ndaugs, const EvtId* daug )
 {
     setNDaug( ndaugs );
     int ichild;
@@ -138,7 +138,7 @@ const EvtComplex& EvtAmp::getAmp( int* ind ) const
     return m_amp[position];
 }
 
-EvtSpinDensity EvtAmp::getSpinDensity()
+EvtSpinDensity EvtAmp::getSpinDensity() const
 {
     EvtSpinDensity rho;
     rho.setDim( m_pstates );
@@ -200,7 +200,7 @@ EvtSpinDensity EvtAmp::getSpinDensity()
     }
 }
 
-EvtSpinDensity EvtAmp::getBackwardSpinDensity( EvtSpinDensity* rho_list )
+EvtSpinDensity EvtAmp::getBackwardSpinDensity( EvtSpinDensity* rho_list ) const
 {
     EvtSpinDensity rho;
 
@@ -226,7 +226,7 @@ EvtSpinDensity EvtAmp::getBackwardSpinDensity( EvtSpinDensity* rho_list )
     return ampprime.contract( 0, ( *this ) );
 }
 
-EvtSpinDensity EvtAmp::getForwardSpinDensity( EvtSpinDensity* rho_list, int i )
+EvtSpinDensity EvtAmp::getForwardSpinDensity( EvtSpinDensity* rho_list, int i ) const
 {
     EvtSpinDensity rho;
 
@@ -257,7 +257,7 @@ EvtSpinDensity EvtAmp::getForwardSpinDensity( EvtSpinDensity* rho_list, int i )
     return ampprime.contract( m_dnontrivial[i], ( *this ) );
 }
 
-EvtAmp EvtAmp::contract( int k, const EvtSpinDensity& rho )
+EvtAmp EvtAmp::contract( int k, const EvtSpinDensity& rho ) const
 {
     EvtAmp temp;
 
@@ -319,7 +319,7 @@ EvtAmp EvtAmp::contract( int k, const EvtSpinDensity& rho )
     return temp;
 }
 
-EvtSpinDensity EvtAmp::contract( int k, const EvtAmp& amp2 )
+EvtSpinDensity EvtAmp::contract( int k, const EvtAmp& amp2 ) const
 {
     int i, j, l;
 
@@ -380,7 +380,7 @@ EvtSpinDensity EvtAmp::contract( int k, const EvtAmp& amp2 )
     return rho;
 }
 
-EvtAmp EvtAmp::contract( int, const EvtAmp&, const EvtAmp& )
+EvtAmp EvtAmp::contract( int, const EvtAmp&, const EvtAmp& ) const
 {
     //Do we need this method?
     EvtAmp tmp;
@@ -389,7 +389,7 @@ EvtAmp EvtAmp::contract( int, const EvtAmp&, const EvtAmp& )
     return tmp;
 }
 
-void EvtAmp::dump()
+void EvtAmp::dump() const
 {
     int i, list[10];
     for ( i = 0; i < 10; i++ ) {

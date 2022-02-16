@@ -36,40 +36,43 @@ class EvtDecayTable {
   public:
     static EvtDecayTable* getInstance();
 
-    int getNMode( int ipar );
+    int getNMode( int ipar ) const;
 
     EvtDecayBase* getDecay( int ipar, int imode );
 
     void readDecayFile( const std::string dec_name, bool verbose = true );
     void readXMLDecayFile( const std::string dec_name, bool verbose = true );
 
-    bool stringToBoolean( std::string valStr );
-    void checkParticle( std::string particle );
+    bool stringToBoolean( std::string valStr ) const;
+    void checkParticle( std::string particle ) const;
 
     int findChannel( EvtId parent, std::string model, int ndaug, EvtId* daugs,
-                     int narg, std::string* args );
+                     int narg, std::string* args ) const;
 
-    int inChannelList( EvtId parent, int ndaug, EvtId* daugs );
+    int inChannelList( EvtId parent, int ndaug, EvtId* daugs ) const;
 
     EvtDecayBase* getDecayFunc( EvtParticle* p );
 
-    void printSummary();
+    void printSummary() const;
 
-    void checkConj();
+    void checkConj() const;
 
-    std::vector<EvtParticleDecayList> getDecayTable() { return m_decaytable; };
+    std::vector<EvtParticleDecayList> getDecayTable() const
+    {
+        return m_decaytable;
+    }
 
     EvtDecayBase* findDecayModel( int aliasInt, int modeInt );
     EvtDecayBase* findDecayModel( EvtId id, int modeInt );
 
-    bool hasPythia( int aliasInt );
-    bool hasPythia( EvtId id );
+    bool hasPythia( int aliasInt ) const;
+    bool hasPythia( EvtId id ) const;
 
-    int getNModes( int aliasInt );
-    int getNModes( EvtId id );
+    int getNModes( int aliasInt ) const;
+    int getNModes( EvtId id ) const;
 
     std::vector<std::string> splitString( std::string& theString,
-                                          std::string& splitter );
+                                          std::string& splitter ) const;
 
   protected:
     EvtDecayTable();

@@ -57,11 +57,11 @@ void EvtRaritaSchwingerParticle::init( EvtId id, const EvtVector4R& p4 )
         spminus.set( 0.0, 0.0, 0.0, sqmt2 );
     }
 
-    static EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
-                              EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
-    static EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
-    static EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
-                               EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    static const EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
+                                    EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    static const EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
+    static const EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
+                                     EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
 
     m_spinorRest[0] = dirProd( eplus, spplus );
     m_spinorRest[1] = dirProd( sqrt( 2.0 / 3.0 ) * ezero, spplus ) +

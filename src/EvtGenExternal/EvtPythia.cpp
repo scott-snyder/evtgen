@@ -33,6 +33,8 @@
 #include <cmath>
 #include <iostream>
 
+std::mutex EvtPythia::m_engine_mutex;
+
 EvtPythia::EvtPythia()
 {
     // Set the Pythia engine to a null pointer at first.
@@ -46,12 +48,12 @@ EvtPythia::~EvtPythia()
     m_commandList.clear();
 }
 
-std::string EvtPythia::getName()
+std::string EvtPythia::getName() const
 {
     return "PYTHIA";
 }
 
-EvtDecayBase* EvtPythia::clone()
+EvtDecayBase* EvtPythia::clone() const
 {
     return new EvtPythia();
 }
@@ -76,6 +78,7 @@ void EvtPythia::decay( EvtParticle* p )
     // We check to see if the engine has been created before doing the decay.
     // This should only create the full Pythia engine once, and all clones will point to the same engine.
 
+    m_engine_mutex.lock();
     if ( !m_pythiaEngine ) {
         m_pythiaEngine = EvtExternalGenFactory::getInstance()->getGenerator(
             EvtExternalGenFactory::PythiaGenId );
@@ -86,6 +89,7 @@ void EvtPythia::decay( EvtParticle* p )
     }
 
     this->fixPolarisations( p );
+    m_engine_mutex.unlock();
 }
 
 void EvtPythia::fixPolarisations( EvtParticle* p )

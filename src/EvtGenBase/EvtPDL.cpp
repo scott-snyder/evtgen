@@ -339,7 +339,7 @@ double EvtPDL::getWidth( EvtId i )
     return getInstance().m_partlist[i.getId()].getWidth();
 }
 
-double EvtPDL::getctau( EvtId i )
+double EvtPDL::getctau( const EvtId i )
 {
     return getInstance().m_partlist[i.getId()].getctau();
 }

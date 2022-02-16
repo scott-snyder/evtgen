@@ -23,6 +23,7 @@
 
 #include "EvtGenBase/EvtDecayIncoherent.hh"
 
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -39,9 +40,9 @@ class EvtPythia : public EvtDecayIncoherent {
     EvtPythia();
     ~EvtPythia();
 
-    std::string getName() override;
+    std::string getName() const override;
 
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     void initProbMax() override;
 
@@ -57,7 +58,10 @@ class EvtPythia : public EvtDecayIncoherent {
 
   private:
     void fixPolarisations( EvtParticle* p );
+
     std::vector<std::string> m_commandList;
+
+    static std::mutex m_engine_mutex;
 };
 
 #endif

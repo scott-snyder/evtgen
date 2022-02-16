@@ -30,7 +30,7 @@
 using std::endl;
 using std::fstream;
 
-std::map<std::string, std::string> EvtSymTable::m_symMap;
+thread_local std::map<std::string, std::string> EvtSymTable::m_symMap;
 
 EvtSymTable::EvtSymTable()
 {

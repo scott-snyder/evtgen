@@ -31,22 +31,22 @@ class EvtAmp {
     EvtAmp();
     EvtAmp( const EvtAmp& amp );
 
-    void init( EvtId p, int ndaug, EvtId* daug );
+    void init( EvtId p, int ndaug, const EvtId* daug );
 
     void setAmp( int* ind, const EvtComplex& amp );
 
     const EvtComplex& getAmp( int* ind ) const;
 
-    EvtSpinDensity getSpinDensity();
+    EvtSpinDensity getSpinDensity() const;
 
-    EvtSpinDensity contract( int i, const EvtAmp& a );
-    EvtAmp contract( int i, const EvtSpinDensity& rho );
+    EvtSpinDensity contract( int i, const EvtAmp& a ) const;
+    EvtAmp contract( int i, const EvtSpinDensity& rho ) const;
 
     //sum over the i:th daugther of a1 and contract with parent of a2
-    EvtAmp contract( int i, const EvtAmp& a1, const EvtAmp& a2 );
+    EvtAmp contract( int i, const EvtAmp& a1, const EvtAmp& a2 ) const;
 
-    EvtSpinDensity getForwardSpinDensity( EvtSpinDensity* rho_list, int k );
-    EvtSpinDensity getBackwardSpinDensity( EvtSpinDensity* rho_list );
+    EvtSpinDensity getForwardSpinDensity( EvtSpinDensity* rho_list, int k ) const;
+    EvtSpinDensity getBackwardSpinDensity( EvtSpinDensity* rho_list ) const;
 
     EvtAmp& operator=( const EvtAmp& amp );
 
@@ -75,7 +75,7 @@ class EvtAmp {
   */
     void vertex( int* i1, const EvtComplex& amp );
 
-    void dump();
+    void dump() const;
 
   private:
     friend class EvtDecayAmp;

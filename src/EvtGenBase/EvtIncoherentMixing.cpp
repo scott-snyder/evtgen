@@ -58,8 +58,8 @@ EvtIncoherentMixing::EvtIncoherentMixing()
 //=============================================================================
 void EvtIncoherentMixing::incoherentB0Mix( const EvtId id, double& t, int& mix )
 {
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     if ( ( B0 != id ) && ( B0B != id ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -100,8 +100,8 @@ void EvtIncoherentMixing::incoherentB0Mix( const EvtId id, double& t, int& mix )
 // ============================================================================
 void EvtIncoherentMixing::incoherentBsMix( const EvtId id, double& t, int& mix )
 {
-    static EvtId BS = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
 
     if ( ( BS != id ) && ( BSB != id ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -146,8 +146,8 @@ bool EvtIncoherentMixing::isBsMixed( EvtParticle* p )
     if ( !( p->getParent() ) )
         return false;
 
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
 
     if ( ( p->getId() != BS0 ) && ( p->getId() != BSB ) )
         return false;
@@ -164,8 +164,8 @@ bool EvtIncoherentMixing::isB0Mixed( EvtParticle* p )
     if ( !( p->getParent() ) )
         return false;
 
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     if ( ( p->getId() != B0 ) && ( p->getId() != B0B ) )
         return false;

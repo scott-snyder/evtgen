@@ -90,8 +90,8 @@ void EvtGen::initialize( const std::string& decayName, std::istream& pdtTable,
 {
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Initializing EvtGen" << endl;
 
-    if ( randomEngine == nullptr ) {
-        static EvtSimpleRandomEngine defaultRandomEngine;
+    if ( !randomEngine ) {
+        static thread_local EvtSimpleRandomEngine defaultRandomEngine;
         EvtRandom::setRandomEngine( &defaultRandomEngine );
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "No random engine given in "

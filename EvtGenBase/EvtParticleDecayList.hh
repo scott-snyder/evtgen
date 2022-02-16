@@ -66,7 +66,7 @@ class EvtParticleDecayList {
     void addMode( EvtDecayBase* decay, double brfr, double massmin );
     void finalize();
 
-    void printSummary();
+    void printSummary() const;
 
     bool isJetSet() const;
 

@@ -51,11 +51,7 @@ EvtExternalGenFactory::~EvtExternalGenFactory()
 
 EvtExternalGenFactory* EvtExternalGenFactory::getInstance()
 {
-    static EvtExternalGenFactory* theFactory = nullptr;
-
-    if ( theFactory == nullptr ) {
-        theFactory = new EvtExternalGenFactory();
-    }
+    static EvtExternalGenFactory* theFactory = new EvtExternalGenFactory();
 
     return theFactory;
 }
@@ -66,6 +62,8 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string xmlDir,
                                                    bool convertPhysCodes,
                                                    bool useEvtGenRandom )
 {
+    m_factory_modification_mutex.lock();
+
     GenId genId = EvtExternalGenFactory::PythiaGenId;
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -87,6 +85,8 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string xmlDir,
     EvtAbsExternalGen* pythiaGenerator =
         new EvtPythiaEngine( xmlDir, convertPhysCodes, useEvtGenRandom );
     m_extGenMap[genId] = pythiaGenerator;
+
+    m_factory_modification_mutex.unlock();
 }
 #else
 void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
@@ -97,12 +97,16 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
 #ifdef EVTGEN_TAUOLA
 void EvtExternalGenFactory::defineTauolaGenerator( bool useEvtGenRandom )
 {
+    m_factory_modification_mutex.lock();
+
     GenId genId = EvtExternalGenFactory::TauolaGenId;
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Defining EvtTauolaEngine." << endl;
 
     EvtAbsExternalGen* tauolaGenerator = new EvtTauolaEngine( useEvtGenRandom );
     m_extGenMap[genId] = tauolaGenerator;
+
+    m_factory_modification_mutex.unlock();
 }
 #else
 void EvtExternalGenFactory::defineTauolaGenerator( bool )

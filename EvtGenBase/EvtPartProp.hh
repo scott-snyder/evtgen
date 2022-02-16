@@ -62,13 +62,13 @@ class EvtPartProp {
     const std::string& getName() { return m_name; }
     void setName( std::string pname );
 
-    EvtId getId() { return m_id; }
+    EvtId getId() const { return m_id; }
     void setId( EvtId id ) { m_id = id; }
 
     EvtId getIdChgConj() { return m_idchgconj; }
     void setIdChgConj( EvtId idchgconj ) { m_idchgconj = idchgconj; }
 
-    int getStdHep() { return m_stdhep; }
+    int getStdHep() const { return m_stdhep; }
     void setStdHep( int stdhep ) { m_stdhep = stdhep; }
 
     int getLundKC() { return m_lundkc; }
