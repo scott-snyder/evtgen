@@ -128,12 +128,12 @@ for changedFile in changedFiles :
         print(f'WARNING: no dependency information for modified file: {changedFile}')
         continue
 
-    models = fileDeps[changedFile]
-    if len(models) == 0 :
+    affectedModels = fileDeps[changedFile]
+    if len(affectedModels) == 0 :
         print(f'WARNING: no models listed for modified file: {changedFile}')
         continue
 
-    modelsToTest.extend( models )
+    modelsToTest.extend( affectedModels )
 
 if testAll :
     print('Need to test all models')
