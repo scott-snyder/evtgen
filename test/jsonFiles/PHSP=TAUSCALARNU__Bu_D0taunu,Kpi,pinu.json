@@ -2,7 +2,7 @@
     "parent" : "B+",
     "daughters" : ["anti-D0", "tau+", "nu_tau"],
     "grand_daughters" : [["K+", "pi-"], ["pi+", "anti-nu_tau"], []],
-    "models" : ["ISGW2", "PHSP", "TAUSCALARNU"],
+    "models" : ["PHSP", "PHSP", "TAUSCALARNU"],
     "parameters" : [[], [], []],
     "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
     "events" : 100000,
@@ -47,6 +47,6 @@
 	{"variable" : "cosTheta_daug2", "title" : "cosTheta(nu2)", "d1" : 2, "d2" : 2, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "phi_daug2", "title" : "phi(nu2)", "d1" : 2, "d2" : 2, "nbins" : 50, "xmin" : 180.0, "xmax" : 180}
     ],
-    "outfile" : "ISGW2=PHSP=TAUSCALARNU__Bu_D0taunu,Kpi,pinu.root",
-    "reference" : "RefISGW2=PHSP=TAUSCALARNU__Bu_D0taunu,Kpi,pinu.root"
+    "outfile" : "PHSP=TAUSCALARNU__Bu_D0taunu,Kpi,pinu.root",
+    "reference" : "RefPHSP=TAUSCALARNU__Bu_D0taunu,Kpi,pinu.root"
 }
