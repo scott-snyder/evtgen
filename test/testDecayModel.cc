@@ -647,10 +647,10 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         const double m13Sq{ m13 * m13 };
         double en1 = ( m12Sq - m2Sq + m1Sq ) / ( 2.0 * m12 );
         double en3 = ( mBSq - m12Sq - m3Sq ) / ( 2.0 * m12 );
-        double p1 = std::sqrt( en1 * en1 - m1Sq );
-        double p3 = std::sqrt( en3 * en3 - m3Sq );
+        double p1_12 = std::sqrt( en1 * en1 - m1Sq );
+        double p3_12 = std::sqrt( en3 * en3 - m3Sq );
         double cosTheta = ( -m13Sq + m1Sq + m3Sq + 2. * en1 * en3 ) /
-                          ( 2. * p1 * p3 );
+                          ( 2. * p1_12 * p3_12 );
         value = acos( cosTheta ) / EvtConst::pi;
 
     } else if ( !selectedVarName.compare( "pSumSq" ) ) {
