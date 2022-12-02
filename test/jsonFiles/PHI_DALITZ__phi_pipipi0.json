@@ -16,6 +16,6 @@
         {"variable" : "cosHel", "title" : "cosHel23", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "cosHel", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "PHI_DALITZ__eta_pipipi0.root",
-    "reference" : "RefPHI_DALITZ__eta_pipipi0.root"
+    "outfile" : "PHI_DALITZ__phi_pipipi0.root",
+    "reference" : "RefPHI_DALITZ__phi_pipipi0.root"
 }

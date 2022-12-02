@@ -1,4 +1,5 @@
 stages:
+  - checks
   - build
   - test
 
@@ -32,6 +33,31 @@ variables:
     - cmake -DCMAKE_BUILD_TYPE:STRING=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX:PATH=$CI_PROJECT_DIR/install -DEVTGEN_HEPMC3:BOOL=$USE_HEPMC3 -DEVTGEN_PYTHIA:BOOL=ON -DEVTGEN_PHOTOS:BOOL=ON -DEVTGEN_TAUOLA:BOOL=ON -DEVTGEN_BUILD_TESTS:BOOL=$BUILD_TESTS -DEVTGEN_BUILD_VALIDATIONS:BOOL=$BUILD_TESTS -DEVTGEN_BUILD_DOXYGEN:BOOL=$BUILD_DOXYGEN $CI_PROJECT_DIR
     - cmake --build .
     - cmake --build . --target install
+
+.check_template:
+  stage: checks
+  variables:
+    LCG_COMPILER: "clang$CLANG_VERSION-opt"
+  extends:
+    - .production_image
+    - .lcg_setup
+
+check_formatting:
+  extends:
+    - .check_template
+  allow_failure: true
+  script:
+    - source applyClangFormat.sh
+    - git status --porcelain | grep '^ M' || exit 0
+    - echo "The above files do not comply with formatting, please apply clang-format"
+    - exit 1
+
+check_test_json_files:
+  extends:
+    - .check_template
+  script:
+    - cd test
+    - python checkJsonFiles.py
 
 build_clang_opt:
   variables:

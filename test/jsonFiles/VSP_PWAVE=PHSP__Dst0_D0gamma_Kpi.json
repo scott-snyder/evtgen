@@ -1,0 +1,28 @@
+{
+    "parent" : "D*0",
+    "daughters" : ["D0", "gamma"],
+    "grand_daughters" : [["K-", "pi+"],[]],
+    "models" : ["VSP_PWAVE", "PHSP", ""],
+    "parameters" : [[], [], []],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "mass", "title" : "m(D0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.8, "xmax" : 1.95},
+        {"variable" : "mass", "title" : "m(D0 gamma)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.8, "xmax" : 2.1},
+        {"variable" : "p", "title" : "p(D0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.2},
+        {"variable" : "pz", "title" : "pz(D0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -0.15, "xmax" : 0.15},
+        {"variable" : "cosHel", "title" : "cosHel(K-)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(D0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi", "title" : "phi(D0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "phi", "title" : "phi(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "pLab_daug1", "title" : "pLab(K-)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.7, "xmax" : 1.0},
+        {"variable" : "pLab_daug1", "title" : "pLab(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.7, "xmax" : 1.0},
+        {"variable" : "cosTheta_daug1", "title" : "cosTheta(K-)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi_daug1", "title" : "phi(K-)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "cosTheta_daug1", "title" : "cosTheta(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi_daug1", "title" : "phi(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
+    ],
+    "outfile" : "VSP_PWAVE=PHSP__Dst0_D0gamma_Kpi.root",
+    "reference" : "RefVSP_PWAVE=PHSP__Dst0_D0gamma_Kpi.root"
+}

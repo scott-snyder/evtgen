@@ -1,0 +1,29 @@
+{
+    "parent" : "Upsilon(4S)",
+    "daughters" : ["B0", "anti-B0"],
+    "grand_daughters" : [["pi+","pi-"], ["D*+","e-","anti-nu_e"]],
+    "models" : ["VSS", "SSS_CPT", "ISGW2"],
+    "parameters" : [[], ["0.0", "0.51e12", "1.0", "0.0", "1.0", "0.0", "0.1", "-0.4"], []],
+    "do_conjugate_decay" : [false, true, true],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob(VSS)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "prob_daug1", "title" : "Prob(SSS_CPT)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "prob_daug2", "title" : "Prob(ISGW2)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "lifetime", "title" : "tau(B0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 20.0},
+        {"variable" : "lifetime", "title" : "tau(B0b)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 20.0},
+        {"variable" : "deltaT", "title" : "deltaT", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -12.0, "xmax" : 12.0},
+        {"variable" : "mass", "title" : "m(B0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 5.2, "xmax" : 5.3},
+        {"variable" : "mass", "title" : "m(B0b)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 5.2, "xmax" : 5.3},
+        {"variable" : "mass_daug2", "title" : "m(D*+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.8, "xmax" : 2.2},
+        {"variable" : "pSumSq_daug2", "title" : "qSq(e- anti-nu_e)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 12.0},
+	{"variable" : "cosHel_daug2", "title" : "cosHel(D*+,e+)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "p_daug1", "title" : "p(pi+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.5, "xmax" : 3.0},
+	{"variable" : "p_daug1", "title" : "p(pi-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.5, "xmax" : 3.0},
+	{"variable" : "p_daug2", "title" : "p(D*+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+	{"variable" : "p_daug2", "title" : "p(e-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+	{"variable" : "p_daug2", "title" : "p(anti-nu_e)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0}
+    ],
+    "outfile" : "VSS=SSS_CPT=ISGW2__Upsilon4S_BdBdbar_pipi,Dstenue.root",
+    "reference" : "RefVSS=SSS_CPT=ISGW2__Upsilon4S_BdBdbar_pipi,Dstenue.root"
+}

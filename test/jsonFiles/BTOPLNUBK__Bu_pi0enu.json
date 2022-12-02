@@ -1,0 +1,26 @@
+{
+    "parent" : "B+",
+    "daughters" : ["pi0", "e+", "nu_e"],
+    "models" : ["BTOPLNUBK"],
+    "parameters" : [["0.54", "1.4"]],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "pSumSq", "title" : "q^{2}(e #nu)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 28.0},
+        {"variable" : "mass", "title" : "m(#pi^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.12, "xmax" : 0.15},
+        {"variable" : "mass", "title" : "m(#pi^{0} e)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 5.5},
+        {"variable" : "mass", "title" : "m(e #nu)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 5.5},
+        {"variable" : "mass", "title" : "m(#pi^{0} #nu)", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 5.5},
+	{"variable" : "p", "title" : "p(#pi^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "p", "title" : "p(e)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "p", "title" : "p(#nu)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+	{"variable" : "cosHel", "title" : "cosHel(#pi^{0},e)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel(e,#nu)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel(#pi^{0},#nu)", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(#pi^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(e)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(#nu)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "BTOPLNUBK__Bu_pi0enu.root",
+    "reference" : "RefBTOPLNUBK__Bu_pi0enu.root"
+}

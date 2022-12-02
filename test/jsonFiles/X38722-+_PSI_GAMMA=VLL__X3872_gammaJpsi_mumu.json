@@ -1,0 +1,17 @@
+{
+    "parent" : "X_2(3872)",
+    "daughters" : ["gamma", "J/psi"],
+    "grand_daughters" : [[], ["mu+", "mu-"]],
+    "models" : ["X38722-+_PSI_GAMMA", "", "VLL"],
+    "parameters" : [[], [], []],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 2.5 },
+        {"variable" : "pLab_daug2", "title" : "pLab(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 2.0},
+        {"variable" : "cosTheta_daug2", "title" : "cosTheta(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi_daug2", "title" : "phi(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(gamma)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "X38722-+_PSI_GAMMA=VLL__X3872_gammaJpsi_mumu.root",
+    "reference" : "RefX38722-+_PSI_GAMMA=VLL__X3872_gammaJpsi_mumu.root"
+}

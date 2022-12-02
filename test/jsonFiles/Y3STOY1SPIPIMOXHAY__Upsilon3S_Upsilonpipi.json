@@ -1,0 +1,26 @@
+{
+    "parent" : "Upsilon(3S)",
+    "daughters" : ["Upsilon", "pi+", "pi-"],
+    "models" : ["Y3STOY1SPIPIMOXHAY"],
+    "parameters" : [["0.2196", "0.2983"]],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 1.0},
+        {"variable" : "parMass", "title" : "m(Upsilon3S)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 10.0, "xmax" : 11.0},
+        {"variable" : "mass", "title" : "m(Upsilon)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 9.0, "xmax" : 10.0},
+        {"variable" : "mass", "title" : "m(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.13, "xmax" : 0.15},
+        {"variable" : "mass", "title" : "m(pi-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.13, "xmax" : 0.15},
+        {"variable" : "p", "title" : "p(Upsilon)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "p", "title" : "p(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "p", "title" : "p(pi-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "pSumSq", "title" : "qSq(pi+pi-)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(Upsilon)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(pi-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi", "title" : "phi(Upsilon)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "phi", "title" : "phi(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "phi", "title" : "phi(pi-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
+    ],
+    "outfile" : "Y3STOY1SPIPIMOXHAY__Upsilon3S_Upsilonpipi.root",
+    "reference" : "RefY3STOY1SPIPIMOXHAY__Upsilon3S_Upsilonpipi.root"
+}

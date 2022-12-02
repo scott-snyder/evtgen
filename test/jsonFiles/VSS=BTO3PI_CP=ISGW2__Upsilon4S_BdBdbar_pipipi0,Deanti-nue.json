@@ -1,0 +1,22 @@
+{
+    "parent" : "Upsilon(4S)",
+    "daughters" : ["B0", "anti-B0"],
+    "grand_daughters" : [["pi+","pi-","pi0"], ["D+","e-","anti-nu_e"]],
+    "models" : ["VSS", "BTO3PI_CP", "ISGW2"],
+    "parameters" : [[], ["0.51e12", "0.4"], []],
+    "do_conjugate_decay" : [false, true, true],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob_daug1", "title" : "Prob(BTO3PI_CP)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "mass_daug1", "title" : "m(#pi^{+} #pi^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 6.0},
+        {"variable" : "mass_daug1", "title" : "m(#pi^{-} #pi^{0})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 6.0},
+        {"variable" : "mass_daug1", "title" : "m(#pi^{+} #pi^{0})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 6.0},
+	{"variable" : "massSq_daug1", "title" : "Dalitz m^{2}(#pi^{+} #pi^{-}) vs m^{2}(#pi^{+} #pi^{0})", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 0.0, "xmax" : 30.0, "variableY" : "massSq_daug1", "d1Y" : 1, "d2Y" : 3, "nbinsY" : 50, "ymin" : 0.0, "ymax" : 30.0},
+        {"variable" : "massSq_daug1", "title" : "Dalitz m^{2}(#pi^{-} #pi^{0}) vs m^{2}(#pi^{+} #pi^{+})", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : 0.0, "xmax" : 30.0, "variableY" : "massSq_daug1", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 50, "ymin" : 0.0, "ymax" : 30.0},
+        {"variable" : "mPrime_daug1", "title" : "sqDalitz", "d1" : 1, "d2" : 2, "nbins" : 25, "xmin" : 0.0, "xmax" : 1.00, "variableY" : "thetaPrime_daug1", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 25, "ymin" : 0.0, "ymax" : 1.0},
+        {"variable" : "lifetime_daug1", "title" : "tau(#pi^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 200000.0},
+        {"variable" : "lifetime_daug1", "title" : "tau(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 200000.0}
+    ],
+    "outfile" :"VSS=BTO3PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipi0,Deanti-nue.root",
+    "reference" : "RefVSS=BTO3PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipi0,Deanti-nue.root"
+}

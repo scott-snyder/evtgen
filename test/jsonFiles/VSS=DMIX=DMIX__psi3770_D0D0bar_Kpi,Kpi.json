@@ -1,0 +1,30 @@
+{
+    "parent" : "psi(3770)",
+    "daughters" : ["D0", "anti-D0"],
+    "grand_daughters" : [["K+", "pi-"], ["K-", "pi+"]],
+    "models" : ["VSS", "DMIX", "DMIX"],
+    "parameters" : [[], ["3.4e-3", "0.1e-3", "1.0e-3"], ["3.4e-3", "0.1e-3", "1.0e-3"]],
+    "extras" : ["noPhotos"],
+    "events" : 20000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob(VSS)",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "prob_daug1", "title" : "Prob(DMIX)",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.1},
+        {"variable" : "prob_daug2", "title" : "Prob(DMIX)",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.1},
+        {"variable" : "parMass", "title" : "m(#psi(3770))", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 3.7, "xmax" : 4.0},
+        {"variable" : "mass", "title" : "m(D^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.8, "xmax" : 1.9},
+        {"variable" : "mass", "title" : "m(anti-D^{0})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.8, "xmax" : 1.9},
+        {"variable" : "cosHel", "title" : "cosHel(K^{+},D^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel(K^{-},anti-D^{0})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "decayangle_daug1", "title" : "DecayAngle(K^{+},#pi^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0},
+        {"variable" : "decayangle_daug2", "title" : "DecayAngle(K^{-},#pi^{+})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0},
+	{"variable" : "lifetime", "title" : "#tau(D^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 4.0},
+	{"variable" : "lifetime", "title" : "#tau(anti-D^{0})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 4.0},
+        {"variable" : "deltaT", "title" : "#Delta #tau", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -4.0, "xmax" : 4.0},
+	{"variable" : "pLab_daug1", "title" : "p(K^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.4, "xmax" : 1.5},
+	{"variable" : "pLab_daug1", "title" : "p(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.4, "xmax" : 1.5},
+	{"variable" : "pLab_daug2", "title" : "p(K^{-})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.4, "xmax" : 1.5},
+	{"variable" : "pLab_daug2", "title" : "p(#pi^{+})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.4, "xmax" : 1.5}
+    ],
+    "outfile" : "VSS=DMIX=DMIX__psi3770_D0D0bar_Kpi,Kpi.root",
+    "reference" : "RefVSS=DMIX=DMIX__psi3770_D0D0bar_Kpi,Kpi.root"
+}

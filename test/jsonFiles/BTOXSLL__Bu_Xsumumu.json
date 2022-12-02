@@ -1,10 +1,8 @@
 {
     "parent" : "B+",
     "daughters" : ["Xsu", "mu+", "mu-"],
-    "grand_daughters" : [[], [], []],
-    "models" : ["BTOXSLL", "", ""],
-    "parameters" : [["4.8", "0.2", "0.0", "0.41"], 
-                    [], []],
+    "models" : ["BTOXSLL"],
+    "parameters" : [["4.8", "0.2", "0.0", "0.41"]], 
     "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
     "events" : 10000,
     "histograms" : [

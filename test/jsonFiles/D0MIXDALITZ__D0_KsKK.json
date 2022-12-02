@@ -17,5 +17,5 @@
         {"variable" : "cosHel", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
     ],
     "outfile" : "D0MIXDALITZ__D0_KsKK.root",
-    "reference" : "RefD_DALITZ__D0_KsKK.root"
+    "reference" : "RefD0MIXDALITZ__D0_KsKK.root"
 }

@@ -1,0 +1,29 @@
+{
+    "parent" : "B+",
+    "daughters" : ["tau+", "nu_tau"],
+    "grand_daughters" : [["rho+", "anti-nu_tau"], []],
+    "models" : ["SLN", "TAUVECTORNU", ""],
+    "parameters" : [[], [], []],
+    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.8, "xmax" : 1.2},
+        {"variable" : "p", "title" : "p(tau)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 2.2, "xmax" : 2.6},
+        {"variable" : "pz", "title" : "pz(tau)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -2.5, "xmax" : 2.5},
+        {"variable" : "cosTheta", "title" : "cosTheta(tau)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi", "title" : "phi(tau)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180},
+        {"variable" : "E", "title" : "E(tau)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 2.5, "xmax" : 3.5},
+        {"variable" : "E_over_Eparent", "title" : "E(tau)/E(B)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "E_over_Eparent_daug1", "title" : "E(rho)/E(tau)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "E_over_Eparent_daug1", "title" : "E(nutau_{2})/E(tau)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "cosTheta_daug1", "title" : "cosTheta(rho)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta_daug1", "title" : "cosTheta(nutau_{2})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel(rho)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHelTau", "title" : "cosHelTau(rho)", "d1" : 1, "d2" : 1, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHelTau", "title" : "cosHelTau(nutau_{2})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "mass_daug1", "title" : "m(rho nutau_{2})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.7, "xmax" : 1.9},
+        {"variable" : "mass_daug1", "title" : "m(rho)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0}
+    ],
+    "outfile" : "SLN=TAUVECTORNU__Bu_taunu_rhonu.root",
+    "reference" : "RefSLN=TAUVECTORNU__Bu_taunu_rhonu.root"
+}

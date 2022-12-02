@@ -1,0 +1,17 @@
+{
+    "parent" : "B_c+",
+    "daughters" : ["B_s0", "pi+", "pi-", "pi+"],
+    "models" : ["BC_BS_NPI", "", "", "", ""],
+    "parameters" : [[], [], [], [], []],
+    "do_conjugate_decay" : [true, false, false, false, false],
+    "extras" : ["Define dm_incohMix_B_s0 0"],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob(BC_BS_NPI)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "parMass", "title" : "m(B_{c}^{+})", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 6.2, "xmax" : 6.3},
+	{"variable" : "mass", "title" : "m(B_{s}^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 5.3, "xmax" : 5.4},
+	{"variable" : "mass3", "title" : "m(#pi^{+}#pi^{-}#pi^{+})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0}
+    ],
+    "outfile" : "BC_BS_NPI__Bc_Bs0pipipi.root",
+    "reference" : "RefBC_BS_NPI__Bc_Bs0pipipi.root"
+}

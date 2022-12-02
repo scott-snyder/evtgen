@@ -1,0 +1,19 @@
+{
+    "parent" : "B+",
+    "daughters" : ["f_2", "pi+"],
+    "grand_daughters" : [["pi+", "pi-"], []],
+    "models" : ["SSD_DirectCP", "TSS", ""],
+    "parameters" : [["0.40"], [], []],
+    "do_conjugate_decay" : [ true, false, false ],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "id", "title" : "StdHep ID", "d1" : 0, "d2" : 0, "nbins" : 2, "xmin" : -600.0, "xmax" : 600.0},
+	{"variable" : "p", "title" : "f_2 Mtm",  "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 3.0},
+	{"variable" : "p", "title" : "pi Mtm",  "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 3.0},
+	{"variable" : "mass", "title" : "f_2 Mass",  "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
+	{"variable" : "cosHel", "title" : "f_2 Helicity Angle",  "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0}
+    ],
+    "outfile" : "SSD_DirectCP=TSS__Bu_f2pi+_pi+pi-.root",
+    "reference" : "RefSSD_DirectCP=TSS__Bu_f2pi+_pi+pi-.root"
+}

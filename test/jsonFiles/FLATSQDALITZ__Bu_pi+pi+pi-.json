@@ -14,6 +14,6 @@
 	{"variable" : "cosHel", "title" : "cosTheta3", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "mPrime", "title" : "sqDalitz", "d1" : 1, "d2" : 2, "nbins" : 20, "xmin" : 0.0, "xmax" : 1.00, "variableY" : "thetaPrime", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 20, "ymin" : 0.0, "ymax" : 1.0}
     ],
-    "outfile" : "FLATSQDALITZ__Bu_pi+pi+pi-.json",
-    "reference" : "RefFLATSQDALITZ__Bu_pi+pi+pi-.json"
+    "outfile" : "FLATSQDALITZ__Bu_pi+pi+pi-.root",
+    "reference" : "RefFLATSQDALITZ__Bu_pi+pi+pi-.root"
 }

@@ -1,0 +1,22 @@
+{
+    "parent" : "X_2(3872)",
+    "daughters" : ["omega", "J/psi"],
+    "grand_daughters" : [["pi+", "pi-"], ["mu+", "mu-"]],
+    "models" : ["X38722-+_PSI_GAMMA", "VSS", "VLL"],
+    "parameters" : [[], [], []],
+    "events" : 5000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 20 },
+        {"variable" : "mass", "title" : "m(omega)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.3, "xmax" : 0.8},
+        {"variable" : "p", "title" : "p(J/psi)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.65},
+        {"variable" : "pLab_daug2", "title" : "pLab(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0},
+        {"variable" : "pLab_daug1", "title" : "pLab(pi+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.6},
+        {"variable" : "cosTheta_daug2", "title" : "cosTheta(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi_daug2", "title" : "phi(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
+        {"variable" : "cosTheta_daug1", "title" : "cosTheta(pi+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi_daug1", "title" : "phi(pi+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
+    ],
+    "outfile" : "X38722-+_PSI_GAMMA=VSS=VLL__X3872_omegaJpsi_pipi,mumu.root",
+    "reference" : "RefX38722-+_PSI_GAMMA=VSS=VLL__X3872_omegaJpsi_pipi,mumu.root"
+}
+
