@@ -99,16 +99,6 @@ bool TestDecayModel::checkMandatoryFields()
 
 bool TestDecayModel::run()
 {
-    // Sometimes an array can be wrongly created when copying the json - fix it
-    if ( m_config.is_array() ) {
-        if ( m_config.size() != 1 ) {
-            std::cerr << "ERROR : json config is an array - dumping config for debugging:\n";
-            std::cerr << m_config << std::endl;
-            return false;
-        }
-        m_config = m_config[0];
-    }
-
     // Check that we have, and then get all the mandatory fields first
     if ( !checkMandatoryFields() ) {
         std::cerr << "ERROR : json does not contain all mandatory fields - dumping config for debugging:\n";
@@ -182,7 +172,7 @@ bool TestDecayModel::run()
 
     /*! Define the root output file and histograms to be saved. */
     TFile* outFile = TFile::Open( outFileName.c_str(), "recreate" );
-    defineHistos( m_config, outFile );
+    defineHistos( outFile );
 
     /*!  Generate events and fill histograms. */
     generateEvents( theGen, decFile, parentName, doConjDecay[0], nEvents,
@@ -337,7 +327,7 @@ std::string TestDecayModel::createDecFile(
     return decName;
 }
 
-void TestDecayModel::defineHistos( json& m_config, TFile* outFile )
+void TestDecayModel::defineHistos( TFile* outFile )
 {
     // Histogram information
     json jHistos = m_config["histograms"];

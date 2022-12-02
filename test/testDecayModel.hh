@@ -78,7 +78,7 @@ class TestDecayModel {
         const std::vector<std::string>& extras,
         const std::string decFileName ) const;
 
-    void defineHistos( nlohmann::json& config, TFile* theFile );
+    void defineHistos( TFile* theFile );
 
     void generateEvents( EvtGen& theGen, const std::string& decFile,
                          const std::string& parentName, bool doConjDecay,
@@ -92,7 +92,7 @@ class TestDecayModel {
     double getCosAcoplanarityAngle( EvtParticle* selectedParent,
                                     int sel_NDaugMax, int d1, int d2 ) const;
 
-    nlohmann::json m_config;
+    const nlohmann::json& m_config;
     std::vector<std::pair<TestInfo, TH1D*>> m_1DhistVect;
     std::vector<std::pair<TestInfo, TH2D*>> m_2DhistVect;
     TH1D* m_mixedHist{ nullptr };
