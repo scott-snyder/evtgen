@@ -270,7 +270,7 @@ void genRootDecayChain::generateEvents()
         }    // daughter loop
 
         // Store probability/max probability
-        double* dProb = theParent->decayProb();
+        const double* dProb = theParent->decayProb();
         if ( dProb ) {
             _probHist->Fill( *dProb );
         }

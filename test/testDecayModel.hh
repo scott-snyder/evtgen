@@ -81,21 +81,22 @@ class TestDecayModel {
     void defineHistos( TFile* theFile );
 
     void generateEvents( EvtGen& theGen, const std::string& decFile,
-                         const std::string& parentName, bool doConjDecay,
-                         int nEvents, bool debugFlag );
+                         const std::string& parentName, const bool doConjDecay,
+                         const int nEvents, const bool debugFlag );
 
-    double getValue( EvtParticle* rootPart, const std::string& varName,
+    double getValue( const EvtParticle* rootPart, const std::string& varName,
                      const int d1, const int d2 ) const;
 
     void compareHistos( const std::string& refFileName ) const;
 
-    double getCosAcoplanarityAngle( EvtParticle* selectedParent,
-                                    int sel_NDaugMax, int d1, int d2 ) const;
+    double getCosAcoplanarityAngle( const EvtParticle* selectedParent,
+                                    const int sel_NDaugMax, const int d1,
+                                    const int d2 ) const;
 
     const nlohmann::json& m_config;
-    std::vector<std::pair<TestInfo, TH1D*>> m_1DhistVect;
-    std::vector<std::pair<TestInfo, TH2D*>> m_2DhistVect;
-    TH1D* m_mixedHist{ nullptr };
+    std::vector<std::pair<TestInfo, TH1*>> m_1DhistVect;
+    std::vector<std::pair<TestInfo, TH2*>> m_2DhistVect;
+    TH1* m_mixedHist{ nullptr };
 };
 
 #endif

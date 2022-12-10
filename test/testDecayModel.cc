@@ -70,8 +70,8 @@ bool TestDecayModel::checkMandatoryFields()
             continue;
         }
         if ( field == "histograms" ) {
-            json jHistos = m_config["histograms"];
-            for ( auto hInfo : jHistos ) {
+            const json& jHistos{ m_config.at( "histograms" ) };
+            for ( const auto& hInfo : jHistos ) {
                 for ( const auto& hField : mandatoryHistoFields ) {
                     if ( !hInfo.contains( hField ) ) {
                         std::cerr
@@ -106,36 +106,40 @@ bool TestDecayModel::run()
         return false;
     }
 
-    const auto parentName = m_config["parent"].get<std::string>();
-    const auto daughterNames =
-        m_config["daughters"].get<std::vector<std::string>>();
-    const auto modelNames = m_config["models"].get<std::vector<std::string>>();
-    const auto modelParameters =
-        m_config["parameters"].get<std::vector<std::vector<std::string>>>();
-    const auto outFileName = m_config["outfile"].get<std::string>();
-    const auto nEvents = m_config["events"].get<int>();
-    const auto refFileName = m_config["reference"].get<std::string>();
+    const auto parentName{ m_config.at( "parent" ).get<std::string>() };
+    const auto daughterNames{
+        m_config.at( "daughters" ).get<std::vector<std::string>>() };
+    const auto modelNames{
+        m_config.at( "models" ).get<std::vector<std::string>>() };
+    const auto modelParameters{
+        m_config.at( "parameters" ).get<std::vector<std::vector<std::string>>>() };
+    const auto outFileName{ m_config.at( "outfile" ).get<std::string>() };
+    const auto nEvents{ m_config.at( "events" ).get<int>() };
+    const auto refFileName{ m_config.at( "reference" ).get<std::string>() };
 
     // Then check for optional fields, setting default values if not present
 
-    json grandDaughters = m_config["grand_daughters"];
-    const auto grandDaughterNames =
-        grandDaughters.is_array()
-            ? grandDaughters.get<std::vector<std::vector<std::string>>>()
-            : std::vector<std::vector<std::string>>{};
+    const auto grandDaughterNames{
+        ( m_config.contains( "grand_daughters" ) &&
+          m_config.at( "grand_daughters" ).is_array() )
+            ? m_config.at( "grand_daughters" )
+                  .get<std::vector<std::vector<std::string>>>()
+            : std::vector<std::vector<std::string>>{} };
 
-    json extras = m_config["extras"];
-    const auto extraCommands = extras.is_array()
-                                   ? extras.get<std::vector<std::string>>()
-                                   : std::vector<std::string>{};
+    const auto extraCommands{
+        ( m_config.contains( "extras" ) && m_config.at( "extras" ).is_array() )
+            ? m_config.at( "extras" ).get<std::vector<std::string>>()
+            : std::vector<std::string>{} };
 
-    json debug = m_config["debug_flag"];
-    const auto debugFlag = debug.is_boolean() ? debug.get<bool>() : false;
+    const auto debugFlag{ ( m_config.contains( "debug_flag" ) &&
+                            m_config.at( "debug_flag" ).is_boolean() )
+                              ? m_config.at( "debug_flag" ).get<bool>()
+                              : false };
 
-    json conjugates = m_config["do_conjugate_decay"];
     std::vector<bool> doConjDecay;
-    if ( conjugates.is_array() ) {
-        doConjDecay = conjugates.get<std::vector<bool>>();
+    if ( m_config.contains( "do_conjugate_decay" ) &&
+         m_config.at( "do_conjugate_decay" ).is_array() ) {
+        doConjDecay = m_config.at( "do_conjugate_decay" ).get<std::vector<bool>>();
     }
     if ( doConjDecay.size() != modelNames.size() ) {
         doConjDecay.resize( modelNames.size(), false );
@@ -146,9 +150,9 @@ bool TestDecayModel::run()
     // latter are also used within createDecFile
 
     // Define the random number generator
-    auto randomEngine = std::make_unique<EvtMTRandomEngine>();
+    auto randomEngine{ std::make_unique<EvtMTRandomEngine>() };
 
-    EvtAbsRadCorr* radCorrEngine = nullptr;
+    EvtAbsRadCorr* radCorrEngine{ nullptr };
     std::list<EvtDecayBase*> extraModels;
 
 #ifdef EVTGEN_EXTERNAL
@@ -163,32 +167,33 @@ bool TestDecayModel::run()
                    radCorrEngine, &extraModels );
 
     /*! Creates a decay file based on json file input. */
-    const std::string decFileName = outFileName.substr( 0,
-                                                        outFileName.size() - 5 );
-    const std::string decFile = createDecFile( parentName, daughterNames,
-                                               grandDaughterNames, modelNames,
-                                               modelParameters, doConjDecay,
-                                               extraCommands, decFileName );
+    const std::string decFileName{
+        outFileName.substr( 0, outFileName.size() - 5 ) };
+    const std::string decFile{ createDecFile( parentName, daughterNames,
+                                              grandDaughterNames, modelNames,
+                                              modelParameters, doConjDecay,
+                                              extraCommands, decFileName ) };
 
     /*! Define the root output file and histograms to be saved. */
-    TFile* outFile = TFile::Open( outFileName.c_str(), "recreate" );
-    defineHistos( outFile );
+    std::unique_ptr<TFile> outFile{
+        TFile::Open( outFileName.c_str(), "recreate" ) };
+    defineHistos( outFile.get() );
 
     /*!  Generate events and fill histograms. */
     generateEvents( theGen, decFile, parentName, doConjDecay[0], nEvents,
                     debugFlag );
 
     // Normalize histograms.
-    for ( auto hist : m_1DhistVect ) {
-        double area = hist.second->Integral();
+    for ( auto& [_, hist] : m_1DhistVect ) {
+        const double area{ hist->Integral() };
         if ( area > 0.0 ) {
-            hist.second->Scale( 1.0 / area );
+            hist->Scale( 1.0 / area );
         }
     }
-    for ( auto hist : m_2DhistVect ) {
-        double area = hist.second->Integral();
+    for ( auto& [_, hist] : m_2DhistVect ) {
+        const double area{ hist->Integral() };
         if ( area > 0.0 ) {
-            hist.second->Scale( 1.0 / area );
+            hist->Scale( 1.0 / area );
         }
     }
 
@@ -197,11 +202,11 @@ bool TestDecayModel::run()
 
     // Write output.
     outFile->cd();
-    for ( auto& hist : m_1DhistVect ) {
-        hist.second->Write();
+    for ( auto& [_, hist] : m_1DhistVect ) {
+        hist->Write();
     }
-    for ( auto& hist : m_2DhistVect ) {
-        hist.second->Write();
+    for ( auto& [_, hist] : m_2DhistVect ) {
+        hist->Write();
     }
     if ( m_mixedHist ) {
         m_mixedHist->Write();
@@ -227,7 +232,7 @@ std::string TestDecayModel::createDecFile(
 
     // Create daughter aliases if needed
     std::vector<std::string> aliasPrefix;
-    for ( long unsigned int daughter_index = 0;
+    for ( long unsigned int daughter_index{ 0 };
           daughter_index < daughterNames.size(); daughter_index++ ) {
         if ( !grandDaughterNames.empty() &&
              !grandDaughterNames[daughter_index].empty() ) {
@@ -258,7 +263,7 @@ std::string TestDecayModel::createDecFile(
         }
     }
 
-    for ( auto iExtra : extras ) {
+    for ( const auto& iExtra : extras ) {
         decFile << iExtra << std::endl;
     }
 
@@ -266,7 +271,7 @@ std::string TestDecayModel::createDecFile(
     decFile << "Decay " << parent << std::endl;
     decFile << "1.0";
 
-    for ( long unsigned int daughter_index = 0;
+    for ( long unsigned int daughter_index{ 0 };
           daughter_index < daughterNames.size(); daughter_index++ ) {
         decFile << " " << aliasPrefix[daughter_index]
                 << daughterNames[daughter_index];
@@ -274,7 +279,7 @@ std::string TestDecayModel::createDecFile(
 
     decFile << " " << modelNames[0];
 
-    for ( auto par : parameters[0] ) {
+    for ( const auto& par : parameters[0] ) {
         decFile << " " << par;
     }
 
@@ -287,21 +292,21 @@ std::string TestDecayModel::createDecFile(
     }
 
     // Daughter decays into granddaughters
-    for ( long unsigned int daughter_index = 0;
+    for ( long unsigned int daughter_index{ 0 };
           daughter_index < grandDaughterNames.size(); daughter_index++ ) {
         if ( grandDaughterNames[daughter_index].empty() )
             continue;
         decFile << "Decay " << aliasPrefix[daughter_index]
                 << daughterNames[daughter_index] << std::endl;
         decFile << "1.0";
-        for ( long unsigned int grandDaughter_index = 0;
+        for ( long unsigned int grandDaughter_index{ 0 };
               grandDaughter_index < grandDaughterNames[daughter_index].size();
               grandDaughter_index++ ) {
             decFile << " "
                     << grandDaughterNames[daughter_index][grandDaughter_index];
         }
         decFile << " " << modelNames[daughter_index + 1];
-        for ( auto par : parameters[daughter_index + 1] ) {
+        for ( const auto& par : parameters[daughter_index + 1] ) {
             decFile << " " << par;
         }
         decFile << ";" << std::endl;
@@ -330,24 +335,24 @@ std::string TestDecayModel::createDecFile(
 void TestDecayModel::defineHistos( TFile* outFile )
 {
     // Histogram information
-    json jHistos = m_config["histograms"];
-    size_t nHistos = jHistos.size();
+    const json& jHistos{ m_config.at( "histograms" ) };
+    const size_t nHistos{ jHistos.size() };
 
     m_1DhistVect.reserve( nHistos );
     m_2DhistVect.reserve( nHistos );
 
-    for ( auto hInfo : jHistos ) {
-        const auto varTitle = hInfo["title"].get<std::string>();
+    for ( const auto& hInfo : jHistos ) {
+        const auto varTitle{ hInfo.at( "title" ).get<std::string>() };
 
-        const auto varName = hInfo["variable"].get<std::string>();
+        const auto varName{ hInfo.at( "variable" ).get<std::string>() };
         // Integer values that define what particles need to be used
         // for invariant mass combinations or helicity angles etc
-        const auto d1 = hInfo["d1"].get<int>();
-        const auto d2 = hInfo["d2"].get<int>();
+        const auto d1{ hInfo.at( "d1" ).get<int>() };
+        const auto d2{ hInfo.at( "d2" ).get<int>() };
 
-        const auto nBins = hInfo["nbins"].get<int>();
-        const auto xmin = hInfo["xmin"].get<double>();
-        const auto xmax = hInfo["xmax"].get<double>();
+        const auto nBins{ hInfo.at( "nbins" ).get<int>() };
+        const auto xmin{ hInfo.at( "xmin" ).get<double>() };
+        const auto xmax{ hInfo.at( "xmax" ).get<double>() };
 
         std::string histName( varName.c_str() );
         if ( d1 != 0 ) {
@@ -360,20 +365,20 @@ void TestDecayModel::defineHistos( TFile* outFile )
         }
 
         if ( !hInfo.contains( "variableY" ) ) {
-            TH1D* hist = new TH1D( histName.c_str(), varTitle.c_str(), nBins,
-                                   xmin, xmax );
+            TH1* hist{ new TH1D{ histName.c_str(), varTitle.c_str(), nBins,
+                                 xmin, xmax } };
             hist->SetDirectory( outFile );
             m_1DhistVect.emplace_back(
                 std::make_pair( TestInfo( varName, d1, d2 ), hist ) );
             continue;
         } else {
-            const auto varNameY = hInfo["variableY"].get<std::string>();
-            const auto d1Y = hInfo["d1Y"].get<int>();
-            const auto d2Y = hInfo["d2Y"].get<int>();
+            const auto varNameY{ hInfo.at( "variableY" ).get<std::string>() };
+            const auto d1Y{ hInfo.at( "d1Y" ).get<int>() };
+            const auto d2Y{ hInfo.at( "d2Y" ).get<int>() };
 
-            const auto nBinsY = hInfo["nbinsY"].get<int>();
-            const auto ymin = hInfo["ymin"].get<double>();
-            const auto ymax = hInfo["ymax"].get<double>();
+            const auto nBinsY{ hInfo.at( "nbinsY" ).get<int>() };
+            const auto ymin{ hInfo.at( "ymin" ).get<double>() };
+            const auto ymax{ hInfo.at( "ymax" ).get<double>() };
 
             histName += "_";
             histName += varNameY;
@@ -385,8 +390,8 @@ void TestDecayModel::defineHistos( TFile* outFile )
                 histName += "_";
                 histName += std::to_string( d2Y );
             }
-            TH2D* hist = new TH2D( histName.c_str(), varTitle.c_str(), nBins,
-                                   xmin, xmax, nBinsY, ymin, ymax );
+            TH2* hist{ new TH2D{ histName.c_str(), varTitle.c_str(), nBins,
+                                 xmin, xmax, nBinsY, ymin, ymax } };
             hist->SetDirectory( outFile );
             m_2DhistVect.emplace_back( std::make_pair(
                 TestInfo( varName, d1, d2, varNameY, d1Y, d2Y ), hist ) );
@@ -394,11 +399,11 @@ void TestDecayModel::defineHistos( TFile* outFile )
     }
 
     // For the case where the parent is either a neutral B or D add a mixed/unmixed histogram
-    const auto parentName = m_config["parent"].get<std::string>();
-    const int parentID = abs( EvtPDL::getStdHep( EvtPDL::getId( parentName ) ) );
+    const auto parentName{ m_config.at( "parent" ).get<std::string>() };
+    const int parentID{ abs( EvtPDL::getStdHep( EvtPDL::getId( parentName ) ) ) };
     if ( parentID == 511 || parentID == 531 || parentID == 421 ) {
         const std::string varTitle{ parentName + " mixed" };
-        m_mixedHist = new TH1D( "mixed", varTitle.c_str(), 2, 0.0, 2.0 );
+        m_mixedHist = new TH1D{ "mixed", varTitle.c_str(), 2, 0.0, 2.0 };
         // TODO maybe set bin labels?
         m_mixedHist->SetDirectory( outFile );
     }
@@ -406,16 +411,16 @@ void TestDecayModel::defineHistos( TFile* outFile )
 
 void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
                                      const std::string& parentName,
-                                     bool doConjDecay, int nEvents,
-                                     bool debug_flag )
+                                     const bool doConjDecay, const int nEvents,
+                                     const bool debug_flag )
 {
     // Read the decay file
     theGen.readUDecay( decFile.c_str() );
 
     // Generate the decays
-    EvtId parId = EvtPDL::getId( parentName.c_str() );
-    EvtId conjId = doConjDecay ? EvtPDL::chargeConj( parId ) : parId;
-    for ( int i = 0; i < nEvents; i++ ) {
+    EvtId parId{ EvtPDL::getId( parentName.c_str() ) };
+    EvtId conjId{ doConjDecay ? EvtPDL::chargeConj( parId ) : parId };
+    for ( int i{ 0 }; i < nEvents; i++ ) {
         if ( i % 1000 == 0 ) {
             std::cout << "Event " << nEvents - i << std::endl;
         }
@@ -449,7 +454,7 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
         if ( debug_flag ) {
             std::cout << "Parent PDG code: " << parent->getPDGId()
                       << " has daughters " << parent->getNDaug() << std::endl;
-            for ( size_t iDaughter = 0; iDaughter < parent->getNDaug();
+            for ( size_t iDaughter{ 0 }; iDaughter < parent->getNDaug();
                   iDaughter++ ) {
                 std::cout << "Parent PDG code of daughter " << iDaughter
                           << " : " << parent->getDaug( iDaughter )->getPDGId()
@@ -457,7 +462,7 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
                           << parent->getDaug( iDaughter )->getNDaug()
                           << std::endl;
 
-                for ( size_t iGrandDaughter = 0;
+                for ( size_t iGrandDaughter{ 0 };
                       iGrandDaughter < parent->getDaug( iDaughter )->getNDaug();
                       iGrandDaughter++ ) {
                     std::cout << "Parent PDG code of grand daughter "
@@ -475,23 +480,21 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
         }
 
         // Store information
-        for ( auto& hist : m_1DhistVect ) {
-            const auto& info = hist.first;
-            const double value = getValue( parent, info.getName(), info.getd1(),
-                                           info.getd2() );
+        for ( auto& [info, hist] : m_1DhistVect ) {
+            const double value{ getValue( parent, info.getName(), info.getd1(),
+                                          info.getd2() ) };
 
-            if ( hist.second ) {
-                hist.second->Fill( value );
+            if ( hist ) {
+                hist->Fill( value );
             }
         }
-        for ( auto& hist : m_2DhistVect ) {
-            const auto& info = hist.first;
-            const double valueX = getValue( parent, info.getName(),
-                                            info.getd1(), info.getd2() );
-            const double valueY = getValue( parent, info.getName( 2 ),
-                                            info.getd1( 2 ), info.getd2( 2 ) );
-            if ( hist.second ) {
-                hist.second->Fill( valueX, valueY );
+        for ( auto& [info, hist] : m_2DhistVect ) {
+            const double valueX{ getValue( parent, info.getName(), info.getd1(),
+                                           info.getd2() ) };
+            const double valueY{ getValue( parent, info.getName( 2 ),
+                                           info.getd1( 2 ), info.getd2( 2 ) ) };
+            if ( hist ) {
+                hist->Fill( valueX, valueY );
             }
         }
 
@@ -512,10 +515,11 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
     }
 }
 
-double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName,
-                                 const int d1, const int d2 ) const
+double TestDecayModel::getValue( const EvtParticle* parent,
+                                 const std::string& varName, const int d1,
+                                 const int d2 ) const
 {
-    double value = std::numeric_limits<double>::quiet_NaN();
+    double value{ std::numeric_limits<double>::quiet_NaN() };
     if ( !parent ) {
         return value;
     }
@@ -523,11 +527,11 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
     const int NDaugMax( parent->getNDaug() );
     // If variable name contains "_daugX", we are interested in daughters of daughter X
     // Else we are interested in daughters
-    EvtParticle* selectedParent = parent;
-    std::string selectedVarName = varName;
+    const EvtParticle* selectedParent{ parent };
+    std::string selectedVarName{ varName };
     if ( varName.find( "_daug" ) != std::string::npos ) {
         // Get daughter index from last character in string
-        const int iDaughter = varName.back() - '0';
+        const int iDaughter{ varName.back() - '0' };
         selectedVarName = varName.substr( 0, varName.size() - 6 );
         if ( iDaughter > 0 && iDaughter <= NDaugMax ) {
             selectedParent = parent->getDaug( iDaughter - 1 );
@@ -537,25 +541,25 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
     }
 
     const int sel_NDaugMax( selectedParent->getNDaug() );
-    const EvtParticle* par1 = d1 > 0 && d1 <= sel_NDaugMax
-                                  ? selectedParent->getDaug( d1 - 1 )
-                                  : nullptr;
-    const EvtParticle* par2 = d2 > 0 && d2 <= sel_NDaugMax
-                                  ? selectedParent->getDaug( d2 - 1 )
-                                  : nullptr;
-    const EvtParticle* par3 = sel_NDaugMax > 0
-                                  ? selectedParent->getDaug( sel_NDaugMax - 1 )
-                                  : nullptr;
+    const EvtParticle* par1{ d1 > 0 && d1 <= sel_NDaugMax
+                                 ? selectedParent->getDaug( d1 - 1 )
+                                 : nullptr };
+    const EvtParticle* par2{ d2 > 0 && d2 <= sel_NDaugMax
+                                 ? selectedParent->getDaug( d2 - 1 )
+                                 : nullptr };
+    const EvtParticle* par3{ sel_NDaugMax > 0
+                                 ? selectedParent->getDaug( sel_NDaugMax - 1 )
+                                 : nullptr };
 
     // 4-momenta in parent rest frame
-    const EvtVector4R p1 = par1 != nullptr ? par1->getP4() : EvtVector4R();
-    const EvtVector4R p2 = par2 != nullptr ? par2->getP4() : EvtVector4R();
-    const EvtVector4R p3 = par3 != nullptr ? par3->getP4() : EvtVector4R();
+    const EvtVector4R p1{ par1 != nullptr ? par1->getP4() : EvtVector4R() };
+    const EvtVector4R p2{ par2 != nullptr ? par2->getP4() : EvtVector4R() };
+    const EvtVector4R p3{ par3 != nullptr ? par3->getP4() : EvtVector4R() };
 
     // 4-momenta in lab frame (1st parent in decay tree)
-    const EvtVector4R p1_lab = par1 != nullptr ? par1->getP4Lab() : EvtVector4R();
-    const EvtVector4R p2_lab = par2 != nullptr ? par2->getP4Lab() : EvtVector4R();
-    const EvtVector4R p3_lab = par3 != nullptr ? par3->getP4Lab() : EvtVector4R();
+    const EvtVector4R p1_lab{ par1 != nullptr ? par1->getP4Lab() : EvtVector4R() };
+    const EvtVector4R p2_lab{ par2 != nullptr ? par2->getP4Lab() : EvtVector4R() };
+    const EvtVector4R p3_lab{ par3 != nullptr ? par3->getP4Lab() : EvtVector4R() };
 
     if ( !selectedVarName.compare( "id" ) ) {
         // StdHep ID of one of the daughters (controlled by d1) or the parent
@@ -593,8 +597,8 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         if ( sel_NDaugMax != 3 ) {
             return -1;
         }
-        int unused = 0;
-        for ( int ii = 1; ii <= sel_NDaugMax; ++ii ) {
+        int unused{ 0 };
+        for ( int ii{ 1 }; ii <= sel_NDaugMax; ++ii ) {
             if ( ii != d1 && ii != d2 ) {
                 unused = ii;
                 break;
@@ -603,16 +607,16 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         if ( unused == 0 ) {
             unused = sel_NDaugMax;
         }
-        const auto parL = selectedParent->getDaug( unused - 1 );
+        const auto parL{ selectedParent->getDaug( unused - 1 ) };
         //            const auto& pL = parL->getP4();
 
-        const double mB = selectedParent->mass();
-        const double m1 = par1->mass();
-        const double m2 = par2->mass();
-        const double m3 = parL->mass();
-        const double m12 = ( p1 + p2 ).mass();
-        const double m12norm =
-            2 * ( ( m12 - ( m1 + m2 ) ) / ( mB - ( m1 + m2 + m3 ) ) ) - 1;
+        const double mB{ selectedParent->mass() };
+        const double m1{ par1->mass() };
+        const double m2{ par2->mass() };
+        const double m3{ parL->mass() };
+        const double m12{ ( p1 + p2 ).mass() };
+        const double m12norm{
+            2 * ( ( m12 - ( m1 + m2 ) ) / ( mB - ( m1 + m2 + m3 ) ) ) - 1 };
         value = acos( m12norm ) / EvtConst::pi;
 
     } else if ( !selectedVarName.compare( "thetaPrime" ) ) {
@@ -620,8 +624,8 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         if ( sel_NDaugMax != 3 ) {
             return -1;
         }
-        int unused = 0;
-        for ( int ii = 1; ii <= sel_NDaugMax; ++ii ) {
+        int unused{ 0 };
+        for ( int ii{ 1 }; ii <= sel_NDaugMax; ++ii ) {
             if ( ii != d1 && ii != d2 ) {
                 unused = ii;
                 break;
@@ -630,27 +634,27 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         if ( unused == 0 ) {
             unused = sel_NDaugMax;
         }
-        const auto parL = selectedParent->getDaug( unused - 1 );
-        const auto& pL = parL->getP4();
+        const auto parL{ selectedParent->getDaug( unused - 1 ) };
+        const auto& pL{ parL->getP4() };
 
-        const double mB = selectedParent->mass();
-        const double m1 = p1.mass();
-        const double m2 = p2.mass();
-        const double m3 = pL.mass();
+        const double mB{ selectedParent->mass() };
+        const double m1{ p1.mass() };
+        const double m2{ p2.mass() };
+        const double m3{ pL.mass() };
         double mBSq{ mB * mB };
         double m1Sq{ m1 * m1 };
         double m2Sq{ m2 * m2 };
         double m3Sq{ m3 * m3 };
-        const double m12 = ( p1 + p2 ).mass();
-        const double m13 = ( p1 + p3 ).mass();
+        const double m12{ ( p1 + p2 ).mass() };
+        const double m13{ ( p1 + p3 ).mass() };
         const double m12Sq{ m12 * m12 };
         const double m13Sq{ m13 * m13 };
-        double en1 = ( m12Sq - m2Sq + m1Sq ) / ( 2.0 * m12 );
-        double en3 = ( mBSq - m12Sq - m3Sq ) / ( 2.0 * m12 );
-        double p1_12 = std::sqrt( en1 * en1 - m1Sq );
-        double p3_12 = std::sqrt( en3 * en3 - m3Sq );
-        double cosTheta = ( -m13Sq + m1Sq + m3Sq + 2. * en1 * en3 ) /
-                          ( 2. * p1_12 * p3_12 );
+        double en1{ ( m12Sq - m2Sq + m1Sq ) / ( 2.0 * m12 ) };
+        double en3{ ( mBSq - m12Sq - m3Sq ) / ( 2.0 * m12 ) };
+        double p1_12{ std::sqrt( en1 * en1 - m1Sq ) };
+        double p3_12{ std::sqrt( en3 * en3 - m3Sq ) };
+        double cosTheta{ ( -m13Sq + m1Sq + m3Sq + 2. * en1 * en3 ) /
+                         ( 2. * p1_12 * p3_12 ) };
         value = acos( cosTheta ) / EvtConst::pi;
 
     } else if ( !selectedVarName.compare( "pSumSq" ) ) {
@@ -668,19 +672,19 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
     } else if ( !selectedVarName.compare( "mass3_specified" ) ) {
         // Invariant mass of 3 daughters, d1 is first daughter
         // second daughter is d1 + 1, d2 is last daughter
-        const EvtParticle* daug2 = selectedParent->getDaug( d1 );
-        const EvtParticle* daug3 = selectedParent->getDaug( d2 - 1 );
+        const EvtParticle* daug2{ selectedParent->getDaug( d1 ) };
+        const EvtParticle* daug3{ selectedParent->getDaug( d2 - 1 ) };
 
-        const EvtVector4R p2_specified = daug2 != nullptr ? daug2->getP4Lab()
-                                                          : EvtVector4R();
-        const EvtVector4R p3_specified = daug3 != nullptr ? daug3->getP4Lab()
-                                                          : EvtVector4R();
+        const EvtVector4R p2_specified{ daug2 != nullptr ? daug2->getP4Lab()
+                                                         : EvtVector4R() };
+        const EvtVector4R p3_specified{ daug3 != nullptr ? daug3->getP4Lab()
+                                                         : EvtVector4R() };
 
         value = ( p1 + p2_specified + p3_specified ).mass();
 
     } else if ( !selectedVarName.compare( "cosTheta3" ) ) {
         // Cosine of the polar angle of the momentum of d1 + d2 + d3
-        const EvtVector4R p123 = p1 + p2 + p3;
+        const EvtVector4R p123{ p1 + p2 + p3 };
         if ( p123.d3mag() > 0.0 ) {
             value = p123.get( 3 ) / p123.d3mag();
         }
@@ -695,16 +699,16 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
 
     } else if ( !selectedVarName.compare( "pLabSq" ) ) {
         // Momentum squared of particle d1 (in lab frame)
-        const double p1_lab_x = p1_lab.get( 1 );
-        const double p1_lab_y = p1_lab.get( 2 );
-        const double p1_lab_z = p1_lab.get( 3 );
+        const double p1_lab_x{ p1_lab.get( 1 ) };
+        const double p1_lab_y{ p1_lab.get( 2 ) };
+        const double p1_lab_z{ p1_lab.get( 3 ) };
         value = p1_lab_x * p1_lab_x + p1_lab_y * p1_lab_y + p1_lab_z * p1_lab_z;
 
     } else if ( !selectedVarName.compare( "pSq" ) ) {
         // Momentum squared of particle d1 (in lab frame)
-        const double p1_x = p1.get( 1 );
-        const double p1_y = p1.get( 2 );
-        const double p1_z = p1.get( 3 );
+        const double p1_x{ p1.get( 1 ) };
+        const double p1_y{ p1.get( 2 ) };
+        const double p1_z{ p1.get( 3 ) };
         value = p1_x * p1_x + p1_y * p1_y + p1_z * p1_z;
 
     } else if ( !selectedVarName.compare( "pxLab" ) ) {
@@ -741,8 +745,8 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
             // Resonance center-of-mass system (d1 and d2)
             p12 = p1_lab + p2_lab;
             // Boost vector
-            const EvtVector4R boost( p12.get( 0 ), -p12.get( 1 ), -p12.get( 2 ),
-                                     -p12.get( 3 ) );
+            const EvtVector4R boost{ p12.get( 0 ), -p12.get( 1 ), -p12.get( 2 ),
+                                     -p12.get( 3 ) };
             // Momentum of particle d1 in resonance frame, p1Res
             p1Res = boostTo( p1_lab, boost );
         } else {
@@ -750,15 +754,15 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
             p12 = p1;
 
             // Find its first daughter
-            const EvtParticle* gpar = par1 != nullptr ? par1->getDaug( 0 )
-                                                      : nullptr;
+            const EvtParticle* gpar{ par1 != nullptr ? par1->getDaug( 0 )
+                                                     : nullptr };
 
             p1Res = gpar != nullptr ? gpar->getP4() : EvtVector4R();
         }
 
         // Cosine of angle between p1Res and momentum of resonance in parent frame
-        const double p1ResMag = p1Res.d3mag();
-        const double p12Mag = p12.d3mag();
+        const double p1ResMag{ p1Res.d3mag() };
+        const double p12Mag{ p12.d3mag() };
         if ( p1ResMag > 0.0 && p12Mag > 0.0 ) {
             value = -p1Res.dot( p12 ) / ( p1ResMag * p12Mag );
         }
@@ -774,24 +778,24 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         // p3 (momentum of last daughter) is taken as the neutrino momentum
 
         // W momentum
-        const EvtVector4R p_W = p1_lab + p3_lab;
+        const EvtVector4R p_W{ p1_lab + p3_lab };
 
         // Index d2 must match the index of the pion (daughter of tau)
-        const EvtParticle* pion = selectedParent->getDaug( d1 - 1 )->getDaug(
-            d2 - 1 );
-        const EvtVector4R p_pion = pion != nullptr ? pion->getP4Lab()
-                                                   : EvtVector4R();
+        const EvtParticle* pion{
+            selectedParent->getDaug( d1 - 1 )->getDaug( d2 - 1 ) };
+        const EvtVector4R p_pion{ pion != nullptr ? pion->getP4Lab()
+                                                  : EvtVector4R() };
 
         // Boost vector to tau frame
-        const EvtVector4R boost( p1_lab.get( 0 ), -p1_lab.get( 1 ),
-                                 -p1_lab.get( 2 ), -p1_lab.get( 3 ) );
+        const EvtVector4R boost{ p1_lab.get( 0 ), -p1_lab.get( 1 ),
+                                 -p1_lab.get( 2 ), -p1_lab.get( 3 ) };
 
         // Boost both momenta to tau frame
-        const EvtVector4R p_W_boosted = boostTo( p_W, boost );
-        const EvtVector4R p_pion_boosted = boostTo( p_pion, boost );
+        const EvtVector4R p_W_boosted{ boostTo( p_W, boost ) };
+        const EvtVector4R p_pion_boosted{ boostTo( p_pion, boost ) };
         // Cosine of angle between opposite W momentum and pion momentum in tau frame
-        const double p_W_boostedMag = p_W_boosted.d3mag();
-        const double p_pion_boostedMag = p_pion_boosted.d3mag();
+        const double p_W_boostedMag{ p_W_boosted.d3mag() };
+        const double p_pion_boostedMag{ p_pion_boosted.d3mag() };
 
         if ( p_W_boostedMag > 0.0 && p_pion_boostedMag > 0.0 ) {
             value = -p_W_boosted.dot( p_pion_boosted ) /
@@ -811,36 +815,36 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         }
 
         // B momentum
-        const EvtVector4R p_B = selectedParent->getP4Lab();
+        const EvtVector4R p_B{ selectedParent->getP4Lab() };
 
         // Index d2 must match the index of the pion (daughter of tau)
-        const EvtParticle* pion_1 =
+        const EvtParticle* pion_1{
             sel_NDaugMax <= 3
                 ? selectedParent->getDaug( d1 - 1 )->getDaug( d2 - 1 )
-                : selectedParent->getDaug( d1 - 1 );
-        const EvtVector4R p_pion_1 = pion_1 != nullptr ? pion_1->getP4Lab()
-                                                       : EvtVector4R();
+                : selectedParent->getDaug( d1 - 1 ) };
+        const EvtVector4R p_pion_1{ pion_1 != nullptr ? pion_1->getP4Lab()
+                                                      : EvtVector4R() };
 
-        const EvtVector4R p_first_daughter =
+        const EvtVector4R p_first_daughter{
             sel_NDaugMax <= 3 ? selectedParent->getDaug( d1 - 1 )->getP4Lab()
                               : selectedParent->getDaug( d1 - 1 )->getP4Lab() +
-                                    selectedParent->getDaug( d1 )->getP4Lab();
+                                    selectedParent->getDaug( d1 )->getP4Lab() };
 
         // Boost vector to tau frame
-        const EvtVector4R boost_1( p_first_daughter.get( 0 ),
+        const EvtVector4R boost_1{ p_first_daughter.get( 0 ),
                                    -p_first_daughter.get( 1 ),
                                    -p_first_daughter.get( 2 ),
-                                   -p_first_daughter.get( 3 ) );
+                                   -p_first_daughter.get( 3 ) };
 
         // Boost both momenta to tau frame
-        const EvtVector4R p_B_boosted_1 = boostTo( p_B, boost_1 );
-        const EvtVector4R p_pion_boosted_1 = boostTo( p_pion_1, boost_1 );
+        const EvtVector4R p_B_boosted_1{ boostTo( p_B, boost_1 ) };
+        const EvtVector4R p_pion_boosted_1{ boostTo( p_pion_1, boost_1 ) };
         // Cosine of angle between opposite W momentum and pion momentum in tau frame
-        const double p_B_boosted_1_Mag = p_B_boosted_1.d3mag();
-        const double p_pion_boosted_1_Mag = p_pion_boosted_1.d3mag();
+        const double p_B_boosted_1_Mag{ p_B_boosted_1.d3mag() };
+        const double p_pion_boosted_1_Mag{ p_pion_boosted_1.d3mag() };
 
-        double hel1 = std::numeric_limits<double>::quiet_NaN();
-        double hel = std::numeric_limits<double>::quiet_NaN();
+        double hel1{ std::numeric_limits<double>::quiet_NaN() };
+        double hel{ std::numeric_limits<double>::quiet_NaN() };
 
         if ( p_B_boosted_1_Mag > 0.0 && p_pion_boosted_1_Mag > 0.0 ) {
             hel1 = -p_B_boosted_1.dot( p_pion_boosted_1 ) /
@@ -854,29 +858,29 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
             // Index d1 must match with tau; cosHelicity above +0.5 or below -0.5
 
             // Index d2 must match the index of the pion (daughter of tau)
-            const EvtParticle* pion =
-                sel_NDaugMax <= 3
-                    ? selectedParent->getDaug( 0 )->getDaug( d2 - 1 )
-                    : selectedParent->getDaug( 0 );
-            const EvtVector4R p_pion = pion != nullptr ? pion->getP4Lab()
-                                                       : EvtVector4R();
+            const EvtParticle* pion{
+                sel_NDaugMax <= 3 ? selectedParent->getDaug( 0 )->getDaug( d2 - 1 )
+                                  : selectedParent->getDaug( 0 ) };
+            const EvtVector4R p_pion{ pion != nullptr ? pion->getP4Lab()
+                                                      : EvtVector4R() };
             // Boost vector to tau frame
-            const EvtVector4R p_second_daughter =
-                sel_NDaugMax == 2 ? selectedParent->getDaug( 0 )->getP4Lab()
-                                  : selectedParent->getDaug( 0 )->getP4Lab() +
-                                        selectedParent->getDaug( 1 )->getP4Lab();
+            const EvtVector4R p_second_daughter{
+                sel_NDaugMax == 2
+                    ? selectedParent->getDaug( 0 )->getP4Lab()
+                    : selectedParent->getDaug( 0 )->getP4Lab() +
+                          selectedParent->getDaug( 1 )->getP4Lab() };
 
-            const EvtVector4R boost( p_second_daughter.get( 0 ),
+            const EvtVector4R boost{ p_second_daughter.get( 0 ),
                                      -p_second_daughter.get( 1 ),
                                      -p_second_daughter.get( 2 ),
-                                     -p_second_daughter.get( 3 ) );
+                                     -p_second_daughter.get( 3 ) };
 
             // Boost both momenta to tau frame
-            const EvtVector4R p_B_boosted = boostTo( p_B, boost );
-            const EvtVector4R p_pion_boosted = boostTo( p_pion, boost );
+            const EvtVector4R p_B_boosted{ boostTo( p_B, boost ) };
+            const EvtVector4R p_pion_boosted{ boostTo( p_pion, boost ) };
             // Cosine of angle between opposite W momentum and pion momentum in tau frame
-            const double p_B_boostedMag = p_B_boosted.d3mag();
-            const double p_pion_boostedMag = p_pion_boosted.d3mag();
+            const double p_B_boostedMag{ p_B_boosted.d3mag() };
+            const double p_pion_boostedMag{ p_pion_boosted.d3mag() };
 
             if ( p_B_boostedMag > 0.0 && p_pion_boostedMag > 0.0 ) {
                 hel = -p_B_boosted.dot( p_pion_boosted ) /
@@ -902,14 +906,14 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
 
     } else if ( !selectedVarName.compare( "cosTheta" ) ) {
         // Cosine of polar angle of first daughter in lab frame
-        const double p1_lab_mag = p1_lab.d3mag();
+        const double p1_lab_mag{ p1_lab.d3mag() };
         if ( p1_lab_mag > 0.0 ) {
             value = p1_lab.get( 3 ) / p1_lab_mag;
         }
 
     } else if ( !selectedVarName.compare( "phi" ) ) {
         // Azimuthal angle of first daughter in lab frame (degrees)
-        const double p1_lab_mag = p1_lab.d3mag();
+        const double p1_lab_mag{ p1_lab.d3mag() };
         if ( p1_lab_mag > 0.0 ) {
             value = atan2( p1_lab.get( 1 ), p1_lab.get( 2 ) ) * 180.0 /
                     EvtConst::pi;
@@ -918,11 +922,11 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
     } else if ( !selectedVarName.compare( "decayangle" ) ) {
         // Polar angle between first and second daughters in lab frame
 
-        const EvtVector4R p = selectedParent->getP4();
-        const EvtVector4R q = p1 + p2;
-        const EvtVector4R d = p1;
+        const EvtVector4R p{ selectedParent->getP4() };
+        const EvtVector4R q{ p1 + p2 };
+        const EvtVector4R d{ p1 };
 
-        const double cost = EvtDecayAngle( p, q, d );
+        const double cost{ EvtDecayAngle( p, q, d ) };
 
         value = acos( cost ) * 180.0 / EvtConst::pi;
 
@@ -930,11 +934,11 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         // Polar angle between combined first and second daughters
         // with the third daughter in lab frame
 
-        const EvtVector4R p = selectedParent->getP4();
-        const EvtVector4R q = p1 + p2 + p3;
-        const EvtVector4R d = p1 + p2;
+        const EvtVector4R p{ selectedParent->getP4() };
+        const EvtVector4R q{ p1 + p2 + p3 };
+        const EvtVector4R d{ p1 + p2 };
 
-        const double cost = EvtDecayAngle( p, q, d );
+        const double cost{ EvtDecayAngle( p, q, d ) };
 
         value = acos( cost ) * 180.0 / EvtConst::pi;
 
@@ -942,34 +946,34 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
         // Polar angle between first and second daughters in lab frame.
         // Used in PIPIPI (BTO4PI_CP) model
 
-        const EvtVector4R p = p1 + p2 + p3;
-        const EvtVector4R q = p1 + p2;
-        const EvtVector4R d = p1;
+        const EvtVector4R p{ p1 + p2 + p3 };
+        const EvtVector4R q{ p1 + p2 };
+        const EvtVector4R d{ p1 };
 
-        const double cost = EvtDecayAngle( p, q, d );
+        const double cost{ EvtDecayAngle( p, q, d ) };
 
         value = acos( cost ) * 180.0 / EvtConst::pi;
 
     } else if ( !selectedVarName.compare( "chi" ) ) {
         // Chi angle (degrees) using all 4 daughters and parent 4 mom
 
-        const EvtParticle* daug1 = selectedParent->getDaug( d1 - 1 );
-        const EvtParticle* daug2 = selectedParent->getDaug( d1 );
-        const EvtParticle* daug3 = selectedParent->getDaug( d1 + 1 );
-        const EvtParticle* daug4 = selectedParent->getDaug( d1 + 2 );
+        const EvtParticle* daug1{ selectedParent->getDaug( d1 - 1 ) };
+        const EvtParticle* daug2{ selectedParent->getDaug( d1 ) };
+        const EvtParticle* daug3{ selectedParent->getDaug( d1 + 1 ) };
+        const EvtParticle* daug4{ selectedParent->getDaug( d1 + 2 ) };
 
-        const EvtVector4R p_parent = selectedParent->getP4();
-        const EvtVector4R p_daug1 = daug1 != nullptr ? daug1->getP4()
-                                                     : EvtVector4R();
-        const EvtVector4R p_daug2 = daug2 != nullptr ? daug2->getP4()
-                                                     : EvtVector4R();
-        const EvtVector4R p_daug3 = daug3 != nullptr ? daug3->getP4()
-                                                     : EvtVector4R();
-        const EvtVector4R p_daug4 = daug4 != nullptr ? daug4->getP4()
-                                                     : EvtVector4R();
+        const EvtVector4R p_parent{ selectedParent->getP4() };
+        const EvtVector4R p_daug1{ daug1 != nullptr ? daug1->getP4()
+                                                    : EvtVector4R() };
+        const EvtVector4R p_daug2{ daug2 != nullptr ? daug2->getP4()
+                                                    : EvtVector4R() };
+        const EvtVector4R p_daug3{ daug3 != nullptr ? daug3->getP4()
+                                                    : EvtVector4R() };
+        const EvtVector4R p_daug4{ daug4 != nullptr ? daug4->getP4()
+                                                    : EvtVector4R() };
 
-        const double chi = EvtDecayAngleChi( p_parent, p_daug1, p_daug2,
-                                             p_daug3, p_daug4 );
+        const double chi{
+            EvtDecayAngleChi( p_parent, p_daug1, p_daug2, p_daug3, p_daug4 ) };
         value = chi * 180.0 / EvtConst::pi;
 
     } else if ( !selectedVarName.compare( "E" ) ) {
@@ -982,9 +986,9 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
 
     } else if ( !selectedVarName.compare( "E_over_Eparent_over05" ) ) {
         // First daughter E_over_Eparent (lab frame) if d2 granddaughter E ratio > 0.5
-        const double E_over_Eparent_2 =
+        const double E_over_Eparent_2{
             parent->getDaug( 0 )->getDaug( d2 - 1 )->getP4Lab().get( 0 ) /
-            parent->getDaug( 0 )->getP4Lab().get( 0 );
+            parent->getDaug( 0 )->getP4Lab().get( 0 ) };
 
         if ( E_over_Eparent_2 > 0.5 ) {
             value = p1_lab.get( 0 ) / selectedParent->getP4Lab().get( 0 );
@@ -996,7 +1000,7 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
 
     } else if ( !selectedVarName.compare( "prob" ) ) {
         // Decay probability
-        double* dProb = selectedParent->decayProb();
+        const double* dProb{ selectedParent->decayProb() };
         if ( dProb ) {
             value = *dProb;
         }
@@ -1014,21 +1018,19 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
 
     } else if ( !selectedVarName.compare( "deltaT" ) ) {
         // Lifetime difference between particles d1 and d2
-        const double t1 = par1 != nullptr
-                              ? par1->getLifetime() * 1e12 / EvtConst::c
-                              : 0.0;
-        const double t2 = par2 != nullptr
-                              ? par2->getLifetime() * 1e12 / EvtConst::c
-                              : 0.0;
+        const double t1{
+            par1 != nullptr ? par1->getLifetime() * 1e12 / EvtConst::c : 0.0 };
+        const double t2{
+            par2 != nullptr ? par2->getLifetime() * 1e12 / EvtConst::c : 0.0 };
         value = t1 - t2;
 
     } else if ( !selectedVarName.compare( "decTime" ) ) {
         // Decay flight time of particle d1 in picoseconds.
         // Decay vertex = position of (1st) decay particle of d1
-        const EvtParticle* gpar = par1 != nullptr ? par1->getDaug( 0 ) : nullptr;
-        const EvtVector4R vtxPos = gpar != nullptr ? gpar->get4Pos()
-                                                   : EvtVector4R();
-        const double p = p1_lab.d3mag();
+        const EvtParticle* gpar{ par1 != nullptr ? par1->getDaug( 0 ) : nullptr };
+        const EvtVector4R vtxPos{ gpar != nullptr ? gpar->get4Pos()
+                                                  : EvtVector4R() };
+        const double p{ p1_lab.d3mag() };
         value = p > 0.0
                     ? 1e12 * vtxPos.d3mag() * p1_lab.mass() / ( p * EvtConst::c )
                     : 0.0;
@@ -1043,25 +1045,26 @@ double TestDecayModel::getValue( EvtParticle* parent, const std::string& varName
 void TestDecayModel::compareHistos( const std::string& refFileName ) const
 {
     // Compare histograms with the same name, calculating the chi-squared
-    TFile* refFile = TFile::Open( refFileName.c_str(), "read" );
+    std::unique_ptr<TFile> refFile{ TFile::Open( refFileName.c_str(), "read" ) };
 
     if ( !refFile ) {
         std::cerr << "Could not open reference file " << refFileName << std::endl;
         return;
     }
 
-    for ( auto& hist : m_1DhistVect ) {
-        const std::string histName = hist.second->GetName();
+    // TODO - should we plot the (signed) chisq histogram? and save it as pdf/png?
+
+    for ( auto& [_, hist] : m_1DhistVect ) {
+        const std::string histName{ hist->GetName() };
         // Get equivalent reference histogram
-        const TH1* refHist = dynamic_cast<TH1*>(
-            refFile->Get( histName.c_str() ) );
+        const TH1* refHist{
+            dynamic_cast<TH1*>( refFile->Get( histName.c_str() ) ) };
 
         if ( refHist ) {
-            double chiSq( 0.0 );
-            int nDof( 0 );
-            int iGood( 0 );
-            double pValue = refHist->Chi2TestX( hist.second, chiSq, nDof, iGood,
-                                                "WW" );
+            double chiSq{ 0.0 };
+            int nDof{ 0 };
+            int iGood{ 0 };
+            double pValue{ refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
             std::cout << "Histogram " << histName << " chiSq/nDof = " << chiSq
                       << "/" << nDof << ", pValue = " << pValue << std::endl;
 
@@ -1070,18 +1073,18 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
                       << std::endl;
         }
     }
-    for ( auto& hist : m_2DhistVect ) {
-        const std::string histName = hist.second->GetName();
+
+    for ( auto& [_, hist] : m_2DhistVect ) {
+        const std::string histName{ hist->GetName() };
         // Get equivalent reference histogram
-        const TH2* refHist = dynamic_cast<TH2*>(
-            refFile->Get( histName.c_str() ) );
+        const TH2* refHist{
+            dynamic_cast<TH2*>( refFile->Get( histName.c_str() ) ) };
 
         if ( refHist ) {
-            double chiSq( 0.0 );
-            int nDof( 0 );
-            int iGood( 0 );
-            double pValue = refHist->Chi2TestX( hist.second, chiSq, nDof, iGood,
-                                                "WW" );
+            double chiSq{ 0.0 };
+            int nDof{ 0 };
+            int iGood{ 0 };
+            double pValue{ refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
             std::cout << "Histogram " << histName << " chiSq/nDof = " << chiSq
                       << "/" << nDof << ", pValue = " << pValue << std::endl;
 
@@ -1094,9 +1097,9 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
     refFile->Close();
 }
 
-double TestDecayModel::getCosAcoplanarityAngle( EvtParticle* selectedParent,
-                                                int sel_NDaugMax, int d1,
-                                                int d2 ) const
+double TestDecayModel::getCosAcoplanarityAngle( const EvtParticle* selectedParent,
+                                                const int sel_NDaugMax,
+                                                const int d1, const int d2 ) const
 {
     // Given a two-body decay, the acoplanarity angle is defined as the angle between the
     // two decay planes (normal vectors) in the reference frame of the mother.
@@ -1106,78 +1109,75 @@ double TestDecayModel::getCosAcoplanarityAngle( EvtParticle* selectedParent,
     // (which are then treated as grand daughters), and in case of 4 daughters, we build
     // 2 intermediate daughters (1+2) and (3+4)
 
-    double cosAco( 0.0 );
+    double cosAco{ 0.0 };
 
     if ( sel_NDaugMax < 2 || sel_NDaugMax > 4 ) {
         return cosAco;
     }
 
-    const EvtParticle* daughter1 = selectedParent->getDaug( 0 );
-    const EvtParticle* daughter2 = selectedParent->getDaug( 1 );
-    const EvtParticle* daughter3 = selectedParent->getDaug( 2 );
-    const EvtParticle* daughter4 = selectedParent->getDaug( 3 );
+    const EvtParticle* daughter1{ selectedParent->getDaug( 0 ) };
+    const EvtParticle* daughter2{ selectedParent->getDaug( 1 ) };
+    const EvtParticle* daughter3{ selectedParent->getDaug( 2 ) };
+    const EvtParticle* daughter4{ selectedParent->getDaug( 3 ) };
 
-    const EvtParticle* grandDaughter1 = daughter1->getDaug( d1 - 1 );
-    const EvtParticle* grandDaughter2 = daughter2->getDaug( d2 - 1 );
+    const EvtParticle* grandDaughter1{ daughter1->getDaug( d1 - 1 ) };
+    const EvtParticle* grandDaughter2{ daughter2->getDaug( d2 - 1 ) };
 
-    const EvtVector4R parent4Vector = selectedParent->getP4Lab();
+    const EvtVector4R parent4Vector{ selectedParent->getP4Lab() };
 
-    const EvtVector4R daughter4Vector1 = sel_NDaugMax <= 3
-                                             ? daughter1->getP4Lab()
-                                             : daughter1->getP4Lab() +
-                                                   daughter2->getP4Lab();
+    const EvtVector4R daughter4Vector1{
+        sel_NDaugMax <= 3 ? daughter1->getP4Lab()
+                          : daughter1->getP4Lab() + daughter2->getP4Lab() };
 
-    const EvtVector4R daughter4Vector2 =
+    const EvtVector4R daughter4Vector2{
         sel_NDaugMax == 2
             ? daughter2->getP4Lab()
             : sel_NDaugMax == 3 ? daughter2->getP4Lab() + daughter3->getP4Lab()
-                                : daughter3->getP4Lab() + daughter4->getP4Lab();
+                                : daughter3->getP4Lab() + daughter4->getP4Lab() };
 
-    const EvtVector4R grandDaughter4Vector1 = sel_NDaugMax <= 3
-                                                  ? grandDaughter1->getP4Lab()
-                                                  : daughter1->getP4Lab();
+    const EvtVector4R grandDaughter4Vector1{
+        sel_NDaugMax <= 3 ? grandDaughter1->getP4Lab() : daughter1->getP4Lab() };
 
-    const EvtVector4R grandDaughter4Vector2 = sel_NDaugMax == 2
-                                                  ? grandDaughter2->getP4Lab()
-                                                  : sel_NDaugMax == 3
-                                                        ? daughter2->getP4Lab()
-                                                        : daughter3->getP4Lab();
+    const EvtVector4R grandDaughter4Vector2{
+        sel_NDaugMax == 2 ? grandDaughter2->getP4Lab()
+                          : sel_NDaugMax == 3 ? daughter2->getP4Lab()
+                                              : daughter3->getP4Lab() };
 
-    const EvtVector4R parentBoost( parent4Vector.get( 0 ),
+    const EvtVector4R parentBoost{ parent4Vector.get( 0 ),
                                    -parent4Vector.get( 1 ),
                                    -parent4Vector.get( 2 ),
-                                   -parent4Vector.get( 3 ) );
+                                   -parent4Vector.get( 3 ) };
 
-    const EvtVector4R daughter1Boost( daughter4Vector1.get( 0 ),
+    const EvtVector4R daughter1Boost{ daughter4Vector1.get( 0 ),
                                       -daughter4Vector1.get( 1 ),
                                       -daughter4Vector1.get( 2 ),
-                                      -daughter4Vector1.get( 3 ) );
+                                      -daughter4Vector1.get( 3 ) };
 
-    const EvtVector4R daughter2Boost( daughter4Vector2.get( 0 ),
+    const EvtVector4R daughter2Boost{ daughter4Vector2.get( 0 ),
                                       -daughter4Vector2.get( 1 ),
                                       -daughter4Vector2.get( 2 ),
-                                      -daughter4Vector2.get( 3 ) );
+                                      -daughter4Vector2.get( 3 ) };
 
     // Boosting daughters to reference frame of the mother
-    EvtVector4R daughter4Vector1_boosted = boostTo( daughter4Vector1,
-                                                    parentBoost );
-    EvtVector4R daughter4Vector2_boosted = boostTo( daughter4Vector2,
-                                                    parentBoost );
+    EvtVector4R daughter4Vector1_boosted{
+        boostTo( daughter4Vector1, parentBoost ) };
+    EvtVector4R daughter4Vector2_boosted{
+        boostTo( daughter4Vector2, parentBoost ) };
 
     // Boosting each granddaughter to reference frame of its mother
-    EvtVector4R grandDaughter4Vector1_boosted = boostTo( grandDaughter4Vector1,
-                                                         daughter1Boost );
-    EvtVector4R grandDaughter4Vector2_boosted = boostTo( grandDaughter4Vector2,
-                                                         daughter2Boost );
+    EvtVector4R grandDaughter4Vector1_boosted{
+        boostTo( grandDaughter4Vector1, daughter1Boost ) };
+    EvtVector4R grandDaughter4Vector2_boosted{
+        boostTo( grandDaughter4Vector2, daughter2Boost ) };
 
     // We calculate the normal vectors of the decay two planes
-    const EvtVector4R normalVector1 = daughter4Vector1_boosted.cross(
-        grandDaughter4Vector1_boosted );
-    const EvtVector4R normalVector2 = daughter4Vector2_boosted.cross(
-        grandDaughter4Vector2_boosted );
+    const EvtVector4R normalVector1{
+        daughter4Vector1_boosted.cross( grandDaughter4Vector1_boosted ) };
+    const EvtVector4R normalVector2{
+        daughter4Vector2_boosted.cross( grandDaughter4Vector2_boosted ) };
 
-    const double normalVector1Mag = normalVector1.d3mag();
-    const double normalVector2Mag = normalVector2.d3mag();
+    const double normalVector1Mag{ normalVector1.d3mag() };
+    const double normalVector2Mag{ normalVector2.d3mag() };
 
     if ( normalVector1Mag > 0.0 && normalVector2Mag > 0.0 ) {
         cosAco = normalVector1.dot( normalVector2 ) /
@@ -1196,18 +1196,18 @@ int main( int argc, char* argv[] )
 
     /*! Load input file in json format. */
     json config;
-    std::ifstream inputStr( argv[1] );
+    std::ifstream inputStr{ argv[1] };
     inputStr >> config;
     inputStr.close();
 
     bool allOK{ true };
     if ( config.is_array() ) {
         for ( const auto& cc : config ) {
-            TestDecayModel test( cc );
+            TestDecayModel test{ cc };
             allOK &= test.run();
         }
     } else {
-        TestDecayModel test( config );
+        TestDecayModel test{ config };
         allOK &= test.run();
     }
 

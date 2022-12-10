@@ -410,7 +410,8 @@ class EvtParticle {
     // decay prob - only relevent if already decayed
     // and is a scalar particle
     // returned is a double* that should be prob/probMax
-    double* decayProb() { return _decayProb; }
+    // FIXME - this should probably be changed to std::optional
+    const double* decayProb() const { return _decayProb; }
     void setDecayProb( double p );
 
     // Return the name of the particle (from the EvtId number)
