@@ -3,7 +3,9 @@
 import json
 import itertools
 
-particleNames = {
+class JsonFileChecker :
+
+    particleNames = {
         'B0' : [ 'Bd', 'B0' ],
         'anti-B0' : [ 'Bd', 'Bdbar', 'B0', 'B0bar' ],
         'B_s0' : [ 'Bs', 'Bs0', 'B0s' ],
@@ -99,74 +101,87 @@ particleNames = {
         'Xu-' : [ 'Xu' ],
         }
 
-def checkModels( jsonModelsList, modelString ) :
+    allowedSuffixes = [
+            'cuts',
+            'CLEO',
+            'BaBar',
+            'Longitudinal',
+            'Transverse',
+            'tree',
+            'nlo',
+            'pWave',
+            'sWave',
+            ]
 
-    modelsFromString = modelString.split('=')
+    def __init__( self, jsonFileName ) :
+        self.j = None
+        with open( 'jsonFiles/'+jsonFileName ) as jsonFile :
+            self.j = json.load( jsonFile )
 
-    jsonModelsList = [ i for i in itertools.filterfalse( lambda x : x == "", jsonModelsList ) ]
+        self.jsonFileName = jsonFileName
+        self.modelString = jsonFileName[ : jsonFileName.index('__') ]
+        self.particleString = jsonFileName[ jsonFileName.index('__') + 2 :  jsonFileName.index('.json') ]
+        self.jsonFileNameBase = jsonFileName[ : jsonFileName.index('.json') ]
 
-    if len(modelsFromString) != len(jsonModelsList) :
-        print(f'ERROR : different numbers of models: {len(modelsFromString)} in filename, {len(jsonModelsList)} in JSON')
-        return False
+    def checkModels( self ) :
 
-    allOK = True
+        modelsFromString = self.modelString.split('=')
 
-    for model1, model2 in zip( modelsFromString, jsonModelsList ) :
-        if  model1 != model2 :
-            print(f'ERROR : different model name : {model1} in filename, {model2} in JSON')
-            allOK = False
+        jsonModelsList = [ i for i in itertools.filterfalse( lambda x : x == "", self.j['models'] ) ]
 
-    return allOK
-
-
-def checkParticles( parent, daughters, grandDaughters, particleString ) :
-
-    allOK = True
-
-    generations = particleString.split('_')
-
-    allowedSuffixes = [ 'cuts', 'CLEO', 'BaBar', 'Longitudinal', 'Transverse', 'tree', 'nlo', 'pWave', 'sWave' ]
-    if generations[-1] in allowedSuffixes :
-        generations = generations[:-1]
-
-    if ( grandDaughters and len(generations) != 3 ) or ( not grandDaughters and len(generations) != 2 ) :
-        print(f'ERROR : incorrect number of generations in particle string: {generations}')
-        return False
-
-    if generations[0] not in particleNames[ parent ] :
-        print(f'ERROR : parent name mis-match : {generations[0]} in filename, {parent} in JSON')
-        allOK = False
-
-    daugList = [ particleNames[d] for d in daughters ]
-
-    combinations = itertools.product( *daugList )
-
-    string_combinations = []
-    for comb in combinations :
-        string = ''
-        for name in comb :
-            string += name
-        string_combinations.append( string )
-
-    if generations[1] not in  string_combinations :
-        print(f'ERROR : daughter name mis-match : {generations[1]} in filename, {daughters} in JSON')
-        print(string_combinations)
-        allOK = False
-
-    if grandDaughters :
-        gdStrings = generations[2].split(',')
-
-        gdLists = [ i for i in itertools.filterfalse( lambda x : len(x) == 0, grandDaughters ) ]
-
-        if len(gdStrings) != len(gdLists) :
-            print(f'ERROR : mis-match in number of grand-daughter sets: {gdStrings} in filename, {gdLists} in JSON')
+        if len(modelsFromString) != len(jsonModelsList) :
+            print(f'ERROR : different numbers of models: {len(modelsFromString)} in filename, {len(jsonModelsList)} in JSON')
             return False
 
-        for gdString, gdList in zip( gdStrings, gdLists ) :
+        allOK = True
 
-            grandDaugList = [ particleNames[gd] for gd in gdList ]
+        for model1, model2 in zip( modelsFromString, jsonModelsList ) :
+            if  model1 != model2 :
+                print(f'ERROR : different model name : {model1} in filename, {model2} in JSON')
+                allOK = False
 
-            combinations = itertools.product( *grandDaugList )
+        return allOK
+
+
+    def checkParticles( self ) :
+
+        allOK = True
+
+        models = self.j['models']
+
+        generations = self.particleString.split('_')
+        if generations[-1] in self.allowedSuffixes :
+            generations = generations[:-1]
+
+        parent = self.j['parent']
+
+        daughters = self.j['daughters']
+        if 'VSS_BMIX' == models[0] and len(daughters) == 4 and daughters[0] == daughters[2] and daughters[1] == daughters[3] :
+            daughters = daughters[:2]
+
+        grandDaughters = None
+        if 'grand_daughters' in self.j :
+            grandDaughters = self.j['grand_daughters']
+        if ( grandDaughters and len(generations) != 3 ) or ( not grandDaughters and len(generations) != 2 ) :
+            print(f'ERROR : incorrect number of generations in particle string: {generations}')
+            return False
+
+        if generations[0] not in self.particleNames[ parent ] :
+            print(f'ERROR : parent name mis-match : {generations[0]} in filename, {parent} in JSON')
+            allOK = False
+
+        tauolaIndex = -1
+        tauolaDecay = -1
+        if 'TAUOLA' in models :
+            tauolaIndex = models.index('TAUOLA')
+            tauolaDecay = self.j['parameters'][tauolaIndex][0]
+
+        if tauolaIndex == 0 :
+            print(f'WARNING : cannot check accuracy of daughter string for TAUOLA decay {tauolaDecay}')
+        else :
+            daugList = [ self.particleNames[d] for d in daughters ]
+
+            combinations = itertools.product( *daugList )
 
             string_combinations = []
             for comb in combinations :
@@ -175,25 +190,75 @@ def checkParticles( parent, daughters, grandDaughters, particleString ) :
                     string += name
                 string_combinations.append( string )
 
-            if gdString not in  string_combinations :
-                print(f'ERROR : grand-daughter name mis-match : {gdString} in filename, {gdList} in JSON')
+            if generations[1] not in  string_combinations :
+                print(f'ERROR : daughter name mis-match : {generations[1]} in filename, {daughters} in JSON')
                 print(string_combinations)
                 allOK = False
 
-    return allOK
+        if grandDaughters :
+            gdStrings = generations[2].split(',')
+
+            gdLists = [ i for i in itertools.filterfalse( lambda x : len(x) == 0, grandDaughters ) ]
+
+            if len(gdStrings) != len(gdLists) :
+                print(f'ERROR : mis-match in number of grand-daughter sets: {gdStrings} in filename, {gdLists} in JSON')
+                return False
+
+            for index, gdList in enumerate(gdLists) :
+                if 'VSS_BMIX' == models[index+1] and len(gdList) == 4 and gdList[0] == gdList[2] and gdList[1] == gdList[3] :
+                    gdList = gdList[:2]
+
+            if tauolaIndex > 0 :
+                gdStrings.pop(tauolaIndex-1)
+                gdLists.pop(tauolaIndex-1)
+                print(f'WARNING : cannot check accuracy of grand-daughter string for TAUOLA decay {tauolaDecay}')
+
+            for gdString, gdList in zip( gdStrings, gdLists ) :
+
+                grandDaugList = [ self.particleNames[gd] for gd in gdList ]
+
+                combinations = itertools.product( *grandDaugList )
+
+                string_combinations = []
+                for comb in combinations :
+                    string = ''
+                    for name in comb :
+                        string += name
+                    string_combinations.append( string )
+
+                if gdString not in  string_combinations :
+                    print(f'ERROR : grand-daughter name mis-match : {gdString} in filename, {gdList} in JSON')
+                    print(string_combinations)
+                    allOK = False
+
+        return allOK
 
 
-def checkFileNames( rootFileName, refFileName, jsonFileNameBase ) :
+    def checkFileNames( self ) :
 
-    if rootFileName != jsonFileNameBase+'.root' :
-        print(f'ERROR : ROOT file name mis-match : {jsonFileNameBase}.root from JSON filename, {rootFileName} in JSON field')
-        return False
+        rootFileName = self.j['outfile']
+        if rootFileName != self.jsonFileNameBase+'.root' :
+            print(f'ERROR : ROOT file name mis-match : {self.jsonFileNameBase}.root from JSON filename, {rootFileName} in JSON field')
+            return False
 
-    if refFileName != 'Ref'+jsonFileNameBase+'.root' :
-        print(f'ERROR : reference file name mis-match : Ref{jsonFileNameBase}.root from JSON filename, {refFileName} in JSON field')
-        return False
+        refFileName = self.j['reference']
+        if refFileName != 'Ref'+self.jsonFileNameBase+'.root' :
+            print(f'ERROR : reference file name mis-match : Ref{self.jsonFileNameBase}.root from JSON filename, {refFileName} in JSON field')
+            return False
 
-    return True
+        return True
+
+
+    def runChecks( self ) :
+
+        modelsOK = checker.checkModels()
+
+        particlesOK = checker.checkParticles()
+
+        namesOK = checker.checkFileNames()
+
+        return modelsOK and particlesOK and namesOK
+
 
 
 if __name__ == '__main__' :
@@ -208,26 +273,10 @@ if __name__ == '__main__' :
 
         print(f'Checking file: {jsonFileName}')
 
-        with open( 'jsonFiles/'+jsonFileName ) as jsonFile :
-            j = json.load(jsonFile)
+        checker = JsonFileChecker( jsonFileName )
 
-        modelString = jsonFileName[ : jsonFileName.index('__') ]
-        modelsOK = checkModels( j['models'], modelString )
-
-        if 'TAUOLA' in j['models'] or 'VSS_BMIX' in j['models'] :
-            # TODO
-            print('Skipping particle checks for TAUOLA and VSS_BMIX for the moment!')
-            particlesOK = True
-        else :
-            particleString = jsonFileName[ jsonFileName.index('__') + 2 :  jsonFileName.index('.json') ]
-            particlesOK = checkParticles( j['parent'], j['daughters'], j['grand_daughters'] if 'grand_daughters' in j else None, particleString )
-
-        jsonFileNameBase = jsonFileName[ : jsonFileName.index('.json') ]
-        namesOK = checkFileNames( j['outfile'], j['reference'], jsonFileNameBase )
-
-        if not modelsOK or not particlesOK or not namesOK :
+        if not checker.runChecks() :
             allOK = False
-
 
     if not allOK :
         sys.exit(1)
