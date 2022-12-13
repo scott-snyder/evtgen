@@ -176,7 +176,7 @@ if len(testFilesToRun) == 0 :
     sys.exit(1)
 
 testFilesToRun = set(testFilesToRun)
-print(f'Will run the following tests: {testFilesToRun}')
+print(f'Will run the following {len(testFilesToRun)} tests: {testFilesToRun}')
 
 joinOutput = True
 allOK = True
