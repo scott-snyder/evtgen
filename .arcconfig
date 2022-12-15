@@ -1,3 +1,7 @@
 {
-  "phabricator.uri" : "https://phab.hepforge.org"
+  "phabricator.uri" : "https://phab.hepforge.org",
+  "repository.callsign" : "evtgen",
+  "arc.land.onto" : [ "master" ],
+  "arc.land.onto-remote" : "origin",
+  "arc.land.strategy" : "squash"
 }

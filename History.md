@@ -11,6 +11,12 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-02-0X
 
+16 Nov 2022 Tom Latham
+* T123: Provide documention of how to contribute bug reports, feature requests, new/modified code
+
+8 Sep 2022 Fernando Abudinen, John Back, Michal Kreps, Tom Latham, Alex Ward
+* T108: Implement JSON test framework for all decay models
+    
 9 June 2022 Michal Kreps
 * D84: Improve efficiency of RareLbToLll decay model for final states with e+e- pair.
 
