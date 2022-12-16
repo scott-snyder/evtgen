@@ -27,7 +27,7 @@ class EvtDecayBase;
 
 class EvtModelReg {
   public:
-    EvtModelReg( const std::list<EvtDecayBase*>* extraModels = 0 );
+    EvtModelReg( const std::list<EvtDecayBase*>* extraModels = nullptr );
 
   private:
 };

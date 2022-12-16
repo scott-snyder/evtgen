@@ -65,7 +65,7 @@ EvtPythiaEngine::EvtPythiaEngine( std::string xmlDir, bool convertPhysCodes,
         << "Creating alias Pythia generator" << endl;
     _aliasPythiaGen = std::make_unique<Pythia8::Pythia>( xmlDir, false );
 
-    _thePythiaGenerator = 0;
+    _thePythiaGenerator = nullptr;
     _daugPDGVector.clear();
     _daugP4Vector.clear();
 
@@ -159,7 +159,7 @@ bool EvtPythiaEngine::doDecay( EvtParticle* theParticle )
         this->initialise();
     }
 
-    if ( theParticle == 0 ) {
+    if ( theParticle == nullptr ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Error in EvtPythiaEngine::doDecay. The mother particle is null. Not doing any Pythia decay."
             << endl;
@@ -286,7 +286,7 @@ void EvtPythiaEngine::storeDaughterInfo( EvtParticle* theParticle, int startInt 
 
 void EvtPythiaEngine::createDaughterEvtParticles( EvtParticle* theParent )
 {
-    if ( theParent == 0 ) {
+    if ( theParent == nullptr ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Error in EvtPythiaEngine::createDaughterEvtParticles. The parent is null"
             << endl;
@@ -334,7 +334,7 @@ void EvtPythiaEngine::createDaughterEvtParticles( EvtParticle* theParent )
         EvtDecayBase* decayModel = EvtDecayTable::getInstance()->findDecayModel(
             aliasInt, pythiaModeInt );
 
-        if ( decayModel != 0 ) {
+        if ( decayModel != nullptr ) {
             int nModeDaug = decayModel->getNDaug();
 
             // We need to make sure that the number of daughters match
@@ -389,7 +389,7 @@ void EvtPythiaEngine::createDaughterEvtParticles( EvtParticle* theParent )
         EvtParticle* theDaughter = theParent->getDaug( iDaug );
 
         // Set the correct 4-momentum for each daughter particle.
-        if ( theDaughter != 0 ) {
+        if ( theDaughter != nullptr ) {
             EvtId theDaugId = daugAliasIdVect[iDaug];
             const EvtVector4R theDaugP4 = _daugP4Vector[iDaug];
             theDaughter->init( theDaugId, theDaugP4 );
@@ -443,7 +443,7 @@ void EvtPythiaEngine::updateParticleLists()
 
         // Check that the PDG code is not zero/null and exclude other
         // special cases, e.g. those reserved for internal generator use
-        if ( entry_generic != 0 && this->validPDGCode( PDGCode ) ) {
+        if ( entry_generic != nullptr && this->validPDGCode( PDGCode ) ) {
             entry_generic->setM0( mass );
             entry_generic->setMWidth( width );
             entry_generic->setTau0( lifetime );
@@ -456,7 +456,7 @@ void EvtPythiaEngine::updateParticleLists()
 
         // Check that the PDG code is not zero/null and exclude other
         // special cases, e.g. those reserved for internal generator use
-        if ( entry_alias != 0 && this->validPDGCode( PDGCode ) ) {
+        if ( entry_alias != nullptr && this->validPDGCode( PDGCode ) ) {
             entry_alias->setM0( mass );
             entry_alias->setMWidth( width );
             entry_alias->setTau0( lifetime );
@@ -557,7 +557,7 @@ void EvtPythiaEngine::updatePythiaDecayTable( EvtId& particleId, int aliasInt,
         EvtDecayBase* decayModel =
             EvtDecayTable::getInstance()->findDecayModel( aliasInt, iMode );
 
-        if ( decayModel != 0 ) {
+        if ( decayModel != nullptr ) {
             int nDaug = decayModel->getNDaug();
 
             // If the decay mode has no daughters, then that means that there will be
@@ -645,7 +645,7 @@ int EvtPythiaEngine::getModeInt( EvtDecayBase* decayModel )
 {
     int tmpModeInt( 0 ), modeInt( 0 );
 
-    if ( decayModel != 0 ) {
+    if ( decayModel != nullptr ) {
         int nVars = decayModel->getNArg();
         // Just read the first integer, which specifies the Pythia decay model.
         // Ignore any other values.

@@ -180,7 +180,7 @@ class EvtParticle {
     /**
   * Iterates over the particles in a decay chain.
   */
-    EvtParticle* nextIter( EvtParticle* rootOfTree = 0 );
+    EvtParticle* nextIter( EvtParticle* rootOfTree = nullptr );
 
     /**
   * Makes stdhep list

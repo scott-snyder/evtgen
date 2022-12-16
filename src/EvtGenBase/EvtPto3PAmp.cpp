@@ -59,7 +59,7 @@ EvtPto3PAmp::EvtPto3PAmp( const EvtPto3PAmp& other ) :
     _pairRes( other._pairRes ),
     _spin( other._spin ),
     _typeN( other._typeN ),
-    _prop( ( other._prop ) ? (EvtPropagator*)other._prop->clone() : 0 ),
+    _prop( ( other._prop ) ? (EvtPropagator*)other._prop->clone() : nullptr ),
     _g0( other._g0 ),
     _min( other._min ),
     _max( other._max ),

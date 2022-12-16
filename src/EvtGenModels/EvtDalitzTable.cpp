@@ -49,9 +49,9 @@ EvtDalitzTable::~EvtDalitzTable()
 EvtDalitzTable* EvtDalitzTable::getInstance( const std::string dec_name,
                                              bool verbose )
 {
-    static EvtDalitzTable* theDalitzTable = 0;
+    static EvtDalitzTable* theDalitzTable = nullptr;
 
-    if ( theDalitzTable == 0 ) {
+    if ( theDalitzTable == nullptr ) {
         theDalitzTable = new EvtDalitzTable();
     }
 
@@ -83,7 +83,7 @@ void EvtDalitzTable::readXMLDecayFile( const std::string dec_name, bool verbose 
 
     _readFiles.push_back( dec_name );
 
-    EvtDalitzDecayInfo* dalitzDecay = 0;
+    EvtDalitzDecayInfo* dalitzDecay = nullptr;
     double probMax = 0;
     EvtId ipar;
     std::string decayParent = "";
@@ -385,7 +385,7 @@ void EvtDalitzTable::readXMLDecayFile( const std::string dec_name, bool verbose 
                 dalitzDecay->setProbMax( probMax );
                 addDecay( ipar, *dalitzDecay );
                 delete dalitzDecay;
-                dalitzDecay = 0;
+                dalitzDecay = nullptr;
             } else if ( verbose ) {
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
                     << "Unexpected tag " << parser.getTagTitle()

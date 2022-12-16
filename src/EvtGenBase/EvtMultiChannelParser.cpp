@@ -121,7 +121,7 @@ void EvtMultiChannelParser::parse( const char* file, const char* model )
 void EvtMultiChannelParser::parse( const std::vector<std::string>& v )
 {
     // place holder for strtod
-    char** tc = 0;
+    char** tc = nullptr;
 
     // Get PDF maximum or number of points to
     // use in the scan.
@@ -200,7 +200,7 @@ void EvtMultiChannelParser::parseComplexCoef( size_t& i,
                                               EvtComplex& c, int& format )
 {
     // place holder for strtod
-    char** tc = 0;
+    char** tc = nullptr;
 
     std::string coefString = v[i++];
     assert( coefString == std::string( "COEFFICIENT" ) );
@@ -233,7 +233,7 @@ double EvtMultiChannelParser::parseRealCoef( int& i,
                                              const std::vector<std::string>& v )
 {
     // place holder for strtod
-    char** tc = 0;
+    char** tc = nullptr;
     double value = 0;
 
     if ( v[i] == std::string( "COEFFICIENT" ) ) {

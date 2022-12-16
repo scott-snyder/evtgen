@@ -151,10 +151,10 @@ void EvtbsToLLLLHyperCPAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
         ::abort();
     }
 
-    EvtParticle* lep1Plus = 0;
-    EvtParticle* lep1Minus = 0;
-    EvtParticle* lep2Plus = 0;
-    EvtParticle* lep2Minus = 0;
+    EvtParticle* lep1Plus = nullptr;
+    EvtParticle* lep1Minus = nullptr;
+    EvtParticle* lep2Plus = nullptr;
+    EvtParticle* lep2Minus = nullptr;
 
     EvtVector4R p;    // B-meson momentum in the B-rest frame
 

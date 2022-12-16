@@ -44,7 +44,7 @@
 template <class T>
 class EvtIntervalDecayAmp : public EvtDecayAmp {
   public:
-    EvtIntervalDecayAmp() : _probMax( 0. ), _nScan( 0 ), _fact( 0 ) {}
+    EvtIntervalDecayAmp() : _probMax( 0. ), _nScan( 0 ), _fact( nullptr ) {}
 
     EvtIntervalDecayAmp( const EvtIntervalDecayAmp<T>& other ) :
         _probMax( other._probMax ), _nScan( other._nScan ), COPY_PTR( _fact )

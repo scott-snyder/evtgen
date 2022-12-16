@@ -34,7 +34,7 @@ ostream& EvtGenReport( EvtGenSeverity severity, const char* facility )
 {
     int printNoFacility = 1;
 
-    if ( ( facility == 0 ) && ( printNoFacility == 1 ) ) {
+    if ( ( facility == nullptr ) && ( printNoFacility == 1 ) ) {
         cout << "There is no `facility' implemented in `report'" << endl;
         printNoFacility = 0;
     }

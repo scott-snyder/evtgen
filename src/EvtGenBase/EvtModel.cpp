@@ -38,7 +38,7 @@
 #include <string>
 using std::fstream;
 
-EvtModel* EvtModel::_instance = 0;
+EvtModel* EvtModel::_instance = nullptr;
 
 EvtModel::EvtModel()
 {
@@ -46,15 +46,15 @@ EvtModel::EvtModel()
 
 EvtDecayBase* EvtModel::getFcn( std::string model_name )
 {
-    EvtDecayBase* model = 0;
+    EvtDecayBase* model = nullptr;
     if ( _modelNameHash.find( model_name ) != _modelNameHash.end() ) {
         model = _modelNameHash[model_name];
     }
 
-    if ( model == 0 ) {
+    if ( model == nullptr ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Did not find the right model:" << model_name.c_str() << "\n";
-        return 0;
+        return nullptr;
     }
 
     return model->clone();
@@ -91,7 +91,7 @@ int EvtModel::isCommand( std::string cmd )
 
 void EvtModel::storeCommand( std::string cmd, std::string cnfgstr )
 {
-    EvtDecayBase* model = 0;
+    EvtDecayBase* model = nullptr;
     if ( _commandNameHash.find( cmd ) != _commandNameHash.end() ) {
         model = _commandNameHash[cmd];
     }

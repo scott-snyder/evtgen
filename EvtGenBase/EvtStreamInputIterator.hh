@@ -43,7 +43,7 @@ class EvtStreamInputIterator {
     EvtStreamInputIterator() : _counter( 0 ) {}
 
     EvtStreamInputIterator( const EvtStreamInputIterator& other ) :
-        _counter( other._counter ? other._counter->clone() : 0 ),
+        _counter( other._counter ? other._counter->clone() : nullptr ),
         _currentValue( other._currentValue )
     {
     }

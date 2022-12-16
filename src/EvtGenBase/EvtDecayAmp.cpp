@@ -79,7 +79,7 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
                 << "channel        :" << p->getChannel() << endl;
             EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                 << "Momentum:" << p->getP4() << " " << p->mass() << endl;
-            if ( p->getParent() != 0 ) {
+            if ( p->getParent() != nullptr ) {
                 EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                     << "parent:"
                     << EvtPDL::name( p->getParent()->getId() ).c_str() << endl;
@@ -189,20 +189,20 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
 
                     for ( size_t idaug = 0; idaug < p->getNDaug(); idaug++ ) {
                         EvtParticle* daughter = p->getDaug( idaug );
-                        if ( daughter != 0 ) {
+                        if ( daughter != nullptr ) {
                             daughter->printTree();
                         }
                     }
 
                     EvtParticle* pParent = p->getParent();
-                    if ( pParent != 0 ) {
+                    if ( pParent != nullptr ) {
                         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                             << "Parent:"
                             << EvtPDL::name( pParent->getId() ).c_str() << endl;
 
                         EvtParticle* grandParent = pParent->getParent();
 
-                        if ( grandParent != 0 ) {
+                        if ( grandParent != nullptr ) {
                             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                                 << "GrandParent:"
                                 << EvtPDL::name( grandParent->getId() ).c_str()

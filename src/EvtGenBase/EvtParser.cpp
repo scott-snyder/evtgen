@@ -34,8 +34,8 @@ EvtParser::EvtParser()
 {
     _ntoken = 0;
     _lengthoftokenlist = 0;
-    _tokenlist = 0;
-    _linelist = 0;
+    _tokenlist = nullptr;
+    _linelist = nullptr;
 }
 
 EvtParser::~EvtParser()

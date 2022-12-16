@@ -58,9 +58,9 @@ EvtDecayTable::~EvtDecayTable()
 
 EvtDecayTable* EvtDecayTable::getInstance()
 {
-    static EvtDecayTable* theDecayTable = 0;
+    static EvtDecayTable* theDecayTable = nullptr;
 
-    if ( theDecayTable == 0 ) {
+    if ( theDecayTable == nullptr ) {
         theDecayTable = new EvtDecayTable();
     }
 
@@ -91,7 +91,7 @@ EvtDecayBase* EvtDecayTable::getDecayFunc( EvtParticle* p )
     partnum = p->getId().getAlias();
 
     if ( _decaytable[partnum].getNMode() == 0 )
-        return 0;
+        return nullptr;
     return _decaytable[partnum].getDecayModel( p );
 }
 
@@ -1445,7 +1445,7 @@ EvtDecayBase* EvtDecayTable::findDecayModel( EvtId id, int modeInt )
 
 EvtDecayBase* EvtDecayTable::findDecayModel( int aliasInt, int modeInt )
 {
-    EvtDecayBase* theModel( 0 );
+    EvtDecayBase* theModel( nullptr );
 
     if ( aliasInt >= 0 && aliasInt < (int)EvtPDL::entries() ) {
         theModel = _decaytable[aliasInt].getDecayModel( modeInt );

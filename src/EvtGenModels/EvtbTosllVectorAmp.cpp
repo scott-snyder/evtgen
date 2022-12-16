@@ -131,8 +131,8 @@ void EvtbTosllVectorAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
     static EvtIdSet bmesons( "B-", "anti-B0", "anti-B_s0" );
     static EvtIdSet bbarmesons( "B+", "B0", "B_s0" );
 
-    EvtParticle* lepPlus = 0;
-    EvtParticle* lepMinus = 0;
+    EvtParticle* lepPlus = nullptr;
+    EvtParticle* lepMinus = nullptr;
 
     int charge1 = EvtPDL::chg3( parent->getDaug( 1 )->getId() );
     int charge2 = EvtPDL::chg3( parent->getDaug( 2 )->getId() );

@@ -326,7 +326,7 @@ bool EvtTauolaEngine::doDecay( EvtParticle* tauParticle )
         this->initialise();
     }
 
-    if ( tauParticle == 0 ) {
+    if ( tauParticle == nullptr ) {
         return false;
     }
 
@@ -369,7 +369,7 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
 
     // Get the parent of this tau particle
     EvtParticle* theParent = tauParticle->getParent();
-    GenParticlePtr hepMCParent( 0 );
+    GenParticlePtr hepMCParent( nullptr );
 
     // Assign the parent particle as the incoming particle to the vertex.
     if ( theParent ) {
@@ -573,8 +573,8 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
 GenParticlePtr EvtTauolaEngine::createGenParticle( EvtParticle* theParticle )
 {
     // Method to create an HepMC::GenParticle version of the given EvtParticle.
-    if ( theParticle == 0 ) {
-        return 0;
+    if ( theParticle == nullptr ) {
+        return nullptr;
     }
 
     // Get the 4-momentum (E, px, py, pz) for the EvtParticle

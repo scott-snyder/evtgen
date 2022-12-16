@@ -291,8 +291,8 @@ void EvtbTosllScalarAmpNewExt::CalcAmp(
     int charge1 = EvtPDL::chg3( parent->getDaug( 1 )->getId() );
     int charge2 = EvtPDL::chg3( parent->getDaug( 2 )->getId() );
 
-    EvtParticle* lepPlus = 0;
-    EvtParticle* lepMinus = 0;
+    EvtParticle* lepPlus = nullptr;
+    EvtParticle* lepMinus = nullptr;
 
     lepPlus = ( charge1 > charge2 ) ? parent->getDaug( 1 ) : parent->getDaug( 2 );
     lepMinus = ( charge1 < charge2 ) ? parent->getDaug( 1 )

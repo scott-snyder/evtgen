@@ -91,7 +91,7 @@ EvtParticle* EvtParticleFactory::particleFactory( EvtSpinType::spintype spinType
 
     ::abort();
 
-    return 0;
+    return nullptr;
 }
 
 EvtParticle* EvtParticleFactory::particleFactory( EvtId id, EvtVector4R p4,
@@ -195,7 +195,7 @@ EvtParticle* EvtParticleFactory::particleFactory( EvtId id, EvtVector4R p4,
 
     ::abort();
 
-    return 0;
+    return nullptr;
 }
 
 EvtParticle* EvtParticleFactory::particleFactory( EvtId id, EvtVector4R p4 )

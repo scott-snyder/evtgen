@@ -331,7 +331,7 @@ const char* EvtCyclic3::c_str( Index i )
             return "C";
     }
     assert( 0 );
-    return 0;    // sngh
+    return nullptr;    // sngh
 }
 
 const char* EvtCyclic3::c_str( Pair i )
@@ -345,7 +345,7 @@ const char* EvtCyclic3::c_str( Pair i )
             return "AB";
     }
     assert( 0 );
-    return 0;    // sngh
+    return nullptr;    // sngh
 }
 
 const char* EvtCyclic3::c_str( Perm p )

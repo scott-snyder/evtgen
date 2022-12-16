@@ -229,8 +229,8 @@ void EvtRareLbToLll::calcAmp( EvtAmp& amp, const EvtParticle& parent )
 
     const bool isparticle = isParticle( parent );
 
-    const EvtParticle* lp = 0;
-    const EvtParticle* lm = 0;
+    const EvtParticle* lp = nullptr;
+    const EvtParticle* lm = nullptr;
 
     if ( leptons.contains( parent.getDaug( 1 )->getId() ) ) {
         lp = parent.getDaug( 1 );

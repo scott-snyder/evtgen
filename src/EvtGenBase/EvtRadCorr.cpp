@@ -28,13 +28,13 @@
 #include <stdlib.h>
 using std::endl;
 
-EvtAbsRadCorr* EvtRadCorr::_fsrEngine = 0;
+EvtAbsRadCorr* EvtRadCorr::_fsrEngine = nullptr;
 bool EvtRadCorr::_alwaysRadCorr = false;
 bool EvtRadCorr::_neverRadCorr = false;
 
 EvtRadCorr::EvtRadCorr()
 {
-    _fsrEngine = 0;
+    _fsrEngine = nullptr;
     _alwaysRadCorr = false;
     _neverRadCorr = false;
 }
@@ -43,7 +43,7 @@ EvtRadCorr::~EvtRadCorr()
 {
     if ( _fsrEngine )
         delete _fsrEngine;
-    _fsrEngine = 0;
+    _fsrEngine = nullptr;
 }
 
 void EvtRadCorr::setRadCorrEngine( EvtAbsRadCorr* fsrEngine )
@@ -53,7 +53,7 @@ void EvtRadCorr::setRadCorrEngine( EvtAbsRadCorr* fsrEngine )
 
 void EvtRadCorr::doRadCorr( EvtParticle* p )
 {
-    if ( _fsrEngine == 0 ) {
+    if ( _fsrEngine == nullptr ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "No RadCorr model available in "
             << "EvtRadCorr::doRadCorr()." << endl;

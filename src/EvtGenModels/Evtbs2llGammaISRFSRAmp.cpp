@@ -110,8 +110,8 @@ void Evtbs2llGammaISRFSRAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
         ::abort();
     }
 
-    EvtParticle* lepPlus = 0;
-    EvtParticle* lepMinus = 0;
+    EvtParticle* lepPlus = nullptr;
+    EvtParticle* lepMinus = nullptr;
 
     lepPlus = ( charge1 > charge2 )
                   ? parent->getDaug( il1 )

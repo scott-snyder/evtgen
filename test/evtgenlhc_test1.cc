@@ -150,12 +150,12 @@ void runJpsiPolarization( int nevent, EvtGen& myGenerator );
 void runDDK( int nevent, EvtGen& myGenerator );
 void runPhspDecaytimeCut( int nevent, EvtGen& myGenerator );
 
-int countInclusive( std::string name, EvtParticle* root, TH1F* mom = 0,
-                    TH1F* mass = 0 );
+int countInclusive( std::string name, EvtParticle* root, TH1F* mom = nullptr,
+                    TH1F* mass = nullptr );
 int countInclusiveParent( std::string name, EvtParticle* root, EvtIdSet setIds,
-                          TH1F* mom = 0 );
+                          TH1F* mom = nullptr );
 int countInclusiveSubTree( std::string name, EvtParticle* root, EvtIdSet setIds,
-                           TH1F* mom = 0 );
+                           TH1F* mom = nullptr );
 void runBaryonic( int nEvent, EvtGen& myGenerator );
 void run3BPhspRegion( int nEvent, EvtGen& myGenerator );
 void runFourBody( int nevent, EvtGen& myGenerator );
@@ -163,7 +163,7 @@ void runFourBody( int nevent, EvtGen& myGenerator );
 int main( int argc, char* argv[] )
 {
     // Define the random number generator
-    EvtRandomEngine* myRandomEngine = 0;
+    EvtRandomEngine* myRandomEngine = nullptr;
 
 #ifdef EVTGEN_CPP11
     // Use the Mersenne-Twister generator (C++11 only)
@@ -190,7 +190,7 @@ int main( int argc, char* argv[] )
         return 1;
     }
 
-    EvtAbsRadCorr* radCorrEngine = 0;
+    EvtAbsRadCorr* radCorrEngine = nullptr;
     std::list<EvtDecayBase*> extraModels;
 
 #ifdef EVTGEN_EXTERNAL
@@ -690,7 +690,7 @@ void runJpsiPolarization( int nevent, EvtGen& myGenerator )
                 }
             }
             p = p->nextIter( root_part );
-        } while ( p != 0 );
+        } while ( p != nullptr );
 
         root_part->deleteTree();
     } while ( count++ < nevent );
@@ -904,7 +904,7 @@ void runDDK( int nevent, EvtGen& myGenerator )
             if ( theKs.contains( type ) && theBs.contains( typePar ) )
                 nK++;
             p = p->nextIter( theB01 );
-        } while ( p != 0 );
+        } while ( p != nullptr );
         if ( nD == 2 && nK == 1 )
             nDDK++;
 
@@ -920,7 +920,7 @@ void runDDK( int nevent, EvtGen& myGenerator )
             if ( theKs.contains( type ) && theBs.contains( typePar ) )
                 nK++;
             p = p->nextIter( theB02 );
-        } while ( p != 0 );
+        } while ( p != nullptr );
         if ( nD == 2 && nK == 1 )
             nDDK++;
 
@@ -1268,7 +1268,7 @@ void runFinalStates( int nevent, EvtGen& myGenerator )
 
     std::vector<std::string> dList[20];
     int dListNum[20];
-    std::vector<std::string>* dListItem = 0;
+    std::vector<std::string>* dListItem = nullptr;
     std::string dListName[20];
     int ik, lk;
     std::string tk = "";
@@ -1422,7 +1422,7 @@ std::vector<std::string> findFinalState( EvtParticle* tree )
 
         p = p->nextIter();
 
-    } while ( p != 0 );
+    } while ( p != nullptr );
 
     return fs;
 }
@@ -1504,7 +1504,7 @@ void runTrackMult( int nevent, EvtGen& myGenerator )
             }
             p = p->nextIter( root_part );
 
-        } while ( p != 0 );
+        } while ( p != nullptr );
 
         //Now need to figure out which histogram to book
         trackAll->Fill( evTracks );
@@ -1643,7 +1643,7 @@ void runGeneric( int neventOrig, EvtGen& myGenerator, std::string listfile )
                                       5.9 * 5.9 ),
                                 0.0, 0.0, 5.9 );
 
-            EvtParticle* root_part = 0;
+            EvtParticle* root_part = nullptr;
             if ( neventOrig > 0 ) {
                 root_part = EvtParticleFactory::particleFactory( UPS4, p_init );
             } else {
@@ -1748,7 +1748,7 @@ void runGeneric( int neventOrig, EvtGen& myGenerator, std::string listfile )
             }
             EvtVector4R p_init( EvtPDL::getMass( UPS4 ), 0.0, 0.0, 0.0 );
 
-            EvtParticle* root_part = 0;
+            EvtParticle* root_part = nullptr;
             if ( neventOrig > 0 ) {
                 root_part = EvtParticleFactory::particleFactory( UPS4, p_init );
             } else {
@@ -3837,7 +3837,7 @@ void runPartWave2( int nevent, EvtGen& myGenerator )
 
         p_jpsi = root_part->getDaug( 0 );
 
-        p_rho = 0;
+        p_rho = nullptr;
 
         if ( p_jpsi->getDaug( 0 )->getNDaug() == 2 ) {
             p_rho = p_jpsi->getDaug( 0 );
@@ -3929,7 +3929,7 @@ void runTwoBody( int nevent, EvtGen& myGenerator, std::string decFile,
             }
 
             if ( nDaug == 2 ) {
-                if ( p->getParent() == 0 ) {
+                if ( p->getParent() == nullptr ) {
                     EvtVector4R p4 = p->getDaug( 0 )->getP4();
                     double ctheta = p4.get( 3 ) / p4.d3mag();
                     double phi = atan2( p4.get( 2 ), p4.get( 1 ) );
@@ -4001,7 +4001,7 @@ void runTwoBody( int nevent, EvtGen& myGenerator, std::string decFile,
 
             p = p->nextIter( root_part );
 
-        } while ( p != 0 );
+        } while ( p != nullptr );
 
         root_part->deleteTree();
 
@@ -4300,7 +4300,7 @@ void runBtoXsgamma( int nevent, EvtGen& myGenerator )
             << "bId1a " << bId1a << " bId1b " << bId1b << " bId2a " << bId2a
             << " bId2b " << bId2b << " for event " << count << std::endl;
 
-        EvtParticle* Bpeng = 0;
+        EvtParticle* Bpeng = nullptr;
         //int bnum=0;
         int pengcount = 0;
         if ( ( ( bId1a == strangeid ) && ( bId1b == 22 ) ) ||
@@ -4515,7 +4515,7 @@ void runBtoK1273gamma( int nevent, EvtGen& myGenerator )
             << "bId1a " << bId1a << " bId1b " << bId1b << " bId2a " << bId2a
             << " bId2b " << bId2b << " for event " << count << std::endl;
 
-        EvtParticle* Bpeng = 0;
+        EvtParticle* Bpeng = nullptr;
         //int bnum=0;
         int pengcount = 0;
         if ( ( ( bId1a == strangeid ) && ( bId1b == 22 ) ) ||
@@ -4727,7 +4727,7 @@ int countInclusive( std::string name, EvtParticle* root_part, TH1F* mom,
 
         p = p->nextIter( root_part );
 
-    } while ( p != 0 );
+    } while ( p != nullptr );
 
     return temp;
 }
@@ -4745,7 +4745,7 @@ int countInclusiveSubTree( std::string name, EvtParticle* root_part,
         //p->printTree();
         p = p->nextIter( root_part );
 
-    } while ( p != 0 );
+    } while ( p != nullptr );
     //EvtGenReport(EVTGEN_INFO,"EvtGen") << "done"<<std::endl;
     return temp;
 }
@@ -4771,7 +4771,7 @@ int countInclusiveParent( std::string name, EvtParticle* root_part,
         }
 
         p = p->nextIter( root_part );
-    } while ( p != 0 );
+    } while ( p != nullptr );
 
     return temp;
 }
@@ -4983,7 +4983,7 @@ void runBHadronic( int nevent, EvtGen& myGenerator )
                    << std::endl;
             p = p->nextIter();
 
-        } while ( p != 0 );
+        } while ( p != nullptr );
 
         root_part->deleteTree();
 
@@ -5489,7 +5489,7 @@ void runDump( int nevent, EvtGen& myGenerator )
 
             p = p->nextIter();
 
-        } while ( p != 0 );
+        } while ( p != nullptr );
 
         outmix << "event" << std::endl;
 
@@ -5538,7 +5538,7 @@ void runGenericCont( int nevent, EvtGen& myGenerator )
 
             p = p->nextIter();
 
-        } while ( p != 0 );
+        } while ( p != nullptr );
 
         //root_part->printTree();
 

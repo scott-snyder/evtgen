@@ -162,7 +162,7 @@ void EvtVubHybrid::decay( EvtParticle* p )
     int j;
     // B+ -> u-bar specflav l+ nu
 
-    EvtParticle *xuhad( 0 ), *lepton( 0 ), *neutrino( 0 );
+    EvtParticle *xuhad( nullptr ), *lepton( nullptr ), *neutrino( nullptr );
     EvtVector4R p4;
     // R. Faccini 21/02/03
     // move the reweighting up , before also shooting the fermi distribution

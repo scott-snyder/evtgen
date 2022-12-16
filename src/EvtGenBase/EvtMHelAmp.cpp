@@ -34,7 +34,7 @@ EvtMHelAmp::EvtMHelAmp( const EvtId& id, EvtMLineShape* lineshape,
 {
     _id = id;
     _twospin = EvtSpinType::getSpin2( EvtPDL::getSpinType( id ) );
-    _parent = NULL;
+    _parent = nullptr;
     _lineshape = lineshape;
 
     _elem = elem;
@@ -82,7 +82,7 @@ EvtSpinAmp EvtMHelAmp::amplitude( const vector<EvtVector4R>& product ) const
     EvtVector4R d = _children[0]->get4vector( product );
     double phi, theta;
 
-    if ( _parent == NULL ) {
+    if ( _parent == nullptr ) {
         // This means that we're calculating the first level and we need to just
         // calculate the polar and azymuthal angles daughters in rest frame of
         // this (root) particle (this is automatic).
@@ -97,7 +97,7 @@ EvtSpinAmp EvtMHelAmp::amplitude( const vector<EvtVector4R>& product ) const
 
         // See if we have a grandparent - if no then the z-axis is defined by
         // the z-axis of the root particle
-        EvtVector4R g = _parent->getparent() == NULL
+        EvtVector4R g = _parent->getparent() == nullptr
                             ? EvtVector4R( 0.0, 0.0, 0.0, 1.0 )
                             : _parent->getparent()->get4vector( product );
 

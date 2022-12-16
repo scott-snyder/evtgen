@@ -32,14 +32,14 @@ EvtdFunctionSingle::EvtdFunctionSingle()
     _j = 0;
     _m1 = 0;
     _m2 = 0;
-    _coef = 0;
+    _coef = nullptr;
     _kmin = 0;
     _kmax = 0;
 }
 
 EvtdFunctionSingle::~EvtdFunctionSingle()
 {
-    if ( _coef != 0 )
+    if ( _coef != nullptr )
         delete[] _coef;
 }
 

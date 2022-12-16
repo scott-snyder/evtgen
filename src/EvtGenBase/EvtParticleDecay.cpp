@@ -36,7 +36,7 @@
 using std::fstream;
 void EvtParticleDecay::printSummary()
 {
-    if ( _decay != 0 )
+    if ( _decay != nullptr )
         _decay->printSummary();
 }
 

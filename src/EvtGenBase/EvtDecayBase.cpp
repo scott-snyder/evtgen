@@ -621,7 +621,7 @@ double EvtDecayBase::getArg( unsigned int j )
         i++;
     }
 
-    char** tc = 0;
+    char** tc = nullptr;
     double result = strtod( _args[j].c_str(), tc );
 
     if ( _storedArgs.size() < j + 1 ) {    // then store the argument's value

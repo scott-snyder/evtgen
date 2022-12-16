@@ -33,12 +33,12 @@
 
 EvtMultibody::~EvtMultibody()
 {
-    if ( _decayTree != NULL )
+    if ( _decayTree != nullptr )
         delete _decayTree;
-    _decayTree = NULL;
-    if ( _ilist != NULL )
+    _decayTree = nullptr;
+    if ( _ilist != nullptr )
         delete[] _ilist;
-    _ilist = NULL;
+    _ilist = nullptr;
 }
 
 std::string EvtMultibody::getName()

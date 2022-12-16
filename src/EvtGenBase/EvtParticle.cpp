@@ -60,7 +60,7 @@ EvtParticle::~EvtParticle()
 EvtParticle::EvtParticle()
 {
     _ndaug = 0;
-    _parent = 0;
+    _parent = nullptr;
     _channel = -10;
     _t = 0.0;
     _genlifetime = 1;
@@ -68,7 +68,7 @@ EvtParticle::EvtParticle()
     _isInit = false;
     _validP4 = false;
     _isDecayed = false;
-    _decayProb = 0;
+    _decayProb = nullptr;
     _intAttributes.clear();
     _dblAttributes.clear();
     //   _mix=false;
@@ -248,7 +248,7 @@ void EvtParticle::initDecay( bool useMinMass )
     // carefull - the parent mass might be fixed in stone..
     EvtParticle* par = p->getParent();
     double parMass = -1.;
-    if ( par != 0 ) {
+    if ( par != nullptr ) {
         if ( par->hasValidP4() )
             parMass = par->mass();
         for ( size_t i = 0; i < par->getNDaug(); i++ ) {
@@ -271,8 +271,8 @@ void EvtParticle::initDecay( bool useMinMass )
             }
         }
 
-        EvtId* dauId = 0;
-        double* dauMasses = 0;
+        EvtId* dauId = nullptr;
+        double* dauMasses = nullptr;
         if ( _ndaug > 0 ) {
             dauId = new EvtId[_ndaug];
             dauMasses = new double[_ndaug];
@@ -281,8 +281,8 @@ void EvtParticle::initDecay( bool useMinMass )
                 dauMasses[j] = p->getDaug( j )->mass();
             }
         }
-        EvtId* parId = 0;
-        EvtId* othDauId = 0;
+        EvtId* parId = nullptr;
+        EvtId* othDauId = nullptr;
         EvtParticle* tempPar = p->getParent();
         if ( tempPar ) {
             parId = new EvtId( tempPar->getId() );
@@ -391,8 +391,8 @@ void EvtParticle::initDecay( bool useMinMass )
     }
 
     int j;
-    EvtId* dauId = 0;
-    double* dauMasses = 0;
+    EvtId* dauId = nullptr;
+    double* dauMasses = nullptr;
     int nDaugT = p->getNDaug();
     if ( nDaugT > 0 ) {
         dauId = new EvtId[nDaugT];
@@ -403,8 +403,8 @@ void EvtParticle::initDecay( bool useMinMass )
         }
     }
 
-    EvtId* parId = 0;
-    EvtId* othDauId = 0;
+    EvtId* parId = nullptr;
+    EvtId* othDauId = nullptr;
     EvtParticle* tempPar = p->getParent();
     if ( tempPar ) {
         parId = new EvtId( tempPar->getId() );
@@ -496,7 +496,7 @@ void EvtParticle::decay()
         decayer = EvtDecayTable::getInstance()->getDecayFunc( p );
     }
     //now we have accepted a set of masses - time
-    if ( decayer != 0 ) {
+    if ( decayer != nullptr ) {
         decayer->makeDecay( p );
     } else {
         p->_rhoBackward.setDiag( p->getSpinStates() );
@@ -564,7 +564,7 @@ double EvtParticle::compMassProb()
     }
 
     int nDaug = p->getNDaug();
-    double* dMasses = 0;
+    double* dMasses = nullptr;
 
     int i;
     if ( nDaug > 0 ) {
@@ -761,7 +761,7 @@ EvtVector4R EvtParticle::getP4Lab() const
     temp = this->getP4();
     ptemp = this;
 
-    while ( ptemp->getParent() != 0 ) {
+    while ( ptemp->getParent() != nullptr ) {
         ptemp = ptemp->getParent();
         mom = ptemp->getP4();
         temp = boostTo( temp, mom );
@@ -777,7 +777,7 @@ EvtVector4R EvtParticle::getP4LabBeforeFSR()
     temp = this->_pBeforeFSR;
     ptemp = this;
 
-    while ( ptemp->getParent() != 0 ) {
+    while ( ptemp->getParent() != nullptr ) {
         ptemp = ptemp->getParent();
         mom = ptemp->getP4();
         temp = boostTo( temp, mom );
@@ -798,12 +798,12 @@ EvtVector4R EvtParticle::get4Pos() const
     temp.set( 0.0, 0.0, 0.0, 0.0 );
     ptemp = getParent();
 
-    if ( ptemp == 0 )
+    if ( ptemp == nullptr )
         return temp;
 
     temp = ( ptemp->_t / ptemp->mass() ) * ( ptemp->getP4() );
 
-    while ( ptemp->getParent() != 0 ) {
+    while ( ptemp->getParent() != nullptr ) {
         ptemp = ptemp->getParent();
         mom = ptemp->getP4();
         temp = boostTo( temp, mom );
@@ -826,8 +826,8 @@ EvtParticle* EvtParticle::nextIter( EvtParticle* rootOfTree )
 
     do {
         bpart = current->_parent;
-        if ( bpart == 0 )
-            return 0;
+        if ( bpart == nullptr )
+            return nullptr;
         i = 0;
         while ( bpart->_daug[i] != current ) {
             i++;
@@ -835,7 +835,7 @@ EvtParticle* EvtParticle::nextIter( EvtParticle* rootOfTree )
 
         if ( bpart == rootOfTree ) {
             if ( i + 1 == bpart->_ndaug )
-                return 0;
+                return nullptr;
         }
 
         i++;
@@ -1270,7 +1270,7 @@ void EvtParticle::makeDaughters( unsigned int ndaugstore, EvtId* id )
 
 void EvtParticle::setDecayProb( double prob )
 {
-    if ( _decayProb == 0 )
+    if ( _decayProb == nullptr )
         _decayProb = new double;
     *_decayProb = prob;
 }

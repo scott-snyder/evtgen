@@ -111,7 +111,7 @@ int main( int argc, char** argv )
 
     // Define the random number generator
 
-    EvtRandomEngine* myRandomEngine = 0;
+    EvtRandomEngine* myRandomEngine = nullptr;
 
 #ifdef EVTGEN_CPP11
     // Use the Mersenne-Twister generator (C++11 only)
@@ -120,7 +120,7 @@ int main( int argc, char** argv )
     myRandomEngine = new EvtSimpleRandomEngine();
 #endif
 
-    EvtAbsRadCorr* radCorrEngine = 0;
+    EvtAbsRadCorr* radCorrEngine = nullptr;
     std::list<EvtDecayBase*> extraModels;
 
 #ifdef EVTGEN_EXTERNAL
@@ -147,7 +147,7 @@ int main( int argc, char** argv )
 
     // Start all initial (parent) decays at the origin
     EvtVector4R origin( 0.0, 0.0, 0.0, 0.0 );
-    EvtSpinDensity* spinDensity = 0;
+    EvtSpinDensity* spinDensity = nullptr;
 
     EvtSpinType::spintype baseSpin = EvtPDL::getSpinType( theId );
 
@@ -259,7 +259,7 @@ void storeBFlightTimes( GenEvent* theEvent )
 
     // Loop over vertices in the event
     for ( auto theVertex : theEvent->vertices() ) {
-        if ( theVertex == 0 ) {
+        if ( theVertex == nullptr ) {
             continue;
         }
 
@@ -272,7 +272,7 @@ void storeBFlightTimes( GenEvent* theEvent )
         FourVector B4mtm;
 
         for ( auto inParticle : theVertex->particles_in() ) {
-            if ( inParticle == 0 ) {
+            if ( inParticle == nullptr ) {
                 continue;
             }
 
@@ -293,7 +293,7 @@ void storeBFlightTimes( GenEvent* theEvent )
             // Check outgoing particles
             std::vector<int> daugIdVect;
             for ( auto outParticle : theVertex->particles_out() ) {
-                if ( outParticle != 0 ) {
+                if ( outParticle != nullptr ) {
                     int outPDGId = outParticle->pdg_id();
                     daugIdVect.push_back( outPDGId );
                 }
@@ -337,7 +337,7 @@ void storeBFlightTimes( GenEvent* theEvent )
         // Get the vertex
         HepMC::GenVertex* theVertex = *vertexIter;
 
-        if ( theVertex == 0 ) {
+        if ( theVertex == nullptr ) {
             continue;
         }
 
@@ -354,7 +354,7 @@ void storeBFlightTimes( GenEvent* theEvent )
               inIter != theVertex->particles_in_const_end(); ++inIter ) {
             HepMC::GenParticle* inParticle = *inIter;
 
-            if ( inParticle == 0 ) {
+            if ( inParticle == nullptr ) {
                 continue;
             }
 
@@ -379,7 +379,7 @@ void storeBFlightTimes( GenEvent* theEvent )
                   outIter != theVertex->particles_out_const_end(); ++outIter ) {
                 HepMC::GenParticle* outParticle = *outIter;
 
-                if ( outParticle != 0 ) {
+                if ( outParticle != nullptr ) {
                     int outPDGId = outParticle->pdg_id();
                     daugIdVect.push_back( outPDGId );
                 }

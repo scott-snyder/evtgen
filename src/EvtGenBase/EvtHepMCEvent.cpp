@@ -25,7 +25,7 @@
 #include "EvtGenBase/EvtPatches.hh"
 
 EvtHepMCEvent::EvtHepMCEvent() :
-    _theEvent( 0 ), _translation( 0.0, 0.0, 0.0, 0.0 )
+    _theEvent( nullptr ), _translation( 0.0, 0.0, 0.0, 0.0 )
 {
 }
 
@@ -36,10 +36,10 @@ EvtHepMCEvent::~EvtHepMCEvent()
 
 void EvtHepMCEvent::deleteEvent()
 {
-    if ( _theEvent != 0 ) {
+    if ( _theEvent != nullptr ) {
         _theEvent->clear();
         delete _theEvent;
-        _theEvent = 0;
+        _theEvent = nullptr;
     }
 }
 
@@ -56,7 +56,7 @@ void EvtHepMCEvent::constructEvent( EvtParticle* baseParticle,
     // Rather, it uses the base particle to construct the event.
 
     this->deleteEvent();
-    if ( baseParticle == 0 ) {
+    if ( baseParticle == nullptr ) {
         return;
     }
 
@@ -79,7 +79,7 @@ GenParticlePtr EvtHepMCEvent::createGenParticle( EvtParticle* theParticle,
     // Create an HepMC GenParticle, with the 4-momenta in the frame given by the frameType integer
     GenParticlePtr genParticle{nullptr};
 
-    if ( theParticle != 0 ) {
+    if ( theParticle != nullptr ) {
         // Set the particle status integer to either stable or decayed
         int status( EvtHepMCEvent::STABLE );
         int nDaug = theParticle->getNDaug();
@@ -127,7 +127,8 @@ void EvtHepMCEvent::addVertex( EvtParticle* inEvtParticle,
     // be the same GenParticle pointer, hence the reason for using it as a 2nd argument
     // in this function.
 
-    if ( _theEvent == 0 || inEvtParticle == 0 || inGenParticle == 0 ) {
+    if ( _theEvent == nullptr || inEvtParticle == nullptr ||
+         inGenParticle == nullptr ) {
         return;
     }
 
@@ -150,7 +151,7 @@ void EvtHepMCEvent::addVertex( EvtParticle* inEvtParticle,
         GenParticlePtr genDaughter =
             this->createGenParticle( evtDaughter, EvtHepMCEvent::LAB );
 
-        if ( genDaughter != 0 ) {
+        if ( genDaughter != nullptr ) {
             // Add a new GenParticle (outgoing) particle daughter to the vertex
             theVertex->add_particle_out( genDaughter );
 
@@ -173,13 +174,13 @@ FourVector EvtHepMCEvent::getVertexCoord( EvtParticle* theParticle )
 {
     FourVector vertexCoord( 0.0, 0.0, 0.0, 0.0 );
 
-    if ( theParticle != 0 && theParticle->getNDaug() != 0 ) {
+    if ( theParticle != nullptr && theParticle->getNDaug() != 0 ) {
         // Get the position (t,x,y,z) of the EvtParticle, offset by the translation vector.
         // This position will be the point where the particle decays. So we ask
         // the position of the (1st) daughter particle.
         EvtParticle* daugParticle = theParticle->getDaug( 0 );
 
-        if ( daugParticle != 0 ) {
+        if ( daugParticle != nullptr ) {
             EvtVector4R vtxPosition = daugParticle->get4Pos() + _translation;
 
             // Create the HepMC 4 vector of the position (x,y,z,t)

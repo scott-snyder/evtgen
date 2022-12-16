@@ -46,10 +46,10 @@
 
 int main( int /*argc*/, char** /*argv*/ )
 {
-    EvtParticle* parent( 0 );
+    EvtParticle* parent( nullptr );
 
     // Define the random number generator
-    EvtRandomEngine* eng = 0;
+    EvtRandomEngine* eng = nullptr;
 
 #ifdef EVTGEN_CPP11
     // Use the Mersenne-Twister generator (C++11 only)
@@ -60,7 +60,7 @@ int main( int /*argc*/, char** /*argv*/ )
 
     EvtRandom::setRandomEngine( eng );
 
-    EvtAbsRadCorr* radCorrEngine = 0;
+    EvtAbsRadCorr* radCorrEngine = nullptr;
     std::list<EvtDecayBase*> extraModels;
 
 #ifdef EVTGEN_EXTERNAL

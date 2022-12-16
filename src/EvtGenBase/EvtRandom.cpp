@@ -32,7 +32,7 @@
 
 using std::endl;
 
-EvtRandomEngine* EvtRandom::_randomEngine = 0;
+EvtRandomEngine* EvtRandom::_randomEngine = nullptr;
 
 void EvtRandom::setRandomEngine( EvtRandomEngine* randomEngine )
 {
@@ -41,7 +41,7 @@ void EvtRandom::setRandomEngine( EvtRandomEngine* randomEngine )
 
 double EvtRandom::random()
 {
-    if ( _randomEngine == 0 ) {
+    if ( _randomEngine == nullptr ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "No random engine available in "
             << "EvtRandom::random()." << endl;

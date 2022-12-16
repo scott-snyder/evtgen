@@ -55,7 +55,7 @@ class EvtModel {
 
 inline EvtModel& EvtModel::instance()
 {
-    if ( _instance == 0 )
+    if ( _instance == nullptr )
         _instance = new EvtModel;
     return *_instance;
 }

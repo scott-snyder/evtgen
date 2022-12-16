@@ -27,14 +27,14 @@ class EvtParticleDecay {
   public:
     EvtParticleDecay()
     {
-        _decay = 0;
+        _decay = nullptr;
         _brfrsum = 0.0;
         _massmin = 0.0;
     }
 
     ~EvtParticleDecay()
     {
-        if ( _decay != 0 )
+        if ( _decay != nullptr )
             delete _decay;
     }
 

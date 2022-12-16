@@ -118,7 +118,7 @@ void EvtD0gammaDalitz::decay( EvtParticle* part )
     // Check if the D is from a B+- -> D0 K+- decay with the appropriate model.
     EvtParticle* parent =
         part->getParent();    // If there are no mistakes, should be B+ or B-.
-    if ( parent != 0 &&
+    if ( parent != nullptr &&
          EvtDecayTable::getInstance()->getDecayFunc( parent )->getName() ==
              "BTODDALITZCPK" ) {
         EvtId parId = parent->getId();

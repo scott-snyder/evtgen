@@ -56,9 +56,9 @@ EvtExternalGenFactory::~EvtExternalGenFactory()
 
 EvtExternalGenFactory* EvtExternalGenFactory::getInstance()
 {
-    static EvtExternalGenFactory* theFactory = 0;
+    static EvtExternalGenFactory* theFactory = nullptr;
 
-    if ( theFactory == 0 ) {
+    if ( theFactory == nullptr ) {
         theFactory = new EvtExternalGenFactory();
     }
 
@@ -136,7 +136,7 @@ void EvtExternalGenFactory::defineTauolaGenerator( bool )
 
 EvtAbsExternalGen* EvtExternalGenFactory::getGenerator( int genId )
 {
-    EvtAbsExternalGen* theGenerator( 0 );
+    EvtAbsExternalGen* theGenerator( nullptr );
 
     ExtGenMap::iterator iter;
 
@@ -158,7 +158,7 @@ void EvtExternalGenFactory::initialiseAllGenerators()
     ExtGenMap::iterator iter;
     for ( iter = _extGenMap.begin(); iter != _extGenMap.end(); ++iter ) {
         EvtAbsExternalGen* theGenerator = iter->second;
-        if ( theGenerator != 0 ) {
+        if ( theGenerator != nullptr ) {
             theGenerator->initialise();
         }
     }

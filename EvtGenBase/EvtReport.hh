@@ -54,7 +54,8 @@ enum EvtGenSeverity
 };
 
 // function declaration
-std::ostream& EvtGenReport( EvtGenSeverity severity, const char* facility = 0 );
+std::ostream& EvtGenReport( EvtGenSeverity severity,
+                            const char* facility = nullptr );
 
 // inline function definitions
 

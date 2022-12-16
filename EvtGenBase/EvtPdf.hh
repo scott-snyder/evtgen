@@ -146,7 +146,7 @@ class EvtPdfGen {
 
     EvtPdfGen() : _pdf( 0 ) {}
     EvtPdfGen( const EvtPdfGen<T>& other ) :
-        _pdf( other._pdf ? other._pdf->clone() : 0 )
+        _pdf( other._pdf ? other._pdf->clone() : nullptr )
     {
     }
     EvtPdfGen( const EvtPdf<T>& pdf ) : _pdf( pdf.clone() ) {}

@@ -79,7 +79,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
         } else if ( vv[0] == "NONRES_EXP" ) {
             typeNRes = EvtPto3PAmp::NONRES_EXP;
             pairRes = strToPair( vv[1].c_str() );
-            alpha = strtod( vv[2].c_str(), 0 );
+            alpha = strtod( vv[2].c_str(), nullptr );
         } else
             assert( 0 );
         pdf = std::make_unique<EvtDalitzFlatPdf>( _dp );
@@ -88,11 +88,11 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
     } else if ( vv[0] == "LASS" || vv[0] == "LASS_ELASTIC" ||
                 vv[0] == "LASS_RESONANT" ) {
         pairRes = strToPair( vv[1].c_str() );
-        double m0 = strtod( vv[2].c_str(), 0 );
-        double g0 = strtod( vv[3].c_str(), 0 );
-        double a = strtod( vv[4].c_str(), 0 );
-        double r = strtod( vv[5].c_str(), 0 );
-        double cutoff = strtod( vv[6].c_str(), 0 );
+        double m0 = strtod( vv[2].c_str(), nullptr );
+        double g0 = strtod( vv[3].c_str(), nullptr );
+        double a = strtod( vv[4].c_str(), nullptr );
+        double r = strtod( vv[5].c_str(), nullptr );
+        double cutoff = strtod( vv[6].c_str(), nullptr );
         pdf = std::make_unique<EvtDalitzResPdf>( _dp, m0, g0, pairRes );
         amp = std::make_unique<EvtLASSAmp>( &_dp, pairRes, m0, g0, a, r, cutoff,
                                             vv[0] );
@@ -146,8 +146,8 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 }
             }
 
-            mR = strtod( vv[3].c_str(), 0 );
-            gR = strtod( vv[4].c_str(), 0 );
+            mR = strtod( vv[3].c_str(), nullptr );
+            gR = strtod( vv[4].c_str(), nullptr );
             i = 4;
         } else {
             // For a valid particle get spin, mass and width
@@ -165,8 +165,8 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                     printf( "Setting m(%s)=%s g(%s)=%s\n", vv[2].c_str(),
                             vv[3].c_str(), vv[2].c_str(), vv[4].c_str() );
 
-                mR = strtod( vv[3].c_str(), 0 );
-                gR = strtod( vv[4].c_str(), 0 );
+                mR = strtod( vv[3].c_str(), nullptr );
+                gR = strtod( vv[4].c_str(), nullptr );
                 i = 4;
             }
         }
@@ -212,9 +212,9 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
             double m1a = _dp.m( first( pairRes ) );
             double m1b = _dp.m( second( pairRes ) );
             // 2nd channel
-            double g2 = strtod( vv[++i].c_str(), 0 );
-            double m2a = strtod( vv[++i].c_str(), 0 );
-            double m2b = strtod( vv[++i].c_str(), 0 );
+            double g2 = strtod( vv[++i].c_str(), nullptr );
+            double m2a = strtod( vv[++i].c_str(), nullptr );
+            double m2b = strtod( vv[++i].c_str(), nullptr );
             EvtPropFlatte prop( mR, gR, m1a, m1b, g2, m2a, m2b );
             partAmp = std::make_unique<EvtPto3PAmp>( _dp, pairAng, pairRes, spinR,
                                                      prop, EvtPto3PAmp::FLATTE );
@@ -227,7 +227,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
             if ( vv[i + 1] == "DVFF" ) {
                 i++;
                 if ( vv[++i] == "BLATTWEISSKOPF" ) {
-                    double R = strtod( vv[++i].c_str(), 0 );
+                    double R = strtod( vv[++i].c_str(), nullptr );
                     partAmp->set_fd( R );
                 } else
                     assert( 0 );
@@ -240,7 +240,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 if ( vv[++i] == "BLATTWEISSKOPF" ) {
                     if ( _verbose )
                         printf( "BVFF=%s\n", vv[i].c_str() );
-                    double R = strtod( vv[++i].c_str(), 0 );
+                    double R = strtod( vv[++i].c_str(), nullptr );
                     partAmp->set_fb( R );
                 } else
                     assert( 0 );
@@ -254,7 +254,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 i++;
                 if ( vv[i + 1] == "MIN" ) {
                     i++;
-                    double min = strtod( vv[++i].c_str(), 0 );
+                    double min = strtod( vv[++i].c_str(), nullptr );
                     if ( _verbose )
                         std::cout << "CUTOFF MIN = " << min << " " << minwidths
                                   << std::endl;
@@ -263,7 +263,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                     partAmp->setmin( min );
                 } else if ( vv[i + 1] == "MAX" ) {
                     i++;
-                    double max = strtod( vv[++i].c_str(), 0 );
+                    double max = strtod( vv[++i].c_str(), nullptr );
                     if ( _verbose )
                         std::cout << "CUTOFF MAX = " << max << " " << minwidths
                                   << std::endl;
@@ -281,7 +281,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 i++;
                 if ( vv[i + 1] == "MIN" ) {
                     i++;
-                    double min = strtod( vv[++i].c_str(), 0 );
+                    double min = strtod( vv[++i].c_str(), nullptr );
                     if ( _verbose )
                         std::cout << "CUTOFF MIN = " << min << std::endl;
                     //ensure against cutting off too close to the resonance
@@ -289,7 +289,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                     partAmp->setmin( min );
                 } else if ( vv[i + 1] == "MAX" ) {
                     i++;
-                    double max = strtod( vv[++i].c_str(), 0 );
+                    double max = strtod( vv[++i].c_str(), nullptr );
                     if ( _verbose )
                         std::cout << "CUTOFF MAX = " << max << std::endl;
                     //ensure against cutting off too close to the resonance

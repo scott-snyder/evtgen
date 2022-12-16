@@ -38,14 +38,16 @@ class EvtHepMCEvent;
 class EvtGen {
   public:
     EvtGen( const std::string& decayName, const std::string& pdtTableName,
-            EvtRandomEngine* randomEngine = 0, EvtAbsRadCorr* isrEngine = 0,
-            const std::list<EvtDecayBase*>* extraModels = 0, int mixingType = 1,
-            bool useXml = false );
+            EvtRandomEngine* randomEngine = nullptr,
+            EvtAbsRadCorr* isrEngine = nullptr,
+            const std::list<EvtDecayBase*>* extraModels = nullptr,
+            int mixingType = 1, bool useXml = false );
 
     EvtGen( const std::string& decayName, std::istream& pdtTableData,
-            EvtRandomEngine* randomEngine = 0, EvtAbsRadCorr* isrEngine = 0,
-            const std::list<EvtDecayBase*>* extraModels = 0, int mixingType = 1,
-            bool useXml = false );
+            EvtRandomEngine* randomEngine = nullptr,
+            EvtAbsRadCorr* isrEngine = nullptr,
+            const std::list<EvtDecayBase*>* extraModels = nullptr,
+            int mixingType = 1, bool useXml = false );
 
     ~EvtGen();
 
@@ -53,16 +55,15 @@ class EvtGen {
 
     EvtHepMCEvent* generateDecay( int PDGid, EvtVector4R refFrameP4,
                                   EvtVector4R translation,
-                                  EvtSpinDensity* spinDensity = 0 );
+                                  EvtSpinDensity* spinDensity = nullptr );
 
     void generateDecay( EvtParticle* p );
 
   private:
-
     void initialize( const std::string& decayName, std::istream& pdtTable,
-                     EvtRandomEngine* randomEngine = 0,
-                     EvtAbsRadCorr* isrEngine = 0,
-                     const std::list<EvtDecayBase*>* extraModels = 0,
+                     EvtRandomEngine* randomEngine = nullptr,
+                     EvtAbsRadCorr* isrEngine = nullptr,
+                     const std::list<EvtDecayBase*>* extraModels = nullptr,
                      int mixingType = 1, bool useXml = false );
 
     EvtPDL _pdl;

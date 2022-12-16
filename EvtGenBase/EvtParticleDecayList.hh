@@ -29,7 +29,7 @@ class EvtParticleDecayList {
   public:
     EvtParticleDecayList()
     {
-        _decaylist = 0;
+        _decaylist = nullptr;
         _nmode = 0;
         _rawbrfrsum = 0;
     }

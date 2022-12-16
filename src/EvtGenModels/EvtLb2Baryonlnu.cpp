@@ -37,16 +37,16 @@ using namespace std;
 #ifdef D0
 #undef D0
 #endif
-EvtLb2Baryonlnu::EvtLb2Baryonlnu() : ffmodel( 0 ), calcamp( 0 )
+EvtLb2Baryonlnu::EvtLb2Baryonlnu() : ffmodel( nullptr ), calcamp( nullptr )
 {
 }
 
 EvtLb2Baryonlnu::~EvtLb2Baryonlnu()
 {
     delete ffmodel;
-    ffmodel = 0;
+    ffmodel = nullptr;
     delete calcamp;
-    calcamp = 0;
+    calcamp = nullptr;
 }
 
 std::string EvtLb2Baryonlnu::getName()

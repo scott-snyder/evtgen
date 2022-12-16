@@ -86,8 +86,8 @@ EvtMRes* EvtMTree::makeresonance( const EvtId& id, const string& ls,
                                   const vector<EvtComplex>& amps,
                                   const vector<EvtMNode*>& children )
 {
-    EvtMRes* resonance = NULL;
-    EvtMLineShape* lineshape = NULL;
+    EvtMRes* resonance = nullptr;
+    EvtMLineShape* lineshape = nullptr;
 
     if ( ls == "BREITWIGNER" ) {
         lineshape = new EvtMBreitWigner( id, lsarg );
@@ -219,7 +219,7 @@ vector<EvtComplex> EvtMTree::parseAmps( ptype& c_iter, ptype& c_begin,
 
     while ( amp_iter != amp_end ) {
         const char* nptr;
-        char* endptr = NULL;
+        char* endptr = nullptr;
         double amp = 0.0, phase = 0.0;
 
         nptr = ( *amp_iter ).c_str();

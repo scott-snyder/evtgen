@@ -51,22 +51,22 @@ void EvtDecayParm::init( fcnPtr pfcn, int ndaug, int* daugs, int narg,
 
 EvtDecayParm::EvtDecayParm()
 {
-    itsfcn = 0;
+    itsfcn = nullptr;
     itsndaug = 0;
     itsnarg = 0;
-    itsdaugs = 0;
-    itsargs = 0;
+    itsdaugs = nullptr;
+    itsargs = nullptr;
 
     modelname = "**********";
 }
 
 EvtDecayParm::~EvtDecayParm()
 {
-    if ( itsdaugs != 0 ) {
+    if ( itsdaugs != nullptr ) {
         delete[] itsdaugs;
     }
 
-    if ( itsargs != 0 ) {
+    if ( itsargs != nullptr ) {
         delete[] itsargs;
     }
 }

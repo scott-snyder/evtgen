@@ -128,11 +128,11 @@ int main( int argc, char** argv )
     dalitzTree->Branch( "invMass13Sq", &inv13Sq, "invMass13Sq/D" );
     dalitzTree->Branch( "invMass23Sq", &inv23Sq, "invMass23Sq/D" );
 
-    EvtParticle* baseParticle( 0 );
-    EvtParticle* theParent( 0 );
+    EvtParticle* baseParticle( nullptr );
+    EvtParticle* theParent( nullptr );
 
     // Define the random number generator
-    EvtRandomEngine* myRandomEngine = 0;
+    EvtRandomEngine* myRandomEngine = nullptr;
 
 #ifdef EVTGEN_CPP11
     // Use the Mersenne-Twister generator (C++11 only)
@@ -145,7 +145,7 @@ int main( int argc, char** argv )
     // For our validation purposes, we just want to read in one decay file and create
     // plots from that.
 
-    EvtAbsRadCorr* radCorrEngine = 0;
+    EvtAbsRadCorr* radCorrEngine = nullptr;
     std::list<EvtDecayBase*> extraModels;
 
 #ifdef EVTGEN_EXTERNAL
@@ -206,7 +206,7 @@ int main( int argc, char** argv )
 
         EvtId daugEvtId( -1, -1 );
         EvtParticle* baseDaughter = baseParticle->getDaug( 0 );
-        if ( baseDaughter != 0 ) {
+        if ( baseDaughter != nullptr ) {
             daugEvtId = baseDaughter->getId();
         }
 
@@ -227,7 +227,7 @@ int main( int argc, char** argv )
         for ( iDaug = 0; iDaug < nDaug; iDaug++ ) {
             EvtParticle* daug = theParent->getDaug( iDaug );
 
-            if ( daug != 0 ) {
+            if ( daug != nullptr ) {
                 EvtVector4R p4Lab = daug->getP4Lab();
                 EvtVector4R pos4 = daug->get4Pos();
 

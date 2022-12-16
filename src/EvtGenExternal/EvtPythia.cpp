@@ -39,7 +39,7 @@ EvtPythia::EvtPythia()
     // Set the Pythia engine to a null pointer at first.
     // When we do the decay, we retrieve the pointer to the Pythia engine
     // and use that for all decays. All clones will use the same Pythia engine.
-    _pythiaEngine = 0;
+    _pythiaEngine = nullptr;
 }
 
 EvtPythia::~EvtPythia()

@@ -91,7 +91,7 @@ void EvtGen::initialize( const std::string& decayName, std::istream& pdtTable,
 {
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Initializing EvtGen" << endl;
 
-    if ( randomEngine == 0 ) {
+    if ( randomEngine == nullptr ) {
         static EvtSimpleRandomEngine defaultRandomEngine;
         EvtRandom::setRandomEngine( &defaultRandomEngine );
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -123,7 +123,7 @@ void EvtGen::initialize( const std::string& decayName, std::istream& pdtTable,
 
     // Set the radiative correction engine
 
-    if ( isrEngine != 0 ) {
+    if ( isrEngine != nullptr ) {
         EvtRadCorr::setRadCorrEngine( isrEngine );
 
     } else {
@@ -164,9 +164,9 @@ EvtHepMCEvent* EvtGen::generateDecay( int PDGId, EvtVector4R refFrameP4,
                                       EvtVector4R translation,
                                       EvtSpinDensity* spinDensity )
 {
-    EvtParticle* theParticle( 0 );
+    EvtParticle* theParticle( nullptr );
 
-    if ( spinDensity == 0 ) {
+    if ( spinDensity == nullptr ) {
         theParticle = EvtParticleFactory::particleFactory(
             EvtPDL::evtIdFromStdHep( PDGId ), refFrameP4 );
     } else {

@@ -37,16 +37,16 @@ using namespace std;
 #ifdef D0
 #undef D0
 #endif
-EvtLb2plnuLQCD::EvtLb2plnuLQCD() : ffmodel( 0 ), calcamp( 0 )
+EvtLb2plnuLQCD::EvtLb2plnuLQCD() : ffmodel( nullptr ), calcamp( nullptr )
 {
 }
 
 EvtLb2plnuLQCD::~EvtLb2plnuLQCD()
 {
     delete ffmodel;
-    ffmodel = 0;
+    ffmodel = nullptr;
     delete calcamp;
-    calcamp = 0;
+    calcamp = nullptr;
 }
 
 std::string EvtLb2plnuLQCD::getName()

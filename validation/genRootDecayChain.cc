@@ -101,10 +101,10 @@ genRootDecayChain::genRootDecayChain( const string& decayFileName,
     _parentName( parentName ),
     _nEvents( nEvents ),
     _storeMtmXYZ( storeMtmXYZ ),
-    _theFile( 0 ),
-    _theTree( 0 ),
-    _probHist( 0 ),
-    _theCanvas( 0 )
+    _theFile( nullptr ),
+    _theTree( nullptr ),
+    _probHist( nullptr ),
+    _theCanvas( nullptr )
 {
     _theFile = new TFile( rootFileName.c_str(), "recreate" );
     _theTree = new TTree( "Data", "Data" );
@@ -178,8 +178,8 @@ void genRootDecayChain::writeTree()
 
 void genRootDecayChain::generateEvents()
 {
-    EvtRandomEngine* randomEngine = 0;
-    EvtAbsRadCorr* radCorrEngine = 0;
+    EvtRandomEngine* randomEngine = nullptr;
+    EvtAbsRadCorr* radCorrEngine = nullptr;
     std::list<EvtDecayBase*> extraModels;
 
     // Define the random number generator
@@ -207,7 +207,7 @@ void genRootDecayChain::generateEvents()
     EvtGen evtGen( _decayFileName.c_str(), "../evt.pdl", randomEngine,
                    radCorrEngine, &extraModels, mixingType, useXml );
 
-    EvtParticle* theParent( 0 );
+    EvtParticle* theParent( nullptr );
 
     EvtId theId = EvtPDL::getId( _parentName );
     if ( theId.getId() == -1 && theId.getAlias() == -1 ) {

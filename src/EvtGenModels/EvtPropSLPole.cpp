@@ -200,7 +200,7 @@ double EvtPropSLPole::calBreitWigner( EvtParticle* pmeson, EvtPoint1D point )
 
     EvtParticle* par = pmeson->getParent();
     double maxMass = -1.;
-    if ( par != 0 ) {
+    if ( par != nullptr ) {
         if ( par->hasValidP4() )
             maxMass = par->mass();
         for ( size_t i = 0; i < par->getNDaug(); i++ ) {
@@ -210,8 +210,8 @@ double EvtPropSLPole::calBreitWigner( EvtParticle* pmeson, EvtPoint1D point )
         }
     }
 
-    EvtId* dauId = 0;
-    double* dauMasses = 0;
+    EvtId* dauId = nullptr;
+    double* dauMasses = nullptr;
     size_t nDaug = pmeson->getNDaug();
     if ( nDaug > 0 ) {
         dauId = new EvtId[nDaug];
@@ -221,8 +221,8 @@ double EvtPropSLPole::calBreitWigner( EvtParticle* pmeson, EvtPoint1D point )
             dauMasses[j] = pmeson->getDaug( j )->mass();
         }
     }
-    EvtId* parId = 0;
-    EvtId* othDaugId = 0;
+    EvtId* parId = nullptr;
+    EvtId* othDaugId = nullptr;
     EvtParticle* tempPar = pmeson->getParent();
     if ( tempPar ) {
         parId = new EvtId( tempPar->getId() );

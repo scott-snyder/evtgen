@@ -90,7 +90,7 @@ bool EvtPhotosEngine::doDecay( EvtParticle* theMother )
         this->initialise();
     }
 
-    if ( theMother == 0 ) {
+    if ( theMother == nullptr ) {
         return false;
     }
 
@@ -174,7 +174,7 @@ bool EvtPhotosEngine::doDecay( EvtParticle* theMother )
             double px( 0.0 ), py( 0.0 ), pz( 0.0 );
             int pdgId( 0 );
 
-            if ( outParticle != 0 ) {
+            if ( outParticle != nullptr ) {
                 FourVector HepMCP4 = outParticle->momentum();
                 px = HepMCP4.px();
                 py = HepMCP4.py();
@@ -188,7 +188,7 @@ bool EvtPhotosEngine::doDecay( EvtParticle* theMother )
             if ( iLoop < nDaug ) {
                 // Original daughters
                 EvtParticle* daugParticle = theMother->getDaug( iLoop );
-                if ( daugParticle != 0 ) {
+                if ( daugParticle != nullptr ) {
                     // Keep the original particle mass, but set the three-momentum
                     // according to what Photos has modified. However, this will
                     // violate energy conservation (from what Photos has provided).
@@ -233,8 +233,8 @@ GenParticlePtr EvtPhotosEngine::createGenParticle( EvtParticle* theParticle,
                                                    bool incoming )
 {
     // Method to create an HepMC::GenParticle version of the given EvtParticle.
-    if ( theParticle == 0 ) {
-        return 0;
+    if ( theParticle == nullptr ) {
+        return nullptr;
     }
 
     // Get the 4-momentum (E, px, py, pz) for the EvtParticle
@@ -291,7 +291,7 @@ int EvtPhotosEngine::getNumberOfPhotons( const GenVertexPtr theVertex ) const
 
         // Get the PDG id
         int pdgId( 0 );
-        if ( outParticle != 0 ) {
+        if ( outParticle != nullptr ) {
             pdgId = outParticle->pdg_id();
         }
 

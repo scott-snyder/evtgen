@@ -42,9 +42,9 @@ EvtCPUtil::EvtCPUtil( int mixingType )
 
 EvtCPUtil* EvtCPUtil::getInstance()
 {
-    static EvtCPUtil* theCPUtil = 0;
+    static EvtCPUtil* theCPUtil = nullptr;
 
-    if ( theCPUtil == 0 ) {
+    if ( theCPUtil == nullptr ) {
         theCPUtil = new EvtCPUtil( 1 );
     }
 
@@ -179,20 +179,21 @@ void EvtCPUtil::OtherCoherentB( EvtParticle* p, double& t, EvtId& otherb,
 
     bool incoherentmix = false;
 
-    if ( ( parent != 0 ) && ( parent->getId() == B0 || parent->getId() == B0B ||
-                              parent->getId() == BS || parent->getId() == BSB ) ) {
+    if ( ( parent != nullptr ) &&
+         ( parent->getId() == B0 || parent->getId() == B0B ||
+           parent->getId() == BS || parent->getId() == BSB ) ) {
         incoherentmix = true;
     }
 
     if ( incoherentmix )
         parent = parent->getParent();
 
-    if ( parent == 0 || parent->getId() != UPS4S ) {
+    if ( parent == nullptr || parent->getId() != UPS4S ) {
         //Need to make this more general, but for now
         //assume no parent. If we have parent of B we
         //need to charge conj. full decay tree.
 
-        if ( parent != 0 ) {
+        if ( parent != nullptr ) {
             EvtGenReport( EVTGEN_INFO, "EvtGen" )
                 << "p=" << EvtPDL::name( p->getId() )
                 << " parent=" << EvtPDL::name( parent->getId() ) << endl;
@@ -231,7 +232,7 @@ void EvtCPUtil::OtherCoherentB( EvtParticle* p, double& t, EvtId& otherb,
         }
     }
 
-    if ( parent != 0 ) {
+    if ( parent != nullptr ) {
         //if (entryCount>1){
         //  EvtGenReport(EVTGEN_INFO,"EvtGen") << "Double CP decay:"<<entryCount<<endl;
         //}
@@ -385,7 +386,8 @@ void EvtCPUtil::OtherB( EvtParticle* p, double& t, EvtId& otherb )
         static double ctau = ctauL < ctauH ? ctauH : ctauL;
         t = -log( EvtRandom::Flat() ) * ctau;
         EvtParticle* parent = p->getParent();
-        if ( parent != 0 && ( parent->getId() == BS0 || parent->getId() == BSB ) ) {
+        if ( parent != nullptr &&
+             ( parent->getId() == BS0 || parent->getId() == BSB ) ) {
             if ( parent->getId() == BS0 )
                 otherb = BSB;
             if ( parent->getId() == BSB )
@@ -407,7 +409,8 @@ void EvtCPUtil::OtherB( EvtParticle* p, double& t, EvtId& otherb )
         static double ctau = ctauL < ctauH ? ctauH : ctauL;
         t = -log( EvtRandom::Flat() ) * ctau;
         EvtParticle* parent = p->getParent();
-        if ( parent != 0 && ( parent->getId() == D0 || parent->getId() == D0B ) ) {
+        if ( parent != nullptr &&
+             ( parent->getId() == D0 || parent->getId() == D0B ) ) {
             if ( parent->getId() == D0 )
                 otherb = D0B;
             if ( parent->getId() == D0B )
@@ -429,7 +432,7 @@ void EvtCPUtil::OtherB( EvtParticle* p, double& t, EvtId& otherb )
 
     EvtParticle* parent = p->getParent();
 
-    if ( parent == 0 || parent->getId() != UPS4 ) {
+    if ( parent == nullptr || parent->getId() != UPS4 ) {
         //EvtGenReport(EVTGEN_ERROR,"EvtGen") <<
         //  "Warning CP violation with B having no parent!"<<endl;
         t = p->getLifetime();

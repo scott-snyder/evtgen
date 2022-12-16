@@ -41,7 +41,7 @@ EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
         // PYTHIA8DATA environment variable which should be set to the
         // xmldoc Pythia directory
         char* pythiaDataDir = getenv( "PYTHIA8DATA" );
-        if ( pythiaDataDir != 0 ) {
+        if ( pythiaDataDir != nullptr ) {
             pythiaXmlDir = pythiaDataDir;
         }
     }

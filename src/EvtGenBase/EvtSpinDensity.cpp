@@ -34,7 +34,7 @@ using std::ostream;
 EvtSpinDensity::EvtSpinDensity( const EvtSpinDensity& density )
 {
     dim = 0;
-    rho = 0;
+    rho = nullptr;
 
     int i, j;
     setDim( density.dim );
@@ -74,7 +74,7 @@ EvtSpinDensity::~EvtSpinDensity()
 EvtSpinDensity::EvtSpinDensity()
 {
     dim = 0;
-    rho = 0;
+    rho = nullptr;
 }
 
 void EvtSpinDensity::setDim( int n )
@@ -86,7 +86,7 @@ void EvtSpinDensity::setDim( int n )
         for ( i = 0; i < dim; i++ )
             delete[] rho[i];
         delete[] rho;
-        rho = 0;
+        rho = nullptr;
         dim = 0;
     }
     if ( n == 0 )

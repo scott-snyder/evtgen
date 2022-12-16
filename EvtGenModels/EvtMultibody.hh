@@ -29,8 +29,8 @@ class EvtMultibody : public EvtDecayAmp {
   public:
     EvtMultibody()
     {
-        _decayTree = NULL;
-        _ilist = NULL;
+        _decayTree = nullptr;
+        _ilist = nullptr;
     }
     ~EvtMultibody();
 

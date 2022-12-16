@@ -75,7 +75,7 @@ void EvtBtoXsgamma::decay( EvtParticle* p )
 {
     //initialize here. -- its too damn slow otherwise.
 
-    if ( _model == 0 ) {
+    if ( _model == nullptr ) {
         if ( getArg( 0 ) == 1 )
             _model = std::make_unique<EvtBtoXsgammaAliGreub>();
         else if ( getArg( 0 ) == 2 )

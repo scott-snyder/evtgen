@@ -435,13 +435,13 @@ void compareRootFiles::getNDaugPlots()
 TH1D* compareRootFiles::getMtmHist( TFile* theFile, string histName,
                                     vector<int> groupInts )
 {
-    if ( theFile == 0 ) {
+    if ( theFile == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }
 
     TTree* theTree = dynamic_cast<TTree*>( theFile->Get( "Data" ) );
-    if ( theTree == 0 ) {
+    if ( theTree == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }
@@ -481,13 +481,13 @@ TH1D* compareRootFiles::getPartIdHist( TFile* theFile, string histName )
     // with bins along the x axis representing each group
     // leptons  gamma  pi+-  pi0   K+-  K0  D+-  D0  light_baryons  strange_baryons  other
 
-    if ( theFile == 0 ) {
+    if ( theFile == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }
 
     TTree* theTree = dynamic_cast<TTree*>( theFile->Get( "Data" ) );
-    if ( theTree == 0 ) {
+    if ( theTree == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }
@@ -563,13 +563,13 @@ int compareRootFiles::getPartGroup( int PDGId )
 
 TH1D* compareRootFiles::getAllIdHist( TFile* theFile, string histName )
 {
-    if ( theFile == 0 ) {
+    if ( theFile == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }
 
     TTree* theTree = dynamic_cast<TTree*>( theFile->Get( "Data" ) );
-    if ( theTree == 0 ) {
+    if ( theTree == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }
@@ -598,13 +598,13 @@ TH1D* compareRootFiles::getAllIdHist( TFile* theFile, string histName )
 
 TH1D* compareRootFiles::getDaugHist( TFile* theFile, string histName )
 {
-    if ( theFile == 0 ) {
+    if ( theFile == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }
 
     TTree* nDaugTree = dynamic_cast<TTree*>( theFile->Get( "nDaugTree" ) );
-    if ( nDaugTree == 0 ) {
+    if ( nDaugTree == nullptr ) {
         // Return empty histogram
         return _emptyHist;
     }

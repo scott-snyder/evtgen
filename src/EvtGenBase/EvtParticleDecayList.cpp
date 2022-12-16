@@ -79,7 +79,7 @@ EvtParticleDecayList::~EvtParticleDecayList()
         delete _decaylist[i];
     }
 
-    if ( _decaylist != 0 )
+    if ( _decaylist != nullptr )
         delete[] _decaylist;
 }
 
@@ -99,17 +99,17 @@ void EvtParticleDecayList::removeDecay()
     }
 
     delete[] _decaylist;
-    _decaylist = 0;
+    _decaylist = nullptr;
     _nmode = 0;
     _rawbrfrsum = 0.0;
 }
 
 EvtDecayBase* EvtParticleDecayList::getDecayModel( int imode )
 {
-    EvtDecayBase* theModel( 0 );
+    EvtDecayBase* theModel( nullptr );
     if ( imode >= 0 && imode < _nmode ) {
         EvtParticleDecay* theDecay = _decaylist[imode];
-        if ( theDecay != 0 ) {
+        if ( theDecay != nullptr ) {
             theModel = theDecay->getDecayModel();
         }
     }
@@ -128,10 +128,10 @@ EvtDecayBase* EvtParticleDecayList::getDecayModel( EvtParticle* p )
     }
 
     if ( getNMode() == 0 ) {
-        return 0;
+        return nullptr;
     }
     if ( getRawBrfrSum() < 0.00000001 ) {
-        return 0;
+        return nullptr;
     }
 
     if ( getNMode() == 1 ) {
@@ -208,7 +208,7 @@ EvtDecayBase* EvtParticleDecayList::getDecayModel( EvtParticle* p )
         << " with mass:" << p->mass() << " will throw event away! " << endl;
 
     EvtStatus::setRejectFlag();
-    return 0;
+    return nullptr;
 }
 
 void EvtParticleDecayList::setNMode( int nmode )
@@ -220,7 +220,7 @@ void EvtParticleDecayList::setNMode( int nmode )
             << "Error _nmode not equal to zero!!!" << endl;
         ::abort();
     }
-    if ( _decaylist != 0 ) {
+    if ( _decaylist != nullptr ) {
         delete[] _decaylist;
     }
     _decaylist = _decaylist_new;
@@ -304,7 +304,7 @@ void EvtParticleDecayList::addMode( EvtDecayBase* decay, double brfrsum,
         delete[] _decaylist;
     }
 
-    if ( ( _nmode == 0 ) && ( _decaylist != 0 ) )
+    if ( ( _nmode == 0 ) && ( _decaylist != nullptr ) )
         delete[] _decaylist;
 
     _nmode++;
