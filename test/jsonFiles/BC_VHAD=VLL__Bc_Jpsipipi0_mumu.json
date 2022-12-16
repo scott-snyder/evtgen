@@ -34,5 +34,5 @@
 	{"variable" : "phi_daug1", "title" : "phi(mu-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
     "outfile" : "BC_VHAD=VLL__Bc_Jpsipipi0_mumu.root",
-    "reference" : "RefBC_VHAD=VLL__Bc_JpsiKpipi0_mumu.root"
+    "reference" : "RefBC_VHAD=VLL__Bc_Jpsipipi0_mumu.root"
 }
