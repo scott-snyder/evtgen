@@ -126,7 +126,33 @@ void EvtBcVHad::init()
 
 void EvtBcVHad::initProbMax()
 {
-    if ( out_code == 3 ) {
+    if ( out_code == 1 ) {
+        if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 1 &&
+             getNDaug() == 2 )
+            setProbMax( 500. );
+        else if ( idVector == EvtPDL::getId( "J/psi" ).getId() &&
+                  whichfit == 2 && getNDaug() == 2 )
+            setProbMax( 300. );
+        else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+                  whichfit == 1 && getNDaug() == 2 )
+            setProbMax( 17. );
+        else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+                  whichfit == 2 && getNDaug() == 2 )
+            setProbMax( 40. );
+    } else if ( out_code == 2 ) {
+        if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 1 &&
+             getNDaug() == 3 )
+            setProbMax( 10950. );
+        else if ( idVector == EvtPDL::getId( "J/psi" ).getId() &&
+                  whichfit == 2 && getNDaug() == 3 )
+            setProbMax( 4200. );
+        else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+                  whichfit == 1 && getNDaug() == 3 )
+            setProbMax( 500. );
+        else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+                  whichfit == 2 && getNDaug() == 3 )
+            setProbMax( 700. );
+    } else if ( out_code == 3 ) {
         if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 1 &&
              getNDaug() == 4 )
             setProbMax( 42000. );
@@ -139,7 +165,6 @@ void EvtBcVHad::initProbMax()
         else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
                   whichfit == 2 && getNDaug() == 4 )
             setProbMax( 2600. );
-
     } else if ( out_code == 5 ) {
         if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 1 &&
              getNDaug() == 6 )

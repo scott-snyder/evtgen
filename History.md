@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-02-0X
 
+16 Dec 2022 John Back
+* D89: Added probabilities for B_c -> V pi+ and V pi+ pi0 EvtBcVHad modes.
+
 16 Nov 2022 Tom Latham
 * T123: Provide documention of how to contribute bug reports, feature requests, new/modified code
 
