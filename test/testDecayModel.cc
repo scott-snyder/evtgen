@@ -1064,9 +1064,12 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
             double chiSq{ 0.0 };
             int nDof{ 0 };
             int iGood{ 0 };
-            double pValue{ refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
+            const double pValue{
+                refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
+            const double integral{ refHist->Integral() };
             std::cout << "Histogram " << histName << " chiSq/nDof = " << chiSq
-                      << "/" << nDof << ", pValue = " << pValue << std::endl;
+                      << "/" << nDof << ", pValue = " << pValue
+                      << ", integral = " << integral << std::endl;
 
         } else {
             std::cerr << "Could not find reference histogram " << histName
@@ -1084,9 +1087,12 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
             double chiSq{ 0.0 };
             int nDof{ 0 };
             int iGood{ 0 };
-            double pValue{ refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
+            const double pValue{
+                refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
+            const double integral{ refHist->Integral() };
             std::cout << "Histogram " << histName << " chiSq/nDof = " << chiSq
-                      << "/" << nDof << ", pValue = " << pValue << std::endl;
+                      << "/" << nDof << ", pValue = " << pValue
+                      << ", integral = " << integral << std::endl;
 
         } else {
             std::cerr << "Could not find reference histogram " << histName

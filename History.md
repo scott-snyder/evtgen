@@ -11,6 +11,10 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-02-0X
 
+3 Feb 2023 John Back
+* D91: Check for non-zero momentum for EvtSLBaryonAmp parent spin density matrix.
+       Print out integrals of JSON test histograms.
+
 16 Dec 2022 John Back
 * D89: Added probabilities for B_c -> V pi+ and V pi+ pi0 EvtBcVHad modes.
 

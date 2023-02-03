@@ -427,7 +427,7 @@ void EvtSLBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
 
     EvtVector4R vector4P = parent->getP4Lab();
     double pmag = vector4P.d3mag();
-    double cosTheta = vector4P.get( 3 ) / pmag;
+    double cosTheta = pmag > 0.0 ? vector4P.get( 3 ) / pmag : 1.0;
 
     double theta = acos( cosTheta );
     double phi = atan2( vector4P.get( 2 ), vector4P.get( 1 ) );
@@ -461,7 +461,7 @@ void EvtSLBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
         FormFactors->getdiracff( par_num, bar_num, q2, baryonmass, &f1, &f2,
                                  &f3, &g1, &g2, &g3 );
 
-        const double form_fact[6] = {f1, f2, f3, g1, g2, g3};
+        const double form_fact[6] = { f1, f2, f3, g1, g2, g3 };
 
         EvtVector4C b11, b12, b21, b22, l1, l2;
 
@@ -584,7 +584,7 @@ void EvtSLBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
         FormFactors->getraritaff( par_num, bar_num, q2, baryonmass, &f1, &f2,
                                   &f3, &f4, &g1, &g2, &g3, &g4 );
 
-        const double form_fact[8] = {f1, f2, f3, f4, g1, g2, g3, g4};
+        const double form_fact[8] = { f1, f2, f3, f4, g1, g2, g3, g4 };
 
         EvtId l_num = parent->getDaug( 1 )->getId();
 
