@@ -65,7 +65,7 @@ void EvtbTosllAli::initProbMax()
     //This routine sets the _poleSize.
     double mymaxprob = _calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num,
                                               _aliffmodel.get(), _poleSize );
-    mymaxprob *= 1.25; // Increase to avoid maxprob errors
+    mymaxprob *= 1.25;    // Increase to avoid maxprob errors
     setProbMax( mymaxprob );
 }
 

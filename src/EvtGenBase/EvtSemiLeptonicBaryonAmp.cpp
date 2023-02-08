@@ -439,7 +439,7 @@ void EvtSemiLeptonicBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
         FormFactors->getdiracff( par_num, bar_num, q2, baryonmass, &f1, &f2,
                                  &f3, &g1, &g2, &g3 );
 
-        const double form_fact[6] = {f1, f2, f3, g1, g2, g3};
+        const double form_fact[6] = { f1, f2, f3, g1, g2, g3 };
 
         EvtVector4C b11, b12, b21, b22, l1, l2;
 
@@ -548,7 +548,7 @@ void EvtSemiLeptonicBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
         FormFactors->getraritaff( par_num, bar_num, q2, baryonmass, &f1, &f2,
                                   &f3, &f4, &g1, &g2, &g3, &g4 );
 
-        const double form_fact[8] = {f1, f2, f3, f4, g1, g2, g3, g4};
+        const double form_fact[8] = { f1, f2, f3, f4, g1, g2, g3, g4 };
 
         EvtId l_num = parent->getDaug( 1 )->getId();
 

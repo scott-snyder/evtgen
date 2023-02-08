@@ -64,7 +64,7 @@ class EvtSpinAmp {
     EvtSpinAmp& operator-=( const EvtSpinAmp& );
 
     // Direct Product
-    EvtSpinAmp operator*(const EvtSpinAmp&)const;
+    EvtSpinAmp operator*( const EvtSpinAmp& ) const;
     EvtSpinAmp& operator*=( const EvtSpinAmp& );
 
     EvtSpinAmp& operator*=( const EvtComplex& );

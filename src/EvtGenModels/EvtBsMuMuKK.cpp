@@ -326,9 +326,9 @@ void EvtBsMuMuKK::decay( EvtParticle* p )
 
     // Generate 4-momenta
     double mKK = EvtRandom::Flat( kin_lower_limit, kin_upper_limit );
-    double mass[10] = {MJpsi, mKK, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-    double Kmass[10] = {MKp, MKm, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-    double muMass[10] = {Mmu, Mmu, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    double mass[10] = { MJpsi, mKK, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    double Kmass[10] = { MKp, MKm, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    double muMass[10] = { Mmu, Mmu, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
     EvtVector4R mypV[2], mypK[2], mypmu[2];
     EvtGenKine::PhaseSpace( 2, mass, mypV, MBs );

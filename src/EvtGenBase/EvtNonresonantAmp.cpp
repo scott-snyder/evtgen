@@ -39,7 +39,7 @@ EvtNonresonantAmp::EvtNonresonantAmp( EvtDalitzPlot* dp,
                                       EvtCyclic3::Pair pair2, double par2,
                                       EvtSpinType::spintype spin ) :
     EvtAmplitude<EvtDalitzPoint>(),
-    _dalitzSpace{dp},
+    _dalitzSpace{ dp },
     _type( type ),
     _pair1( pair1 ),
     _pair2( pair2 ),

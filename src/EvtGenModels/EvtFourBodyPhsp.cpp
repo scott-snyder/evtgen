@@ -18,14 +18,15 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
-#include <cmath>
+#include "EvtGenModels/EvtFourBodyPhsp.hh"
 
 #include "EvtGenBase/EvtKine.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
-#include "EvtGenModels/EvtFourBodyPhsp.hh"
+
+#include <cmath>
 
 std::string EvtFourBodyPhsp::getName()
 {
@@ -163,7 +164,7 @@ void EvtFourBodyPhsp::initProbMax()
     double mMother = EvtPDL::getMaxMass( parent );
 
     double funcValue = 0;
-    while (contCond){
+    while ( contCond ) {
         ++iteration;
         double currentM12 = startM12;
         double currentM34 = startM34;
@@ -225,14 +226,14 @@ void EvtFourBodyPhsp::initProbMax()
         }
 
         // Check termination condition
-       double m12Diff = currentM12 - startM12;
-       double m34Diff = currentM34 - startM34;
-       double distSq = m12Diff * m12Diff + m34Diff * m34Diff;
-       if (distSq < 1e-8 || iteration > 50){
-           contCond = false;
-       }
-       startM12 = currentM12;
-       startM34 = currentM34;
+        double m12Diff = currentM12 - startM12;
+        double m34Diff = currentM34 - startM34;
+        double distSq = m12Diff * m12Diff + m34Diff * m34Diff;
+        if ( distSq < 1e-8 || iteration > 50 ) {
+            contCond = false;
+        }
+        startM12 = currentM12;
+        startM34 = currentM34;
     }
 
     setProbMax( funcValue * 1.05 );
@@ -240,7 +241,6 @@ void EvtFourBodyPhsp::initProbMax()
 
 void EvtFourBodyPhsp::decay( EvtParticle* parent )
 {
-
     parent->makeDaughters( getNDaug(), getDaugs() );
     bool massTreeStatus = parent->generateMassTree();
     if ( !massTreeStatus ) {
@@ -299,9 +299,9 @@ void EvtFourBodyPhsp::decay( EvtParticle* parent )
     setProb( probEval[0] );
 
     // initialise kinematics
-    const double cosTheta1 = EvtRandom::Flat(-1.0, 1.0);
+    const double cosTheta1 = EvtRandom::Flat( -1.0, 1.0 );
     const double sinTheta1 = std::sqrt( 1 - cosTheta1 * cosTheta1 );
-    const double cosTheta3 = EvtRandom::Flat(-1.0, 1.0);
+    const double cosTheta3 = EvtRandom::Flat( -1.0, 1.0 );
     const double sinTheta3 = std::sqrt( 1 - cosTheta3 * cosTheta3 );
     const double phi = EvtRandom::Flat( 0., EvtConst::twoPi );
     // m12 and m34 are put along z-axis, 1 and 2 go to x-z plane and 3-4

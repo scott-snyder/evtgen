@@ -72,14 +72,14 @@ void EvtRareLbToLll::init()
     // Work out whether we have electron mode
     const EvtIdSet leptons{ "e-", "e+" };
     if ( leptons.contains( getDaug( 1 ) ) ) {
-      m_electronMode = true;
-      EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-          << " EvtRareLbToLll has dielectron final state" << std::endl;
+        m_electronMode = true;
+        EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+            << " EvtRareLbToLll has dielectron final state" << std::endl;
     }
 
     std::string model{ "LQCD" };
-    if ( getNArg() == 1) {
-	model = getArgStr( 0 );
+    if ( getNArg() == 1 ) {
+        model = getArgStr( 0 );
     }
     if ( model == "Gutsche" ) {
         ffmodel_ = std::make_unique<EvtRareLbToLllFFGutsche>();
@@ -115,7 +115,7 @@ void EvtRareLbToLll::initProbMax()
         parent.setDiagonalSpinDensity();
 
         EvtAmp amp;
-        EvtId daughters[3] = {getDaug( 0 ), getDaug( 1 ), getDaug( 2 )};
+        EvtId daughters[3] = { getDaug( 0 ), getDaug( 1 ), getDaug( 2 ) };
         amp.init( getParentId(), 3, daughters );
         parent.makeDaughters( 3, daughters );
         EvtParticle* lambda = parent.getDaug( 0 );
@@ -146,7 +146,7 @@ void EvtRareLbToLll::initProbMax()
         for ( int i = 0; i <= nsteps; i++ ) {
             const double q2 = q2min + i * ( q2max - q2min ) / nsteps;
             const double elambda = ( M0 * M0 + mL * mL - q2 ) / 2 / M0;
-            double pstar{0};
+            double pstar{ 0 };
             if ( i != 0 ) {
                 pstar = sqrt( q2 - ( m1 + m2 ) * ( m1 + m2 ) ) *
                         sqrt( q2 - ( m1 - m2 ) * ( m1 - m2 ) ) / 2 / sqrt( q2 );
@@ -165,7 +165,7 @@ void EvtRareLbToLll::initProbMax()
                 p4lep2.set( sqrt( pstar * pstar + m2 * m2 ), 0,
                             -pstar * sin( theta ), -pstar * cos( theta ) );
 
-                if ( i != nsteps)    // At maximal q2 we are already in correct frame as Lambda and W/Zvirtual are at rest
+                if ( i != nsteps )    // At maximal q2 we are already in correct frame as Lambda and W/Zvirtual are at rest
                 {
                     p4lep1 = boostTo( p4lep1, boost );
                     p4lep2 = boostTo( p4lep2, boost );
@@ -177,9 +177,9 @@ void EvtRareLbToLll::initProbMax()
                 prob = rho.normalizedProb( amp.getSpinDensity() );
                 // In case of electron mode add pole
                 if ( m_electronMode ) {
-                    prob /= 1.0 + m_poleSize / ( q2*q2 );
+                    prob /= 1.0 + m_poleSize / ( q2 * q2 );
                 }
- 
+
                 if ( prob > m_maxProbability ) {
                     EvtGenReport( EVTGEN_INFO, "EvtGen" )
                         << "  - probability " << prob << " found at q2 = " << q2

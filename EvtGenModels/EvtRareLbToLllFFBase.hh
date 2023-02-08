@@ -63,8 +63,10 @@ class EvtRareLbToLllFFBase {
     virtual ~EvtRareLbToLllFFBase(){};
 
   protected:
-    double calculateVdotV( const EvtParticle& parent, const EvtParticle& lambda ) const;
-    double calculateVdotV( const EvtParticle&, const EvtParticle&, double qsq ) const;
+    double calculateVdotV( const EvtParticle& parent,
+                           const EvtParticle& lambda ) const;
+    double calculateVdotV( const EvtParticle&, const EvtParticle&,
+                           double qsq ) const;
 
     EvtIdSet natural_;
 };

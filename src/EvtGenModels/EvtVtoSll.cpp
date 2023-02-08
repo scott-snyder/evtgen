@@ -58,7 +58,7 @@ void EvtVtoSll::init()
 
 void EvtVtoSll::initProbMax()
 {
-    setProbMax(10.0);
+    setProbMax( 10.0 );
 }
 
 void EvtVtoSll::decay( EvtParticle* p )

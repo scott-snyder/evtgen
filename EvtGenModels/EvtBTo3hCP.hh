@@ -28,7 +28,6 @@ class EvtParticle;
 
 class EvtBTo3hCP {
   public:
-
     void EvtKpipi( double alpha, double beta, int iset, EvtVector4R& p_K_plus,
                    EvtVector4R& p_pi_minus, EvtVector4R& p_gamma_1,
                    EvtVector4R& p_gamma_2, double& Real_B0, double& Imag_B0,
@@ -97,8 +96,8 @@ class EvtBTo3hCP {
         NatKrho;
     double alphaCP = 1.365;
     double betaCP = 0.362;
-    double MA2 = 27.927981186; 
-    double MB2 = 27.929242450; 
+    double MA2 = 27.927981186;
+    double MB2 = 27.929242450;
     double MC2 = 28.153482608;
     double pi = 3.141592653;
     double Mass_rho = 0.770;

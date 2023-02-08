@@ -124,10 +124,10 @@ void compareRootFiles::getMtmPlots()
     gPad->SetLogy();
 
     // Different colours for the particle groups
-    int colours[6] = {1, 2, 4, 6, 8, 28};
+    int colours[6] = { 1, 2, 4, 6, 8, 28 };
     string histLabels[6] = {
         "Leptons,#gamma",        "Pions", "Kaons", "D+,D-,D0",
-        "Light/strange baryons", "Other"};
+        "Light/strange baryons", "Other" };
 
     TLegend* theLegend = new TLegend( 0.7, 0.7, 0.9, 0.9 );
     theLegend->SetFillColor( kWhite );

@@ -127,7 +127,6 @@ void EvtBTo3hCP::setConstants( double balpha, double bbeta )
     NatKstar0 = EvtComplex( 0., 0. );
     // B0bar -->-- K+ rho- Amplitudes (Trees + Penguins)
     NatKrho = EvtComplex( 0., 0. );
-
 }
 
 void EvtBTo3hCP::Evt3pi( double alpha, int iset, EvtVector4R& p_pi_plus,

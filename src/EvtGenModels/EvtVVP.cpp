@@ -156,7 +156,7 @@ void EvtVVP::decay_3body( EvtParticle* root )
         factor = dSq / ( dSqDenom * kSq );
     }
 
-    int iPols[4] = {0, 0, 0, 0};
+    int iPols[4] = { 0, 0, 0, 0 };
 
     // Calculate the amplitude terms, looping over the chi, psi and lepton states
     for ( int iChi = 0; iChi < 3; iChi++ ) {

@@ -168,11 +168,11 @@ void EvtLambdacPHH::calcNormalisations()
     int nDaug( 3 );
     EvtVector4R p4Daug[3];
 
-    double mDaug[3] = {EvtPDL::getMeanMass( EvtPDL::getId( "K-" ) ),
-                       EvtPDL::getMeanMass( EvtPDL::getId( "pi+" ) ),
-                       EvtPDL::getMeanMass( EvtPDL::getId( "p+" ) )};
+    double mDaug[3] = { EvtPDL::getMeanMass( EvtPDL::getId( "K-" ) ),
+                        EvtPDL::getMeanMass( EvtPDL::getId( "pi+" ) ),
+                        EvtPDL::getMeanMass( EvtPDL::getId( "p+" ) ) };
 
-    double norm[3] = {0.0, 0.0, 0.0};
+    double norm[3] = { 0.0, 0.0, 0.0 };
 
     // sample size
     int N( 100000 );
@@ -229,11 +229,11 @@ void EvtLambdacPHH::getFitFractions()
     int nDaug( 3 );
     EvtVector4R p4Daug[3];
 
-    double mDaug[3] = {EvtPDL::getMeanMass( EvtPDL::getId( "K-" ) ),
-                       EvtPDL::getMeanMass( EvtPDL::getId( "pi+" ) ),
-                       EvtPDL::getMeanMass( EvtPDL::getId( "p+" ) )};
+    double mDaug[3] = { EvtPDL::getMeanMass( EvtPDL::getId( "K-" ) ),
+                        EvtPDL::getMeanMass( EvtPDL::getId( "pi+" ) ),
+                        EvtPDL::getMeanMass( EvtPDL::getId( "p+" ) ) };
 
-    double FitFracTop[4] = {0.0, 0.0, 0.0, 0.0};
+    double FitFracTop[4] = { 0.0, 0.0, 0.0, 0.0 };
     double FitFracDenom = 0.0;
 
     // sample size

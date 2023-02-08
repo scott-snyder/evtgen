@@ -261,15 +261,15 @@ void EvtVubNLO::decay( EvtParticle* p )
 
     sttmp = sqrt( 1 - ctH * ctH );
     ptmp = sqrt( Eh * Eh - sh );
-    double pHB[4] = {Eh, ptmp * sttmp * cos( phH ), ptmp * sttmp * sin( phH ),
-                     ptmp * ctH};
+    double pHB[4] = { Eh, ptmp * sttmp * cos( phH ), ptmp * sttmp * sin( phH ),
+                      ptmp * ctH };
     p4.set( pHB[0], pHB[1], pHB[2], pHB[3] );
     xuhad->init( getDaug( 0 ), p4 );
 
     // calculate the W 4 vector in the B Meson restrframe
 
     double apWB = ptmp;
-    double pWB[4] = {_mB - Eh, -pHB[1], -pHB[2], -pHB[3]};
+    double pWB[4] = { _mB - Eh, -pHB[1], -pHB[2], -pHB[3] };
 
     // first go in the W restframe and calculate the lepton and
     // the neutrino in the W frame
@@ -294,17 +294,17 @@ void EvtVubNLO::decay( EvtParticle* p )
     sttmp = sqrt( 1 - ctL * ctL );
 
     // eX' = eZ x eW
-    double xW[3] = {-pWB[2], pWB[1], 0};
+    double xW[3] = { -pWB[2], pWB[1], 0 };
     // eZ' = eW
-    double zW[3] = {pWB[1] / apWB, pWB[2] / apWB, pWB[3] / apWB};
+    double zW[3] = { pWB[1] / apWB, pWB[2] / apWB, pWB[3] / apWB };
 
     double lx = sqrt( xW[0] * xW[0] + xW[1] * xW[1] );
     for ( int j = 0; j < 2; j++ )
         xW[j] /= lx;
 
     // eY' = eZ' x eX'
-    double yW[3] = {-pWB[1] * pWB[3], -pWB[2] * pWB[3],
-                    pWB[1] * pWB[1] + pWB[2] * pWB[2]};
+    double yW[3] = { -pWB[1] * pWB[3], -pWB[2] * pWB[3],
+                     pWB[1] * pWB[1] + pWB[2] * pWB[2] };
     double ly = sqrt( yW[0] * yW[0] + yW[1] * yW[1] + yW[2] * yW[2] );
     for ( int j = 0; j < 3; j++ )
         yW[j] /= ly;
@@ -330,8 +330,8 @@ void EvtVubNLO::decay( EvtParticle* p )
     if ( ctLL < -1 )
         ctLL = -1;
 
-    double pLB[4] = {El, 0, 0, 0};
-    double pNB[8] = {pWB[0] - El, 0, 0, 0};
+    double pLB[4] = { El, 0, 0, 0 };
+    double pNB[8] = { pWB[0] - El, 0, 0, 0 };
 
     for ( int j = 1; j < 4; j++ ) {
         pLB[j] = pLW[j] + ( ctLL * ptmp - ctL * apLW ) / apWB * pWB[j];
@@ -370,8 +370,8 @@ double EvtVubNLO::tripleDiff( double pp, double pl, double pm )
     double aF3 = F30( sCoeffs );
     double td0 = c1 * aF1 + c2 * aF2 + c3 * aF3;
 
-    auto func = EvtItgPtrFunction{&integrand, 0., _mB, sCoeffs};
-    auto jetSF = EvtItgSimpsonIntegrator{func, 0.01, 25};
+    auto func = EvtItgPtrFunction{ &integrand, 0., _mB, sCoeffs };
+    auto jetSF = EvtItgSimpsonIntegrator{ func, 0.01, 25 };
     double smallfrac =
         0.000001;    // stop a bit before the end to avoid problems with numerical integration
     double tdInt = jetSF.evaluate( 0, pp * ( 1 - smallfrac ) );
@@ -704,7 +704,7 @@ double EvtVubNLO::Gamma( double z )
 {
     std::array<double, 6> gammaCoeffs{
         76.18009172947146,  -86.50532032941677,    24.01409824083091,
-        -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5};
+        -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5 };
 
     //Lifted from Numerical Recipies in C
     double y = z;
@@ -726,7 +726,7 @@ double EvtVubNLO::Gamma( double z, double tmin )
 {
     std::vector<double> c( 1 );
     c[0] = z;
-    auto func = EvtItgPtrFunction{&dgamma, tmin, 100., c};
-    auto jetSF = EvtItgSimpsonIntegrator{func, 0.001};
+    auto func = EvtItgPtrFunction{ &dgamma, tmin, 100., c };
+    auto jetSF = EvtItgSimpsonIntegrator{ func, 0.001 };
     return jetSF.evaluate( tmin, 100. );
 }

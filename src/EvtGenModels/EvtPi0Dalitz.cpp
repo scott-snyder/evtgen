@@ -65,8 +65,7 @@ void EvtPi0Dalitz::initProbMax()
         double q2 = q2Min + ii * step;
         const double mSqDiff = m_m0Sq - q2;
         const double q2Sq = q2 * q2;
-        double prob = ( q2Max - q2 ) * ( q2Max - q2 ) * ( q2 - q2Min ) /
-                      ( q2Sq );
+        double prob = ( q2Max - q2 ) * ( q2Max - q2 ) * ( q2 - q2Min ) / ( q2Sq );
         prob *= ( 1.0 / ( mSqDiff * mSqDiff + m_m0SqG0Sq ) );
         // When generating events, we do not start from phase-space, but
         // add some pole to it, weight of which is taken into account
@@ -76,7 +75,7 @@ void EvtPi0Dalitz::initProbMax()
             maxProb = prob;
         }
     }
-    setProbMax( maxProb * 1.05  );
+    setProbMax( maxProb * 1.05 );
 }
 
 void EvtPi0Dalitz::init()

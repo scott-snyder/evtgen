@@ -403,7 +403,6 @@ bool EvtMTree::validTree( const EvtMNode* root ) const
     ret = true;
 
     return ret;
-
 }
 
 void EvtMTree::addtree( const string& str )

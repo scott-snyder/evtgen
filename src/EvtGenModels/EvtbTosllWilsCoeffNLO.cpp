@@ -45,8 +45,8 @@ double EvtbTosllWilsCoeffNLO::As( double mu, int Nf, int ias )
 {
     double as, ll;
     double b0, b1, b2; /* terms in the series of the beta-function */
-    double alpha_strong[] = {0.1156, 0.1176, 0.1196}; /* at M_Z scale */
-    double MZ = 91.19;                                /* in GeV */
+    double alpha_strong[] = { 0.1156, 0.1176, 0.1196 }; /* at M_Z scale */
+    double MZ = 91.19;                                  /* in GeV */
 
     b0 = 11. - 2. * ( (double)Nf ) / 3.;
     b1 = 51. - 19. * ( (double)Nf ) / 3.;
@@ -113,9 +113,9 @@ double EvtbTosllWilsCoeffNLO::C1( double mu, double Mw, int Nf, int ias )
     double asmu; /* the strong coupling constant at the scale mu */
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double k1[] = {0.0, 0.0, 0.5, -0.5, 0.0, 0.0, 0.0, 0.0};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double k1[] = { 0.0, 0.0, 0.5, -0.5, 0.0, 0.0, 0.0, 0.0 };
 
     asW = As( Mw, Nf, ias );
     asmu = As( mu, Nf, ias );
@@ -141,9 +141,9 @@ double EvtbTosllWilsCoeffNLO::C2( double mu, double Mw, int Nf, int ias )
     double asmu; /* the strong coupling constant at the scale mu */
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double k2[] = {0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double k2[] = { 0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0 };
 
     asW = As( Mw, Nf, ias );
     asmu = As( mu, Nf, ias );
@@ -169,10 +169,10 @@ double EvtbTosllWilsCoeffNLO::C3( double mu, double Mw, int Nf, int ias )
     double asmu; /* the strong coupling constant at the scale mu */
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double k3[] = {0.0,    0.0,     -1.0 / 14.0, 1.0 / 6.0,
-                   0.0510, -0.1403, -0.0113,     0.0054};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double k3[] = { 0.0,    0.0,     -1.0 / 14.0, 1.0 / 6.0,
+                    0.0510, -0.1403, -0.0113,     0.0054 };
 
     asW = As( Mw, Nf, ias );
     asmu = As( mu, Nf, ias );
@@ -198,10 +198,10 @@ double EvtbTosllWilsCoeffNLO::C4( double mu, double Mw, int Nf, int ias )
     double asmu; /* the strong coupling constant at the scale mu */
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double k4[] = {0.0,    0.0,    -1.0 / 14.0, -1.0 / 6.0,
-                   0.0984, 0.1214, 0.0156,      0.0026};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double k4[] = { 0.0,    0.0,    -1.0 / 14.0, -1.0 / 6.0,
+                    0.0984, 0.1214, 0.0156,      0.0026 };
 
     asW = As( Mw, Nf, ias );
     asmu = As( mu, Nf, ias );
@@ -227,9 +227,9 @@ double EvtbTosllWilsCoeffNLO::C5( double mu, double Mw, int Nf, int ias )
     double asmu; /* the strong coupling constant at the scale mu */
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double k5[] = {0.0, 0.0, 0.0, 0.0, -0.0397, 0.0117, -0.0025, 0.0304};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double k5[] = { 0.0, 0.0, 0.0, 0.0, -0.0397, 0.0117, -0.0025, 0.0304 };
 
     asW = As( Mw, Nf, ias );
     asmu = As( mu, Nf, ias );
@@ -255,9 +255,9 @@ double EvtbTosllWilsCoeffNLO::C6( double mu, double Mw, int Nf, int ias )
     double asmu; /* the strong coupling constant at the scale mu */
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double k6[] = {0.0, 0.0, 0.0, 0.0, 0.0335, 0.0239, -0.0462, -0.0112};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double k6[] = { 0.0, 0.0, 0.0, 0.0, 0.0335, 0.0239, -0.0462, -0.0112 };
 
     asW = As( Mw, Nf, ias );
     asmu = As( mu, Nf, ias );
@@ -379,10 +379,10 @@ double EvtbTosllWilsCoeffNLO::C7gamma( double mu, double Mw, double mt, int Nf,
     double asW, asmu;
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double h[] = {2.2996,  -1.0880, -3.0 / 7.0, -1.0 / 14.0,
-                  -0.6494, -0.0380, -0.0186,    -0.0057};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double h[] = { 2.2996,  -1.0880, -3.0 / 7.0, -1.0 / 14.0,
+                   -0.6494, -0.0380, -0.0186,    -0.0057 };
 
     x = pow( mt / Mw, 2.0 );
     asW = As( Mw, Nf, ias );
@@ -420,9 +420,9 @@ double EvtbTosllWilsCoeffNLO::Pe( double eta )
     double Pee;
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double q[] = {0.0, 0.0, 0.0, 0.0, 0.0318, 0.0918, -0.2700, 0.0059};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double q[] = { 0.0, 0.0, 0.0, 0.0, 0.0318, 0.0918, -0.2700, 0.0059 };
 
     sum = 0.0;
     i = 0;
@@ -444,12 +444,14 @@ double EvtbTosllWilsCoeffNLO::P0ndr( double asW, double eta )
     double sum;
     int i;
 
-    double a[] = {14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
-                  0.4086,      -0.4230,     -0.8994,    0.1456};
-    double p[] = {0.0,    0.0,    -80.0 / 203.0, 8.0 / 33.0,
-                  0.0433, 0.1384, 0.1648,        -0.0073};
-    double r[] = {0.0, 0.0, 0.8966, -0.1960, -0.2011, 0.1328, -0.0292, -0.1858};
-    double s[] = {0.0, 0.0, -0.2009, -0.3579, 0.0490, -0.3616, -0.3554, 0.0072};
+    double a[] = { 14.0 / 23.0, 16.0 / 23.0, 6.0 / 23.0, -12.0 / 23.0,
+                   0.4086,      -0.4230,     -0.8994,    0.1456 };
+    double p[] = { 0.0,    0.0,    -80.0 / 203.0, 8.0 / 33.0,
+                   0.0433, 0.1384, 0.1648,        -0.0073 };
+    double r[] = { 0.0,     0.0,    0.8966,  -0.1960,
+                   -0.2011, 0.1328, -0.0292, -0.1858 };
+    double s[] = { 0.0,    0.0,     -0.2009, -0.3579,
+                   0.0490, -0.3616, -0.3554, 0.0072 };
 
     sum = 0.0;
     i = 0;

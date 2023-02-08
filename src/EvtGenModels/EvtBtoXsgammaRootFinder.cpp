@@ -123,10 +123,10 @@ double EvtBtoXsgammaRootFinder::GetGaussIntegFcnRoot(
     // Iterates until find root to the accuracy of precision
 
     //Need to work with integrators
-    auto func1Integ = EvtItgSimpsonIntegrator{*theFunc1, integ1Precision,
-                                              maxLoop1};
-    auto func2Integ = EvtItgSimpsonIntegrator{*theFunc2, integ2Precision,
-                                              maxLoop2};
+    auto func1Integ = EvtItgSimpsonIntegrator{ *theFunc1, integ1Precision,
+                                               maxLoop1 };
+    auto func2Integ = EvtItgSimpsonIntegrator{ *theFunc2, integ2Precision,
+                                               maxLoop2 };
 
     //coefficient 1 of the integrators is the root to be found
     //need to set this to lower value to start off with

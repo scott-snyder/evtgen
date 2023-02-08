@@ -26,9 +26,9 @@
 #include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
+#include <iostream>
 #include <stdlib.h>
 #include <string>
-#include <iostream>
 
 std::string EvtPhspDecaytimeCut::getName()
 {

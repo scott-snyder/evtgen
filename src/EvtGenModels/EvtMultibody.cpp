@@ -71,7 +71,7 @@ void EvtMultibody::init()
 
 void EvtMultibody::initProbMax()
 {
-    setProbMax(1.0);
+    setProbMax( 1.0 );
 }
 
 void EvtMultibody::decay( EvtParticle* p )

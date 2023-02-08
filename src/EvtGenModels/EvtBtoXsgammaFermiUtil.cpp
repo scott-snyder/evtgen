@@ -54,13 +54,13 @@ double EvtBtoXsgammaFermiUtil::FermiGaussFunc( double y,
 double EvtBtoXsgammaFermiUtil::FermiGaussFuncRoot(
     double lambdabar, double lam1, double mb, std::vector<double>& gammaCoeffs )
 {
-    std::vector<double> coeffs1 = {0.2, lambdabar, 0.0};
-    std::vector<double> coeffs2 = {0.2, lambdabar, -lam1 / 3.};
+    std::vector<double> coeffs1 = { 0.2, lambdabar, 0.0 };
+    std::vector<double> coeffs2 = { 0.2, lambdabar, -lam1 / 3. };
 
-    auto lhFunc = EvtItgTwoCoeffFcn{&FermiGaussRootFcnA, -mb, lambdabar,
-                                    coeffs1, gammaCoeffs};
-    auto rhFunc = EvtItgTwoCoeffFcn{&FermiGaussRootFcnB, -mb, lambdabar,
-                                    coeffs2, gammaCoeffs};
+    auto lhFunc = EvtItgTwoCoeffFcn{ &FermiGaussRootFcnA, -mb, lambdabar,
+                                     coeffs1, gammaCoeffs };
+    auto rhFunc = EvtItgTwoCoeffFcn{ &FermiGaussRootFcnB, -mb, lambdabar,
+                                     coeffs2, gammaCoeffs };
     auto rootFinder = EvtBtoXsgammaRootFinder{};
 
     return rootFinder.GetGaussIntegFcnRoot( &lhFunc, &rhFunc, 1.0e-4, 1.0e-4,
@@ -180,7 +180,7 @@ double EvtBtoXsgammaFermiUtil::BesselI1( double x )
 
 double EvtBtoXsgammaFermiUtil::FermiRomanFuncRoot( double lambdabar, double lam1 )
 {
-    auto lhFunc = EvtItgFunction{&FermiRomanRootFcnA, -1.e-6, 1.e6};
+    auto lhFunc = EvtItgFunction{ &FermiRomanRootFcnA, -1.e-6, 1.e6 };
 
     auto rootFinder = EvtBtoXsgammaRootFinder{};
     double rhSide = 1.0 - ( lam1 / ( 3.0 * lambdabar * lambdabar ) );

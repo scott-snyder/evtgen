@@ -292,7 +292,7 @@ void EvtLb2Lll::initProbMax()
         parent->setDiagonalSpinDensity();
 
         EvtAmp amp;
-        EvtId daughters[3] = {getDaug( 0 ), getDaug( 1 ), getDaug( 2 )};
+        EvtId daughters[3] = { getDaug( 0 ), getDaug( 1 ), getDaug( 2 ) };
         amp.init( getParentId(), 3, daughters );
         parent->makeDaughters( 3, daughters );
         EvtParticle* lambda = parent->getDaug( 0 );
@@ -368,10 +368,10 @@ void EvtLb2Lll::initProbMax()
         delete parent;
     }
 
-    if (m_maxProbability < 1e-10) {
-	EvtGenReport( EVTGEN_INFO, "EvtLb2Lll")
-	   << "EvtLb2Lll found zero max prob, setting to 1.5e6" << std::endl;
-	m_maxProbability = 1.5e6;
+    if ( m_maxProbability < 1e-10 ) {
+        EvtGenReport( EVTGEN_INFO, "EvtLb2Lll" )
+            << "EvtLb2Lll found zero max prob, setting to 1.5e6" << std::endl;
+        m_maxProbability = 1.5e6;
     }
 
     setProbMax( m_maxProbability );
@@ -400,7 +400,7 @@ void EvtLb2Lll::calcAmp( EvtAmp* amp, EvtParticle* parent )
     char ch;
 
     double r, M_L, M_Lb, M_s, M_c, M_b, q2, alpha, M_W, M_t;
-    double M_psi[2] = {0, 0}, Gamma_psi[2] = {0, 0}, k_psi[2] = {0, 0};
+    double M_psi[2] = { 0, 0 }, Gamma_psi[2] = { 0, 0 }, k_psi[2] = { 0, 0 };
     double F0_1, F0_2, a_F1, a_F2, b_F1, b_F2, F1, F2;
     double f_1, f_2, f_3, g_1, g_2, g_3, f_1T, f_2T, f_3T, g_1T, g_2T, g_3T,
         f_TV, f_TS, g_TV( 0.0 ), g_TS, f_T, g_T;

@@ -87,7 +87,7 @@ void EvtBtoKD3P::decay( EvtParticle* p )
     const int D2IND = 2;
 
     // generate kinematics of daughters (K and D):
-    EvtId tempDaug[2] = {getDaug( KIND ), getDaug( D1IND )};
+    EvtId tempDaug[2] = { getDaug( KIND ), getDaug( D1IND ) };
     p->initializePhaseSpace( 2, tempDaug );
 
     // Get the D daughter particle and the decay models of the allowed

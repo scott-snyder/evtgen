@@ -34,8 +34,8 @@ class EvtDecayProb : public EvtDecayBase {
     inline void setWeight( double weight ) { _weight = weight; }
 
   private:
-    double _prob {1.0};
-    double _weight {1.0};
+    double _prob{ 1.0 };
+    double _weight{ 1.0 };
 };
 
 #endif

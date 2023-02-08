@@ -104,37 +104,37 @@ void EvtBtoXsgammaKagan::init( int nArg, double* args )
 
 void EvtBtoXsgammaKagan::getDefaultHadronicMass()
 {
-    massHad = {0,        0.0625995, 0.125199, 0.187798, 0.250398, 0.312997,
-               0.375597, 0.438196,  0.500796, 0.563395, 0.625995, 0.688594,
-               0.751194, 0.813793,  0.876392, 0.938992, 1.00159,  1.06419,
-               1.12679,  1.18939,   1.25199,  1.31459,  1.37719,  1.43979,
-               1.50239,  1.56499,   1.62759,  1.69019,  1.75278,  1.81538,
-               1.87798,  1.94058,   2.00318,  2.06578,  2.12838,  2.19098,
-               2.25358,  2.31618,   2.37878,  2.44138,  2.50398,  2.56658,
-               2.62918,  2.69178,   2.75438,  2.81698,  2.87958,  2.94217,
-               3.00477,  3.06737,   3.12997,  3.19257,  3.25517,  3.31777,
-               3.38037,  3.44297,   3.50557,  3.56817,  3.63077,  3.69337,
-               3.75597,  3.81857,   3.88117,  3.94377,  4.00637,  4.06896,
-               4.13156,  4.19416,   4.25676,  4.31936,  4.38196,  4.44456,
-               4.50716,  4.56976,   4.63236,  4.69496,  4.75756,  4.82016,
-               4.88276,  4.94536,   5.00796};
-    brHad = {0,           1.03244e-09, 3.0239e-08,  1.99815e-07, 7.29392e-07,
-             1.93129e-06, 4.17806e-06, 7.86021e-06, 1.33421e-05, 2.09196e-05,
-             3.07815e-05, 4.29854e-05, 5.74406e-05, 7.3906e-05,  9.2003e-05,
-             0.000111223, 0.000130977, 0.000150618, 0.000169483, 0.000186934,
-             0.000202392, 0.000215366, 0.000225491, 0.000232496, 0.000236274,
-             0.000236835, 0.000234313, 0.000228942, 0.000221042, 0.000210994,
-             0.000199215, 0.000186137, 0.000172194, 0.000157775, 0.000143255,
-             0.000128952, 0.000115133, 0.000102012, 8.97451e-05, 7.84384e-05,
-             6.81519e-05, 5.89048e-05, 5.06851e-05, 4.34515e-05, 3.71506e-05,
-             3.1702e-05,  2.70124e-05, 2.30588e-05, 1.96951e-05, 1.68596e-05,
-             1.44909e-05, 1.25102e-05, 1.08596e-05, 9.48476e-06, 8.34013e-06,
-             7.38477e-06, 6.58627e-06, 5.91541e-06, 5.35022e-06, 4.87047e-06,
-             4.46249e-06, 4.11032e-06, 3.80543e-06, 3.54051e-06, 3.30967e-06,
-             3.10848e-06, 2.93254e-06, 2.78369e-06, 2.65823e-06, 2.55747e-06,
-             2.51068e-06, 2.57179e-06, 2.74684e-06, 3.02719e-06, 3.41182e-06,
-             3.91387e-06, 4.56248e-06, 5.40862e-06, 6.53915e-06, 8.10867e-06,
-             1.04167e-05};
+    massHad = { 0,        0.0625995, 0.125199, 0.187798, 0.250398, 0.312997,
+                0.375597, 0.438196,  0.500796, 0.563395, 0.625995, 0.688594,
+                0.751194, 0.813793,  0.876392, 0.938992, 1.00159,  1.06419,
+                1.12679,  1.18939,   1.25199,  1.31459,  1.37719,  1.43979,
+                1.50239,  1.56499,   1.62759,  1.69019,  1.75278,  1.81538,
+                1.87798,  1.94058,   2.00318,  2.06578,  2.12838,  2.19098,
+                2.25358,  2.31618,   2.37878,  2.44138,  2.50398,  2.56658,
+                2.62918,  2.69178,   2.75438,  2.81698,  2.87958,  2.94217,
+                3.00477,  3.06737,   3.12997,  3.19257,  3.25517,  3.31777,
+                3.38037,  3.44297,   3.50557,  3.56817,  3.63077,  3.69337,
+                3.75597,  3.81857,   3.88117,  3.94377,  4.00637,  4.06896,
+                4.13156,  4.19416,   4.25676,  4.31936,  4.38196,  4.44456,
+                4.50716,  4.56976,   4.63236,  4.69496,  4.75756,  4.82016,
+                4.88276,  4.94536,   5.00796 };
+    brHad = { 0,           1.03244e-09, 3.0239e-08,  1.99815e-07, 7.29392e-07,
+              1.93129e-06, 4.17806e-06, 7.86021e-06, 1.33421e-05, 2.09196e-05,
+              3.07815e-05, 4.29854e-05, 5.74406e-05, 7.3906e-05,  9.2003e-05,
+              0.000111223, 0.000130977, 0.000150618, 0.000169483, 0.000186934,
+              0.000202392, 0.000215366, 0.000225491, 0.000232496, 0.000236274,
+              0.000236835, 0.000234313, 0.000228942, 0.000221042, 0.000210994,
+              0.000199215, 0.000186137, 0.000172194, 0.000157775, 0.000143255,
+              0.000128952, 0.000115133, 0.000102012, 8.97451e-05, 7.84384e-05,
+              6.81519e-05, 5.89048e-05, 5.06851e-05, 4.34515e-05, 3.71506e-05,
+              3.1702e-05,  2.70124e-05, 2.30588e-05, 1.96951e-05, 1.68596e-05,
+              1.44909e-05, 1.25102e-05, 1.08596e-05, 9.48476e-06, 8.34013e-06,
+              7.38477e-06, 6.58627e-06, 5.91541e-06, 5.35022e-06, 4.87047e-06,
+              4.46249e-06, 4.11032e-06, 3.80543e-06, 3.54051e-06, 3.30967e-06,
+              3.10848e-06, 2.93254e-06, 2.78369e-06, 2.65823e-06, 2.55747e-06,
+              2.51068e-06, 2.57179e-06, 2.74684e-06, 3.02719e-06, 3.41182e-06,
+              3.91387e-06, 4.56248e-06, 5.40862e-06, 6.53915e-06, 8.10867e-06,
+              1.04167e-05 };
     massHad.resize( 81 );
     brHad.resize( 81 );
 
@@ -221,12 +221,12 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
     sCoeffs[0] = _z;
 
     //Define s22 and s27 functions
-    auto mys22Func = EvtItgPtrFunction{&s22Func, 0., yMax + 0.1, sCoeffs};
-    auto mys27Func = EvtItgPtrFunction{&s27Func, 0., yMax + 0.1, sCoeffs};
+    auto mys22Func = EvtItgPtrFunction{ &s22Func, 0., yMax + 0.1, sCoeffs };
+    auto mys27Func = EvtItgPtrFunction{ &s27Func, 0., yMax + 0.1, sCoeffs };
 
     //Use a simpson integrator
-    auto mys22Simp = EvtItgSimpsonIntegrator{mys22Func, 1.0e-4, 20};
-    auto mys27Simp = EvtItgSimpsonIntegrator{mys27Func, 1.0e-4, 50};
+    auto mys22Simp = EvtItgSimpsonIntegrator{ mys22Func, 1.0e-4, 20 };
+    auto mys27Simp = EvtItgSimpsonIntegrator{ mys27Func, 1.0e-4, 50 };
 
     int i;
 
@@ -323,37 +323,38 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
     }
 
     //Define functions
-    auto myDeltaFermiFunc = EvtItgThreeCoeffFcn{&DeltaFermiFunc, -_mb,
-                                                _mB - _mb,       FermiCoeffs,
-                                                varCoeffs,       DeltaCoeffs};
-    auto mys88FermiFunc = EvtItgThreeCoeffFcn{&s88FermiFunc, -_mb,
-                                              _mB - _mb,     FermiCoeffs,
-                                              varCoeffs,     s88Coeffs};
-    auto mys77FermiFunc = EvtItgTwoCoeffFcn{&s77FermiFunc, -_mb, _mB - _mb,
-                                            FermiCoeffs, varCoeffs};
-    auto mys78FermiFunc = EvtItgTwoCoeffFcn{&s78FermiFunc, -_mb, _mB - _mb,
-                                            FermiCoeffs, varCoeffs};
-    auto mys22FermiFunc = EvtItgFourCoeffFcn{&sFermiFunc, -_mb,
-                                             _mB - _mb,   FermiCoeffs,
-                                             varCoeffs,   sInitCoeffs,
-                                             s22Coeffs};
-    auto mys27FermiFunc = EvtItgFourCoeffFcn{&sFermiFunc, -_mb,
-                                             _mB - _mb,   FermiCoeffs,
-                                             varCoeffs,   sInitCoeffs,
-                                             s27Coeffs};
-    auto mys28FermiFunc = EvtItgFourCoeffFcn{&sFermiFunc, -_mb,
-                                             _mB - _mb,   FermiCoeffs,
-                                             varCoeffs,   sInitCoeffs,
-                                             s28Coeffs};
+    auto myDeltaFermiFunc = EvtItgThreeCoeffFcn{ &DeltaFermiFunc, -_mb,
+                                                 _mB - _mb,       FermiCoeffs,
+                                                 varCoeffs,       DeltaCoeffs };
+    auto mys88FermiFunc = EvtItgThreeCoeffFcn{ &s88FermiFunc, -_mb,
+                                               _mB - _mb,     FermiCoeffs,
+                                               varCoeffs,     s88Coeffs };
+    auto mys77FermiFunc = EvtItgTwoCoeffFcn{ &s77FermiFunc, -_mb, _mB - _mb,
+                                             FermiCoeffs, varCoeffs };
+    auto mys78FermiFunc = EvtItgTwoCoeffFcn{ &s78FermiFunc, -_mb, _mB - _mb,
+                                             FermiCoeffs, varCoeffs };
+    auto mys22FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -_mb,
+                                              _mB - _mb,   FermiCoeffs,
+                                              varCoeffs,   sInitCoeffs,
+                                              s22Coeffs };
+    auto mys27FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -_mb,
+                                              _mB - _mb,   FermiCoeffs,
+                                              varCoeffs,   sInitCoeffs,
+                                              s27Coeffs };
+    auto mys28FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -_mb,
+                                              _mB - _mb,   FermiCoeffs,
+                                              varCoeffs,   sInitCoeffs,
+                                              s28Coeffs };
 
     //Define integrators
-    auto myDeltaFermiSimp = EvtItgSimpsonIntegrator{myDeltaFermiFunc, 1.0e-4, 40};
-    auto mys77FermiSimp = EvtItgSimpsonIntegrator{mys77FermiFunc, 1.0e-4, 40};
-    auto mys88FermiSimp = EvtItgSimpsonIntegrator{mys88FermiFunc, 1.0e-4, 40};
-    auto mys78FermiSimp = EvtItgSimpsonIntegrator{mys78FermiFunc, 1.0e-4, 40};
-    auto mys22FermiSimp = EvtItgSimpsonIntegrator{mys22FermiFunc, 1.0e-4, 40};
-    auto mys27FermiSimp = EvtItgSimpsonIntegrator{mys27FermiFunc, 1.0e-4, 40};
-    auto mys28FermiSimp = EvtItgSimpsonIntegrator{mys28FermiFunc, 1.0e-4, 40};
+    auto myDeltaFermiSimp = EvtItgSimpsonIntegrator{ myDeltaFermiFunc, 1.0e-4,
+                                                     40 };
+    auto mys77FermiSimp = EvtItgSimpsonIntegrator{ mys77FermiFunc, 1.0e-4, 40 };
+    auto mys88FermiSimp = EvtItgSimpsonIntegrator{ mys88FermiFunc, 1.0e-4, 40 };
+    auto mys78FermiSimp = EvtItgSimpsonIntegrator{ mys78FermiFunc, 1.0e-4, 40 };
+    auto mys22FermiSimp = EvtItgSimpsonIntegrator{ mys22FermiFunc, 1.0e-4, 40 };
+    auto mys27FermiSimp = EvtItgSimpsonIntegrator{ mys27FermiFunc, 1.0e-4, 40 };
+    auto mys28FermiSimp = EvtItgSimpsonIntegrator{ mys28FermiFunc, 1.0e-4, 40 };
 
     //Finally calculate mHVect for the range of hadronic masses
     double mHmin = sqrt( _mB * _mB - 2. * _mB * eGammaMax );

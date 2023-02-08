@@ -77,7 +77,7 @@ GenParticlePtr EvtHepMCEvent::createGenParticle( EvtParticle* theParticle,
                                                  int frameType )
 {
     // Create an HepMC GenParticle, with the 4-momenta in the frame given by the frameType integer
-    GenParticlePtr genParticle{nullptr};
+    GenParticlePtr genParticle{ nullptr };
 
     if ( theParticle != nullptr ) {
         // Set the particle status integer to either stable or decayed

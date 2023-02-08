@@ -154,7 +154,7 @@ void EvtRareLbToLllFF::init()
     FFMap_[EvtPDL::getId( "Lambda(1520)0" ).getId()] = L1520.get();
     FFMap_[EvtPDL::getId( "anti-Lambda(1520)0" ).getId()] = L1520.get();
 
-    FF_ = {std::move( L1115 ), std::move( L1520 )};
+    FF_ = { std::move( L1115 ), std::move( L1520 ) };
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << " EvtRareLbToLll is using form factors from arXiv:1108.6129 "
@@ -278,7 +278,8 @@ void EvtRareLbToLllFF::RaritaSchwingerFF(
     }
 }
 
-void EvtRareLbToLllFF::getFF( const EvtParticle& parent, const EvtParticle& lambda,
+void EvtRareLbToLllFF::getFF( const EvtParticle& parent,
+                              const EvtParticle& lambda,
                               EvtRareLbToLllFF::FormFactors& FF ) const
 {
     // Find the FF information for this particle, start by setting all to zero

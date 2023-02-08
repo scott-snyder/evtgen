@@ -26,10 +26,10 @@
 #include "EvtGenBase/EvtSpinType.hh"
 #include "EvtGenBase/EvtStringHash.hh"
 
-#include <map>
-#include <vector>
-#include <string>
 #include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
 const int SPIN_NAME_LENGTH = 100;
 

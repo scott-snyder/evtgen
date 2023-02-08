@@ -274,8 +274,8 @@ void EvtVub::decay( EvtParticle* p )
 
     sttmp = sqrt( 1 - ctH * ctH );
     ptmp = sqrt( Eh * Eh - sh );
-    double pHB[4] = {Eh, ptmp * sttmp * cos( phH ), ptmp * sttmp * sin( phH ),
-                     ptmp * ctH};
+    double pHB[4] = { Eh, ptmp * sttmp * cos( phH ), ptmp * sttmp * sin( phH ),
+                      ptmp * ctH };
     p4.set( pHB[0], pHB[1], pHB[2], pHB[3] );
     xuhad->init( getDaug( 0 ), p4 );
 
@@ -299,7 +299,7 @@ void EvtVub::decay( EvtParticle* p )
     // calculate the W 4 vector in the B Meson restrframe
 
     double apWB = ptmp;
-    double pWB[4] = {mB - Eh, -pHB[1], -pHB[2], -pHB[3]};
+    double pWB[4] = { mB - Eh, -pHB[1], -pHB[2], -pHB[3] };
 
     // first go in the W restframe and calculate the lepton and
     // the neutrino in the W frame
@@ -321,17 +321,17 @@ void EvtVub::decay( EvtParticle* p )
     sttmp = sqrt( 1 - ctL * ctL );
 
     // eX' = eZ x eW
-    double xW[3] = {-pWB[2], pWB[1], 0};
+    double xW[3] = { -pWB[2], pWB[1], 0 };
     // eZ' = eW
-    double zW[3] = {pWB[1] / apWB, pWB[2] / apWB, pWB[3] / apWB};
+    double zW[3] = { pWB[1] / apWB, pWB[2] / apWB, pWB[3] / apWB };
 
     double lx = sqrt( xW[0] * xW[0] + xW[1] * xW[1] );
     for ( j = 0; j < 2; j++ )
         xW[j] /= lx;
 
     // eY' = eZ' x eX'
-    double yW[3] = {-pWB[1] * pWB[3], -pWB[2] * pWB[3],
-                    pWB[1] * pWB[1] + pWB[2] * pWB[2]};
+    double yW[3] = { -pWB[1] * pWB[3], -pWB[2] * pWB[3],
+                     pWB[1] * pWB[1] + pWB[2] * pWB[2] };
     double ly = sqrt( yW[0] * yW[0] + yW[1] * yW[1] + yW[2] * yW[2] );
     for ( j = 0; j < 3; j++ )
         yW[j] /= ly;
@@ -356,8 +356,8 @@ void EvtVub::decay( EvtParticle* p )
     if ( ctLL < -1 )
         ctLL = -1;
 
-    double pLB[4] = {El, 0, 0, 0};
-    double pNB[4] = {pWB[0] - El, 0, 0, 0};
+    double pLB[4] = { El, 0, 0, 0 };
+    double pNB[4] = { pWB[0] - El, 0, 0, 0 };
 
     for ( j = 1; j < 4; j++ ) {
         pLB[j] = pLW[j] + ( ctLL * ptmp - ctL * apLW ) / apWB * pWB[j];

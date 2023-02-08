@@ -58,11 +58,11 @@ void Evtbs2llGammaFFMNT::getPhotonFF( int decay_id, double fb, EvtId parent,
     EvtComplex unit0( 0.0, 0.0 );    // complex zero unit
 
     // characteristics of resonances rho, omega, phi
-    double M_res[] = {0.7758, 0.78259, 1.019456};    // particle masses, Gev
-    double Gamma[] = {0.1503, 0.00849, 0.00426};     // particle widthes, Gev
+    double M_res[] = { 0.7758, 0.78259, 1.019456 };    // particle masses, Gev
+    double Gamma[] = { 0.1503, 0.00849, 0.00426 };     // particle widthes, Gev
 
-    double f_lept[] = {5.04, 17.1, -13.2};     // decay constants f_i
-    double g_plus[] = {0.27, -0.27, -0.38};    // and form-factors g+(0)
+    double f_lept[] = { 5.04, 17.1, -13.2 };     // decay constants f_i
+    double g_plus[] = { 0.27, -0.27, -0.38 };    // and form-factors g+(0)
     g_plus[0] = g_plus[0] / sqrt( 2.0 );    // by D.Melikhov, N.Nikitin, K.Toms,
     g_plus[1] = g_plus[1] / sqrt( 2.0 );    // Phys.At.Nucl. 68, p.1842 (2005)
 
@@ -72,8 +72,8 @@ void Evtbs2llGammaFFMNT::getPhotonFF( int decay_id, double fb, EvtId parent,
 
     // parametrs for form-factors Fv, Ftv, Fa, Fta
     //(by D.Melikhov, N.Nikitin, K.Toms, Yad. Fiz. 62, No 11)
-    double beta[] = {0.28, 0.30, 0.26, 0.33};     // beta, Gev^(-1)
-    double Delta[] = {0.04, 0.04, 0.30, 0.30};    // Delta, Gev
+    double beta[] = { 0.28, 0.30, 0.26, 0.33 };     // beta, Gev^(-1)
+    double Delta[] = { 0.04, 0.04, 0.30, 0.30 };    // Delta, Gev
 
     // form-factors
     EvtComplex Ftvq0, Ftaq0, Ftv00, Fta00;

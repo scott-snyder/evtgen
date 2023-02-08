@@ -21,11 +21,11 @@
 #ifndef EVTFOURBODYPHSP_HH
 #define EVTFOURBODYPHSP_HH
 
-#include <vector>
+#include "EvtGenBase/EvtDecayProb.hh"
+
 #include <array>
 #include <utility>
-
-#include "EvtGenBase/EvtDecayProb.hh"
+#include <vector>
 
 class EvtParticle;
 
@@ -84,9 +84,9 @@ class EvtFourBodyPhsp : public EvtDecayProb {
 
     Shape m_boundaryShape;
 
-    bool m_stableMother{true};
-    bool m_stableDaughters{true};
-    bool m_fixedBoundary{true};
+    bool m_stableMother{ true };
+    bool m_stableDaughters{ true };
+    bool m_fixedBoundary{ true };
 };
 
 #endif

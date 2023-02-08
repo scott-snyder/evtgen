@@ -30,7 +30,6 @@ class EvtParticle;
 
 class EvtFlatSqDalitz : public EvtDecayIncoherent {
   public:
-
     std::string getName() override;
     EvtDecayBase* clone() override;
 

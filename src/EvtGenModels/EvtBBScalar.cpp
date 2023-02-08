@@ -42,9 +42,9 @@ const EvtComplex EvtBBScalar::V_ts_star =
                 -0.000813 * cos( 60 / 180 * pi ) );
 const EvtComplex EvtBBScalar::a4 = EvtComplex( -387.3e-4, -121e-4 );
 const EvtComplex EvtBBScalar::a6 = EvtComplex( -555.3e-4, -121e-4 );
-const double EvtBBScalar::x[] = {420.96, -10485.50, 100639.97, -433916.61,
-                                 613780.15};
-const double EvtBBScalar::y[] = {292.62, -735.73};
+const double EvtBBScalar::x[] = { 420.96, -10485.50, 100639.97, -433916.61,
+                                  613780.15 };
+const double EvtBBScalar::y[] = { 292.62, -735.73 };
 const double EvtBBScalar::m_s = 0.120;
 const double EvtBBScalar::m_u = 0.029 * 0.120;
 const double EvtBBScalar::m_b = 4.88;
@@ -244,28 +244,28 @@ double EvtBBScalar::baryon_fS( double t ) const
 
 double EvtBBScalar::D_A( double t ) const
 {
-    const double d_tilde[] = {x[0] - 1.5 * y[0], -478};
+    const double d_tilde[] = { x[0] - 1.5 * y[0], -478 };
     const vector<double> v_d_tilde( d_tilde, d_tilde + 2 );
     return formFactorFit( t, v_d_tilde );
 }
 
 double EvtBBScalar::F_A( double t ) const
 {
-    const double f_tilde[] = {2. / 3 * x[0] + 0.5 * y[0], -478};
+    const double f_tilde[] = { 2. / 3 * x[0] + 0.5 * y[0], -478 };
     const vector<double> v_f_tilde( f_tilde, f_tilde + 2 );
     return formFactorFit( t, v_f_tilde );
 }
 
 double EvtBBScalar::D_P( double t ) const
 {
-    const double d_bar[] = {1.5 * y[0] * _massRatio, /*-952*/ 0};
+    const double d_bar[] = { 1.5 * y[0] * _massRatio, /*-952*/ 0 };
     const vector<double> v_d_bar( d_bar, d_bar + 2 );
     return formFactorFit( t, v_d_bar );
 }
 
 double EvtBBScalar::F_P( double t ) const
 {
-    const double f_bar[] = {( x[0] - 0.5 * y[0] ) * _massRatio, /*-952*/ 0};
+    const double f_bar[] = { ( x[0] - 0.5 * y[0] ) * _massRatio, /*-952*/ 0 };
     const vector<double> v_f_bar( f_bar, f_bar + 2 );
     return formFactorFit( t, v_f_bar );
 }
