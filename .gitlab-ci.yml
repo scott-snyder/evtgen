@@ -45,7 +45,6 @@ variables:
 check_formatting:
   extends:
     - .check_template
-  allow_failure: true
   script:
     - source applyClangFormat.sh
     - git status --porcelain | grep '^ M' || exit 0
