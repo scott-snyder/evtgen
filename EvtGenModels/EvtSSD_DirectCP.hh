@@ -38,9 +38,12 @@ class EvtSSD_DirectCP : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
     std::string getParamName( int i ) override;
 
+  protected:
+    void calcAmp( const EvtParticle& parent, EvtAmp& amp ) const;
+
   private:
-    bool isB0Mixed( EvtParticle* p );
-    bool isBsMixed( EvtParticle* p );
+    bool isB0Mixed( const EvtParticle& p );
+    bool isBsMixed( const EvtParticle& p );
 
     //Arguments
 

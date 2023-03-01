@@ -11,6 +11,11 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-02-0X
 
+1 March 2023 Fernando Abudinen
+* D92: Bugfix probmax issue for TENSOR daughter in EvtSSD_DirectCP model.
+       Calculation of amplitude in EvtSSD_DirectCP model moved to dedicated calcAmp function. 
+       Got rid of a few static variables along the way.
+
 3 Feb 2023 John Back
 * D91: Check for non-zero momentum for EvtSLBaryonAmp parent spin density matrix.
        Print out integrals of JSON test histograms.
