@@ -9,6 +9,12 @@ https://phab.hepforge.org/Tabc
 https://phab.hepforge.org/Dxyz
 
 ===
+## R02-02-01
+
+21 Aug 2023 Tom Latham
+* D96: Work around change of interface for setRndmEnginePtr in Pythia8 310
+
+===
 ## R02-02-00
 
 12 May 2022 Michal Kreps
