@@ -75,7 +75,7 @@ EvtPythiaEngine::EvtPythiaEngine( std::string xmlDir, bool convertPhysCodes,
     // from EvtGen for Pythia 8.
     _useEvtGenRandom = useEvtGenRandom;
 
-    _evtgenRandom = std::make_unique<EvtPythiaRandom>();
+    _evtgenRandom = std::make_shared<EvtPythiaRandom>();
 
     _initialised = false;
 }
@@ -128,8 +128,13 @@ void EvtPythiaEngine::initialise()
 
     // Set the random number generator
     if ( _useEvtGenRandom == true ) {
+#if PYTHIA_VERSION_INTEGER < 8310
         _genericPythiaGen->setRndmEnginePtr( _evtgenRandom.get() );
         _aliasPythiaGen->setRndmEnginePtr( _evtgenRandom.get() );
+#else
+        _genericPythiaGen->setRndmEnginePtr( _evtgenRandom );
+        _aliasPythiaGen->setRndmEnginePtr( _evtgenRandom );
+#endif
     }
 
     _genericPythiaGen->init();

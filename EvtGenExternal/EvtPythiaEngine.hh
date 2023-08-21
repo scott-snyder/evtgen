@@ -82,7 +82,7 @@ class EvtPythiaEngine : public EvtAbsExternalGen {
 
     bool _convertPhysCodes, _initialised, _useEvtGenRandom;
 
-    std::unique_ptr<EvtPythiaRandom> _evtgenRandom;
+    std::shared_ptr<EvtPythiaRandom> _evtgenRandom;
 
     std::map<int, int> _addedPDGCodes;
 };
