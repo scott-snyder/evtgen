@@ -9,12 +9,18 @@ https://phab.hepforge.org/Tabc
 https://phab.hepforge.org/Dxyz
 
 ===
-## R02-02-0X
+## R02-0X-00
+
+21 Aug 2023 Tom Latham
+* D96: Work around change of interface for setRndmEnginePtr in Pythia8 310
 
 1 March 2023 Fernando Abudinen
 * D92: Bugfix probmax issue for TENSOR daughter in EvtSSD_DirectCP model.
        Calculation of amplitude in EvtSSD_DirectCP model moved to dedicated calcAmp function. 
        Got rid of a few static variables along the way.
+
+8 Feb 2023 Alexei Sibidanov and Tom Latham
+* D90: Apply clang format and enable checking of formatting in gitlab CI
 
 3 Feb 2023 John Back
 * D91: Check for non-zero momentum for EvtSLBaryonAmp parent spin density matrix.
@@ -22,6 +28,12 @@ https://phab.hepforge.org/Dxyz
 
 16 Dec 2022 John Back
 * D89: Added probabilities for B_c -> V pi+ and V pi+ pi0 EvtBcVHad modes.
+
+16 Dec 2022 Alexei Sibidanov
+* D88: Applied clang-tidy modernize-use-nullptr
+
+13 Dec 2022 Fernando Abudinen and Tom Latham
+* Various improvements to testing framework
 
 16 Nov 2022 Tom Latham
 * T123: Provide documention of how to contribute bug reports, feature requests, new/modified code
