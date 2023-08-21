@@ -39,13 +39,13 @@ cmake_minimum_required(VERSION 3.11.0)
 # Project setup
 if(${CMAKE_VERSION} VERSION_LESS 3.12.0)
     project(EvtGen
-        VERSION 2.2.0
+        VERSION 2.2.1
         DESCRIPTION "Monte Carlo generator of particle decays, in particular the weak decays of heavy flavour particles such as B mesons."
         LANGUAGES C CXX
         )
 else()
     project(EvtGen
-        VERSION 2.2.0
+        VERSION 2.2.1
         DESCRIPTION "Monte Carlo generator of particle decays, in particular the weak decays of heavy flavour particles such as B mesons."
         LANGUAGES C CXX
         HOMEPAGE_URL "https://evtgen.hepforge.org"

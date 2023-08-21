@@ -42,7 +42,7 @@
 INSTALL_PREFIX="/usr/local"
 
 # EvtGen version or tag number (or branch name). No extra spaces on this line!
-VERSION=R02-02-00
+VERSION=R02-02-01
 
 # HepMC version numbers - change HEPMCMAJORVERSION to 2 in order to use HepMC2
 HEPMCMAJORVERSION="3"
