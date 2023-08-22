@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+22 Aug 2023 Andrii Verbytskyi
+* Patch for finding Pythia8 xmldoc path
+
 21 Aug 2023 Tom Latham
 * D96: Work around change of interface for setRndmEnginePtr in Pythia8 310
 
