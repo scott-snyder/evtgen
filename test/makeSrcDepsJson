@@ -30,18 +30,18 @@ sourceDir=$1
 buildDir=$2
 
 # get a list of all the object files that are built in the EvtGen lib
-declare -a objFiles=(`awk -F: '{print $1}' $buildDir/src/CMakeFiles/objlib.dir/depend.make | grep '\.cpp\.o$' | sort -u`)
-
+declare -a objFiles=(`find $buildDir/src/CMakeFiles/objlib.dir -name "*.cpp.o" | sort -u`)
 declare -i nObjFiles=${#objFiles[@]}
 declare -i lastIndex=$nObjFiles-1
 
 echo "{"
 for i in `seq 0 $lastIndex`
 do
-    objFile=${objFiles[$i]}
-    srcFile=`echo $objFile | sed -e 's%CMakeFiles/objlib\.dir/%%' -e 's%\.o$%%'`
+    oFile=${objFiles[$i]}
+    dFile=${oFile}.d
+    srcFile=src/`echo $oFile | sed -e "s%.*/CMakeFiles/objlib\.dir/%%" -e "s%\.o$%%"`
 
-    declare -a depFiles=(`grep "${objFile}:" $buildDir/src/CMakeFiles/objlib.dir/depend.make | awk '{print $NF}' | sed -e "s%$sourceDir[/]\?%%" -e "s%\.\./%%"`)
+    declare -a depFiles=(`grep EvtGen $dFile | grep -v "\.o:" | awk '{print $1}' | sed -e "s%$sourceDir[/]\?%%"`)
     declare -i nDepFiles=${#depFiles[@]}
     declare -i lastDep=$nDepFiles-1
 
