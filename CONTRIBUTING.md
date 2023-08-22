@@ -32,7 +32,7 @@ As such, any new code should try to conform to these already.
 ## Code formatting, naming conventions, etc.
 
 EvtGen uses a `clang-format` style file for code formatting.
-Please run `clang-format` on all files that you have modified/created.
+Please run `clang-format` version 12 on all files that you have modified/created.
 
 EvtGen is licenced under the GNU GPL v3 (or later) and as such the appropriate
 copyright header should appear at the top of each source file.
