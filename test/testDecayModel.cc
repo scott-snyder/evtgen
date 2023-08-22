@@ -1136,18 +1136,17 @@ double TestDecayModel::getCosAcoplanarityAngle( const EvtParticle* selectedParen
                           : daughter1->getP4Lab() + daughter2->getP4Lab() };
 
     const EvtVector4R daughter4Vector2{
-        sel_NDaugMax == 2
-            ? daughter2->getP4Lab()
-            : sel_NDaugMax == 3 ? daughter2->getP4Lab() + daughter3->getP4Lab()
-                                : daughter3->getP4Lab() + daughter4->getP4Lab() };
+        sel_NDaugMax == 2   ? daughter2->getP4Lab()
+        : sel_NDaugMax == 3 ? daughter2->getP4Lab() + daughter3->getP4Lab()
+                            : daughter3->getP4Lab() + daughter4->getP4Lab() };
 
     const EvtVector4R grandDaughter4Vector1{
         sel_NDaugMax <= 3 ? grandDaughter1->getP4Lab() : daughter1->getP4Lab() };
 
     const EvtVector4R grandDaughter4Vector2{
-        sel_NDaugMax == 2 ? grandDaughter2->getP4Lab()
-                          : sel_NDaugMax == 3 ? daughter2->getP4Lab()
-                                              : daughter3->getP4Lab() };
+        sel_NDaugMax == 2   ? grandDaughter2->getP4Lab()
+        : sel_NDaugMax == 3 ? daughter2->getP4Lab()
+                            : daughter3->getP4Lab() };
 
     const EvtVector4R parentBoost{ parent4Vector.get( 0 ),
                                    -parent4Vector.get( 1 ),

@@ -254,7 +254,7 @@ EvtComplex& EvtSpinAmp::operator()( int i, ... )
 
     va_end( ap );
 
-    return ( *this )( index );
+    return (*this)( index );
 }
 
 const EvtComplex& EvtSpinAmp::operator()( int i, ... ) const
@@ -270,7 +270,7 @@ const EvtComplex& EvtSpinAmp::operator()( int i, ... ) const
 
     va_end( ap );
 
-    return ( *this )( index );
+    return (*this)( index );
 }
 
 EvtSpinAmp& EvtSpinAmp::operator=( const EvtSpinAmp& cont )
@@ -349,7 +349,7 @@ EvtSpinAmp EvtSpinAmp::operator*( const EvtSpinAmp& amp2 ) const
         index[i + rank()] = index2[i] = -amp2._twospin[i];
 
     while ( true ) {
-        amp( index ) = ( *this )(index1)*amp2( index2 );
+        amp( index ) = (*this)(index1)*amp2( index2 );
         if ( !amp.iterate( index ) )
             break;
 
@@ -504,10 +504,10 @@ void EvtSpinAmp::intcont( size_t a, size_t b )
         }
 
         index[b] = index[a] = -_twospin[a];
-        newamp( newindex ) = ( *this )( index );
+        newamp( newindex ) = (*this)( index );
         for ( size_t i = -_twospin[a] + 2; i <= _twospin[a]; i += 2 ) {
             index[b] = index[a] = i;
-            newamp( newindex ) += ( *this )( index );
+            newamp( newindex ) += (*this)( index );
         }
 
         if ( !newamp.iterate( newindex ) )
