@@ -47,7 +47,7 @@ VERSION=R02-02-00
 # HepMC version numbers - change HEPMCMAJORVERSION to 2 in order to use HepMC2
 HEPMCMAJORVERSION="3"
 HEPMC2VER="2.06.10"
-HEPMC3VER="3.2.0"
+HEPMC3VER="3.2.6"
 HEPMC2PKG="HepMC-"$HEPMC2VER
 HEPMC3PKG="HepMC3-"$HEPMC3VER
 HEPMC2TAR="hepmc"$HEPMC2VER".tgz"
@@ -55,7 +55,7 @@ HEPMC3TAR=$HEPMC3PKG".tar.gz"
 
 # Pythia version number with no decimal points, e.g. 8230 corresponds to version 8.230. This
 # follows the naming convention of Pythia install tar files. Again, no extra spaces allowed.
-PYTHIAVER=8243
+PYTHIAVER=8310
 PYTHIAPKG="pythia"$PYTHIAVER
 PYTHIATAR=$PYTHIAPKG".tgz"
 
@@ -82,6 +82,19 @@ else
 fi
 
 echo Will install EvtGen version $VERSION and its dependencies in $INSTALL_PREFIX
+
+# Make sure that the dependencies are picked up from our local install
+delpath()
+{
+    eval "$1=\$(echo \$$1 | sed -e s%^$2\$%% -e s%^$2\:%% -e s%:$2\:%:%g -e s%:$2\\\$%%)"
+}
+addpath_front()
+{
+    delpath $*
+    eval "$1=$2:\$$1"
+}
+addpath_front CMAKE_PREFIX_PATH $INSTALL_PREFIX
+export CMAKE_PREFIX_PATH
 
 BUILD_BASE=`mktemp -d` || exit 1
 
