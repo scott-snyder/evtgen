@@ -11,6 +11,27 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+22 Aug 2023 Tom Latham
+* CMake updates
+  - Update default C++ standard to 17
+  - Suppress 'up-to-date' messages during install
+  - Add 'EvtGen' prefix to file names of custom CMake modules
+  - Remove unused CMake module
+* Update CI config
+  - Update default LCG version to 103
+  - Add builds for el9 OS using LCG 104
+  - Allow switching on/off building against each external
+  - Test stage: attempt to improve selection of commits to diff in different cases
+  - Update CVMFS tags as per https://cern.service-now.com/service-portal?id=outage&n=OTG0079356
+* Fix script for generating src dependencies
+  - Adapted to behaviour of newer CMake version in LCG 103
+* Apply clang-format
+  - Few small changes after update of CI clang version to 12
+  - Document version of clang-format to be used
+* Updates to install script
+  - Update to latest Pythia8 and HepMC3 versions
+  - Fix to ensure dependencies are picked up from the local install
+
 22 Aug 2023 Andrii Verbytskyi
 * Patch for finding Pythia8 xmldoc path
 
