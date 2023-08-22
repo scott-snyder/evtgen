@@ -59,12 +59,15 @@ set(CMAKE_FIND_FRAMEWORK LAST)
 # Control verbosity of the build
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Control verbosity of generated Makefiles")
 
+# Control verbosity of the install - suppresses 'up-to-date' messages
+set(CMAKE_INSTALL_MESSAGE LAZY)
+
 # C++ standard settings
 set(CMAKE_CXX_EXTENSIONS OFF)
 if(DEFINED ENV{CMAKE_CXX_STANDARD})
     set(CMAKE_CXX_STANDARD $ENV{CMAKE_CXX_STANDARD} CACHE STRING "C++ standard")
 else()
-    set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ standard")
+    set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard")
 endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 message(STATUS "EvtGen: Using C++${CMAKE_CXX_STANDARD} standard")

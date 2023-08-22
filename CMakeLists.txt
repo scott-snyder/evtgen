@@ -58,7 +58,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules ${CMAKE_MODULE_PATH})
 # Install paths
 include(GNUInstallDirs)
 # Compilation/linking flags and related settings
-include(CompilerFlags)
+include(EvtGenCompilerFlags)
 # EvtGen external dependencies
 option(EVTGEN_HEPMC3 "Enable/disable linking with HepMC3"   ON)
 option(EVTGEN_PYTHIA "Enable/disable linking with Pythia8"  OFF)
@@ -74,7 +74,7 @@ message(STATUS "EvtGen: Optional linking with HepMC3   EVTGEN_HEPMC3 ${EVTGEN_HE
 message(STATUS "EvtGen: Optional linking with Pythia8  EVTGEN_PYTHIA ${EVTGEN_PYTHIA}")
 message(STATUS "EvtGen: Optional linking with Photos++ EVTGEN_PHOTOS ${EVTGEN_PHOTOS}")
 message(STATUS "EvtGen: Optional linking with Tauola++ EVTGEN_TAUOLA ${EVTGEN_TAUOLA}")
-include(ExternalDependencies)
+include(EvtGenExternalDependencies)
 
 # Setup clang-tidy checks
 option(EVTGEN_RUN_CLANG_TIDY "Enable/disable running clang-tidy static analysis checks during build" OFF)
