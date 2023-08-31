@@ -1,6 +1,6 @@
 
 /***********************************************************************
-* Copyright 1998-2020 CERN for the benefit of the EvtGen authors       *
+* Copyright 1998-2023 CERN for the benefit of the EvtGen authors       *
 *                                                                      *
 * This file is part of EvtGen.                                         *
 *                                                                      *
@@ -770,41 +770,43 @@ void EvtDDalitz::decay( EvtParticle* p )
     //D0 -> pi- pi+ pi0
     //PRL 99, 251801 (2007)
     //arXiv:hep-ex/0703037
+    // Amplitude magnitudes taken from the above paper, but corrected for normalization
+    // For details, see https://phab.hepforge.org/T219
     if ( _flag == 12 ) {
         EvtResonance2 DpipipiRes1p( p4_p, moms2, moms3, 1.0, 0.0, 0.149, 0.775,
                                     1, true );    //rho+(770)
-        EvtResonance2 DpipipiRes1( p4_p, moms1, moms2, 0.588, 16.2, 0.149,
+        EvtResonance2 DpipipiRes1( p4_p, moms1, moms2, 0.6237, 16.2, 0.149,
                                    0.775, 1, true );    //rho0(770)
-        EvtResonance2 DpipipiRes1m( p4_p, moms3, moms1, 0.714, -2.0, 0.149,
+        EvtResonance2 DpipipiRes1m( p4_p, moms3, moms1, 0.7143, -2.0, 0.149,
                                     0.775, 1, true );    //rho-(770)
-        EvtResonance2 DpipipiRes2p( p4_p, moms2, moms3, 0.21, -146.0, 0.400,
+        EvtResonance2 DpipipiRes2p( p4_p, moms2, moms3, 0.2587, -146.0, 0.400,
                                     1.465, 1, true );    //rho+(1450)
-        EvtResonance2 DpipipiRes2( p4_p, moms1, moms2, 0.33, 10.0, 0.400, 1.465,
-                                   1, true );    //rho0(1450)
-        EvtResonance2 DpipipiRes2m( p4_p, moms3, moms1, 0.82, 16.0, 0.400,
+        EvtResonance2 DpipipiRes2( p4_p, moms1, moms2, 0.4258, 10.0, 0.400,
+                                   1.465, 1, true );    //rho0(1450)
+        EvtResonance2 DpipipiRes2m( p4_p, moms3, moms1, 1.043, 16.0, 0.400,
                                     1.465, 1, true );    //rho-(1450)
-        EvtResonance2 DpipipiRes3p( p4_p, moms2, moms3, 2.25, -17.0, 0.250,
+        EvtResonance2 DpipipiRes3p( p4_p, moms2, moms3, 4.155, -17.0, 0.250,
                                     1.720, 1, true );    //rho+(1700)
-        EvtResonance2 DpipipiRes3( p4_p, moms1, moms2, 2.51, -17.0, 0.250,
+        EvtResonance2 DpipipiRes3( p4_p, moms1, moms2, 4.508, -17.0, 0.250,
                                    1.720, 1, true );    //rho0(1700)
-        EvtResonance2 DpipipiRes3m( p4_p, moms3, moms1, 2.00, -50.0, 0.250,
+        EvtResonance2 DpipipiRes3m( p4_p, moms3, moms1, 3.670, -50.0, 0.250,
                                     1.720, 1, true );    //rho-(1700)
-        EvtResonance2 DpipipiRes4( p4_p, moms1, moms2, 0.015, -59.0, 0.07,
+        EvtResonance2 DpipipiRes4( p4_p, moms1, moms2, 0.07289, -59.0, 0.07,
                                    0.980, 0 );    //f0(980)
-        EvtResonance2 DpipipiRes5( p4_p, moms1, moms2, 0.063, 156.0, 0.350,
+        EvtResonance2 DpipipiRes5( p4_p, moms1, moms2, 0.3186, 156.0, 0.350,
                                    1.370, 0 );    //f0(1370)
-        EvtResonance2 DpipipiRes6( p4_p, moms1, moms2, 0.058, 12.0, 0.109,
+        EvtResonance2 DpipipiRes6( p4_p, moms1, moms2, 0.2075, 12.0, 0.109,
                                    1.505, 0 );    //f0(1500)
-        EvtResonance2 DpipipiRes7( p4_p, moms1, moms2, 0.112, 51.0, 0.135,
+        EvtResonance2 DpipipiRes7( p4_p, moms1, moms2, 0.3823, 51.0, 0.135,
                                    1.720, 0 );    //f0(1720)
-        EvtResonance2 DpipipiRes8( p4_p, moms1, moms2, 1.04, -171.0, 0.185,
+        EvtResonance2 DpipipiRes8( p4_p, moms1, moms2, 0.3878, -171.0, 0.185,
                                    1.275, 2, true );    //f2(1270)
-        EvtResonance2 DpipipiRes9( p4_p, moms1, moms2, 0.069, 8.0, 0.600, 0.400,
+        EvtResonance2 DpipipiRes9( p4_p, moms1, moms2, 0.3249, 8.0, 0.600, 0.400,
                                    0 );    //sigma(400)
 
         double pi180inv = 1.0 / EvtConst::radToDegrees;
-        amp = EvtComplex( 0.57 * cos( -11.0 * pi180inv ),
-                          0.57 * sin( -11.0 * pi180inv ) ) +
+        amp = EvtComplex( 0.6087 * cos( -11.0 * pi180inv ),
+                          0.6087 * sin( -11.0 * pi180inv ) ) +
               DpipipiRes1p.resAmpl() + DpipipiRes1.resAmpl() +
               DpipipiRes1m.resAmpl() + DpipipiRes2p.resAmpl() +
               DpipipiRes2.resAmpl() + DpipipiRes2m.resAmpl() +

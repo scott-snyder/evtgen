@@ -38,9 +38,12 @@ https://phab.hepforge.org/Dxyz
 21 Aug 2023 Tom Latham
 * D96: Work around change of interface for setRndmEnginePtr in Pythia8 310
 
+22 Jun 2023 Ludovico Massaccesi
+* T219: Fixed amplitudes for D_DALITZ model of D0 -> pi+ pi- pi0.
+
 1 March 2023 Fernando Abudinen
 * D92: Bugfix probmax issue for TENSOR daughter in EvtSSD_DirectCP model.
-       Calculation of amplitude in EvtSSD_DirectCP model moved to dedicated calcAmp function. 
+       Calculation of amplitude in EvtSSD_DirectCP model moved to dedicated calcAmp function.
        Got rid of a few static variables along the way.
 
 8 Feb 2023 Alexei Sibidanov and Tom Latham
@@ -64,7 +67,7 @@ https://phab.hepforge.org/Dxyz
 
 8 Sep 2022 Fernando Abudinen, John Back, Michal Kreps, Tom Latham, Alex Ward
 * T108: Implement JSON test framework for all decay models
-    
+
 9 June 2022 Michal Kreps
 * D84: Improve efficiency of RareLbToLll decay model for final states with e+e- pair.
 
@@ -88,7 +91,7 @@ https://phab.hepforge.org/Dxyz
 * D78: Add Bc -> J/psi K+ pi- pi+ pi- pi+, Bc -> J/psi K+ K- pi+ pi- pi+ &
        Bc -> J/psi 4pi+ 3pi- decay modes to the BC_VHAD model, courtesy of
        Aleksei Luchinsky, Anna Danilina, Dmitrii Pereima & Vanya Belyaev (LHCb)
-       
+
 ===
 ## R02-01-01
 
@@ -189,7 +192,7 @@ https://phab.hepforge.org/Dxyz
 * Correct imaginary sign for EvtComplex /= (EvtComplex c) operator.
 
 3rd July 2019 John Back
-* Added the EvtLambdacPHH decay model for Lc -> p K pi decays with K*(890), 
+* Added the EvtLambdacPHH decay model for Lc -> p K pi decays with K*(890),
   Delta++(1232) and Lambda(1520) resonances, based on the Fermilab E791
   analysis hep-ex/9912003v1,
   - courtesy of Elisabeth Niel and Patrick Robbe (LHCb).
@@ -200,11 +203,11 @@ https://phab.hepforge.org/Dxyz
   1e-4 GeV in EvtRelBreitWignerBarrierFact.
 
 3rd May 2019 John Back
-* Corrected EvtSLDiBaryonAmp bugs/issues in the BToDiBaryonlnupQCD model: 
-  - parity, amplitude terms and B momentum reference frame variables.    
+* Corrected EvtSLDiBaryonAmp bugs/issues in the BToDiBaryonlnupQCD model:
+  - parity, amplitude terms and B momentum reference frame variables.
 * Corrected treament of spinor indices in EvtRareLb2Lll,
   - courtesy of Tom Blake and Michal Kreps (LHCb).
-* Updated the EvtBcVHad model to also handle Bc -> psi Ks K decays, 
+* Updated the EvtBcVHad model to also handle Bc -> psi Ks K decays,
   - courtesy of Aleksei Luchinsky (LHCb).
 * Add new decay model EvtBsMuMuKK (BS_MUMUKK) for Bs to J/psi (mu+mu-) K+K-,
   - courtesy of Veronika Chobanova, Jeremy Dalseno, Diego Martinez Santos and
@@ -226,10 +229,10 @@ https://phab.hepforge.org/Dxyz
 * Imported C++ modernization changes from Gerhard Raven (LHCb).
 
 7th December 2018 John Back
-* Added the EvtBLLNuL (BLLNUL) model that generates rare B -> ell ell nu ell 
+* Added the EvtBLLNuL (BLLNUL) model that generates rare B -> ell ell nu ell
   decays, where ell = e or mu,
   - courtesy of Anna Danilina and Nikolai Nikitin (LHCb).
-* Removed the EvtB2MuMuMuNu (BUTOMMMN) model, since its now replaced 
+* Removed the EvtB2MuMuMuNu (BUTOMMMN) model, since its now replaced
   by the more general BLLNuL one.
 
 5th November 2018 John Back
@@ -254,17 +257,17 @@ https://phab.hepforge.org/Dxyz
 * Updated setupEvtGen.sh to work with the new HepForge Phabricator site.
 
 13th March 2018 John Back
-* Updated EvtPythiaEngine to correctly handle updates of various particle 
+* Updated EvtPythiaEngine to correctly handle updates of various particle
   properties so that Pythia uses the same information as EvtGen (evt.pdl)
   for the generic and alias PYTHIA decay model.
 
 12th March 2018 John Back
 * Updated EvtBcXMuNu models (X = Scalar, Vector, Tensor) to generate
-  Bc to D0(star) mu nu decays, with associated form factors in EvtBCXFF, 
+  Bc to D0(star) mu nu decays, with associated form factors in EvtBCXFF,
   - courtesy of Aleksei Luchinsky (LHCb).
-* Also generalised the calculation 
-  of their maximum probabilities by reusing the CalcMaxProb method in 
-  EvtSemiLeptonicAmp, which now allows for different Q^2 binning 
+* Also generalised the calculation
+  of their maximum probabilities by reusing the CalcMaxProb method in
+  EvtSemiLeptonicAmp, which now allows for different Q^2 binning
   (default remains at 25 bins).
 
 ===
@@ -306,7 +309,7 @@ https://phab.hepforge.org/Dxyz
 
 8th May 2017 Michal Kreps
 * Fix bug in EvtbTosllVectorAmp to recognise Bs --> K*bar mu mu decay as
-  b --> d ll transition. 
+  b --> d ll transition.
 
 8th May 2017 Michal Kreps
 * Significantly simplify way how we decide on decay mode and daughters
@@ -344,26 +347,26 @@ https://phab.hepforge.org/Dxyz
 
 
 13th October 2016 John Back
-* Added the TauolaCurrentOption decfile keyword to select the hadronic 
+* Added the TauolaCurrentOption decfile keyword to select the hadronic
   current in Tauola; default is the BaBar-tuned current option (int = 1).
-* EvtParticles can store double attributes using the functions 
+* EvtParticles can store double attributes using the functions
   setAttributeDouble(name, double) and getAttributeDouble(name), which can
   be useful for storing and retrieving amplitude weights, for example.
   - The analogous EvtParticle integer attribute interface remains unchanged:
     setAttribute(name, int) and getAttribute(name).
 
 13th September 2016 John Back
-* Modified EvtTauolaEngine to use internal Tauola spin matrices for 
+* Modified EvtTauolaEngine to use internal Tauola spin matrices for
   tau pair events by temporarily setting the PDG id of the mother as a
   boson, keeping the same 4-momentum.
 * The BaBar hadronic currents are now used by default.
-* Also added the ability to change some Tauola parameters 
+* Also added the ability to change some Tauola parameters
   using the "Define" keyword in decay files.
 * Added an example decay file
   illustrating the new features: validation/TauolaFiles/Btautau.dec
 
 9th September 2016 Michal Kreps
-* Reimplement code in EvtBTo3pi.F, EvtBTo3piMPP.F, EvtBTo3piP00.F and 
+* Reimplement code in EvtBTo3pi.F, EvtBTo3piMPP.F, EvtBTo3piP00.F and
   EvtBToKpipi.F in C++ in order to remove dependence on Fortran compiler.
   - With this, there is no internal Fortran code in EvtGen.
 
@@ -385,11 +388,11 @@ https://phab.hepforge.org/Dxyz
   - Fix by revisiting submodes, which now fill total Ds --> 3pi.
 
 25th April 2016 Michal Kreps
-* Added DECAY.DEC/XML, which contain updated semileptonic charm and beauty 
-  branching fractions using the 2014 PDG, tuned to minimize disagreements 
-  between measurements and EvtGen for both inclusive and exclusive decays. 
+* Added DECAY.DEC/XML, which contain updated semileptonic charm and beauty
+  branching fractions using the 2014 PDG, tuned to minimize disagreements
+  between measurements and EvtGen for both inclusive and exclusive decays.
 * Updated the evt.pdl particle properties file to the PDG 2014 edition.
-* Implemented new LQCD form factors for Lb --> L mu mu from arXiv paper 
+* Implemented new LQCD form factors for Lb --> L mu mu from arXiv paper
   1602.01399 (EvtRareLbToLllFFlQCD); old LQCD form factors are removed.
 
 18th March 2016 John Back
@@ -398,14 +401,14 @@ https://phab.hepforge.org/Dxyz
   - courtesy of Luis Miguel Garcia Martin and the IFIC Valencia LHCb group.
 
 19th Feburary 2016 John Back
-* Fixed bug in the definition of the initial spinor term Sinit in 
+* Fixed bug in the definition of the initial spinor term Sinit in
   EvtRareLbToLll::HadronicAmpRS(),
   - from Tom Blake (LHCb).
 
 12th February 2016 John Back
 * From LHCb, added extensions to the EvtHQET2(FF) model for semitauonic
-  decays from Brian Hamilton, which needs a patch to EvtSemiLeptonicAmp 
-  from Jack Wimberley to ensure that the q^2 range is physical when 
+  decays from Brian Hamilton, which needs a patch to EvtSemiLeptonicAmp
+  from Jack Wimberley to ensure that the q^2 range is physical when
   finding the maximum amplitude probability.
 
 2nd December 2015 John Back
@@ -425,7 +428,7 @@ https://phab.hepforge.org/Dxyz
   - Photos++ 3.61
   - Tauola++ 1.1.5
 
-* Added the EvtB2MuMuMuNu model for simulating the very rare four-leptonic 
+* Added the EvtB2MuMuMuNu model for simulating the very rare four-leptonic
   decays B- -> mu+ mu- anti-nu_mu mu-,
   - courtesy Nikolai Nikitin.
 
@@ -438,16 +441,16 @@ https://phab.hepforge.org/Dxyz
 
 7th October 2015 John Back
 * Updated EvtGenExternal/EvtPhotosEngine to check that additional particles
-  from the outgoing vertex are indeed (FSR) photons, since later versions of 
+  from the outgoing vertex are indeed (FSR) photons, since later versions of
   PHOTOS introduce pair emission, where particles may not always be photons.
-* Added the genRootDecayChain.cc validation program to create ROOT files 
+* Added the genRootDecayChain.cc validation program to create ROOT files
   containing information about the complete decay tree. Two example test
   decay files BKstarGamma.dec and BuDst0rhop.dec can be used with this; the
   first tests PHOTOS, the second looks at sequential decay chain storage.
   The plotBKstarGamma.C ROOT macro can be used for B -> K* gamma plots.
 
-2nd October 2015 John Back    
-* Modified EvtSVPHelAmp and added a new EvtSVPHelCPMix model, implementing 
+2nd October 2015 John Back
+* Modified EvtSVPHelAmp and added a new EvtSVPHelCPMix model, implementing
   the complete mixing phenomenology of Bs to vector gamma decays,
   - courtesy of Clara Remon (LHCb).
 * EvtD0mixDalitz code: cleanup, inverted q/p for decays of D0bar (simplifies
@@ -465,23 +468,23 @@ https://phab.hepforge.org/Dxyz
 15th September 2015 Michal Kreps
 * Fixed accessed uninitialised memory in EvtPDL.cpp, line 213.
 * Modified the configure and setupEvtGen.sh scripts to work on Mac; needed
-  Mac compilation patch files added to the new "platform" subdirectory. 
+  Mac compilation patch files added to the new "platform" subdirectory.
 
 10th September 2015 John Back
 * Updated setupEvtGen.sh to use the recommended external packages:
-  - HepMC 2.06.09, pythia 8.186, Photos++ 3.56 and Tauola++ 1.1.5. 
+  - HepMC 2.06.09, pythia 8.186, Photos++ 3.56 and Tauola++ 1.1.5.
 * Fixed form-factor calculations for the BTOSLLBALL model 6 used to generate
   b -> sll decays,
-  - courtesy of Christoph Langenbruch and David Loh (LHCb). 
+  - courtesy of Christoph Langenbruch and David Loh (LHCb).
   - Affects B->K*ll, B->rholl and B->omegall, particularly the electron modes.
 * In the validation directory, added runPhotosTest.sh for testing FSR in
   Upsilon(4S) -> e+ e- decays, and changed the plot comparison scripts to
-  use the 2nd directory "oldRootFiles" (which could be a soft-link) for 
-  including ROOT histograms made from a previous version of EvtGen.    
+  use the 2nd directory "oldRootFiles" (which could be a soft-link) for
+  including ROOT histograms made from a previous version of EvtGen.
 
 27th August 2015 John Back
 * Added Mersenne-Twister random number generator (RNG) EvtMTRandomEngine.
-  - It requires c++11 compiler features (>= gcc 4.7), which should 
+  - It requires c++11 compiler features (>= gcc 4.7), which should
     automatically be enabled by the configure script.
   - Introduced the preprocessor environment variable EVTGEN_CPP11 for c++11
     features.
@@ -490,8 +493,8 @@ https://phab.hepforge.org/Dxyz
 * Added a phase-space test validation/genPHSP.sh and PhaseSpacePlots.C to
   visually check the flatness of Dalitz plots in order to ensure that the
   RNG is not producing biased results that depend on particle ordering.
-* Added the models EvtbsToLLLLAmp and EvtbsToLLLLHyperCP for 
-  B0_q -> l+ l- l+ l- decays (SM and one supersymmetric scenario), 
+* Added the models EvtbsToLLLLAmp and EvtbsToLLLLHyperCP for
+  B0_q -> l+ l- l+ l- decays (SM and one supersymmetric scenario),
   - courtesy of Nikolai Nikitin and Konstantin Toms.
   - Documentation provided in doc/evt_BQTOLLLL_model.pdf and
     doc/evt_BQTOLLLLHYPERCP_model.pdf.
@@ -505,17 +508,17 @@ https://phab.hepforge.org/Dxyz
 * Changed the width of chi_b1 in evt.pdl from 9.8928 GeV (!) to zero.
 
 1st May 2015 John Back
-* Added Bc -> scalar ell nu (EvtBcSMuNu) and Bc -> tensor ell nu 
+* Added Bc -> scalar ell nu (EvtBcSMuNu) and Bc -> tensor ell nu
   (EvtBcTMuNu) decays,
   - courtesy of Jack Wimberley, LHCb.
-  - Also included the chi_c1 mode for EvtBcVMuNu.   
+  - Also included the chi_c1 mode for EvtBcVMuNu.
 
 ===
 ## R01-04-00
 
 2nd April 2015 John Back
 * Removed the EvtStdlibRandomEngine class since this can produce biases
-  to kinematic distributions when one or more of the daughters is a 
+  to kinematic distributions when one or more of the daughters is a
   resonance, such as B0 -> K pi psi
   - (thanks to Antonio Augusto Alves Jr who discovered this issue).
   - EvtSimpleRandomEngine is now the default random number generator in the
@@ -523,13 +526,13 @@ https://phab.hepforge.org/Dxyz
 * Incorporated several additions and modifications from LHCb:
   a) From Michal Kreps, Tom Blake & Christoph Langenbruch,
      added rare Lb --> Lambda^(*) ell ell models described in
-     arXiv:1108.6129, with various form factors from Gutsche et al. 
+     arXiv:1108.6129, with various form factors from Gutsche et al.
      (arXiv:1301.3737) and lattice QCD  (arXiv:1212.4827)
-  b) From Andrew Crocombe, implemented Bs --> K* form factors 
-     from Ball-Zwicky and z-parametrization form factors from 
+  b) From Andrew Crocombe, implemented Bs --> K* form factors
+     from Ball-Zwicky and z-parametrization form factors from
      arXiv:1006.4945 for EvtbTosllBallFF
   c) Christoph Langenbruch fixed the Bs -> phi ll form factors in
-     EvtbTosllBallFF; T3 showed a non-physical pole at very low 
+     EvtbTosllBallFF; T3 showed a non-physical pole at very low
      q2 which significantly affected the electron mode
   d) From Michal Kreps, removed semicolons from wrong places to
      clear warnings when compiled with the "-pedantic" option.
@@ -539,7 +542,7 @@ https://phab.hepforge.org/Dxyz
 
 1st April 2014 John Back
 * In EvtReport, modified the logging output severity status flags
-  to have the "EVTGEN_" prefix, e.g. INFO becomes EVTGEN_INFO. 
+  to have the "EVTGEN_" prefix, e.g. INFO becomes EVTGEN_INFO.
 * The global report() function has been renamed to EvtGenReport().
 
 31st March 2014 John Back
@@ -548,12 +551,12 @@ https://phab.hepforge.org/Dxyz
   required value, while getAttribute(name) retrieves the integer value.
   This is used in EvtPhotosEngine to specify the final-state radiation
   "FSR" attribute to 1 for any additional photons (EvtPhotonParticles)
-  created by Photos++. It also stores the "ISR" attribute, but this 
+  created by Photos++. It also stores the "ISR" attribute, but this
   is always set to zero, since only FSR photons are created.
   If the named attribute does not exist, then getAttribute() returns zero.
 
 29th January 2014 Daniel Craik
-* Removed mass assertion on GS shape in EvtDalitzReso to allow it to also 
+* Removed mass assertion on GS shape in EvtDalitzReso to allow it to also
   be used for charged rho resonances.
 
 27th January 2014 John Back
@@ -567,14 +570,14 @@ https://phab.hepforge.org/Dxyz
 * New tag version "1.3.0", incorporating all changes below.
 * Replaced auto-install script to work with this version as well as
   the latest versions of all external generator packages.
-* Updated README to mention the new CERN-based web pages for Photos++ 
+* Updated README to mention the new CERN-based web pages for Photos++
   and Tauola++.
 
 8th January 2014 John Back
 * Fix gcc 4.6 and 4.8 compilation warnings,
   - courtesy of Patrick Robbe (LHCb);
   - main changes are removal of unused variables.
-* Changed the EvtPythiaEngine class and configure script to use new 
+* Changed the EvtPythiaEngine class and configure script to use new
   Pythia 8 header locations; Pythia 8.180 or above is now required.
 
 7th January 2014 John Back
@@ -582,11 +585,11 @@ https://phab.hepforge.org/Dxyz
   - from Jack Wimberley (LHCb).
 
 9th October 2013 Daniel Craik
-* Added Gounaris-Sakurai and Gaussian shapes to EvtGenericDalitz 
+* Added Gounaris-Sakurai and Gaussian shapes to EvtGenericDalitz
   and set sensible defaults for LASS parameters.
 
 19th September 2013 John Back
-* Modified EvtGenExternal/EvtPythiaEngine to keep track of any new 
+* Modified EvtGenExternal/EvtPythiaEngine to keep track of any new
   particles that are added to the default Pythia database to avoid
   duplicating particle/anti-particle entries that could override
   previously defined Pythia decay chains.
@@ -618,23 +621,23 @@ https://phab.hepforge.org/Dxyz
 * New tag, version "1.2.0", incorporating all changes below.
 
 14th May 2013 Michal Kreps
-* Added Blatt-Weisskopf barrier factors up to L=5 in 
+* Added Blatt-Weisskopf barrier factors up to L=5 in
   EvtGenBase/EvtBlattWeisskopf::compute().
 
 14th May 2013 John Back
-* Added additional entries (appended at the end) to the evt.pdl particle 
+* Added additional entries (appended at the end) to the evt.pdl particle
   data file
   - courtesy of Romulus Godang and Belle II colleagues.
 
 14th March 2013 John Back
 * Added the method EvtParticle::getPDGId() to get the PDG integer for a
   particle directly (which just calls EvtPDL::getStdHep()).
-* Added a check in EvtPhotosEngine::doDecay to skip Photos if a given 
-  particle has too many daughters (>= 10) to avoid a problem with a 
+* Added a check in EvtPhotosEngine::doDecay to skip Photos if a given
+  particle has too many daughters (>= 10) to avoid a problem with a
   hard coded upper limit in the Photos PHOENE subroutine.
 
 2nd February 2013 Daniel Craik
-* Updated EvtDalitzTable to estimate probMax when it is missing from a 
+* Updated EvtDalitzTable to estimate probMax when it is missing from a
   Dalitz model.
 
 1st  February 2013 John Back
@@ -649,7 +652,7 @@ https://phab.hepforge.org/Dxyz
   "PythiaTypeParam module:variable=value", where Type = Generic, Alias or
   Both for specifying whether the parameter is for the generic or alias
   Pythia decay engines (or both). The 2nd argument must not contain any
-  spaces. Fixed the list of commands strings being used in the 
+  spaces. Fixed the list of commands strings being used in the
   EvtPythiaEngine class (i.e. Pythia parameters that can be set via decay
   files).
 
@@ -660,20 +663,20 @@ https://phab.hepforge.org/Dxyz
 * Fixed some of the parameter arguments used in the EvtSVSCPiso model.
 
 24th January 2013 John Back
-* Set the Photos++ and Tauola++ models to use the EvtGen random number 
-  engine when useEvtGenRandom is set to true in the EvtExternalGenList 
+* Set the Photos++ and Tauola++ models to use the EvtGen random number
+  engine when useEvtGenRandom is set to true in the EvtExternalGenList
   constructor.
 
 23rd January 2013 John Back
 * Added EvtGenExternal/EvtPythiaRandom to allow the use of the EvtGen
   random number engine to also be used for the random engine for Pythia 8.
-* Added a boolean (useEvtGenRandom, default = true) within the 
+* Added a boolean (useEvtGenRandom, default = true) within the
   EvtExternalGenList constructor to use this feature.
 
 18th December 2012 John Back
 * Corrected some wrong daughter ordering assignments for decay modes 5 and
   12 in EvtDDalitz. Updated validation/DalitzDecays.xml to also contain
-  D decay mode 12, as well as various modes that may use K_S0 and K_L0. 
+  D decay mode 12, as well as various modes that may use K_S0 and K_L0.
 * Added validation/genDDalitzModes.sh and updated validation/compareDalitz.C to
   do a complete comparison of the D Dalitz modes with the xml versions.
 
@@ -683,7 +686,7 @@ https://phab.hepforge.org/Dxyz
 
 15th October 2012 John Back
 * Make EvtSimpleRandomEngine inherit from EvtRandomEngine to avoid
-  crash in EvtGen.cpp when no random engine is defined 
+  crash in EvtGen.cpp when no random engine is defined
   - (from Bjoern Spruck).
 
 ===
@@ -692,32 +695,32 @@ https://phab.hepforge.org/Dxyz
 4th October 2012 John Back
 * New tag, version "1.1.0", incorporating all changes below.
 
-* Provide proper default constructors for EvtVector4R and 
+* Provide proper default constructors for EvtVector4R and
   EvtPhotonParticle. Modified the validation and test code to also
   compile/link in the case of no external generators being included.
 
 3rd October 2012 John Back
-* Corrected the t3 vector form factor values for the Ball-Zwicky 2005 
+* Corrected the t3 vector form factor values for the Ball-Zwicky 2005
   model (modelId = 6) in EvtbTosllBallFF::getVectorFF(), which
   were set to t3tilde instead.
 
 18th September 2012 John Back
-* Moved the external generator engines to a new sub-directory 
+* Moved the external generator engines to a new sub-directory
   EvtGenExternal. Building the code now creates 2 libraries:
   libEvtGen.so (Base+Models) and libEvtGenExternal.so.
   - This allows anyone to ignore using the new external generators
     if required (by not creating/loading the 2nd library).
-* Added prefix option to the configure script/Makefile to allow the user 
-  to specify an installation directory for the include files, libraries, 
+* Added prefix option to the configure script/Makefile to allow the user
+  to specify an installation directory for the include files, libraries,
   DECAY.DEC and evt.pdl files (for Genser).
 
 14th September 2012 Michal Kreps
 * Fixed the calculation of the angle between decay planes in the function
-  EvtKine::EvtDecayAngleChi. Fixed typo in EvtLb2Lll decay model. Only 
+  EvtKine::EvtDecayAngleChi. Fixed typo in EvtLb2Lll decay model. Only
   some NP scenarious could be affected, SM one is definitely unaffected.
 
 13th September 2012 John Back
-* Added the use of the environment variables EVTGEN_PHOTOS, EVTGEN_PYTHIA 
+* Added the use of the environment variables EVTGEN_PHOTOS, EVTGEN_PYTHIA
   and EVTGEN_TAUOLA to specify if the Photos, Pythia and/or Tauola engine
   classes are used or not. These variables are set by the configure script,
   depending if the library paths are specified for these generators.
@@ -733,14 +736,14 @@ https://phab.hepforge.org/Dxyz
   Photospp and Tauolapp namespaces that are present in the latest
   versions of Photos++(3.5) and Tauola++(1.0.7).
 * Updated the configure file to get the correct location of the Tauola++
-  include files. 
+  include files.
 * Added the D0->pi+pi-pi0 decay mode in EvtDDalitz
   - from Marco Gersabeck and Frederic Dreyer (LHCb).
 * Added new decay models/classes from Alexey Luchinsky (LHCb):
   EvtBcVMuNu, EvtTVP, EvtWnPi, EvtSVP, EvtXPsiGamma, EvtBcVNpi
 
 29th June 2012 John Back
-* Corrected mass(squared) variables filled in the Dalitz TTree in 
+* Corrected mass(squared) variables filled in the Dalitz TTree in
   validation/genExampleRootFiles.
 
 15th May 2012 Daniel Craik
@@ -750,15 +753,15 @@ https://phab.hepforge.org/Dxyz
 11th May 2012 Daniel Craik
 * Replaced BaBar specific configuration for BlattWeisskopf birth factors.
 * Updated XML conversion script to handle new configuration.
-* Fixed some bugs in the XML conversion script related to particle 
+* Fixed some bugs in the XML conversion script related to particle
   modifications.
 
 9th May 2012 Daniel Craik
 * Added latex documentation for xml decay files.
 
 2nd May 2012 Daniel Craik
-* Added resDaughters attribute to the Dalitz resonance xml tag to 
-  simplify defining symmetric resonances. Updated validation xml files to 
+* Added resDaughters attribute to the Dalitz resonance xml tag to
+  simplify defining symmetric resonances. Updated validation xml files to
   use the new functionality.
 
 27th April 2012 Daniel Craik
@@ -772,7 +775,7 @@ https://phab.hepforge.org/Dxyz
   to determine the model used, not the D flavour.
 
 17th April 2012 Daniel Craik
-* Updated the GenericDalitz validation code to use the same probMax 
+* Updated the GenericDalitz validation code to use the same probMax
   values as DDalitz.
 * Added XML decay file parsing to EvtGen::readUDecay.
   - Dec files are still the default.
@@ -804,13 +807,13 @@ https://phab.hepforge.org/Dxyz
 * Added further validation code for the generic Dalitz model.
 
 15th March 2012 Daniel Craik
-* Added validation code for xml decay files and the generic Dalitz model. 
+* Added validation code for xml decay files and the generic Dalitz model.
 
 ===
-## R01-00-00 
+## R01-00-00
 
 6th March 2012 John Back
 * First official version for Genser (evtgen 1.0.0) that includes
- support for external generators: Pythia8, Photos++ and Tauola++. 
+ support for external generators: Pythia8, Photos++ and Tauola++.
 * This also includes a preliminary version of creating Dalitz plot
  decay models using EvtGenericDalitz.

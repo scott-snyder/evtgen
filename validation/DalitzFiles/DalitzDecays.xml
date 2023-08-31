@@ -280,36 +280,36 @@
 
 <!-- flag=12 from D_DALITZ -->
   <dalitzDecay particle="D0" daughters="pi- pi+ pi0" probMax="1000.0">
-    <resonance real="0.5595" imag="-0.1088" shape="NonRes"/>
-    <resonance ampFactorReal="1.00" mag="1.00" phase="0.0" width="0.149" mass="0.775" spin="1" 
+    <resonance real="0.5976" imag="-0.1162" shape="NonRes"/>
+    <resonance ampFactorReal="1.00" mag="1.00" phase="0.0" width="0.149" mass="0.775" spin="1"
                daughterPair="2" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.588" phase="16.2" width="0.149" mass="0.775" spin="1" 
+    <resonance ampFactorReal="1.00" mag="0.6237" phase="16.2" width="0.149" mass="0.775" spin="1"
                daughterPair="1" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.714" phase="-2.0" width="0.149" mass="0.775" spin="1" 
+    <resonance ampFactorReal="1.00" mag="0.7143" phase="-2.0" width="0.149" mass="0.775" spin="1"
                daughterPair="3" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.21" phase="-146.0" width="0.400" mass="1.465" spin="1" 
+    <resonance ampFactorReal="1.00" mag="0.2587" phase="-146.0" width="0.400" mass="1.465" spin="1"
                daughterPair="2" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.33" phase="10.0" width="0.400" mass="1.465" spin="1" 
+    <resonance ampFactorReal="1.00" mag="0.4258" phase="10.0" width="0.400" mass="1.465" spin="1"
                daughterPair="1" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.82" phase="16.0" width="0.400" mass="1.465" spin="1" 
+    <resonance ampFactorReal="1.00" mag="1.043" phase="16.0" width="0.400" mass="1.465" spin="1"
                daughterPair="3" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="2.25" phase="-17.0" width="0.250" mass="1.720" spin="1" 
+    <resonance ampFactorReal="1.00" mag="4.155" phase="-17.0" width="0.250" mass="1.720" spin="1"
                daughterPair="2" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="2.51" phase="-17.0" width="0.250" mass="1.720" spin="1" 
+    <resonance ampFactorReal="1.00" mag="4.508" phase="-17.0" width="0.250" mass="1.720" spin="1"
                daughterPair="1" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="2.00" phase="-50.0" width="0.250" mass="1.720" spin="1" 
+    <resonance ampFactorReal="1.00" mag="3.670" phase="-50.0" width="0.250" mass="1.720" spin="1"
                daughterPair="3" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.015" phase="-59.0" width="0.07" mass="0.980" spin="0" 
+    <resonance ampFactorReal="1.00" mag="0.07289" phase="-59.0" width="0.07" mass="0.980" spin="0"
                daughterPair="1" shape="RBW" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.063" phase="156.0" width="0.350" mass="1.370" spin="0" 
+    <resonance ampFactorReal="1.00" mag="0.3186" phase="156.0" width="0.350" mass="1.370" spin="0"
                daughterPair="1" shape="RBW" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.058" phase="12.0" width="0.109" mass="1.505" spin="0" 
+    <resonance ampFactorReal="1.00" mag="0.2075" phase="12.0" width="0.109" mass="1.505" spin="0"
                daughterPair="1" shape="RBW" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.112" phase="51.0" width="0.135" mass="1.720" spin="0" 
+    <resonance ampFactorReal="1.00" mag="0.3823" phase="51.0" width="0.135" mass="1.720" spin="0"
                daughterPair="1" shape="RBW" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="1.04" phase="-171.0" width="0.185" mass="1.275" spin="2" 
+    <resonance ampFactorReal="1.00" mag="0.3878" phase="-171.0" width="0.185" mass="1.275" spin="2"
                daughterPair="1" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="5.0"/>
-    <resonance ampFactorReal="1.00" mag="0.069" phase="8.0" width="0.600" mass="0.400" spin="0" 
+    <resonance ampFactorReal="1.00" mag="0.3249" phase="8.0" width="0.600" mass="0.400" spin="0"
                daughterPair="1" shape="RBW" BlattWeisskopfFactorParent="5.0"/>
   </dalitzDecay>
   <copyDalitz particle="anti-D0" daughters="pi+ pi- pi0"
@@ -317,4 +317,3 @@
 
 
 </data>
-
