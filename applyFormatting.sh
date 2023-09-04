@@ -19,5 +19,9 @@
 # along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     #
 ########################################################################
 
+# apply clang-format to all source files
 find . \( -name "*.cpp" -o -name "*.hh" -o -name "*.cc" -o -name "*.C" \) -exec clang-format -i '{}' \;
+
+# remove trailing whitespace in all Markdown files
+find . -name "*.md" -exec sed -i -e 's/[[:space:]]\+$//' '{}' \;
 

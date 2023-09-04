@@ -65,9 +65,9 @@ check_formatting:
   extends:
     - .check_template
   script:
-    - source applyClangFormat.sh
+    - source applyFormatting.sh
     - git status --porcelain | grep '^ M' || exit 0
-    - echo "The above files do not comply with formatting, please apply clang-format"
+    - echo "The above files do not comply with formatting requirements"
     - exit 1
 
 check_test_json_files:
