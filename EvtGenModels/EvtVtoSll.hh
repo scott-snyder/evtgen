@@ -32,7 +32,14 @@ class EvtVtoSll : public EvtDecayAmp {
 
     void initProbMax() override;
     void init() override;
-    void decay( EvtParticle* p ) override;
+    void decay( EvtParticle* parent ) override;
+
+  protected:
+    void calcAmp( const EvtParticle& parent, EvtAmp& amp ) const;
+
+  private:
+    static constexpr double m_poleSize{ 0.00005 };
+    bool m_electronMode{ false };
 };
 
 #endif

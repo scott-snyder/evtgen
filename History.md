@@ -11,6 +11,10 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+22 Aug 2023 Fernando Abudinen
+* D97: Bugfix probmax issue and introduced pole compensation for VTOSLL model
+     Calculation of amplitude moved to dedicated calcAmp function and fixed initialisation.
+
 22 Aug 2023 Tom Latham
 * CMake updates
   - Update default C++ standard to 17

@@ -1,0 +1,26 @@
+{
+    "parent" : "J/psi",
+    "daughters" : ["pi0", "e+", "e-"],
+    "models" : ["VTOSLL"],
+    "parameters" : [[]],
+    "extras" : ["noPhotos"],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 5.0},
+        {"variable" : "mass", "title" : "m(pi0 e+)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.14, "xmax" : 3.1},
+        {"variable" : "mass", "title" : "m(pi0 e-)", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.14, "xmax" : 3.1},
+        {"variable" : "mass", "title" : "m(e+e-)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.1},
+        {"variable" : "pSumSq", "title" : "qSq(e+ e-)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 5.0},
+        {"variable" : "p", "title" : "p(pi0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.2, "xmax" : 1.6},
+        {"variable" : "pSq", "title" : "pSq(pi0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.6},
+        {"variable" : "pz", "title" : "pz(pi0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
+        {"variable" : "cosHel", "title" : "cosHel(pi0,e+)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel(e+,e-)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(pi0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(e+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(e-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "phi", "title" : "phi(pi0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
+    ],
+    "outfile" : "VTOSLL__Jpsi_pi0ee.root",
+    "reference" : "RefVTOSLL__Jpsi_pi0ee.root"
+}
