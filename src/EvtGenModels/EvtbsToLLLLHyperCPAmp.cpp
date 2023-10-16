@@ -272,8 +272,8 @@ void EvtbsToLLLLHyperCPAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
     k2second = ksecond.mass2();    // Mandelstam variable t=k^2
 
     // B - and barB - mesons descriptors
-    static EvtIdSet bmesons( "anti-B0", "anti-B_s0" );
-    static EvtIdSet bbarmesons( "B0", "B_s0" );
+    static EvtIdSet bmesons{ "anti-B0", "anti-B_s0" };
+    static EvtIdSet bbarmesons{ "B0", "B_s0" };
 
     EvtId parentID = parent->getId();
 

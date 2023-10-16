@@ -261,7 +261,7 @@ void EvtISGW2FF::EvtISGW2FF1S0( EvtId parent, EvtId daugt, double t,
     EvtId dgt = daugt;
 
     //added by Lange Jan4,2000
-    static EvtIdSet theB( "B+", "B-", "B0", "anti-B0" );
+    static EvtIdSet theB{ "B+", "B-", "B0", "anti-B0" };
 
     static EvtId D0 = EvtPDL::getId( "D0" );
     static EvtId D0B = EvtPDL::getId( "anti-D0" );

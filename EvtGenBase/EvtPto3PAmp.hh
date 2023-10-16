@@ -21,6 +21,7 @@
 #ifndef EVT_PTO3P_AMP_HH
 #define EVT_PTO3P_AMP_HH
 
+#include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtCyclic3.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 
@@ -31,7 +32,6 @@ using std::vector;
 #include "EvtGenBase/EvtPropagator.hh"
 #include "EvtGenBase/EvtTwoBodyVertex.hh"
 
-class EvtComplex;
 class EvtBlattWeisskopf;
 
 class EvtPto3PAmp : public EvtAmplitude<EvtDalitzPoint> {

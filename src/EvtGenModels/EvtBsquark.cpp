@@ -59,7 +59,7 @@ void EvtBsquark::decay( EvtParticle* p )
     static EvtId cquark = EvtPDL::getId( "c" );
     static EvtId anticquark = EvtPDL::getId( "anti-c" );
 
-    static EvtIdSet leptons( "e-", "mu-", "tau-" );
+    static EvtIdSet leptons{ "e-", "mu-", "tau-" };
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 

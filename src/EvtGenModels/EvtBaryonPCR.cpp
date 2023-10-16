@@ -51,9 +51,9 @@ EvtBaryonPCR* EvtBaryonPCR::clone()
 void EvtBaryonPCR::decay( EvtParticle* p )
 {
     //This is a kludge to avoid warnings because the K_2* mass becomes to large.
-    static EvtIdSet regenerateMasses( "K_2*+", "K_2*-", "K_2*0", "anti-K_2*0",
-                                      "K_1+", "K_1-", "K_10", "anti-K_10",
-                                      "D'_1+", "D'_1-", "D'_10", "anti-D'_10" );
+    static EvtIdSet regenerateMasses{ "K_2*+", "K_2*-", "K_2*0", "anti-K_2*0",
+                                      "K_1+",  "K_1-",  "K_10",  "anti-K_10",
+                                      "D'_1+", "D'_1-", "D'_10", "anti-D'_10" };
 
     if ( regenerateMasses.contains( getDaug( 0 ) ) ) {
         p->resetFirstOrNot();

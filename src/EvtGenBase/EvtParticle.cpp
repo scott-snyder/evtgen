@@ -248,7 +248,7 @@ void EvtParticle::initDecay( bool useMinMass )
     // carefull - the parent mass might be fixed in stone..
     EvtParticle* par = p->getParent();
     double parMass = -1.;
-    if ( par != nullptr ) {
+    if ( par ) {
         if ( par->hasValidP4() )
             parMass = par->mass();
         for ( size_t i = 0; i < par->getNDaug(); i++ ) {
@@ -320,7 +320,7 @@ void EvtParticle::initDecay( bool useMinMass )
     static EvtId D0 = EvtPDL::getId( "D0" );
     static EvtId D0B = EvtPDL::getId( "anti-D0" );
     static EvtId U4S = EvtPDL::getId( "Upsilon(4S)" );
-    static EvtIdSet borUps( BS0, BSB, BD0, BDB, U4S );
+    static EvtIdSet borUps{ BS0, BSB, BD0, BDB, U4S };
 
     //only makes sense if there is no parent particle which is a B or an Upsilon
     bool hasBorUps = false;
@@ -761,7 +761,7 @@ EvtVector4R EvtParticle::getP4Lab() const
     temp = this->getP4();
     ptemp = this;
 
-    while ( ptemp->getParent() != nullptr ) {
+    while ( ptemp->getParent() ) {
         ptemp = ptemp->getParent();
         mom = ptemp->getP4();
         temp = boostTo( temp, mom );
@@ -777,7 +777,7 @@ EvtVector4R EvtParticle::getP4LabBeforeFSR()
     temp = this->_pBeforeFSR;
     ptemp = this;
 
-    while ( ptemp->getParent() != nullptr ) {
+    while ( ptemp->getParent() ) {
         ptemp = ptemp->getParent();
         mom = ptemp->getP4();
         temp = boostTo( temp, mom );
@@ -798,12 +798,13 @@ EvtVector4R EvtParticle::get4Pos() const
     temp.set( 0.0, 0.0, 0.0, 0.0 );
     ptemp = getParent();
 
-    if ( ptemp == nullptr )
+    if ( !ptemp ) {
         return temp;
+    }
 
     temp = ( ptemp->_t / ptemp->mass() ) * ( ptemp->getP4() );
 
-    while ( ptemp->getParent() != nullptr ) {
+    while ( ptemp->getParent() ) {
         ptemp = ptemp->getParent();
         mom = ptemp->getP4();
         temp = boostTo( temp, mom );
@@ -826,16 +827,18 @@ EvtParticle* EvtParticle::nextIter( EvtParticle* rootOfTree )
 
     do {
         bpart = current->_parent;
-        if ( bpart == nullptr )
+        if ( !bpart ) {
             return nullptr;
+        }
         i = 0;
         while ( bpart->_daug[i] != current ) {
             i++;
         }
 
         if ( bpart == rootOfTree ) {
-            if ( i + 1 == bpart->_ndaug )
+            if ( i + 1 == bpart->_ndaug ) {
                 return nullptr;
+            }
         }
 
         i++;

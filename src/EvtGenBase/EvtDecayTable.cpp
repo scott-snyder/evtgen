@@ -60,7 +60,7 @@ EvtDecayTable* EvtDecayTable::getInstance()
 {
     static EvtDecayTable* theDecayTable = nullptr;
 
-    if ( theDecayTable == nullptr ) {
+    if ( !theDecayTable ) {
         theDecayTable = new EvtDecayTable();
     }
 

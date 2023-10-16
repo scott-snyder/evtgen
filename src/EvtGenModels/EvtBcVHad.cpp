@@ -61,8 +61,8 @@ void EvtBcVHad::init()
     wcurr = std::make_unique<EvtWHad>();
 
     // determine the code of final hadronic state
-    EvtIdSet thePis( "pi+", "pi-", "pi0" );
-    EvtIdSet theK( "K+", "K-", "K_S0" );
+    EvtIdSet thePis{ "pi+", "pi-", "pi0" };
+    EvtIdSet theK{ "K+", "K-", "K_S0" };
     if ( getNDaug() == 2 && thePis.contains( getDaug( 1 ) ) ) {
         out_code = 1;    // pi+
     } else if ( getNDaug() == 3 && thePis.contains( getDaug( 1 ) ) &&

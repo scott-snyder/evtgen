@@ -869,15 +869,15 @@ void runDDK( int nevent, EvtGen& myGenerator )
     static EvtId dm = EvtPDL::getId( std::string( "D-" ) );
     static EvtId db = EvtPDL::getId( std::string( "anti-D0" ) );
 
-    static EvtIdSet theKs( kp, km, ks, kl, k0, kb );
-    static EvtIdSet theDs( d0, dp, dm, db );
+    static EvtIdSet theKs{ kp, km, ks, kl, k0, kb };
+    static EvtIdSet theDs{ d0, dp, dm, db };
 
     static EvtId B0 = EvtPDL::getId( std::string( "B0" ) );
     static EvtId B0B = EvtPDL::getId( std::string( "anti-B0" ) );
     static EvtId BP = EvtPDL::getId( std::string( "B+" ) );
     static EvtId BM = EvtPDL::getId( std::string( "B-" ) );
 
-    static EvtIdSet theBs( B0B, B0, BP, BM );
+    static EvtIdSet theBs{ B0B, B0, BP, BM };
 
     int nDDK = 0;
     do {
@@ -1454,9 +1454,9 @@ void runTrackMult( int nevent, EvtGen& myGenerator )
     static EvtId pp = EvtPDL::getId( std::string( "p+" ) );
     static EvtId pm = EvtPDL::getId( std::string( "anti-p-" ) );
 
-    static EvtIdSet theTracks( ep, em, mup, mum, pip, pim, kp, km, pp, pm );
-    static EvtIdSet theLeptons( ep, em, mup, mum );
-    static EvtIdSet theBs( B0, B0B, BP, BM );
+    static EvtIdSet theTracks{ ep, em, mup, mum, pip, pim, kp, km, pp, pm };
+    static EvtIdSet theLeptons{ ep, em, mup, mum };
+    static EvtIdSet theBs{ B0, B0B, BP, BM };
 
     int count = 1;
 
@@ -1563,22 +1563,22 @@ void runGeneric( int neventOrig, EvtGen& myGenerator, std::string listfile )
     static EvtId BP = EvtPDL::getId( std::string( "B+" ) );
     static EvtId BM = EvtPDL::getId( std::string( "B-" ) );
 
-    static EvtIdSet theBs( B0B, B0, BP, BM );
-    static EvtIdSet theB0B( B0B );
-    static EvtIdSet theB0( B0 );
-    static EvtIdSet theBP( BP );
-    static EvtIdSet theBM( BM );
+    static EvtIdSet theBs{ B0B, B0, BP, BM };
+    static EvtIdSet theB0B{ B0B };
+    static EvtIdSet theB0{ B0 };
+    static EvtIdSet theBP{ BP };
+    static EvtIdSet theBM{ BM };
 
     static EvtId D0 = EvtPDL::getId( std::string( "D0" ) );
     static EvtId D0B = EvtPDL::getId( std::string( "anti-D0" ) );
     static EvtId DP = EvtPDL::getId( std::string( "D+" ) );
     static EvtId DM = EvtPDL::getId( std::string( "D-" ) );
 
-    static EvtIdSet theDs( D0B, D0, DP, DM );
-    static EvtIdSet theD0B( D0B );
-    static EvtIdSet theD0( D0 );
-    static EvtIdSet theDP( DP );
-    static EvtIdSet theDM( DM );
+    static EvtIdSet theDs{ D0B, D0, DP, DM };
+    static EvtIdSet theD0B{ D0B };
+    static EvtIdSet theD0{ D0 };
+    static EvtIdSet theDP{ DP };
+    static EvtIdSet theDM{ DM };
 
     int count;
     char udecay_name[100];
@@ -1609,14 +1609,14 @@ void runGeneric( int neventOrig, EvtGen& myGenerator, std::string listfile )
             directName = strcpy( directName, tkname.c_str() );
             directName = strcat( directName, "Direct" );
             histo2[ik] = new TH1F( directName, directName, 30, 0.0, 3.0 );
-            delete directName;
+            delete[] directName;
 
             char* massName;
             massName = new char[( strlen( tkname.c_str() ) + 4 )];
             massName = strcpy( massName, tkname.c_str() );
             massName = strcat( massName, "Mass" );
             massHisto[ik] = new TH1F( massName, massName, 3000, 0.0, 5.0 );
-            delete massName;
+            delete[] massName;
         }
 
         count = 1;
@@ -1908,7 +1908,7 @@ void runSemic( int nevent, EvtGen& myGenerator )
     static EvtId D23S10 = EvtPDL::getId( std::string( "D*(2S)0" ) );
     static EvtId D23S1B = EvtPDL::getId( std::string( "anti-D*(2S)0" ) );
 
-    static EvtIdSet radExitDstar( D23S1P, D23S1N, D23S10, D23S1B );
+    static EvtIdSet radExitDstar{ D23S1P, D23S1N, D23S10, D23S1B };
 
     TFile* file = new TFile( "semic.root", "RECREATE" );
 

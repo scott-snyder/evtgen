@@ -26,8 +26,6 @@
 
 #include <vector>
 
-class EvtId;
-
 class EvtAbsLineShape {
   public:
     EvtAbsLineShape() = default;

@@ -70,7 +70,7 @@ IncludeCategories:
     Priority:        6
   - Regex:           '^"T[[:alnum:]]+\.h"'
     Priority:        7
-  - Regex:           '^<[[:alnum:].]+>'
+  - Regex:           '^<[[:alnum:]._]+>'
     Priority:        9
   - Regex:           '.*'
     Priority:        8

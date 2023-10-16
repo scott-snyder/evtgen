@@ -307,8 +307,8 @@ void EvtbTosllScalarAmpNewExt::CalcAmp(
     EvtVector4C lac21, lac22;    // the leptonic axial current
 
     // B - and barB - mesons descriptors
-    EvtIdSet bmesons( "B-", "anti-B0", "anti-B_s0", "B_c-" );
-    EvtIdSet bbarmesons( "B+", "B0", "B_s0", "B_c+" );
+    EvtIdSet bmesons{ "B-", "anti-B0", "anti-B_s0", "B_c-" };
+    EvtIdSet bbarmesons{ "B+", "B0", "B_s0", "B_c+" };
 
     EvtId parentID = parent->getId();
 

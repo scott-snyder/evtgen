@@ -34,7 +34,7 @@ EvtExtGeneratorCommandsTable* EvtExtGeneratorCommandsTable::getInstance()
 {
     static EvtExtGeneratorCommandsTable* theCommandMap = nullptr;
 
-    if ( theCommandMap == nullptr ) {
+    if ( !theCommandMap ) {
         theCommandMap = new EvtExtGeneratorCommandsTable();
     }
 

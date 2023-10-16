@@ -99,8 +99,8 @@ void EvtbTosllScalarAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
     EvtComplex dprime;
     dprime = c10eff * fm;
 
-    static EvtIdSet leptons( "e-", "mu-", "tau-" );
-    static EvtIdSet antileptons( "e+", "mu+", "tau+" );
+    static EvtIdSet leptons{ "e-", "mu-", "tau-" };
+    static EvtIdSet antileptons{ "e+", "mu+", "tau+" };
 
     if ( leptons.contains( l_num ) ) {
         T1 = aprime * phat + bprime * qhat;

@@ -420,11 +420,18 @@ int EvtSLDiBaryonAmp::getBaryonParity( const EvtId& id ) const
     int parity( 1 );
 
     // List of baryons with parity = +1
-    static EvtIdSet posParity( "p+", "Delta+", "Lambda_c+",
-                               "anti-Lambda_c(2593)-", "anti-Lambda_c(2625)-",
-                               "N(1440)+", "anti-N(1520)-", "anti-N(1535)-",
-                               "anti-N(1650)-", "anti-N(1700)-", "N(1710)+",
-                               "N(1720)+" );
+    static EvtIdSet posParity{ "p+",
+                               "Delta+",
+                               "Lambda_c+",
+                               "anti-Lambda_c(2593)-",
+                               "anti-Lambda_c(2625)-",
+                               "N(1440)+",
+                               "anti-N(1520)-",
+                               "anti-N(1535)-",
+                               "anti-N(1650)-",
+                               "anti-N(1700)-",
+                               "N(1710)+",
+                               "N(1720)+" };
 
     // If the baryon id is not in the list, set the parity to -1
     if ( !posParity.contains( id ) ) {

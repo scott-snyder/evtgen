@@ -115,8 +115,8 @@ void EvtTauHadnu::decay( EvtParticle* p )
 {
     static EvtId TAUM = EvtPDL::getId( "tau-" );
 
-    EvtIdSet thePis( "pi+", "pi-", "pi0" );
-    EvtIdSet theKs( "K+", "K-" );
+    EvtIdSet thePis{ "pi+", "pi-", "pi0" };
+    EvtIdSet theKs{ "K+", "K-" };
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 

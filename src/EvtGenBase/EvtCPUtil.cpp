@@ -44,7 +44,7 @@ EvtCPUtil* EvtCPUtil::getInstance()
 {
     static EvtCPUtil* theCPUtil = nullptr;
 
-    if ( theCPUtil == nullptr ) {
+    if ( !theCPUtil ) {
         theCPUtil = new EvtCPUtil( 1 );
     }
 

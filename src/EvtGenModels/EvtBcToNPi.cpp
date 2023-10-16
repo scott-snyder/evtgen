@@ -213,7 +213,7 @@ void EvtBcToNPi::decay( EvtParticle* root_particle )
 {
     ++nCall;
 
-    EvtIdSet thePis( "pi+", "pi-", "pi0" );
+    EvtIdSet thePis{ "pi+", "pi-", "pi0" };
     EvtComplex I = EvtComplex( 0.0, 1.0 );
 
     root_particle->initializePhaseSpace( getNDaug(), getDaugs() );

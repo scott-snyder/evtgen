@@ -11,6 +11,14 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+16 Oct 2023 Thomas Latham
+* D98: Modernise EvtIdSet and other improvements
+  - Modernise and greatly simplify EvtIdSet implementation
+  - Fixes in EvtPropSLPole to avoid unnecessary dynamic allocations
+  - Other minor fixes and tidy-ups
+* Credit to Heather Ratcliffe and Chris Brady for providing
+  and/or inspiring several of these improvements
+
 22 Aug 2023 Fernando Abudinen
 * D97: Bugfix probmax issue and introduced pole compensation for VTOSLL model
      Calculation of amplitude moved to dedicated calcAmp function and fixed initialisation.

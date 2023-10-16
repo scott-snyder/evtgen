@@ -36,8 +36,9 @@ void EvtRareLbToLllFFBase::FormFactors::areZero()
 }
 
 EvtRareLbToLllFFBase::EvtRareLbToLllFFBase() :
-    natural_( "Lambda0", "anti-Lambda0", "Lambda(1520)0", "anti-Lambda(1520)0",
-              "Lambda(1600)0", "anti-Lambda(1600)0" )
+    natural_{ "Lambda0",       "anti-Lambda0",
+              "Lambda(1520)0", "anti-Lambda(1520)0",
+              "Lambda(1600)0", "anti-Lambda(1600)0" }
 {
 }
 

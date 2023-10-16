@@ -51,7 +51,7 @@ EvtDecayBase* EvtModel::getFcn( std::string model_name )
         model = _modelNameHash[model_name];
     }
 
-    if ( model == nullptr ) {
+    if ( !model ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Did not find the right model:" << model_name.c_str() << "\n";
         return nullptr;
@@ -96,7 +96,7 @@ void EvtModel::storeCommand( std::string cmd, std::string cnfgstr )
         model = _commandNameHash[cmd];
     }
 
-    assert( model != 0 );
+    assert( model );
 
     model->command( cnfgstr );
 }

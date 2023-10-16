@@ -203,34 +203,35 @@ double EvtPropSLPole::calBreitWigner( EvtParticle* pmeson, EvtPoint1D point )
     if ( par != nullptr ) {
         if ( par->hasValidP4() )
             maxMass = par->mass();
-        for ( size_t i = 0; i < par->getNDaug(); i++ ) {
+        for ( std::size_t i = 0; i < par->getNDaug(); i++ ) {
             EvtParticle* tDaug = par->getDaug( i );
             if ( pmeson != tDaug )
                 maxMass -= EvtPDL::getMinMass( tDaug->getId() );
         }
     }
 
-    EvtId* dauId = nullptr;
-    double* dauMasses = nullptr;
-    size_t nDaug = pmeson->getNDaug();
+    std::vector<EvtId> dauId;
+    std::vector<double> dauMasses;
+    const std::size_t nDaug{ pmeson->getNDaug() };
     if ( nDaug > 0 ) {
-        dauId = new EvtId[nDaug];
-        dauMasses = new double[nDaug];
-        for ( size_t j = 0; j < nDaug; j++ ) {
+        dauId.resize( nDaug );
+        dauMasses.resize( nDaug );
+        for ( std::size_t j = 0; j < nDaug; j++ ) {
             dauId[j] = pmeson->getDaug( j )->getId();
             dauMasses[j] = pmeson->getDaug( j )->mass();
         }
     }
-    EvtId* parId = nullptr;
-    EvtId* othDaugId = nullptr;
+    EvtId parId;
+    EvtId othDaugId;
     EvtParticle* tempPar = pmeson->getParent();
     if ( tempPar ) {
-        parId = new EvtId( tempPar->getId() );
+        parId = tempPar->getId();
         if ( tempPar->getNDaug() == 2 ) {
-            if ( tempPar->getDaug( 0 ) == pmeson )
-                othDaugId = new EvtId( tempPar->getDaug( 1 )->getId() );
-            else
-                othDaugId = new EvtId( tempPar->getDaug( 0 )->getId() );
+            if ( tempPar->getDaug( 0 ) == pmeson ) {
+                othDaugId = tempPar->getDaug( 1 )->getId();
+            } else {
+                othDaugId = tempPar->getDaug( 0 )->getId();
+            }
         }
     }
 
@@ -281,9 +282,9 @@ double EvtPropSLPole::calBreitWigner( EvtParticle* pmeson, EvtPoint1D point )
     double massOthD = -10.;
     double massParent = -10.;
     int birthl = -10;
-    if ( othDaugId ) {
-        EvtSpinType::spintype spinOth = EvtPDL::getSpinType( *othDaugId );
-        EvtSpinType::spintype spinPar = EvtPDL::getSpinType( *parId );
+    if ( othDaugId != EvtId{} ) {
+        EvtSpinType::spintype spinOth = EvtPDL::getSpinType( othDaugId );
+        EvtSpinType::spintype spinPar = EvtPDL::getSpinType( parId );
 
         int tt1 = EvtSpinType::getSpin2( spinOth );
         int tt2 = EvtSpinType::getSpin2( spinPar );
@@ -296,8 +297,8 @@ double EvtPropSLPole::calBreitWigner( EvtParticle* pmeson, EvtPoint1D point )
             if ( birthl < 0 )
                 birthl = 0;
 
-            massOthD = EvtPDL::getMeanMass( *othDaugId );
-            massParent = EvtPDL::getMeanMass( *parId );
+            massOthD = EvtPDL::getMeanMass( othDaugId );
+            massParent = EvtPDL::getMeanMass( parId );
         }
     }
     double massM = _massMax;
@@ -332,15 +333,6 @@ double EvtPropSLPole::calBreitWigner( EvtParticle* pmeson, EvtPoint1D point )
 
     double ampVal = sqrt( pdf.evaluate( point ) );
 
-    if ( parId )
-        delete parId;
-    if ( othDaugId )
-        delete othDaugId;
-    if ( dauId )
-        delete[] dauId;
-    if ( dauMasses )
-        delete[] dauMasses;
-
     return ampVal;
 }
 
@@ -370,7 +362,7 @@ double EvtPropSLPole::calcMaxProb( EvtId parent, EvtId meson, EvtId lepton,
 
     p_init.set( EvtPDL::getMass( parent ), 0.0, 0.0, 0.0 );
     scalar_part->init( parent, p_init );
-    root_part = (EvtParticle*)scalar_part;
+    root_part = scalar_part;
     //  root_part->set_type(EvtSpinType::SCALAR);
     root_part->setDiagonalSpinDensity();
 
@@ -481,9 +473,9 @@ double EvtPropSLPole::calcMaxProb( EvtId parent, EvtId meson, EvtId lepton,
 
                 calcamp->CalcAmp( root_part, amp, FormFactors );
 
-                EvtPoint1D* point = new EvtPoint1D( mass[0] );
+                EvtPoint1D point( mass[0] );
 
-                double meson_BWAmp = calBreitWigner( daughter, *point );
+                double meson_BWAmp = calBreitWigner( daughter, point );
 
                 int list[2];
                 list[0] = 0;
