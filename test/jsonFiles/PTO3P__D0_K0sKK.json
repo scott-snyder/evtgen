@@ -7,6 +7,7 @@
 		     "AMPLITUDE RESONANCE BC phi ANGULAR AC TYPE RBW_ZEMACH COEFFICIENT POLAR_RAD 0.437 1.91",
 		     "AMPLITUDE RESONANCE AB a_0+ ANGULAR CA TYPE NBW COEFFICIENT POLAR_RAD 0.460 3.59",
 		     "AMPLITUDE RESONANCE BC f'_0 ANGULAR AC TYPE RBW_ZEMACH COEFFICIENT POLAR_RAD 0.435 -2.65"]],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

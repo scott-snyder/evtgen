@@ -4,6 +4,7 @@
     "grand_daughters" : [["Lambda0", "pi+"], [], []],
     "models" : ["BaryonPCR", "PHSP", ""],
     "parameters" : [["1", "1", "1", "1"], [], []],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob(BaryonPCR)",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

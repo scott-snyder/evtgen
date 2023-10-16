@@ -6,6 +6,7 @@
 		     "RESONANCE", "a_0+(BREITWIGNER,HELAMP,[0.460,3.59],[K_S0,K+])",
 		     "RESONANCE", "f'_0(BREITWIGNER,HELAMP,[0.435,-2.65],[K+,K-])"]],
     "do_conjugate_decay" : [false],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

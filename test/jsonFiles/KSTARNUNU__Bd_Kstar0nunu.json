@@ -3,7 +3,7 @@
     "daughters" : ["K*0","nu_e","anti-nu_e"],
     "models" : ["KSTARNUNU"],
     "parameters" : [[]],
-    "extras" : ["Define dm_incohMix_B0 0.0"],
+    "extras" : ["Define dm_incohMix_B0 0.0", "noPhotos"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

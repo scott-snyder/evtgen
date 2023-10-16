@@ -5,6 +5,7 @@
     "models" : ["THREEBODYPHSP", "VLL", "", "PHSP"],
     "parameters" : [["15.0", "22.0", "1.5", "4.5"], [], [], []],
     "do_conjugate_decay" : [true, false, false, false],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "px", "title" : "px(J/psi)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -3.0, "xmax" : 3.0},

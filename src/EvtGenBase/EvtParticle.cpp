@@ -1284,14 +1284,14 @@ std::string EvtParticle::getName() const
     return theName;
 }
 
-int EvtParticle::getAttribute( std::string attName )
+int EvtParticle::getAttribute( std::string attName ) const
 {
     // Retrieve the attribute integer if the name exists.
     // Otherwise, simply return 0
 
     int attValue = 0;
 
-    EvtAttIntMap::iterator mapIter;
+    EvtAttIntMap::const_iterator mapIter;
 
     if ( ( mapIter = _intAttributes.find( attName ) ) != _intAttributes.end() ) {
         attValue = mapIter->second;
@@ -1300,14 +1300,14 @@ int EvtParticle::getAttribute( std::string attName )
     return attValue;
 }
 
-double EvtParticle::getAttributeDouble( std::string attName )
+double EvtParticle::getAttributeDouble( std::string attName ) const
 {
     // Retrieve the attribute double if the name exists.
     // Otherwise, simply return 0.0
 
     double attValue = 0.0;
 
-    EvtAttDblMap::iterator mapIter;
+    EvtAttDblMap::const_iterator mapIter;
 
     if ( ( mapIter = _dblAttributes.find( attName ) ) != _dblAttributes.end() ) {
         attValue = mapIter->second;

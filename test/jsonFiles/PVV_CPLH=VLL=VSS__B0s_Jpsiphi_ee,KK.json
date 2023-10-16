@@ -5,7 +5,7 @@
     "models" : ["PVV_CPLH", "VLL", "VSS"],
     "parameters" : [["-0.035", "1", "0.480", "3.30", "0.722", "0.0", "0.499", "3.07"], [], []],
     "do_conjugate_decay" : [true, false, false],
-    "extras" : ["Define dm_incohMix_B_s0 0"],
+    "extras" : ["Define dm_incohMix_B_s0 0", "noPhotos"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob(PVV_CPLH)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

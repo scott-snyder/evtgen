@@ -5,6 +5,7 @@
     "models" : ["SSD_DirectCP", "TSS", ""],
     "parameters" : [["0.40"], [], []],
     "do_conjugate_decay" : [ true, false, false ],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "id", "title" : "StdHep ID", "d1" : 0, "d2" : 0, "nbins" : 2, "xmin" : -600.0, "xmax" : 600.0},

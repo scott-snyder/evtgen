@@ -11,6 +11,13 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+16 Oct 2023 Fernando Abudinen
+* D99: Add tests for PHOTOS
+  - EvtParticle::getAttribute function made const
+  - Added variables for testing of FSR to testing framework
+  - Added dedicated tests for FSR with Photos
+  - Turned off Photos for all other tests
+
 16 Oct 2023 Thomas Latham
 * D98: Modernise EvtIdSet and other improvements
   - Modernise and greatly simplify EvtIdSet implementation

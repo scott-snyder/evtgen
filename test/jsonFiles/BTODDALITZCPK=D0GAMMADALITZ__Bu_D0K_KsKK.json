@@ -4,6 +4,7 @@
     "grand_daughters" : [["K_S0", "K+", "K-"], []],
     "models" : ["BTODDALITZCPK", "D0GAMMADALITZ", ""],
     "parameters" : [["1.15", "2.27", "0.10"], [], []],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob_daug1", "title" : "Prob(D0GAMMADALITZ)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

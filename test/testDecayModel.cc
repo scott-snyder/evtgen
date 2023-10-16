@@ -1034,6 +1034,35 @@ double TestDecayModel::getValue( const EvtParticle* parent,
         value = p > 0.0
                     ? 1e12 * vtxPos.d3mag() * p1_lab.mass() / ( p * EvtConst::c )
                     : 0.0;
+    } else if ( !selectedVarName.compare( "nFSRPhotons" ) ) {
+        // Loop over all daughters and get number of FSR photons
+
+        double nFSRPhotons{ 0 };
+
+        for ( size_t iDaughter{ 0 }; iDaughter < selectedParent->getNDaug();
+              iDaughter++ ) {
+            const EvtParticle* iDaug = selectedParent->getDaug( iDaughter );
+
+            if ( iDaug->getAttribute( "FSR" ) == 1 )
+                nFSRPhotons += 1.0;
+        }
+
+        value = nFSRPhotons;
+
+    } else if ( !selectedVarName.compare( "totalFSREnergy" ) ) {
+        // Loop over all daughters and get number of FSR photons
+
+        double totalFSREnergy{ 0 };
+
+        for ( size_t iDaughter{ 0 }; iDaughter < selectedParent->getNDaug();
+              iDaughter++ ) {
+            const EvtParticle* iDaug = selectedParent->getDaug( iDaughter );
+
+            if ( iDaug->getAttribute( "FSR" ) == 1 )
+                totalFSREnergy += iDaug->getP4Lab().get( 0 );
+        }
+
+        value = totalFSREnergy;
     } else {
         std::cerr << "Warning: Did not recognise variable name "
                   << selectedVarName << std::endl;

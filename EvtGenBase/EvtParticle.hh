@@ -426,7 +426,7 @@ class EvtParticle {
     }
 
     // Retrieve the integer value for the given attribute name
-    int getAttribute( std::string attName );
+    int getAttribute( std::string attName ) const;
 
     // Specify if the particle has a double attribute value, e.g. amplitude weight.
     // By default, nothing is set, but derived classes can set this to mean something specific
@@ -436,7 +436,7 @@ class EvtParticle {
     }
 
     // Retrieve the double value for the given attribute name
-    double getAttributeDouble( std::string attName );
+    double getAttributeDouble( std::string attName ) const;
 
   protected:
     void setp( double e, double px, double py, double pz )

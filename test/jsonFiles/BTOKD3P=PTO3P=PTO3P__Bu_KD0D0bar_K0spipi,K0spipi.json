@@ -23,6 +23,7 @@
 		     "AMPLITUDE RESONANCE BC omega ANGULAR AB TYPE RBW_ZEMACH COEFFICIENT POLAR_DEG 0.053 126.5",
 		     "AMPLITUDE RESONANCE BC f_2 ANGULAR AB TYPE RBW_ZEMACH COEFFICIENT POLAR_DEG 0.61 157.4",
 		     "AMPLITUDE PHASESPACE COEFFICIENT POLAR_DEG 0.3 0.0"]],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob(BTOKD3P)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

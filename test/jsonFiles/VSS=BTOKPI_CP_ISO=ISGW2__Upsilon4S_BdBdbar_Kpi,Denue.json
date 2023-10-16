@@ -4,7 +4,7 @@
     "grand_daughters" : [["K+", "pi-"], ["D+","e-","anti-nu_e"]],
     "models" : ["VSS", "BTOKPI_CP_ISO", "ISGW2"],
     "parameters" : [[], ["0.4", "0.51e12", "0.8", "1.48", "0.8", "-1.48", "0.8", "1.48", "0.8", "-1.48", "1.0", "1.48", "1.0", "-1.48"], []],
-    "extras" : ["Define dm_incohMix_B0 0"],
+    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
     "do_conjugate_decay" : [false, true, true],
     "events" : 10000,
     "histograms" : [

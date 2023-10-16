@@ -3,6 +3,7 @@
     "daughters" : ["B0", "anti-B0"],
     "models" : ["VSS_MIX"],
     "parameters" : [["0.474e12"]],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "id", "title" : "StdHep ID1", "d1" : 1, "d2" : 0, "nbins" : 2, "xmin" : -600.0, "xmax" : 600.0},

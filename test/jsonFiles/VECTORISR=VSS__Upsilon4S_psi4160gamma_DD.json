@@ -4,6 +4,7 @@
     "grand_daughters" : [["D+", "D-"], []],
     "models" : ["VECTORISR", "VSS", ""],
     "parameters" : [["0.9", "0.9"], [], []],
+    "extras" : ["noPhotos"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob_daug1", "title" : "Prob(VSS)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
