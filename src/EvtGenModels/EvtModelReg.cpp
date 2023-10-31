@@ -79,7 +79,6 @@
 #include "EvtGenModels/EvtKstarnunu.hh"
 #include "EvtGenModels/EvtKstarstargamma.hh"
 #include "EvtGenModels/EvtLNuGamma.hh"
-#include "EvtGenModels/EvtLambdaB2LambdaV.hh"
 #include "EvtGenModels/EvtLambdaP_BarGamma.hh"
 #include "EvtGenModels/EvtLambdacPHH.hh"
 #include "EvtGenModels/EvtLb2Baryonlnu.hh"
@@ -286,9 +285,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtBaryonPCR );
 
     modelist.registerModel( new EvtBToDDalitzCPK );
-    modelist.registerModel( new EvtLambdaB2LambdaV );
-    modelist.registerModel( new EvtLambda2PPiForLambdaB2LambdaV );
-    modelist.registerModel( new EvtV2VpVmForLambdaB2LambdaV );
     modelist.registerModel( new EvtPVVCPLH );
     modelist.registerModel( new EvtSSD_DirectCP );
 
