@@ -101,7 +101,6 @@ void runDump( int nevent, EvtGen& myGenerator );
 void runD1( int nevent, EvtGen& myGenerator );
 void runGenericCont( int nevent, EvtGen& myGenerator );
 void runPiPiPi( int nevent, EvtGen& myGenerator );
-void runBHadronic( int nevent, EvtGen& myGenerator );
 void runSingleB( int nevent, EvtGen& myGenerator );
 void runA2Pi( int nevent, EvtGen& myGenerator );
 void runAlias();
@@ -417,11 +416,6 @@ int main( int argc, char* argv[] )
     if ( !strcmp( argv[1], "pipipi" ) ) {
         int nevent = atoi( argv[2] );
         runPiPiPi( nevent, myGenerator );
-    }
-
-    if ( !strcmp( argv[1], "bhadronic" ) ) {
-        int nevent = atoi( argv[2] );
-        runBHadronic( nevent, myGenerator );
     }
 
     if ( !strcmp( argv[1], "singleb" ) ) {
@@ -4942,48 +4936,6 @@ void runPiPiPi( int nevent, EvtGen& myGenerator )
                << root_part->getDaug( 1 )->getLifetime() << " ";
         outmix << ( p4pip + p4pim ).mass2() << " " << ( p4pip + p4pi0 ).mass2()
                << std::endl;
-
-        root_part->deleteTree();
-
-    } while ( count++ < nevent );
-
-    outmix.close();
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
-}
-
-void runBHadronic( int nevent, EvtGen& myGenerator )
-{
-    std::ofstream outmix;
-    outmix.open( "bhadronic.dat" );
-
-    int count;
-
-    myGenerator.readUDecay( "exampleFiles/BHADRONIC.DEC" );
-
-    static EvtId B0 = EvtPDL::getId( std::string( "B0" ) );
-
-    count = 1;
-
-    do {
-        EvtVector4R p_init( EvtPDL::getMass( B0 ), 0.0, 0.0, 0.0 );
-
-        EvtParticle* root_part = EvtParticleFactory::particleFactory( B0, p_init );
-        root_part->setDiagonalSpinDensity();
-
-        myGenerator.generateDecay( root_part );
-
-        EvtParticle* p;
-
-        //    root_part->printTree();
-
-        p = root_part;
-
-        do {
-            outmix << p->getId().getId() << " " << p->getP4Lab().d3mag()
-                   << std::endl;
-            p = p->nextIter();
-
-        } while ( p != nullptr );
 
         root_part->deleteTree();
 

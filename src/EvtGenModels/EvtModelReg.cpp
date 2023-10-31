@@ -26,7 +26,6 @@
 #include "EvtGenBase/EvtPatches.hh"
 
 #include "EvtGenModels/EvtBBScalar.hh"
-#include "EvtGenModels/EvtBHadronic.hh"
 #include "EvtGenModels/EvtBLLNuL.hh"
 #include "EvtGenModels/EvtBTo3piCP.hh"
 #include "EvtGenModels/EvtBTo4piCP.hh"
@@ -201,7 +200,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtHQET );
     modelist.registerModel( new EvtHQET2 );
     modelist.registerModel( new EvtISGW );
-    modelist.registerModel( new EvtBHadronic );
     modelist.registerModel( new EvtVSS );
     modelist.registerModel( new EvtVSSMix );
     modelist.registerModel( new EvtVSSBMixCPT );
