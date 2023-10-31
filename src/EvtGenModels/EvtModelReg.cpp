@@ -83,7 +83,6 @@
 #include "EvtGenModels/EvtLambdaP_BarGamma.hh"
 #include "EvtGenModels/EvtLambdacPHH.hh"
 #include "EvtGenModels/EvtLb2Baryonlnu.hh"
-#include "EvtGenModels/EvtLb2Lll.hh"
 #include "EvtGenModels/EvtLb2plnuLCSR.hh"
 #include "EvtGenModels/EvtLb2plnuLQCD.hh"
 #include "EvtGenModels/EvtMelikhov.hh"
@@ -261,7 +260,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtCBTo3piMPP );
     modelist.registerModel( new EvtBToKpipiCP );
 
-    modelist.registerModel( new EvtLb2Lll );
     modelist.registerModel( new EvtRareLbToLll );
     modelist.registerModel( new EvtHypNonLepton );
     modelist.registerModel( new EvtSVVHelCPMix );
