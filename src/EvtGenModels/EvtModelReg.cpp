@@ -87,7 +87,6 @@
 #include "EvtGenModels/EvtLb2plnuLCSR.hh"
 #include "EvtGenModels/EvtLb2plnuLQCD.hh"
 #include "EvtGenModels/EvtMelikhov.hh"
-#include "EvtGenModels/EvtMultibody.hh"
 #include "EvtGenModels/EvtOmegaDalitz.hh"
 #include "EvtGenModels/EvtPVVCPLH.hh"
 #include "EvtGenModels/EvtPartWave.hh"
@@ -281,7 +280,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtPto3P );
     modelist.registerModel( new EvtBtoKD3P );
     modelist.registerModel( new EvtKKLambdaC );
-    modelist.registerModel( new EvtMultibody );
     modelist.registerModel( new EvtDMix );
     modelist.registerModel( new EvtD0mixDalitz );
     modelist.registerModel( new EvtD0gammaDalitz );
