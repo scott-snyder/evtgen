@@ -11,6 +11,12 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+31 Oct 2023 Fernando Abudinen
+* D102: Bugfix probmax issue for X38722-+\_PSI\_GAMMA model
+     Calculation of amplitude moved to dedicated calcAmp function and fixed initialisation.
+     Introduced weighting to compensate for phase-space changes due to resonance width.
+     Fixed bugs in rho couplings and loops over photon and vector states.
+
 16 Oct 2023 Fernando Abudinen
 * D99: Add tests for PHOTOS
   - EvtParticle::getAttribute function made const

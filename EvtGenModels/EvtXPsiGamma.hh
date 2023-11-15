@@ -35,26 +35,37 @@ class EvtVector4R;
 
 // Description:Implementation of the X3872(2-+) -> J/psi gamma decay
 // Description: Routine to implement radiative decay X3872(2-+) -> J/psi gamma
-//      according to [F. Brazzi et al, arXiv:1103.3155
+//      according to F. Brazzi et al, arXiv:1103.3155
 
 class EvtXPsiGamma : public EvtDecayAmp {
   public:
     std::string getName() override;
     EvtDecayBase* clone() override;
 
-    void decay( EvtParticle* p ) override;
     void init() override;
-
     void initProbMax() override;
+    void decay( EvtParticle* p ) override;
+
+  protected:
+    // This function is not declared const because epsParentPhoton is not const
+    void calcAmp( EvtParticle& parent, EvtAmp& amp );
 
   private:
-    //  int whichfit;
+    double calcPstar( double m_parent, double m_1, double m_2 ) const;
+
     EvtComplex fT2( EvtVector4R p, EvtVector4R q, EvtTensor4C epsPI,
-                    EvtVector4C epsEps, EvtVector4C epsEta );
+                    EvtVector4C epsEps, EvtVector4C epsEta ) const;
     EvtComplex fT3( EvtVector4R p, EvtVector4R q, EvtTensor4C epsPI,
-                    EvtVector4C epsEps, EvtVector4C epsEta );
-    EvtId _ID0;
-    int ncall;
+                    EvtVector4C epsEps, EvtVector4C epsEta ) const;
+
+    EvtId m_ID0;
+
+    double m_gOmega;
+    double m_gPOmega;
+    double m_gRho;
+    double m_gPRho;
+    double m_fOmega;
+    double m_fRho;
 };
 
 #endif

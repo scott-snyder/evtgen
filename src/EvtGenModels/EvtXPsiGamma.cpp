@@ -42,158 +42,265 @@ std::string EvtXPsiGamma::getName()
 
 EvtDecayBase* EvtXPsiGamma::clone()
 {
-    //  cout<<" (* AVL: === EvtXPsiGamma::clone() ============ *)"<<endl;
     return new EvtXPsiGamma;
 }
 
-EvtComplex EvtXPsiGamma::fT2( EvtVector4R p, EvtVector4R q, EvtTensor4C epsPI,
-                              EvtVector4C epsEps, EvtVector4C epsEta )
+void EvtXPsiGamma::init()
 {
-    // T2 term from [Bazi](10)
-    EvtTensor4C epsPQ =
-        EvtGenFunctions::directProd( q, p );    // e_{mu nu a b} p^a q^b;
-    epsPQ = dual( epsPQ );
+    checkNArg( 0, 6 );
 
-    EvtVector4C tmp1 = epsPI.cont1( epsEps );
-    EvtVector4C tmp2 = epsPQ.cont1( tmp1 );
-    EvtComplex T2 =
-        tmp2 * epsEta;    // epa^a pi_{a mu} e_{mu nu rho si} p_nu q_rho eta_si
+    if ( getNArg() == 0 ) {
+        // X -> omega psi, rho0 psi couplings from table II in F. Brazzi et al, arXiv:1103.3155
+        m_gOmega = 1.58;
+        m_gPOmega = -0.74;
+        m_gRho = -0.29;
+        m_gPRho = 0.28;
 
-    tmp1 = epsPI.cont1( epsEta );
-    tmp2 = epsPQ.cont1( tmp1 );
-    T2 += tmp2 *
-          epsEps;    // T2 - eta^a pi_{a mu} e_{mu nu rho si} q_nu p_rhi eps_si
+        // Decay constants used in F. Brazzi et al, arXiv:1103.3155, taken from J. Sakurai, Currents and Mesons (1969)
+        m_fOmega = 0.036;
+        m_fRho = 0.121;
+
+    } else {
+        m_gOmega = getArg( 0 );
+        m_gPOmega = getArg( 1 );
+        m_gRho = getArg( 2 );
+        m_gPRho = getArg( 3 );
+        m_fOmega = getArg( 4 );
+        m_fRho = getArg( 5 );
+    }
+
+    checkNDaug( 2 );
+
+    checkSpinParent( EvtSpinType::TENSOR );
+
+    checkSpinDaughter( 1, EvtSpinType::VECTOR );
+
+    m_ID0 = getDaug( 0 );
+
+    if ( m_ID0 != EvtPDL::getId( "gamma" ) &&
+         m_ID0 != EvtPDL::getId( "omega" ) && m_ID0 != EvtPDL::getId( "rho0" ) ) {
+        EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+            << " " << getName() << " - Decays with '" << getDaug( 0 ).getName()
+            << "' as first daughter are not supported. Choose among: 'gamma', 'omega', or 'rho0'."
+            << std::endl;
+        ::abort();
+    };
+}
+
+void EvtXPsiGamma::initProbMax()
+{
+    double theProbMax = 1.;
+
+    // Create a tensor parent at rest and initialize it
+    // Use noLifeTime() cludge to avoid generating random numbers
+
+    EvtTensorParticle parent{};
+    parent.noLifeTime();
+    parent.init( getParentId(),
+                 EvtVector4R( EvtPDL::getMass( getParentId() ), 0, 0, 0 ) );
+    parent.setDiagonalSpinDensity();
+
+    // Create daughters and initialize amplitude
+    EvtAmp amp;
+    EvtId daughters[2] = { getDaug( 0 ), getDaug( 1 ) };
+    amp.init( getParentId(), 2, daughters );
+    parent.makeDaughters( 2, daughters );
+
+    EvtParticle* child1 = parent.getDaug( 0 );
+    EvtParticle* child2 = parent.getDaug( 1 );
+
+    child1->noLifeTime();
+    child2->noLifeTime();
+
+    EvtSpinDensity rho;
+    rho.setDiag( parent.getSpinStates() );
+
+    // Momentum of daughters in parent's frame
+    const double m_parent = EvtPDL::getMass( getParentId() );
+
+    // The daughter CMS momentum pstar (and thus the phase space) is larger if the mass of the daughters is lower.
+    // Thus the probability is maximal for the minimal resonance mass for rho0 and omega resonances.
+    // For photons the minimal mass is always zero.
+    const double m_1 = EvtPDL::getMinMass( getDaug( 0 ) );
+
+    const double m_2 = EvtPDL::getMass( getDaug( 1 ) );
+
+    const double pstar = calcPstar( m_parent, m_1, m_2 );
+
+    EvtVector4R p4_1, p4_2;
+
+    const int nsteps = 180;
+
+    double prob_max = 0;
+    double theta_max = 0;
+
+    for ( int i = 0; i <= nsteps; i++ ) {
+        const double theta = i * EvtConst::pi / nsteps;
+
+        p4_1.set( sqrt( pow( pstar, 2 ) + pow( m_1, 2 ) ), 0,
+                  +pstar * sin( theta ), +pstar * cos( theta ) );
+
+        p4_2.set( sqrt( pow( pstar, 2 ) + pow( m_2, 2 ) ), 0,
+                  -pstar * sin( theta ), -pstar * cos( theta ) );
+
+        child1->init( getDaug( 0 ), p4_1 );
+        child2->init( getDaug( 1 ), p4_2 );
+
+        calcAmp( parent, amp );
+
+        const double i_prob = rho.normalizedProb( amp.getSpinDensity() );
+
+        if ( i_prob > prob_max ) {
+            prob_max = i_prob;
+            theta_max = theta;
+        }
+    }
+
+    EvtGenReport( EVTGEN_INFO, "EvtGen" )
+        << " " << getName() << " - probability " << prob_max
+        << " found for p* (child momenta in parent's frame) = " << pstar
+        << ", at theta* = " << theta_max << std::endl;
+
+    theProbMax *= 1.01 * prob_max;
+
+    // For wide resonances we have to account for the phase space increasing with pstar
+    if ( m_ID0 != EvtPDL::getId( "gamma" ) )
+        theProbMax /= pstar;
+
+    setProbMax( theProbMax );
+
+    EvtGenReport( EVTGEN_INFO, "EvtGen" )
+        << " " << getName() << " - set up maximum probability to " << theProbMax
+        << std::endl;
+}
+
+void EvtXPsiGamma::decay( EvtParticle* parent )
+{
+    parent->initializePhaseSpace( getNDaug(), getDaugs() );
+
+    if ( m_ID0 != EvtPDL::getId( "gamma" ) ) {
+        // This weight compensates for the phase space becoming small at resonance masses
+        // close to kinematic boundary (only for omega and rho which have large widths)
+        setWeight( calcPstar( parent->mass(), parent->getDaug( 0 )->mass(),
+                              parent->getDaug( 1 )->mass() ) );
+    }
+
+    calcAmp( *parent, _amp2 );
+}
+
+void EvtXPsiGamma::calcAmp( EvtParticle& parent, EvtAmp& amp )
+{
+    static const double mOmega2 =
+        pow( EvtPDL::getMeanMass( EvtPDL::getId( "omega" ) ), 2 );
+    static const double mRho2 =
+        pow( EvtPDL::getMeanMass( EvtPDL::getId( "rho0" ) ), 2 );
+
+    if ( m_ID0 == EvtPDL::getId( "gamma" ) ) {
+        for ( int iPsi = 0; iPsi < 3; iPsi++ ) {
+            for ( int iGamma = 0; iGamma < 2; iGamma++ ) {
+                for ( int iChi = 0; iChi < 4; iChi++ ) {
+                    const EvtComplex T2 = fT2(
+                        parent.getDaug( 1 )->getP4(),
+                        parent.getDaug( 0 )->getP4(), parent.epsTensor( iChi ),
+                        parent.getDaug( 1 )->epsParent( iPsi ).conj(),
+                        parent.getDaug( 0 )->epsParentPhoton( iGamma ).conj() );
+                    const EvtComplex T3 = fT3(
+                        parent.getDaug( 1 )->getP4(),
+                        parent.getDaug( 0 )->getP4(), parent.epsTensor( iChi ),
+                        parent.getDaug( 1 )->epsParent( iPsi ).conj(),
+                        parent.getDaug( 0 )->epsParentPhoton( iGamma ).conj() );
+                    amp.vertex( iChi, iGamma, iPsi,
+                                ( m_fOmega / mOmega2 * m_gOmega +
+                                  m_fRho / mRho2 * m_gRho ) *
+                                        T2 +
+                                    ( m_fOmega / mOmega2 * m_gPOmega +
+                                      m_fRho / mRho2 * m_gPRho ) *
+                                        T3 );
+                }
+            }
+        }
+    } else if ( m_ID0 == EvtPDL::getId( "omega" ) ) {
+        for ( int iPsi = 0; iPsi < 3; iPsi++ ) {
+            for ( int iVect = 0; iVect < 3; iVect++ ) {
+                for ( int iChi = 0; iChi < 4; iChi++ ) {
+                    const EvtComplex T2 = fT2(
+                        parent.getDaug( 1 )->getP4(),
+                        parent.getDaug( 0 )->getP4(), parent.epsTensor( iChi ),
+                        parent.getDaug( 1 )->epsParent( iPsi ).conj(),
+                        parent.getDaug( 0 )->epsParent( iVect ).conj() );
+                    const EvtComplex T3 = fT3(
+                        parent.getDaug( 1 )->getP4(),
+                        parent.getDaug( 0 )->getP4(), parent.epsTensor( iChi ),
+                        parent.getDaug( 1 )->epsParent( iPsi ).conj(),
+                        parent.getDaug( 0 )->epsParent( iVect ).conj() );
+                    amp.vertex( iChi, iVect, iPsi,
+                                m_gOmega * T2 + m_gPOmega * T3 );
+                }
+            }
+        }
+        // This is for the m_ID0 == EvtPDL::getId( "rho0" ) case
+    } else {
+        for ( int iPsi = 0; iPsi < 3; iPsi++ ) {
+            for ( int iVect = 0; iVect < 3; iVect++ ) {
+                for ( int iChi = 0; iChi < 4; iChi++ ) {
+                    const EvtComplex T2 = fT2(
+                        parent.getDaug( 1 )->getP4(),
+                        parent.getDaug( 0 )->getP4(), parent.epsTensor( iChi ),
+                        parent.getDaug( 1 )->epsParent( iPsi ).conj(),
+                        parent.getDaug( 0 )->epsParent( iVect ).conj() );
+                    const EvtComplex T3 = fT3(
+                        parent.getDaug( 1 )->getP4(),
+                        parent.getDaug( 0 )->getP4(), parent.epsTensor( iChi ),
+                        parent.getDaug( 1 )->epsParent( iPsi ).conj(),
+                        parent.getDaug( 0 )->epsParent( iVect ).conj() );
+                    amp.vertex( iChi, iVect, iPsi, m_gRho * T2 + m_gPRho * T3 );
+                }
+            }
+        }
+    }
+}
+
+double EvtXPsiGamma::calcPstar( double m_parent, double m_1, double m_2 ) const
+{
+    const double pstar = sqrt( pow( m_parent, 2 ) - pow( ( m_1 + m_2 ), 2 ) ) *
+                         sqrt( pow( m_parent, 2 ) - pow( ( m_2 - m_1 ), 2 ) ) /
+                         ( 2 * m_parent );
+
+    return pstar;
+}
+
+EvtComplex EvtXPsiGamma::fT2( EvtVector4R p, EvtVector4R q, EvtTensor4C epsPI,
+                              EvtVector4C epsEps, EvtVector4C epsEta ) const
+{
+    // T2 term from F. Brazzi et al, arXiv:1103.3155, eq. (10)
+    const EvtTensor4C epsPQ = dual(
+        EvtGenFunctions::directProd( q, p ) );    // e_{mu nu a b} p^a q^b;
+
+    const EvtVector4C tmp1 = epsPI.cont1( epsEps );
+    const EvtVector4C tmp2 = epsPQ.cont1( tmp1 );
+    const EvtComplex T2temp =
+        tmp2 * epsEta;    // eps^a pi_{a mu} e_{mu nu rho si} p_nu q_rho eta_si
+
+    const EvtVector4C tmp3 = epsPI.cont1( epsEta );
+    const EvtVector4C tmp4 = epsPQ.cont1( tmp3 );
+    const EvtComplex T2 =
+        T2temp +
+        tmp4 * epsEps;    // T2 - eta^a pi_{a mu} e_{mu nu rho si} q_nu p_rho eps_si
 
     return T2;
 }
 
 EvtComplex EvtXPsiGamma::fT3( EvtVector4R p, EvtVector4R q, EvtTensor4C epsPI,
-                              EvtVector4C epsEps, EvtVector4C epsEta )
+                              EvtVector4C epsEps, EvtVector4C epsEta ) const
 {
-    // T3 term from [Bazi](11)
-    EvtVector4R Q = p - q, P = p + q;
-    EvtVector4C tmp1 = epsPI.cont1( Q );    // Q_a pi_{a mu}
-    EvtTensor4C tmp3 = dual( EvtGenFunctions::directProd(
+    // T3 term from F. Brazzi et al, arXiv:1103.3155, eq. (11)
+    const EvtVector4R Q = p - q;
+    const EvtVector4R P = p + q;
+    const EvtVector4C tmp1 = epsPI.cont1( Q );    // Q_a pi_{a mu}
+    const EvtTensor4C tmp3 = dual( EvtGenFunctions::directProd(
         P, epsEps ) );    // e_{mu nu rho si} P^rho eps^si
-    EvtVector4C tmp4 = tmp3.cont1( tmp1 );
-    EvtComplex T3 =
+    const EvtVector4C tmp4 = tmp3.cont1( tmp1 );
+    const EvtComplex T3 =
         tmp4 * epsEta;    // Q_a pi_{a mu} e_{mu nu rho si} P^rho eps_si eta_nu
     return T3;
-}
-
-void EvtXPsiGamma::decay( EvtParticle* root )
-{
-    ncall++;
-    root->initializePhaseSpace( getNDaug(), getDaugs() );
-
-    double gOmega = 1.58,
-           gPOmega = -0.74;    // X -> omega psi couplings from table II
-    double gRho = 1.58, gPRho = -0.74;    // X -> omega psi couplings from table II
-    double fRho = 0.121, mRho2 = 0.770 * 0.770, fOmega = 0.036,
-           mOmega2 = 0.782 * 0.782;
-
-    EvtComplex amp;
-
-    if ( _ID0 == EvtPDL::getId( "gamma" ) ) {
-        for ( int iPsi = 0; iPsi < 4; iPsi++ ) {
-            for ( int iGamma = 0; iGamma < 1; iGamma++ ) {
-                for ( int iChi = 0; iChi < 4; iChi++ ) {
-                    EvtComplex T2 = fT2(
-                        root->getDaug( 1 )->getP4(),
-                        root->getDaug( 0 )->getP4(), root->epsTensor( iChi ),
-                        root->getDaug( 1 )->epsParent( iPsi ).conj(),
-                        root->getDaug( 0 )->epsParentPhoton( iGamma ).conj() );
-                    EvtComplex T3 = fT3(
-                        root->getDaug( 1 )->getP4(),
-                        root->getDaug( 0 )->getP4(), root->epsTensor( iChi ),
-                        root->getDaug( 1 )->epsParent( iPsi ).conj(),
-                        root->getDaug( 0 )->epsParentPhoton( iGamma ).conj() );
-                    amp = ( fOmega / mOmega2 * gOmega + fRho / mRho2 * gRho ) *
-                              T2 +
-                          ( fOmega / mOmega2 * gPOmega + fRho / mRho2 * gPRho ) *
-                              T3;
-                    vertex( iChi, iGamma, iPsi, amp );
-                };
-            };
-        };
-    } else if ( _ID0 == EvtPDL::getId( "omega" ) ) {
-        for ( int iPsi = 0; iPsi < 4; iPsi++ ) {
-            for ( int iGamma = 0; iGamma < 4; iGamma++ ) {
-                for ( int iChi = 0; iChi < 4; iChi++ ) {
-                    EvtComplex T2 = fT2(
-                        root->getDaug( 1 )->getP4(),
-                        root->getDaug( 0 )->getP4(), root->epsTensor( iChi ),
-                        root->getDaug( 1 )->epsParent( iPsi ).conj(),
-                        root->getDaug( 0 )->epsParent( iGamma ).conj() );
-                    EvtComplex T3 = fT3(
-                        root->getDaug( 1 )->getP4(),
-                        root->getDaug( 0 )->getP4(), root->epsTensor( iChi ),
-                        root->getDaug( 1 )->epsParent( iPsi ).conj(),
-                        root->getDaug( 0 )->epsParent( iGamma ).conj() );
-                    //	  cout << "AVL:: omega"<<endl;
-                    amp = gOmega * T2 + gPOmega * T3;
-                    vertex( iChi, iGamma, iPsi, amp );
-                };
-            };
-        };
-    } else if ( _ID0 == EvtPDL::getId( "rho0" ) ) {
-        for ( int iPsi = 0; iPsi < 4; iPsi++ ) {
-            for ( int iGamma = 0; iGamma < 4; iGamma++ ) {
-                for ( int iChi = 0; iChi < 4; iChi++ ) {
-                    EvtComplex T2 = fT2(
-                        root->getDaug( 1 )->getP4(),
-                        root->getDaug( 0 )->getP4(), root->epsTensor( iChi ),
-                        root->getDaug( 1 )->epsParent( iPsi ).conj(),
-                        root->getDaug( 0 )->epsParent( iGamma ).conj() );
-                    EvtComplex T3 = fT3(
-                        root->getDaug( 1 )->getP4(),
-                        root->getDaug( 0 )->getP4(), root->epsTensor( iChi ),
-                        root->getDaug( 1 )->epsParent( iPsi ).conj(),
-                        root->getDaug( 0 )->epsParent( iGamma ).conj() );
-                    //	  cout << "AVL:: rho"<<endl;
-                    amp = gRho * T2 + gPRho * T3;
-                    vertex( iChi, iGamma, iPsi, amp );
-                };
-            };
-        };
-    } else {
-        cout << "AVL:: Not realized yet" << endl;
-    };
-}
-
-void EvtXPsiGamma::init()
-{
-    //  cout<<" (* AVL: ==== EvtXPsiGamma::init() ============ *)"<<endl;
-
-    ncall = 0;
-
-    checkNArg( 0 );
-    checkNDaug( 2 );
-
-    checkSpinParent( EvtSpinType::TENSOR );
-
-    //  checkSpinDaughter(0,EvtSpinType::PHOTON);
-    checkSpinDaughter( 1, EvtSpinType::VECTOR );
-
-    _ID0 = getDaug( 0 );
-    /*  if(_ID0 == EvtPDL::getId("gamma") ) {
-    cout << "AVL:: gamma"<<endl;
-  }
-  else if(_ID0 == EvtPDL::getId("omega") ) {
-    cout << "AVL:: omega"<<endl;
-  }
-  else if(_ID0 == EvtPDL::getId("rho0") ) {
-    cout << "AVL:: rho"<<endl;
-  };
-*/
-}
-
-void EvtXPsiGamma::initProbMax()
-{
-    if ( _ID0 == EvtPDL::getId( "gamma" ) )
-        setProbMax( 2.400 );
-    else if ( _ID0 == EvtPDL::getId( "omega" ) )
-        setProbMax( 16. );
-    else if ( _ID0 == EvtPDL::getId( "rho0" ) )
-        setProbMax( 70. );
 }
