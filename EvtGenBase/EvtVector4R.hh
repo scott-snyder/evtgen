@@ -53,7 +53,7 @@ class EvtVector4R {
     void applyRotateEuler( double alpha, double beta, double gamma );
     void applyBoostTo( const EvtVector4R& p4, bool inverse = false );
     void applyBoostTo( const EvtVector3R& boost, bool inverse = false );
-    EvtVector4R cross( const EvtVector4R& v2 );
+    EvtVector4R cross( const EvtVector4R& v2 ) const;
     double dot( const EvtVector4R& v2 ) const;
     double d3mag() const;
 

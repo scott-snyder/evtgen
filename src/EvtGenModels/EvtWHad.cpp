@@ -276,7 +276,7 @@ EvtVector4C EvtWHad::WCurrent_7pi_nosymm(
                                                     p6 );    // pi+ pi+ pi+ pi- pi-
     const EvtVector4R pf0 = p4 + p7;
     return eps1 * BWa( qTot ) * BWf( pf0 );
-};
+}
 
 // hadronic current W+ -> K+ pi+ pi-
 
@@ -456,4 +456,60 @@ EvtVector4C EvtWHad::WCurrent_K4pi_nosymm( const EvtVector4R& p1,
     const EvtVector4C eps =
         dual( EvtGenFunctions::directProd( epsKstar, epsA1 ) ).cont2( pKstar - pa1 );
     return eps;
+}
+
+EvtVector4C EvtWHad::WCurrent_ppPi( const EvtVector4R& p1,
+                                    const EvtDiracSpinor& sp1,
+                                    const EvtVector4R& p2,
+                                    const EvtDiracSpinor& sp2,
+                                    const EvtVector4R& k ) const
+{
+    const EvtVector4R q = p1 + p2 + k;
+    const double q2 = q.mass2();
+    const double mp = p1.mass(), mp2 = mp * mp, mpi = k.mass(), mpi2 = mpi * mpi;
+    const double mn = EvtPDL::getMeanMass( EvtPDL::getId( "n0" ) );
+    const double mn2 = mn * mn;
+    const EvtComplex II( 0, 1 );
+
+    const double kp2 = k * p2;
+    const double p1p2 = p1 * p2;
+
+    const double f1 = 1.0;
+    const double f2 = 3.7 / ( 2.0 + mp );
+    const double g1 = 1.25;
+    const double g3 = 2.0 * mp * g1 / ( p1p2 + mp2 );
+
+    const EvtComplex curS = EvtLeptonSCurrent( sp1, sp2 );
+    const EvtComplex curP = EvtLeptonPCurrent( sp1, sp2 );
+    const EvtVector4C curV = EvtLeptonVCurrent( sp1, sp2 );
+    const EvtVector4C curA = EvtLeptonACurrent( sp1, sp2 );
+    const EvtTensor4C curT = EvtLeptonTCurrent( sp1, sp2 );
+
+    const double D1 = 1 / ( 2 * kp2 + mp2 - mn2 + mpi2 );    //(k+p2)^2-mn^2
+
+    // Amplitude: ~U(p1).GA5.Vpp(alpha).prop(-p2-k).V(p2) + permutations
+    // U() and V() are proton and antiproton spinors, prop() is the proton's propagator,
+    // and Vpp(alpha) is the W->pp vertex.
+    // Expand terms to use basic spinor currents (Scalar, Vector, Axial, etc)
+
+    EvtVector4C current;
+    current += curA * ( -( f2 * II ) );
+    current += ( D1 * g1 * II ) * curT.cont2( k );
+    current += -( -0.5 * ( D1 * f1 ) ) * dual( curT ).cont2( k );
+    current += -( D1 * f2 * II * mp ) * dual( curT ).cont2( k );
+    current += k * ( -( D1 * g1 ) ) * curS;
+    current += k * ( -( D1 * f1 ) ) * curP;
+    current += k * ( 2 * D1 * f2 * II * mp ) * curP;
+    current += k * ( curV * k ) * ( D1 * g3 );
+    current += k * ( curA * k ) * ( D1 * f2 * II );
+    current += p1 * ( curV * k ) * ( D1 * g3 );
+    current += p1 * ( curA * k ) * ( -( D1 * f2 * II ) );
+    current += p2 * ( curV * k ) * ( D1 * g3 );
+    current += p2 * ( curA * k ) * ( D1 * f2 * II );
+
+    const EvtTensor4C JT = ( 1.0 / q2 ) * EvtGenFunctions::directProd( q, q ) -
+                           EvtTensor4C::g();
+    current = JT.cont2( current );
+
+    return BWa( q ) * current;
 }

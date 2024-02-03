@@ -1,6 +1,5 @@
-
 /***********************************************************************
-* Copyright 1998-2020 CERN for the benefit of the EvtGen authors       *
+* Copyright 1998-2023 CERN for the benefit of the EvtGen authors       *
 *                                                                      *
 * This file is part of EvtGen.                                         *
 *                                                                      *
@@ -18,8 +17,8 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
-#ifndef EvtBcVHad_HH
-#define EvtBcVHad_HH
+#ifndef EvtBcVPPHad_HH
+#define EvtBcVPPHad_HH
 
 #include "EvtGenBase/EvtDecayAmp.hh"
 #include "EvtGenBase/EvtVector4C.hh"
@@ -27,15 +26,13 @@
 #include "EvtGenModels/EvtBCVFF2.hh"
 #include "EvtGenModels/EvtWHad.hh"
 
-#include <array>
-#include <memory>
 #include <string>
 
 class EvtParticle;
 
-// Description: Module to implement Bc -> psi + (n pi) + (m K) decays
+// Description: Module to implement Bc -> psi + p + pbar + pi decays
 
-class EvtBcVHad : public EvtDecayAmp {
+class EvtBcVPPHad : public EvtDecayAmp {
   public:
     std::string getName() override;
     EvtDecayBase* clone() override;
@@ -45,8 +42,7 @@ class EvtBcVHad : public EvtDecayAmp {
 
   protected:
     // Hadronic current function
-    EvtVector4C hardCurr( EvtParticle* parent ) const;
-    void parseDecay();
+    EvtVector4C hardCurrPP( EvtParticle* parent, int i1, int i2 ) const;
 
   private:
     // Code of the Bc -> VW formfactor set:
@@ -58,27 +54,11 @@ class EvtBcVHad : public EvtDecayAmp {
     int m_idVector;
 
     // Code of the hadronic final state
-    // 1:  B_c+ -> V pi+
-    // 2:  B_c+ -> V pi+ pi0
-    // 3:  B_c+ -> V 2pi+ pi-
-    // 4:  B_c+ -> V 2pi+ pi- pi0 (not implemented)
-    // 5:  B_c+ -> V 3pi+ 2pi-
-    // 6:  B_c+ -> V K+ K- pi+
-    // 7:  B_c+ -> V K+ pi+ pi-
-    // 8:  B_c+ -> V K_S0 K+
-    // 9:  B_c+ -> V K+ K- 2pi+ pi-
-    // 10: B_c+ -> V 4pi+ 3pi-
-    // 11: B_c+ -> V K+ 2pi+ 2pi-
+    // 1: p+ p- pi+
     int m_outCode;
 
     std::unique_ptr<EvtBCVFF2> m_FFModel;
     std::unique_ptr<EvtWHad> m_WCurr;
-
-    std::array<int, 4> m_iPiPlus = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iPiMinus = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iPiZero = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iKPlus = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iKMinus = { { -1, -1, -1, -1 } };
 };
 
 #endif

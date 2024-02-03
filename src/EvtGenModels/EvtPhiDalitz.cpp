@@ -25,6 +25,9 @@
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
+#include "EvtGenBase/EvtVector3C.hh"
+#include "EvtGenBase/EvtVector3R.hh"
+#include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
 #include <math.h>
@@ -57,26 +60,27 @@ void EvtPhiDalitz::init()
     checkSpinDaughter( 1, EvtSpinType::SCALAR );
     checkSpinDaughter( 2, EvtSpinType::SCALAR );
 
-    _mRho = 0.7758;
-    _gRho = 0.1439;
-    _aD = 0.78;
-    _phiD = -2.47;
-    _aOmega = 0.0071;
-    _phiOmega = -0.22;
+    // results taken from KLOE results: arxiv.org/abs/hep-ex/0303016
+    m_mRho = 0.7758;
+    m_gRho = 0.1439;
+    m_aD = 0.78;
+    m_phiD = -2.47;
+    m_aOmega = 0.0071;
+    m_phiOmega = -0.22;
 
-    _locPip = -1;
-    _locPim = -1;
-    _locPi0 = -1;
+    m_locPip = -1;
+    m_locPim = -1;
+    m_locPi0 = -1;
 
     for ( int i = 0; i < 3; i++ ) {
         if ( getDaug( i ) == EvtPDL::getId( "pi+" ) )
-            _locPip = i;
+            m_locPip = i;
         if ( getDaug( i ) == EvtPDL::getId( "pi-" ) )
-            _locPim = i;
+            m_locPim = i;
         if ( getDaug( i ) == EvtPDL::getId( "pi0" ) )
-            _locPi0 = i;
+            m_locPi0 = i;
     }
-    if ( _locPip == -1 || _locPim == -1 || _locPi0 == -1 ) {
+    if ( m_locPip == -1 || m_locPim == -1 || m_locPi0 == -1 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << getModelName()
             << "generator expects daughters to be pi+ pi- pi0\n";
@@ -89,80 +93,118 @@ void EvtPhiDalitz::init()
 
 void EvtPhiDalitz::initProbMax()
 {
-    setProbMax( 150.0 );
+    setProbMax( 300.0 );
 }
 
 void EvtPhiDalitz::decay( EvtParticle* p )
 {
-    EvtId PIP = EvtPDL::getId( "pi+" );
-    EvtId PIM = EvtPDL::getId( "pi-" );
-    EvtId PIZ = EvtPDL::getId( "pi0" );
-    EvtId OMEGA = EvtPDL::getId( "omega" );
+    const EvtId PIP = EvtPDL::getId( "pi+" );
+    const EvtId PIM = EvtPDL::getId( "pi-" );
+    const EvtId PIZ = EvtPDL::getId( "pi0" );
+    const EvtId OMEGA = EvtPDL::getId( "omega" );
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    EvtVector4R Ppip = p->getDaug( _locPip )->getP4();
-    EvtVector4R Ppim = p->getDaug( _locPim )->getP4();
-    EvtVector4R Ppi0 = p->getDaug( _locPi0 )->getP4();
-    EvtVector4R Qp = ( Ppim + Ppi0 );
-    EvtVector4R Qm = ( Ppip + Ppi0 );
-    EvtVector4R Q0 = ( Ppip + Ppim );
-    double m2_pip = pow( EvtPDL::getMeanMass( PIP ), 2 );
-    double m2_pim = pow( EvtPDL::getMeanMass( PIM ), 2 );
-    double m2_pi0 = pow( EvtPDL::getMeanMass( PIZ ), 2 );
-    double M2rhop = pow( _mRho, 2 );
-    double M2rhom = pow( _mRho, 2 );
-    double M2rho0 = pow( _mRho, 2 );
-    double M2omega = pow( EvtPDL::getMeanMass( OMEGA ), 2 );
+    const EvtVector4R Ppip = p->getDaug( m_locPip )->getP4();
+    const EvtVector4R Ppim = p->getDaug( m_locPim )->getP4();
+    const EvtVector4R Ppi0 = p->getDaug( m_locPi0 )->getP4();
+    const EvtVector4R Qm = ( Ppim + Ppi0 );
+    const EvtVector4R Qp = ( Ppip + Ppi0 );
+    const EvtVector4R Q0 = ( Ppip + Ppim );
+    const double m_pip = EvtPDL::getMeanMass( PIP );
+    const double m_pim = EvtPDL::getMeanMass( PIM );
+    const double m_pi0 = EvtPDL::getMeanMass( PIZ );
+    const double Mrhop = m_mRho;
+    const double Mrhom = m_mRho;
+    const double Mrho0 = m_mRho;
+    const double M2rhop = pow( Mrhop, 2 );
+    const double M2rhom = pow( Mrhom, 2 );
+    const double M2rho0 = pow( Mrho0, 2 );
+    const double M2omega = pow( EvtPDL::getMeanMass( OMEGA ), 2 );
 
-    double Wrhop = _gRho;
-    double Wrhom = _gRho;
-    double Wrho0 = _gRho;
-    double Womega = EvtPDL::getWidth( OMEGA );
+    const double Wrhop = m_gRho;
+    const double Wrhom = m_gRho;
+    const double Wrho0 = m_gRho;
+    const double Womega = EvtPDL::getWidth( OMEGA );
 
-    EvtComplex Atot( 0, 0 );
+    const double QmM = Qm.mass();
+    const double QmM2 = Qm.mass2();
+    const double QpM = Qp.mass();
+    const double QpM2 = Qp.mass2();
+    const double Q0M = Q0.mass();
+    const double Q0M2 = Q0.mass2();
 
-    //Rho+ Risonance Amplitude
-    double Gp = Wrhop *
-                pow( ( ( Qp.mass2() - m2_pim - m2_pi0 ) / 2 - M2rhop / 4 ) /
-                         ( M2rhop / 4 - ( m2_pim + m2_pi0 ) / 2 ),
-                     3 / 2 ) *
-                ( M2rhop / Qp.mass2() );
-    EvtComplex Drhop( ( Qp.mass2() - M2rhop ), Qp.mass() * Gp );
-    EvtComplex A1( M2rhop / Drhop );
+    //Rho- Resonance Amplitude
+    const double qm = calc_q( QmM, m_pim, m_pi0 );
+    const double qm_0 = calc_q( Mrhom, m_pim, m_pi0 );
+    const double Gm = Wrhom * pow( qm / qm_0, 3 ) * ( M2rhom / QmM2 );
+    const EvtComplex Drhom( ( QmM2 - M2rhom ), QmM * Gm );
+    const EvtComplex A1( M2rhom / Drhom );
 
-    //Rho- Risonance Amplitude
-    double Gm = Wrhom *
-                pow( ( ( Qm.mass2() - m2_pip - m2_pi0 ) / 2 - M2rhom / 4 ) /
-                         ( M2rhom / 4 - ( m2_pip + m2_pi0 ) / 2 ),
-                     3 / 2 ) *
-                ( M2rhom / Qm.mass2() );
-    EvtComplex Drhom( ( Qm.mass2() - M2rhom ), Qm.mass() * Gm );
-    EvtComplex A2( M2rhom / Drhom );
+    //Rho+ Resonance Amplitude
+    const double qp = calc_q( QpM, m_pip, m_pi0 );
+    const double qp_0 = calc_q( Mrhop, m_pip, m_pi0 );
+    const double Gp = Wrhop * pow( qp / qp_0, 3 ) * ( M2rhop / QpM2 );
+    const EvtComplex Drhop( ( QpM2 - M2rhop ), QpM * Gp );
+    const EvtComplex A2( M2rhop / Drhop );
 
-    //Rho0 Risonance Amplitude
-    double G0 = Wrho0 *
-                pow( ( ( Q0.mass2() - m2_pip - m2_pim ) / 2 - M2rho0 / 4 ) /
-                         ( M2rho0 / 4 - ( m2_pip + m2_pim ) / 2 ),
-                     3 / 2 ) *
-                ( M2rho0 / Q0.mass2() );
-    EvtComplex Drho0( ( Q0.mass2() - M2rho0 ), Q0.mass() * G0 );
-    EvtComplex A3( M2rho0 / Drho0 );
+    //Rho0 Resonance Amplitude
+    const double q0 = calc_q( Q0M, m_pip, m_pim );
+    const double q0_0 = calc_q( Mrho0, m_pip, m_pim );
+    const double G0 = Wrho0 * pow( q0 / q0_0, 3 ) * ( M2rho0 / Q0M2 );
+    const EvtComplex Drho0( ( Q0M2 - M2rho0 ), Q0M * G0 );
+    const EvtComplex A3( M2rho0 / Drho0 );
 
-    //Omega Risonance Amplitude
-    EvtComplex OmegaPhase( 0, _phiOmega );
-    EvtComplex DOmega( ( Q0.mass2() - M2omega ), Q0.mass() * Womega );
-    EvtComplex A4( _aOmega * M2omega * exp( OmegaPhase ) / DOmega );
+    //Omega Resonance Amplitude
+    const EvtComplex OmegaA( m_aOmega * cos( m_phiOmega ),
+                             m_aOmega * sin( m_phiOmega ) );
+    const EvtComplex DOmega( ( Q0M2 - M2omega ), Q0M * Womega );
+    const EvtComplex A4( OmegaA * M2omega / DOmega );
 
     //Direct Decay Amplitude
-    EvtComplex DirPhase( 0, _phiD );
-    EvtComplex A5( _aD * exp( DirPhase ) );
+    const EvtComplex A5( m_aD * cos( m_phiD ), m_aD * sin( m_phiD ) );
 
-    Atot = A1 + A2 + A3 + A4 + A5;
+    const EvtComplex Atot = A1 + A2 + A3 + A4 + A5;
 
-    vertex( 0, Atot );
-    vertex( 1, Atot );
-    vertex( 2, Atot );
+    // Polarization
+
+    const EvtVector4C ep0 = p->eps( 0 );
+    const EvtVector4C ep1 = p->eps( 1 );
+    const EvtVector4C ep2 = p->eps( 2 );
+
+    const EvtVector3R p1( Ppip.get( 1 ), Ppip.get( 2 ), Ppip.get( 3 ) );
+    const EvtVector3R p2( Ppim.get( 1 ), Ppim.get( 2 ), Ppim.get( 3 ) );
+    const EvtVector3R q = cross( p1, p2 );
+
+    const EvtVector3C e1( ep0.get( 1 ), ep0.get( 2 ), ep0.get( 3 ) );
+    const EvtVector3C e2( ep1.get( 1 ), ep1.get( 2 ), ep1.get( 3 ) );
+    const EvtVector3C e3( ep2.get( 1 ), ep2.get( 2 ), ep2.get( 3 ) );
+
+    //This is an approximate formula of the maximum value that
+    //|q| can have.
+    const double pM = p->mass();
+    const double mSum = Ppip.mass() + Ppim.mass() + Ppi0.mass();
+    const double norm = 10.26 / ( pM * pM - mSum * mSum );
+
+    vertex( 0, norm * e1 * q * Atot );
+    vertex( 1, norm * e2 * q * Atot );
+    vertex( 2, norm * e3 * q * Atot );
 
     return;
+}
+
+double EvtPhiDalitz::calc_q( double M, double m1, double m2 ) const
+{
+    const double m12Sum = m1 + m2;
+
+    if ( M > m12Sum ) {
+        const double MSq = M * M;
+        const double m12Diff = m1 - m2;
+
+        return sqrt( ( MSq - ( m12Sum ) * ( m12Sum ) ) *
+                     ( MSq - ( m12Diff ) * ( m12Diff ) ) ) /
+               ( 2.0 * M );
+    } else {
+        return 0.0;
+    }
 }

@@ -22,6 +22,7 @@
 #define EvtWHad_HH
 
 #include "EvtGenBase/EvtComplex.hh"
+#include "EvtGenBase/EvtDiracSpinor.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
@@ -72,10 +73,15 @@ class EvtWHad {
                               const EvtVector4R& p5, const EvtVector4R& p6,
                               const EvtVector4R& p7 ) const;
 
-    // 1=K+ 2 = pi+ 3 = pi+ 4 = pi- 5 = pi- with symmetrizatiom
+    // 1=K+ 2 = pi+ 3 = pi+ 4 = pi- 5 = pi- with symmetrization
     EvtVector4C WCurrent_K4pi( const EvtVector4R& p1, const EvtVector4R& p2,
                                const EvtVector4R& p3, const EvtVector4R& p4,
                                const EvtVector4R& p5 ) const;
+
+    // a1 -> p+ p- pi+
+    EvtVector4C WCurrent_ppPi( const EvtVector4R& p1, const EvtDiracSpinor& sp1,
+                               const EvtVector4R& p2, const EvtDiracSpinor& sp2,
+                               const EvtVector4R& k ) const;
 
   protected:
     EvtVector4C JB( const EvtVector4R& q1, const EvtVector4R& q2,

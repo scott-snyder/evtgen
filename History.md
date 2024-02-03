@@ -11,11 +11,17 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+3 Feb 2024 John Back
+* T230: Add EvtBcVPPHad model for Bc to Jpsi p pbar pi decays and generalised particle ordering
+  for EvtBcVHad decay files, courtesy of Aleksei Luchinsky, Dmitrii Pereima & Vanya Belyaev (LHCb). 
+  Updated EvtPhiDalitz model to use helicity amplitudes and fixed the indices used in
+  EvtVector3R::dot(), courtesy of Arnau Brossa Gonzalo & Antonio Romero Vidal (LHCb).
+
 31 Oct 2023 Fernando Abudinen
 * D102: Bugfix probmax issue for X38722-+\_PSI\_GAMMA model
-     Calculation of amplitude moved to dedicated calcAmp function and fixed initialisation.
-     Introduced weighting to compensate for phase-space changes due to resonance width.
-     Fixed bugs in rho couplings and loops over photon and vector states.
+  - Calculation of amplitude moved to dedicated calcAmp function and fixed initialisation.
+  - Introduced weighting to compensate for phase-space changes due to resonance width.
+  - Fixed bugs in rho couplings and loops over photon and vector states.
 
 16 Oct 2023 Fernando Abudinen
 * D99: Add tests for PHOTOS
@@ -34,7 +40,7 @@ https://phab.hepforge.org/Dxyz
 
 22 Aug 2023 Fernando Abudinen
 * D97: Bugfix probmax issue and introduced pole compensation for VTOSLL model
-     Calculation of amplitude moved to dedicated calcAmp function and fixed initialisation.
+  - Calculation of amplitude moved to dedicated calcAmp function and fixed initialisation.
 
 22 Aug 2023 Tom Latham
 * CMake updates

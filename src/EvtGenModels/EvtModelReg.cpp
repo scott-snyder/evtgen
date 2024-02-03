@@ -46,6 +46,7 @@
 #include "EvtGenModels/EvtBcVHad.hh"
 #include "EvtGenModels/EvtBcVMuNu.hh"
 #include "EvtGenModels/EvtBcVNpi.hh"
+#include "EvtGenModels/EvtBcVPPHad.hh"
 #include "EvtGenModels/EvtBsMuMuKK.hh"
 #include "EvtGenModels/EvtBsquark.hh"
 #include "EvtGenModels/EvtBto2piCPiso.hh"
@@ -297,7 +298,7 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtPVVCPLH );
     modelist.registerModel( new EvtSSD_DirectCP );
 
-    modelist.registerModel( new EvtBcToNPi( true ) );    // true = print author info
+    modelist.registerModel( new EvtBcToNPi );
     modelist.registerModel( new EvtBcPsiNPi );
     modelist.registerModel( new EvtBcBsNPi );
     modelist.registerModel( new EvtBcBsStarNPi );
@@ -318,9 +319,10 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtVtoSll );
 
     modelist.registerModel( new EvtBsMuMuKK );
-    modelist.registerModel( new EvtGenericDalitz() );
+    modelist.registerModel( new EvtGenericDalitz );
 
     modelist.registerModel( new EvtBcVHad );
+    modelist.registerModel( new EvtBcVPPHad );
 
     modelist.registerModel( new Evtbs2llGammaMNT );
     modelist.registerModel( new Evtbs2llGammaISRFSR );

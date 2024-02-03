@@ -87,24 +87,23 @@ EvtVector3R cross( const EvtVector3R& p1, const EvtVector3R& p2 )
 }
 
 double EvtVector3R::d3mag() const
-
-// returns the 3 momentum mag.
 {
+    // Returns the 3 momentum mag
     double temp;
 
     temp = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
     temp = sqrt( temp );
 
     return temp;
-}    // r3mag
+}
 
 double EvtVector3R::dot( const EvtVector3R& p2 )
 {
     double temp;
 
     temp = v[0] * p2.v[0];
-    temp += v[0] * p2.v[0];
-    temp += v[0] * p2.v[0];
+    temp += v[1] * p2.v[1];
+    temp += v[2] * p2.v[2];
 
     return temp;
-}    //dot
+}

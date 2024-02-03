@@ -35,15 +35,17 @@ class EvtPhiDalitz : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    double _mRho;
-    double _gRho;
-    double _aD;
-    double _phiD;
-    double _aOmega;
-    double _phiOmega;
-    int _locPip;
-    int _locPim;
-    int _locPi0;
+    double calc_q( double, double, double ) const;
+
+    double m_mRho;
+    double m_gRho;
+    double m_aD;
+    double m_phiD;
+    double m_aOmega;
+    double m_phiOmega;
+    int m_locPip;
+    int m_locPim;
+    int m_locPi0;
 };
 
 #endif

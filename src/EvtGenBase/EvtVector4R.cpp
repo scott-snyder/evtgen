@@ -170,7 +170,7 @@ void EvtVector4R::applyBoostTo( const EvtVector3R& boost, bool inverse )
     }
 }
 
-EvtVector4R EvtVector4R::cross( const EvtVector4R& p2 )
+EvtVector4R EvtVector4R::cross( const EvtVector4R& p2 ) const
 {
     //Calcs the cross product.  Added by djl on July 27, 1995.
     //Modified for real vectros by ryd Aug 28-96

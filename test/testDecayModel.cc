@@ -976,6 +976,88 @@ double TestDecayModel::getValue( const EvtParticle* parent,
             EvtDecayAngleChi( p_parent, p_daug1, p_daug2, p_daug3, p_daug4 ) };
         value = chi * 180.0 / EvtConst::pi;
 
+    } else if ( !selectedVarName.compare( "cosThetaResNorm" ) ) {
+        // P -> R p4 -> (p1 p2 p3) p4, where the resonance R decays to p1 p2 p3.
+        // Theta is the angle between the normal of the plane containing p1, p2 & p3
+        // and the bachelor particle p4 in the rest frame of resonance R.
+        // The normal vector is given by the cross product p3 x p1
+
+        if ( sel_NDaugMax > 1 ) {
+            const EvtParticle* res{ selectedParent->getDaug( 0 ) };
+            const EvtParticle* bac{ selectedParent->getDaug( 1 ) };
+
+            // Check resonance has 3 daughters
+            if ( res != nullptr && res->getNDaug() == 3 ) {
+                const EvtParticle* daug1 = res->getDaug( 0 );
+                const EvtParticle* daug3 = res->getDaug( 2 );
+
+                // 4-momenta in base parent P lab frame
+                const EvtVector4R pRes{ res->getP4Lab() };
+                const EvtVector4R p4{ bac != nullptr ? bac->getP4Lab()
+                                                     : EvtVector4R() };
+                const EvtVector4R p1{ daug1 != nullptr ? daug1->getP4Lab()
+                                                       : EvtVector4R() };
+                const EvtVector4R p3{ daug3 != nullptr ? daug3->getP4Lab()
+                                                       : EvtVector4R() };
+
+                // Boost 4-vector for resonance frame
+                const EvtVector4R boost{ pRes.get( 0 ), -pRes.get( 1 ),
+                                         -pRes.get( 2 ), -pRes.get( 3 ) };
+
+                // Momentum of p1 and p3 in resonance frame
+                const EvtVector4R p1Res{ boostTo( p1, boost ) };
+                const EvtVector4R p3Res{ boostTo( p3, boost ) };
+
+                // Plane normal vector (just uses 3-momentum components)
+                const EvtVector4R norm{ p3Res.cross( p1Res ) };
+
+                // Momentum of p4 in resonance frame
+                const EvtVector4R p4Res{ boostTo( p4, boost ) };
+
+                // Cosine of the angle between the normal and p4 in the resonance frame
+                const double normMag{ norm.d3mag() };
+                const double p4ResMag{ p4Res.d3mag() };
+                if ( normMag > 0.0 && p4ResMag > 0.0 ) {
+                    value = norm.dot( p4Res ) / ( normMag * p4ResMag );
+                }
+            }
+        }
+
+    } else if ( !selectedVarName.compare( "cosBetaRes" ) ) {
+        // For resonance P (parent) -> p1 p2 p3, beta is the
+        // angle between p1 & p3 in the (p1 + p2) rest frame
+        if ( sel_NDaugMax > 2 ) {
+            const EvtParticle* daug1 = selectedParent->getDaug( 0 );
+            const EvtParticle* daug2 = selectedParent->getDaug( 1 );
+            const EvtParticle* daug3 = selectedParent->getDaug( 2 );
+
+            // 4-momenta in base parent frame
+            const EvtVector4R p1{ daug1 != nullptr ? daug1->getP4Lab()
+                                                   : EvtVector4R() };
+            const EvtVector4R p2{ daug2 != nullptr ? daug2->getP4Lab()
+                                                   : EvtVector4R() };
+            const EvtVector4R p3{ daug3 != nullptr ? daug3->getP4Lab()
+                                                   : EvtVector4R() };
+
+            // p1 + p2
+            const EvtVector4R p12{ p1 + p2 };
+
+            // Boost 4-vector for p12 frame
+            const EvtVector4R boost{ p12.get( 0 ), -p12.get( 1 ), -p12.get( 2 ),
+                                     -p12.get( 3 ) };
+
+            // Momentum of p1 & p3 in p12 frame
+            const EvtVector4R p1_12{ boostTo( p1, boost ) };
+            const EvtVector4R p3_12{ boostTo( p3, boost ) };
+
+            // Cosine of angle between p1 & p3 in p12 frame
+            const double p1_12Mag{ p1_12.d3mag() };
+            const double p3_12Mag{ p3_12.d3mag() };
+            if ( p1_12Mag > 0.0 && p3_12Mag > 0.0 ) {
+                value = p1_12.dot( p3_12 ) / ( p1_12Mag * p3_12Mag );
+            }
+        }
+
     } else if ( !selectedVarName.compare( "E" ) ) {
         // Energy of first daughter in lab frame
         value = p1_lab.get( 0 );
@@ -1165,17 +1247,18 @@ double TestDecayModel::getCosAcoplanarityAngle( const EvtParticle* selectedParen
                           : daughter1->getP4Lab() + daughter2->getP4Lab() };
 
     const EvtVector4R daughter4Vector2{
-        sel_NDaugMax == 2   ? daughter2->getP4Lab()
-        : sel_NDaugMax == 3 ? daughter2->getP4Lab() + daughter3->getP4Lab()
-                            : daughter3->getP4Lab() + daughter4->getP4Lab() };
+        sel_NDaugMax == 2
+            ? daughter2->getP4Lab()
+            : sel_NDaugMax == 3 ? daughter2->getP4Lab() + daughter3->getP4Lab()
+                                : daughter3->getP4Lab() + daughter4->getP4Lab() };
 
     const EvtVector4R grandDaughter4Vector1{
         sel_NDaugMax <= 3 ? grandDaughter1->getP4Lab() : daughter1->getP4Lab() };
 
     const EvtVector4R grandDaughter4Vector2{
-        sel_NDaugMax == 2   ? grandDaughter2->getP4Lab()
-        : sel_NDaugMax == 3 ? daughter2->getP4Lab()
-                            : daughter3->getP4Lab() };
+        sel_NDaugMax == 2 ? grandDaughter2->getP4Lab()
+                          : sel_NDaugMax == 3 ? daughter2->getP4Lab()
+                                              : daughter3->getP4Lab() };
 
     const EvtVector4R parentBoost{ parent4Vector.get( 0 ),
                                    -parent4Vector.get( 1 ),
@@ -1193,15 +1276,15 @@ double TestDecayModel::getCosAcoplanarityAngle( const EvtParticle* selectedParen
                                       -daughter4Vector2.get( 3 ) };
 
     // Boosting daughters to reference frame of the mother
-    EvtVector4R daughter4Vector1_boosted{
+    const EvtVector4R daughter4Vector1_boosted{
         boostTo( daughter4Vector1, parentBoost ) };
-    EvtVector4R daughter4Vector2_boosted{
+    const EvtVector4R daughter4Vector2_boosted{
         boostTo( daughter4Vector2, parentBoost ) };
 
     // Boosting each granddaughter to reference frame of its mother
-    EvtVector4R grandDaughter4Vector1_boosted{
+    const EvtVector4R grandDaughter4Vector1_boosted{
         boostTo( grandDaughter4Vector1, daughter1Boost ) };
-    EvtVector4R grandDaughter4Vector2_boosted{
+    const EvtVector4R grandDaughter4Vector2_boosted{
         boostTo( grandDaughter4Vector2, daughter2Boost ) };
 
     // We calculate the normal vectors of the decay two planes
