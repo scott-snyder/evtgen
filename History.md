@@ -13,7 +13,7 @@ https://phab.hepforge.org/Dxyz
 
 3 Feb 2024 John Back
 * T230: Add EvtBcVPPHad model for Bc to Jpsi p pbar pi decays and generalised particle ordering
-  for EvtBcVHad decay files, courtesy of Aleksei Luchinsky, Dmitrii Pereima & Vanya Belyaev (LHCb). 
+  for EvtBcVHad decay files, courtesy of Aleksei Luchinsky, Dmitrii Pereima & Vanya Belyaev (LHCb).
   Updated EvtPhiDalitz model to use helicity amplitudes and fixed the indices used in
   EvtVector3R::dot(), courtesy of Arnau Brossa Gonzalo & Antonio Romero Vidal (LHCb).
 
