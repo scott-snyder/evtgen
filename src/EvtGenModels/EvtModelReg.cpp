@@ -156,8 +156,6 @@
 #include "EvtGenModels/EvtbTosllMSExt.hh"
 #include "EvtGenModels/Evtbs2llGammaISRFSR.hh"
 #include "EvtGenModels/Evtbs2llGammaMNT.hh"
-#include "EvtGenModels/EvtbsToLLLL.hh"
-#include "EvtGenModels/EvtbsToLLLLHyperCP.hh"
 
 #include <assert.h>
 #include <ctype.h>
@@ -299,8 +297,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtTVP );
     modelist.registerModel( new EvtXPsiGamma );
 
-    modelist.registerModel( new EvtbsToLLLL );
-    modelist.registerModel( new EvtbsToLLLLHyperCP );
     modelist.registerModel( new EvtBLLNuL );
 
     modelist.registerModel( new EvtKStopizmumu );
