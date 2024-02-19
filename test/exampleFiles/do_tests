@@ -68,7 +68,6 @@ time ../../testEvtGen svvcplh 1000
 time ../../testEvtGen svscplh 1000
 time ../../testEvtGen ssdcp 10000
 time ../../testEvtGen ssdcp2 10000
-time ../../testEvtGen kstarstargamma 1000
 time ../../testEvtGen dstarpi 10000
 time ../../testEvtGen etacphiphi 10000
 time ../../testEvtGen vvpipi 1000

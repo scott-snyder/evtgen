@@ -77,7 +77,6 @@
 #include "EvtGenModels/EvtKKLambdaC.hh"
 #include "EvtGenModels/EvtKStopizmumu.hh"
 #include "EvtGenModels/EvtKstarnunu.hh"
-#include "EvtGenModels/EvtKstarstargamma.hh"
 #include "EvtGenModels/EvtLNuGamma.hh"
 #include "EvtGenModels/EvtLambdaP_BarGamma.hh"
 #include "EvtGenModels/EvtLambdacPHH.hh"
@@ -265,7 +264,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtSVPHelCPMix );
 
     modelist.registerModel( new EvtLNuGamma );
-    modelist.registerModel( new EvtKstarstargamma );
 
     modelist.registerModel( new EvtVub );
 

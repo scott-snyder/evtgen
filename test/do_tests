@@ -61,7 +61,6 @@ time ./evtgenlhc_test1 jpsikstar 1000 4
 time ./evtgenlhc_test1 svvcplh 1000
 time ./evtgenlhc_test1 svscplh 1000
 time ./evtgenlhc_test1 ssdcp 10000
-time ./evtgenlhc_test1 kstarstargamma 1000
 time ./evtgenlhc_test1 dstarpi 10000
 time ./evtgenlhc_test1 etacphiphi 10000
 time ./evtgenlhc_test1 vvpipi 1000

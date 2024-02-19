@@ -80,7 +80,6 @@ class EvtAmp {
 
   private:
     friend class EvtDecayAmp;
-    friend class EvtKstarstargamma;
 
     void setNDaug( int n );
     void setNState( int parent_states, int* daug_states );

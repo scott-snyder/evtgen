@@ -120,7 +120,6 @@ void runJPsiKstar( int nevent, EvtGen& myGenerator, int modeInt );
 void runSVVCPLH( int nevent, EvtGen& myGenerator );
 void runSVSCPLH( int nevent, EvtGen& myGenerator );
 void runSSDCP( int nevent, EvtGen& myGenerator );
-void runKstarstargamma( int nevent, EvtGen& myGenerator );
 void runDSTARPI( int nevent, EvtGen& myGenerator );
 void runETACPHIPHI( int nevent, EvtGen& myGenerator );
 void runVVPiPi( int nevent, EvtGen& myGenerator );
@@ -371,11 +370,6 @@ int main( int argc, char* argv[] )
     if ( !strcmp( argv[1], "ssdcp" ) ) {
         int nevent = atoi( argv[2] );
         runSSDCP( nevent, myGenerator );
-    }
-
-    if ( !strcmp( argv[1], "kstarstargamma" ) ) {
-        int nevent = atoi( argv[2] );
-        runKstarstargamma( nevent, myGenerator );
     }
 
     if ( !strcmp( argv[1], "dstarpi" ) ) {
@@ -3329,55 +3323,6 @@ void runSSDCP( int nevent, EvtGen& myGenerator )
         if ( p_tag->getId() == B0B ) {
             tB0Btag->Fill( dt );
         }
-
-        root_part->deleteTree();
-
-    } while ( count++ < nevent );
-
-    file->Write();
-    file->Close();
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
-}
-
-void runKstarstargamma( int nevent, EvtGen& myGenerator )
-{
-    TFile* file = new TFile( "kstarstargamma.root", "RECREATE" );
-
-    TH1F* m = new TH1F( "h1", "mkpi", 100, 0.5, 2.5 );
-
-    TH1F* ctheta = new TH1F( "h2", "ctheta", 100, -1.0, 1.0 );
-
-    int count = 1;
-
-    myGenerator.readUDecay( "exampleFiles/KSTARSTARGAMMA.DEC" );
-
-    static EvtId B0 = EvtPDL::getId( std::string( "B0" ) );
-
-    std::ofstream outmix;
-
-    do {
-        EvtVector4R pinit( EvtPDL::getMass( B0 ), 0.0, 0.0, 0.0 );
-
-        EvtParticle* root_part = EvtParticleFactory::particleFactory( B0, pinit );
-
-        root_part->setDiagonalSpinDensity();
-
-        myGenerator.generateDecay( root_part );
-
-        EvtParticle *p_kaon, *p_pion;
-        EvtVector4R p4_kaon, p4_pion;
-
-        p_kaon = root_part->getDaug( 0 );
-        p_pion = root_part->getDaug( 1 );
-
-        p4_kaon = p_kaon->getP4Lab();
-        p4_pion = p_pion->getP4Lab();
-
-        m->Fill( ( p4_kaon + p4_pion ).mass() );
-
-        ctheta->Fill( EvtDecayAngle( pinit, p4_kaon + p4_pion, p4_kaon ) );
-
-        //EvtGenReport(EVTGEN_INFO,"EvtGen") << "ctheta:"<<EvtDecayAngle(pinit,p4_kaon+p4_pion,p4_kaon)<<std::endl;
 
         root_part->deleteTree();
 
