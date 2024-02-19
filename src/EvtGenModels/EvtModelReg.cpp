@@ -92,7 +92,6 @@
 #include "EvtGenModels/EvtPhspDecaytimeCut.hh"
 #include "EvtGenModels/EvtPhspFlatLifetime.hh"
 #include "EvtGenModels/EvtPi0Dalitz.hh"
-#include "EvtGenModels/EvtPropSLPole.hh"
 #include "EvtGenModels/EvtPsi2JpsiPiPi.hh"
 #include "EvtGenModels/EvtPto3P.hh"
 #include "EvtGenModels/EvtRareLbToLll.hh"
@@ -189,7 +188,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtISGW2 );
     modelist.registerModel( new EvtMelikhov );
     modelist.registerModel( new EvtSLPole );
-    modelist.registerModel( new EvtPropSLPole );
     modelist.registerModel( new EvtSLBKPole );
     modelist.registerModel( new EvtHQET );
     modelist.registerModel( new EvtHQET2 );
