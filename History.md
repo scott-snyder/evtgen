@@ -12,6 +12,9 @@ https://phab.hepforge.org/Dxyz
 ## R02-0X-00
 
 19 Feb 2024 Fernando Abudinen
+* D108: Bugfix protect polarisation vector for vector and tensor particles against wrong indices
+
+19 Feb 2024 Fernando Abudinen
 * D107: Implement const correctness for epsPhoton and epsParentPhoton
 
 3 Feb 2024 John Back

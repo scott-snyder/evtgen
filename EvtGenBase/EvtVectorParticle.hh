@@ -25,6 +25,9 @@
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
+#include <array>
+#include <cassert>
+
 class EvtId;
 
 class EvtVectorParticle : public EvtParticle {
@@ -37,15 +40,22 @@ class EvtVectorParticle : public EvtParticle {
                const EvtVector4C&, const EvtVector4C& );
     EvtVector4C epsParent( int i ) const override
     {
+        assert( i >= 0 && i < _eps.size() );
+
         return boostTo( _eps[i], this->getP4() );
     }
-    EvtVector4C eps( int i ) const override { return _eps[i]; }
+    EvtVector4C eps( int i ) const override
+    {
+        assert( i >= 0 && i < _eps.size() );
+
+        return _eps[i];
+    }
     EvtSpinDensity rotateToHelicityBasis() const override;
     EvtSpinDensity rotateToHelicityBasis( double alpha, double beta,
                                           double gamma ) const override;
 
   private:
-    EvtVector4C _eps[3];
+    std::array<EvtVector4C, 3> _eps;
 
     EvtVectorParticle( const EvtVectorParticle& vector );
     EvtVectorParticle& operator=( const EvtVectorParticle& vector );

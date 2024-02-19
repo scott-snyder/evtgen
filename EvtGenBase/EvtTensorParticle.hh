@@ -24,6 +24,8 @@
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtTensor4C.hh"
 
+#include <array>
+
 class EvtTensorParticle : public EvtParticle {
   public:
     EvtTensorParticle() = default;
@@ -42,7 +44,7 @@ class EvtTensorParticle : public EvtParticle {
                                           double gamma ) const override;
 
   private:
-    EvtTensor4C eps[5];    //eps1,eps2,eps3,eps4,eps5;
+    std::array<EvtTensor4C, 5> eps;    //eps1,eps2,eps3,eps4,eps5;
 
     EvtTensorParticle( const EvtTensorParticle& tensor );
     EvtTensorParticle& operator=( const EvtTensorParticle& tensor );

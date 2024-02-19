@@ -27,6 +27,7 @@
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
+#include <cassert>
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
@@ -84,15 +85,15 @@ void EvtTensorParticle::init( EvtId part_n, const EvtVector4R& p4,
 
 EvtTensor4C EvtTensorParticle::epsTensorParent( int i ) const
 {
-    EvtTensor4C temp = eps[i];
+    assert( i >= 0 && i < eps.size() );
 
-    temp.applyBoostTo( this->getP4() );
-    return temp;
+    return boostTo( eps[i], this->getP4() );
 
 }    //epsParent
 
 EvtTensor4C EvtTensorParticle::epsTensor( int i ) const
 {
+    assert( i >= 0 && i < eps.size() );
     return eps[i];
 
 }    //eps

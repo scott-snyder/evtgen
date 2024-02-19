@@ -301,7 +301,7 @@ void EvtBcToNPi::decay( EvtParticle* root_particle )
             2 * I * FV * dual( EvtGenFunctions::directProd( p, k ) );
         EvtVector4C Heps = H.cont2( hardCur );
 
-        for ( int i = 0; i < 4; i++ ) {
+        for ( int i = 0; i < 3; i++ ) {
             EvtVector4C eps = root_particle->getDaug( 0 )
                                   ->epsParent( i )
                                   .conj();    // psi-meson polarization vector
