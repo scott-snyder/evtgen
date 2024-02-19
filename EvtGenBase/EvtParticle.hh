@@ -67,12 +67,12 @@ class EvtParticle {
     /**
   * Returns polarization vector in the parents restframe for a photon.
   */
-    virtual EvtVector4C epsParentPhoton( int i );
+    virtual EvtVector4C epsParentPhoton( int i ) const;
 
     /**
   * Returns polarization vector in the particles own restframe for a photon.
   */
-    virtual EvtVector4C epsPhoton( int i );
+    virtual EvtVector4C epsPhoton( int i ) const;
 
     /**
   * Returns Dirac spinor in the parents restframe for a Dirac particle.

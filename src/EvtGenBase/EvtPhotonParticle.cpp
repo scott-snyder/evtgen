@@ -43,45 +43,23 @@ void EvtPhotonParticle::init( EvtId part_n, double e, double px, double py,
     setpart_num( part_n );
 
     setLifetime();
-
-    //defere calculation of basis vectors untill they are needed!
-    _evalBasis = 0;
 }
 
-EvtVector4C EvtPhotonParticle::epsParentPhoton( int i )
+EvtVector4C EvtPhotonParticle::epsParentPhoton( int i ) const
 {
-    if ( !_evalBasis ) {
-        _evalBasis = 1;
-        eps1.set( EvtComplex( 0.0, 0.0 ), EvtComplex( -1.0 / sqrt( 2.0 ), 0.0 ),
-                  EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), EvtComplex( 0.0, 0.0 ) );
-        eps2.set( EvtComplex( 0.0, 0.0 ), EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ),
-                  EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), EvtComplex( 0.0, 0.0 ) );
-
-        // These are for photon along z axis.  Rotate to get
-        // correct direction...
-
-        double phi, theta;
-
-        EvtVector4R p = this->getP4();
-
-        double px = p.get( 1 );
-        double py = p.get( 2 );
-        double pz = p.get( 3 );
-
-        phi = atan2( py, px );
-        theta = acos( pz / sqrt( px * px + py * py + pz * pz ) );
-        eps1.applyRotateEuler( phi, theta, -phi );
-        eps2.applyRotateEuler( phi, theta, -phi );
-    }
-
-    EvtVector4C temp;
+    EvtVector4C eps;
 
     switch ( i ) {
         case 0:
-            temp = eps1;
+            eps.set( EvtComplex( 0.0, 0.0 ),
+                     EvtComplex( -1.0 / sqrt( 2.0 ), 0.0 ),
+                     EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ),
+                     EvtComplex( 0.0, 0.0 ) );
             break;
         case 1:
-            temp = eps2;
+            eps.set( EvtComplex( 0.0, 0.0 ), EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ),
+                     EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ),
+                     EvtComplex( 0.0, 0.0 ) );
             break;
         default:
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -90,11 +68,21 @@ EvtVector4C EvtPhotonParticle::epsParentPhoton( int i )
             ::abort();
             break;
     }
+    // These are for photon along z axis.  Rotate to get
+    // correct direction...
 
-    return temp;
+    const double px = this->getP4().get( 1 );
+    const double py = this->getP4().get( 2 );
+    const double pz = this->getP4().get( 3 );
+
+    const double phi = atan2( py, px );
+    const double theta = acos( pz / sqrt( px * px + py * py + pz * pz ) );
+    eps.applyRotateEuler( phi, theta, -phi );
+
+    return eps;
 }
 
-EvtVector4C EvtPhotonParticle::epsPhoton( int )
+EvtVector4C EvtPhotonParticle::epsPhoton( int ) const
 {
     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
         << "EvtPhotonParticle.cc: Can not get "
@@ -106,15 +94,13 @@ EvtVector4C EvtPhotonParticle::epsPhoton( int )
 
 EvtSpinDensity EvtPhotonParticle::rotateToHelicityBasis() const
 {
-    EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
-                       EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
-    EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
-                        EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    const EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
+                             EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    const EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
+                              EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
 
-    //Really uggly have to cast away constness because the
-    //function epsParentPhoton caches the state vectors...
-    EvtVector4C e1 = ( (EvtParticle*)this )->epsParentPhoton( 0 );
-    EvtVector4C e2 = ( (EvtParticle*)this )->epsParentPhoton( 1 );
+    const EvtVector4C e1 = this->epsParentPhoton( 0 );
+    const EvtVector4C e2 = this->epsParentPhoton( 1 );
 
     EvtSpinDensity R;
     R.setDim( 2 );
@@ -140,10 +126,8 @@ EvtSpinDensity EvtPhotonParticle::rotateToHelicityBasis( double alpha,
     eplus.applyRotateEuler( alpha, beta, gamma );
     eminus.applyRotateEuler( alpha, beta, gamma );
 
-    //Really uggly have to cast away constness because the
-    //function epsParentPhoton caches the state vectors...
-    EvtVector4C e1 = ( (EvtParticle*)this )->epsParentPhoton( 0 );
-    EvtVector4C e2 = ( (EvtParticle*)this )->epsParentPhoton( 1 );
+    const EvtVector4C e1 = this->epsParentPhoton( 0 );
+    const EvtVector4C e2 = this->epsParentPhoton( 1 );
 
     EvtSpinDensity R;
     R.setDim( 2 );

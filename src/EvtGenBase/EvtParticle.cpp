@@ -632,7 +632,7 @@ EvtVector4C EvtParticle::eps( int i ) const
     return temp;
 }
 
-EvtVector4C EvtParticle::epsParentPhoton( int i )
+EvtVector4C EvtParticle::epsParentPhoton( int i ) const
 {
     EvtVector4C temp;
     printParticle();
@@ -644,7 +644,7 @@ EvtVector4C EvtParticle::epsParentPhoton( int i )
     return temp;
 }
 
-EvtVector4C EvtParticle::epsPhoton( int i )
+EvtVector4C EvtParticle::epsPhoton( int i ) const
 {
     EvtVector4C temp;
     printParticle();

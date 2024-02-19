@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+19 Feb 2024 Fernando Abudinen
+* D107: Implement const correctness for epsPhoton and epsParentPhoton
+
 3 Feb 2024 John Back
 * T230: Add EvtBcVPPHad model for Bc to Jpsi p pbar pi decays and generalised particle ordering
   for EvtBcVHad decay files, courtesy of Aleksei Luchinsky, Dmitrii Pereima & Vanya Belyaev (LHCb).

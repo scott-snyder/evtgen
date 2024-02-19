@@ -35,17 +35,14 @@ class EvtPhotonParticle : public EvtParticle {
     void init( EvtId part_n, const EvtVector4R& p4 ) override;
 
     //Return polarization vectors
-    EvtVector4C epsParentPhoton( int i ) override;
-    EvtVector4C epsPhoton( int i ) override;
+    EvtVector4C epsParentPhoton( int i ) const override;
+    EvtVector4C epsPhoton( int i ) const override;
 
     EvtSpinDensity rotateToHelicityBasis() const override;
     EvtSpinDensity rotateToHelicityBasis( double alpha, double beta,
                                           double gamma ) const override;
 
   private:
-    EvtVector4C eps1, eps2;
-    int _evalBasis;
-
     EvtPhotonParticle( const EvtPhotonParticle& photon );
     EvtPhotonParticle& operator=( const EvtPhotonParticle& photon );
 };
