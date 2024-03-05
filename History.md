@@ -11,6 +11,41 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+11 Apr 2024 Thomas Latham
+* D109: Remove broken or obsolete models
+  - Models removed:
+    * BHADRONIC
+    * BQTOLLLLHYPERCP
+    * BQTOLLLL
+    * D\_MULTIBODY
+    * KSTARSTARGAMMA
+    * LAMBDAB2LAMBDAV and subsidiary models LAMBDA2PPIFORLAMBDAB2LAMBDAV and V2VPVMFORLAMBDAB2LAMBDAV
+    * Lb2Lhh
+    * PROPSLPOLE
+    * VPHOTOV
+    * VPHOTOVISR
+    * VUB\_AC
+  - Classes in EvtGenBase already unused or used only by the above models also removed
+    * Evt3Rank3C
+    * EvtAbsBinning
+    * EvtAmpAmpPdf
+    * EvtAmpIndex
+    * EvtAmpSubIndex
+    * EvtBreitWignerPdf
+    * EvtDecayParm
+    * EvtIntegPdf1D
+    * EvtMBreitWigner
+    * EvtMHelAmp
+    * EvtMNode
+    * EvtMParticle
+    * EvtMLineShape
+    * EvtMRes
+    * EvtMTree
+    * EvtMTrivialLS
+    * EvtPointPred
+    * EvtPto3PAmpSmpResolution
+    * EvtSpinAmp
+
 9 Apr 2024 Fernando Abudinen
 * D111: Added tests for decays with FSR and implemented const correctness for getP4LabBeforeFSR() function.
 
