@@ -1,0 +1,32 @@
+{
+    "parent" : "tau+",
+    "daughters" : ["e+", "nu_e", "anti-nu_tau"],
+    "models" : ["TAULNUNU"],
+    "parameters" : [[]],
+    "extras" : ["yesPhotos"],
+    "events" : 100000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.8, "xmax" : 1.2},
+        {"variable" : "nFSRPhotons", "title" : "nFSRPhotons", "d1" : 0, "d2" : 0, "nbins" : 8, "xmin" : 0, "xmax" : 8.0 },  
+        {"variable" : "totalFSREnergy", "title" : "totalFSREnergy", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 1.0 },  
+        {"variable" : "E_FSRPhotons", "title" : "FSR E(#gamma)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+        {"variable" : "E_FSRPhotons", "title" : "FSR E(#gamma) cut off", "d1" : 1, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 0.5e-6},
+        {"variable" : "cosTheta_FSRPhotons", "title" : "FSR cosTheta/#gamma)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "openingAngle_FSRPhotons", "title" : "FSR opening angle", "d1" : 0, "d2" : 0, "nbins" : 90, "xmin" : 0, "xmax" : 180},
+        {"variable" : "cosTheta_EnergyWeight_FSRPhotons", "title" : "FSR cosTheta(#gamma)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "openingAngle_EnergyWeight_FSRPhotons", "title" : "FSR opening angle", "d1" : 0, "d2" : 0, "nbins" : 90, "xmin" : 0, "xmax" : 180},
+	{"variable" : "pSumSq", "title" : "qSq(e#nu_{e})", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 0.0, "xmax" : 3.0},
+	{"variable" : "cosHel", "title" : "cosHel(e)", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "E_over_Eparent", "title" : "E(e)/E(tau)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.5},
+        {"variable" : "E_over_Eparent", "title" : "E(nue)/E(tau)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.5},
+        {"variable" : "E_over_Eparent", "title" : "E(nutau_{2})/E(tau)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.5},
+        {"variable" : "cosTheta", "title" : "cosTheta(e)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(nue)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(nutau_{2})", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "mass", "title" : "m(e nue)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0},
+        {"variable" : "mass", "title" : "m(e nutau_{2})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0},
+        {"variable" : "mass", "title" : "m(nue nutau_{2})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0}
+    ],
+    "outfile" : "TAULNUNU__tau_enunu_yesPhotos.root",
+    "reference" : "RefTAULNUNU__tau_enunu_yesPhotos.root"
+}

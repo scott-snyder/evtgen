@@ -200,7 +200,7 @@ class EvtParticle {
   * generated in the parents decay. The lab frame is where the root
   * particles momentum is measured.
   */
-    EvtVector4R getP4LabBeforeFSR();
+    EvtVector4R getP4LabBeforeFSR() const;
 
     /**
   * Gets 4vector in the particles restframe, i.e. this functiont will

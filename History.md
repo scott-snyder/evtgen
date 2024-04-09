@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+9 Apr 2024 Fernando Abudinen
+* D111: Added tests for decays with FSR and implemented const correctness for getP4LabBeforeFSR() function.
+
 19 Feb 2024 Fernando Abudinen
 * D108: Bugfix protect polarisation vector for vector and tensor particles against wrong indices
 

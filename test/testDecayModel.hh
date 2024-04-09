@@ -84,6 +84,8 @@ class TestDecayModel {
                          const std::string& parentName, const bool doConjDecay,
                          const int nEvents, const bool debugFlag );
 
+    int findChargedDaugtherWithMaxE( const EvtParticle* parent ) const;
+
     double getValue( const EvtParticle* rootPart, const std::string& varName,
                      const int d1, const int d2 ) const;
 

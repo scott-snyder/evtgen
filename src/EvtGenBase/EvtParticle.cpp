@@ -769,10 +769,10 @@ EvtVector4R EvtParticle::getP4Lab() const
     return temp;
 }
 
-EvtVector4R EvtParticle::getP4LabBeforeFSR()
+EvtVector4R EvtParticle::getP4LabBeforeFSR() const
 {
     EvtVector4R temp, mom;
-    EvtParticle* ptemp;
+    const EvtParticle* ptemp;
 
     temp = this->_pBeforeFSR;
     ptemp = this;

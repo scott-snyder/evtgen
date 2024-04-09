@@ -479,23 +479,73 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
             }
         }
 
+        int leadingChargedDaughter = -1;
+        const std::string fsrStr = "_FSRPhotons";
+        const std::string ewStr = "_EnergyWeight";
+
         // Store information
         for ( auto& [info, hist] : m_1DhistVect ) {
-            const double value{ getValue( parent, info.getName(), info.getd1(),
-                                          info.getd2() ) };
+            if ( !hist ) {
+                continue;
+            }
 
-            if ( hist ) {
+            const std::string varName = info.getName();
+            const std::string::size_type findFSRstr = varName.find( fsrStr );
+
+            // If the variable name does not have the substring '_FSRPhotons', then add an entry per event and continue
+            if ( findFSRstr == std::string::npos ) {
+                const double value{
+                    getValue( parent, varName, info.getd1(), info.getd2() ) };
+
                 hist->Fill( value );
+                continue;
+            }
+
+            // If otherwise the variable contains the substring '_FSRPhotons', then add an entry per photon
+
+            if ( leadingChargedDaughter == -1 ) {
+                leadingChargedDaughter = findChargedDaugtherWithMaxE( parent );
+            }
+
+            std::string reducedVarName = varName;
+            reducedVarName.erase( findFSRstr, fsrStr.length() );
+
+            const std::string::size_type findEwStr = reducedVarName.find( ewStr );
+
+            // If variable name has substring '_EnergyWeight' then add an entry weighted by the photon energy
+            bool energyWeight = false;
+            if ( findEwStr != std::string::npos ) {
+                reducedVarName.erase( findEwStr, ewStr.length() );
+                energyWeight = true;
+            }
+
+            for ( int iDaug{ 0 }; iDaug < (int)parent->getNDaug(); iDaug++ ) {
+                const EvtParticle* iDaughter = parent->getDaug( iDaug );
+
+                if ( iDaughter->getAttribute( "FSR" ) == 1 ) {
+                    const double value{ getValue( parent, reducedVarName,
+                                                  iDaug + 1,
+                                                  leadingChargedDaughter + 1 ) };
+                    if ( energyWeight ) {
+                        const double photonEnergy = iDaughter->getP4().get( 0 );
+                        hist->Fill( value, photonEnergy );
+                    } else {
+                        hist->Fill( value );
+                    }
+                }
             }
         }
+
         for ( auto& [info, hist] : m_2DhistVect ) {
+            if ( !hist ) {
+                continue;
+            }
+
             const double valueX{ getValue( parent, info.getName(), info.getd1(),
                                            info.getd2() ) };
             const double valueY{ getValue( parent, info.getName( 2 ),
                                            info.getd1( 2 ), info.getd2( 2 ) ) };
-            if ( hist ) {
-                hist->Fill( valueX, valueY );
-            }
+            hist->Fill( valueX, valueY );
         }
 
         if ( debug_flag ) {
@@ -513,6 +563,31 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
             parent->deleteTree();
         }
     }
+}
+
+int TestDecayModel::findChargedDaugtherWithMaxE( const EvtParticle* parent ) const
+{
+    /* This function returns the index of the charged daughter with the highest energy 
+     * following the sign convention below. */
+
+    double max_E = 0;
+    double max_index = 0;
+
+    const int parentCh3 = EvtPDL::chg3( parent->getId() );
+
+    for ( int iDaug{ 0 }; iDaug < (int)parent->getNDaug(); iDaug++ ) {
+        const EvtParticle* iDaughter = parent->getDaug( iDaug );
+        const int dauCh3 = EvtPDL::chg3( iDaughter->getId() );
+        const double daugE = iDaughter->getP4LabBeforeFSR().get( 0 );
+        // Sign convention: take negative daughter if mother is neutral,
+        // otherwise the one with the same sign as the mother.
+        if ( ( ( parentCh3 == 0 && dauCh3 < 0 ) || ( parentCh3 * dauCh3 > 0 ) ) &&
+             daugE > max_E ) {
+            max_E = daugE;
+            max_index = iDaug;
+        }
+    }
+    return max_index;
 }
 
 double TestDecayModel::getValue( const EvtParticle* parent,
@@ -918,6 +993,13 @@ double TestDecayModel::getValue( const EvtParticle* parent,
             value = atan2( p1_lab.get( 1 ), p1_lab.get( 2 ) ) * 180.0 /
                     EvtConst::pi;
         }
+
+    } else if ( !selectedVarName.compare( "openingAngle" ) ) {
+        // Polar angle between first and second daughters in parent's frame
+
+        const double cost{ p1.dot( p2 ) / ( p1.d3mag() * p2.d3mag() ) };
+
+        value = acos( cost ) * 180.0 / EvtConst::pi;
 
     } else if ( !selectedVarName.compare( "decayangle" ) ) {
         // Polar angle between first and second daughters in lab frame
