@@ -68,7 +68,6 @@ time ../../testEvtGen svvcplh 1000
 time ../../testEvtGen svscplh 1000
 time ../../testEvtGen ssdcp 10000
 time ../../testEvtGen ssdcp2 10000
-time ../../testEvtGen kstarstargamma 1000
 time ../../testEvtGen dstarpi 10000
 time ../../testEvtGen etacphiphi 10000
 time ../../testEvtGen vvpipi 1000
@@ -79,7 +78,6 @@ time ../../testEvtGen twobody 1000 TWOBODY1.DEC
 time ../../testEvtGen twobody 1000 TWOBODY2.DEC
 time ../../testEvtGen twobody 1000 TWOBODY3.DEC
 time ../../testEvtGen pipipi 1000
-time ../../testEvtGen bhadronic 1000
 time ../../testEvtGen singleb 1000
 time ../../testEvtGen pipi 1000
 time ../../testEvtGen pipipipi  1000

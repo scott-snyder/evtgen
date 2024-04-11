@@ -49,6 +49,11 @@ if not models or not srcdeps or len(models) == 0 or len(srcdeps) == 0 :
 # turn the lists into sets, automatically removes duplicates
 for srcfile in srcdeps :
     depset = set(srcdeps[srcfile])
+
+    # deal with a special case
+    if srcfile == 'src/EvtGenModels/EvtWilsonCoefficients.cpp' :
+        depset.add('src/EvtGenModels/EvtLi2Spence.cpp')
+
     srcdeps[srcfile] = depset
 
 def getDeps( srcfile, srcdeps, founddeps ) :
@@ -96,6 +101,21 @@ for model in models :
         else :
             fileDeps[modeldep] = [ model ]
 
+# some classes should trigger a rerun of all tests
+# TODO - any others that should be in here?
+testAllTriggers = [
+        'EvtGen/EvtGen.hh',
+        'EvtGenBase/EvtHepMCEvent.hh',
+        'EvtGenBase/EvtMTRandomEngine.hh',
+        'EvtGenBase/EvtSimpleRandomEngine.hh',
+        'EvtGenModels/EvtModelReg.hh',
+        'EvtGenModels/EvtNoRadCorr.hh',
+        'src/EvtGen.cpp',
+        'src/EvtGenBase/EvtHepMCEvent.cpp',
+        'src/EvtGenBase/EvtMTRandomEngine.cpp',
+        'src/EvtGenBase/EvtSimpleRandomEngine.cpp',
+        'src/EvtGenModels/EvtModelReg.cpp',
+        ]
 testAll = False
 modelsToTest = []
 skippedFiles = []
@@ -111,12 +131,10 @@ for changedFile in changedFiles :
         skippedFiles.append( changedFile )
         continue
 
-    # the EvtGen, EvtModelReg, or EvtNoRadCorr objects; or the test code itself should trigger a rerun of all tests
-    # TODO - any others that should be in here?
-    if changedFile == 'EvtGen/EvtGen.hh' or changedFile == 'src/EvtGen.cpp' or changedFile == 'EvtGenModels/EvtModelReg.hh' or changedFile == 'src/EvtGenModels/EvtModelReg.cpp' or changedFile == 'EvtGenModels/EvtNoRadCorr.hh' or changedFile.startswith('test/') :
+    # some classes and/or the test code itself should trigger a rerun of all tests
+    if changedFile in testAllTriggers or changedFile.startswith('test/') or changedFile.startswith('validation/') :
         testAll = True
-        modelsToTest = []
-        break
+        continue
 
     # TODO temporarily skip EvtGenExternal stuff
     if 'EvtGenExternal/' in changedFile or changedFile == 'EvtGenModels/EvtAbsExternalGen.hh' :
@@ -169,7 +187,9 @@ for model in modelsToTest :
         testFilesToRun.extend( testFilesForThisModel )
 
 for jsonFile in jsonFilesChanged :
-    testFilesToRun.append( jsonFile.split('/')[-1] )
+    jsonFile = jsonFile.split('/')[-1]
+    if jsonFile in allTestFiles :
+        testFilesToRun.append( jsonFile )
 
 if len(testFilesToRun) == 0 :
     print(f'No tests to run, exiting...')

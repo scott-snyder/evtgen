@@ -26,7 +26,6 @@
 #include "EvtGenBase/EvtPatches.hh"
 
 #include "EvtGenModels/EvtBBScalar.hh"
-#include "EvtGenModels/EvtBHadronic.hh"
 #include "EvtGenModels/EvtBLLNuL.hh"
 #include "EvtGenModels/EvtBTo3piCP.hh"
 #include "EvtGenModels/EvtBTo4piCP.hh"
@@ -78,17 +77,13 @@
 #include "EvtGenModels/EvtKKLambdaC.hh"
 #include "EvtGenModels/EvtKStopizmumu.hh"
 #include "EvtGenModels/EvtKstarnunu.hh"
-#include "EvtGenModels/EvtKstarstargamma.hh"
 #include "EvtGenModels/EvtLNuGamma.hh"
-#include "EvtGenModels/EvtLambdaB2LambdaV.hh"
 #include "EvtGenModels/EvtLambdaP_BarGamma.hh"
 #include "EvtGenModels/EvtLambdacPHH.hh"
 #include "EvtGenModels/EvtLb2Baryonlnu.hh"
-#include "EvtGenModels/EvtLb2Lll.hh"
 #include "EvtGenModels/EvtLb2plnuLCSR.hh"
 #include "EvtGenModels/EvtLb2plnuLQCD.hh"
 #include "EvtGenModels/EvtMelikhov.hh"
-#include "EvtGenModels/EvtMultibody.hh"
 #include "EvtGenModels/EvtOmegaDalitz.hh"
 #include "EvtGenModels/EvtPVVCPLH.hh"
 #include "EvtGenModels/EvtPartWave.hh"
@@ -97,7 +92,6 @@
 #include "EvtGenModels/EvtPhspDecaytimeCut.hh"
 #include "EvtGenModels/EvtPhspFlatLifetime.hh"
 #include "EvtGenModels/EvtPi0Dalitz.hh"
-#include "EvtGenModels/EvtPropSLPole.hh"
 #include "EvtGenModels/EvtPsi2JpsiPiPi.hh"
 #include "EvtGenModels/EvtPto3P.hh"
 #include "EvtGenModels/EvtRareLbToLll.hh"
@@ -161,8 +155,6 @@
 #include "EvtGenModels/EvtbTosllMSExt.hh"
 #include "EvtGenModels/Evtbs2llGammaISRFSR.hh"
 #include "EvtGenModels/Evtbs2llGammaMNT.hh"
-#include "EvtGenModels/EvtbsToLLLL.hh"
-#include "EvtGenModels/EvtbsToLLLLHyperCP.hh"
 
 #include <assert.h>
 #include <ctype.h>
@@ -196,12 +188,10 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtISGW2 );
     modelist.registerModel( new EvtMelikhov );
     modelist.registerModel( new EvtSLPole );
-    modelist.registerModel( new EvtPropSLPole );
     modelist.registerModel( new EvtSLBKPole );
     modelist.registerModel( new EvtHQET );
     modelist.registerModel( new EvtHQET2 );
     modelist.registerModel( new EvtISGW );
-    modelist.registerModel( new EvtBHadronic );
     modelist.registerModel( new EvtVSS );
     modelist.registerModel( new EvtVSSMix );
     modelist.registerModel( new EvtVSSBMixCPT );
@@ -264,14 +254,12 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtCBTo3piMPP );
     modelist.registerModel( new EvtBToKpipiCP );
 
-    modelist.registerModel( new EvtLb2Lll );
     modelist.registerModel( new EvtRareLbToLll );
     modelist.registerModel( new EvtHypNonLepton );
     modelist.registerModel( new EvtSVVHelCPMix );
     modelist.registerModel( new EvtSVPHelCPMix );
 
     modelist.registerModel( new EvtLNuGamma );
-    modelist.registerModel( new EvtKstarstargamma );
 
     modelist.registerModel( new EvtVub );
 
@@ -283,7 +271,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtPto3P );
     modelist.registerModel( new EvtBtoKD3P );
     modelist.registerModel( new EvtKKLambdaC );
-    modelist.registerModel( new EvtMultibody );
     modelist.registerModel( new EvtDMix );
     modelist.registerModel( new EvtD0mixDalitz );
     modelist.registerModel( new EvtD0gammaDalitz );
@@ -292,9 +279,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtBaryonPCR );
 
     modelist.registerModel( new EvtBToDDalitzCPK );
-    modelist.registerModel( new EvtLambdaB2LambdaV );
-    modelist.registerModel( new EvtLambda2PPiForLambdaB2LambdaV );
-    modelist.registerModel( new EvtV2VpVmForLambdaB2LambdaV );
     modelist.registerModel( new EvtPVVCPLH );
     modelist.registerModel( new EvtSSD_DirectCP );
 
@@ -311,8 +295,6 @@ EvtModelReg::EvtModelReg( const std::list<EvtDecayBase*>* extraModels )
     modelist.registerModel( new EvtTVP );
     modelist.registerModel( new EvtXPsiGamma );
 
-    modelist.registerModel( new EvtbsToLLLL );
-    modelist.registerModel( new EvtbsToLLLLHyperCP );
     modelist.registerModel( new EvtBLLNuL );
 
     modelist.registerModel( new EvtKStopizmumu );

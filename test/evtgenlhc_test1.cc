@@ -101,7 +101,6 @@ void runDump( int nevent, EvtGen& myGenerator );
 void runD1( int nevent, EvtGen& myGenerator );
 void runGenericCont( int nevent, EvtGen& myGenerator );
 void runPiPiPi( int nevent, EvtGen& myGenerator );
-void runBHadronic( int nevent, EvtGen& myGenerator );
 void runSingleB( int nevent, EvtGen& myGenerator );
 void runA2Pi( int nevent, EvtGen& myGenerator );
 void runAlias();
@@ -121,7 +120,6 @@ void runJPsiKstar( int nevent, EvtGen& myGenerator, int modeInt );
 void runSVVCPLH( int nevent, EvtGen& myGenerator );
 void runSVSCPLH( int nevent, EvtGen& myGenerator );
 void runSSDCP( int nevent, EvtGen& myGenerator );
-void runKstarstargamma( int nevent, EvtGen& myGenerator );
 void runDSTARPI( int nevent, EvtGen& myGenerator );
 void runETACPHIPHI( int nevent, EvtGen& myGenerator );
 void runVVPiPi( int nevent, EvtGen& myGenerator );
@@ -374,11 +372,6 @@ int main( int argc, char* argv[] )
         runSSDCP( nevent, myGenerator );
     }
 
-    if ( !strcmp( argv[1], "kstarstargamma" ) ) {
-        int nevent = atoi( argv[2] );
-        runKstarstargamma( nevent, myGenerator );
-    }
-
     if ( !strcmp( argv[1], "dstarpi" ) ) {
         int nevent = atoi( argv[2] );
         runDSTARPI( nevent, myGenerator );
@@ -417,11 +410,6 @@ int main( int argc, char* argv[] )
     if ( !strcmp( argv[1], "pipipi" ) ) {
         int nevent = atoi( argv[2] );
         runPiPiPi( nevent, myGenerator );
-    }
-
-    if ( !strcmp( argv[1], "bhadronic" ) ) {
-        int nevent = atoi( argv[2] );
-        runBHadronic( nevent, myGenerator );
     }
 
     if ( !strcmp( argv[1], "singleb" ) ) {
@@ -3345,55 +3333,6 @@ void runSSDCP( int nevent, EvtGen& myGenerator )
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
 }
 
-void runKstarstargamma( int nevent, EvtGen& myGenerator )
-{
-    TFile* file = new TFile( "kstarstargamma.root", "RECREATE" );
-
-    TH1F* m = new TH1F( "h1", "mkpi", 100, 0.5, 2.5 );
-
-    TH1F* ctheta = new TH1F( "h2", "ctheta", 100, -1.0, 1.0 );
-
-    int count = 1;
-
-    myGenerator.readUDecay( "exampleFiles/KSTARSTARGAMMA.DEC" );
-
-    static EvtId B0 = EvtPDL::getId( std::string( "B0" ) );
-
-    std::ofstream outmix;
-
-    do {
-        EvtVector4R pinit( EvtPDL::getMass( B0 ), 0.0, 0.0, 0.0 );
-
-        EvtParticle* root_part = EvtParticleFactory::particleFactory( B0, pinit );
-
-        root_part->setDiagonalSpinDensity();
-
-        myGenerator.generateDecay( root_part );
-
-        EvtParticle *p_kaon, *p_pion;
-        EvtVector4R p4_kaon, p4_pion;
-
-        p_kaon = root_part->getDaug( 0 );
-        p_pion = root_part->getDaug( 1 );
-
-        p4_kaon = p_kaon->getP4Lab();
-        p4_pion = p_pion->getP4Lab();
-
-        m->Fill( ( p4_kaon + p4_pion ).mass() );
-
-        ctheta->Fill( EvtDecayAngle( pinit, p4_kaon + p4_pion, p4_kaon ) );
-
-        //EvtGenReport(EVTGEN_INFO,"EvtGen") << "ctheta:"<<EvtDecayAngle(pinit,p4_kaon+p4_pion,p4_kaon)<<std::endl;
-
-        root_part->deleteTree();
-
-    } while ( count++ < nevent );
-
-    file->Write();
-    file->Close();
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
-}
-
 void runDSTARPI( int nevent, EvtGen& myGenerator )
 {
     TFile* file = new TFile( "dstarpi.root", "RECREATE" );
@@ -4942,48 +4881,6 @@ void runPiPiPi( int nevent, EvtGen& myGenerator )
                << root_part->getDaug( 1 )->getLifetime() << " ";
         outmix << ( p4pip + p4pim ).mass2() << " " << ( p4pip + p4pi0 ).mass2()
                << std::endl;
-
-        root_part->deleteTree();
-
-    } while ( count++ < nevent );
-
-    outmix.close();
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
-}
-
-void runBHadronic( int nevent, EvtGen& myGenerator )
-{
-    std::ofstream outmix;
-    outmix.open( "bhadronic.dat" );
-
-    int count;
-
-    myGenerator.readUDecay( "exampleFiles/BHADRONIC.DEC" );
-
-    static EvtId B0 = EvtPDL::getId( std::string( "B0" ) );
-
-    count = 1;
-
-    do {
-        EvtVector4R p_init( EvtPDL::getMass( B0 ), 0.0, 0.0, 0.0 );
-
-        EvtParticle* root_part = EvtParticleFactory::particleFactory( B0, p_init );
-        root_part->setDiagonalSpinDensity();
-
-        myGenerator.generateDecay( root_part );
-
-        EvtParticle* p;
-
-        //    root_part->printTree();
-
-        p = root_part;
-
-        do {
-            outmix << p->getId().getId() << " " << p->getP4Lab().d3mag()
-                   << std::endl;
-            p = p->nextIter();
-
-        } while ( p != nullptr );
 
         root_part->deleteTree();
 
