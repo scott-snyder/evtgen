@@ -27,10 +27,6 @@
 #include "EvtGenExternal/EvtPythiaEngine.hh"
 #endif
 
-#ifdef EVTGEN_PHOTOS
-#include "EvtGenExternal/EvtPhotosEngine.hh"
-#endif
-
 #ifdef EVTGEN_TAUOLA
 #include "EvtGenExternal/EvtTauolaEngine.hh"
 #endif
@@ -95,25 +91,6 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string xmlDir,
 }
 #else
 void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
-{
-}
-#endif
-
-#ifdef EVTGEN_PHOTOS
-void EvtExternalGenFactory::definePhotosGenerator( std::string photonType,
-                                                   bool useEvtGenRandom )
-{
-    int genId = EvtExternalGenFactory::PhotosGenId;
-
-    EvtGenReport( EVTGEN_INFO, "EvtGen" )
-        << "Defining EvtPhotosEngine using photonType = " << photonType << endl;
-
-    EvtAbsExternalGen* photosGenerator = new EvtPhotosEngine( photonType,
-                                                              useEvtGenRandom );
-    _extGenMap[genId] = photosGenerator;
-}
-#else
-void EvtExternalGenFactory::definePhotosGenerator( std::string, bool )
 {
 }
 #endif

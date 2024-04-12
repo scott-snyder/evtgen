@@ -29,6 +29,7 @@ class EvtAbsRadCorr {
   public:
     EvtAbsRadCorr(){};
     virtual ~EvtAbsRadCorr(){};
+    virtual void initialise() = 0;
     virtual void doRadCorr( EvtParticle* p ) = 0;
 
   private:

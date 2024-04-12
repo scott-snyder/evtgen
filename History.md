@@ -11,6 +11,10 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+12 Apr 2024 Fernando Abudinen
+* D112: Removed EvtPhotosEngine and moved its functionality EvtPHOTOS class.
+  Moved initialisation of fsrEngine to setRadCorrEngine.
+
 11 Apr 2024 Thomas Latham
 * D109: Remove broken or obsolete models
   - Models removed:

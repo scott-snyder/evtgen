@@ -33,7 +33,6 @@ class EvtExternalGenFactory {
     enum genId
     {
         PythiaGenId = 0,
-        PhotosGenId,
         TauolaGenId
     };
 
@@ -44,8 +43,6 @@ class EvtExternalGenFactory {
     void initialiseAllGenerators();
 
     void definePythiaGenerator( std::string xmlDir, bool convertPhysCodes,
-                                bool useEvtGenRandom = true );
-    void definePhotosGenerator( std::string photonType = "gamma",
                                 bool useEvtGenRandom = true );
     void defineTauolaGenerator( bool useEvtGenRandom = true );
 

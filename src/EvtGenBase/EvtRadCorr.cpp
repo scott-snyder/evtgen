@@ -49,6 +49,10 @@ EvtRadCorr::~EvtRadCorr()
 void EvtRadCorr::setRadCorrEngine( EvtAbsRadCorr* fsrEngine )
 {
     _fsrEngine = fsrEngine;
+
+    if ( _fsrEngine ) {
+        _fsrEngine->initialise();
+    }
 }
 
 void EvtRadCorr::doRadCorr( EvtParticle* p )

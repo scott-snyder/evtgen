@@ -40,10 +40,14 @@ class EvtExternalGenList {
 
     std::list<EvtDecayBase*> getListOfModels();
 
-    EvtAbsRadCorr* getPhotosModel();
+    EvtAbsRadCorr* getPhotosModel( const double infraredCutOff = 1.0e-7,
+                                   const double maxWtInterference = 64.0 );
 
   protected:
   private:
+    std::string m_photonType;
+
+    bool m_useEvtGenRandom;
 };
 
 #endif

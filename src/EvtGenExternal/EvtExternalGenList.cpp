@@ -28,13 +28,11 @@
 EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
                                         std::string pythiaXmlDir,
                                         std::string photonType,
-                                        bool useEvtGenRandom )
+                                        bool useEvtGenRandom ) :
+    m_photonType{ photonType }, m_useEvtGenRandom{ useEvtGenRandom }
 {
     // Instantiate the external generator factory
     EvtExternalGenFactory* extFactory = EvtExternalGenFactory::getInstance();
-
-    // Define the external generator "engines" here
-    extFactory->definePhotosGenerator( photonType, useEvtGenRandom );
 
     if ( pythiaXmlDir.size() < 1 ) {
         // If we have no string defined, check the value of the
@@ -56,10 +54,12 @@ EvtExternalGenList::~EvtExternalGenList()
 {
 }
 
-EvtAbsRadCorr* EvtExternalGenList::getPhotosModel()
+EvtAbsRadCorr* EvtExternalGenList::getPhotosModel( const double infraredCutOff,
+                                                   const double maxWtInterference )
 {
-    // Define the Photos model, which uses the EvtPhotosEngine class.
-    EvtPHOTOS* photosModel = new EvtPHOTOS();
+    // Define the Photos model, which uses the EvtPHOTOS class.
+    EvtPHOTOS* photosModel = new EvtPHOTOS( m_photonType, m_useEvtGenRandom,
+                                            infraredCutOff, maxWtInterference );
     return photosModel;
 }
 

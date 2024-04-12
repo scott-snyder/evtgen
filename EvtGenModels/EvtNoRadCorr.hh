@@ -36,6 +36,8 @@ class EvtNoRadCorr : public EvtAbsRadCorr {
     EvtNoRadCorr() { ; }
     virtual ~EvtNoRadCorr() { ; }
 
+    virtual void initialise() { ; }
+
     virtual void doRadCorr( EvtParticle* ) { ; }
 
   private:

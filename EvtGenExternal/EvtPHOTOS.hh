@@ -22,21 +22,64 @@
 #define EVTPHOTOS_HH
 
 #include "EvtGenBase/EvtAbsRadCorr.hh"
+#include "EvtGenBase/EvtHepMCEvent.hh"
+#include "EvtGenBase/EvtId.hh"
+#include "EvtGenBase/EvtParticle.hh"
+#include "EvtGenBase/EvtVector4R.hh"
 
+#ifdef EVTGEN_PHOTOS
+#ifdef EVTGEN_HEPMC3
+#include "HepMC3/Units.h"
+
+#include "Photos/PhotosHepMC3Event.h"
+#include "Photos/PhotosHepMC3Particle.h"
+#else
+#include "Photos/PhotosHepMCEvent.h"
+#include "Photos/PhotosHepMCParticle.h"
+#include "Photos/PhotosParticle.h"
+#endif
+#endif
+
+#include <mutex>
 #include <string>
 
 class EvtParticle;
 class EvtAbsExternalGen;
 
-// Description: EvtGen's interface to PHOTOS for generation of
-//              QED final state radiation.
+/*
+ * Description: EvtGen's interface to PHOTOS for generation of
+ *              QED final-state radiation.
+ */
 
 class EvtPHOTOS : public EvtAbsRadCorr {
   public:
-    void doRadCorr( EvtParticle* p ) override;
+    EvtPHOTOS( const std::string& photonType = "gamma",
+               const bool useEvtGenRandom = true,
+               const double infraredCutOff = 1.0e-7,
+               const double maxWtInterference = 64.0 );
+
+    void initialise() override;
+
+    void doRadCorr( EvtParticle* theParticle ) override;
 
   private:
-    EvtAbsExternalGen* _photosEngine = nullptr;
+#ifdef EVTGEN_PHOTOS
+    GenParticlePtr createGenParticle( const EvtParticle& theParticle,
+                                      bool incoming ) const;
+
+    int getNumberOfPhotons( const GenVertexPtr theVertex ) const;
+
+    // Default photon type, id, pdg number and mass
+    std::string m_photonType = "gamma";
+    EvtId m_gammaId = EvtId( -1, -1 );
+    int m_gammaPDG = 22;
+    double m_mPhoton = 0.0;
+
+    bool m_initialised = false;
+
+    static std::mutex photos_mutex;
+
+#endif
 };
 
 #endif
