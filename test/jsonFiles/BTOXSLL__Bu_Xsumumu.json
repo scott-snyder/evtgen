@@ -3,7 +3,7 @@
     "daughters" : ["Xsu", "mu+", "mu-"],
     "models" : ["BTOXSLL"],
     "parameters" : [["4.8", "0.2", "0.0", "0.41"]], 
-    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0},

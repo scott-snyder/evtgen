@@ -248,7 +248,8 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
         }
     }
 
-    if ( getPHOTOS() || EvtRadCorr::alwaysRadCorr() ) {
+    if ( ( getFSR() || EvtRadCorr::alwaysRadCorr() ) &&
+         !EvtRadCorr::neverRadCorr() ) {
         int n_daug_orig = p->getNDaug();
         EvtRadCorr::doRadCorr( p );
         int n_daug_new = p->getNDaug();

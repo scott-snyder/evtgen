@@ -53,23 +53,23 @@ class EvtDecayBase {
     double getProbMax( double prob );
     double resetProbMax( double prob );
 
-    EvtDecayBase();
+    EvtDecayBase() = default;
     virtual ~EvtDecayBase() = default;
 
     virtual bool matchingDecay( const EvtDecayBase& other ) const;
 
     EvtId getParentId() const { return _parent; }
     double getBranchingFraction() const { return _brfr; }
-    void disableCheckQ() { _chkCharge = 0; };
+    void disableCheckQ() { _chkCharge = false; };
     void checkQ();
     int getNDaug() const { return _ndaug; }
     EvtId* getDaugs() { return _daug.data(); }
     EvtId getDaug( int i ) const { return _daug[i]; }
     int getNArg() const { return _narg; }
-    int getPHOTOS() const { return _photos; }
-    void setPHOTOS() { _photos = 1; }
-    void setVerbose() { _verbose = 1; }
-    void setSummary() { _summary = 1; }
+    bool getFSR() const { return _fsr; }
+    void setFSR() { _fsr = true; }
+    void setVerbose() { _verbose = true; }
+    void setSummary() { _summary = true; }
     double* getArgs();
     std::string* getArgsStr() { return _args.data(); }
     double getArg( unsigned int j );
@@ -78,8 +78,8 @@ class EvtDecayBase {
     std::string getArgStr( int j ) const { return _args[j]; }
     std::string getModelName() const { return _modelname; }
     int getDSum() const { return _dsum; }
-    int summary() const { return _summary; }
-    int verbose() const { return _verbose; }
+    bool summary() const { return _summary; }
+    bool verbose() const { return _verbose; }
 
     void saveDecayInfo( EvtId ipar, int ndaug, EvtId* daug, int narg,
                         std::vector<std::string>& args, std::string name,
@@ -112,31 +112,34 @@ class EvtDecayBase {
     bool daugsDecayedByParentModel() { return _daugsDecayedByParentModel; }
 
   private:
-    int _photos;
-    int _ndaug;
-    EvtId _parent;
-    int _narg;
     std::vector<double> _storedArgs;
     std::vector<EvtId> _daug;
     std::vector<double> _argsD;
     std::vector<std::string> _args;
-    std::string _modelname;
-    double _brfr;
-    int _dsum;
-    int _summary;
-    int _verbose;
 
-    int defaultprobmax;
-    double probmax;
-    int ntimes_prob;
+    std::string _modelname = "**********";
 
-    //Should charge conservation be checked when model is
-    //created? 1=yes 0 no.
-    int _chkCharge;
+    EvtId _parent = EvtId( -1, -1 );
+    int _ndaug = 0;
+    int _narg = 0;
+    double _brfr = 0;
+    int _dsum = 0;
+
+    bool _fsr = false;
+    bool _summary = false;
+    bool _verbose = false;
+
+    // The default is that the user module does _not_ set any probmax.
+    bool defaultprobmax = true;
+    int ntimes_prob = 0;
+    double probmax = 0.0;
+
+    //Default is to check that charge is conserved
+    bool _chkCharge = true;
 
     //These are used for gathering statistics.
-    double sum_prob;
-    double max_prob;
+    double sum_prob = 0.0;
+    double max_prob = 0.0;
 };
 
 #endif

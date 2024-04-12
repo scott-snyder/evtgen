@@ -111,9 +111,9 @@ class JsonFileChecker :
             'nlo',
             'pWave',
             'sWave',
-            'yesPhotos',
+            'yesFSR',
             'Pars1',
-            'Pars2'
+            'Pars2',
             ]
 
     def __init__( self, jsonFileName ) :

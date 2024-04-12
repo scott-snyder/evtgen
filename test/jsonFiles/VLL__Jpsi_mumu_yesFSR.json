@@ -1,9 +1,9 @@
 {
     "parent" : "J/psi",
-    "daughters" : ["e+", "e-"],
+    "daughters" : ["mu+", "mu-"],
     "models" : ["VLL"],
     "parameters" : [[]],
-    "extras" : ["yesPhotos"],
+    "extras" : ["yesFSR"],
     "events" : 100000,
     "histograms" : [
         {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 2.5 },
@@ -16,17 +16,17 @@
         {"variable" : "cosTheta_EnergyWeight_FSRPhotons", "title" : "FSR cosTheta(#gamma)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "openingAngle_EnergyWeight_FSRPhotons", "title" : "FSR opening angle", "d1" : 0, "d2" : 0, "nbins" : 90, "xmin" : 0, "xmax" : 180},
 	{"variable" : "parMass", "title" : "m(J/#psi)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 3.0967, "xmax" : 3.09695},
-	{"variable" : "mass", "title" : "m(e^{+}e^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 3.0967, "xmax" : 3.09695},
+	{"variable" : "mass", "title" : "m(#mu^{+}#mu^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 3.0967, "xmax" : 3.09695},
         {"variable" : "cosHel", "title" : "cosHel12", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},	
-        {"variable" : "E", "title" : "E(e^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "E", "title" : "E(e^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "pz", "title" : "p_{z}(e^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
-        {"variable" : "pz", "title" : "p_{z}(e^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
-        {"variable" : "pLab", "title" : "pLab(e^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "pLab", "title" : "pLab(e^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "cosTheta", "title" : "cosTheta(e^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
-        {"variable" : "cosTheta", "title" : "cosTheta(e^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+        {"variable" : "E", "title" : "E(#mu^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "E", "title" : "E(#mu^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "pz", "title" : "p_{z}(#mu^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
+        {"variable" : "pz", "title" : "p_{z}(#mu^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
+        {"variable" : "pLab", "title" : "pLab(#mu^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "pLab", "title" : "pLab(#mu^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "cosTheta", "title" : "cosTheta(#mu^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(#mu^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "VLL__Jpsi_ee_yesPhotos.root",
-    "reference" : "RefVLL__Jpsi_ee_yesPhotos.root"
+    "outfile" : "VLL__Jpsi_mumu_yesFSR.root",
+    "reference" : "RefVLL__Jpsi_mumu_yesFSR.root"
 }

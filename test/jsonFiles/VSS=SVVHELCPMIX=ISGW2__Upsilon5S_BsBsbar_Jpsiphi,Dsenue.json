@@ -5,7 +5,7 @@
     "models" : ["VSS", "SVVHELCPMIX", "ISGW2"],
     "parameters" : [[], ["1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "8.15e24", "17.8e12", "65.78e10", "8.42e10", "0.0", "0.025"], []],
     "do_conjugate_decay" : [false, true, true],
-    "extras" : ["Define dm_incohMix_B_s0 17.8e12", "Define qoverp_incohMix_B_s0 1.0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B_s0 17.8e12", "Define qoverp_incohMix_B_s0 1.0", "noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob(VSS)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

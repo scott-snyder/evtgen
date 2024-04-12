@@ -4,7 +4,7 @@
     "grand_daughters" : [["J/psi", "pi+", "pi-"], [], []],
     "models" : ["BC_VMN", "VVPIPI", ""],
     "parameters" : [["1"], [], []],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins": 100, "xmin" : 0.0, "xmax" : 1.0},

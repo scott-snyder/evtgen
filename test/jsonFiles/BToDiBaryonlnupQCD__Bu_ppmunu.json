@@ -3,7 +3,7 @@
     "daughters" : ["p+", "anti-p-", "mu-", "anti-nu_mu"],
     "models" : ["BToDiBaryonlnupQCD"],
     "parameters" : [["67.7", "-280.0", "-187.3", "-840.1", "-10.1", "-157.0", "3.0e6"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

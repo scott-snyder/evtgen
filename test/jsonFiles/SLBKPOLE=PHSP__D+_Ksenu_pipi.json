@@ -4,7 +4,7 @@
     "grand_daughters" : [["pi+", "pi-"], [], []],
     "models" : ["SLBKPOLE", "PHSP", ""],
     "parameters" : [["1.0", "0.303", "1.0", "2.112"], [], []],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

@@ -4,7 +4,7 @@
     "grand_daughters" : [["D*-", "rho+"], ["D+","e-","anti-nu_e"]],
     "models" : ["VSS", "SVV_NONCPEIGEN", "ISGW2"],
     "parameters" : [[], ["0.51e12", "0.4", "1.15", "0.152", "1.48", "0.936", "0.0", "0.317", "0.19", "0.00152", "1.48", "0.00936", "0.0", "0.00317", "0.19"], []],
-    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "do_conjugate_decay" : [false, true, true],
     "events" : 10000,
     "histograms" : [

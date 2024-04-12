@@ -157,24 +157,62 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
     do {
         token = parser.getToken( itoken++ );
 
-        //Easy way to turn off photos... Lange September 5, 2000
-        if ( token == "noPhotos" ) {
+        //Easy way to turn off final-state radiation.
+        if ( token == "noFSR" ) {
             EvtRadCorr::setNeverRadCorr();
-            if ( verbose )
+
+            if ( verbose ) {
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                    << "As requested, PHOTOS will be turned off." << endl;
-        } else if ( token == "yesPhotos" ) {
+                    << "As requested, final-state radiation will be turned off."
+                    << endl;
+            }
+        } else if ( token == "yesFSR" ) {
             EvtRadCorr::setAlwaysRadCorr();
-            if ( verbose )
+
+            if ( verbose ) {
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                    << "As requested, PHOTOS will be turned on for all decays."
+                    << "As requested, final-state radiation will be turned on for all decays."
                     << endl;
-        } else if ( token == "normalPhotos" ) {
+            }
+        } else if ( token == "normalFSR" ) {
             EvtRadCorr::setNormalRadCorr();
-            if ( verbose )
+
+            if ( verbose ) {
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                    << "As requested, PHOTOS will be turned on only when requested."
+                    << "As requested, final-state radiation will be turned on only when requested."
                     << endl;
+            }
+        } else if ( token == "noPhotos" ) {
+            EvtGenReport( EVTGEN_WARNING, "EvtGen" )
+                << "'noPhotos' is deprecated. Use 'noFSR' instead. " << endl;
+            EvtRadCorr::setNeverRadCorr();
+
+            if ( verbose ) {
+                EvtGenReport( EVTGEN_INFO, "EvtGen" )
+                    << "As requested, final-state radiation will be turned off."
+                    << endl;
+            }
+        } else if ( token == "yesPhotos" ) {
+            EvtGenReport( EVTGEN_WARNING, "EvtGen" )
+                << "'yesPhotos' is deprecated. Use 'yesFSR' instead." << endl;
+            EvtRadCorr::setAlwaysRadCorr();
+
+            if ( verbose ) {
+                EvtGenReport( EVTGEN_INFO, "EvtGen" )
+                    << " As requested, final-state radiation will be turned on for all decays."
+                    << endl;
+            }
+        } else if ( token == "normalPhotos" ) {
+            EvtGenReport( EVTGEN_WARNING, "EvtGen" )
+                << "'normalPhotos' is deprecated. Use 'normalFSR' instead. "
+                << endl;
+            EvtRadCorr::setNormalRadCorr();
+
+            if ( verbose ) {
+                EvtGenReport( EVTGEN_INFO, "EvtGen" )
+                    << "As requested, final-state radiation will be turned on only when requested."
+                    << endl;
+            }
         } else if ( token == "Alias" ) {
             std::string newname;
             std::string oldname;
@@ -622,25 +660,30 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
 
                     model = parser.getToken( itoken++ );
 
-                    int photos = 0;
-                    int verbose = 0;
-                    int summary = 0;
+                    bool fsr = false;
+                    bool verbose = false;
+                    bool summary = false;
 
                     do {
-                        if ( model == "PHOTOS" ) {
-                            photos = 1;
+                        if ( model == "PHOTOS" || model == "FSR" ) {
+                            fsr = true;
+                            if ( model == "PHOTOS" ) {
+                                EvtGenReport( EVTGEN_WARNING, "EvtGen" )
+                                    << "'PHOTOS' is deprecated. Use 'FSR' instead. "
+                                    << endl;
+                            }
                             model = parser.getToken( itoken++ );
                         }
                         if ( model == "VERBOSE" ) {
-                            verbose = 1;
+                            verbose = true;
                             model = parser.getToken( itoken++ );
                         }
                         if ( model == "SUMMARY" ) {
-                            summary = 1;
+                            summary = true;
                             model = parser.getToken( itoken++ );
                         }
-                    } while ( model == "PHOTOS" || model == "VERBOSE" ||
-                              model == "SUMMARY" );
+                    } while ( model == "PHOTOS" || model == "FSR" ||
+                              model == "VERBOSE" || model == "SUMMARY" );
 
                     //see if this is an aliased model
                     int foundAnAlias = -1;
@@ -669,9 +712,10 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                     temp_fcn_new_model = model;
                     temp_fcn_new = modelist.getFcn( model );
 
-                    if ( photos ) {
-                        temp_fcn_new->setPHOTOS();
+                    if ( fsr ) {
+                        temp_fcn_new->setFSR();
                     }
+
                     if ( verbose ) {
                         temp_fcn_new->setVerbose();
                     }
@@ -910,25 +954,32 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
     while ( parser.readNextTag() ) {
         //TAGS FOUND UNDER DATA
         if ( parser.getParentTagTitle() == "data" ) {
-            if ( parser.getTagTitle() == "photos" ) {
+            if ( parser.getTagTitle() == "photos" ||
+                 parser.getTagTitle() == "fsr" ) {
+                if ( parser.getTagTitle() == "photos" ) {
+                    EvtGenReport( EVTGEN_WARNING, "EvtGen" )
+                        << "'photos' is deprecated. Use 'fsr' instead. " << endl;
+                }
+
                 std::string usage = parser.readAttribute( "usage" );
+
                 if ( usage == "always" ) {
                     EvtRadCorr::setAlwaysRadCorr();
                     if ( verbose )
                         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                            << "As requested, PHOTOS will be turned on for all decays."
+                            << "As requested, final-state radiation will be turned on for all decays."
                             << endl;
                 } else if ( usage == "never" ) {
                     EvtRadCorr::setNeverRadCorr();
                     if ( verbose )
                         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                            << "As requested, PHOTOS will be turned off."
+                            << "As requested, final-state radiation will be turned off."
                             << endl;
                 } else {
                     EvtRadCorr::setNormalRadCorr();
                     if ( verbose )
                         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                            << "As requested, PHOTOS will be turned on only when requested."
+                            << "As requested, final-state radiation will be turned on only when requested."
                             << endl;
                 }
 
@@ -1233,7 +1284,16 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                 std::string paramStr = parser.readAttribute( "params" );
                 std::istringstream paramStream( paramStr );
                 bool decVerbose = parser.readAttributeBool( "verbose" );
-                bool decPhotos = parser.readAttributeBool( "photos" );
+
+                bool decFSR = parser.readAttributeBool( "fsr" );
+
+                if ( parser.readAttribute( "photos" ) != "" ) {
+                    EvtGenReport( EVTGEN_WARNING, "EvtGen" )
+                        << "'photos' is deprecated. Use 'fsr' instead. " << endl;
+
+                    decFSR = parser.readAttributeBool( "photos" );
+                }
+
                 bool decSummary = parser.readAttributeBool( "summary" );
 
                 std::string daugh;
@@ -1268,8 +1328,8 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                 temp_fcn_new_model = model;
                 temp_fcn_new = modelist.getFcn( model );
 
-                if ( decPhotos )
-                    temp_fcn_new->setPHOTOS();
+                if ( decFSR )
+                    temp_fcn_new->setFSR();
                 if ( decVerbose )
                     temp_fcn_new->setVerbose();
                 if ( decSummary )

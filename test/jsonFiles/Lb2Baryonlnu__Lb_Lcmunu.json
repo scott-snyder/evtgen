@@ -4,7 +4,7 @@
     "do_conjugate_decay" : [ true, true, true, true ],
     "models" : ["Lb2Baryonlnu"],
     "parameters" : [["1.0", "1.0", "1.0", "1.0"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "massSq", "title" : "q2", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 11.5},

@@ -47,8 +47,8 @@ EvtParticleDecayList::EvtParticleDecayList( const EvtParticleDecayList& o )
         EvtDecayBase* tModel = o._decaylist[i]->getDecayModel();
 
         EvtDecayBase* tModelNew = tModel->clone();
-        if ( tModel->getPHOTOS() ) {
-            tModelNew->setPHOTOS();
+        if ( tModel->getFSR() ) {
+            tModelNew->setFSR();
         }
         if ( tModel->verbose() ) {
             tModelNew->setVerbose();
@@ -354,8 +354,8 @@ EvtParticleDecayList& EvtParticleDecayList::operator=( const EvtParticleDecayLis
             EvtDecayBase* tModel = o._decaylist[i]->getDecayModel();
 
             EvtDecayBase* tModelNew = tModel->clone();
-            if ( tModel->getPHOTOS() ) {
-                tModelNew->setPHOTOS();
+            if ( tModel->getFSR() ) {
+                tModelNew->setFSR();
             }
             if ( tModel->verbose() ) {
                 tModelNew->setVerbose();

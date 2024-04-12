@@ -4,7 +4,7 @@
     "grand_daughters" : [["rho+", "anti-nu_tau"], []],
     "models" : ["SLN", "TAUVECTORNU", ""],
     "parameters" : [[], [], []],
-    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.8, "xmax" : 1.2},

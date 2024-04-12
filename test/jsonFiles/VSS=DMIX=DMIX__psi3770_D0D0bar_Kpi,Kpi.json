@@ -4,7 +4,7 @@
     "grand_daughters" : [["K+", "pi-"], ["K-", "pi+"]],
     "models" : ["VSS", "DMIX", "DMIX"],
     "parameters" : [[], ["3.4e-3", "0.1e-3", "1.0e-3"], ["3.4e-3", "0.1e-3", "1.0e-3"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 20000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob(VSS)",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

@@ -3,7 +3,7 @@
     "daughters" : ["e+", "nu_e", "gamma"],
     "models" : ["LNUGAMMA"],
     "parameters" : [["0.35", "3.0", "5.0", "0.0"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

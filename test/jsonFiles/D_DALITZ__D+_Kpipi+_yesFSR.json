@@ -4,7 +4,7 @@
     "models" : ["D_DALITZ"],
     "parameters" : [[]],
     "do_conjugate_decay" : [true],
-    "extras" : ["yesPhotos"],
+    "extras" : ["yesFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
@@ -26,6 +26,6 @@
         {"variable" : "cosHel", "title" : "cosHel23", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "cosHel", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "D_DALITZ__D+_Kpipi+_yesPhotos.root",
-    "reference" : "RefD_DALITZ__D+_Kpipi+_yesPhotos.root"
+    "outfile" : "D_DALITZ__D+_Kpipi+_yesFSR.root",
+    "reference" : "RefD_DALITZ__D+_Kpipi+_yesFSR.root"
 }

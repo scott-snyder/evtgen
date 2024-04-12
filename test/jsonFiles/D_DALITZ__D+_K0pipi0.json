@@ -4,7 +4,7 @@
     "models" : ["D_DALITZ"],
     "parameters" : [[]],
     "do_conjugate_decay" : [true],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

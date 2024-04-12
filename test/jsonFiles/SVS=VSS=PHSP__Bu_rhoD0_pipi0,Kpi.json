@@ -4,7 +4,7 @@
     "grand_daughters" : [["pi+", "pi0"], ["K+", "pi-"]],
     "models" : ["SVS", "VSS", "PHSP"],
     "parameters" : [[], [], []],
-    "extras" : ["Define dm_incohMix_B_s0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B_s0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob(SVS)",  "d1" : 0, "d2" : 0, "nbins" : 110, "xmin" : 0.0, "xmax" : 1.1},

@@ -5,7 +5,7 @@
     "models" : ["BTOSLLMSEXT", "VVS_PWAVE", ""],
     "parameters" : [["5.0", "5", "0", "1", "0.88", "0.227", "0.22", "0.34", "1.0", "0.0", "-1.0", "0.0"], 
                     ["1.0", "0.0", "0.0", "0.0", "0.0", "0.0"], []],
-    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

@@ -3,7 +3,7 @@
     "daughters" : ["e+", "nu_e", "anti-nu_tau"],
     "models" : ["TAULNUNU"],
     "parameters" : [[]],
-    "extras" : ["yesPhotos"],
+    "extras" : ["yesFSR"],
     "events" : 100000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.8, "xmax" : 1.2},
@@ -27,6 +27,6 @@
         {"variable" : "mass", "title" : "m(e nutau_{2})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0},
         {"variable" : "mass", "title" : "m(nue nutau_{2})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0}
     ],
-    "outfile" : "TAULNUNU__tau_enunu_yesPhotos.root",
-    "reference" : "RefTAULNUNU__tau_enunu_yesPhotos.root"
+    "outfile" : "TAULNUNU__tau_enunu_yesFSR.root",
+    "reference" : "RefTAULNUNU__tau_enunu_yesFSR.root"
 }

@@ -3,7 +3,7 @@
     "daughters" : ["e+", "e-", "gamma"],
     "models" : ["PI0_DALITZ"],
     "parameters" : [[], [], []],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

@@ -65,8 +65,8 @@ void EvtParticleDecay::chargeConj( EvtParticleDecay* decay )
 
     _decay->saveDecayInfo( ipar, ndaug, daug, narg, args, name, brfr );
 
-    if ( decay->_decay->getPHOTOS() )
-        _decay->setPHOTOS();
+    if ( decay->_decay->getFSR() )
+        _decay->setFSR();
 
     delete[] daug;
 }

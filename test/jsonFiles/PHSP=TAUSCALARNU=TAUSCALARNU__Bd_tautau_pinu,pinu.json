@@ -4,7 +4,7 @@
     "grand_daughters" : [["pi+", "anti-nu_tau"], ["pi-", "nu_tau"]],
     "models" : ["PHSP", "TAUSCALARNU", "TAUSCALARNU"],
     "parameters" : [[], [], []],
-    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0},

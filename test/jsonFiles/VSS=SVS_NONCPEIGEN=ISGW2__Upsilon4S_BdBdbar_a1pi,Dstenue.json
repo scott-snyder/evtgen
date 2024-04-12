@@ -5,7 +5,7 @@
     "models" : ["VSS", "SVS_NONCPEIGEN", "ISGW2"],
     "parameters" : [[], ["0.35", "0.51e12", "1.0", "1.0", "0.0", "3.0", "0.0", "3.0", "0.0", "1.0", "0.0"], []],
     "do_conjugate_decay" : [false, true, true],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob(VSS)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

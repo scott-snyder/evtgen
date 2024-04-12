@@ -4,7 +4,7 @@
     "models" : ["BSQUARK", "", ""],
     "parameters" : [["1.14", "2.0", "1000.0", "100.0", "100.0"], [], []],
     "do_conjugate_decay" : [ true, false, false ],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

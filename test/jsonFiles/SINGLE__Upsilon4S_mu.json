@@ -3,7 +3,7 @@
     "daughters" : ["mu+"],
     "models" : ["SINGLE"],
     "parameters" : [["0.5", "1.0", "-0.8", "0.5", "0.0", "6.2832"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 100000,
     "histograms" : [
         {"variable" : "parMass", "title" : "m(Upsilon4S)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 10.0, "xmax" : 11.0},

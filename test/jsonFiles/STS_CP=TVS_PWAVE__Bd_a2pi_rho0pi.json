@@ -5,7 +5,7 @@
     "models" : ["STS_CP", "TVS_PWAVE"],
     "parameters" : [["0.4", "0.51e12", "1.0", "1.0", "0.0", "1.0", "0.0"], ["0.0", "0.0", "1.0", "0.0", "0.0", "0.0"]],
     "do_conjugate_decay" : [true, true],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

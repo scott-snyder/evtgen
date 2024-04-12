@@ -4,7 +4,7 @@
     "grand_daughters" : [["K-", "pi+"], [], []],
     "models" : ["SLPOLE", "VSS", ""],
     "parameters" : [["1.00", "-0.558", "0.0", "1.0", "0.85", "-0.558", "0.0", "1.0", "1.50", "-0.790", "0.0", "1.0", "0.00", "-0.558", "0.0", "1.0"], [], []],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

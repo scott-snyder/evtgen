@@ -5,7 +5,7 @@
     "models" : ["VSS", "BTO4PI_CP", "ISGW2"],
     "parameters" : [[], ["0.4", "0.51e12", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0", "1.0", "0.0"], []],
     "do_conjugate_decay" : [false, true, true],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob_daug1", "title" : "Prob(BTO4PI_CP)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

@@ -3,7 +3,7 @@
     "daughters" : ["Xu-", "mu+", "nu_mu"],
     "models" : ["VUB_BLNPHYBRID"],
     "parameters" : [["3.95", "0.72", "0.5", "1.5", "1.5", "1.0", "1.0", "1.0", "1.0", "1.0"]],
-    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.2},

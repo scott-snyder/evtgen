@@ -72,7 +72,9 @@ void EvtDecayProb::makeDecay( EvtParticle* p, bool recursive )
     EvtSpinDensity rho;
     rho.setDiag( p->getSpinStates() );
     p->setSpinDensityBackward( rho );
-    if ( getPHOTOS() || EvtRadCorr::alwaysRadCorr() ) {
+
+    if ( ( getFSR() || EvtRadCorr::alwaysRadCorr() ) &&
+         !EvtRadCorr::neverRadCorr() ) {
         EvtRadCorr::doRadCorr( p );
     }
 

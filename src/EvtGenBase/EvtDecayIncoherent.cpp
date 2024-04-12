@@ -46,7 +46,8 @@ void EvtDecayIncoherent::makeDecay( EvtParticle* p, bool recursive )
 
     p->setSpinDensityBackward( rho );
 
-    if ( getPHOTOS() || EvtRadCorr::alwaysRadCorr() ) {
+    if ( ( getFSR() || EvtRadCorr::alwaysRadCorr() ) &&
+         !EvtRadCorr::neverRadCorr() ) {
         EvtRadCorr::doRadCorr( p );
     }
 

@@ -4,7 +4,7 @@
     "do_conjugate_decay" : [true,false,false,true,false],
     "models" : ["FOURBODYPHSP"],
     "parameters" : [["1.0", "2.0", "1.0", "2.0"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "parMass", "title" : "M(B+)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 5.0, "xmax" : 5.5},

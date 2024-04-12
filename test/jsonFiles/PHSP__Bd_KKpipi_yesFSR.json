@@ -4,7 +4,7 @@
     "models" : ["PHSP"],
     "parameters" : [[]],
     "do_conjugate_decay" : [true],    
-    "extras" : ["yesPhotos"],
+    "extras" : ["yesFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 2.5 },
@@ -28,6 +28,6 @@
         {"variable" : "cosTheta", "title" : "cosTheta(K^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "cosTheta", "title" : "cosTheta(K^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "PHSP__Bd_KKpipi_yesPhotos.root",
-    "reference" : "RefPHSP__Bd_KKpipi_yesPhotos.root"
+    "outfile" : "PHSP__Bd_KKpipi_yesFSR.root",
+    "reference" : "RefPHSP__Bd_KKpipi_yesFSR.root"
 }

@@ -3,7 +3,7 @@
     "daughters" : ["Lambda0", "anti-p-", "pi0"],
     "models" : ["B_TO_2BARYON_SCALAR"],
     "parameters" : [[]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

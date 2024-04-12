@@ -3,7 +3,7 @@
     "daughters" : ["Upsilon", "pi+", "pi-"],
     "models" : ["Y3STOY1SPIPIMOXHAY"],
     "parameters" : [["0.2196", "0.2983"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 1.0},

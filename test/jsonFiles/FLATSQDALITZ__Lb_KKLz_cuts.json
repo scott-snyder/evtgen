@@ -4,7 +4,7 @@
     "do_conjugate_decay" : [ true, true, true, true ],
     "models" : ["FLATSQDALITZ"],
     "parameters" : [["0.2", "0.7", "0.3", "0.8"]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 1000000,
     "histograms" : [
 	{"variable" : "mass", "title" : "mKPi", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.6, "xmax" : 2.25},

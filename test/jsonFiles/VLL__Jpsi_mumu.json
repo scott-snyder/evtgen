@@ -3,7 +3,7 @@
     "daughters" : ["mu+", "mu-"],
     "models" : ["VLL"],
     "parameters" : [[]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 100000,
     "histograms" : [
         {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 2.5 },

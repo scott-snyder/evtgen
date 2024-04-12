@@ -4,7 +4,7 @@
     "grand_daughters" : [["mu+", "mu-"], ["K_S0", "pi+"]],
     "models" : ["SVV_HELAMP", "VLL", "VSS"],
     "parameters" : [["0.159", "1.563", "0.775", "0.0", "0.612", "2.712"], [], []],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},

@@ -4,7 +4,7 @@
     "models" : ["BSTOGLLISRFSR"],
     "parameters" : [["5.0", "5", "1", "1", "1", "0.02", "0.814", "0.2254", "0.117", "0.353"]],
     "do_conjugate_decay" : [true],
-    "extras" : ["Define dm_incohMix_B_s0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B_s0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.02},

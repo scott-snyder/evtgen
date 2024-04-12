@@ -129,7 +129,7 @@ double EvtDecayBase::resetProbMax( double prob )
     EvtGenReport( EVTGEN_INFO, "" ) << endl;
 
     probmax = 0.0;
-    defaultprobmax = 0;
+    defaultprobmax = false;
     ntimes_prob = 0;
 
     return prob;
@@ -195,12 +195,12 @@ void EvtDecayBase::initProbMax()
     //specialized initialization.
     //The default is to set the maximum
     //probability to 0 and the number of times called to 0
-    //and defaultprobmax to 1 such that the decay will be
+    //and defaultprobmax to 'true' such that the decay will be
     //generated many many times
     //in order to generate a reasonable maximum probability
     //for the decay.
 
-    defaultprobmax = 1;
+    defaultprobmax = true;
     ntimes_prob = 0;
     probmax = 0.0;
 
@@ -269,31 +269,6 @@ void EvtDecayBase::saveDecayInfo( EvtId ipar, int ndaug, EvtId* daug, int narg,
     }
 }
 
-EvtDecayBase::EvtDecayBase()
-{
-    //the default is that the user module does _not_ set
-    // any probmax.
-    defaultprobmax = 1;
-    ntimes_prob = 0;
-    probmax = 0.0;
-
-    _photos = 0;
-    _verbose = 0;
-    _summary = 0;
-    _parent = EvtId( -1, -1 );
-    _ndaug = 0;
-    _narg = 0;
-    _modelname = "**********";
-
-    //Default is to check that charge is conserved
-    _chkCharge = 1;
-
-    //statistics collection!
-
-    max_prob = 0.0;
-    sum_prob = 0.0;
-}
-
 void EvtDecayBase::printSummary() const
 {
     if ( ntimes_prob > 0 ) {
@@ -320,13 +295,13 @@ void EvtDecayBase::printInfo() const
 
 void EvtDecayBase::setProbMax( double prbmx )
 {
-    defaultprobmax = 0;
+    defaultprobmax = false;
     probmax = prbmx;
 }
 
 void EvtDecayBase::noProbMax()
 {
-    defaultprobmax = 0;
+    defaultprobmax = false;
 }
 
 double EvtDecayBase::findMaxMass( EvtParticle* p )

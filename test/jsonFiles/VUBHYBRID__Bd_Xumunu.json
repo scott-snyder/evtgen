@@ -3,7 +3,7 @@
     "daughters" : ["Xu-", "mu+", "nu_mu"],
     "models" : ["VUBHYBRID"],
     "parameters" : [["4.8", "1.29", "0.22"]],
-    "extras" : ["Define dm_incohMix_B0 0", "noPhotos"],
+    "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.2},

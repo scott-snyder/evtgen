@@ -12,6 +12,10 @@ https://phab.hepforge.org/Dxyz
 ## R02-0X-00
 
 12 Apr 2024 Fernando Abudinen
+* D113: Introduced new FSR flag and deprecated PHOTOS flag.
+        Implemented proper use of neverRadCorr.
+
+12 Apr 2024 Fernando Abudinen
 * D112: Removed EvtPhotosEngine and moved its functionality EvtPHOTOS class.
   Moved initialisation of fsrEngine to setRadCorrEngine.
 

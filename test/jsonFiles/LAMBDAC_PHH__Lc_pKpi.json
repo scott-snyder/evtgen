@@ -4,7 +4,7 @@
     "do_conjugate_decay" : [ true, true, true, true ],
     "models" : ["LAMBDAC_PHH"],
     "parameters" : [[]],
-    "extras" : ["noPhotos"],
+    "extras" : ["noFSR"],
     "events" : 100000,
     "histograms" : [
 	{"variable" : "mass", "title" : "mPK", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.4, "xmax" : 2.2},

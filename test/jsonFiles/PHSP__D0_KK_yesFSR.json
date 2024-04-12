@@ -1,10 +1,10 @@
 {
     "parent" : "D0",
-    "daughters" : ["pi+", "pi-"],
+    "daughters" : ["K+", "K-"],
     "models" : ["PHSP"],
     "parameters" : [[]],
     "do_conjugate_decay" : [true],    
-    "extras" : ["yesPhotos"],
+    "extras" : ["yesFSR"],
     "events" : 10000,
     "histograms" : [
         {"variable" : "prob", "title" : "probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0, "xmax" : 2.5 },
@@ -17,17 +17,17 @@
         {"variable" : "cosTheta_EnergyWeight_FSRPhotons", "title" : "FSR cosTheta(#gamma)", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "openingAngle_EnergyWeight_FSRPhotons", "title" : "FSR opening angle", "d1" : 0, "d2" : 0, "nbins" : 90, "xmin" : 0, "xmax" : 180},
 	{"variable" : "parMass", "title" : "m(D^{0})", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 3.0967, "xmax" : 3.09695},
-	{"variable" : "mass", "title" : "m(#pi^{+}#pi^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 3.0967, "xmax" : 3.09695},
+	{"variable" : "mass", "title" : "m(K^{+}K^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 3.0967, "xmax" : 3.09695},
         {"variable" : "cosHel", "title" : "cosHel12", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},	
-        {"variable" : "E", "title" : "E(#pi^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "E", "title" : "E(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "pz", "title" : "p_{z}(#pi^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
-        {"variable" : "pz", "title" : "p_{z}(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
-        {"variable" : "pLab", "title" : "pLab(#pi^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "pLab", "title" : "pLab(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
-        {"variable" : "cosTheta", "title" : "cosTheta(#pi^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
-        {"variable" : "cosTheta", "title" : "cosTheta(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
+        {"variable" : "E", "title" : "E(K^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "E", "title" : "E(K^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "pz", "title" : "p_{z}(K^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
+        {"variable" : "pz", "title" : "p_{z}(K^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.6, "xmax" : 1.6},
+        {"variable" : "pLab", "title" : "pLab(K^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "pLab", "title" : "pLab(K^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 1.2, "xmax" : 1.6},
+        {"variable" : "cosTheta", "title" : "cosTheta(K^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(K^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "PHSP__D0_pipi_yesPhotos.root",
-    "reference" : "RefPHSP__D0_pipi_yesPhotos.root"
+    "outfile" : "PHSP__D0_KK_yesFSR.root",
+    "reference" : "RefPHSP__D0_KK_yesFSR.root"
 }
