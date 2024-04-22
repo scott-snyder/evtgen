@@ -18,6 +18,7 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
+#ifdef EVTGEN_PHOTOS
 #ifndef EVTPHOTOS_HH
 #define EVTPHOTOS_HH
 
@@ -27,7 +28,6 @@
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-#ifdef EVTGEN_PHOTOS
 #ifdef EVTGEN_HEPMC3
 #include "HepMC3/Units.h"
 
@@ -37,7 +37,6 @@
 #include "Photos/PhotosHepMCEvent.h"
 #include "Photos/PhotosHepMCParticle.h"
 #include "Photos/PhotosParticle.h"
-#endif
 #endif
 
 #include <mutex>
@@ -63,7 +62,6 @@ class EvtPHOTOS : public EvtAbsRadCorr {
     void doRadCorr( EvtParticle* theParticle ) override;
 
   private:
-#ifdef EVTGEN_PHOTOS
     GenParticlePtr createGenParticle( const EvtParticle& theParticle,
                                       bool incoming ) const;
 
@@ -78,8 +76,8 @@ class EvtPHOTOS : public EvtAbsRadCorr {
     bool m_initialised = false;
 
     static std::mutex photos_mutex;
+};
 
 #endif
-};
 
 #endif

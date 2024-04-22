@@ -18,6 +18,8 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
+#ifdef EVTGEN_PHOTOS
+
 #include "EvtGenExternal/EvtPHOTOS.hh"
 
 #include "EvtGenBase/EvtPDL.hh"
@@ -31,8 +33,6 @@
 #include <vector>
 
 using std::endl;
-
-#ifdef EVTGEN_PHOTOS
 
 // Mutex PHOTOS as it is not thread safe.
 std::mutex EvtPHOTOS::photos_mutex;
@@ -79,22 +79,27 @@ EvtPHOTOS::EvtPHOTOS( const std::string& photonType, const bool useEvtGenRandom,
 
     photos_mutex.unlock();
 }
-#else
-EvtPHOTOS::EvtPHOTOS( const std::string& /*photonType*/,
-                      const bool /*useEvtGenRandom*/,
-                      const double /*infraredCutOff*/,
-                      const double /*maxWtInterference*/ )
+
+void EvtPHOTOS::initialise()
 {
-    EvtGenReport( EVTGEN_WARNING, "EvtGen" )
-        << " PHOTOS has been called for FSR simulation, but it was not switched on during compilation."
-        << endl;
+    if ( m_initialised ) {
+        return;
+    }
+    m_gammaId = EvtPDL::getId( m_photonType );
 
-    EvtGenReport( EVTGEN_WARNING, "EvtGen" )
-        << " The simulation will be generated without FSR." << endl;
+    if ( m_gammaId == EvtId( -1, -1 ) ) {
+        EvtGenReport( EVTGEN_INFO, "EvtGen" )
+            << "Error in EvtPHOTOS. Do not recognise the photon type "
+            << m_photonType << ". Setting this to \"gamma\". " << endl;
+        m_gammaId = EvtPDL::getId( "gamma" );
+    }
+
+    m_gammaPDG = EvtPDL::getStdHep( m_gammaId );
+    m_mPhoton = EvtPDL::getMeanMass( m_gammaId );
+
+    m_initialised = true;
 }
-#endif
 
-#ifdef EVTGEN_PHOTOS
 void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )
 {
     if ( !theParticle ) {
@@ -224,39 +229,7 @@ void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )
 
     return;
 }
-#else
-void EvtPHOTOS::doRadCorr( EvtParticle* /*theParticle*/ )
-{
-}
-#endif
 
-#ifdef EVTGEN_PHOTOS
-void EvtPHOTOS::initialise()
-{
-    if ( m_initialised ) {
-        return;
-    }
-    m_gammaId = EvtPDL::getId( m_photonType );
-
-    if ( m_gammaId == EvtId( -1, -1 ) ) {
-        EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << "Error in EvtPHOTOS. Do not recognise the photon type "
-            << m_photonType << ". Setting this to \"gamma\". " << endl;
-        m_gammaId = EvtPDL::getId( "gamma" );
-    }
-
-    m_gammaPDG = EvtPDL::getStdHep( m_gammaId );
-    m_mPhoton = EvtPDL::getMeanMass( m_gammaId );
-
-    m_initialised = true;
-}
-#else
-void EvtPHOTOS::initialise()
-{
-}
-#endif
-
-#ifdef EVTGEN_PHOTOS
 GenParticlePtr EvtPHOTOS::createGenParticle( const EvtParticle& theParticle,
                                              bool incoming ) const
 {

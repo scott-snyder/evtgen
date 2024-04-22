@@ -20,6 +20,8 @@
 
 #include "EvtGenExternal/EvtExternalGenList.hh"
 
+#include "EvtGenModels/EvtNoRadCorr.hh"
+
 #include "EvtGenExternal/EvtExternalGenFactory.hh"
 #include "EvtGenExternal/EvtPHOTOS.hh"
 #include "EvtGenExternal/EvtPythia.hh"
@@ -54,6 +56,7 @@ EvtExternalGenList::~EvtExternalGenList()
 {
 }
 
+#ifdef EVTGEN_PHOTOS
 EvtAbsRadCorr* EvtExternalGenList::getPhotosModel( const double infraredCutOff,
                                                    const double maxWtInterference )
 {
@@ -62,6 +65,20 @@ EvtAbsRadCorr* EvtExternalGenList::getPhotosModel( const double infraredCutOff,
                                             infraredCutOff, maxWtInterference );
     return photosModel;
 }
+#else
+EvtAbsRadCorr* EvtExternalGenList::getPhotosModel(
+    const double /*infraredCutOff*/, const double /*maxWtInterference*/ )
+{
+    EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+        << " PHOTOS generator has been called for FSR simulation, but it was not switched on during compilation."
+        << std::endl;
+
+    EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+        << " The simulation will be generated without FSR." << std::endl;
+
+    return new EvtNoRadCorr{};
+}
+#endif
 
 std::list<EvtDecayBase*> EvtExternalGenList::getListOfModels()
 {
