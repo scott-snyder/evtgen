@@ -23,9 +23,9 @@ Alias MyB02 B0
 Alias Myanti-B02 anti-B0
 ChargeConj MyB02 Myanti-B02
 #
-#turn off photos so that we can count daughthers to determine
+#turn off fsr so that we can count daughthers to determine
 #which B is the CP decay and which is the tag B.
-noPhotos
+noFSR
 #
 Decay Upsilon(4S)
 0.500  MyB02 Myanti-B0     VSS;
@@ -86,11 +86,11 @@ Decay J/psi
 Enddecay
 #
 Decay MyB02
-1.00 D*-    e+   nu_e           PHOTOS HQET 0.92 1.18 0.72;
+1.00 D*-    e+   nu_e           FSR HQET 0.92 1.18 0.72;
 Enddecay
 #
 Decay Myanti-B02
-1.00 D*+    e-   anti-nu_e      PHOTOS HQET 0.92 1.18 0.72;
+1.00 D*+    e-   anti-nu_e      FSR HQET 0.92 1.18 0.72;
 Enddecay
 #
 End

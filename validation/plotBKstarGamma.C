@@ -18,7 +18,7 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
-// Macro to create validation plots for testing PHOTOS for
+// Macro to create validation plots for testing FSR for
 // B0 -> K*0' gamma, K*0' -> K+ pi- nGamma, where n = 0,1,2,...
 // Uses the ROOT files created by genRootDecayChain program
 
@@ -207,7 +207,7 @@ void plotBKstarGamma( string inFileName = "BKstarGamma.root" )
     latex.SetTextSize( 0.045 );
     latex.DrawLatex(
         0.1, 0.95,
-        "B0 #rightarrow K^{*0'} #gamma, K^{*0'} #rightarrow K^{+} #pi^{-} with PHOTOS" );
+        "B0 #rightarrow K^{*0'} #gamma, K^{*0'} #rightarrow K^{+} #pi^{-} with FSR" );
 
     theCanvas->Print( "plotBKstarGamma.eps" );
     //theCanvas->Print("plotBKstarGamma.png");

@@ -1,5 +1,5 @@
-#turn off photos to avoid the issue of random extra gammas..
-noPhotos
+#turn off fsr to avoid the issue of random extra gammas..
+noFSR
 
 End
 

@@ -18,4 +18,4 @@
 # along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     #
 ########################################################################
 
-./genExampleRootFiles photosTest.dec Upsilon4S_PHOTOS.root "Upsilon(4S)" 100000
+./genExampleRootFiles fsrTest.dec Upsilon4S_FSR.root "Upsilon(4S)" 100000

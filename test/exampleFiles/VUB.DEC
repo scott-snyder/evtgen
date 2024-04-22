@@ -73,26 +73,26 @@ Enddecay
 Decay myantiB0
 #                    b -> u l nu
 #
-.5 Xu+ e-  anti-nu_e  PHOTOS VUB 4.80 1.29 0.22 1 0.28 1;
+.5 Xu+ e-  anti-nu_e  FSR VUB 4.80 1.29 0.22 1 0.28 1;
 .5 Xu+ mu- anti-nu_mu        VUB 4.80 1.29 0.22 1 0.28 1;
 #
 # use the following lines instead if you need access to the hidden
 # parameter q+ 
 #
-# .5 Xu+ e-  anti-nu_e  PHOTOS VUB 4.80 1.29 0.22 -1 0.28 1;
+# .5 Xu+ e-  anti-nu_e  FSR VUB 4.80 1.29 0.22 -1 0.28 1;
 # .5 Xu+ mu- anti-nu_mu        VUB 4.80 1.29 0.22 -1 0.28 1;
 Enddecay
 CDecay myB0
 Decay myB+
 #                    b -> u l nu
 #
-.5 Xu0 e+  nu_e       PHOTOS VUB 4.80 1.29 0.22 1 0.28 1;
+.5 Xu0 e+  nu_e       FSR VUB 4.80 1.29 0.22 1 0.28 1;
 .5 Xu0 mu+ nu_mu             VUB 4.80 1.29 0.22 1 0.28 1;
 #
 # use the following lines instead if you need access to the hidden
 # parameter q+ 
 #
-# .5 Xu0 e+  nu_e       PHOTOS VUB 4.80 1.29 0.22 -1 0.28 1;
+# .5 Xu0 e+  nu_e       FSR VUB 4.80 1.29 0.22 -1 0.28 1;
 # .5 Xu0 mu+ nu_mu             VUB 4.80 1.29 0.22 -1 0.28 1;
 Enddecay
 CDecay myB-

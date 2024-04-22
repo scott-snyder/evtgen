@@ -1,5 +1,5 @@
-# Turn of photos for this test
-noPhotos
+# Turn off fsr for this test
+noFSR
 #
 # Define model alias for the D semileptonic decays
 # This should correspond to MV=2.1 GeV and MA1=MA2=2.5 GeV

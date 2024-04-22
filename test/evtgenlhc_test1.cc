@@ -105,7 +105,7 @@ void runSingleB( int nevent, EvtGen& myGenerator );
 void runA2Pi( int nevent, EvtGen& myGenerator );
 void runAlias();
 void runRepeat( int nevent );
-void runPhotos( int nevent, EvtGen& myGenerator );
+void runFSR( int nevent, EvtGen& myGenerator );
 void runTrackMult( int nevent, EvtGen& myGenerator );
 void runGeneric( int neventOrig, EvtGen& myGenerator, std::string listfile );
 void runFinalStates( int nevent, EvtGen& myGenerator );
@@ -246,9 +246,9 @@ int main( int argc, char* argv[] )
         runRepeat( nevent );
     }
 
-    if ( !strcmp( argv[1], "photos" ) ) {
+    if ( !strcmp( argv[1], "fsr" ) ) {
         int nevent = atoi( argv[2] );
-        runPhotos( nevent, myGenerator );
+        runFSR( nevent, myGenerator );
     }
 
     if ( !strcmp( argv[1], "trackmult" ) ) {
@@ -1207,11 +1207,11 @@ void runRepeat( int nevent )
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "SUCCESS\n";
 }
 
-void runPhotos( int nevent, EvtGen& myGenerator )
+void runFSR( int nevent, EvtGen& myGenerator )
 {
     static EvtId PSI = EvtPDL::getId( std::string( "J/psi" ) );
 
-    TFile* file = new TFile( "photos.root", "RECREATE" );
+    TFile* file = new TFile( "fsr.root", "RECREATE" );
 
     TH1F* mee = new TH1F( "h1", "mee", 60, 3.0, 3.12 );
 
@@ -1220,7 +1220,7 @@ void runPhotos( int nevent, EvtGen& myGenerator )
     EvtVector4R e1, e2;
 
     char udecay_name[100];
-    strcpy( udecay_name, "exampleFiles/PHOTOS.DEC" );
+    strcpy( udecay_name, "exampleFiles/FSR.DEC" );
     //EvtGen myGenerator(decay_name,pdttable_name,myRandomEngine);
     myGenerator.readUDecay( udecay_name );
 

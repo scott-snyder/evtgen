@@ -20,7 +20,7 @@
 
 #include <string>
 
-void photosPlots( std::string fileName = "Upsilon4S_PHOTOS.root" )
+void fsrPlots( std::string fileName = "Upsilon4S_FSR.root" )
 {
     TFile* theFile = new TFile( fileName.c_str(), "read" );
     TTree* theTree = dynamic_cast<TTree*>( theFile->Get( "Data" ) );
@@ -114,7 +114,7 @@ void photosPlots( std::string fileName = "Upsilon4S_PHOTOS.root" )
     latex.SetNDC();
     latex.SetTextSize( 0.045 );
     latex.DrawLatex( 0.1, 0.95,
-                     "#Upsilon(4S) #rightarrow e^{-} e^{+} decay with PHOTOS" );
+                     "#Upsilon(4S) #rightarrow e^{-} e^{+} decay with FSR" );
 
-    theCanvas->Print( "photosPlots.png" );
+    theCanvas->Print( "fsrPlots.png" );
 }

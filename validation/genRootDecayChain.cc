@@ -59,8 +59,8 @@
 // C2         5       1        2
 // C3         5       1        3
 //
-// The decay tree will be defined by the decay file. Additional photons from PHOTOS will
-// only appear as appended, extra daughters on the RHS of a given vertex, e.g. if a FSR
+// The decay tree will be defined by the decay file. Additional photons from FSR will
+// only appear as appended, extra daughters on the RHS of a given vertex, e.g. if an FSR
 // photon is added to the RHS of V4, there will be a "d3" particle with attributes (4,3,3)
 
 #include "genRootDecayChain.hh"

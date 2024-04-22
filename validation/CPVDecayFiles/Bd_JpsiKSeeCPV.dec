@@ -34,7 +34,7 @@ Enddecay
 CDecay Myanti-B0
 #
 Decay MyJ/psi
-1.000         e+        e-      PHOTOS VLL;
+1.000         e+        e-      FSR VLL;
 Enddecay
 #
 Decay MyKs

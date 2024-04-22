@@ -39,7 +39,7 @@ Decay MyKs
 Enddecay
 #
 Decay MyJ/psi
-  1.000         mu+       mu-            PHOTOS VLL;
+  1.000         mu+       mu-            FSR VLL;
 Enddecay
 End
 

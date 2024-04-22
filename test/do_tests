@@ -27,7 +27,7 @@ time ./evtgenlhc_test1 chi1kstar 1000
 time ./evtgenlhc_test1 test2 1000
 time ./evtgenlhc_test1 omega 1000
 time ./evtgenlhc_test1 alias
-time ./evtgenlhc_test1 photos 1000
+time ./evtgenlhc_test1 fsr 1000
 time ./evtgenlhc_test1 trackmult 1000
 time ./evtgenlhc_test1 generic 1000
 time ./evtgenlhc_test1 generic 1000 exampleFiles/generic.list

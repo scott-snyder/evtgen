@@ -57,8 +57,8 @@ if (ROOT_FOUND)
     install(DIRECTORY BpFiles DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation)
     install(DIRECTORY gifFiles DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation)
     install(DIRECTORY DalitzFiles DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation)
-    install(FILES BKstarGamma.dec BuDst0rhop.dec Kspimumu.dec photosTest.dec DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation)
-    install(FILES compareDalitz.C PhaseSpacePlots.C photosPlots.C plotBKstarGamma.C PlotKspimumu.C DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation)
+    install(FILES BKstarGamma.dec BuDst0rhop.dec Kspimumu.dec fsrTest.dec DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation)
+    install(FILES compareDalitz.C PhaseSpacePlots.C fsrPlots.C plotBKstarGamma.C PlotKspimumu.C DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation)
     install(FILES compareAllDecays.sh
         compareB0PythiaDecays.sh
         compareBpPythiaDecays.sh
@@ -77,7 +77,7 @@ if (ROOT_FOUND)
         genTauPythiaDecays.sh
         genUpsilonPythiaDecays.sh
         runKspimumu.sh
-        runPhotosTest.sh
+        runFSRTest.sh
         DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/validation
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 else()

@@ -93,8 +93,8 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--cut-off parameter used to stop fragmentation process (should not be changed) -->
 <!--JetSetPar PARJ(33)=0.3 SET NOW IN GAUSS -->
 <!-- PR LHCb 10/01/2006 -->
-<!-- Turn on PHOTOS for all decays -->
-	<photos usage="always"/>
+<!-- Turn on FSR for all decays -->
+	<fsr usage="always"/>
 <!--Decay vpho -->
 <!--1.000                     PYCONT; -->
 <!--Enddecay -->
@@ -104,11 +104,11 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.483122645" daughters="B0 anti-B0" model="VSS_BMIX" params="dm"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000015583" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.000015583" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000015766" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.000015766" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000015766" daughters="tau+ tau-" model="VLL" photos="true"/>
+		<channel br="0.000015766" daughters="tau+ tau-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000084099" daughters="Upsilon(2S) pi+ pi-" model="VVPIPI"/>
 <!--[Reconstructed PDG2011] -->
@@ -145,40 +145,40 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	<decay name="anti-B0">
 <!-- Updated to PDG 2008 -->
 <!--                   b -> c semileptonic -->
-		<channel br="0.0493" daughters="D*+ e- anti-nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
+		<channel br="0.0493" daughters="D*+ e- anti-nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
 <!-- 1.0 * PDG2014 -->
-		<channel br="0.0219" daughters="D+ e- anti-nu_e" model="HQET2" params="1.185 1.081" photos="true"/>
+		<channel br="0.0219" daughters="D+ e- anti-nu_e" model="HQET2" params="1.185 1.081" fsr="true"/>
 <!-- 1.0 * PDG2014 -->
-		<channel br="0.0042" daughters="D_1+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0042" daughters="D_1+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.0045" daughters="D_0*+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0045" daughters="D_0*+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.0046" daughters="D'_1+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0046" daughters="D'_1+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.0033" daughters="D_2*+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0033" daughters="D_2*+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.00045" daughters="D*+ pi0 e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.00045" daughters="D*+ pi0 e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- Increase by 1.5 compared to 2011 -->
-		<channel br="0.00490" daughters="D*0 pi+ e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.00490" daughters="D*0 pi+ e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- Same as 2011 -->
-		<channel br="0.0015" daughters="D+ pi0 e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0015" daughters="D+ pi0 e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- 1.5 * of 2011 table -->
-		<channel br="0.0043" daughters="D0 pi+ e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0043" daughters="D0 pi+ e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- In principle should be in D**, but go to PDG2014 to fill inclusive -->
 <!-- Do same as for electrons -->
-		<channel br="0.0493" daughters="D*+ mu- anti-nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
+		<channel br="0.0493" daughters="D*+ mu- anti-nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0219" daughters="D+ mu- anti-nu_mu" model="HQET2" params="1.185 1.081" photos="true"/>
+		<channel br="0.0219" daughters="D+ mu- anti-nu_mu" model="HQET2" params="1.185 1.081" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0042" daughters="D_1+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0045" daughters="D_0*+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0046" daughters="D'_1+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0033" daughters="D_2*+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00045" daughters="D*+ pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.00490" daughters="D*0 pi+ mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0042" daughters="D_1+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0045" daughters="D_0*+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0046" daughters="D'_1+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0033" daughters="D_2*+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00045" daughters="D*+ pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.00490" daughters="D*0 pi+ mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0015" daughters="D+ pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0043" daughters="D0 pi+ mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0015" daughters="D+ pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0043" daughters="D0 pi+ mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
 <!--                    b -> c tau nu -->
 		<channel br="0.015000000" daughters="D*+ tau- anti-nu_tau" model="ISGW2"/>
 <!--[Reconstructed PDG2011] -->
@@ -213,20 +213,20 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!-- - Hybrid weights for neutral B -> Xu l nu decays -->
 <!-- NOTE: Do NOT CHANGE any BFs without using the corresponding set of -->
 <!--       hybrid weights (and vice versa). -->
-		<channel br="0.000145000" daughters="pi+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000145000" daughters="pi+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000294000" daughters="rho+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000294000" daughters="rho+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000000" daughters="D(2S)+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="D*(2S)+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.001892" daughters="Xu+ e- anti-nu_e" model="VUB" params="4.8 1.29 0.22 20 0.30 0.55 1.20 0.61 1.26 0.85 1.34 1.08 1.41 1.21 1.48 1.30 1.55 1.30 1.61 1.33 1.67 1.36 1.73 1.39 1.79 1.33 1.84 1.42 1.90 1.39 1.95 1.39 2.00 1.37 2.50 1.30 3.00 0.74 3.50 0.99 4.00 1.09 4.50 1.00" photos="true"/>
-		<channel br="0.000145000" daughters="pi+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000000" daughters="D(2S)+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="D*(2S)+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.001892" daughters="Xu+ e- anti-nu_e" model="VUB" params="4.8 1.29 0.22 20 0.30 0.55 1.20 0.61 1.26 0.85 1.34 1.08 1.41 1.21 1.48 1.30 1.55 1.30 1.61 1.33 1.67 1.36 1.73 1.39 1.79 1.33 1.84 1.42 1.90 1.39 1.95 1.39 2.00 1.37 2.50 1.30 3.00 0.74 3.50 0.99 4.00 1.09 4.50 1.00" fsr="true"/>
+		<channel br="0.000145000" daughters="pi+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000294000" daughters="rho+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000294000" daughters="rho+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000000" daughters="D(2S)+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="D*(2S)+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.001892" daughters="Xu+ mu- anti-nu_mu" model="VUB" params="4.8 1.29 0.22 20 0.30 0.55 1.20 0.61 1.26 0.85 1.34 1.08 1.41 1.21 1.48 1.30 1.55 1.30 1.61 1.33 1.67 1.36 1.73 1.39 1.79 1.33 1.84 1.42 1.90 1.39 1.95 1.39 2.00 1.37 2.50 1.30 3.00 0.74 3.50 0.99 4.00 1.09 4.50 1.00" photos="true"/>
+		<channel br="0.000000" daughters="D(2S)+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="D*(2S)+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.001892" daughters="Xu+ mu- anti-nu_mu" model="VUB" params="4.8 1.29 0.22 20 0.30 0.55 1.20 0.61 1.26 0.85 1.34 1.08 1.41 1.21 1.48 1.30 1.55 1.30 1.61 1.33 1.67 1.36 1.73 1.39 1.79 1.33 1.84 1.42 1.90 1.39 1.95 1.39 2.00 1.37 2.50 1.30 3.00 0.74 3.50 0.99 4.00 1.09 4.50 1.00" fsr="true"/>
 		<channel br="0.000060" daughters="pi+ tau- anti-nu_tau" model="ISGW2"/>
 		<channel br="0.000083" daughters="rho+ tau- anti-nu_tau" model="ISGW2"/>
 		<channel br="0.000090" daughters="a_1+ tau- anti-nu_tau" model="ISGW2"/>
@@ -266,19 +266,19 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--0.0000166  anti-K_2*0 gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 <!--0.0000017  anti-K''*0 gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 		<channel br="0.0003118" daughters="anti-Xsd gamma" model="BTOXSGAMMA" params="2 "/>
-		<channel br="0.000000160" daughters="anti-K0 e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000000160" daughters="anti-K0 e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001030" daughters="anti-K*0 e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001030" daughters="anti-K*0 e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000050" daughters="anti-Xsd e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.000000450" daughters="anti-K0 mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.0000050" daughters="anti-Xsd e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.000000450" daughters="anti-K0 mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001050" daughters="anti-K*0 mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001050" daughters="anti-K*0 mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000025" daughters="anti-Xsd mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.0000001" daughters="anti-K0 tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="anti-K*0 tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="anti-Xsd tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
+		<channel br="0.0000025" daughters="anti-Xsd mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.0000001" daughters="anti-K0 tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="anti-K*0 tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="anti-Xsd tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
 -<!-- 2- and 3-body modes revised Feb.2005  Markus Cristinziani, SLAC -->
 <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
 <!--    B0 -> CP eigenstates  (some exclusive b -> u)   sum=0.00036 -->
@@ -1450,37 +1450,37 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	<decay name="B0">
 <!-- Updated to PDG 2008 -->
 <!--                   b -> c semileptonic -->
-		<channel br="0.0493" daughters="D*- e+ nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
+		<channel br="0.0493" daughters="D*- e+ nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
 <!-- 1.0 * PDG2014 -->
-		<channel br="0.0219" daughters="D- e+ nu_e" model="HQET2" params="1.185 1.081" photos="true"/>
+		<channel br="0.0219" daughters="D- e+ nu_e" model="HQET2" params="1.185 1.081" fsr="true"/>
 <!-- 1.0 * PDG2014 -->
-		<channel br="0.0042" daughters="D_1- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0042" daughters="D_1- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.0045" daughters="D_0*- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0045" daughters="D_0*- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.0046" daughters="D'_1- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0046" daughters="D'_1- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.0033" daughters="D_2*- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0033" daughters="D_2*- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014+D_J below -->
-		<channel br="0.00045" daughters="D*- pi0 e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.00045" daughters="D*- pi0 e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- Increase by 1.5 compared to 2011 -->
-		<channel br="0.00490" daughters="anti-D*0 pi- e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.00490" daughters="anti-D*0 pi- e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- Same as 2011 -->
-		<channel br="0.0015" daughters="D- pi0 e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0015" daughters="D- pi0 e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- 1.5 * of 2011 table -->
-		<channel br="0.0043" daughters="anti-D0 pi- e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0043" daughters="anti-D0 pi- e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- In principle should be in D**, but go to PDG2014 to fill inclusive -->
 <!-- Do same as for electrons -->
-		<channel br="0.0493" daughters="D*- mu+ nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
-		<channel br="0.0219" daughters="D- mu+ nu_mu" model="HQET2" params="1.185 1.081" photos="true"/>
-		<channel br="0.0042" daughters="D_1- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0045" daughters="D_0*- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0046" daughters="D'_1- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0033" daughters="D_2*- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00045" daughters="D*- pi0 mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.00490" daughters="anti-D*0 pi- mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0015" daughters="D- pi0 mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0043" daughters="anti-D0 pi- mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0493" daughters="D*- mu+ nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
+		<channel br="0.0219" daughters="D- mu+ nu_mu" model="HQET2" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0042" daughters="D_1- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0045" daughters="D_0*- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0046" daughters="D'_1- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0033" daughters="D_2*- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00045" daughters="D*- pi0 mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.00490" daughters="anti-D*0 pi- mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0015" daughters="D- pi0 mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0043" daughters="anti-D0 pi- mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
 <!--                    b -> c tau nu -->
 		<channel br="0.015000000" daughters="D*- tau+ nu_tau" model="ISGW2"/>
 <!--[Reconstructed PDG2011] -->
@@ -1491,19 +1491,19 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="0.0020" daughters="D'_1- tau+ nu_tau" model="ISGW2"/>
 		<channel br="0.0020" daughters="D_2*- tau+ nu_tau" model="ISGW2"/>
 <!--                    b -> u l nu -->
-		<channel br="0.000145" daughters="pi- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000145" daughters="pi- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000294" daughters="rho- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000294" daughters="rho- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000000" daughters="D(2S)- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="D*(2S)- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000000" daughters="D(2S)- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="D*(2S)- e+ nu_e" model="ISGW2" fsr="true"/>
 		<channel br="0.001892" daughters="Xu- e+ nu_e" model="VUB" params="4.8 1.29 0.22 20 0.30 0.55 1.20 0.61 1.26 0.85 1.34 1.08 1.41 1.21 1.48 1.30 1.55 1.30 1.61 1.33 1.67 1.36 1.73 1.39 1.79 1.33 1.84 1.42 1.90 1.39 1.95 1.39 2.00 1.37 2.50 1.30 3.00 0.74 3.50 0.99 4.00 1.09 4.50 1.00"/>
-		<channel br="0.000145" daughters="pi- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000145" daughters="pi- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 (electrons) -->
-		<channel br="0.000294" daughters="rho- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000294" daughters="rho- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 (electrons) -->
-		<channel br="0.000000" daughters="D(2S)- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="D*(2S)- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000000" daughters="D(2S)- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="D*(2S)- mu+ nu_mu" model="ISGW2" fsr="true"/>
 		<channel br="0.001892" daughters="Xu- mu+ nu_mu" model="VUB" params="4.8 1.29 0.22 20 0.30 0.55 1.20 0.61 1.26 0.85 1.34 1.08 1.41 1.21 1.48 1.30 1.55 1.30 1.61 1.33 1.67 1.36 1.73 1.39 1.79 1.33 1.84 1.42 1.90 1.39 1.95 1.39 2.00 1.37 2.50 1.30 3.00 0.74 3.50 0.99 4.00 1.09 4.50 1.00"/>
 		<channel br="0.000060" daughters="pi- tau+ nu_tau" model="ISGW2"/>
 		<channel br="0.000083" daughters="rho- tau+ nu_tau" model="ISGW2"/>
@@ -1544,19 +1544,19 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--0.0000166  K_2*0  gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 <!--0.0000017  K''*0  gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 		<channel br="0.0003118" daughters="Xsd gamma" model="BTOXSGAMMA" params="2 "/>
-		<channel br="0.000000160" daughters="K0 e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000000160" daughters="K0 e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001030" daughters="K*0 e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001030" daughters="K*0 e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000050" daughters="Xsd e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.000000450" daughters="K0 mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.0000050" daughters="Xsd e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.000000450" daughters="K0 mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001050" daughters="K*0 mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001050" daughters="K*0 mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000025" daughters="Xsd mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.0000001" daughters="K0 tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="K*0 tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="Xsd tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
+		<channel br="0.0000025" daughters="Xsd mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.0000001" daughters="K0 tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="K*0 tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="Xsd tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
 -<!-- 2- and 3-body modes revised Feb.2005  Markus Cristinziani, SLAC -->
 <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
 <!--    B0 -> CP eigenstates  (some exclusive b -> u)   sum=0.00036 -->
@@ -2711,37 +2711,37 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	<decay name="B-">
 <!-- Updated to PDG 2008 -->
 <!--                  b -> c semileptonic -->
-		<channel br="0.0569" daughters="D*0 e- anti-nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
+		<channel br="0.0569" daughters="D*0 e- anti-nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
 <!-- 1.0 * PDG2014 -->
-		<channel br="0.022907" daughters="D0 e- anti-nu_e" model="HQET2" params="1.185 1.081" photos="true"/>
+		<channel br="0.022907" daughters="D0 e- anti-nu_e" model="HQET2" params="1.185 1.081" fsr="true"/>
 <!-- 1.0 * PDG2014 -->
-		<channel br="0.0045" daughters="D_10 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0045" daughters="D_10 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 + D_10->D*+pi- = 2/3 -->
-		<channel br="0.0037" daughters="D_0*0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0037" daughters="D_0*0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 + D_0*0->D+pi- = 2/3 -->
-		<channel br="0.0040" daughters="D'_10 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0040" daughters="D'_10 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 + Dprime_10->D*+pi- = 2/3 -->
-		<channel br="0.0033" daughters="D_2*0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0033" daughters="D_2*0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- DG2014 + D_2*0->D+pi- = 0.459 -->
-		<channel br="0.006100" daughters="D*+ pi- e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.006100" daughters="D*+ pi- e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- Same as 2011 -->
-		<channel br="0.0003" daughters="D*0 pi0 e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0003" daughters="D*0 pi0 e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- same as 2011 -->
-		<channel br="0.0021" daughters="D+ pi- e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0021" daughters="D+ pi- e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- PDG2014 (in principle covered by other decays, but there are some decays missing to inclusives) -->
-		<channel br="0.0010" daughters="D0 pi0 e- anti-nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0010" daughters="D0 pi0 e- anti-nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- same as 2011 -->
 <!-- For muonic decays do same as for electrons -->
-		<channel br="0.0569" daughters="D*0 mu- anti-nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
-		<channel br="0.022907" daughters="D0 mu- anti-nu_mu" model="HQET2" params="1.185 1.081" photos="true"/>
-		<channel br="0.0045" daughters="D_10 mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0037" daughters="D_0*0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0040" daughters="D'_10 mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0033" daughters="D_2*0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.006100" daughters="D*+ pi- mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0003" daughters="D*0 pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0021" daughters="D+ pi- mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0010" daughters="D0 pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0569" daughters="D*0 mu- anti-nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
+		<channel br="0.022907" daughters="D0 mu- anti-nu_mu" model="HQET2" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0045" daughters="D_10 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0037" daughters="D_0*0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0040" daughters="D'_10 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0033" daughters="D_2*0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.006100" daughters="D*+ pi- mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0003" daughters="D*0 pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0021" daughters="D+ pi- mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0010" daughters="D0 pi0 mu- anti-nu_mu" model="GOITY_ROBERTS" fsr="true"/>
 <!--                   b -> c tau nu -->
 		<channel br="0.020000000" daughters="D*0 tau- anti-nu_tau" model="ISGW2"/>
 <!--[Reconstructed PDG2011] -->
@@ -2755,27 +2755,27 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!-- NOTE: Do NOT CHANGE any BFs without using the corresponding set of -->
 <!--       hybrid weights (and vice versa). -->
 <!-- This will need check whether we get correct inclusive q2 dependence -->
-		<channel br="0.00007800" daughters="pi0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00007800" daughters="pi0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.00003800" daughters="eta e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00003800" daughters="eta e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.00015800" daughters="rho0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00015800" daughters="rho0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.00011900" daughters="omega e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00011900" daughters="omega e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.0000230" daughters="eta' e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0000230" daughters="eta' e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000000" daughters="D(2S)0 e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="D*(2S)0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000000" daughters="D(2S)0 e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="D*(2S)0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 		<channel br="0.001948" daughters="Xu0 e- anti-nu_e" model="VUB" params="4.8 1.29 0.22 20 0.30 0.54 1.20 0.95 1.26 0.78 1.34 0.98 1.41 0.91 1.48 1.23 1.55 1.36 1.61 1.39 1.67 1.38 1.73 1.43 1.79 1.41 1.84 1.42 1.90 1.45 1.95 1.40 2.00 1.42 2.50 1.31 3.00 1.36 3.50 1.15 4.00 1.01 4.50 1.51"/>
 <!-- For muons do same as for electrons -->
-		<channel br="0.00007800" daughters="pi0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00003800" daughters="eta mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00015800" daughters="rho0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00011900" daughters="omega mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0000230" daughters="eta' mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="D(2S)0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="D*(2S)0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.00007800" daughters="pi0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00003800" daughters="eta mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00015800" daughters="rho0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00011900" daughters="omega mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0000230" daughters="eta' mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="D(2S)0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="D*(2S)0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 		<channel br="0.001948" daughters="Xu0 mu- anti-nu_mu" model="VUB" params="4.8 1.29 0.22 20 0.30 0.54 1.20 0.95 1.26 0.78 1.34 0.98 1.41 0.91 1.48 1.23 1.55 1.36 1.61 1.39 1.67 1.38 1.73 1.43 1.79 1.41 1.84 1.42 1.90 1.45 1.95 1.40 2.00 1.42 2.50 1.31 3.00 1.36 3.50 1.15 4.00 1.01 4.50 1.51"/>
 		<channel br="0.000030" daughters="pi0 tau- anti-nu_tau" model="ISGW2"/>
 		<channel br="0.000012" daughters="eta tau- anti-nu_tau" model="ISGW2"/>
@@ -2811,24 +2811,24 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--0.0000166  K_2*-  gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 <!--0.0000017  K''*-  gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 		<channel br="0.0003118" daughters="anti-Xsu gamma" model="BTOXSGAMMA" params="2 "/>
-		<channel br="0.000000550" daughters="K- e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000000550" daughters="K- e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001550" daughters="K*- e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001550" daughters="K*- e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000050" daughters="anti-Xsu e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.000000520" daughters="K- mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.0000050" daughters="anti-Xsu e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.000000520" daughters="K- mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001160" daughters="K*- mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001160" daughters="K*- mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000025" daughters="anti-Xsu mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.0000001" daughters="K- tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="K*- tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="anti-Xsu tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
+		<channel br="0.0000025" daughters="anti-Xsu mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.0000001" daughters="K- tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="K*- tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="anti-Xsu tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
 <!--   b -> l nu -->
 		<channel br="0.000180000" daughters="tau- anti-nu_tau" model="SLN"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000000" daughters="mu- anti-nu_mu" model="SLN" photos="true"/>
-		<channel br="0.000000" daughters="e- anti-nu_e" model="SLN" photos="true"/>
+		<channel br="0.000000" daughters="mu- anti-nu_mu" model="SLN" fsr="true"/>
+		<channel br="0.000000" daughters="e- anti-nu_e" model="SLN" fsr="true"/>
 -<!-- 2- and 3-body modes revised Feb.2005  Markus Cristinziani, SLAC -->
 <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
 <!-- Exclusive hadronic b->u -->
@@ -3772,28 +3772,28 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	<decay name="B+">
 <!-- Updated to PDG 2008 -->
 <!--                  b -> c semileptonic -->
-		<channel br="0.0569" daughters="anti-D*0 e+ nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
+		<channel br="0.0569" daughters="anti-D*0 e+ nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
 <!-- For details see B- decay -->
-		<channel br="0.022907" daughters="anti-D0 e+ nu_e" model="HQET2" params="1.185 1.081" photos="true"/>
-		<channel br="0.0045" daughters="anti-D_10 e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0037" daughters="anti-D_0*0 e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0040" daughters="anti-D'_10 e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0033" daughters="anti-D_2*0 e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.006100" daughters="D*- pi+ e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0006" daughters="anti-D*0 pi0 e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0021" daughters="D- pi+ e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0020" daughters="anti-D0 pi0 e+ nu_e" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.022907" daughters="anti-D0 e+ nu_e" model="HQET2" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0045" daughters="anti-D_10 e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0037" daughters="anti-D_0*0 e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0040" daughters="anti-D'_10 e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0033" daughters="anti-D_2*0 e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.006100" daughters="D*- pi+ e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0006" daughters="anti-D*0 pi0 e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0021" daughters="D- pi+ e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0020" daughters="anti-D0 pi0 e+ nu_e" model="GOITY_ROBERTS" fsr="true"/>
 <!-- For muonic decays do same as for electrons -->
-		<channel br="0.0569" daughters="anti-D*0 mu+ nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
-		<channel br="0.022907" daughters="anti-D0 mu+ nu_mu" model="HQET2" params="1.185 1.081" photos="true"/>
-		<channel br="0.0045" daughters="anti-D_10 mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0037" daughters="anti-D_0*0 mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0040" daughters="anti-D'_10 mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0033" daughters="anti-D_2*0 mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.006100" daughters="D*- pi+ mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0006" daughters="anti-D*0 pi0 mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0021" daughters="D- pi+ mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
-		<channel br="0.0020" daughters="anti-D0 pi0 mu+ nu_mu" model="GOITY_ROBERTS" photos="true"/>
+		<channel br="0.0569" daughters="anti-D*0 mu+ nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
+		<channel br="0.022907" daughters="anti-D0 mu+ nu_mu" model="HQET2" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0045" daughters="anti-D_10 mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0037" daughters="anti-D_0*0 mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0040" daughters="anti-D'_10 mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0033" daughters="anti-D_2*0 mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.006100" daughters="D*- pi+ mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0006" daughters="anti-D*0 pi0 mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0021" daughters="D- pi+ mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
+		<channel br="0.0020" daughters="anti-D0 pi0 mu+ nu_mu" model="GOITY_ROBERTS" fsr="true"/>
 <!--                   b -> c tau nu -->
 		<channel br="0.020000000" daughters="anti-D*0 tau+ nu_tau" model="ISGW2"/>
 <!--[Reconstructed PDG2011] -->
@@ -3805,27 +3805,27 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="0.0020" daughters="anti-D_2*0 tau+ nu_tau" model="ISGW2"/>
 <!--                   b -> u l nu -->
 <!-- This will need check whether we get correct inclusive q2 dependence -->
-		<channel br="0.00007800" daughters="pi0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00007800" daughters="pi0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.00003800" daughters="eta e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00003800" daughters="eta e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.00015800" daughters="rho0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00015800" daughters="rho0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.00011900" daughters="omega e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.00011900" daughters="omega e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.0000230" daughters="eta' e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.0000230" daughters="eta' e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000000" daughters="anti-D(2S)0 e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="anti-D*(2S)0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000000" daughters="anti-D(2S)0 e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="anti-D*(2S)0 e+ nu_e" model="ISGW2" fsr="true"/>
 		<channel br="0.001948" daughters="Xu0 e+ nu_e" model="VUB" params="4.8 1.29 0.22 20 0.30 0.54 1.20 0.95 1.26 0.78 1.34 0.98 1.41 0.91 1.48 1.23 1.55 1.36 1.61 1.39 1.67 1.38 1.73 1.43 1.79 1.41 1.84 1.42 1.90 1.45 1.95 1.40 2.00 1.42 2.50 1.31 3.00 1.36 3.50 1.15 4.00 1.01 4.50 1.51"/>
 <!-- For muons do same as for electrons -->
-		<channel br="0.00007800" daughters="pi0 mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00003800" daughters="eta mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00015800" daughters="rho0 mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.00011900" daughters="omega mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0000230" daughters="eta' mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="anti-D(2S)0 mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000000" daughters="anti-D*(2S)0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.00007800" daughters="pi0 mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00003800" daughters="eta mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00015800" daughters="rho0 mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.00011900" daughters="omega mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0000230" daughters="eta' mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="anti-D(2S)0 mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000000" daughters="anti-D*(2S)0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 		<channel br="0.0020454" daughters="Xu0 mu+ nu_mu" model="VUB" params="4.8 1.29 0.22 20 0.30 0.54 1.20 0.95 1.26 0.78 1.34 0.98 1.41 0.91 1.48 1.23 1.55 1.36 1.61 1.39 1.67 1.38 1.73 1.43 1.79 1.41 1.84 1.42 1.90 1.45 1.95 1.40 2.00 1.42 2.50 1.31 3.00 1.36 3.50 1.15 4.00 1.01 4.50 1.51"/>
 		<channel br="0.000030" daughters="pi0 tau+ nu_tau" model="ISGW2"/>
 		<channel br="0.000012" daughters="eta tau+ nu_tau" model="ISGW2"/>
@@ -3861,24 +3861,24 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--0.0000166  K_2*+  gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 <!--0.0000017  K''*+  gamma                   HELAMP 1.0 0.0 1.0 0.0; -->
 		<channel br="0.0003118" daughters="Xsu gamma" model="BTOXSGAMMA" params="2"/>
-		<channel br="0.000000550" daughters="K+ e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000000550" daughters="K+ e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001550" daughters="K*+ e+ e-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001550" daughters="K*+ e+ e-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000050" daughters="Xsu e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.000000520" daughters="K+ mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.0000050" daughters="Xsu e+ e-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.000000520" daughters="K+ mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000001160" daughters="K*+ mu+ mu-" model="BTOSLLBALL" photos="true"/>
+		<channel br="0.000001160" daughters="K*+ mu+ mu-" model="BTOSLLBALL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.0000025" daughters="Xsu mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
-		<channel br="0.0000001" daughters="K+ tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="K*+ tau+ tau-" model="BTOSLLBALL" photos="true"/>
-		<channel br="0.0000002" daughters="Xsu tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" photos="true"/>
+		<channel br="0.0000025" daughters="Xsu mu+ mu-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
+		<channel br="0.0000001" daughters="K+ tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="K*+ tau+ tau-" model="BTOSLLBALL" fsr="true"/>
+		<channel br="0.0000002" daughters="Xsu tau+ tau-" model="BTOXSLL" params="4.8 0.2 0.0 0.41" fsr="true"/>
 <!--   b -> l nu -->
 		<channel br="0.000180000" daughters="tau+ nu_tau" model="SLN"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000000" daughters="mu+ nu_mu" model="SLN" photos="true"/>
-		<channel br="0.000000" daughters="e+ nu_e" model="SLN" photos="true"/>
+		<channel br="0.000000" daughters="mu+ nu_mu" model="SLN" fsr="true"/>
+		<channel br="0.000000" daughters="e+ nu_e" model="SLN" fsr="true"/>
 -<!-- 2- and 3-body modes revised Feb.2005  Markus Cristinziani, SLAC -->
 <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
 <!-- Exclusive hadronic b->u -->
@@ -4853,18 +4853,18 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	<decay name="anti-B_s0">
 <!--                                        b -> c  (l nu) -->
 <!--                                        Sum = 24.5% -->
-		<channel br="0.0210" daughters="D_s+ e- anti-nu_e" model="HQET" params="1.185 1.081" photos="true"/>
-		<channel br="0.0490" daughters="D_s*+ e- anti-nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
-		<channel br="0.0040" daughters="D_s1+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0040" daughters="D_s0*+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D'_s1+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D_s2*+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0210" daughters="D_s+ mu- anti-nu_mu" model="HQET2" params="1.185 1.081" photos="true"/>
-		<channel br="0.0490" daughters="D_s*+ mu- anti-nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
-		<channel br="0.0040" daughters="D_s1+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0040" daughters="D_s0*+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D'_s1+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D_s2*+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.0210" daughters="D_s+ e- anti-nu_e" model="HQET" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0490" daughters="D_s*+ e- anti-nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
+		<channel br="0.0040" daughters="D_s1+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0040" daughters="D_s0*+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D'_s1+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D_s2*+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0210" daughters="D_s+ mu- anti-nu_mu" model="HQET2" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0490" daughters="D_s*+ mu- anti-nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
+		<channel br="0.0040" daughters="D_s1+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0040" daughters="D_s0*+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D'_s1+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D_s2*+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--0.0070   D_s+     tau-   anti-nu_tau          ISGW2; -->
 <!--0.0150   D_s*+    tau-   anti-nu_tau            ISGW2; -->
 <!--0.0013   D_s1+    tau-   anti-nu_tau            ISGW2; -->
@@ -5152,14 +5152,14 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="0.001271724" daughters="anti-s s s anti-s" model="PYTHIA" params="23"/>
 		<channel br="0.004891245" daughters="s anti-s" model="PYTHIA" params="91"/>
 <!-- fkw 5/10/00 the b->ulnu decays are loosely modelled according to B0 in EvtGen -->
-		<channel br="0.000200" daughters="K+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K*+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K_1+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000200" daughters="K'_1+ e- anti-nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000200" daughters="K+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K*+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K_1+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000200" daughters="K'_1+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000200" daughters="K+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K*+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K_1+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000200" daughters="K'_1+ e- anti-nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000200" daughters="K+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K*+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K_1+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000200" daughters="K'_1+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- - -->
 <!-- 2e-3 for charmless semi-leptonic -->
 <!--*********************************************************** -->
@@ -5253,18 +5253,18 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!-- fkw 4/28/00 made the Bs parallel to the Bd as best as I could -->
 <!-- - -->
 	<decay name="B_s0">
-		<channel br="0.0210" daughters="D_s- e+ nu_e" model="HQET2" params="1.185 1.081" photos="true"/>
-		<channel br="0.0490" daughters="D_s*- e+ nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
-		<channel br="0.0040" daughters="D_s1- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0040" daughters="D_s0*- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D'_s1- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D_s2*- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.0210" daughters="D_s- mu+ nu_mu" model="HQET2" params="1.185 1.081" photos="true"/>
-		<channel br="0.0490" daughters="D_s*- mu+ nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" photos="true"/>
-		<channel br="0.0040" daughters="D_s1- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0040" daughters="D_s0*- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D'_s1- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.0070" daughters="D_s2*- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.0210" daughters="D_s- e+ nu_e" model="HQET2" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0490" daughters="D_s*- e+ nu_e" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
+		<channel br="0.0040" daughters="D_s1- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0040" daughters="D_s0*- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D'_s1- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D_s2*- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.0210" daughters="D_s- mu+ nu_mu" model="HQET2" params="1.185 1.081" fsr="true"/>
+		<channel br="0.0490" daughters="D_s*- mu+ nu_mu" model="HQET2" params="1.207 0.920 1.406 0.853" fsr="true"/>
+		<channel br="0.0040" daughters="D_s1- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0040" daughters="D_s0*- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D'_s1- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.0070" daughters="D_s2*- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!--fkw 5/04/01 changed these to account for taking out non-res -->
 <!--0.0070   D_s-     tau+   nu_tau                 ISGW2; -->
 <!--0.0150   D_s*-    tau+   nu_tau                 ISGW2; -->
@@ -5550,14 +5550,14 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="0.001271724" daughters="s anti-s anti-s s" model="PYTHIA" params="23"/>
 		<channel br="0.004891245" daughters="anti-s s" model="PYTHIA" params="91"/>
 <!-- fkw 5/10/00 the b->ulnu decays are loosely modelled according to B0 in EvtGen -->
-		<channel br="0.000200" daughters="K- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K*- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K_1- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000200" daughters="K'_1- e+ nu_e" model="ISGW2" photos="true"/>
-		<channel br="0.000200" daughters="K- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K*- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000300" daughters="K_1- mu+ nu_mu" model="ISGW2" photos="true"/>
-		<channel br="0.000200" daughters="K'_1- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000200" daughters="K- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K*- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K_1- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000200" daughters="K'_1- e+ nu_e" model="ISGW2" fsr="true"/>
+		<channel br="0.000200" daughters="K- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K*- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000300" daughters="K_1- mu+ nu_mu" model="ISGW2" fsr="true"/>
+		<channel br="0.000200" daughters="K'_1- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- - -->
 <!-- 2e-3 for charmless semi-leptonic -->
 <!--*********************************************************** -->
@@ -5677,9 +5677,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--Enddecay -->
 <!-- Updated to PDG 2008 -->
 	<decay name="tau-">
-		<channel br="0.154002925" daughters="e- anti-nu_e nu_tau" model="TAULNUNU" photos="true"/>
+		<channel br="0.154002925" daughters="e- anti-nu_e nu_tau" model="TAULNUNU" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.170000000" daughters="mu- anti-nu_mu nu_tau" model="TAULNUNU" photos="true"/>
+		<channel br="0.170000000" daughters="mu- anti-nu_mu nu_tau" model="TAULNUNU" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.109100000" daughters="pi- nu_tau" model="TAUSCALARNU"/>
 <!--[Reconstructed PDG2011] -->
@@ -5804,51 +5804,51 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	</decay>
 <!--   D+ Meson -->
 	<decay name="D+">
-		<channel br="0.055200000" daughters="anti-K*0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.055200000" daughters="anti-K*0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.088300000" daughters="anti-K0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.088300000" daughters="anti-K0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.002773020" daughters="anti-K_10 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002773020" daughters="anti-K_10 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- Keep same as in 2010 version -->
-		<channel br="0.002927076" daughters="anti-K_2*0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002927076" daughters="anti-K_2*0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- Keep same as in 2010 version -->
-		<channel br="0.004050000" daughters="pi0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.004050000" daughters="pi0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001140000" daughters="eta e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001140000" daughters="eta e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000220000" daughters="eta' e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000220000" daughters="eta' e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.002180000" daughters="rho0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002180000" daughters="rho0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001820000" daughters="omega e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001820000" daughters="omega e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.003321725" daughters="K- pi+ e+ nu_e" model="PHSP" photos="true"/>
+		<channel br="0.003321725" daughters="K- pi+ e+ nu_e" model="PHSP" fsr="true"/>
 <!-- PDG2014 (subtracted K*)+tiny bit to have sum=1 -->
-		<channel br="0.001200122" daughters="anti-K0 pi0 e+ nu_e" model="PHSP" photos="true"/>
+		<channel br="0.001200122" daughters="anti-K0 pi0 e+ nu_e" model="PHSP" fsr="true"/>
 <!-- Keep same as in 2010 version+tiny bit to have sum=1 -->
-		<channel br="0.052800000" daughters="anti-K*0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.052800000" daughters="anti-K*0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.092000000" daughters="anti-K0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.092000000" daughters="anti-K0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.002773020" daughters="anti-K_10 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002773020" daughters="anti-K_10 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- Keep same as in 2010 version -->
-		<channel br="0.002927076" daughters="anti-K_2*0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002927076" daughters="anti-K_2*0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- Keep same as in 2010 version -->
-		<channel br="0.004050000" daughters="pi0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.004050000" daughters="pi0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- Same as electron -->
-		<channel br="0.001140000" daughters="eta mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.001140000" daughters="eta mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- Same as electron -->
-		<channel br="0.002200000" daughters="eta' mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002200000" daughters="eta' mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- Same as electron -->
-		<channel br="0.002400000" daughters="rho0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002400000" daughters="rho0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001820000" daughters="omega mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.001820000" daughters="omega mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- Same as electron -->
-		<channel br="0.002921725" daughters="K- pi+ mu+ nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.002921725" daughters="K- pi+ mu+ nu_mu" model="PHSP" fsr="true"/>
 <!-- PDG2014 (subtracted K*)+tiny bit to have sum=1 -->
-		<channel br="0.001200122" daughters="anti-K0 pi0 mu+ nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.001200122" daughters="anti-K0 pi0 mu+ nu_mu" model="PHSP" fsr="true"/>
 <!-- Keep same as in 2010 version+tiny bit to have sum=1 -->
-		<channel br="0.000382000" daughters="mu+ nu_mu" model="SLN" photos="true"/>
+		<channel br="0.000382000" daughters="mu+ nu_mu" model="SLN" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000770283" daughters="tau+ nu_tau" model="SLN"/>
 <!--[Reconstructed PDG2011] -->
@@ -6029,51 +6029,51 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[New mode added] #[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="D-">
-		<channel br="0.055200000" daughters="K*0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.055200000" daughters="K*0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.088300000" daughters="K0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.088300000" daughters="K0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.002773020" daughters="K_10 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002773020" daughters="K_10 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- Keep same as in 2010 version -->
-		<channel br="0.002927076" daughters="K_2*0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002927076" daughters="K_2*0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- Keep same as in 2010 version -->
-		<channel br="0.004050000" daughters="pi0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.004050000" daughters="pi0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001140000" daughters="eta e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001140000" daughters="eta e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000220000" daughters="eta' e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000220000" daughters="eta' e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.002180000" daughters="rho0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002180000" daughters="rho0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001820000" daughters="omega e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001820000" daughters="omega e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.003321725" daughters="K+ pi- e- anti-nu_e" model="PHSP" photos="true"/>
+		<channel br="0.003321725" daughters="K+ pi- e- anti-nu_e" model="PHSP" fsr="true"/>
 <!-- PDG2014 (subtracted K*)+tiny bit to have sum=1 -->
-		<channel br="0.001200122" daughters="K0 pi0 e- anti-nu_e" model="PHSP" photos="true"/>
+		<channel br="0.001200122" daughters="K0 pi0 e- anti-nu_e" model="PHSP" fsr="true"/>
 <!-- Keep same as in 2010 version+tiny bit to have sum=1 -->
-		<channel br="0.052800000" daughters="K*0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.052800000" daughters="K*0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.092000000" daughters="K0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.092000000" daughters="K0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002773020" daughters="K_10 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002773020" daughters="K_10 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002927076" daughters="K_2*0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002927076" daughters="K_2*0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.004050000" daughters="pi0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.004050000" daughters="pi0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.001140000" daughters="eta mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.001140000" daughters="eta mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002200000" daughters="eta' mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002200000" daughters="eta' mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002400000" daughters="rho0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002400000" daughters="rho0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.001820000" daughters="omega mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.001820000" daughters="omega mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002921725" daughters="K+ pi- mu- anti-nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.002921725" daughters="K+ pi- mu- anti-nu_mu" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.001200122" daughters="K0 pi0 mu- anti-nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.001200122" daughters="K0 pi0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000382000" daughters="mu- anti-nu_mu" model="SLN" photos="true"/>
+		<channel br="0.000382000" daughters="mu- anti-nu_mu" model="SLN" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000770283" daughters="tau- anti-nu_tau" model="SLN"/>
 <!--[Reconstructed PDG2011] -->
@@ -6257,37 +6257,37 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!-- using PDG2004 measurements and imposing the equality -->
 <!-- of sl partial widths for D+ and D0. -->
 <!-- Include additional decay anti-K0 pi- e+ nu_e , K- pi0 e+ nu_e. -->
-		<channel br="0.021600000" daughters="K*- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.021600000" daughters="K*- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.035500000" daughters="K- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.035500000" daughters="K- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000760000" daughters="K_1- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000760000" daughters="K_1- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001100000" daughters="K_2*- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001100000" daughters="K_2*- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- Small decrease as this is unmeasured -->
-		<channel br="0.002890000" daughters="pi- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002890000" daughters="pi- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001770000" daughters="rho- e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001770000" daughters="rho- e+ nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001080000" daughters="anti-K0 pi- e+ nu_e" model="PHSP" photos="true"/>
+		<channel br="0.001080000" daughters="anti-K0 pi- e+ nu_e" model="PHSP" fsr="true"/>
 <!-- PDG2014 subtracting K* (decreased due large uncertaity ) -->
-		<channel br="0.000400000" daughters="K- pi0 e+ nu_e" model="PHSP" photos="true"/>
+		<channel br="0.000400000" daughters="K- pi0 e+ nu_e" model="PHSP" fsr="true"/>
 <!-- PDG2014 subtracting K* (decreased due large uncertaity ) -->
-		<channel br="0.021000000" daughters="K*- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.021000000" daughters="K*- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- 1.1 * PDG2014 -->
-		<channel br="0.034700000" daughters="K- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.034700000" daughters="K- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- 1.05 * PDG2014 -->
-		<channel br="0.000076000" daughters="K_1- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000076000" daughters="K_1- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 for electron -->
-		<channel br="0.001100000" daughters="K_2*- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.001100000" daughters="K_2*- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- copy from electron -->
-		<channel br="0.002370000" daughters="pi- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002370000" daughters="pi- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.002015940" daughters="rho- mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002015940" daughters="rho- mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 for electron -->
-		<channel br="0.001080000" daughters="anti-K0 pi- mu+ nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.001080000" daughters="anti-K0 pi- mu+ nu_mu" model="PHSP" fsr="true"/>
 <!-- copy electron -->
-		<channel br="0.000400000" daughters="K- pi0 mu+ nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.000400000" daughters="K- pi0 mu+ nu_mu" model="PHSP" fsr="true"/>
 <!-- copy electron -->
 		<channel br="0.038900000" daughters="K- pi+" model="PHSP"/>
 <!--[Reconstructed PDG2011] -->
@@ -6549,37 +6549,37 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="1.0000" daughters="K0 pi0" model="VSS"/>
 	</decay>
 	<decay name="anti-D0">
-		<channel br="0.021600000" daughters="K*+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.021600000" daughters="K*+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.035500000" daughters="K+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.035500000" daughters="K+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.000760000" daughters="K_1+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000760000" daughters="K_1+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001100000" daughters="K_2*+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001100000" daughters="K_2*+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- Small decrease as this is unmeasured -->
-		<channel br="0.002890000" daughters="pi+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002890000" daughters="pi+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001770000" daughters="rho+ e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.001770000" daughters="rho+ e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.001080000" daughters="K0 pi+ e- anti-nu_e" model="PHSP" photos="true"/>
+		<channel br="0.001080000" daughters="K0 pi+ e- anti-nu_e" model="PHSP" fsr="true"/>
 <!-- PDG2014 subtracting K* (decreased due large uncertaity ) -->
-		<channel br="0.000400000" daughters="K+ pi0 e- anti-nu_e" model="PHSP" photos="true"/>
+		<channel br="0.000400000" daughters="K+ pi0 e- anti-nu_e" model="PHSP" fsr="true"/>
 <!-- PDG2014 subtracting K* (decreased due large uncertaity ) -->
-		<channel br="0.021000000" daughters="K*+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.021000000" daughters="K*+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- 1.1 * PDG2014 -->
-		<channel br="0.034700000" daughters="K+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.034700000" daughters="K+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- 1.05 * PDG2014 -->
-		<channel br="0.000076000" daughters="K_1+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000076000" daughters="K_1+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 for electron -->
-		<channel br="0.001100000" daughters="K_2*+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.001100000" daughters="K_2*+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- copy from electron -->
-		<channel br="0.002370000" daughters="pi+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002370000" daughters="pi+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 -->
-		<channel br="0.002015940" daughters="rho+ mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002015940" daughters="rho+ mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!-- PDG2014 for electron -->
-		<channel br="0.001080000" daughters="K0 pi+ mu- anti-nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.001080000" daughters="K0 pi+ mu- anti-nu_mu" model="PHSP" fsr="true"/>
 <!-- copy electron -->
-		<channel br="0.000400000" daughters="K+ pi0 mu- anti-nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.000400000" daughters="K+ pi0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
 <!-- copy electron -->
 		<channel br="0.038900000" daughters="K+ pi-" model="PHSP"/>
 <!--[Reconstructed PDG2011] -->
@@ -6837,27 +6837,27 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	</decay>
 <!-- Updated to PDG 2008 -->
 	<decay name="D_s+">
-		<channel br="0.024900000" daughters="phi e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.024900000" daughters="phi e+ nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.026700000" daughters="eta e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.026700000" daughters="eta e+ nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.009900000" daughters="eta' e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.009900000" daughters="eta' e+ nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002058115" daughters="anti-K0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002058115" daughters="anti-K0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000762265" daughters="anti-K*0 e+ nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000762265" daughters="anti-K*0 e+ nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.018309605" daughters="phi mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.018309605" daughters="phi mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.022845082" daughters="eta mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.022845082" daughters="eta mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.008186726" daughters="eta' mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.008186726" daughters="eta' mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002058115" daughters="anti-K0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002058115" daughters="anti-K0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000762265" daughters="anti-K*0 mu+ nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000762265" daughters="anti-K*0 mu+ nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.005800000" daughters="mu+ nu_mu" model="SLN" photos="true"/>
+		<channel br="0.005800000" daughters="mu+ nu_mu" model="SLN" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.031100000" daughters="tau+ nu_tau" model="SLN"/>
 <!--[Reconstructed PDG2011] -->
@@ -7019,27 +7019,27 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	</decay>
 <!-- Updated to PDG 2008 -->
 	<decay name="D_s-">
-		<channel br="0.024900000" daughters="phi e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.024900000" daughters="phi e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.026700000" daughters="eta e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.026700000" daughters="eta e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.009900000" daughters="eta' e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.009900000" daughters="eta' e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002058115" daughters="K0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.002058115" daughters="K0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000762265" daughters="K*0 e- anti-nu_e" model="ISGW2" photos="true"/>
+		<channel br="0.000762265" daughters="K*0 e- anti-nu_e" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.018309605" daughters="phi mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.018309605" daughters="phi mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.022845082" daughters="eta mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.022845082" daughters="eta mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.008186726" daughters="eta' mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.008186726" daughters="eta' mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.002058115" daughters="K0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.002058115" daughters="K0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000762265" daughters="K*0 mu- anti-nu_mu" model="ISGW2" photos="true"/>
+		<channel br="0.000762265" daughters="K*0 mu- anti-nu_mu" model="ISGW2" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.005800000" daughters="mu- anti-nu_mu" model="SLN" photos="true"/>
+		<channel br="0.005800000" daughters="mu- anti-nu_mu" model="SLN" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.031100000" daughters="tau- anti-nu_tau" model="SLN"/>
 <!--[Reconstructed PDG2011] -->
@@ -7727,9 +7727,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000460000" daughters="eta gamma" model="VSP_PWAVE"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000770000" daughters="pi0 e+ e-" model="PHSP" photos="true"/>
+		<channel br="0.000770000" daughters="pi0 e+ e-" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000130000" daughters="pi0 mu+ mu-" model="PHSP" photos="true"/>
+		<channel br="0.000130000" daughters="pi0 mu+ mu-" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.00150" daughters="pi+ pi- gamma" model="PHSP"/>
 		<channel br="0.000066000" daughters="pi0 pi0 gamma" model="PHSP"/>
@@ -7753,7 +7753,7 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.001680000" daughters="pi0 pi0 pi0" model="PHSP"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000109000" daughters="gamma mu- mu+" model="PHSP" photos="true"/>
+		<channel br="0.000109000" daughters="gamma mu- mu+" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.003600000" daughters="pi+ pi- pi0" model="PHSP"/>
 <!--[New mode added] #[Reconstructed PDG2011] -->
@@ -7773,9 +7773,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000687600" daughters="pi0 gamma" model="VSP_PWAVE"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000295400" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.000295400" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000287000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.000287000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000113000" daughters="pi0 pi0 gamma" model="PHSP"/>
 <!--[Reconstructed PDG2011] -->
@@ -8246,9 +8246,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="0.943" daughters="rndmflav anti-rndmflav" model="PYTHIA" params="42"/>
 	</decay>
 	<decay name="J/psi">
-		<channel br="0.059400000" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.059400000" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.059300000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.059300000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.005600000" daughters="rho0 pi0" model="PARTWAVE" params="0.0 0.0 1.0 0.0 0.0 0.0"/>
 <!--[Reconstructed PDG2011] -->
@@ -8480,11 +8480,11 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[New mode added] #[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="psi(2S)">
-		<channel br="0.007720000" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.007720000" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.007700000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.007700000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.003000000" daughters="tau+ tau-" model="VLL" photos="true"/>
+		<channel br="0.003000000" daughters="tau+ tau-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.336000000" daughters="J/psi pi+ pi-" model="VVPIPI"/>
 <!--[Reconstructed PDG2011] -->
@@ -8649,9 +8649,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[New mode added] #[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="psi(4040)">
-		<channel br="0.000010700" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.000010700" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000014000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.000014000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000005000" daughters="tau+ tau-" model="VLL"/>
 <!--[Reconstructed PDG2011] -->
@@ -8695,9 +8695,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="psi(4160)">
-		<channel br="0.000008100" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.000008100" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000009999" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.000009999" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000006000" daughters="tau+ tau-" model="VLL"/>
 <!--[Reconstructed PDG2011] -->
@@ -8747,9 +8747,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="psi(4415)">
-		<channel br="0.000009400" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.000009400" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000011000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.000011000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000007000" daughters="tau+ tau-" model="VLL"/>
 <!--[Reconstructed PDG2011] -->
@@ -9067,9 +9067,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="1.000" daughters="rndmflav anti-rndmflav" model="PYTHIA" params="42"/>
 	</decay>
 	<decay name="Upsilon">
-		<channel br="0.024800000" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.024800000" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.024800000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.024800000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.026000000" daughters="tau+ tau-" model="VLL"/>
 <!--[Reconstructed PDG2011] -->
@@ -9105,9 +9105,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[New mode added] #[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="Upsilon(2S)">
-		<channel br="0.019100000" daughters="e+ e-" model="VLL" photos="true"/>
+		<channel br="0.019100000" daughters="e+ e-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.019300000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.019300000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.020000000" daughters="tau+ tau-" model="VLL"/>
 <!--[Reconstructed PDG2011] -->
@@ -9136,8 +9136,8 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[New mode added] #[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="Upsilon(3S)">
-		<channel br="0.0181" daughters="e+ e-" model="VLL" photos="true"/>
-		<channel br="0.021800000" daughters="mu+ mu-" model="VLL" photos="true"/>
+		<channel br="0.0181" daughters="e+ e-" model="VLL" fsr="true"/>
+		<channel br="0.021800000" daughters="mu+ mu-" model="VLL" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.022900000" daughters="tau+ tau-" model="VLL"/>
 <!--[Reconstructed PDG2011] -->
@@ -9747,9 +9747,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000832160" daughters="p+ pi- gamma" model="PHSP"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000831216" daughters="p+ e- anti-nu_e" model="PHSP" photos="true"/>
+		<channel br="0.000831216" daughters="p+ e- anti-nu_e" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000155040" daughters="p+ mu- anti-nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.000155040" daughters="p+ mu- anti-nu_mu" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="anti-Lambda0">
@@ -9761,9 +9761,9 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 <!--[Reconstructed PDG2011] -->
 		<channel br="0.000832160" daughters="anti-p- pi+ gamma" model="PHSP"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000831216" daughters="anti-p- e+ nu_e" model="PHSP" photos="true"/>
+		<channel br="0.000831216" daughters="anti-p- e+ nu_e" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
-		<channel br="0.000155040" daughters="anti-p- mu+ nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.000155040" daughters="anti-p- mu+ nu_mu" model="PHSP" fsr="true"/>
 <!--[Reconstructed PDG2011] -->
 	</decay>
 	<decay name="Lambda(1405)0">
@@ -10604,35 +10604,35 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 		<channel br="1.00000" daughters="anti-Lambda_b0 pi+" model="PHSP"/>
 	</decay>
 	<decay name="Sigma_b0">
-		<channel br="1.00000" daughters="Lambda_b0 gamma" model="PHSP" photos="true"/>
+		<channel br="1.00000" daughters="Lambda_b0 gamma" model="PHSP" fsr="true"/>
 	</decay>
 	<decay name="anti-Sigma_b0">
-		<channel br="1.00000" daughters="anti-Lambda_b0 gamma" model="PHSP" photos="true"/>
+		<channel br="1.00000" daughters="anti-Lambda_b0 gamma" model="PHSP" fsr="true"/>
 	</decay>
 <!--   B_c Mesons -->
 	<decay name="B_c-">
 		<channel br="0.01600" daughters="tau- anti-nu_tau" model="SLN"/>
 <!--                  SemiLeptonic Decays -->
-		<channel br="0.01900" daughters="J/psi e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00094" daughters="psi(2S) e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00750" daughters="eta_c e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00020" daughters="eta_c(2S) e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00004" daughters="anti-D0 e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00018" daughters="anti-D*0 e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.04030" daughters="anti-B_s0 e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.05060" daughters="anti-B_s*0 e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00340" daughters="anti-B0 e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00580" daughters="anti-B*0 e- anti-nu_e" model="PHSP" photos="true"/>
-		<channel br="0.01900" daughters="J/psi mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00094" daughters="psi(2S) mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00750" daughters="eta_c mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00020" daughters="eta_c(2S) mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00004" daughters="anti-D0 mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00018" daughters="anti-D*0 mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.04030" daughters="anti-B_s0 mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.05060" daughters="anti-B_s*0 mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00340" daughters="anti-B0 mu- anti-nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00580" daughters="anti-B*0 mu- anti-nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.01900" daughters="J/psi e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00094" daughters="psi(2S) e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00750" daughters="eta_c e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00020" daughters="eta_c(2S) e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00004" daughters="anti-D0 e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00018" daughters="anti-D*0 e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.04030" daughters="anti-B_s0 e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.05060" daughters="anti-B_s*0 e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00340" daughters="anti-B0 e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00580" daughters="anti-B*0 e- anti-nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.01900" daughters="J/psi mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00094" daughters="psi(2S) mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00750" daughters="eta_c mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00020" daughters="eta_c(2S) mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00004" daughters="anti-D0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00018" daughters="anti-D*0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.04030" daughters="anti-B_s0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.05060" daughters="anti-B_s*0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00340" daughters="anti-B0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00580" daughters="anti-B*0 mu- anti-nu_mu" model="PHSP" fsr="true"/>
 		<channel br="0.00480" daughters="J/psi tau- anti-nu_tau" model="PHSP"/>
 		<channel br="0.00008" daughters="psi(2S) tau- anti-nu_tau" model="PHSP"/>
 		<channel br="0.00230" daughters="eta_c tau- anti-nu_tau" model="PHSP"/>
@@ -10709,26 +10709,26 @@ along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.
 	<decay name="B_c+">
 		<channel br="0.01600" daughters="tau+ nu_tau" model="SLN"/>
 <!--                  SemiLeptonic Decays -->
-		<channel br="0.01900" daughters="J/psi e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00094" daughters="psi(2S) e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00750" daughters="eta_c e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00020" daughters="eta_c(2S) e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00004" daughters="D0 e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00018" daughters="D*0 e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.04030" daughters="B_s0 e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.05060" daughters="B_s*0 e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00340" daughters="B0 e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.00580" daughters="B*0 e+ nu_e" model="PHSP" photos="true"/>
-		<channel br="0.01900" daughters="J/psi mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00094" daughters="psi(2S) mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00750" daughters="eta_c mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00020" daughters="eta_c(2S) mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00004" daughters="D0 mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00018" daughters="D*0 mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.04030" daughters="B_s0 mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.05060" daughters="B_s*0 mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00340" daughters="B0 mu+ nu_mu" model="PHSP" photos="true"/>
-		<channel br="0.00580" daughters="B*0 mu+ nu_mu" model="PHSP" photos="true"/>
+		<channel br="0.01900" daughters="J/psi e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00094" daughters="psi(2S) e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00750" daughters="eta_c e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00020" daughters="eta_c(2S) e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00004" daughters="D0 e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00018" daughters="D*0 e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.04030" daughters="B_s0 e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.05060" daughters="B_s*0 e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00340" daughters="B0 e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.00580" daughters="B*0 e+ nu_e" model="PHSP" fsr="true"/>
+		<channel br="0.01900" daughters="J/psi mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00094" daughters="psi(2S) mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00750" daughters="eta_c mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00020" daughters="eta_c(2S) mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00004" daughters="D0 mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00018" daughters="D*0 mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.04030" daughters="B_s0 mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.05060" daughters="B_s*0 mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00340" daughters="B0 mu+ nu_mu" model="PHSP" fsr="true"/>
+		<channel br="0.00580" daughters="B*0 mu+ nu_mu" model="PHSP" fsr="true"/>
 		<channel br="0.00480" daughters="J/psi tau+ nu_tau" model="PHSP"/>
 		<channel br="0.00008" daughters="psi(2S) tau+ nu_tau" model="PHSP"/>
 		<channel br="0.00230" daughters="eta_c tau+ nu_tau" model="PHSP"/>

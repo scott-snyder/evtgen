@@ -46,8 +46,8 @@ Contains a single decay channel.
       The name of the decay model used to model this decay channel.
 \item{\tt params}\\
       A space-separated list of parameters to configure the decay model.
-\item{\tt photos}\\
-      Turn on PHOTOS for this decay.\\
+\item{\tt fsr}\\
+      Turn on FSR for this decay.\\
       \emph{Default: off}
 \item{\tt verbose}\\
       Turn on verbose for this decay.\\
@@ -189,7 +189,7 @@ This is the top-level tag that must contain all other tags.
 \subsubsection*{Attributes}
 This tag has no attributes.
 \subsubsection*{Tags}
-alias, Author, chargeConj, copyDalitz, copyDecay, dalitzDecay, decay, define, Details, lineShapePW, modelAlias, particle, photos, pythia6Param, pythiaParam, removeDecay, Title, Version.
+alias, Author, chargeConj, copyDalitz, copyDecay, dalitzDecay, decay, define, Details, lineShapePW, modelAlias, particle, fsr, pythia6Param, pythiaParam, removeDecay, Title, Version.
 
 \subsection{decay}
 \index{decayTag}
@@ -208,9 +208,9 @@ channel.
 <decay name="Upsilon(4S)">
   <channel br="0.515122645" daughters="B+ B-" model="VSS"/>
   <channel br="0.483122645" daughters="B0 anti-B0" model="VSS_BMIX" params="dm"/>
-  <channel br="0.000015583" daughters="e+ e-" model="VLL" photos="true"/>
-  <channel br="0.000015766" daughters="mu+ mu-" model="VLL" photos="true"/>
-  <channel br="0.000015766" daughters="tau+ tau-" model="VLL" photos="true"/>
+  <channel br="0.000015583" daughters="e+ e-" model="VLL" fsr="true"/>
+  <channel br="0.000015766" daughters="mu+ mu-" model="VLL" fsr="true"/>
+  <channel br="0.000015766" daughters="tau+ tau-" model="VLL" fsr="true"/>
   <channel br="0.000084099" daughters="Upsilon(2S) pi+ pi-" model="VVPIPI"/>
   <channel br="0.000044342" daughters="Upsilon(2S) pi0 pi0" model="VVPIPI"/>
   <channel br="0.000080123" daughters="Upsilon pi+ pi-" model="VVPIPI"/>
@@ -342,22 +342,22 @@ This tag has no tags.
 \end{verbatim}
 }
 
-\subsection{photos}
-\index{photosTag}
-\index{xml!photosTag}
-Configure PHOTOS.
+\subsection{fsr}
+\index{fsrTag}
+\index{xml!fsrTag}
+Configure FSR.
 \subsubsection*{Attributes}
 \begin{itemize}
 \item{\tt usage}\\
-      Configure usage of PHOTOS. Takes the values always or never.\\
-      \emph{Overrides the {\tt photos} parameter of the channel tag when set.}
+      Configure usage of FSR. Takes the values always or never.\\
+      \emph{Overrides the {\tt fsr} parameter of the channel tag when set.}
 \end{itemize}
 \subsubsection*{Tags}
 This tag has no tags.
 \subsubsection*{Example}
 {\footnotesize
 \begin{verbatim}
-<photos usage="always"/>
+<fsr usage="always"/>
 \end{verbatim}
 }
 

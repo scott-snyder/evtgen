@@ -73,7 +73,7 @@ def main(inFile, outFile, extraFiles):
   countConj = 0
   countConjDecay = 0
   countLineShapePW = 0
-  countPhotos = 0
+  countFSR = 0
   countBad = 0
   countCopyDec = 0
   countRemoveDec = 0
@@ -147,7 +147,7 @@ def main(inFile, outFile, extraFiles):
           paramsList = []
 
     #various flags to deal with the evil format
-          photos = False
+          fsr = False
           summary = False
           verbose = False
           stage = 0 ## 0 - daughters, 1 - PSV/model, 2 - params
@@ -178,8 +178,8 @@ def main(inFile, outFile, extraFiles):
               else:
                 stage = 1 #fall through into stage 1
             if stage == 1:
-              if words[x] == "PHOTOS":
-                photos = True
+              if words[x] == "FSR" or words[x] == "PHOTOS":
+                fsr = True
               elif words[x] == "SUMMARY":
                 summary = True
               elif words[x] == "VERBOSE":
@@ -203,8 +203,8 @@ def main(inFile, outFile, extraFiles):
           toWrite = "\t\t<channel br=\""+br+"\" daughters=\""+daughters+"\" model=\""+model
           if params:
             toWrite += "\" params=\""+params
-          if photos:
-            toWrite += "\" photos=\"true"
+          if fsr:
+            toWrite += "\" fsr=\"true"
           if summary:
             toWrite += "\" summary=\"true"
           if verbose:
@@ -374,24 +374,24 @@ def main(inFile, outFile, extraFiles):
           line = " ".join(words[5:])
         else:
           getMore = True
-  #######PHOTOS#################
-      elif words[0] == "yesPhotos":
-        countPhotos += 1
-        fh2.write("\t<photos usage=\"always\"/>\n")
+  #######FSR#################
+      elif words[0] == "yesFSR" or words[0] == "yesPhotos":
+        countFSR += 1
+        fh2.write("\t<fsr usage=\"always\"/>\n")
         if len(words) > 1:
           line = " ".join(words[1:])
         else:
           getMore = True
-      elif words[0] == "noPhotos":
-        countPhotos += 1
-        fh2.write("\t<photos usage=\"never\"/>\n")
+      elif words[0] == "noFSR" or words[0] == "noPhotos": 
+        countFSR += 1
+        fh2.write("\t<fsr usage=\"never\"/>\n")
         if len(words) > 1:
           line = " ".join(words[1:])
         else:
           getMore = True
-      elif words[0] == "normalPhotos":
-        countPhotos += 1
-        fh2.write("\t<photos usage=\"normal\"/>\n")
+      elif words[0] == "normalFSR" or words[0] == "normalPhotos":
+        countFSR += 1
+        fh2.write("\t<fsr usage=\"normal\"/>\n")
         if len(words) > 1:
           line = " ".join(words[1:])
         else:
@@ -690,7 +690,7 @@ def main(inFile, outFile, extraFiles):
   print(str(countConj)+" conjugates")
   print(str(countConjDecay)+" conjugate decays")
   print(str(countLineShapePW)+" line shape PWs")
-  print(str(countPhotos)+" PHOTOS lines")
+  print(str(countFSR)+" FSR lines")
   print(str(countCopyDec)+" copied decays")
   print(str(countRemoveDec)+" removed decays")
   print(str(countPythia6)+" pythia commands")

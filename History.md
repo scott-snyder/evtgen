@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+22 Apr 2024 Fernando Abudinen
+* D116: Replaced PHOTOS with FSR flags in examples and tests.
+
 17 Apr 2024 Fernando Abudinen
 * D114: Simplified pre-processor behaviour for PHOTOS.
 
