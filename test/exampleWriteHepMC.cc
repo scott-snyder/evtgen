@@ -88,14 +88,8 @@ int main( int /*argc*/, char** /*argv*/ )
     EvtParticle* parent( nullptr );
 
     // Define the random number generator
-    EvtRandomEngine* eng = nullptr;
-
-#ifdef EVTGEN_CPP11
-    // Use the Mersenne-Twister generator (C++11 only)
-    eng = new EvtMTRandomEngine();
-#else
-    eng = new EvtSimpleRandomEngine();
-#endif
+    // Use the Mersenne-Twister generator
+    EvtRandomEngine* eng = new EvtMTRandomEngine();
 
     EvtRandom::setRandomEngine( eng );
 

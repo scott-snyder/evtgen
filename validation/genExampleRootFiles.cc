@@ -132,14 +132,8 @@ int main( int argc, char** argv )
     EvtParticle* theParent( nullptr );
 
     // Define the random number generator
-    EvtRandomEngine* myRandomEngine = nullptr;
-
-#ifdef EVTGEN_CPP11
-    // Use the Mersenne-Twister generator (C++11 only)
-    myRandomEngine = new EvtMTRandomEngine();
-#else
-    myRandomEngine = new EvtSimpleRandomEngine();
-#endif
+    // Use the Mersenne-Twister generator
+    EvtRandomEngine* myRandomEngine = new EvtMTRandomEngine();
 
     // Initialize the generator - read in the decay table and particle properties.
     // For our validation purposes, we just want to read in one decay file and create

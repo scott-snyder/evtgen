@@ -178,17 +178,12 @@ void genRootDecayChain::writeTree()
 
 void genRootDecayChain::generateEvents()
 {
-    EvtRandomEngine* randomEngine = nullptr;
     EvtAbsRadCorr* radCorrEngine = nullptr;
     std::list<EvtDecayBase*> extraModels;
 
     // Define the random number generator
-#ifdef EVTGEN_CPP11
-    // Use the Mersenne-Twister generator (C++11 only)
-    randomEngine = new EvtMTRandomEngine();
-#else
-    randomEngine = new EvtSimpleRandomEngine();
-#endif
+    // Use the Mersenne-Twister generator
+    EvtRandomEngine* randomEngine = new EvtMTRandomEngine();
 
     // Initialize the generator - read in the decay table and particle properties.
     // For our validation purposes, we just want to read in one decay file

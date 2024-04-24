@@ -11,6 +11,10 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+
+23 Apr 2024 Thomas Latham
+* Drop redundant EVTGEN\_CPP11 preprocessor switch
+
 22 Apr 2024 Fernando Abudinen
 * D116: Replaced PHOTOS with FSR flags in examples and tests.
 
