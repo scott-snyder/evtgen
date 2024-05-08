@@ -62,52 +62,52 @@ class EvtBtoXsgammaKagan : public EvtBtoXsgammaAbsModel {
 
   private:
     //Input parameters
-    double _mb;
-    double _mB;
-    double _delta;
-    double _nIntervalS;
-    double _nIntervalmH;
-    double _lambdabar;
-    double _lam1;
-    double _mHmin;
-    double _mHmax;
+    double m_mb;
+    double m_mB;
+    double m_delta;
+    double m_nIntervalS;
+    double m_nIntervalmH;
+    double m_lambdabar;
+    double m_lam1;
+    double m_mHmin;
+    double m_mHmax;
     //Other parameters
-    double _r7;
-    double _gam77;
-    double _gam27;
-    double _gam87;
-    double _beta0;
-    double _beta1;
-    double _alphasmZ;
-    double _mZ;
-    double _z;
-    double _fz;
-    double _lam2;
-    double _kappabar;
-    double _rer2;
-    double _rer8;
-    double _kSLemmu;
-    double _mW;
-    double _mt;
-    double _ms;
-    double _mu;
+    double m_r7;
+    double m_gam77;
+    double m_gam27;
+    double m_gam87;
+    double m_beta0;
+    double m_beta1;
+    double m_alphasmZ;
+    double m_mZ;
+    double m_z;
+    double m_fz;
+    double m_lam2;
+    double m_kappabar;
+    double m_rer2;
+    double m_rer8;
+    double m_kSLemmu;
+    double m_mW;
+    double m_mt;
+    double m_ms;
+    double m_mu;
 
-    double _c2mu;
-    double _c70mu;
-    double _c80mu;
-    double _c71mu;
-    double _c7emmu;
+    double m_c2mu;
+    double m_c70mu;
+    double m_c80mu;
+    double m_c71mu;
+    double m_c7emmu;
 
-    double _cDeltatot;
+    double m_cDeltatot;
 
-    double _alpha;
-    double _alphasmW;
-    double _alphasmt;
-    double _alphasmu;
-    double _alphasmubar;
-    double _etamu;
+    double m_alpha;
+    double m_alphasmW;
+    double m_alphasmt;
+    double m_alphasmu;
+    double m_alphasmubar;
+    double m_etamu;
 
-    std::vector<double> _mHVect;
+    std::vector<double> m_mHVect;
 
     static double ReG( double );
     static double ImG( double );
@@ -140,9 +140,9 @@ class EvtBtoXsgammaKagan : public EvtBtoXsgammaAbsModel {
     static double FermiFunc( double, const std::vector<double>& coeffs );
     static double diLogFunc( double );
     static double diLogMathematica( double );
-    std::vector<double> massHad, brHad;
-    static double intervalMH;
-    static bool bbprod;
+    std::vector<double> m_massHad, m_brHad;
+    static double m_intervalMH;
+    static bool m_bbprod;
 };
 
 #endif

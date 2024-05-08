@@ -66,23 +66,29 @@ class EvtBsMuMuKK : public EvtDecayAmp {
                         const double phis, const int eta ) const;
 
   private:
-    double MBs, MJpsi, Mf0, Mphi, Mf2p, MKp, MKm, MK0, Mpip, Mpi0, Mmu;
-    double Gamma0phi, Gamma0f2p;
-    double kin_lower_limit, kin_upper_limit, kin_middle;
-    double p30Kp_mid_CMS, p30Kp_ll_CMS, p30Kp_phi_CMS, p30Kp_f2p_CMS;
-    double p30Jpsi_mid_CMS, p30Jpsi_ll_CMS, p30Jpsi_phi_CMS, p30Jpsi_f2p_CMS;
-    double int_const_NR, int_Flatte_f0, int_BW_phi, int_BW_f2p;
-    double f_S_NR, f_f0, f_phi, f_f2p, f_phi_0, f_phi_perp, f_f2p_0, f_f2p_perp;
-    double A_S_NR, A_f0, A_phi_0, A_phi_perp, A_phi_par, A_f2p_0, A_f2p_perp;
-    double A_f2p_par;
-    double delta_S_NR, delta_f0, delta_phi_0, delta_phi_perp, delta_phi_par;
-    double delta_f2p_0, delta_f2p_perp, delta_f2p_par;
-    double phis_S_NR, phis_f0, phis_phi_0, phis_phi_perp, phis_phi_par;
-    double phis_f2p_0, phis_f2p_perp, phis_f2p_par;
-    double lambda_S_NR_abs, lambda_f0_abs, lambda_phi_0_abs, lambda_phi_perp_abs;
-    double lambda_phi_par_abs, lambda_f2p_0_abs, lambda_f2p_perp_abs;
-    double lambda_f2p_par_abs;
-    double Gamma, deltaGamma, ctau, deltaMs;
+    double m_MBs, m_MJpsi, m_Mf0, m_Mphi, m_Mf2p, m_MKp, m_MKm, m_MK0, m_Mpip,
+        m_Mpi0, m_Mmu;
+    double m_Gamma0phi, m_Gamma0f2p;
+    double m_kin_lower_limit, m_kin_upper_limit, m_kin_middle;
+    double m_p30Kp_mid_CMS, m_p30Kp_ll_CMS, m_p30Kp_phi_CMS, m_p30Kp_f2p_CMS;
+    double m_p30Jpsi_mid_CMS, m_p30Jpsi_ll_CMS, m_p30Jpsi_phi_CMS,
+        m_p30Jpsi_f2p_CMS;
+    double m_int_const_NR, m_int_Flatte_f0, m_int_BW_phi, m_int_BW_f2p;
+    double m_f_S_NR, m_f_f0, m_f_phi, m_f_f2p, m_f_phi_0, m_f_phi_perp,
+        m_f_f2p_0, m_f_f2p_perp;
+    double m_A_S_NR, m_A_f0, m_A_phi_0, m_A_phi_perp, m_A_phi_par, m_A_f2p_0,
+        m_A_f2p_perp;
+    double m_A_f2p_par;
+    double m_delta_S_NR, m_delta_f0, m_delta_phi_0, m_delta_phi_perp,
+        m_delta_phi_par;
+    double m_delta_f2p_0, m_delta_f2p_perp, m_delta_f2p_par;
+    double m_phis_S_NR, m_phis_f0, m_phis_phi_0, m_phis_phi_perp, m_phis_phi_par;
+    double m_phis_f2p_0, m_phis_f2p_perp, m_phis_f2p_par;
+    double m_lambda_S_NR_abs, m_lambda_f0_abs, m_lambda_phi_0_abs,
+        m_lambda_phi_perp_abs;
+    double m_lambda_phi_par_abs, m_lambda_f2p_0_abs, m_lambda_f2p_perp_abs;
+    double m_lambda_f2p_par_abs;
+    double m_Gamma, m_deltaGamma, m_ctau, m_deltaMs;
 };
 
 #endif

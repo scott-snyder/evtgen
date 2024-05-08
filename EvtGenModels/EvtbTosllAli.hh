@@ -42,9 +42,9 @@ class EvtbTosllAli : public EvtDecayAmp {
     void initProbMax() override;
 
   private:
-    std::unique_ptr<EvtbTosllFF> _aliffmodel;
-    std::unique_ptr<EvtbTosllAmp> _calcamp;
-    double _poleSize;
+    std::unique_ptr<EvtbTosllFF> m_aliffmodel;
+    std::unique_ptr<EvtbTosllAmp> m_calcamp;
+    double m_poleSize;
 };
 
 #endif

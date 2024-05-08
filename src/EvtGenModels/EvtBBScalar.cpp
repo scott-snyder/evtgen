@@ -31,43 +31,44 @@
 using namespace std;
 
 const float pi = 3.14159;
-const EvtComplex EvtBBScalar::I = EvtComplex( 0, 1 );
-const EvtComplex EvtBBScalar::V_ub = EvtComplex( 3.67e-3 * cos( 60 / 180 * pi ),
-                                                 3.67e-3 * cos( 60 / 180 * pi ) );
-const EvtComplex EvtBBScalar::V_us_star = EvtComplex( 0.22, 0 );
-const EvtComplex EvtBBScalar::a1 = EvtComplex( 1.05, 0 );
-const EvtComplex EvtBBScalar::V_tb = EvtComplex( 0.99915, 0 );
-const EvtComplex EvtBBScalar::V_ts_star =
+const EvtComplex EvtBBScalar::m_I = EvtComplex( 0, 1 );
+const EvtComplex EvtBBScalar::m_V_ub =
+    EvtComplex( 3.67e-3 * cos( 60 / 180 * pi ), 3.67e-3 * cos( 60 / 180 * pi ) );
+const EvtComplex EvtBBScalar::m_V_us_star = EvtComplex( 0.22, 0 );
+const EvtComplex EvtBBScalar::m_a1 = EvtComplex( 1.05, 0 );
+const EvtComplex EvtBBScalar::m_V_tb = EvtComplex( 0.99915, 0 );
+const EvtComplex EvtBBScalar::m_V_ts_star =
     EvtComplex( -0.04029 - 0.000813 * cos( 60 / 180 * pi ),
                 -0.000813 * cos( 60 / 180 * pi ) );
-const EvtComplex EvtBBScalar::a4 = EvtComplex( -387.3e-4, -121e-4 );
-const EvtComplex EvtBBScalar::a6 = EvtComplex( -555.3e-4, -121e-4 );
-const double EvtBBScalar::x[] = { 420.96, -10485.50, 100639.97, -433916.61,
-                                  613780.15 };
-const double EvtBBScalar::y[] = { 292.62, -735.73 };
-const double EvtBBScalar::m_s = 0.120;
-const double EvtBBScalar::m_u = 0.029 * 0.120;
-const double EvtBBScalar::m_b = 4.88;
+const EvtComplex EvtBBScalar::m_a4 = EvtComplex( -387.3e-4, -121e-4 );
+const EvtComplex EvtBBScalar::m_a6 = EvtComplex( -555.3e-4, -121e-4 );
+const double EvtBBScalar::m_x[] = { 420.96, -10485.50, 100639.97, -433916.61,
+                                    613780.15 };
+const double EvtBBScalar::m_y[] = { 292.62, -735.73 };
+const double EvtBBScalar::m_ms = 0.120;
+const double EvtBBScalar::m_mu = 0.029 * 0.120;
+const double EvtBBScalar::m_mb = 4.88;
 
-EvtBBScalar::EvtBBScalar() : EvtDecayAmp(), _massRatio( 0 ), _baryonMassSum( 0 )
+EvtBBScalar::EvtBBScalar() :
+    EvtDecayAmp(), m_massRatio( 0 ), m_baryonMassSum( 0 )
 {
     FormFactor dummy;
-    dummy.value = 0.36;
-    dummy.sigma1 = 0.43;
-    dummy.sigma2 = 0.0;
-    dummy.mV = 5.42;
-    _f1Map.insert( make_pair( string( "K" ), dummy ) );
-    dummy.sigma1 = 0.70;
-    dummy.sigma2 = 0.27;
-    _f0Map.insert( make_pair( string( "K" ), dummy ) );
-    dummy.value = 0.29;
-    dummy.sigma1 = 0.48;
-    dummy.sigma2 = 0.0;
-    dummy.mV = 5.32;
-    _f1Map.insert( make_pair( string( "pi" ), dummy ) );
-    dummy.sigma1 = 0.76;
-    dummy.sigma2 = 0.28;
-    _f0Map.insert( make_pair( string( "pi" ), dummy ) );
+    dummy.m_value = 0.36;
+    dummy.m_sigma1 = 0.43;
+    dummy.m_sigma2 = 0.0;
+    dummy.m_mV = 5.42;
+    m_f1Map.insert( make_pair( string( "K" ), dummy ) );
+    dummy.m_sigma1 = 0.70;
+    dummy.m_sigma2 = 0.27;
+    m_f0Map.insert( make_pair( string( "K" ), dummy ) );
+    dummy.m_value = 0.29;
+    dummy.m_sigma1 = 0.48;
+    dummy.m_sigma2 = 0.0;
+    dummy.m_mV = 5.32;
+    m_f1Map.insert( make_pair( string( "pi" ), dummy ) );
+    dummy.m_sigma1 = 0.76;
+    dummy.m_sigma2 = 0.28;
+    m_f0Map.insert( make_pair( string( "pi" ), dummy ) );
 }
 
 std::string EvtBBScalar::getName()
@@ -85,25 +86,25 @@ void EvtBBScalar::setKnownBaryonTypes( const EvtId& baryon )
     int baryonId = EvtPDL::getStdHep( baryon );
     if ( EvtPDL::getStdHep( EvtPDL::getId( "Lambda0" ) ) == baryonId or
          EvtPDL::getStdHep( EvtPDL::getId( "anti-Lambda0" ) ) == baryonId ) {
-        _baryonCombination.set( Lambda );
+        m_baryonCombination.set( Lambda );
     } else if ( EvtPDL::getStdHep( EvtPDL::getId( "p+" ) ) == baryonId or
                 EvtPDL::getStdHep( EvtPDL::getId( "anti-p-" ) ) == baryonId ) {
-        _baryonCombination.set( Proton );
+        m_baryonCombination.set( Proton );
     } else if ( EvtPDL::getStdHep( EvtPDL::getId( "n0" ) ) == baryonId or
                 EvtPDL::getStdHep( EvtPDL::getId( "anti-n0" ) ) == baryonId ) {
-        _baryonCombination.set( Neutron );
+        m_baryonCombination.set( Neutron );
     } else if ( EvtPDL::getStdHep( EvtPDL::getId( "Sigma0" ) ) == baryonId or
                 EvtPDL::getStdHep( EvtPDL::getId( "anti-Sigma0" ) ) == baryonId ) {
-        _baryonCombination.set( Sigma0 );
+        m_baryonCombination.set( Sigma0 );
     } else if ( EvtPDL::getStdHep( EvtPDL::getId( "Sigma-" ) ) == baryonId or
                 EvtPDL::getStdHep( EvtPDL::getId( "anti-Sigma+" ) ) == baryonId ) {
-        _baryonCombination.set( Sigma_minus );
+        m_baryonCombination.set( Sigma_minus );
     } else if ( EvtPDL::getStdHep( EvtPDL::getId( "Xi0" ) ) == baryonId or
                 EvtPDL::getStdHep( EvtPDL::getId( "anti-Xi0" ) ) == baryonId ) {
-        _baryonCombination.set( Xi0 );
+        m_baryonCombination.set( Xi0 );
     } else if ( EvtPDL::getStdHep( EvtPDL::getId( "Xi-" ) ) == baryonId or
                 EvtPDL::getStdHep( EvtPDL::getId( "anti-Xi+" ) ) == baryonId ) {
-        _baryonCombination.set( Xi_minus );
+        m_baryonCombination.set( Xi_minus );
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "EvtBBScalar::init: Don't know what to do with this type as the first or second baryon\n";
@@ -114,22 +115,23 @@ void EvtBBScalar::setKnownBaryonTypes( const EvtId& baryon )
 double EvtBBScalar::baryonF1F2( double t ) const
 {
     // check for known form factors for combination of baryons
-    if ( _baryonCombination.test( Lambda ) and _baryonCombination.test( Proton ) ) {
+    if ( m_baryonCombination.test( Lambda ) and
+         m_baryonCombination.test( Proton ) ) {
         return -sqrt( 1.5 ) * G_p( t );
-    } else if ( _baryonCombination.test( Sigma0 ) and
-                _baryonCombination.test( Proton ) ) {
+    } else if ( m_baryonCombination.test( Sigma0 ) and
+                m_baryonCombination.test( Proton ) ) {
         return -sqrt( 0.5 ) * ( G_p( t ) + 2 * G_n( t ) );
-    } else if ( _baryonCombination.test( Sigma_minus ) and
-                _baryonCombination.test( Neutron ) ) {
+    } else if ( m_baryonCombination.test( Sigma_minus ) and
+                m_baryonCombination.test( Neutron ) ) {
         return -G_p( t ) - 2 * G_n( t );
-    } else if ( _baryonCombination.test( Xi0 ) and
-                _baryonCombination.test( Sigma_minus ) ) {
+    } else if ( m_baryonCombination.test( Xi0 ) and
+                m_baryonCombination.test( Sigma_minus ) ) {
         return G_p( t ) - G_n( t );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Sigma0 ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Sigma0 ) ) {
         return sqrt( 0.5 ) * ( G_p( t ) - G_n( t ) );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Lambda ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Lambda ) ) {
         return sqrt( 1.5 ) * ( G_p( t ) + G_n( t ) );
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -151,35 +153,36 @@ double EvtBBScalar::formFactorFit( double t, const vector<double>& params ) cons
 
 double EvtBBScalar::G_p( double t ) const
 {
-    const vector<double> v_x( x, x + 5 );
+    const vector<double> v_x( m_x, m_x + 5 );
     return formFactorFit( t, v_x );
 }
 
 double EvtBBScalar::G_n( double t ) const
 {
-    const vector<double> v_y( y, y + 2 );
+    const vector<double> v_y( m_y, m_y + 2 );
     return -formFactorFit( t, v_y );
 }
 
 double EvtBBScalar::baryon_gA( double t ) const
 {
     // check for known form factors for combination of baryons
-    if ( _baryonCombination.test( Lambda ) and _baryonCombination.test( Proton ) ) {
+    if ( m_baryonCombination.test( Lambda ) and
+         m_baryonCombination.test( Proton ) ) {
         return -1 / sqrt( 6. ) * ( D_A( t ) + 3 * F_A( t ) );
-    } else if ( _baryonCombination.test( Sigma0 ) and
-                _baryonCombination.test( Proton ) ) {
+    } else if ( m_baryonCombination.test( Sigma0 ) and
+                m_baryonCombination.test( Proton ) ) {
         return 1 / sqrt( 2. ) * ( D_A( t ) - F_A( t ) );
-    } else if ( _baryonCombination.test( Sigma_minus ) and
-                _baryonCombination.test( Neutron ) ) {
+    } else if ( m_baryonCombination.test( Sigma_minus ) and
+                m_baryonCombination.test( Neutron ) ) {
         return D_A( t ) - F_A( t );
-    } else if ( _baryonCombination.test( Xi0 ) and
-                _baryonCombination.test( Sigma_minus ) ) {
+    } else if ( m_baryonCombination.test( Xi0 ) and
+                m_baryonCombination.test( Sigma_minus ) ) {
         return D_A( t ) + F_A( t );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Sigma0 ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Sigma0 ) ) {
         return 1 / sqrt( 2. ) * ( D_A( t ) + F_A( t ) );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Lambda ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Lambda ) ) {
         return -1 / sqrt( 6. ) * ( D_A( t ) - 3 * F_A( t ) );
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -191,22 +194,23 @@ double EvtBBScalar::baryon_gA( double t ) const
 double EvtBBScalar::baryon_gP( double t ) const
 {
     // check for known form factors for combination of baryons
-    if ( _baryonCombination.test( Lambda ) and _baryonCombination.test( Proton ) ) {
+    if ( m_baryonCombination.test( Lambda ) and
+         m_baryonCombination.test( Proton ) ) {
         return -1 / sqrt( 6. ) * ( D_P( t ) + 3 * F_P( t ) );
-    } else if ( _baryonCombination.test( Sigma0 ) and
-                _baryonCombination.test( Proton ) ) {
+    } else if ( m_baryonCombination.test( Sigma0 ) and
+                m_baryonCombination.test( Proton ) ) {
         return 1 / sqrt( 2. ) * ( D_P( t ) - F_P( t ) );
-    } else if ( _baryonCombination.test( Sigma_minus ) and
-                _baryonCombination.test( Neutron ) ) {
+    } else if ( m_baryonCombination.test( Sigma_minus ) and
+                m_baryonCombination.test( Neutron ) ) {
         return D_P( t ) - F_P( t );
-    } else if ( _baryonCombination.test( Xi0 ) and
-                _baryonCombination.test( Sigma_minus ) ) {
+    } else if ( m_baryonCombination.test( Xi0 ) and
+                m_baryonCombination.test( Sigma_minus ) ) {
         return D_P( t ) + F_P( t );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Sigma0 ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Sigma0 ) ) {
         return 1 / sqrt( 2. ) * ( D_P( t ) + F_P( t ) );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Lambda ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Lambda ) ) {
         return -1 / sqrt( 6. ) * ( D_P( t ) - 3 * F_P( t ) );
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -218,22 +222,23 @@ double EvtBBScalar::baryon_gP( double t ) const
 double EvtBBScalar::baryon_fS( double t ) const
 {
     // check for known form factors for combination of baryons
-    if ( _baryonCombination.test( Lambda ) and _baryonCombination.test( Proton ) ) {
+    if ( m_baryonCombination.test( Lambda ) and
+         m_baryonCombination.test( Proton ) ) {
         return -1 / sqrt( 6. ) * ( D_S( t ) + 3 * F_S( t ) );
-    } else if ( _baryonCombination.test( Sigma0 ) and
-                _baryonCombination.test( Proton ) ) {
+    } else if ( m_baryonCombination.test( Sigma0 ) and
+                m_baryonCombination.test( Proton ) ) {
         return 1 / sqrt( 2. ) * ( D_S( t ) - F_S( t ) );
-    } else if ( _baryonCombination.test( Sigma_minus ) and
-                _baryonCombination.test( Neutron ) ) {
+    } else if ( m_baryonCombination.test( Sigma_minus ) and
+                m_baryonCombination.test( Neutron ) ) {
         return D_S( t ) - F_S( t );
-    } else if ( _baryonCombination.test( Xi0 ) and
-                _baryonCombination.test( Sigma_minus ) ) {
+    } else if ( m_baryonCombination.test( Xi0 ) and
+                m_baryonCombination.test( Sigma_minus ) ) {
         return D_S( t ) + F_S( t );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Sigma0 ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Sigma0 ) ) {
         return 1 / sqrt( 2. ) * ( D_S( t ) + F_S( t ) );
-    } else if ( _baryonCombination.test( Xi_minus ) and
-                _baryonCombination.test( Lambda ) ) {
+    } else if ( m_baryonCombination.test( Xi_minus ) and
+                m_baryonCombination.test( Lambda ) ) {
         return -1 / sqrt( 6. ) * ( D_S( t ) - 3 * F_S( t ) );
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -244,46 +249,46 @@ double EvtBBScalar::baryon_fS( double t ) const
 
 double EvtBBScalar::D_A( double t ) const
 {
-    const double d_tilde[] = { x[0] - 1.5 * y[0], -478 };
+    const double d_tilde[] = { m_x[0] - 1.5 * m_y[0], -478 };
     const vector<double> v_d_tilde( d_tilde, d_tilde + 2 );
     return formFactorFit( t, v_d_tilde );
 }
 
 double EvtBBScalar::F_A( double t ) const
 {
-    const double f_tilde[] = { 2. / 3 * x[0] + 0.5 * y[0], -478 };
+    const double f_tilde[] = { 2. / 3 * m_x[0] + 0.5 * m_y[0], -478 };
     const vector<double> v_f_tilde( f_tilde, f_tilde + 2 );
     return formFactorFit( t, v_f_tilde );
 }
 
 double EvtBBScalar::D_P( double t ) const
 {
-    const double d_bar[] = { 1.5 * y[0] * _massRatio, /*-952*/ 0 };
+    const double d_bar[] = { 1.5 * m_y[0] * m_massRatio, /*-952*/ 0 };
     const vector<double> v_d_bar( d_bar, d_bar + 2 );
     return formFactorFit( t, v_d_bar );
 }
 
 double EvtBBScalar::F_P( double t ) const
 {
-    const double f_bar[] = { ( x[0] - 0.5 * y[0] ) * _massRatio, /*-952*/ 0 };
+    const double f_bar[] = { ( m_x[0] - 0.5 * m_y[0] ) * m_massRatio, /*-952*/ 0 };
     const vector<double> v_f_bar( f_bar, f_bar + 2 );
     return formFactorFit( t, v_f_bar );
 }
 
 double EvtBBScalar::D_S( double t ) const
 {
-    return -1.5 * _massRatio * G_n( t );
+    return -1.5 * m_massRatio * G_n( t );
 }
 
 double EvtBBScalar::F_S( double t ) const
 {
-    return ( G_p( t ) + 0.5 * G_n( t ) ) * _massRatio;
+    return ( G_p( t ) + 0.5 * G_n( t ) ) * m_massRatio;
 }
 
 double EvtBBScalar::baryon_hA( double t ) const
 {
-    return ( 1 / _massRatio * baryon_gP( t ) - baryon_gA( t ) ) *
-           pow( _baryonMassSum, 2 ) / t;
+    return ( 1 / m_massRatio * baryon_gP( t ) - baryon_gA( t ) ) *
+           pow( m_baryonMassSum, 2 ) / t;
 }
 
 void EvtBBScalar::init()
@@ -305,12 +310,12 @@ void EvtBBScalar::init()
     if ( scalarId == EvtPDL::getStdHep( EvtPDL::getId( "pi+" ) ) or
          scalarId == EvtPDL::getStdHep( EvtPDL::getId( "pi-" ) ) or
          scalarId == EvtPDL::getStdHep( EvtPDL::getId( "pi0" ) ) ) {
-        _scalarType = "pi";
+        m_scalarType = "pi";
     } else if ( scalarId == EvtPDL::getStdHep( EvtPDL::getId( "K+" ) ) or
                 scalarId == EvtPDL::getStdHep( EvtPDL::getId( "K-" ) ) or
                 scalarId == EvtPDL::getStdHep( EvtPDL::getId( "K0" ) ) or
                 scalarId == EvtPDL::getStdHep( EvtPDL::getId( "anti-K0" ) ) ) {
-        _scalarType = "K";
+        m_scalarType = "K";
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "EvtBBScalar::init: Can only deal with Kaons or pions as the third particle\n"
@@ -324,10 +329,10 @@ void EvtBBScalar::init()
     double mass2 = EvtPDL::getMass( baryon2 );
     // This whole model deals only with baryons that differ in s-u
     if ( mass1 > mass2 )
-        _massRatio = ( mass1 - mass2 ) / ( m_s - m_u );
+        m_massRatio = ( mass1 - mass2 ) / ( m_ms - m_mu );
     else
-        _massRatio = ( mass2 - mass1 ) / ( m_s - m_u );
-    _baryonMassSum = mass1 + mass2;
+        m_massRatio = ( mass2 - mass1 ) / ( m_ms - m_mu );
+    m_baryonMassSum = mass1 + mass2;
 }
 
 // initialize phasespace and calculate the amplitude
@@ -354,10 +359,10 @@ void EvtBBScalar::decay( EvtParticle* p )
             EvtComplex amplitude;
             for ( int index = 0; index < 4; ++index ) {
                 amplitude += theAmplitudePartA.get( index ) *
-                             ( const_B * amp_B( theLambda, lambdaPol, theAntiP,
-                                                antiP_Pol, index ) +
-                               const_C * amp_C( theLambda, lambdaPol, theAntiP,
-                                                antiP_Pol, index ) );
+                             ( m_const_B * amp_B( theLambda, lambdaPol,
+                                                  theAntiP, antiP_Pol, index ) +
+                               m_const_C * amp_C( theLambda, lambdaPol,
+                                                  theAntiP, antiP_Pol, index ) );
             }
             vertex( i, j, amplitude );
         }
@@ -373,24 +378,25 @@ void EvtBBScalar::initProbMax()
 // Form factor f1 for B-pi transition
 double EvtBBScalar::B_pi_f1( double t ) const
 {
-    FormFactor f = _f1Map[_scalarType];
-    double mv2 = f.mV * f.mV;
-    return f.value / ( ( 1 - t / mv2 ) * ( 1 - f.sigma1 * t / mv2 +
-                                           f.sigma2 * t * t / mv2 / mv2 ) );
+    FormFactor f = m_f1Map[m_scalarType];
+    double mv2 = f.m_mV * f.m_mV;
+    return f.m_value / ( ( 1 - t / mv2 ) * ( 1 - f.m_sigma1 * t / mv2 +
+                                             f.m_sigma2 * t * t / mv2 / mv2 ) );
 }
 
 // Form factor f0 for B-pi transition
 double EvtBBScalar::B_pi_f0( double t ) const
 {
-    FormFactor f = _f0Map[_scalarType];
-    double mv2 = f.mV * f.mV;
-    return f.value / ( 1 - f.sigma1 * t / mv2 + f.sigma2 * t * t / mv2 / mv2 );
+    FormFactor f = m_f0Map[m_scalarType];
+    double mv2 = f.m_mV * f.m_mV;
+    return f.m_value /
+           ( 1 - f.m_sigma1 * t / mv2 + f.m_sigma2 * t * t / mv2 / mv2 );
 }
 
 // constants of the B and C parts of the amplitude
-const EvtComplex EvtBBScalar::const_B = V_ub * V_us_star * a1 -
-                                        V_tb * V_ts_star * a4;
-const EvtComplex EvtBBScalar::const_C = 2 * a6 * V_tb * V_ts_star;
+const EvtComplex EvtBBScalar::m_const_B = m_V_ub * m_V_us_star * m_a1 -
+                                          m_V_tb * m_V_ts_star * m_a4;
+const EvtComplex EvtBBScalar::m_const_C = 2 * m_a6 * m_V_tb * m_V_ts_star;
 
 // part A of the amplitude, see hep-ph/0204185
 const EvtVector4C EvtBBScalar::amp_A( const EvtVector4R& p4B,
@@ -478,7 +484,7 @@ const EvtComplex EvtBBScalar::amp_C( const EvtDiracParticle* baryon1,
         baryonSumP4.set( mu, dummy );
     }
     double t = ( baryon1->getP4Lab() + baryon2->getP4Lab() ).mass2();
-    return baryonSumP4.get( index ) / ( m_b - m_u ) *
+    return baryonSumP4.get( index ) / ( m_mb - m_mu ) *
            ( amp_C_scalarPart( b1Pol, b2Pol, t ) +
              amp_C_pseudoscalarPart( b1Pol, b2Pol, t ) );
 }

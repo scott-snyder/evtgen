@@ -32,39 +32,39 @@
 EvtFlatLineShape::EvtFlatLineShape( double mass, double width, double maxRange,
                                     EvtSpinType::spintype sp )
 {
-    _mass = mass;
-    _width = width;
-    _spin = sp;
-    _maxRange = maxRange;
+    m_mass = mass;
+    m_width = width;
+    m_spin = sp;
+    m_maxRange = maxRange;
 
     double maxdelta = width;
 
-    _massMax = mass + maxdelta;
-    _massMin = mass - maxdelta;
+    m_massMax = mass + maxdelta;
+    m_massMin = mass - maxdelta;
 
-    if ( _massMin < 0. )
-        _massMin = 0.;
+    if ( m_massMin < 0. )
+        m_massMin = 0.;
 }
 
 EvtFlatLineShape::EvtFlatLineShape( const EvtFlatLineShape& x ) :
     EvtAbsLineShape( x )
 {
-    _mass = x._mass;
-    _width = x._width;
-    _spin = x._spin;
-    _massMax = x._massMax;
-    _massMin = x._massMin;
-    _maxRange = x._maxRange;
+    m_mass = x.m_mass;
+    m_width = x.m_width;
+    m_spin = x.m_spin;
+    m_massMax = x.m_massMax;
+    m_massMin = x.m_massMin;
+    m_maxRange = x.m_maxRange;
 }
 
 EvtFlatLineShape& EvtFlatLineShape::operator=( const EvtFlatLineShape& x )
 {
-    _mass = x._mass;
-    _massMax = x._massMax;
-    _massMin = x._massMin;
-    _width = x._width;
-    _maxRange = x._maxRange;
-    _spin = x._spin;
+    m_mass = x.m_mass;
+    m_massMax = x.m_massMax;
+    m_massMin = x.m_massMin;
+    m_width = x.m_width;
+    m_maxRange = x.m_maxRange;
+    m_spin = x.m_spin;
     return *this;
 }
 
@@ -96,5 +96,5 @@ double EvtFlatLineShape::getMassProb( double mass, double massPar, int nDaug,
 double EvtFlatLineShape::getRandMass( EvtId*, int, EvtId*, EvtId*, double,
                                       double* )
 {
-    return EvtRandom::Flat( _massMin, _massMax );
+    return EvtRandom::Flat( m_massMin, m_massMax );
 }

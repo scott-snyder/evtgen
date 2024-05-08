@@ -43,12 +43,12 @@ class EvtPsi2JpsiPiPi : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    bool tree;
-    double phi;    // LO vs NLO mixing angle (radians)
-    double cosPhi, cos2Phi, sinPhi, sin2Phi;
+    bool m_tree;
+    double m_phi;    // LO vs NLO mixing angle (radians)
+    double m_cosPhi, m_cos2Phi, m_sinPhi, m_sin2Phi;
     // NLO corrections
-    static const int nQ = 6;    // number of terms in mPiPi interpolation
-    std::array<double, nQ> c0, c1, c2, s1, s2;
+    static const int m_nQ = 6;    // number of terms in mPiPi interpolation
+    std::array<double, m_nQ> m_c0, m_c1, m_c2, m_s1, m_s2;
 
     void setNLOArrays();
 };

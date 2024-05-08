@@ -148,21 +148,21 @@ class EvtParticle {
   * adds them to the parent. Note that momentum
   * is left uninitialized, this is _only_ creation.
   */
-    void makeDaughters( unsigned int ndaug, EvtId* id );
+    void makeDaughters( size_t ndaug, EvtId* id );
 
     /**
   * Creates the daughters in the list of ids and 
   * adds them to the parent. Note that momentum
   * is left uninitialized, this is _only_ creation.
   */
-    void makeDaughters( unsigned int ndaug, std::vector<EvtId> idVector );
+    void makeDaughters( size_t ndaug, std::vector<EvtId> idVector );
 
     /**
   * Similar to the routine above except that here 
   * momentum is generated according to phase space 
   * daughters are filled with this momentum.
   */
-    double initializePhaseSpace( unsigned int numdaughter, EvtId* daughters,
+    double initializePhaseSpace( size_t numdaughter, EvtId* daughters,
                                  bool forceResetMasses = false,
                                  double poleSize = -1., int whichTwo1 = 0,
                                  int whichTwo2 = 1 );
@@ -170,12 +170,12 @@ class EvtParticle {
     /**
   * Get pointer the the i:th daugther.
   */
-    EvtParticle* getDaug( const int i ) { return _daug[i]; }
+    EvtParticle* getDaug( const int i ) { return m_daug[i]; }
 
     /**
   * Get const pointer the the i:th daugther.
   */
-    const EvtParticle* getDaug( const int i ) const { return _daug[i]; }
+    const EvtParticle* getDaug( const int i ) const { return m_daug[i]; }
 
     /**
   * Iterates over the particles in a decay chain.
@@ -223,8 +223,8 @@ class EvtParticle {
   */
     void insertDaugPtr( int idaug, EvtParticle* partptr )
     {
-        _daug[idaug] = partptr;
-        partptr->_parent = this;
+        m_daug[idaug] = partptr;
+        partptr->m_parent = this;
     }
     /**
   * Returns mass of particle.
@@ -270,13 +270,13 @@ class EvtParticle {
   */
     void setP4( const EvtVector4R& p4 )
     {
-        _p = p4;
-        _pBeforeFSR = p4;
+        m_p = p4;
+        m_pBeforeFSR = p4;
     }
 
-    void setP4WithFSR( const EvtVector4R& p4 ) { _p = p4; }
+    void setP4WithFSR( const EvtVector4R& p4 ) { m_p = p4; }
 
-    void setFSRP4toZero() { _pBeforeFSR.set( 0.0, 0.0, 0.0, 0.0 ); }
+    void setFSRP4toZero() { m_pBeforeFSR.set( 0.0, 0.0, 0.0, 0.0 ); }
 
     /**
   * Retunrs the decay channel.
@@ -289,7 +289,7 @@ class EvtParticle {
     size_t getNDaug() const;
     void resetNDaug()
     {
-        _ndaug = 0;
+        m_ndaug = 0;
         return;
     }
 
@@ -340,7 +340,7 @@ class EvtParticle {
   */
     void setSpinDensityForward( const EvtSpinDensity& rho )
     {
-        _rhoForward = rho;
+        m_rhoForward = rho;
     }
 
     /**
@@ -365,53 +365,53 @@ class EvtParticle {
     /**
   * Get forward spin density matrix.
   */
-    EvtSpinDensity getSpinDensityForward() { return _rhoForward; }
+    EvtSpinDensity getSpinDensityForward() { return m_rhoForward; }
 
     /**
   * Set backward spin density matrix.
   */
     void setSpinDensityBackward( const EvtSpinDensity& rho )
     {
-        _rhoBackward = rho;
+        m_rhoBackward = rho;
     }
 
     /**
   * Get backward spin density matrix.
   */
-    EvtSpinDensity getSpinDensityBackward() { return _rhoBackward; }
+    EvtSpinDensity getSpinDensityBackward() { return m_rhoBackward; }
 
     //Hacks will be removed when better solutions are thought of!
     //This is used to suppress use of random numbers when doing initialization
     //of some models.
-    void noLifeTime() { _genlifetime = 0; }
+    void noLifeTime() { m_genlifetime = 0; }
 
     //lange - April 29, 2002
-    void setId( EvtId id ) { _id = id; }
+    void setId( EvtId id ) { m_id = id; }
     void initDecay( bool useMinMass = false );
     bool generateMassTree();
 
     double compMassProb();
 
     //setMass will blow away any existing 4vector
-    void setMass( double m ) { _p = EvtVector4R( m, 0.0, 0.0, 0.0 ); }
+    void setMass( double m ) { m_p = EvtVector4R( m, 0.0, 0.0, 0.0 ); }
 
-    //void setMixed() {_mix=true;}
-    //void setUnMixed() {_mix=false;}
-    //bool getMixed() {return _mix;}
+    //void setMixed() {m_mix=true;}
+    //void setUnMixed() {m_mix=false;}
+    //bool getMixed() {return m_mix;}
 
     //void takeCConj() {EvtGenReport(EVTGEN_INFO,"EvtGen") << "should take conj\n";}
 
     //this means that the particle has gone through initDecay
     // and thus has a mass
-    bool isInitialized() { return _isInit; }
-    bool hasValidP4() { return _validP4; }
-    bool isDecayed() { return _isDecayed; }
+    bool isInitialized() { return m_isInit; }
+    bool hasValidP4() { return m_validP4; }
+    bool isDecayed() { return m_isDecayed; }
 
     // decay prob - only relevent if already decayed
     // and is a scalar particle
     // returned is a double* that should be prob/probMax
     // FIXME - this should probably be changed to std::optional
-    const double* decayProb() const { return _decayProb; }
+    const double* decayProb() const { return m_decayProb; }
     void setDecayProb( double p );
 
     // Return the name of the particle (from the EvtId number)
@@ -422,7 +422,7 @@ class EvtParticle {
     // can set this to mean something specific, e.g. if a photon is FSR
     void setAttribute( std::string attName, int attValue )
     {
-        _intAttributes[attName] = attValue;
+        m_intAttributes[attName] = attValue;
     }
 
     // Retrieve the integer value for the given attribute name
@@ -432,7 +432,7 @@ class EvtParticle {
     // By default, nothing is set, but derived classes can set this to mean something specific
     void setAttributeDouble( std::string attName, double attValue )
     {
-        _dblAttributes[attName] = attValue;
+        m_dblAttributes[attName] = attValue;
     }
 
     // Retrieve the double value for the given attribute name
@@ -441,63 +441,63 @@ class EvtParticle {
   protected:
     void setp( double e, double px, double py, double pz )
     {
-        _p.set( e, px, py, pz );
-        _pBeforeFSR = _p;
+        m_p.set( e, px, py, pz );
+        m_pBeforeFSR = m_p;
     }
 
     void setp( const EvtVector4R& p4 )
     {
-        _p = p4;
-        _pBeforeFSR = _p;
+        m_p = p4;
+        m_pBeforeFSR = m_p;
     }
 
     void setpart_num( EvtId particle_number )
     {
-        assert( _channel == -10 || _id.getId() == particle_number.getId() ||
-                _id.getId() == -1 );
-        _id = particle_number;
+        assert( m_channel == -10 || m_id.getId() == particle_number.getId() ||
+                m_id.getId() == -1 );
+        m_id = particle_number;
     }
-    bool _validP4;
+    bool m_validP4;
 
     // A typedef to define the attribute (name, integer) map
     typedef std::map<std::string, int> EvtAttIntMap;
-    EvtAttIntMap _intAttributes;
+    EvtAttIntMap m_intAttributes;
 
     // A typedef to define the attribute (name, double) map
     typedef std::map<std::string, double> EvtAttDblMap;
-    EvtAttDblMap _dblAttributes;
+    EvtAttDblMap m_dblAttributes;
 
   private:
-    EvtParticle* _daug[MAX_DAUG];
-    size_t _ndaug;
-    EvtParticle* _parent;
-    int _channel;
-    int _first;
-    EvtId _id;
-    EvtVector4R _p;
-    EvtVector4R _pBeforeFSR;
-    double _t;
-    bool _isInit;
-    bool _isDecayed;
+    EvtParticle* m_daug[MAX_DAUG];
+    size_t m_ndaug;
+    EvtParticle* m_parent;
+    int m_channel;
+    int m_first;
+    EvtId m_id;
+    EvtVector4R m_p;
+    EvtVector4R m_pBeforeFSR;
+    double m_t;
+    bool m_isInit;
+    bool m_isDecayed;
 
-    //bool _mix;
+    //bool m_mix;
 
-    EvtSpinDensity _rhoForward;
-    EvtSpinDensity _rhoBackward;
+    EvtSpinDensity m_rhoForward;
+    EvtSpinDensity m_rhoBackward;
 
     void makeStdHepRec( int firstparent, int lastparent, EvtStdHep& stdhep,
                         EvtSecondary& secondary, EvtId* stable_parent_ihep );
     void makeStdHepRec( int firstparent, int lastparent, EvtStdHep& stdhep );
 
     //This is a hack until things gets straightened out. (Ryd)
-    int _genlifetime;
+    int m_genlifetime;
 
     //should never be used, therefor is private.
     //these does _not_ have an implementation
     EvtParticle& operator=( const EvtParticle& p );
     EvtParticle( const EvtParticle& p );
 
-    double* _decayProb;
+    double* m_decayProb;
 };
 
 #endif

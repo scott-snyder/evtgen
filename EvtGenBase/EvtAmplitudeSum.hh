@@ -37,19 +37,19 @@ class EvtAmplitudeSum : public EvtAmplitude<T> {
         int i;
         for ( i = 0; i < other.nTerms(); i++ ) {
             EvtComplex c = other.c( i );
-            _c.push_back( c );
+            m_c.push_back( c );
             EvtAmplitude<T>* amp = other.getTerm( i );
             assert( amp );
             EvtAmplitude<T>* amp1 = amp->clone();
             assert( amp1 );
-            _term.push_back( amp1 );
+            m_term.push_back( amp1 );
         }
     }
 
     virtual ~EvtAmplitudeSum()
     {
-        for ( size_t i = 0; i < _term.size(); i++ ) {
-            delete _term[i];
+        for ( size_t i = 0; i < m_term.size(); i++ ) {
+            delete m_term[i];
         }
     }
 
@@ -60,18 +60,18 @@ class EvtAmplitudeSum : public EvtAmplitude<T> {
 
     void addTerm( EvtComplex c, const EvtAmplitude<T>& amp )
     {
-        _c.push_back( c );
-        _term.push_back( amp.clone() );
+        m_c.push_back( c );
+        m_term.push_back( amp.clone() );
     }
 
     void addOwnedTerm( EvtComplex c, std::unique_ptr<EvtAmplitude<T>> amp )
     {
         assert( amp );
-        _c.push_back( c );
-        _term.push_back( amp.release() );
+        m_c.push_back( c );
+        m_term.push_back( amp.release() );
     }
 
-    int nTerms() const { return _term.size(); }    // number of terms
+    int nTerms() const { return m_term.size(); }    // number of terms
 
     void print() const
     {
@@ -79,31 +79,31 @@ class EvtAmplitudeSum : public EvtAmplitude<T> {
         printf( "Amplitude has %d terms\n", N );
         int i;
         for ( i = 0; i < N; i++ ) {
-            printf( "c%d = (%f,%f)\n", i, real( _c[i] ), imag( _c[i] ) );
-            assert( _term[i] );
+            printf( "c%d = (%f,%f)\n", i, real( m_c[i] ), imag( m_c[i] ) );
+            assert( m_term[i] );
         }
     }
 
-    inline EvtComplex c( int i ) const { return _c[i]; }
-    inline EvtAmplitude<T>* getTerm( int i ) const { return _term[i]; }
+    inline EvtComplex c( int i ) const { return m_c[i]; }
+    inline EvtAmplitude<T>* getTerm( int i ) const { return m_term[i]; }
 
   protected:
     EvtComplex amplitude( const T& p ) const override
     {
-        if ( _term.size() == 0 )
+        if ( m_term.size() == 0 )
             printf( "Warning: amplitude sum has zero terms\n" );
 
         EvtComplex value = 0.;
 
-        for ( size_t i = 0; i < _term.size(); i++ ) {
-            value += _c[i] * _term[i]->evaluate( p );
+        for ( size_t i = 0; i < m_term.size(); i++ ) {
+            value += m_c[i] * m_term[i]->evaluate( p );
         }
         return value;
     }
 
   private:
-    std::vector<EvtComplex> _c;             // coefficients
-    std::vector<EvtAmplitude<T>*> _term;    // pointers to amplitudes
+    std::vector<EvtComplex> m_c;             // coefficients
+    std::vector<EvtAmplitude<T>*> m_term;    // pointers to amplitudes
 };
 
 #endif

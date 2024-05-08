@@ -48,7 +48,7 @@ EvtDecayBase* EvtHQET::clone()
 void EvtHQET::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
-    calcamp->CalcAmp( p, _amp2, hqetffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_hqetffmodel.get() );
 }
 
 void EvtHQET::initProbMax()
@@ -60,8 +60,8 @@ void EvtHQET::initProbMax()
     lnum = getDaug( 1 );
     nunum = getDaug( 2 );
 
-    double mymaxprob = calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
-                                             hqetffmodel.get() );
+    double mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
+                                               m_hqetffmodel.get() );
 
     setProbMax( mymaxprob );
 }
@@ -81,19 +81,20 @@ void EvtHQET::init()
     if ( d1type == EvtSpinType::SCALAR ) {
         checkNArg( 1, 2 );
         if ( getNArg() == 1 )
-            hqetffmodel = std::make_unique<EvtHQETFF>( getArg( 0 ) );
+            m_hqetffmodel = std::make_unique<EvtHQETFF>( getArg( 0 ) );
         else
-            hqetffmodel = std::make_unique<EvtHQETFF>( getArg( 0 ), getArg( 1 ) );
-        calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
+            m_hqetffmodel = std::make_unique<EvtHQETFF>( getArg( 0 ),
+                                                         getArg( 1 ) );
+        m_calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
     } else if ( d1type == EvtSpinType::VECTOR ) {
         checkNArg( 3, 4 );
         if ( getNArg() == 3 )
-            hqetffmodel = std::make_unique<EvtHQETFF>( getArg( 0 ), getArg( 1 ),
-                                                       getArg( 2 ) );
+            m_hqetffmodel = std::make_unique<EvtHQETFF>( getArg( 0 ), getArg( 1 ),
+                                                         getArg( 2 ) );
         else
-            hqetffmodel = std::make_unique<EvtHQETFF>( getArg( 0 ), getArg( 1 ),
-                                                       getArg( 2 ), getArg( 3 ) );
-        calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+            m_hqetffmodel = std::make_unique<EvtHQETFF>(
+                getArg( 0 ), getArg( 1 ), getArg( 2 ), getArg( 3 ) );
+        m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "HQET model handles only scalar and vector meson daughters. Sorry."

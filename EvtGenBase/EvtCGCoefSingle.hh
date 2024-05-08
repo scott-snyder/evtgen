@@ -33,13 +33,13 @@ class EvtCGCoefSingle final {
     void init( int j1, int j2 );
     double& cg( int J, int M, int m1, int m2 );
 
-    int _j1;
-    int _j2;
+    int m_j1;
+    int m_j2;
 
-    int _Jmax;
-    int _Jmin;
+    int m_Jmax;
+    int m_Jmin;
 
-    std::vector<std::vector<std::vector<double>>> _table;
+    std::vector<std::vector<std::vector<double>>> m_table;
 };
 
 #endif

@@ -87,11 +87,11 @@ class EvtDalitzReso final {
         WA76
     };
 
-    EvtDalitzReso() : _typeN( NON_RES ){};
+    EvtDalitzReso() : m_typeN( NON_RES ){};
 
     EvtDalitzReso( const EvtDalitzPlot& dp, EvtCyclic3::Pair pairRes,
                    NumType typeN, double alpha = 0.0 ) :
-        _dp( dp ), _pairRes( pairRes ), _typeN( typeN ), _alpha( alpha ){};
+        m_dp( dp ), m_pairRes( pairRes ), m_typeN( typeN ), m_alpha( alpha ){};
 
     EvtDalitzReso( const EvtDalitzPlot& dp, EvtCyclic3::Pair pairAng,
                    EvtCyclic3::Pair pairRes, EvtSpinType::spintype spin,
@@ -126,12 +126,12 @@ class EvtDalitzReso final {
 
     EvtComplex evaluate( const EvtDalitzPoint& p );
 
-    void set_fd( double R ) { _vd.set_f( R ); }
-    void set_fb( double R ) { _vb.set_f( R ); }
+    void set_fd( double R ) { m_vd.set_f( R ); }
+    void set_fb( double R ) { m_vb.set_f( R ); }
 
     void addFlatteParam( const EvtFlatteParam& param )
     {
-        _flatteParams.push_back( param );
+        m_flatteParams.push_back( param );
     }
 
   private:
@@ -171,59 +171,59 @@ class EvtDalitzReso final {
     }
 
     // Dalitz plot
-    EvtDalitzPlot _dp;
+    EvtDalitzPlot m_dp;
 
     // Pairing indices:
-    EvtCyclic3::Pair _pairAng;    // angular
-    EvtCyclic3::Pair _pairRes;    // resonance
+    EvtCyclic3::Pair m_pairAng;    // angular
+    EvtCyclic3::Pair m_pairRes;    // resonance
 
     // Spin
-    EvtSpinType::spintype _spin;
+    EvtSpinType::spintype m_spin;
 
     // Numerator type
-    NumType _typeN;
+    NumType m_typeN;
 
     // Nominal mass and width
-    double _m0, _g0;
+    double m_m0, m_g0;
 
     // Vertices
-    EvtTwoBodyVertex _vb;
-    EvtTwoBodyVertex _vd;
+    EvtTwoBodyVertex m_vb;
+    EvtTwoBodyVertex m_vd;
 
     // Daughter masses
-    double _massFirst, _massSecond;
+    double m_massFirst, m_massSecond;
 
     // variables for electromagnetic mass mixing
-    double _m0_mix, _g0_mix, _delta_mix;
-    EvtComplex _amp_mix;
+    double m_m0_mix, m_g0_mix, m_delta_mix;
+    EvtComplex m_amp_mix;
 
     // variables for coupled Breit-Wigner
-    double _g1, _g2;
-    CouplingType _coupling2;
+    double m_g1, m_g2;
+    CouplingType m_coupling2;
 
     // variables for Blatt-Weisskopf form factors
-    double _f_b, _f_d;
+    double m_f_b, m_f_d;
 
     // K-matrix
-    int _kmatrix_index;
-    EvtComplex _fr12prod, _fr13prod, _fr14prod, _fr15prod;
-    double _s0prod;
+    int m_kmatrix_index;
+    EvtComplex m_fr12prod, m_fr13prod, m_fr14prod, m_fr15prod;
+    double m_s0prod;
 
     // LASS
-    double _a;
-    double _r;
-    double _Blass;
-    double _phiB;
-    double _R;
-    double _phiR;
-    double _cutoff;
-    bool _scaleByMOverQ;
+    double m_a;
+    double m_r;
+    double m_Blass;
+    double m_phiB;
+    double m_R;
+    double m_phiR;
+    double m_cutoff;
+    bool m_scaleByMOverQ;
 
     //Nonresonant
-    double _alpha;
+    double m_alpha;
 
     // Flatte
-    std::vector<EvtFlatteParam> _flatteParams;
+    std::vector<EvtFlatteParam> m_flatteParams;
 };
 
 #endif

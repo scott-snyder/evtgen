@@ -29,13 +29,13 @@ class EvtDecayProb : public EvtDecayBase {
   public:
     void makeDecay( EvtParticle* p, bool recursive = true ) override;
 
-    void setProb( double prob ) { _prob = prob; }
-    double getProb() { return _prob; }
-    inline void setWeight( double weight ) { _weight = weight; }
+    void setProb( double prob ) { m_prob = prob; }
+    double getProb() { return m_prob; }
+    inline void setWeight( double weight ) { m_weight = weight; }
 
   private:
-    double _prob{ 1.0 };
-    double _weight{ 1.0 };
+    double m_prob{ 1.0 };
+    double m_weight{ 1.0 };
 };
 
 #endif

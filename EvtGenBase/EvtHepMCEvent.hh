@@ -95,7 +95,7 @@ class EvtHepMCEvent {
     void constructEvent( EvtParticle* baseParticle );
     void constructEvent( EvtParticle* baseParticle, EvtVector4R& translation );
 
-    GenEvent* getEvent() { return _theEvent; }
+    GenEvent* getEvent() { return m_theEvent; }
 
     // Methods used to create GenParticles and FourVectors of vertices.
     // Make these public so that other classes may call them if they use EvtHepMCEvent.
@@ -117,8 +117,8 @@ class EvtHepMCEvent {
     // their descendents.
     void addVertex( EvtParticle* inEvtParticle, GenParticlePtr inGenParticle );
 
-    GenEvent* _theEvent;
-    EvtVector4R _translation;
+    GenEvent* m_theEvent;
+    EvtVector4R m_translation;
 };
 
 #endif

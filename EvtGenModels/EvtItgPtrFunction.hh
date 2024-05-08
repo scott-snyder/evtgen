@@ -44,9 +44,9 @@ class EvtItgPtrFunction : public EvtItgAbsFunction {
 
   private:
     // Data members
-    double ( *_myFunction )( double x, const std::vector<double>& coeffs1 );
+    double ( *m_myFunction )( double x, const std::vector<double>& coeffs1 );
 
-    std::vector<double> _coeffs1;
+    std::vector<double> m_coeffs1;
 };
 
 #endif    // EVTITGPTRFUNCTION_HH

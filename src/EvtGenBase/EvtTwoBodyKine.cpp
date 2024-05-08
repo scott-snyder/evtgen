@@ -29,12 +29,12 @@
 using std::endl;
 using std::ostream;
 
-EvtTwoBodyKine::EvtTwoBodyKine() : _mA( 0. ), _mB( 0. ), _mAB( 0. )
+EvtTwoBodyKine::EvtTwoBodyKine() : m_mA( 0. ), m_mB( 0. ), m_mAB( 0. )
 {
 }
 
 EvtTwoBodyKine::EvtTwoBodyKine( double mA, double mB, double mAB ) :
-    _mA( mA ), _mB( mB ), _mAB( mAB )
+    m_mA( mA ), m_mB( mB ), m_mAB( mAB )
 {
     if ( mAB < mA + mB ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -45,11 +45,11 @@ EvtTwoBodyKine::EvtTwoBodyKine( double mA, double mB, double mAB ) :
 
 double EvtTwoBodyKine::m( Index i ) const
 {
-    double ret = _mAB;
+    double ret = m_mAB;
     if ( A == i )
-        ret = _mA;
+        ret = m_mA;
     else if ( B == i )
-        ret = _mB;
+        ret = m_mB;
 
     return ret;
 }
@@ -59,17 +59,17 @@ double EvtTwoBodyKine::p( Index i ) const
     double p0 = 0.;
 
     if ( i == AB ) {
-        double x = _mAB * _mAB - _mA * _mA - _mB * _mB;
-        double y = 2 * _mA * _mB;
-        p0 = sqrt( x * x - y * y ) / 2. / _mAB;
+        double x = m_mAB * m_mAB - m_mA * m_mA - m_mB * m_mB;
+        double y = 2 * m_mA * m_mB;
+        p0 = sqrt( x * x - y * y ) / 2. / m_mAB;
     } else if ( i == A ) {
-        double x = _mA * _mA - _mAB * _mAB - _mB * _mB;
-        double y = 2 * _mAB * _mB;
-        p0 = sqrt( x * x - y * y ) / 2. / _mA;
+        double x = m_mA * m_mA - m_mAB * m_mAB - m_mB * m_mB;
+        double y = 2 * m_mAB * m_mB;
+        p0 = sqrt( x * x - y * y ) / 2. / m_mA;
     } else {
-        double x = _mB * _mB - _mAB * _mAB - _mA * _mA;
-        double y = 2 * _mAB * _mA;
-        p0 = sqrt( x * x - y * y ) / 2. / _mB;
+        double x = m_mB * m_mB - m_mAB * m_mAB - m_mA * m_mA;
+        double y = 2 * m_mAB * m_mA;
+        p0 = sqrt( x * x - y * y ) / 2. / m_mB;
     }
 
     return p0;
@@ -87,9 +87,9 @@ double EvtTwoBodyKine::e( Index i, Index j ) const
 
 void EvtTwoBodyKine::print( ostream& os ) const
 {
-    os << " mA = " << _mA << endl;
-    os << " mB = " << _mB << endl;
-    os << "mAB = " << _mAB << endl;
+    os << " mA = " << m_mA << endl;
+    os << " mB = " << m_mB << endl;
+    os << "mAB = " << m_mAB << endl;
 }
 
 ostream& operator<<( ostream& os, const EvtTwoBodyKine& p )

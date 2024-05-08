@@ -34,9 +34,9 @@
 
 Evtbs2llGammaMNT::~Evtbs2llGammaMNT()
 {
-    delete _mntffmodel;
-    if ( _calcamp )
-        delete _calcamp;
+    delete m_mntffmodel;
+    if ( m_calcamp )
+        delete m_calcamp;
 }
 
 // The module name specification
@@ -97,10 +97,10 @@ void Evtbs2llGammaMNT::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::DIRAC );
 
-    _mntffmodel = new Evtbs2llGammaFFMNT();
-    _wilscoeff = new EvtbTosllWilsCoeffNLO();
+    m_mntffmodel = new Evtbs2llGammaFFMNT();
+    m_wilscoeff = new EvtbTosllWilsCoeffNLO();
     if ( photontype == EvtSpinType::PHOTON ) {
-        _calcamp = new Evtbs2llGammaAmp();
+        m_calcamp = new Evtbs2llGammaAmp();
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "The init()-function in the Evtbs2llGammaMNT generator:"
@@ -132,10 +132,10 @@ void Evtbs2llGammaMNT::initProbMax()
     double CKM_barrho = getArg( 7 );
     double CKM_bareta = getArg( 8 );
 
-    mymaxprob = _calcamp->CalcMaxProb( parnum, photnum, l1num, l2num,
-                                       _mntffmodel, _wilscoeff, mu, Nf,
-                                       res_swch, ias, Egamma_max, CKM_A,
-                                       CKM_lambda, CKM_barrho, CKM_bareta );
+    mymaxprob = m_calcamp->CalcMaxProb( parnum, photnum, l1num, l2num,
+                                        m_mntffmodel, m_wilscoeff, mu, Nf,
+                                        res_swch, ias, Egamma_max, CKM_A,
+                                        CKM_lambda, CKM_barrho, CKM_bareta );
 
     if ( mymaxprob <= 0.0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -164,8 +164,9 @@ void Evtbs2llGammaMNT::decay( EvtParticle* p )
 
     // The class "Evtbs2llGammaFFMNT" is the derived class of the
     // class  "Evtbs2llGammaFF" (see the file "Evtbs2llGammaFF.hh")
-    _calcamp->CalcAmp( p, _amp2, _mntffmodel, _wilscoeff, mu, Nf, res_swch, ias,
-                       Egamma_max, CKM_A, CKM_lambda, CKM_barrho, CKM_bareta );
+    m_calcamp->CalcAmp( p, m_amp2, m_mntffmodel, m_wilscoeff, mu, Nf, res_swch,
+                        ias, Egamma_max, CKM_A, CKM_lambda, CKM_barrho,
+                        CKM_bareta );
 
     //  EvtGenReport(EVTGEN_NOTICE,"EvtGen") << "\n "
     //                          << "\n The function Evtbs2llGammaMNT::decay(...) passed with arguments:"

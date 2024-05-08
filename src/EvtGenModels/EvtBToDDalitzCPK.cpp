@@ -71,7 +71,7 @@ void EvtBToDDalitzCPK::init()
     static EvtId D0 = EvtPDL::getId( "D0" );
     static EvtId D0B = EvtPDL::getId( "anti-D0" );
 
-    _flag = 0;
+    m_flag = 0;
 
     EvtId parent = getParentId();
     EvtId d1 = getDaug( 0 );
@@ -79,21 +79,21 @@ void EvtBToDDalitzCPK::init()
 
     if ( ( ( parent == BP ) || ( parent == BM ) ) &&
          ( ( d1 == D0 ) || ( d1 == D0B ) ) && ( ( d2 == KP ) || ( d2 == KM ) ) ) {
-        _flag = 1;
+        m_flag = 1;
         // PHSP Decay
     } else if ( ( ( parent == BP ) || ( parent == BM ) ) &&
                 ( ( d1 == KP ) || ( d1 == KM ) ) &&
                 ( ( d2 == D0 ) || ( d2 == D0B ) ) ) {
-        _flag = 1;
+        m_flag = 1;
         // also PHSP decay
     } else if ( ( ( parent == B0 ) || ( parent == B0B ) ) &&
                 ( ( d1 == KS ) || ( d1 == KSB ) ) &&
                 ( ( d2 == D0 ) || ( d2 == D0B ) ) ) {
-        _flag = 2;
+        m_flag = 2;
         // SVS Decay
     }
 
-    if ( _flag == 0 ) {
+    if ( m_flag == 0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "EvtBToDDalitzCPK : Invalid mode." << std::endl;
         assert( 0 );
@@ -104,10 +104,10 @@ void EvtBToDDalitzCPK::init()
 //=============================================================================
 void EvtBToDDalitzCPK::initProbMax()
 {
-    if ( _flag == 1 ) {
+    if ( m_flag == 1 ) {
         // PHSP
         setProbMax( 0. );
-    } else if ( _flag == 2 ) {
+    } else if ( m_flag == 2 ) {
         // SVS
         setProbMax( 1.0 );
     }
@@ -117,11 +117,11 @@ void EvtBToDDalitzCPK::initProbMax()
 //=============================================================================
 void EvtBToDDalitzCPK::decay( EvtParticle* p )
 {
-    if ( _flag == 1 ) {
+    if ( m_flag == 1 ) {
         // PHSP
         p->initializePhaseSpace( getNDaug(), getDaugs() );
         vertex( 0. );
-    } else if ( _flag == 2 ) {
+    } else if ( m_flag == 2 ) {
         // SVS
         p->initializePhaseSpace( getNDaug(), getDaugs() );
 
@@ -130,10 +130,10 @@ void EvtBToDDalitzCPK::decay( EvtParticle* p )
         double massv = v->mass();
         EvtVector4R momv = v->getP4();
         EvtVector4R moms = p->getDaug( 1 )->getP4();
-        double m_parent = p->mass();
+        double parentMass = p->mass();
         EvtVector4R p4_parent = momv + moms;
 
-        double norm = massv / ( momv.d3mag() * m_parent );
+        double norm = massv / ( momv.d3mag() * parentMass );
         p4_parent = norm * p4_parent;
         vertex( 0, p4_parent * ( v->epsParent( 0 ) ) );
         vertex( 1, p4_parent * ( v->epsParent( 1 ) ) );

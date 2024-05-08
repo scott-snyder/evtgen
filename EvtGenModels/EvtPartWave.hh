@@ -46,7 +46,7 @@ class EvtPartWave : public EvtDecayAmp {
   private:
     void fillHelicity( int* lambda2, int n, int J2 );
 
-    std::unique_ptr<EvtEvalHelAmp> _evalHelAmp;
+    std::unique_ptr<EvtEvalHelAmp> m_evalHelAmp;
 };
 
 #endif

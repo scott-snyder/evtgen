@@ -42,10 +42,10 @@ class EvtBcTMuNu : public EvtDecayAmp {
     void initProbMax() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> ffmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> calcamp;
-    int whichfit;
-    int idTensor;
+    std::unique_ptr<EvtSemiLeptonicFF> m_ffmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
+    int m_whichfit;
+    int m_idTensor;
 };
 
 #endif

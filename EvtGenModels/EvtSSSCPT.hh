@@ -36,8 +36,8 @@ class EvtSSSCPT : public EvtDecayAmp {
 
   private:
     // Amplitude coeffs
-    EvtComplex A, Abar;
-    EvtComplex P, Q, D, Im;
+    EvtComplex m_A, m_Abar;
+    EvtComplex m_P, m_Q, m_D, m_Im;
     // Set amplitude coeffs from decay model params
     void setAmpCoeffs();
 };

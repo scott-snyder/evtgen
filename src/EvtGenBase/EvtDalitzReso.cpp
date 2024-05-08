@@ -43,47 +43,48 @@ using EvtCyclic3::Pair;
 EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairAng, Pair pairRes,
                               EvtSpinType::spintype spin, double m0, double g0,
                               NumType typeN, double f_b, double f_d ) :
-    _dp( dp ),
-    _pairAng( pairAng ),
-    _pairRes( pairRes ),
-    _spin( spin ),
-    _typeN( typeN ),
-    _m0( m0 ),
-    _g0( g0 ),
-    _massFirst( dp.m( first( pairRes ) ) ),
-    _massSecond( dp.m( second( pairRes ) ) ),
-    _m0_mix( -1. ),
-    _g0_mix( 0. ),
-    _delta_mix( 0. ),
-    _amp_mix( 0., 0. ),
-    _g1( -1. ),
-    _g2( -1. ),
-    _coupling2( Undefined ),
-    _f_b( f_b ),
-    _f_d( f_d ),
-    _kmatrix_index( -1 ),
-    _fr12prod( 0., 0. ),
-    _fr13prod( 0., 0. ),
-    _fr14prod( 0., 0. ),
-    _fr15prod( 0., 0. ),
-    _s0prod( 0. ),
-    _a( 0. ),
-    _r( 0. ),
-    _Blass( 0. ),
-    _phiB( 0. ),
-    _R( 0. ),
-    _phiR( 0. ),
-    _cutoff( -1. ),
-    _scaleByMOverQ( false ),
-    _alpha( 0. )
+    m_dp( dp ),
+    m_pairAng( pairAng ),
+    m_pairRes( pairRes ),
+    m_spin( spin ),
+    m_typeN( typeN ),
+    m_m0( m0 ),
+    m_g0( g0 ),
+    m_massFirst( dp.m( first( pairRes ) ) ),
+    m_massSecond( dp.m( second( pairRes ) ) ),
+    m_m0_mix( -1. ),
+    m_g0_mix( 0. ),
+    m_delta_mix( 0. ),
+    m_amp_mix( 0., 0. ),
+    m_g1( -1. ),
+    m_g2( -1. ),
+    m_coupling2( Undefined ),
+    m_f_b( f_b ),
+    m_f_d( f_d ),
+    m_kmatrix_index( -1 ),
+    m_fr12prod( 0., 0. ),
+    m_fr13prod( 0., 0. ),
+    m_fr14prod( 0., 0. ),
+    m_fr15prod( 0., 0. ),
+    m_s0prod( 0. ),
+    m_a( 0. ),
+    m_r( 0. ),
+    m_Blass( 0. ),
+    m_phiB( 0. ),
+    m_R( 0. ),
+    m_phiR( 0. ),
+    m_cutoff( -1. ),
+    m_scaleByMOverQ( false ),
+    m_alpha( 0. )
 {
-    _vb = EvtTwoBodyVertex( _m0, _dp.m( EvtCyclic3::other( _pairRes ) ),
-                            _dp.bigM(), _spin );
-    _vd = EvtTwoBodyVertex( _massFirst, _massSecond, _m0, _spin );
-    _vb.set_f( _f_b );    // Default values for Blatt-Weisskopf factors are 0.0 and 1.5.
-    _vd.set_f( _f_d );
-    assert( _typeN != K_MATRIX && _typeN != K_MATRIX_I &&
-            _typeN != K_MATRIX_II );    // single BW cannot be K-matrix
+    m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
+                             m_dp.bigM(), m_spin );
+    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
+    m_vb.set_f(
+        m_f_b );    // Default values for Blatt-Weisskopf factors are 0.0 and 1.5.
+    m_vd.set_f( m_f_d );
+    assert( m_typeN != K_MATRIX && m_typeN != K_MATRIX_I &&
+            m_typeN != K_MATRIX_II );    // single BW cannot be K-matrix
 }
 
 // Breit-Wigner with electromagnetic mass mixing
@@ -91,47 +92,48 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairAng, Pair pairRe
                               EvtSpinType::spintype spin, double m0, double g0,
                               NumType typeN, double m0_mix, double g0_mix,
                               double delta_mix, EvtComplex amp_mix ) :
-    _dp( dp ),
-    _pairAng( pairAng ),
-    _pairRes( pairRes ),
-    _spin( spin ),
-    _typeN( typeN ),
-    _m0( m0 ),
-    _g0( g0 ),
-    _massFirst( dp.m( first( pairRes ) ) ),
-    _massSecond( dp.m( second( pairRes ) ) ),
-    _m0_mix( m0_mix ),
-    _g0_mix( g0_mix ),
-    _delta_mix( delta_mix ),
-    _amp_mix( amp_mix ),
-    _g1( -1. ),
-    _g2( -1. ),
-    _coupling2( Undefined ),
-    _f_b( 0.0 ),
-    _f_d( 1.5 ),
-    _kmatrix_index( -1 ),
-    _fr12prod( 0., 0. ),
-    _fr13prod( 0., 0. ),
-    _fr14prod( 0., 0. ),
-    _fr15prod( 0., 0. ),
-    _s0prod( 0. ),
-    _a( 0. ),
-    _r( 0. ),
-    _Blass( 0. ),
-    _phiB( 0. ),
-    _R( 0. ),
-    _phiR( 0. ),
-    _cutoff( -1. ),
-    _scaleByMOverQ( false ),
-    _alpha( 0. )
+    m_dp( dp ),
+    m_pairAng( pairAng ),
+    m_pairRes( pairRes ),
+    m_spin( spin ),
+    m_typeN( typeN ),
+    m_m0( m0 ),
+    m_g0( g0 ),
+    m_massFirst( dp.m( first( pairRes ) ) ),
+    m_massSecond( dp.m( second( pairRes ) ) ),
+    m_m0_mix( m0_mix ),
+    m_g0_mix( g0_mix ),
+    m_delta_mix( delta_mix ),
+    m_amp_mix( amp_mix ),
+    m_g1( -1. ),
+    m_g2( -1. ),
+    m_coupling2( Undefined ),
+    m_f_b( 0.0 ),
+    m_f_d( 1.5 ),
+    m_kmatrix_index( -1 ),
+    m_fr12prod( 0., 0. ),
+    m_fr13prod( 0., 0. ),
+    m_fr14prod( 0., 0. ),
+    m_fr15prod( 0., 0. ),
+    m_s0prod( 0. ),
+    m_a( 0. ),
+    m_r( 0. ),
+    m_Blass( 0. ),
+    m_phiB( 0. ),
+    m_R( 0. ),
+    m_phiR( 0. ),
+    m_cutoff( -1. ),
+    m_scaleByMOverQ( false ),
+    m_alpha( 0. )
 {
-    _vb = EvtTwoBodyVertex( _m0, _dp.m( EvtCyclic3::other( _pairRes ) ),
-                            _dp.bigM(), _spin );
-    _vd = EvtTwoBodyVertex( _massFirst, _massSecond, _m0, _spin );
-    _vb.set_f( 0.0 );    // Default values for Blatt-Weisskopf factors.
-    _vd.set_f( 1.5 );
+    m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
+                             m_dp.bigM(), m_spin );
+    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
+    m_vb.set_f( 0.0 );    // Default values for Blatt-Weisskopf factors.
+    m_vd.set_f( 1.5 );
     // single BW (with electromagnetic mixing) cannot be K-matrix
-    assert( _typeN != K_MATRIX && _typeN != K_MATRIX_I && _typeN != K_MATRIX_II );
+    assert( m_typeN != K_MATRIX && m_typeN != K_MATRIX_I &&
+            m_typeN != K_MATRIX_II );
 }
 
 // coupled Breit-Wigner
@@ -139,50 +141,50 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairAng,
                               Pair pairRes, EvtSpinType::spintype spin,
                               double m0, NumType typeN, double g1, double g2,
                               CouplingType coupling2 ) :
-    _dp( dp ),
-    _pairAng( pairAng ),
-    _pairRes( pairRes ),
-    _spin( spin ),
-    _typeN( typeN ),
-    _m0( m0 ),
-    _g0( -1. ),
-    _massFirst( dp.m( first( pairRes ) ) ),
-    _massSecond( dp.m( second( pairRes ) ) ),
-    _m0_mix( -1. ),
-    _g0_mix( 0. ),
-    _delta_mix( 0. ),
-    _amp_mix( 0., 0. ),
-    _g1( g1 ),
-    _g2( g2 ),
-    _coupling2( coupling2 ),
-    _f_b( 0.0 ),
-    _f_d( 1.5 ),
-    _kmatrix_index( -1 ),
-    _fr12prod( 0., 0. ),
-    _fr13prod( 0., 0. ),
-    _fr14prod( 0., 0. ),
-    _fr15prod( 0., 0. ),
-    _s0prod( 0. ),
-    _a( 0. ),
-    _r( 0. ),
-    _Blass( 0. ),
-    _phiB( 0. ),
-    _R( 0. ),
-    _phiR( 0. ),
-    _cutoff( -1. ),
-    _scaleByMOverQ( false ),
-    _alpha( 0. )
+    m_dp( dp ),
+    m_pairAng( pairAng ),
+    m_pairRes( pairRes ),
+    m_spin( spin ),
+    m_typeN( typeN ),
+    m_m0( m0 ),
+    m_g0( -1. ),
+    m_massFirst( dp.m( first( pairRes ) ) ),
+    m_massSecond( dp.m( second( pairRes ) ) ),
+    m_m0_mix( -1. ),
+    m_g0_mix( 0. ),
+    m_delta_mix( 0. ),
+    m_amp_mix( 0., 0. ),
+    m_g1( g1 ),
+    m_g2( g2 ),
+    m_coupling2( coupling2 ),
+    m_f_b( 0.0 ),
+    m_f_d( 1.5 ),
+    m_kmatrix_index( -1 ),
+    m_fr12prod( 0., 0. ),
+    m_fr13prod( 0., 0. ),
+    m_fr14prod( 0., 0. ),
+    m_fr15prod( 0., 0. ),
+    m_s0prod( 0. ),
+    m_a( 0. ),
+    m_r( 0. ),
+    m_Blass( 0. ),
+    m_phiB( 0. ),
+    m_R( 0. ),
+    m_phiR( 0. ),
+    m_cutoff( -1. ),
+    m_scaleByMOverQ( false ),
+    m_alpha( 0. )
 {
-    _vb = EvtTwoBodyVertex( _m0, _dp.m( EvtCyclic3::other( _pairRes ) ),
-                            _dp.bigM(), _spin );
-    _vd = EvtTwoBodyVertex( _massFirst, _massSecond, _m0, _spin );
-    _vb.set_f( 0.0 );    // Default values for Blatt-Weisskopf factors.
-    _vd.set_f( 1.5 );
-    assert( _coupling2 != Undefined );
-    assert( _typeN != K_MATRIX && _typeN != K_MATRIX_I &&
-            _typeN != K_MATRIX_II );    // coupled BW cannot be K-matrix
-    assert( _typeN != LASS );           // coupled BW cannot be LASS
-    assert( _typeN != NBW );            // for coupled BW, only relativistic BW
+    m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
+                             m_dp.bigM(), m_spin );
+    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
+    m_vb.set_f( 0.0 );    // Default values for Blatt-Weisskopf factors.
+    m_vd.set_f( 1.5 );
+    assert( m_coupling2 != Undefined );
+    assert( m_typeN != K_MATRIX && m_typeN != K_MATRIX_I &&
+            m_typeN != K_MATRIX_II );    // coupled BW cannot be K-matrix
+    assert( m_typeN != LASS );           // coupled BW cannot be LASS
+    assert( m_typeN != NBW );            // for coupled BW, only relativistic BW
 }
 
 // K-Matrix (A&S)
@@ -191,52 +193,53 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairRes,
                               EvtComplex fr12prod, EvtComplex fr13prod,
                               EvtComplex fr14prod, EvtComplex fr15prod,
                               double s0prod ) :
-    _dp( dp ),
-    _pairRes( pairRes ),
-    _typeN( typeN ),
-    _m0( 0. ),
-    _g0( 0. ),
-    _massFirst( dp.m( first( pairRes ) ) ),
-    _massSecond( dp.m( second( pairRes ) ) ),
-    _m0_mix( -1. ),
-    _g0_mix( 0. ),
-    _delta_mix( 0. ),
-    _amp_mix( 0., 0. ),
-    _g1( -1. ),
-    _g2( -1. ),
-    _coupling2( Undefined ),
-    _f_b( 0. ),
-    _f_d( 0. ),
-    _kmatrix_index( -1 ),
-    _fr12prod( fr12prod ),
-    _fr13prod( fr13prod ),
-    _fr14prod( fr14prod ),
-    _fr15prod( fr15prod ),
-    _s0prod( s0prod ),
-    _a( 0. ),
-    _r( 0. ),
-    _Blass( 0. ),
-    _phiB( 0. ),
-    _R( 0. ),
-    _phiR( 0. ),
-    _cutoff( -1. ),
-    _scaleByMOverQ( false ),
-    _alpha( 0. )
+    m_dp( dp ),
+    m_pairRes( pairRes ),
+    m_typeN( typeN ),
+    m_m0( 0. ),
+    m_g0( 0. ),
+    m_massFirst( dp.m( first( pairRes ) ) ),
+    m_massSecond( dp.m( second( pairRes ) ) ),
+    m_m0_mix( -1. ),
+    m_g0_mix( 0. ),
+    m_delta_mix( 0. ),
+    m_amp_mix( 0., 0. ),
+    m_g1( -1. ),
+    m_g2( -1. ),
+    m_coupling2( Undefined ),
+    m_f_b( 0. ),
+    m_f_d( 0. ),
+    m_kmatrix_index( -1 ),
+    m_fr12prod( fr12prod ),
+    m_fr13prod( fr13prod ),
+    m_fr14prod( fr14prod ),
+    m_fr15prod( fr15prod ),
+    m_s0prod( s0prod ),
+    m_a( 0. ),
+    m_r( 0. ),
+    m_Blass( 0. ),
+    m_phiB( 0. ),
+    m_R( 0. ),
+    m_phiR( 0. ),
+    m_cutoff( -1. ),
+    m_scaleByMOverQ( false ),
+    m_alpha( 0. )
 {
-    assert( _typeN == K_MATRIX || _typeN == K_MATRIX_I || _typeN == K_MATRIX_II );
-    _spin = EvtSpinType::SCALAR;
+    assert( m_typeN == K_MATRIX || m_typeN == K_MATRIX_I ||
+            m_typeN == K_MATRIX_II );
+    m_spin = EvtSpinType::SCALAR;
     if ( nameIndex == "Pole1" )
-        _kmatrix_index = 1;
+        m_kmatrix_index = 1;
     else if ( nameIndex == "Pole2" )
-        _kmatrix_index = 2;
+        m_kmatrix_index = 2;
     else if ( nameIndex == "Pole3" )
-        _kmatrix_index = 3;
+        m_kmatrix_index = 3;
     else if ( nameIndex == "Pole4" )
-        _kmatrix_index = 4;
+        m_kmatrix_index = 4;
     else if ( nameIndex == "Pole5" )
-        _kmatrix_index = 5;
+        m_kmatrix_index = 5;
     else if ( nameIndex == "f11prod" )
-        _kmatrix_index = 6;
+        m_kmatrix_index = 6;
     else
         assert( 0 );
 }
@@ -246,197 +249,195 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairRes, double m0,
                               double g0, double a, double r, double B,
                               double phiB, double R, double phiR, double cutoff,
                               bool scaleByMOverQ ) :
-    _dp( dp ),
-    _pairRes( pairRes ),
-    _typeN( LASS ),
-    _m0( m0 ),
-    _g0( g0 ),
-    _massFirst( dp.m( first( pairRes ) ) ),
-    _massSecond( dp.m( second( pairRes ) ) ),
-    _m0_mix( -1. ),
-    _g0_mix( 0. ),
-    _delta_mix( 0. ),
-    _amp_mix( 0., 0. ),
-    _g1( -1. ),
-    _g2( -1. ),
-    _coupling2( Undefined ),
-    _f_b( 0.0 ),
-    _f_d( 1.5 ),
-    _kmatrix_index( -1 ),
-    _fr12prod( 0., 0. ),
-    _fr13prod( 0., 0. ),
-    _fr14prod( 0., 0. ),
-    _fr15prod( 0., 0. ),
-    _s0prod( 0. ),
-    _a( a ),
-    _r( r ),
-    _Blass( B ),
-    _phiB( phiB ),
-    _R( R ),
-    _phiR( phiR ),
-    _cutoff( cutoff ),
-    _scaleByMOverQ( scaleByMOverQ ),
-    _alpha( 0. )
+    m_dp( dp ),
+    m_pairRes( pairRes ),
+    m_typeN( LASS ),
+    m_m0( m0 ),
+    m_g0( g0 ),
+    m_massFirst( dp.m( first( pairRes ) ) ),
+    m_massSecond( dp.m( second( pairRes ) ) ),
+    m_m0_mix( -1. ),
+    m_g0_mix( 0. ),
+    m_delta_mix( 0. ),
+    m_amp_mix( 0., 0. ),
+    m_g1( -1. ),
+    m_g2( -1. ),
+    m_coupling2( Undefined ),
+    m_f_b( 0.0 ),
+    m_f_d( 1.5 ),
+    m_kmatrix_index( -1 ),
+    m_fr12prod( 0., 0. ),
+    m_fr13prod( 0., 0. ),
+    m_fr14prod( 0., 0. ),
+    m_fr15prod( 0., 0. ),
+    m_s0prod( 0. ),
+    m_a( a ),
+    m_r( r ),
+    m_Blass( B ),
+    m_phiB( phiB ),
+    m_R( R ),
+    m_phiR( phiR ),
+    m_cutoff( cutoff ),
+    m_scaleByMOverQ( scaleByMOverQ ),
+    m_alpha( 0. )
 {
-    _spin = EvtSpinType::SCALAR;
-    _vd = EvtTwoBodyVertex( _massFirst, _massSecond, _m0, _spin );
-    _vd.set_f( 1.5 );    // Default values for Blatt-Weisskopf factors.
+    m_spin = EvtSpinType::SCALAR;
+    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
+    m_vd.set_f( 1.5 );    // Default values for Blatt-Weisskopf factors.
 }
 
 //Flatte
 EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, EvtCyclic3::Pair pairRes,
                               double m0 ) :
-    _dp( dp ),
-    _pairRes( pairRes ),
-    _typeN( FLATTE ),
-    _m0( m0 ),
-    _g0( 0. ),
-    _massFirst( dp.m( first( pairRes ) ) ),
-    _massSecond( dp.m( second( pairRes ) ) ),
-    _m0_mix( -1. ),
-    _g0_mix( 0. ),
-    _delta_mix( 0. ),
-    _amp_mix( 0., 0. ),
-    _g1( -1. ),
-    _g2( -1. ),
-    _coupling2( Undefined ),
-    _f_b( 0. ),
-    _f_d( 0. ),
-    _kmatrix_index( -1 ),
-    _fr12prod( 0., 0. ),
-    _fr13prod( 0., 0. ),
-    _fr14prod( 0., 0. ),
-    _fr15prod( 0., 0. ),
-    _s0prod( 0. ),
-    _a( 0. ),
-    _r( 0. ),
-    _Blass( 0. ),
-    _phiB( 0. ),
-    _R( 0. ),
-    _phiR( 0. ),
-    _cutoff( -1. ),
-    _scaleByMOverQ( false ),
-    _alpha( 0. )
+    m_dp( dp ),
+    m_pairRes( pairRes ),
+    m_typeN( FLATTE ),
+    m_m0( m0 ),
+    m_g0( 0. ),
+    m_massFirst( dp.m( first( pairRes ) ) ),
+    m_massSecond( dp.m( second( pairRes ) ) ),
+    m_m0_mix( -1. ),
+    m_g0_mix( 0. ),
+    m_delta_mix( 0. ),
+    m_amp_mix( 0., 0. ),
+    m_g1( -1. ),
+    m_g2( -1. ),
+    m_coupling2( Undefined ),
+    m_f_b( 0. ),
+    m_f_d( 0. ),
+    m_kmatrix_index( -1 ),
+    m_fr12prod( 0., 0. ),
+    m_fr13prod( 0., 0. ),
+    m_fr14prod( 0., 0. ),
+    m_fr15prod( 0., 0. ),
+    m_s0prod( 0. ),
+    m_a( 0. ),
+    m_r( 0. ),
+    m_Blass( 0. ),
+    m_phiB( 0. ),
+    m_R( 0. ),
+    m_phiR( 0. ),
+    m_cutoff( -1. ),
+    m_scaleByMOverQ( false ),
+    m_alpha( 0. )
 {
-    _spin = EvtSpinType::SCALAR;
+    m_spin = EvtSpinType::SCALAR;
 }
 
 EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x )
 {
-    double m = sqrt( x.q( _pairRes ) );
+    double m = sqrt( x.q( m_pairRes ) );
 
-    if ( _typeN == NON_RES )
+    if ( m_typeN == NON_RES )
         return EvtComplex( 1.0, 0.0 );
 
-    if ( _typeN == NON_RES_LIN )
+    if ( m_typeN == NON_RES_LIN )
         return m * m;
 
-    if ( _typeN == NON_RES_EXP )
-        return exp( -_alpha * m * m );
+    if ( m_typeN == NON_RES_EXP )
+        return exp( -m_alpha * m * m );
 
     // do use always hash table (speed up fitting)
-    if ( _typeN == K_MATRIX || _typeN == K_MATRIX_I || _typeN == K_MATRIX_II )
-        return Fvector( m * m, _kmatrix_index );
+    if ( m_typeN == K_MATRIX || m_typeN == K_MATRIX_I || m_typeN == K_MATRIX_II )
+        return Fvector( m * m, m_kmatrix_index );
 
-    if ( _typeN == LASS )
+    if ( m_typeN == LASS )
         return lass( m * m );
 
-    if ( _typeN == FLATTE )
+    if ( m_typeN == FLATTE )
         return flatte( m );
 
     EvtComplex amp( 1.0, 0.0 );
 
-    if ( fabs( _dp.bigM() - x.bigM() ) > 0.000001 ) {
-        _vb = EvtTwoBodyVertex( _m0, _dp.m( EvtCyclic3::other( _pairRes ) ),
-                                x.bigM(), _spin );
-        _vb.set_f( _f_b );
+    if ( fabs( m_dp.bigM() - x.bigM() ) > 0.000001 ) {
+        m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
+                                 x.bigM(), m_spin );
+        m_vb.set_f( m_f_b );
     }
-    EvtTwoBodyKine vb( m, x.m( EvtCyclic3::other( _pairRes ) ), x.bigM() );
-    EvtTwoBodyKine vd( _massFirst, _massSecond, m );
+    EvtTwoBodyKine vb( m, x.m( EvtCyclic3::other( m_pairRes ) ), x.bigM() );
+    EvtTwoBodyKine vd( m_massFirst, m_massSecond, m );
 
     EvtComplex prop( 0, 0 );
-    if ( _typeN == NBW ) {
-        prop = propBreitWigner( _m0, _g0, m );
-    } else if ( _typeN == GAUSS_CLEO || _typeN == GAUSS_CLEO_ZEMACH ) {
-        prop = propGauss( _m0, _g0, m );
+    if ( m_typeN == NBW ) {
+        prop = propBreitWigner( m_m0, m_g0, m );
+    } else if ( m_typeN == GAUSS_CLEO || m_typeN == GAUSS_CLEO_ZEMACH ) {
+        prop = propGauss( m_m0, m_g0, m );
     } else {
-        if ( _coupling2 == Undefined ) {
+        if ( m_coupling2 == Undefined ) {
             // single BW
-            double g = ( _g0 <= 0. || _vd.pD() <= 0. )
-                           ? -_g0
-                           : _g0 * _vd.widthFactor( vd );    // running width
-            if ( _typeN == GS_CLEO || _typeN == GS_CLEO_ZEMACH ) {
+            double g = ( m_g0 <= 0. || m_vd.pD() <= 0. )
+                           ? -m_g0
+                           : m_g0 * m_vd.widthFactor( vd );    // running width
+            if ( m_typeN == GS_CLEO || m_typeN == GS_CLEO_ZEMACH ) {
                 // Gounaris-Sakurai (GS)
-                prop = propGounarisSakurai( _m0, fabs( _g0 ), _vd.pD(), m, g,
+                prop = propGounarisSakurai( m_m0, fabs( m_g0 ), m_vd.pD(), m, g,
                                             vd.p() );
             } else {
                 // standard relativistic BW
-                prop = propBreitWignerRel( _m0, g, m );
+                prop = propBreitWignerRel( m_m0, g, m );
             }
         } else {
             // coupled width BW
             EvtComplex G1, G2;
-            switch ( _coupling2 ) {
+            switch ( m_coupling2 ) {
                 case PicPic: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
-                    G2 = _g2 * _g2 * psFactor( mPic, mPic, m );
+                    G2 = m_g2 * m_g2 * psFactor( mPic, mPic, m );
                     break;
                 }
                 case PizPiz: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mPiz = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
-                    G2 = _g2 * _g2 * psFactor( mPiz, mPiz, m );
+                    G2 = m_g2 * m_g2 * psFactor( mPiz, mPiz, m );
                     break;
                 }
                 case PiPi: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
                     static double mPiz = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
-                    G2 = _g2 * _g2 * psFactor( mPic, mPic, mPiz, mPiz, m );
+                    G2 = m_g2 * m_g2 * psFactor( mPic, mPic, mPiz, mPiz, m );
                     break;
                 }
                 case KcKc: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mKc = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
-                    G2 = _g2 * _g2 * psFactor( mKc, mKc, m );
+                    G2 = m_g2 * m_g2 * psFactor( mKc, mKc, m );
                     break;
                 }
                 case KzKz: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mKz = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
-                    G2 = _g2 * _g2 * psFactor( mKz, mKz, m );
+                    G2 = m_g2 * m_g2 * psFactor( mKz, mKz, m );
                     break;
                 }
                 case KK: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mKc = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
                     static double mKz = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
-                    G2 = _g2 * _g2 * psFactor( mKc, mKc, mKz, mKz, m );
+                    G2 = m_g2 * m_g2 * psFactor( mKc, mKc, mKz, mKz, m );
                     break;
                 }
                 case EtaPic: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mEta = EvtPDL::getMass( EvtPDL::getId( "eta" ) );
                     static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
-                    G2 = _g2 * _g2 * psFactor( mEta, mPic, m );
+                    G2 = m_g2 * m_g2 * psFactor( mEta, mPic, m );
                     break;
                 }
                 case EtaPiz: {
-                    G1 = _g1 * _g1 * psFactor( _massFirst, _massSecond, m );
+                    G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
                     static double mEta = EvtPDL::getMass( EvtPDL::getId( "eta" ) );
                     static double mPiz = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
-                    G2 = _g2 * _g2 * psFactor( mEta, mPiz, m );
+                    G2 = m_g2 * m_g2 * psFactor( mEta, mPiz, m );
                     break;
                 }
                 case PicPicKK: {
                     static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
-                    //G1 = _g1*_g1*psFactor(mPic,mPic,m);
-                    G1 = _g1 * psFactor( mPic, mPic, m );
+                    G1 = m_g1 * psFactor( mPic, mPic, m );
                     static double mKc = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
                     static double mKz = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
-                    //G2 = _g2*_g2*psFactor(mKc,mKc,mKz,mKz,m);
-                    G2 = _g2 * psFactor( mKc, mKc, mKz, mKz, m );
+                    G2 = m_g2 * psFactor( mKc, mKc, mKz, mKz, m );
                     break;
                 }
                 default:
@@ -447,28 +448,28 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x )
                     break;
             }
             // calculate standard couple BW propagator
-            if ( _coupling2 != WA76 )
-                prop = _g1 * propBreitWignerRelCoupled( _m0, G1, G2, m );
+            if ( m_coupling2 != WA76 )
+                prop = m_g1 * propBreitWignerRelCoupled( m_m0, G1, G2, m );
         }
     }
     amp *= prop;
 
     // Compute form-factors (Blatt-Weisskopf penetration factor)
-    amp *= _vb.formFactor( vb );
-    amp *= _vd.formFactor( vd );
+    amp *= m_vb.formFactor( vb );
+    amp *= m_vd.formFactor( vd );
 
     // Compute numerator (angular distribution)
     amp *= numerator( x, vb, vd );
 
     // Compute electromagnetic mass mixing factor
-    if ( _m0_mix > 0. ) {
+    if ( m_m0_mix > 0. ) {
         EvtComplex prop_mix;
-        if ( _typeN == NBW ) {
-            prop_mix = propBreitWigner( _m0_mix, _g0_mix, m );
+        if ( m_typeN == NBW ) {
+            prop_mix = propBreitWigner( m_m0_mix, m_g0_mix, m );
         } else {
-            assert( _g1 < 0. );    // running width only
-            double g_mix = _g0_mix * _vd.widthFactor( vd );
-            prop_mix = propBreitWignerRel( _m0_mix, g_mix, m );
+            assert( m_g1 < 0. );    // running width only
+            double g_mix = m_g0_mix * m_vd.widthFactor( vd );
+            prop_mix = propBreitWignerRel( m_m0_mix, g_mix, m );
         }
         amp *= mixFactor( prop, prop_mix );
     }
@@ -563,7 +564,7 @@ inline double EvtDalitzReso::GS_f( const double& m0, const double& g0,
 inline double EvtDalitzReso::GS_h( const double& m, const double& k )
 {
     return 2. / EvtConst::pi * k / m *
-           log( ( m + 2. * k ) / ( 2. * _massFirst ) );
+           log( ( m + 2. * k ) / ( 2. * m_massFirst ) );
 }
 
 inline double EvtDalitzReso::GS_dhods( const double& m0, const double& k0 )
@@ -574,10 +575,10 @@ inline double EvtDalitzReso::GS_dhods( const double& m0, const double& k0 )
 
 inline double EvtDalitzReso::GS_d( const double& m0, const double& k0 )
 {
-    return 3. / EvtConst::pi * _massFirst * _massFirst / ( k0 * k0 ) *
-               log( ( m0 + 2. * k0 ) / ( 2. * _massFirst ) ) +
+    return 3. / EvtConst::pi * m_massFirst * m_massFirst / ( k0 * k0 ) *
+               log( ( m0 + 2. * k0 ) / ( 2. * m_massFirst ) ) +
            m0 / ( 2. * EvtConst::pi * k0 ) -
-           _massFirst * _massFirst * m0 / ( EvtConst::pi * k0 * k0 * k0 );
+           m_massFirst * m_massFirst * m0 / ( EvtConst::pi * k0 * k0 * k0 );
 }
 
 EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
@@ -587,39 +588,39 @@ EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
     EvtComplex ret( 0., 0. );
 
     // Non-relativistic Breit-Wigner
-    if ( NBW == _typeN ) {
+    if ( NBW == m_typeN ) {
         ret = angDep( x );
     }
 
     // Standard relativistic Zemach propagator
-    else if ( RBW_ZEMACH == _typeN ) {
-        ret = _vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB ) * angDep( x );
+    else if ( RBW_ZEMACH == m_typeN ) {
+        ret = m_vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB ) * angDep( x );
     }
 
     // Standard relativistic Zemach propagator
-    else if ( RBW_ZEMACH2 == _typeN ) {
-        ret = _vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB ) *
-              _vb.phaseSpaceFactor( vb, EvtTwoBodyKine::AB ) * angDep( x );
-        if ( _spin == EvtSpinType::VECTOR ) {
+    else if ( RBW_ZEMACH2 == m_typeN ) {
+        ret = m_vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB ) *
+              m_vb.phaseSpaceFactor( vb, EvtTwoBodyKine::AB ) * angDep( x );
+        if ( m_spin == EvtSpinType::VECTOR ) {
             ret *= -4.;
-        } else if ( _spin == EvtSpinType::TENSOR ) {
+        } else if ( m_spin == EvtSpinType::TENSOR ) {
             ret *= 16. / 3.;
-        } else if ( _spin != EvtSpinType::SCALAR )
+        } else if ( m_spin != EvtSpinType::SCALAR )
             assert( 0 );
     }
 
     // Kuehn-Santamaria normalization:
-    else if ( RBW_KUEHN == _typeN ) {
-        ret = _m0 * _m0 * angDep( x );
+    else if ( RBW_KUEHN == m_typeN ) {
+        ret = m_m0 * m_m0 * angDep( x );
     }
 
     // CLEO amplitude
-    else if ( ( RBW_CLEO == _typeN ) || ( GS_CLEO == _typeN ) ||
-              ( RBW_CLEO_ZEMACH == _typeN ) || ( GS_CLEO_ZEMACH == _typeN ) ||
-              ( GAUSS_CLEO == _typeN ) || ( GAUSS_CLEO_ZEMACH == _typeN ) ) {
-        Index iA = other( _pairAng );               // A = other(BC)
-        Index iB = common( _pairRes, _pairAng );    // B = common(AB,BC)
-        Index iC = other( _pairRes );               // C = other(AB)
+    else if ( ( RBW_CLEO == m_typeN ) || ( GS_CLEO == m_typeN ) ||
+              ( RBW_CLEO_ZEMACH == m_typeN ) || ( GS_CLEO_ZEMACH == m_typeN ) ||
+              ( GAUSS_CLEO == m_typeN ) || ( GAUSS_CLEO_ZEMACH == m_typeN ) ) {
+        Index iA = other( m_pairAng );                // A = other(BC)
+        Index iB = common( m_pairRes, m_pairAng );    // B = common(AB,BC)
+        Index iC = other( m_pairRes );                // C = other(AB)
 
         double M = x.bigM();
         double mA = x.m( iA );
@@ -630,20 +631,20 @@ EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
         double qCA = x.q( combine( iC, iA ) );
 
         double M2 = M * M;
-        double m02 = ( ( RBW_CLEO_ZEMACH == _typeN ) ||
-                       ( GS_CLEO_ZEMACH == _typeN ) ||
-                       ( GAUSS_CLEO_ZEMACH == _typeN ) )
+        double m02 = ( ( RBW_CLEO_ZEMACH == m_typeN ) ||
+                       ( GS_CLEO_ZEMACH == m_typeN ) ||
+                       ( GAUSS_CLEO_ZEMACH == m_typeN ) )
                          ? qAB
-                         : _m0 * _m0;
+                         : m_m0 * m_m0;
         double mA2 = mA * mA;
         double mB2 = mB * mB;
         double mC2 = mC * mC;
 
-        if ( _spin == EvtSpinType::SCALAR )
+        if ( m_spin == EvtSpinType::SCALAR )
             ret = EvtComplex( 1., 0. );
-        else if ( _spin == EvtSpinType::VECTOR ) {
+        else if ( m_spin == EvtSpinType::VECTOR ) {
             ret = qCA - qBC + ( M2 - mC2 ) * ( mB2 - mA2 ) / m02;
-        } else if ( _spin == EvtSpinType::TENSOR ) {
+        } else if ( m_spin == EvtSpinType::TENSOR ) {
             double x1 = qBC - qCA + ( M2 - mC2 ) * ( mA2 - mB2 ) / m02;
             double x2 = M2 - mC2;
             double x3 = qAB - 2 * M2 - 2 * mC2 + x2 * x2 / m02;
@@ -662,22 +663,22 @@ double EvtDalitzReso::angDep( const EvtDalitzPoint& x )
     // Angular dependece for factorizable amplitudes
     // unphysical cosines indicate we are in big trouble
     double cosTh = x.cosTh(
-        _pairAng, _pairRes );    // angle between common(reso,ang) and other(reso)
+        m_pairAng, m_pairRes );    // angle between common(reso,ang) and other(reso)
     if ( fabs( cosTh ) > 1. ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "cosTh " << cosTh << std::endl;
         assert( 0 );
     }
 
     // in units of half-spin
-    return EvtdFunction::d( EvtSpinType::getSpin2( _spin ), 2 * 0, 2 * 0,
+    return EvtdFunction::d( EvtSpinType::getSpin2( m_spin ), 2 * 0, 2 * 0,
                             acos( cosTh ) );
 }
 
 EvtComplex EvtDalitzReso::mixFactor( EvtComplex prop, EvtComplex prop_mix )
 {
-    double Delta = _delta_mix * ( _m0 + _m0_mix );
+    double Delta = m_delta_mix * ( m_m0 + m_m0_mix );
     return 1 / ( 1 - Delta * Delta * prop * prop_mix ) *
-           ( 1 + _amp_mix * Delta * prop_mix );
+           ( 1 + m_amp_mix * Delta * prop_mix );
 }
 
 EvtComplex EvtDalitzReso::Fvector( double s, int index )
@@ -696,11 +697,11 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index )
     double g[5][5];    // Coupling constants. The first index is the pole index. The second index is the decay channel
     double ma[5];      // Pole masses. The unit is in GeV
 
-    int solution = ( _typeN == K_MATRIX )
+    int solution = ( m_typeN == K_MATRIX )
                        ? 3
-                       : ( ( _typeN == K_MATRIX_I )
+                       : ( ( m_typeN == K_MATRIX_I )
                                ? 1
-                               : ( ( _typeN == K_MATRIX_II ) ? 2 : 0 ) );
+                               : ( ( m_typeN == K_MATRIX_II ) ? 2 : 0 ) );
     if ( solution == 0 ) {
         std::cout << "EvtDalitzReso::Fvector() error. Kmatrix solution incorrectly chosen ! "
                   << std::endl;
@@ -998,12 +999,12 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index )
     } else {
         //this calculates fprod Factors
         value += U1j[0];
-        value += U1j[1] * _fr12prod;
-        value += U1j[2] * _fr13prod;
-        value += U1j[3] * _fr14prod;
-        value += U1j[4] * _fr15prod;
+        value += U1j[1] * m_fr12prod;
+        value += U1j[2] * m_fr13prod;
+        value += U1j[3] * m_fr14prod;
+        value += U1j[4] * m_fr15prod;
 
-        value *= ( 1 - _s0prod ) / ( s - _s0prod ) * smallTerm;
+        value *= ( 1 - m_s0prod ) / ( s - m_s0prod ) * smallTerm;
     }
 
     return value;
@@ -1012,34 +1013,34 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index )
 //replace Breit-Wigner with LASS
 EvtComplex EvtDalitzReso::lass( double s )
 {
-    EvtTwoBodyKine vd( _massFirst, _massSecond, sqrt( s ) );
+    EvtTwoBodyKine vd( m_massFirst, m_massSecond, sqrt( s ) );
     double q = vd.p();
-    double GammaM = _g0 * _vd.widthFactor( vd );    // running width;
+    double GammaM = m_g0 * m_vd.widthFactor( vd );    // running width;
 
     //calculate the background phase motion
-    double cot_deltaB = 1.0 / ( _a * q ) + 0.5 * _r * q;
+    double cot_deltaB = 1.0 / ( m_a * q ) + 0.5 * m_r * q;
     double deltaB = atan( 1.0 / cot_deltaB );
-    double totalB = deltaB + _phiB;
+    double totalB = deltaB + m_phiB;
 
     //calculate the resonant phase motion
-    double deltaR = atan( ( _m0 * GammaM / ( _m0 * _m0 - s ) ) );
-    double totalR = deltaR + _phiR;
+    double deltaR = atan( ( m_m0 * GammaM / ( m_m0 * m_m0 - s ) ) );
+    double totalR = deltaR + m_phiR;
 
     //sum them up
     EvtComplex bkgB, resT;
-    bkgB = EvtComplex( _Blass * sin( totalB ), 0 ) *
+    bkgB = EvtComplex( m_Blass * sin( totalB ), 0 ) *
            EvtComplex( cos( totalB ), sin( totalB ) );
-    resT = EvtComplex( _R * sin( deltaR ), 0 ) *
+    resT = EvtComplex( m_R * sin( deltaR ), 0 ) *
            EvtComplex( cos( totalR ), sin( totalR ) ) *
            EvtComplex( cos( 2 * totalB ), sin( 2 * totalB ) );
 
     EvtComplex T;
-    if ( _cutoff > 0 && sqrt( s ) > _cutoff )
+    if ( m_cutoff > 0 && sqrt( s ) > m_cutoff )
         T = resT;
     else
         T = bkgB + resT;
 
-    if ( _scaleByMOverQ )
+    if ( m_scaleByMOverQ )
         T *= ( sqrt( s ) / q );
 
     return T;
@@ -1049,8 +1050,8 @@ EvtComplex EvtDalitzReso::flatte( const double& m )
 {
     EvtComplex w;
 
-    for ( vector<EvtFlatteParam>::const_iterator param = _flatteParams.begin();
-          param != _flatteParams.end(); ++param ) {
+    for ( vector<EvtFlatteParam>::const_iterator param = m_flatteParams.begin();
+          param != m_flatteParams.end(); ++param ) {
         double m1 = ( *param ).m1();
         double m2 = ( *param ).m2();
         double g = ( *param ).g();
@@ -1059,7 +1060,7 @@ EvtComplex EvtDalitzReso::flatte( const double& m )
                          ( 1 - ( ( m1 + m2 ) * ( m1 + m2 ) ) / ( m * m ) ) ) );
     }
 
-    EvtComplex denom = _m0 * _m0 - m * m - EvtComplex( 0, 1 ) * w;
+    EvtComplex denom = m_m0 * m_m0 - m * m - EvtComplex( 0, 1 ) * w;
 
     return EvtComplex( 1.0, 0.0 ) / denom;
 }

@@ -44,20 +44,20 @@ class EvtLambdaP_BarGamma : public EvtDecayAmp {
   private:
     // some constants to make the code easier to read and maintain
     // these three should be constants... (implementation of getMass() prohibits this)
-    double _mLambdab;    //  = 5.624;                          // Lambda_b mass
-    double _mLambda0;    //  = 1.115684;                       // Lambda0 mass
-    double _c7Eff;    //  = -0.31;                          // Wilson coefficient
-    double _mb;       //  =  4.4;                           // running b mass
-    double _mV;    //  =  5.42;                          // pole mass vector current
-    double _mA;    //  =  5.86;                          // pole mass axial current
-    double _GF;    //  =  1.166E-5;                      // Fermi constant
-    double _gLambdab;    // =  16;                            // coupling constant Lambda_b -> B- p
-    double _e0;    //  =  1;                             // electromagnetic coupling (+1)
-    double _g1;    //  =  0.64;                          // heavy-light form factors at q_mSqare
-    double _g2;            //  = -0.10;
-    double _f1;            //  =  0.64;
-    double _f2;            //  = -0.31;
-    double _VtbVtsStar;    // = 0.038;                          // |V_tb V_ts^*|
+    double m_mLambdab;    //  = 5.624;                          // Lambda_b mass
+    double m_mLambda0;    //  = 1.115684;                       // Lambda0 mass
+    double m_c7Eff;    //  = -0.31;                          // Wilson coefficient
+    double m_mb;       //  =  4.4;                           // running b mass
+    double m_mV;    //  =  5.42;                          // pole mass vector current
+    double m_mA;    //  =  5.86;                          // pole mass axial current
+    double m_GF;    //  =  1.166E-5;                      // Fermi constant
+    double m_gLambdab;    // =  16;                            // coupling constant Lambda_b -> B- p
+    double m_e0;    //  =  1;                             // electromagnetic coupling (+1)
+    double m_g1;    //  =  0.64;                          // heavy-light form factors at q_mSqare
+    double m_g2;            //  = -0.10;
+    double m_f1;            //  =  0.64;
+    double m_f2;            //  = -0.31;
+    double m_VtbVtsStar;    // = 0.038;                          // |V_tb V_ts^*|
 
     // user never needs to call this -> private
     // baryonic form factors f(p), g(p), at p=0

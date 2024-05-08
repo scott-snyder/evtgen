@@ -36,21 +36,21 @@ EvtLASSAmp::EvtLASSAmp( EvtDalitzPlot* dp, EvtCyclic3::Pair pair, double m0,
                         double g0, double a, double r, double cutoff,
                         std::string subtype ) :
     EvtAmplitude<EvtDalitzPoint>(),
-    _pair( pair ),
-    _m0( m0 ),
-    _g0( g0 ),
-    _r( r ),
-    _a( a ),
-    _cutoff( cutoff ),
-    _subtype( subtype )
+    m_pair( pair ),
+    m_m0( m0 ),
+    m_g0( g0 ),
+    m_r( r ),
+    m_a( a ),
+    m_cutoff( cutoff ),
+    m_subtype( subtype )
 {
-    _dalitzSpace = dp;
+    m_dalitzSpace = dp;
     double ma = dp->m( first( pair ) );
     double mb = dp->m( second( pair ) );
-    double E0a = 0.5 * ( _m0 * _m0 + ma * ma - mb * mb ) / _m0;
-    _q0 = E0a * E0a - ma * ma;
-    assert( _q0 > 0 );
-    _q0 = sqrt( _q0 );
+    double E0a = 0.5 * ( m_m0 * m_m0 + ma * ma - mb * mb ) / m_m0;
+    m_q0 = E0a * E0a - ma * ma;
+    assert( m_q0 > 0 );
+    m_q0 = sqrt( m_q0 );
 }
 
 EvtComplex EvtLASSAmp::amplitude( const EvtDalitzPoint& dalitzPoint ) const
@@ -76,14 +76,14 @@ EvtComplex EvtLASSAmp::amplitude( const EvtDalitzPoint& dalitzPoint ) const
 
   */
 
-    double s = dalitzPoint.q( _pair );
+    double s = dalitzPoint.q( m_pair );
     double m = sqrt( s );
-    double q = dalitzPoint.p( first( _pair ), _pair );
+    double q = dalitzPoint.p( first( m_pair ), m_pair );
 
     // elastic scattering
-    double qcotd = 1. / _a + 0.5 * _r * q * q;
-    EvtComplex lass_elastic = m < _cutoff ? m / ( qcotd - EvtComplex( 0, q ) )
-                                          : 0;
+    double qcotd = 1. / m_a + 0.5 * m_r * q * q;
+    EvtComplex lass_elastic = m < m_cutoff ? m / ( qcotd - EvtComplex( 0, q ) )
+                                           : 0;
 
     // relative phase
     double cosd = 1;
@@ -97,16 +97,17 @@ EvtComplex EvtLASSAmp::amplitude( const EvtDalitzPoint& dalitzPoint ) const
     lass_phase *= lass_phase;
 
     // K*(1430)
-    double gamma = _g0 * q / m * _m0 / _q0;
-    EvtComplex lass_Kstar = ( _m0 * _m0 ) * ( _g0 / _q0 ) /
-                            ( _m0 * _m0 - m * m - EvtComplex( 0., _m0 * gamma ) );
+    double gamma = m_g0 * q / m * m_m0 / m_q0;
+    EvtComplex lass_Kstar = ( m_m0 * m_m0 ) * ( m_g0 / m_q0 ) /
+                            ( m_m0 * m_m0 - m * m -
+                              EvtComplex( 0., m_m0 * gamma ) );
 
     EvtComplex theAmplitude( 0.0, 0.0 );
 
-    if ( _subtype == "LASS_ELASTIC" ) {
+    if ( m_subtype == "LASS_ELASTIC" ) {
         theAmplitude = lass_elastic;
 
-    } else if ( _subtype == "LASS_RESONANT" ) {
+    } else if ( m_subtype == "LASS_RESONANT" ) {
         theAmplitude = lass_phase * lass_Kstar;
 
     } else {

@@ -44,7 +44,7 @@ void EvtBToDiBaryonlnupQCD::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs(), true );
 
-    calcAmp_->CalcAmp( p, _amp2 );
+    m_calcAmp->CalcAmp( p, m_amp2 );
 }
 
 void EvtBToDiBaryonlnupQCD::init()
@@ -109,7 +109,7 @@ void EvtBToDiBaryonlnupQCD::init()
     }
 
     // Form factor model
-    ffModel_ = std::make_unique<EvtBToDiBaryonlnupQCDFF>( DPars );
+    m_ffModel = std::make_unique<EvtBToDiBaryonlnupQCDFF>( DPars );
 
     // Set amplitude calculation pointer.
     // Accomodate for spin 1/2 (DIRAC) or 3/2 (RARITASCHWINGER) baryons
@@ -122,7 +122,7 @@ void EvtBToDiBaryonlnupQCD::init()
            baryon2Type == EvtSpinType::DIRAC ) ||
          ( baryon1Type == EvtSpinType::DIRAC &&
            baryon2Type == EvtSpinType::DIRAC ) ) {
-        calcAmp_ = std::make_unique<EvtSLDiBaryonAmp>( *ffModel_ );
+        m_calcAmp = std::make_unique<EvtSLDiBaryonAmp>( *m_ffModel );
 
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )

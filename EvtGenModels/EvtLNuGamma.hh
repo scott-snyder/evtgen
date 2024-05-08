@@ -38,7 +38,7 @@ class EvtLNuGamma : public EvtDecayAmp {
     void initProbMax() override;
     double getFormFactor( double photonEnergy );
 
-    bool _fafvzero = false;
+    bool m_fafvzero = false;
 };
 
 #endif

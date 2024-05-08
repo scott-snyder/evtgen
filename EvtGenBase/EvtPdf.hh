@@ -72,7 +72,7 @@ template <class T>
 class EvtPdf {
   public:
     EvtPdf() {}
-    EvtPdf( const EvtPdf& other ) : _itg( other._itg ) {}
+    EvtPdf( const EvtPdf& other ) : m_itg( other.m_itg ) {}
     virtual ~EvtPdf() {}
     virtual EvtPdf<T>* clone() const = 0;
 
@@ -95,19 +95,19 @@ class EvtPdf {
     // Analytic integration. Calls cascade down until an overridden
     // method is called.
 
-    void setItg( EvtValError itg ) { _itg = itg; }
+    void setItg( EvtValError itg ) { m_itg = itg; }
 
     EvtValError getItg() const
     {
-        if ( !_itg.valueKnown() )
-            _itg = compute_integral();
-        return _itg;
+        if ( !m_itg.valueKnown() )
+            m_itg = compute_integral();
+        return m_itg;
     }
     EvtValError getItg( int N ) const
     {
-        if ( !_itg.valueKnown() )
-            _itg = compute_integral( N );
-        return _itg;
+        if ( !m_itg.valueKnown() )
+            m_itg = compute_integral( N );
+        return m_itg;
     }
 
     virtual EvtValError compute_integral() const
@@ -136,7 +136,7 @@ class EvtPdf {
 
   protected:
     virtual double pdf( const T& ) const = 0;
-    mutable EvtValError _itg;
+    mutable EvtValError m_itg;
 };
 
 template <class T>
@@ -144,18 +144,18 @@ class EvtPdfGen {
   public:
     typedef T result_type;
 
-    EvtPdfGen() : _pdf( 0 ) {}
+    EvtPdfGen() : m_pdf( 0 ) {}
     EvtPdfGen( const EvtPdfGen<T>& other ) :
-        _pdf( other._pdf ? other._pdf->clone() : nullptr )
+        m_pdf( other.m_pdf ? other.m_pdf->clone() : nullptr )
     {
     }
-    EvtPdfGen( const EvtPdf<T>& pdf ) : _pdf( pdf.clone() ) {}
-    ~EvtPdfGen() { delete _pdf; }
+    EvtPdfGen( const EvtPdf<T>& pdf ) : m_pdf( pdf.clone() ) {}
+    ~EvtPdfGen() { delete m_pdf; }
 
-    result_type operator()() { return _pdf->randomPoint(); }
+    result_type operator()() { return m_pdf->randomPoint(); }
 
   private:
-    EvtPdf<T>* _pdf;
+    EvtPdf<T>* m_pdf;
 };
 
 template <class T>
@@ -165,41 +165,41 @@ class EvtPdfPred {
     typedef bool result_type;
 
     EvtPdfPred() {}
-    EvtPdfPred( const EvtPdf<T>& thePdf ) : itsPdf( thePdf.clone() ) {}
+    EvtPdfPred( const EvtPdf<T>& thePdf ) : m_pdf( thePdf.clone() ) {}
     EvtPdfPred( const EvtPdfPred& other ) :
-        COPY_PTR( itsPdf ), COPY_MEM( itsPdfMax )
+        COPY_PTR( m_pdf ), COPY_MEM( m_pdfMax )
     {
     }
-    ~EvtPdfPred() { delete itsPdf; }
+    ~EvtPdfPred() { delete m_pdf; }
 
     result_type operator()( argument_type p )
     {
-        assert( itsPdf );
-        assert( itsPdfMax.valueKnown() );
+        assert( m_pdf );
+        assert( m_pdfMax.valueKnown() );
 
-        double random = EvtRandom::Flat( 0., itsPdfMax.value() );
-        return ( random <= itsPdf->evaluate( p ) );
+        double random = EvtRandom::Flat( 0., m_pdfMax.value() );
+        return ( random <= m_pdf->evaluate( p ) );
     }
 
-    EvtPdfMax<T> getMax() const { return itsPdfMax; }
-    void setMax( const EvtPdfMax<T>& max ) { itsPdfMax = max; }
+    EvtPdfMax<T> getMax() const { return m_pdfMax; }
+    void setMax( const EvtPdfMax<T>& max ) { m_pdfMax = max; }
     template <class InputIterator>
     void compute_max( InputIterator it, InputIterator end, double factor = 1. )
     {
         T p = *it++;
-        itsPdfMax = EvtPdfMax<T>( p, itsPdf->evaluate( p ) * factor );
+        m_pdfMax = EvtPdfMax<T>( p, m_pdf->evaluate( p ) * factor );
 
         while ( !( it == end ) ) {
-            T p = *it++;
-            double val = itsPdf->evaluate( p ) * factor;
-            if ( val > itsPdfMax.value() )
-                itsPdfMax = EvtPdfMax<T>( p, val );
+            T pp = *it++;
+            double val = m_pdf->evaluate( pp ) * factor;
+            if ( val > m_pdfMax.value() )
+                m_pdfMax = EvtPdfMax<T>( pp, val );
         }
     }
 
   private:
-    EvtPdf<T>* itsPdf;
-    EvtPdfMax<T> itsPdfMax;
+    EvtPdf<T>* m_pdf;
+    EvtPdfMax<T> m_pdfMax;
 };
 
 template <class T>
@@ -209,51 +209,51 @@ class EvtPdfUnary {
     typedef T argument_type;
 
     EvtPdfUnary() {}
-    EvtPdfUnary( const EvtPdf<T>& thePdf ) : itsPdf( thePdf.clone() ) {}
-    EvtPdfUnary( const EvtPdfUnary& other ) : COPY_PTR( itsPdf ) {}
-    ~EvtPdfUnary() { delete itsPdf; }
+    EvtPdfUnary( const EvtPdf<T>& thePdf ) : m_pdf( thePdf.clone() ) {}
+    EvtPdfUnary( const EvtPdfUnary& other ) : COPY_PTR( m_pdf ) {}
+    ~EvtPdfUnary() { delete m_pdf; }
 
     result_type operator()( argument_type p )
     {
-        assert( itsPdf );
-        double ret = itsPdf->evaluate( p );
+        assert( m_pdf );
+        double ret = m_pdf->evaluate( p );
         return ret;
     }
 
   private:
-    EvtPdf<T>* itsPdf;
+    EvtPdf<T>* m_pdf;
 };
 
 template <class T>
 class EvtPdfDiv : public EvtPdf<T> {
   public:
-    EvtPdfDiv() : itsNum( 0 ), itsDen( 0 ) {}
+    EvtPdfDiv() : m_num( 0 ), m_den( 0 ) {}
     EvtPdfDiv( const EvtPdf<T>& theNum, const EvtPdf<T>& theDen ) :
-        EvtPdf<T>(), itsNum( theNum.clone() ), itsDen( theDen.clone() )
+        EvtPdf<T>(), m_num( theNum.clone() ), m_den( theDen.clone() )
     {
     }
     EvtPdfDiv( const EvtPdfDiv<T>& other ) :
-        EvtPdf<T>( other ), COPY_PTR( itsNum ), COPY_PTR( itsDen )
+        EvtPdf<T>( other ), COPY_PTR( m_num ), COPY_PTR( m_den )
     {
     }
     virtual ~EvtPdfDiv()
     {
-        delete itsNum;
-        delete itsDen;
+        delete m_num;
+        delete m_den;
     }
     EvtPdf<T>* clone() const override { return new EvtPdfDiv( *this ); }
 
     double pdf( const T& p ) const override
     {
-        double num = itsNum->evaluate( p );
-        double den = itsDen->evaluate( p );
+        double num = m_num->evaluate( p );
+        double den = m_den->evaluate( p );
         assert( den != 0 );
         return num / den;
     }
 
   private:
-    EvtPdf<T>* itsNum;    // numerator
-    EvtPdf<T>* itsDen;    // denominator
+    EvtPdf<T>* m_num;    // numerator
+    EvtPdf<T>* m_den;    // denominator
 };
 
 template <class T>
@@ -312,8 +312,8 @@ EvtValError EvtPdf<T>::compute_mc_integral( const EvtPdf<T>& pc, int N )
         } else
             x = EvtValError( av );
     }
-    _itg = x * pc.getItg();
-    return _itg;
+    m_itg = x * pc.getItg();
+    return m_itg;
 }
 
 template <class T>

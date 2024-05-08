@@ -22,12 +22,12 @@
 
 EvtExtGeneratorCommandsTable::EvtExtGeneratorCommandsTable()
 {
-    _commandMap.clear();
+    m_commandMap.clear();
 }
 
 EvtExtGeneratorCommandsTable::~EvtExtGeneratorCommandsTable()
 {
-    _commandMap.clear();
+    m_commandMap.clear();
 }
 
 EvtExtGeneratorCommandsTable* EvtExtGeneratorCommandsTable::getInstance()

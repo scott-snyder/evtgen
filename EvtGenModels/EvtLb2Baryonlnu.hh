@@ -45,8 +45,8 @@ class EvtLb2Baryonlnu : public EvtDecayAmp {
     void init() override;
 
   private:
-    EvtSemiLeptonicFF* ffmodel;
-    EvtSLBaryonAmp* calcamp;
+    EvtSemiLeptonicFF* m_ffmodel;
+    EvtSLBaryonAmp* m_calcamp;
 };
 
 #endif

@@ -83,11 +83,11 @@ void EvtTVSPwave::decay( EvtParticle* p )
 
     EvtComplex temp;
     temp = ad;
-    double m_parent = p->mass();
+    double parentMass = p->mass();
 
     EvtVector4R p_parent;
 
-    p_parent.set( m_parent, 0.0, 0.0, 0.0 );
+    p_parent.set( parentMass, 0.0, 0.0, 0.0 );
 
     EvtVector4C pep0, pep1, pep2, pep3, pep4;
     EvtTensor4C pdual;
@@ -95,7 +95,7 @@ void EvtTVSPwave::decay( EvtParticle* p )
     EvtVector4C epsdual0, epsdual1, epsdual2;
 
     double norm = massv /
-                  ( m_parent * momv.get( 0 ) * momv.d3mag() * momv.d3mag() );
+                  ( parentMass * momv.get( 0 ) * momv.d3mag() * momv.d3mag() );
     pdual = dual( EvtGenFunctions::directProd( norm * p_parent, momv ) );
 
     epsdual0 = pdual.cont1( v->epsParent( 0 ).conj() );

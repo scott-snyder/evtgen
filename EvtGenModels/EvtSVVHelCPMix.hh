@@ -54,24 +54,25 @@ class EvtSVVHelCPMix : public EvtDecayAmp {
 
     void init() override;
 
-    EvtComplex hp;
-    EvtComplex h0;
-    EvtComplex hm;
-    double averageM;
-    double deltaM;
-    double gamma;
-    double deltagamma;
-    EvtComplex strongphase1;
-    EvtComplex strongphase2;
-    EvtComplex weakmixingphase;
-    EvtComplex weakdirectphase;
-
     void initProbMax() override;
 
     void decay( EvtParticle* p ) override;
 
     std::string getParamName( int i ) override;
     std::string getParamDefault( int i ) override;
+
+  private:
+    EvtComplex m_hp;
+    EvtComplex m_h0;
+    EvtComplex m_hm;
+    double m_averageM;
+    double m_deltaM;
+    double m_gamma;
+    double m_deltagamma;
+    EvtComplex m_strongphase1;
+    EvtComplex m_strongphase2;
+    EvtComplex m_weakmixingphase;
+    EvtComplex m_weakdirectphase;
 };
 
 #endif

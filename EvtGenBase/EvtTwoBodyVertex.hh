@@ -40,20 +40,20 @@ class EvtTwoBodyVertex {
     double formFactor( EvtTwoBodyKine x ) const;
     double phaseSpaceFactor( EvtTwoBodyKine x, EvtTwoBodyKine::Index ) const;
 
-    inline int L() const { return _LL; }
-    inline double mA() const { return _kine.mA(); }
-    inline double mB() const { return _kine.mB(); }
-    inline double mAB() const { return _kine.mAB(); }
-    inline double pD() const { return _p0; }
+    inline int L() const { return m_LL; }
+    inline double mA() const { return m_kine.mA(); }
+    inline double mB() const { return m_kine.mB(); }
+    inline double mAB() const { return m_kine.mAB(); }
+    inline double pD() const { return m_p0; }
     void print( std::ostream& os ) const;
 
     void set_f( double R );
 
   private:
-    EvtTwoBodyKine _kine;
-    int _LL;
-    double _p0;
-    std::unique_ptr<EvtBlattWeisskopf> _f;    // optional Blatt-Weisskopf form factor
+    EvtTwoBodyKine m_kine;
+    int m_LL;
+    double m_p0;
+    std::unique_ptr<EvtBlattWeisskopf> m_f;    // optional Blatt-Weisskopf form factor
 };
 
 std::ostream& operator<<( std::ostream& os, const EvtTwoBodyVertex& v );

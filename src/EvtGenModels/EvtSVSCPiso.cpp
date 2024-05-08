@@ -63,36 +63,36 @@ void EvtSVSCPiso::init()
 
 void EvtSVSCPiso::setAmpCoeffs()
 {
-    Tp0 = EvtComplex( getArg( 3 ) * cos( getArg( 4 ) ),
-                      getArg( 3 ) * sin( getArg( 4 ) ) );
-    Tp0_bar = EvtComplex( getArg( 5 ) * cos( getArg( 6 ) ),
-                          getArg( 5 ) * sin( getArg( 6 ) ) );
-    T0p = EvtComplex( getArg( 7 ) * cos( getArg( 8 ) ),
-                      getArg( 7 ) * sin( getArg( 8 ) ) );
-    T0p_bar = EvtComplex( getArg( 9 ) * cos( getArg( 10 ) ),
-                          getArg( 9 ) * sin( getArg( 10 ) ) );
-    Tpm = EvtComplex( getArg( 11 ) * cos( getArg( 12 ) ),
-                      getArg( 11 ) * sin( getArg( 12 ) ) );
-    Tpm_bar = EvtComplex( getArg( 13 ) * cos( getArg( 14 ) ),
-                          getArg( 13 ) * sin( getArg( 14 ) ) );
-    Tmp = EvtComplex( getArg( 15 ) * cos( getArg( 16 ) ),
-                      getArg( 15 ) * sin( getArg( 16 ) ) );
-    Tmp_bar = EvtComplex( getArg( 17 ) * cos( getArg( 18 ) ),
-                          getArg( 17 ) * sin( getArg( 18 ) ) );
-    P0 = EvtComplex( getArg( 19 ) * cos( getArg( 20 ) ),
-                     getArg( 19 ) * sin( getArg( 20 ) ) );
-    P0_bar = EvtComplex( getArg( 21 ) * cos( getArg( 22 ) ),
-                         getArg( 21 ) * sin( getArg( 22 ) ) );
-    P1 = EvtComplex( getArg( 23 ) * cos( getArg( 24 ) ),
-                     getArg( 23 ) * sin( getArg( 24 ) ) );
-    P1_bar = EvtComplex( getArg( 25 ) * cos( getArg( 26 ) ),
-                         getArg( 25 ) * sin( getArg( 26 ) ) );
+    m_Tp0 = EvtComplex( getArg( 3 ) * cos( getArg( 4 ) ),
+                        getArg( 3 ) * sin( getArg( 4 ) ) );
+    m_Tp0_bar = EvtComplex( getArg( 5 ) * cos( getArg( 6 ) ),
+                            getArg( 5 ) * sin( getArg( 6 ) ) );
+    m_T0p = EvtComplex( getArg( 7 ) * cos( getArg( 8 ) ),
+                        getArg( 7 ) * sin( getArg( 8 ) ) );
+    m_T0p_bar = EvtComplex( getArg( 9 ) * cos( getArg( 10 ) ),
+                            getArg( 9 ) * sin( getArg( 10 ) ) );
+    m_Tpm = EvtComplex( getArg( 11 ) * cos( getArg( 12 ) ),
+                        getArg( 11 ) * sin( getArg( 12 ) ) );
+    m_Tpm_bar = EvtComplex( getArg( 13 ) * cos( getArg( 14 ) ),
+                            getArg( 13 ) * sin( getArg( 14 ) ) );
+    m_Tmp = EvtComplex( getArg( 15 ) * cos( getArg( 16 ) ),
+                        getArg( 15 ) * sin( getArg( 16 ) ) );
+    m_Tmp_bar = EvtComplex( getArg( 17 ) * cos( getArg( 18 ) ),
+                            getArg( 17 ) * sin( getArg( 18 ) ) );
+    m_P0 = EvtComplex( getArg( 19 ) * cos( getArg( 20 ) ),
+                       getArg( 19 ) * sin( getArg( 20 ) ) );
+    m_P0_bar = EvtComplex( getArg( 21 ) * cos( getArg( 22 ) ),
+                           getArg( 21 ) * sin( getArg( 22 ) ) );
+    m_P1 = EvtComplex( getArg( 23 ) * cos( getArg( 24 ) ),
+                       getArg( 23 ) * sin( getArg( 24 ) ) );
+    m_P1_bar = EvtComplex( getArg( 25 ) * cos( getArg( 26 ) ),
+                           getArg( 25 ) * sin( getArg( 26 ) ) );
 }
 
 void EvtSVSCPiso::initProbMax()
 {
-    const double max1 = abs2( A_f ) + abs2( Abar_f );
-    const double max2 = abs2( A_fbar ) + abs2( Abar_fbar );
+    const double max1 = abs2( m_A_f ) + abs2( m_Abar_f );
+    const double max2 = abs2( m_A_fbar ) + abs2( m_Abar_fbar );
     // Amplitude has momentum normalisation that roughly scales with (parent mass)/2
     // so probability will scale with 0.25 * parenMassSq. Use 0.3 * parMassSq
     // in case we get larger normalisation values
@@ -151,43 +151,43 @@ void EvtSVSCPiso::decay( EvtParticle* p )
 
     EvtComplex amp;
 
-    if ( charged == 0 ) {
+    if ( m_charged == 0 ) {
         if ( !flip ) {
             if ( other_b == B0B ) {
-                amp = A_f * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
+                amp = m_A_f * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
                       EvtComplex( cos( -2.0 * getArg( 0 ) ),
                                   sin( -2.0 * getArg( 0 ) ) ) *
-                          EvtComplex( 0.0, 1.0 ) * Abar_f *
+                          EvtComplex( 0.0, 1.0 ) * m_Abar_f *
                           sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) );
             }
             if ( other_b == B0 ) {
-                amp = A_f *
+                amp = m_A_f *
                           EvtComplex( cos( 2.0 * getArg( 0 ) ),
                                       sin( 2.0 * getArg( 0 ) ) ) *
                           EvtComplex( 0.0, 1.0 ) *
                           sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
-                      Abar_f * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) );
+                      m_Abar_f * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) );
             }
         } else {
             if ( other_b == B0B ) {
-                amp = A_fbar * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
+                amp = m_A_fbar * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
                       EvtComplex( cos( -2.0 * getArg( 0 ) ),
                                   sin( -2.0 * getArg( 0 ) ) ) *
-                          EvtComplex( 0.0, 1.0 ) * Abar_fbar *
+                          EvtComplex( 0.0, 1.0 ) * m_Abar_fbar *
                           sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) );
             }
             if ( other_b == B0 ) {
-                amp = A_fbar *
+                amp = m_A_fbar *
                           EvtComplex( cos( 2.0 * getArg( 0 ) ),
                                       sin( 2.0 * getArg( 0 ) ) ) *
                           EvtComplex( 0.0, 1.0 ) *
                           sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
-                      Abar_fbar * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) );
+                      m_Abar_fbar * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) );
             }
         }
 
     } else {
-        amp = A_f;
+        amp = m_A_f;
     }
 
     const EvtVector4R p4_parent = v->getP4() + s->getP4();
@@ -210,65 +210,65 @@ void EvtSVSCPiso::calcAmpTerms()
     if ( Q1 > 0 && Q2 == 0 ) {
         //V+ S0, so T+0 + 2 P1
 
-        charged = 1;
-        A_f = Tp0 + 2.0 * P1;
+        m_charged = 1;
+        m_A_f = m_Tp0 + 2.0 * m_P1;
     }
 
     if ( Q1 < 0 && Q2 == 0 ) {
         //V- S0, so T+0_bar + 2P1_bar
 
-        charged = 1;
-        A_f = Tp0_bar + 2.0 * P1_bar;
+        m_charged = 1;
+        m_A_f = m_Tp0_bar + 2.0 * m_P1_bar;
     }
 
     if ( Q1 == 0 && Q2 > 0 ) {
         //V0 S+, so T0+ - 2 P1
 
-        charged = 1;
-        A_f = T0p - 2.0 * P1;
+        m_charged = 1;
+        m_A_f = m_T0p - 2.0 * m_P1;
     }
 
     if ( Q1 == 0 && Q2 < 0 ) {
         //V0 S-, so T0+_bar - 2 P1_bar
 
-        charged = 1;
-        A_f = T0p_bar - 2.0 * P1_bar;
+        m_charged = 1;
+        m_A_f = m_T0p_bar - 2.0 * m_P1_bar;
     }
 
     //***********************neutral modes***************************
 
     //V+ S-, so Af = T+- + P1 + P0
-    Apm = Tpm + P1 + P0;
-    Apm_bar = Tpm_bar + P1_bar + P0_bar;
+    m_Apm = m_Tpm + m_P1 + m_P0;
+    m_Apm_bar = m_Tpm_bar + m_P1_bar + m_P0_bar;
 
     //V- S+, so Af = T-+ - P1 + P0
-    Amp = Tmp - P1 + P0;
-    Amp_bar = Tmp_bar - P1_bar + P0;
+    m_Amp = m_Tmp - m_P1 + m_P0;
+    m_Amp_bar = m_Tmp_bar - m_P1_bar + m_P0;
 
     if ( Q1 > 0 && Q2 < 0 ) {
         //V+ S-
-        charged = 0;
-        A_f = Apm;
-        Abar_f = Apm_bar;
-        A_fbar = Amp;
-        Abar_fbar = Amp_bar;
+        m_charged = 0;
+        m_A_f = m_Apm;
+        m_Abar_f = m_Apm_bar;
+        m_A_fbar = m_Amp;
+        m_Abar_fbar = m_Amp_bar;
     }
 
     if ( Q1 < 0 && Q2 > 0 ) {
         //V- S+
-        charged = 0;
-        A_f = Amp;
-        Abar_f = Amp_bar;
-        A_fbar = Apm;
-        Abar_fbar = Apm_bar;
+        m_charged = 0;
+        m_A_f = m_Amp;
+        m_Abar_f = m_Amp_bar;
+        m_A_fbar = m_Apm;
+        m_Abar_fbar = m_Apm_bar;
     }
 
     if ( Q1 == 0 && Q2 == 0 ) {
         //V0 S0
-        charged = 0;
-        A_f = T0p + Tp0 - Tpm - Tmp - 2.0 * P0;
-        Abar_f = T0p_bar + Tp0_bar - Tpm_bar - Tmp_bar - 2.0 * P0_bar;
-        A_fbar = A_f;
-        Abar_fbar = Abar_f;
+        m_charged = 0;
+        m_A_f = m_T0p + m_Tp0 - m_Tpm - m_Tmp - 2.0 * m_P0;
+        m_Abar_f = m_T0p_bar + m_Tp0_bar - m_Tpm_bar - m_Tmp_bar - 2.0 * m_P0_bar;
+        m_A_fbar = m_A_f;
+        m_Abar_fbar = m_Abar_f;
     }
 }

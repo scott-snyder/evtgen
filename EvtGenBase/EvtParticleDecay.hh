@@ -27,33 +27,33 @@ class EvtParticleDecay {
   public:
     EvtParticleDecay()
     {
-        _decay = nullptr;
-        _brfrsum = 0.0;
-        _massmin = 0.0;
+        m_decay = nullptr;
+        m_brfrsum = 0.0;
+        m_massmin = 0.0;
     }
 
     ~EvtParticleDecay()
     {
-        if ( _decay != nullptr )
-            delete _decay;
+        if ( m_decay != nullptr )
+            delete m_decay;
     }
 
     void chargeConj( EvtParticleDecay* decay );
 
-    void setDecayModel( EvtDecayBase* decay ) { _decay = decay; }
-    EvtDecayBase* getDecayModel() { return _decay; }
-    double getBrfrSum() { return _brfrsum; }
-    void setBrfrSum( double brfrsum ) { _brfrsum = brfrsum; }
-    double getMassMin() { return _massmin; }
-    void setMassMin( double massmin ) { _massmin = massmin; }
+    void setDecayModel( EvtDecayBase* decay ) { m_decay = decay; }
+    EvtDecayBase* getDecayModel() { return m_decay; }
+    double getBrfrSum() { return m_brfrsum; }
+    void setBrfrSum( double brfrsum ) { m_brfrsum = brfrsum; }
+    double getMassMin() { return m_massmin; }
+    void setMassMin( double massmin ) { m_massmin = massmin; }
 
     void printSummary();
 
   private:
-    EvtDecayBase* _decay;
+    EvtDecayBase* m_decay;
 
-    double _brfrsum;
-    double _massmin;
+    double m_brfrsum;
+    double m_massmin;
 };
 
 #endif

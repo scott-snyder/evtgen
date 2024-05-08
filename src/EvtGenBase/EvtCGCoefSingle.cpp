@@ -30,13 +30,13 @@
 
 void EvtCGCoefSingle::init( int j1, int j2 )
 {
-    _j1 = j1;
-    _j2 = j2;
+    m_j1 = j1;
+    m_j2 = j2;
 
-    _Jmax = abs( j1 + j2 );
-    _Jmin = abs( j1 - j2 );
+    m_Jmax = abs( j1 + j2 );
+    m_Jmin = abs( j1 - j2 );
 
-    _table.resize( ( _Jmax - _Jmin ) / 2 + 1 );
+    m_table.resize( ( m_Jmax - m_Jmin ) / 2 + 1 );
 
     int J, M;
 
@@ -45,31 +45,31 @@ void EvtCGCoefSingle::init( int j1, int j2 )
         lenmax = j2 + 1;
 
     //set vector sizes
-    for ( J = _Jmax; J >= _Jmin; J -= 2 ) {
-        _table[( J - _Jmin ) / 2].resize( J + 1 );
+    for ( J = m_Jmax; J >= m_Jmin; J -= 2 ) {
+        m_table[( J - m_Jmin ) / 2].resize( J + 1 );
         for ( M = J; J >= -M; M -= 2 ) {
-            int len = ( ( _j1 + _j2 ) - abs( M ) ) / 2 + 1;
+            int len = ( ( m_j1 + m_j2 ) - abs( M ) ) / 2 + 1;
             if ( len > lenmax )
                 len = lenmax;
-            _table[( J - _Jmin ) / 2][( M + J ) / 2].resize( len );
+            m_table[( J - m_Jmin ) / 2][( M + J ) / 2].resize( len );
         }
     }
 
     //now fill the vectors
-    for ( J = _Jmax; J >= _Jmin; J -= 2 ) {
+    for ( J = m_Jmax; J >= m_Jmin; J -= 2 ) {
         //bootstrap with highest M(=J) as a special case
-        if ( J == _Jmax ) {
-            cg( J, J, _j1, _j2 ) = 1.0;
+        if ( J == m_Jmax ) {
+            cg( J, J, m_j1, m_j2 ) = 1.0;
         } else {
-            int n = ( _Jmax - J ) / 2 + 1;
+            int n = ( m_Jmax - J ) / 2 + 1;
             std::vector<double>* vectors = new std::vector<double>[n - 1];
             int i, k;
             for ( i = 0; i < n - 1; i++ ) {
                 // i corresponds to J=Jmax-2*i
                 vectors[i].resize( n );
                 for ( k = 0; k < n; k++ ) {
-                    double tmp = _table[( _Jmax - _Jmin ) / 2 - i]
-                                       [( J + _Jmax - 2 * i ) / 2][k];
+                    double tmp = m_table[( m_Jmax - m_Jmin ) / 2 - i]
+                                        [( J + m_Jmax - 2 * i ) / 2][k];
                     vectors[i][k] = tmp;
                 }
             }
@@ -79,12 +79,12 @@ void EvtCGCoefSingle::init( int j1, int j2 )
             if ( orth[n - 1] < 0.0 )
                 sign = -1;
             for ( k = 0; k < n; k++ ) {
-                _table[( J - _Jmin ) / 2][J][k] = sign * orth[k];
+                m_table[( J - m_Jmin ) / 2][J][k] = sign * orth[k];
             }
             delete[] vectors;
         }
         for ( M = J - 2; M >= -J; M -= 2 ) {
-            int len = ( ( _j1 + _j2 ) - abs( M ) ) / 2 + 1;
+            int len = ( ( m_j1 + m_j2 ) - abs( M ) ) / 2 + 1;
             if ( len > lenmax )
                 len = lenmax;
             int mmin = M - j2;
@@ -94,15 +94,15 @@ void EvtCGCoefSingle::init( int j1, int j2 )
             for ( m1 = mmin; m1 < mmin + len * 2; m1 += 2 ) {
                 int m2 = M - m1;
                 double sum = 0.0;
-                float fkwTmp = _j1 * ( _j1 + 2 ) - ( m1 + 2 ) * m1;
+                float fkwTmp = m_j1 * ( m_j1 + 2 ) - ( m1 + 2 ) * m1;
                 //fkw 2/2/2001: changes needed to satisfy KCC
-                //fkw if (m1+2<=_j1) sum+=0.5*sqrt(_j1*(_j1+2)-(m1+2)*m1)*cg(J,M+2,m1+2,m2);
-                //fkw if (m2+2<=_j2) sum+=0.5*sqrt(_j2*(_j2+2)-(m2+2)*m2)*cg(J,M+2,m1,m2+2);
+                //fkw if (m1+2<=m_j1) sum+=0.5*sqrt(m_j1*(m_j1+2)-(m1+2)*m1)*cg(J,M+2,m1+2,m2);
+                //fkw if (m2+2<=m_j2) sum+=0.5*sqrt(m_j2*(m_j2+2)-(m2+2)*m2)*cg(J,M+2,m1,m2+2);
                 //fkw sum/=(0.5*sqrt(J*(J+2)-(M+2)*M));
-                if ( m1 + 2 <= _j1 )
+                if ( m1 + 2 <= m_j1 )
                     sum += 0.5 * sqrt( fkwTmp ) * cg( J, M + 2, m1 + 2, m2 );
-                fkwTmp = _j2 * ( _j2 + 2 ) - ( m2 + 2 ) * m2;
-                if ( m2 + 2 <= _j2 )
+                fkwTmp = m_j2 * ( m_j2 + 2 ) - ( m2 + 2 ) * m2;
+                if ( m2 + 2 <= m_j2 )
                     sum += 0.5 * sqrt( fkwTmp ) * cg( J, M + 2, m1, m2 + 2 );
                 fkwTmp = J * ( J + 2 ) - ( M + 2 ) * M;
                 sum /= ( 0.5 * sqrt( fkwTmp ) );
@@ -114,10 +114,10 @@ void EvtCGCoefSingle::init( int j1, int j2 )
 
 double EvtCGCoefSingle::coef( int J, int M, int j1, int j2, int m1, int m2 )
 {
-    assert( j1 == _j1 );
-    _unused( j1 );
-    assert( j2 == _j2 );
-    _unused( j2 );
+    assert( j1 == m_j1 );
+    UNUSED( j1 );
+    assert( j2 == m_j2 );
+    UNUSED( j2 );
 
     return cg( J, M, m1, m2 );
 }
@@ -125,21 +125,21 @@ double EvtCGCoefSingle::coef( int J, int M, int j1, int j2, int m1, int m2 )
 double& EvtCGCoefSingle::cg( int J, int M, int m1, int m2 )
 {
     assert( M == m1 + m2 );
-    _unused( m2 );
+    UNUSED( m2 );
     assert( abs( M ) <= J );
-    assert( J <= _Jmax );
-    assert( J >= _Jmin );
-    assert( abs( m1 ) <= _j1 );
-    assert( abs( m2 ) <= _j2 );
+    assert( J <= m_Jmax );
+    assert( J >= m_Jmin );
+    assert( abs( m1 ) <= m_j1 );
+    assert( abs( m2 ) <= m_j2 );
 
     //find lowest m1 allowed for the given M
 
-    int mmin = M - _j2;
+    int mmin = M - m_j2;
 
-    if ( mmin < -_j1 )
-        mmin = -_j1;
+    if ( mmin < -m_j1 )
+        mmin = -m_j1;
 
     int n = m1 - mmin;
 
-    return _table[( J - _Jmin ) / 2][( M + J ) / 2][n / 2];
+    return m_table[( J - m_Jmin ) / 2][( M + J ) / 2][n / 2];
 }

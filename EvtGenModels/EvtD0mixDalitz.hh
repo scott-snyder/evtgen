@@ -35,63 +35,63 @@
 
 class EvtD0mixDalitz : public EvtDecayAmp {
   private:
-    int _d1;
-    int _d2;
-    int _d3;
+    int m_d1;
+    int m_d2;
+    int m_d3;
 
     // Mixing parameters.
-    double _x;
-    double _y;
+    double m_x;
+    double m_y;
 
     // q/p CP violation in the mixing.
-    EvtComplex _qp;
+    EvtComplex m_qp;
 
     // Checker of the decay mode.
-    bool _isKsPiPi;
-    bool _isRBWmodel;
+    bool m_isKsPiPi;
+    bool m_isRBWmodel;
 
     // Useful constants.
-    static const EvtSpinType::spintype& _SCALAR;
-    static const EvtSpinType::spintype& _VECTOR;
-    static const EvtSpinType::spintype& _TENSOR;
+    static const EvtSpinType::spintype& m_SCALAR;
+    static const EvtSpinType::spintype& m_VECTOR;
+    static const EvtSpinType::spintype& m_TENSOR;
 
-    static const EvtDalitzReso::CouplingType& _EtaPic;
-    static const EvtDalitzReso::CouplingType& _PicPicKK;
+    static const EvtDalitzReso::CouplingType& m_EtaPic;
+    static const EvtDalitzReso::CouplingType& m_PicPicKK;
 
-    static const EvtDalitzReso::NumType& _RBW;
-    static const EvtDalitzReso::NumType& _GS;
-    static const EvtDalitzReso::NumType& _KMAT;
+    static const EvtDalitzReso::NumType& m_RBW;
+    static const EvtDalitzReso::NumType& m_GS;
+    static const EvtDalitzReso::NumType& m_KMAT;
 
-    static const EvtCyclic3::Pair& _AB;
-    static const EvtCyclic3::Pair& _AC;
-    static const EvtCyclic3::Pair& _BC;
+    static const EvtCyclic3::Pair& m_AB;
+    static const EvtCyclic3::Pair& m_AC;
+    static const EvtCyclic3::Pair& m_BC;
 
     // Values to be read or computed based on values in the evt.pdl file.
     // IDs of the relevant particles.
-    EvtId _D0;
-    EvtId _D0B;
-    EvtId _KM;
-    EvtId _KP;
-    EvtId _K0;
-    EvtId _K0B;
-    EvtId _KL;
-    EvtId _KS;
-    EvtId _PIM;
-    EvtId _PIP;
+    EvtId m_D0;
+    EvtId m_D0B;
+    EvtId m_KM;
+    EvtId m_KP;
+    EvtId m_K0;
+    EvtId m_K0B;
+    EvtId m_KL;
+    EvtId m_KS;
+    EvtId m_PIM;
+    EvtId m_PIP;
 
     // Masses of the relevant particles.
-    double _mD0;
-    double _mKs;
-    double _mPi;
-    double _mK;
+    double m_mD0;
+    double m_mKs;
+    double m_mPi;
+    double m_mK;
 
     // Life time and decay rate.
-    double _ctau;
-    double _gamma;
+    double m_ctau;
+    double m_gamma;
 
     // Some useful integrals over the Dalitz plot.
-    EvtComplex _iChi;
-    EvtComplex _iChi2;
+    EvtComplex m_iChi;
+    EvtComplex m_iChi2;
 
     void readPDGValues();
     EvtComplex dalitzKsPiPi( const EvtDalitzPoint& point );
@@ -111,14 +111,14 @@ class EvtD0mixDalitz : public EvtDecayAmp {
 
   public:
     EvtD0mixDalitz() :
-        _d1( 0 ),
-        _d2( 0 ),
-        _d3( 0 ),
-        _x( 0. ),
-        _y( 0. ),
-        _qp( 1. ),
-        _isKsPiPi( false ),
-        _isRBWmodel( true )
+        m_d1( 0 ),
+        m_d2( 0 ),
+        m_d3( 0 ),
+        m_x( 0. ),
+        m_y( 0. ),
+        m_qp( 1. ),
+        m_isKsPiPi( false ),
+        m_isRBWmodel( true )
     {
     }
 

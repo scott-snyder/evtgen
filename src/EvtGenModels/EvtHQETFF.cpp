@@ -32,18 +32,18 @@
 EvtHQETFF::EvtHQETFF( double hqetrho2, double hqetr1, double hqetr2,
                       double quadTerm )
 {
-    rho2 = hqetrho2;
-    r1 = hqetr1;
-    r2 = hqetr2;
-    c = quadTerm;
+    m_rho2 = hqetrho2;
+    m_r1 = hqetr1;
+    m_r2 = hqetr2;
+    m_c = quadTerm;
 
     return;
 }
 
 EvtHQETFF::EvtHQETFF( double hqetrho2, double quadTerm )
 {
-    rho2 = hqetrho2;
-    c = quadTerm;
+    m_rho2 = hqetrho2;
+    m_c = quadTerm;
 
     return;
 }
@@ -57,7 +57,7 @@ void EvtHQETFF::getscalarff( EvtId parent, EvtId, double t, double mass,
     // Form factors have a general form, with parameters passed in
     // from the arguements.
 
-    double ha1 = 1 - rho2 * ( w - 1 ) + c * ( w - 1 ) * ( w - 1 );
+    double ha1 = 1 - m_rho2 * ( w - 1 ) + m_c * ( w - 1 ) * ( w - 1 );
 
     *f0p = ha1;
     *f0m = 0.0;
@@ -75,12 +75,12 @@ void EvtHQETFF::getvectorff( EvtId parent, EvtId, double t, double mass,
     // from the arguements.
 
     double rstar = ( 2.0 * sqrt( mb * mass ) ) / ( mb + mass );
-    double ha1 = 1 - rho2 * ( w - 1 );
+    double ha1 = 1 - m_rho2 * ( w - 1 );
 
     *a1f = ( 1.0 - ( t / ( ( mb + mass ) * ( mb + mass ) ) ) ) * ha1;
     *a1f = ( *a1f ) / rstar;
-    *a2f = ( r2 / rstar ) * ha1;
-    *vf = ( r1 / rstar ) * ha1;
+    *a2f = ( m_r2 / rstar ) * ha1;
+    *vf = ( m_r1 / rstar ) * ha1;
     *a0f = 0.0;
 
     return;

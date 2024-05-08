@@ -35,17 +35,17 @@ class EvtValError final {
     EvtValError( double val, double err );
     EvtValError( const EvtValError& other );
 
-    inline int valueKnown() const { return _valKnown; }
+    inline int valueKnown() const { return m_valKnown; }
     inline double value() const
     {
-        assert( _valKnown );
-        return _val;
+        assert( m_valKnown );
+        return m_val;
     }
-    inline int errorKnown() const { return _errKnown; }
+    inline int errorKnown() const { return m_errKnown; }
     inline double error() const
     {
-        assert( _errKnown );
-        return _err;
+        assert( m_errKnown );
+        return m_err;
     }
 
     double prec() const;
@@ -58,10 +58,10 @@ class EvtValError final {
     void print( std::ostream& ) const;
 
   private:
-    int _valKnown;
-    double _val;
-    int _errKnown;
-    double _err;
+    int m_valKnown;
+    double m_val;
+    int m_errKnown;
+    double m_err;
 };
 
 EvtValError operator*( const EvtValError& x1, const EvtValError& x2 );

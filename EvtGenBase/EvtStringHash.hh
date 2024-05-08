@@ -33,29 +33,29 @@ class EvtStringHash {
 
   private:
     EvtStringHash();
-    int _size;
+    int m_size;
     inline int hash( const std::string& str );
-    std::string*** _strings;
-    T*** _data;
-    int* _entries;
+    std::string*** m_strings;
+    T*** m_data;
+    int* m_entries;
 };
 
 template <class T>
 EvtStringHash<T>::EvtStringHash( int size )
 {
-    _size = size;
+    m_size = size;
 
     typedef std::string** EvtStringPtrPtr;
     typedef T** TPtrPtr;
 
-    _strings = new EvtStringPtrPtr[_size];
-    _data = new TPtrPtr[_size];
-    _entries = new int[_size];
+    m_strings = new EvtStringPtrPtr[m_size];
+    m_data = new TPtrPtr[m_size];
+    m_entries = new int[m_size];
 
     int i;
 
-    for ( i = 0; i < _size; i++ ) {
-        _entries[i] = 0;
+    for ( i = 0; i < m_size; i++ ) {
+        m_entries[i] = 0;
     }
 }
 
@@ -63,20 +63,20 @@ template <class T>
 EvtStringHash<T>::~EvtStringHash()
 {
     int i;
-    for ( i = 0; i < _size; i++ ) {
+    for ( i = 0; i < m_size; i++ ) {
         int j;
-        for ( j = 0; j < _entries[i]; j++ ) {
-            delete _strings[i][j];
+        for ( j = 0; j < m_entries[i]; j++ ) {
+            delete m_strings[i][j];
         }
-        if ( _entries[i] > 0 ) {
-            delete[] _strings[i];
-            delete[] _data[i];
+        if ( m_entries[i] > 0 ) {
+            delete[] m_strings[i];
+            delete[] m_data[i];
         }
     }
 
-    delete[] _strings;
-    delete[] _data;
-    delete[] _entries;
+    delete[] m_strings;
+    delete[] m_data;
+    delete[] m_entries;
 }
 
 template <class T>
@@ -87,29 +87,29 @@ void EvtStringHash<T>::add( const std::string& str, T* data )
     typedef std::string* EvtStringPtr;
     typedef T* TPtr;
 
-    std::string** newstrings = new EvtStringPtr[_entries[ihash] + 1];
-    T** newdata = new TPtr[_entries[ihash] + 1];
+    std::string** newstrings = new EvtStringPtr[m_entries[ihash] + 1];
+    T** newdata = new TPtr[m_entries[ihash] + 1];
 
     int i;
 
-    for ( i = 0; i < _entries[ihash]; i++ ) {
-        newstrings[i] = _strings[ihash][i];
-        newdata[i] = _data[ihash][i];
+    for ( i = 0; i < m_entries[ihash]; i++ ) {
+        newstrings[i] = m_strings[ihash][i];
+        newdata[i] = m_data[ihash][i];
     }
 
-    newstrings[_entries[ihash]] = new std::string;
-    *( newstrings[_entries[ihash]] ) = str;
-    newdata[_entries[ihash]] = data;
+    newstrings[m_entries[ihash]] = new std::string;
+    *( newstrings[m_entries[ihash]] ) = str;
+    newdata[m_entries[ihash]] = data;
 
-    if ( _entries[ihash] != 0 ) {
-        delete[] _strings[ihash];
-        delete[] _data[ihash];
+    if ( m_entries[ihash] != 0 ) {
+        delete[] m_strings[ihash];
+        delete[] m_data[ihash];
     }
 
-    _entries[ihash]++;
+    m_entries[ihash]++;
 
-    _strings[ihash] = newstrings;
-    _data[ihash] = newdata;
+    m_strings[ihash] = newstrings;
+    m_data[ihash] = newdata;
 }
 
 template <class T>
@@ -119,9 +119,9 @@ T* EvtStringHash<T>::get( const std::string& str )
 
     int i;
 
-    for ( i = 0; i < _entries[ihash]; i++ ) {
-        if ( *( _strings[ihash][i] ) == str )
-            return _data[ihash][i];
+    for ( i = 0; i < m_entries[ihash]; i++ ) {
+        if ( *( m_strings[ihash][i] ) == str )
+            return m_data[ihash][i];
     }
 
     return 0;
@@ -141,7 +141,7 @@ int EvtStringHash<T>::hash( const std::string& str )
         i++;
     }
 
-    return value % _size;
+    return value % m_size;
 }
 
 #endif

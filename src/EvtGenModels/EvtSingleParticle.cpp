@@ -55,40 +55,40 @@ void EvtSingleParticle::init()
         if ( getNArg() == 6 ) {
             //copy the arguments into eaiser to remember names!
 
-            pmin = getArg( 0 );
-            pmax = getArg( 1 );
+            m_pmin = getArg( 0 );
+            m_pmax = getArg( 1 );
 
-            cthetamin = getArg( 2 );
-            cthetamax = getArg( 3 );
+            m_cthetamin = getArg( 2 );
+            m_cthetamax = getArg( 3 );
 
-            phimin = getArg( 4 );
-            phimax = getArg( 5 );
+            m_phimin = getArg( 4 );
+            m_phimax = getArg( 5 );
         }
 
         if ( getNArg() == 4 ) {
             //copy the arguments into eaiser to remember names!
 
-            pmin = getArg( 0 );
-            pmax = getArg( 1 );
+            m_pmin = getArg( 0 );
+            m_pmax = getArg( 1 );
 
-            cthetamin = getArg( 2 );
-            cthetamax = getArg( 3 );
+            m_cthetamin = getArg( 2 );
+            m_cthetamax = getArg( 3 );
 
-            phimin = 0.0;
-            phimax = EvtConst::twoPi;
+            m_phimin = 0.0;
+            m_phimax = EvtConst::twoPi;
         }
 
         if ( getNArg() == 2 ) {
             //copy the arguments into eaiser to remember names!
 
-            pmin = getArg( 0 );
-            pmax = getArg( 1 );
+            m_pmin = getArg( 0 );
+            m_pmax = getArg( 1 );
 
-            cthetamin = -1.0;
-            cthetamax = 1.0;
+            m_cthetamin = -1.0;
+            m_cthetamax = 1.0;
 
-            phimin = 0.0;
-            phimax = EvtConst::twoPi;
+            m_phimin = 0.0;
+            m_phimax = EvtConst::twoPi;
         }
 
     } else {
@@ -102,11 +102,12 @@ void EvtSingleParticle::init()
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << "The single particle generator has been configured:" << endl;
-    EvtGenReport( EVTGEN_INFO, "EvtGen" ) << pmax << " > p > " << pmin << endl;
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
-        << cthetamax << " > costheta > " << cthetamin << endl;
+        << m_pmax << " > p > " << m_pmin << endl;
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
-        << phimax << " > phi > " << phimin << endl;
+        << m_cthetamax << " > costheta > " << m_cthetamin << endl;
+    EvtGenReport( EVTGEN_INFO, "EvtGen" )
+        << m_phimax << " > phi > " << m_phimin << endl;
 }
 
 void EvtSingleParticle::decay( EvtParticle* p )
@@ -122,15 +123,15 @@ void EvtSingleParticle::decay( EvtParticle* p )
     //generate flat distribution in p
     //we are now in the parents restframe! This means the
     //restframe of the e+e- collison.
-    double pcm = EvtRandom::Flat( pmin, pmax );
+    double pcm = EvtRandom::Flat( m_pmin, m_pmax );
     //generate flat distribution in phi.
-    double phi = EvtRandom::Flat( phimin, phimax );
+    double phi = EvtRandom::Flat( m_phimin, m_phimax );
 
     double cthetalab;
 
     do {
         //generate flat distribution in costheta
-        double ctheta = EvtRandom::Flat( cthetamin, cthetamax );
+        double ctheta = EvtRandom::Flat( m_cthetamin, m_cthetamax );
         double stheta = sqrt( 1.0 - ctheta * ctheta );
         p4.set( sqrt( mass * mass + pcm * pcm ), pcm * cos( phi ) * stheta,
                 pcm * sin( phi ) * stheta, pcm * ctheta );
@@ -140,7 +141,7 @@ void EvtSingleParticle::decay( EvtParticle* p )
         //get 4 vector in the lab frame!
         EvtVector4R p4lab = d->getP4Lab();
         cthetalab = p4lab.get( 3 ) / p4lab.d3mag();
-    } while ( cthetalab > cthetamax || cthetalab < cthetamin );
+    } while ( cthetalab > m_cthetamax || cthetalab < m_cthetamin );
 
     return;
 }

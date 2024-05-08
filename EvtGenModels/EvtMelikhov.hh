@@ -41,8 +41,8 @@ class EvtMelikhov : public EvtDecayAmp {
     void initProbMax() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> Melikhovffmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_Melikhovffmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
 };
 
 #endif

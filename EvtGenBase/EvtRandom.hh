@@ -40,7 +40,7 @@ class EvtRandom {
     static void setRandomEngine( EvtRandomEngine* randomEngine );
 
   private:
-    static EvtRandomEngine* _randomEngine;
+    static EvtRandomEngine* m_randomEngine;
 };
 
 #endif

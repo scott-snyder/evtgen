@@ -34,28 +34,28 @@ EvtResonance& EvtResonance::operator=( const EvtResonance& n )
 {
     if ( &n == this )
         return *this;
-    _p4_p = n._p4_p;
-    _p4_d1 = n._p4_d1;
-    _p4_d2 = n._p4_d2;
-    _ampl = n._ampl;
-    _theta = n._theta;
-    _gamma = n._gamma;
-    _spin = n._spin;
-    _bwm = n._bwm;
+    m_p4_p = n.m_p4_p;
+    m_p4_d1 = n.m_p4_d1;
+    m_p4_d2 = n.m_p4_d2;
+    m_ampl = n.m_ampl;
+    m_theta = n.m_theta;
+    m_gamma = n.m_gamma;
+    m_spin = n.m_spin;
+    m_bwm = n.m_bwm;
     return *this;
 }
 
 EvtResonance::EvtResonance( const EvtVector4R& p4_p, const EvtVector4R& p4_d1,
                             const EvtVector4R& p4_d2, double ampl, double theta,
                             double gamma, double bwm, int spin ) :
-    _p4_p( p4_p ),
-    _p4_d1( p4_d1 ),
-    _p4_d2( p4_d2 ),
-    _ampl( ampl ),
-    _theta( theta ),
-    _gamma( gamma ),
-    _bwm( bwm ),
-    _spin( spin )
+    m_p4_p( p4_p ),
+    m_p4_d1( p4_d1 ),
+    m_p4_d2( p4_d2 ),
+    m_ampl( ampl ),
+    m_theta( theta ),
+    m_gamma( gamma ),
+    m_bwm( bwm ),
+    m_spin( spin )
 {
 }
 
@@ -64,7 +64,7 @@ EvtComplex EvtResonance::resAmpl()
     double pi180inv = 1.0 / EvtConst::radToDegrees;
 
     EvtComplex ampl;
-    //EvtVector4R  _p4_d3 = _p4_p-_p4_d1-_p4_d2;
+    //EvtVector4R  _p4_d3 = m_p4_p-m_p4_d1-m_p4_d2;
 
     //get cos of the angle between the daughters from their 4-momenta
     //and the 4-momentum of the parent
@@ -75,47 +75,47 @@ EvtComplex EvtResonance::resAmpl()
     //listed particles (12)
 
     //angle 3 makes with 2 in rest frame of 12 (CS3)
-    double cos_phi_0 = EvtDecayAngle( _p4_p, _p4_d1 + _p4_d2, _p4_d1 );
+    double cos_phi_0 = EvtDecayAngle( m_p4_p, m_p4_d1 + m_p4_d2, m_p4_d1 );
     //angle 3 makes with 1 in 12 is, of course, -cos_phi_0
 
-    switch ( _spin ) {
+    switch ( m_spin ) {
         case 0:
-            ampl = ( _ampl *
-                     EvtComplex( cos( _theta * pi180inv ),
-                                 sin( _theta * pi180inv ) ) *
-                     sqrt( _gamma / EvtConst::twoPi ) *
-                     ( 1.0 / ( ( _p4_d1 + _p4_d2 ).mass() - _bwm -
-                               EvtComplex( 0.0, 0.5 * _gamma ) ) ) );
+            ampl = ( m_ampl *
+                     EvtComplex( cos( m_theta * pi180inv ),
+                                 sin( m_theta * pi180inv ) ) *
+                     sqrt( m_gamma / EvtConst::twoPi ) *
+                     ( 1.0 / ( ( m_p4_d1 + m_p4_d2 ).mass() - m_bwm -
+                               EvtComplex( 0.0, 0.5 * m_gamma ) ) ) );
             break;
 
         case 1:
-            ampl = ( _ampl *
-                     EvtComplex( cos( _theta * pi180inv ),
-                                 sin( _theta * pi180inv ) ) *
-                     sqrt( _gamma / EvtConst::twoPi ) *
-                     ( cos_phi_0 / ( ( _p4_d1 + _p4_d2 ).mass() - _bwm -
-                                     EvtComplex( 0.0, 0.5 * _gamma ) ) ) );
+            ampl = ( m_ampl *
+                     EvtComplex( cos( m_theta * pi180inv ),
+                                 sin( m_theta * pi180inv ) ) *
+                     sqrt( m_gamma / EvtConst::twoPi ) *
+                     ( cos_phi_0 / ( ( m_p4_d1 + m_p4_d2 ).mass() - m_bwm -
+                                     EvtComplex( 0.0, 0.5 * m_gamma ) ) ) );
             break;
 
         case 2:
-            ampl = ( _ampl *
-                     EvtComplex( cos( _theta * pi180inv ),
-                                 sin( _theta * pi180inv ) ) *
-                     sqrt( _gamma / EvtConst::twoPi ) *
+            ampl = ( m_ampl *
+                     EvtComplex( cos( m_theta * pi180inv ),
+                                 sin( m_theta * pi180inv ) ) *
+                     sqrt( m_gamma / EvtConst::twoPi ) *
                      ( ( 1.5 * cos_phi_0 * cos_phi_0 - 0.5 ) /
-                       ( ( _p4_d1 + _p4_d2 ).mass() - _bwm -
-                         EvtComplex( 0.0, 0.5 * _gamma ) ) ) );
+                       ( ( m_p4_d1 + m_p4_d2 ).mass() - m_bwm -
+                         EvtComplex( 0.0, 0.5 * m_gamma ) ) ) );
             break;
 
         case 3:
-            ampl = ( _ampl *
-                     EvtComplex( cos( _theta * pi180inv ),
-                                 sin( _theta * pi180inv ) ) *
-                     sqrt( _gamma / EvtConst::twoPi ) *
+            ampl = ( m_ampl *
+                     EvtComplex( cos( m_theta * pi180inv ),
+                                 sin( m_theta * pi180inv ) ) *
+                     sqrt( m_gamma / EvtConst::twoPi ) *
                      ( ( 2.5 * cos_phi_0 * cos_phi_0 * cos_phi_0 -
                          1.5 * cos_phi_0 ) /
-                       ( ( _p4_d1 + _p4_d2 ).mass() - _bwm -
-                         EvtComplex( 0.0, 0.5 * _gamma ) ) ) );
+                       ( ( m_p4_d1 + m_p4_d2 ).mass() - m_bwm -
+                         EvtComplex( 0.0, 0.5 * m_gamma ) ) ) );
             break;
 
         default:
@@ -134,29 +134,31 @@ EvtComplex EvtResonance::relBrWig( int i )
     //for a given resonance (for P-wave decays of scalars only at the moment!)
 
     EvtComplex BW;
-    EvtVector4R _p4_d3 = _p4_p - _p4_d1 - _p4_d2;
-    EvtVector4R _p4_12 = _p4_d1 + _p4_d2;
+    EvtVector4R _p4_d3 = m_p4_p - m_p4_d1 - m_p4_d2;
+    EvtVector4R _p4_12 = m_p4_d1 + m_p4_d2;
 
-    double msq13 = ( _p4_d1 + _p4_d3 ).mass2();
-    double msq23 = ( _p4_d2 + _p4_d3 ).mass2();
-    double msqParent = _p4_p.mass2();
-    double msq1 = _p4_d1.mass2();
-    double msq2 = _p4_d2.mass2();
+    double msq13 = ( m_p4_d1 + _p4_d3 ).mass2();
+    double msq23 = ( m_p4_d2 + _p4_d3 ).mass2();
+    double msqParent = m_p4_p.mass2();
+    double msq1 = m_p4_d1.mass2();
+    double msq2 = m_p4_d2.mass2();
     double msq3 = _p4_d3.mass2();
 
     double M;
 
-    double p2 = sqrt( ( _p4_12.mass2() - ( _p4_d1.mass() + _p4_d2.mass() ) *
-                                             ( _p4_d1.mass() + _p4_d2.mass() ) ) *
-                      ( _p4_12.mass2() - ( _p4_d1.mass() - _p4_d2.mass() ) *
-                                             ( _p4_d1.mass() - _p4_d2.mass() ) ) ) /
-                ( 2.0 * _p4_12.mass() );
+    double p2 =
+        sqrt( ( _p4_12.mass2() - ( m_p4_d1.mass() + m_p4_d2.mass() ) *
+                                     ( m_p4_d1.mass() + m_p4_d2.mass() ) ) *
+              ( _p4_12.mass2() - ( m_p4_d1.mass() - m_p4_d2.mass() ) *
+                                     ( m_p4_d1.mass() - m_p4_d2.mass() ) ) ) /
+        ( 2.0 * _p4_12.mass() );
 
-    double p2R = sqrt( ( _bwm * _bwm - ( _p4_d1.mass() + _p4_d2.mass() ) *
-                                           ( _p4_d1.mass() + _p4_d2.mass() ) ) *
-                       ( _bwm * _bwm - ( _p4_d1.mass() - _p4_d2.mass() ) *
-                                           ( _p4_d1.mass() - _p4_d2.mass() ) ) ) /
-                 ( 2.0 * _bwm );
+    double p2R =
+        sqrt( ( m_bwm * m_bwm - ( m_p4_d1.mass() + m_p4_d2.mass() ) *
+                                    ( m_p4_d1.mass() + m_p4_d2.mass() ) ) *
+              ( m_bwm * m_bwm - ( m_p4_d1.mass() - m_p4_d2.mass() ) *
+                                    ( m_p4_d1.mass() - m_p4_d2.mass() ) ) ) /
+        ( 2.0 * m_bwm );
 
     double gam, R;
 
@@ -166,15 +168,15 @@ EvtComplex EvtResonance::relBrWig( int i )
     } else
         R = 5.0 / ( 0.197 );
 
-    gam = _gamma * ( _bwm / _p4_12.mass() ) * ( p2 / p2R ) * ( p2 / p2R ) *
+    gam = m_gamma * ( m_bwm / _p4_12.mass() ) * ( p2 / p2R ) * ( p2 / p2R ) *
           ( p2 / p2R ) * ( ( 1 + R * R * p2R * p2R ) / ( 1 + R * R * p2 * p2 ) );
     M = ( msq13 - msq23 -
-          ( msqParent - msq3 ) * ( msq1 - msq2 ) / ( _bwm * _bwm ) ) *
+          ( msqParent - msq3 ) * ( msq1 - msq2 ) / ( m_bwm * m_bwm ) ) *
         sqrt( ( 1 + R * R * p2R * p2R ) / ( 1 + R * R * p2 * p2 ) );
 
-    BW = sqrt( _gamma ) * M /
-         ( ( _bwm * _bwm - _p4_12.mass2() ) -
-           EvtComplex( 0.0, 1.0 ) * gam * _bwm );
+    BW = sqrt( m_gamma ) * M /
+         ( ( m_bwm * m_bwm - _p4_12.mass2() ) -
+           EvtComplex( 0.0, 1.0 ) * gam * m_bwm );
 
     return BW;
 }

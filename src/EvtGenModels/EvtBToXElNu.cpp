@@ -48,7 +48,7 @@ EvtDecayBase* EvtBToXElNu::clone()
 void EvtBToXElNu::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
-    m_calcamp->CalcAmp( p, _amp2, m_ffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_ffmodel.get() );
 }
 
 void EvtBToXElNu::initProbMax()

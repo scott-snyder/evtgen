@@ -43,16 +43,16 @@ class EvtSVSCPiso : public EvtDecayAmp {
 
   private:
     // Amplitude coefficients
-    EvtComplex Tp0, Tp0_bar, T0p, T0p_bar;
-    EvtComplex Tpm, Tpm_bar, Tmp, Tmp_bar;
-    EvtComplex P1, P1_bar, P0, P0_bar;
+    EvtComplex m_Tp0, m_Tp0_bar, m_T0p, m_T0p_bar;
+    EvtComplex m_Tpm, m_Tpm_bar, m_Tmp, m_Tmp_bar;
+    EvtComplex m_P1, m_P1_bar, m_P0, m_P0_bar;
 
     // Amplitudes
-    EvtComplex A_f, Abar_f;
-    EvtComplex A_fbar, Abar_fbar;
-    EvtComplex Apm, Apm_bar, Amp, Amp_bar;
+    EvtComplex m_A_f, m_Abar_f;
+    EvtComplex m_A_fbar, m_Abar_fbar;
+    EvtComplex m_Apm, m_Apm_bar, m_Amp, m_Amp_bar;
     // Charged mode flag
-    int charged{ 0 };
+    int m_charged{ 0 };
 
     // Set amplitude coeffs from decay model pars
     void setAmpCoeffs();

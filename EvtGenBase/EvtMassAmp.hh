@@ -26,6 +26,7 @@
 #include "EvtGenBase/EvtPropBreitWignerRel.hh"
 #include "EvtGenBase/EvtTwoBodyVertex.hh"
 
+#include <memory>
 // Relativistic lineshape for a two-body decay of a resonance to two
 // pseudoscalars. The mass dependence of the width and the vertex factors
 // are included in the calculation.
@@ -45,23 +46,23 @@ class EvtMassAmp : public EvtAmplitude<EvtPoint1D> {
 
     void setBirthVtx( const EvtTwoBodyVertex& vb )
     {
-        _vb = std::make_unique<EvtTwoBodyVertex>( vb );
+        m_vb = std::make_unique<EvtTwoBodyVertex>( vb );
     }
 
-    void addBirthFact() { _useBirthFact = true; }
-    void addDeathFact() { _useDeathFact = true; }
-    void addBirthFactFF() { _useBirthFactFF = true; }
-    void addDeathFactFF() { _useDeathFactFF = true; }
+    void addBirthFact() { m_useBirthFact = true; }
+    void addDeathFact() { m_useDeathFact = true; }
+    void addBirthFactFF() { m_useBirthFactFF = true; }
+    void addDeathFactFF() { m_useDeathFactFF = true; }
 
   private:
-    EvtPropBreitWignerRel _prop;
-    EvtTwoBodyVertex _vd;
-    std::unique_ptr<EvtTwoBodyVertex> _vb;
+    EvtPropBreitWignerRel m_prop;
+    EvtTwoBodyVertex m_vd;
+    std::unique_ptr<EvtTwoBodyVertex> m_vb;
 
-    bool _useBirthFact;
-    bool _useDeathFact;
-    bool _useBirthFactFF;
-    bool _useDeathFactFF;
+    bool m_useBirthFact;
+    bool m_useDeathFact;
+    bool m_useBirthFactFF;
+    bool m_useDeathFactFF;
 };
 
 #endif

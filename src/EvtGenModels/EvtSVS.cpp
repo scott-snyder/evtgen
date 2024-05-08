@@ -66,10 +66,9 @@ void EvtSVS::decay( EvtParticle* p )
     double massv = v->mass();
     EvtVector4R momv = v->getP4();
     EvtVector4R moms = p->getDaug( 1 )->getP4();
-    double m_parent = p->mass();
     EvtVector4R p4_parent = momv + moms;
 
-    double norm = massv / ( momv.d3mag() * m_parent );
+    double norm = massv / ( momv.d3mag() * p->mass() );
     p4_parent = norm * p4_parent;
     vertex( 0, p4_parent * ( v->epsParent( 0 ) ) );
     vertex( 1, p4_parent * ( v->epsParent( 1 ) ) );

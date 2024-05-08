@@ -40,14 +40,14 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
     EvtSpinDensity rho;
     double prob, prob_max;
 
-    _amp2.init( p->getId(), getNDaug(), getDaugs() );
+    m_amp2.init( p->getId(), getNDaug(), getDaugs() );
 
     do {
-        _daugsDecayedByParentModel = false;
-        _weight = 1.0;
+        m_daugsDecayedByParentModel = false;
+        m_weight = 1.0;
         decay( p );
 
-        rho = _amp2.getSpinDensity();
+        rho = m_amp2.getSpinDensity();
 
         prob = p->getSpinDensityForward().normalizedProb( rho );
 
@@ -87,9 +87,8 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
                     << "parent channel        :" << p->getParent()->getChannel()
                     << endl;
 
-                size_t i;
                 EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << "parent daughters  :";
-                for ( i = 0; i < p->getParent()->getNDaug(); i++ ) {
+                for ( size_t i = 0; i < p->getParent()->getNDaug(); i++ ) {
                     EvtGenReport( EVTGEN_DEBUG, "" )
                         << EvtPDL::name( p->getParent()->getDaug( i )->getId() )
                                .c_str()
@@ -117,7 +116,7 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
             }
         }
 
-        prob /= _weight;
+        prob /= m_weight;
 
         prob_max = getProbMax( prob );
         p->setDecayProb( prob / prob_max );
@@ -156,10 +155,10 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
 
     EvtAmp ampcont;
 
-    if ( _amp2._pstates != 1 ) {
-        ampcont = _amp2.contract( 0, p->getSpinDensityForward() );
+    if ( m_amp2.m_pstates != 1 ) {
+        ampcont = m_amp2.contract( 0, p->getSpinDensityForward() );
     } else {
-        ampcont = _amp2;
+        ampcont = m_amp2;
     }
 
     // it may be that the parent decay model has already
@@ -169,12 +168,12 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
     if ( !daugsDecayedByParentModel() ) {
         if ( recursive ) {
             for ( size_t i = 0; i < p->getNDaug(); i++ ) {
-                rho.setDim( _amp2.dstates[i] );
+                rho.setDim( m_amp2.m_dstates[i] );
 
-                if ( _amp2.dstates[i] == 1 ) {
+                if ( m_amp2.m_dstates[i] == 1 ) {
                     rho.set( 0, 0, EvtComplex( 1.0, 0.0 ) );
                 } else {
-                    rho = ampcont.contract( _amp2._dnontrivial[i], _amp2 );
+                    rho = ampcont.contract( m_amp2.m_dnontrivial[i], m_amp2 );
                 }
 
                 if ( !rho.check() ) {
@@ -213,7 +212,7 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
                     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                         << " EvtSpinDensity rho: " << rho;
 
-                    _amp2.dump();
+                    m_amp2.dump();
 
                     for ( size_t ii = 0; ii < i + 1; ii++ ) {
                         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -229,13 +228,13 @@ void EvtDecayAmp::makeDecay( EvtParticle* p, bool recursive )
 
                 rho_list[i + 1] = p->getDaug( i )->getSpinDensityBackward();
 
-                if ( _amp2.dstates[i] != 1 ) {
-                    ampcont = ampcont.contract( _amp2._dnontrivial[i],
+                if ( m_amp2.m_dstates[i] != 1 ) {
+                    ampcont = ampcont.contract( m_amp2.m_dnontrivial[i],
                                                 rho_list[i + 1] );
                 }
             }
 
-            p->setSpinDensityBackward( _amp2.getBackwardSpinDensity( rho_list ) );
+            p->setSpinDensityBackward( m_amp2.getBackwardSpinDensity( rho_list ) );
 
             if ( !p->getSpinDensityBackward().check() ) {
                 EvtGenReport( EVTGEN_ERROR, "EvtGen" )

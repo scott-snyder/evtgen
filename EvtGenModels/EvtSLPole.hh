@@ -39,10 +39,10 @@ class EvtSLPole : public EvtDecayAmp {
     void init() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> SLPoleffmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_SLPoleffmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
     //special case - reset the daughter masses
-    bool _resetDaughterTree;
+    bool m_resetDaughterTree;
 };
 
 #endif

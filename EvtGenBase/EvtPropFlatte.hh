@@ -36,12 +36,12 @@ class EvtPropFlatte : public EvtPropagator {
   protected:
     EvtComplex amplitude( const EvtPoint1D& x ) const override;
 
-    double _m0a;
-    double _m0b;
+    double m_m0a;
+    double m_m0b;
 
-    double _g1;
-    double _m1a;
-    double _m1b;
+    double m_g1;
+    double m_m1a;
+    double m_m1b;
 };
 
 #endif

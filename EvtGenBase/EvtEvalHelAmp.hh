@@ -44,22 +44,22 @@ class EvtEvalHelAmp {
     void applyRotationMatrices();
 
     //spins states available for particle A, B, and C.
-    int _nA, _nB, _nC;
+    int m_nA, m_nB, m_nC;
 
     //helicity amplitudes
-    EvtComplexPtrPtr _HBC;
+    EvtComplexPtrPtr m_HBC;
 
     //2 times spin for each of the particles
-    int _JA2, _JB2, _JC2;
+    int m_JA2, m_JB2, m_JC2;
 
     //2 times the helicity for the states
-    int *_lambdaA2, *_lambdaB2, *_lambdaC2;
+    int *m_lambdaA2, *m_lambdaB2, *m_lambdaC2;
 
     //Rotation matrices
-    EvtComplexPtrPtr _RA, _RB, _RC;
+    EvtComplexPtrPtr m_RA, m_RB, m_RC;
 
     //temporary array for amplitudes
-    EvtComplexPtrPtrPtr _amp, _amp1, _amp3;
+    EvtComplexPtrPtrPtr m_amp, m_amp1, m_amp3;
 };
 
 #endif

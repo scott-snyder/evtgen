@@ -55,34 +55,34 @@ void EvtGenericDalitz::init()
         EvtId daughter3 = ( *i ).daughter3();
 
         if ( d1 == daughter1 && d2 == daughter2 && d3 == daughter3 ) {
-            _d1 = 0;
-            _d2 = 1;
-            _d3 = 2;
+            m_d1 = 0;
+            m_d2 = 1;
+            m_d3 = 2;
         } else if ( d1 == daughter1 && d2 == daughter3 && d3 == daughter2 ) {
-            _d1 = 0;
-            _d2 = 2;
-            _d3 = 1;
+            m_d1 = 0;
+            m_d2 = 2;
+            m_d3 = 1;
         } else if ( d1 == daughter2 && d2 == daughter1 && d3 == daughter3 ) {
-            _d1 = 1;
-            _d2 = 0;
-            _d3 = 2;
+            m_d1 = 1;
+            m_d2 = 0;
+            m_d3 = 2;
         } else if ( d1 == daughter2 && d2 == daughter3 && d3 == daughter1 ) {
-            _d1 = 1;
-            _d2 = 2;
-            _d3 = 0;
+            m_d1 = 1;
+            m_d2 = 2;
+            m_d3 = 0;
         } else if ( d1 == daughter3 && d2 == daughter1 && d3 == daughter2 ) {
-            _d1 = 2;
-            _d2 = 0;
-            _d3 = 1;
+            m_d1 = 2;
+            m_d2 = 0;
+            m_d3 = 1;
         } else if ( d1 == daughter3 && d2 == daughter2 && d3 == daughter1 ) {
-            _d1 = 2;
-            _d2 = 1;
-            _d3 = 0;
+            m_d1 = 2;
+            m_d2 = 1;
+            m_d3 = 0;
         } else {
             continue;
         }
 
-        _resonances = ( *i ).getResonances();
+        m_resonances = ( *i ).getResonances();
         setProbMax( ( *i ).getProbMax() );
         return;
     }
@@ -92,13 +92,13 @@ void EvtGenericDalitz::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    EvtVector4R p4_d1 = p->getDaug( _d1 )->getP4();
-    EvtVector4R p4_d2 = p->getDaug( _d2 )->getP4();
-    EvtVector4R p4_d3 = p->getDaug( _d3 )->getP4();
+    EvtVector4R p4_d1 = p->getDaug( m_d1 )->getP4();
+    EvtVector4R p4_d2 = p->getDaug( m_d2 )->getP4();
+    EvtVector4R p4_d3 = p->getDaug( m_d3 )->getP4();
 
-    double mA = p->getDaug( _d1 )->mass();
-    double mB = p->getDaug( _d2 )->mass();
-    double mC = p->getDaug( _d3 )->mass();
+    double mA = p->getDaug( m_d1 )->mass();
+    double mB = p->getDaug( m_d2 )->mass();
+    double mC = p->getDaug( m_d3 )->mass();
 
     double m2AB = ( p4_d1 + p4_d2 ).mass2();
     double m2CA = ( p4_d1 + p4_d3 ).mass2();
@@ -108,8 +108,8 @@ void EvtGenericDalitz::decay( EvtParticle* p )
 
     EvtComplex amp( 0, 0 );
     std::vector<std::pair<EvtComplex, EvtDalitzReso>>::iterator i =
-        _resonances.begin();
-    for ( ; i != _resonances.end(); i++ ) {
+        m_resonances.begin();
+    for ( ; i != m_resonances.end(); i++ ) {
         std::pair<EvtComplex, EvtDalitzReso> res = ( *i );
         amp += res.first * res.second.evaluate( point );
     }

@@ -36,10 +36,10 @@ class EvtDalitzCoord final {
                     double q2 );
     EvtDalitzCoord( const EvtDalitzCoord& other );
 
-    inline EvtCyclic3::Pair pair1() const { return _i1; }
-    inline EvtCyclic3::Pair pair2() const { return _i2; }
-    inline double q1() const { return _q1; }
-    inline double q2() const { return _q2; }
+    inline EvtCyclic3::Pair pair1() const { return m_i1; }
+    inline EvtCyclic3::Pair pair2() const { return m_i2; }
+    inline double q1() const { return m_q1; }
+    inline double q2() const { return m_q2; }
 
     // It's nice to have an equality operator for
     // a coordinate. However, beware effects of numerical precision
@@ -51,11 +51,11 @@ class EvtDalitzCoord final {
   private:
     // Two coordinates define the point
 
-    EvtCyclic3::Pair _i1;
-    EvtCyclic3::Pair _i2;
+    EvtCyclic3::Pair m_i1;
+    EvtCyclic3::Pair m_i2;
 
-    double _q1;
-    double _q2;
+    double m_q1;
+    double m_q2;
 };
 
 std::ostream& operator<<( std::ostream&, const EvtDalitzCoord& );

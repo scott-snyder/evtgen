@@ -47,7 +47,7 @@ class EvtItgFunction : public EvtItgAbsFunction {
 
   private:
     // Data members
-    double ( *_myFunction )( double x );
+    double ( *m_myFunction )( double x );
 };
 
 #endif    // EvtITGFUNCTION_HH

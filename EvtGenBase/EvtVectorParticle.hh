@@ -40,22 +40,22 @@ class EvtVectorParticle : public EvtParticle {
                const EvtVector4C&, const EvtVector4C& );
     EvtVector4C epsParent( int i ) const override
     {
-        assert( i >= 0 && i < _eps.size() );
+        assert( i >= 0 && i < m_eps.size() );
 
-        return boostTo( _eps[i], this->getP4() );
+        return boostTo( m_eps[i], this->getP4() );
     }
     EvtVector4C eps( int i ) const override
     {
-        assert( i >= 0 && i < _eps.size() );
+        assert( i >= 0 && i < m_eps.size() );
 
-        return _eps[i];
+        return m_eps[i];
     }
     EvtSpinDensity rotateToHelicityBasis() const override;
     EvtSpinDensity rotateToHelicityBasis( double alpha, double beta,
                                           double gamma ) const override;
 
   private:
-    std::array<EvtVector4C, 3> _eps;
+    std::array<EvtVector4C, 3> m_eps;
 
     EvtVectorParticle( const EvtVectorParticle& vector );
     EvtVectorParticle& operator=( const EvtVectorParticle& vector );

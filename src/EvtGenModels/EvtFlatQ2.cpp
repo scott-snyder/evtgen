@@ -91,15 +91,15 @@ void EvtFlatQ2::init()
     }
 
     // Specify if we want to use the phase space factor
-    _usePhsp = false;
+    m_usePhsp = false;
     if ( getNArg() > 0 ) {
         if ( getArg( 0 ) != 0 ) {
-            _usePhsp = true;
+            m_usePhsp = true;
         }
     }
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
-        << "EvtFlatQ2 usePhsp = " << int( _usePhsp ) << std::endl;
+        << "EvtFlatQ2 usePhsp = " << int( m_usePhsp ) << std::endl;
 }
 
 void EvtFlatQ2::decay( EvtParticle* p )
@@ -121,7 +121,7 @@ void EvtFlatQ2::decay( EvtParticle* p )
     }
 
     // Include the phase space factor if requested
-    if ( _usePhsp ) {
+    if ( m_usePhsp ) {
         // Invariant mass of lepton pair
         double q = ( p4ell1 + p4ell2 ).mass();
         // Rest masses of the leptons

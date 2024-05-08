@@ -34,7 +34,7 @@ class EvtBtoXsgammaFixedMass : public EvtBtoXsgammaAbsModel {
 
   private:
     //Input parameters
-    double _mH;
+    double m_mH;
 };
 
 #endif

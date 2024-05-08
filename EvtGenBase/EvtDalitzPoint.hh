@@ -74,8 +74,8 @@ class EvtDalitzPoint final {
     void print() const;
 
   private:
-    double _mA, _mB, _mC;       // masses
-    double _qAB, _qBC, _qCA;    // masses squared
+    double m_mA, m_mB, m_mC;       // masses
+    double m_qAB, m_qBC, m_qCA;    // masses squared
 };
 
 #endif

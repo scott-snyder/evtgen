@@ -40,38 +40,38 @@ class EvtStreamInputIterator {
     typedef const Point* pointer;
     typedef const Point& reference;
 
-    EvtStreamInputIterator() : _counter( 0 ) {}
+    EvtStreamInputIterator() : m_counter( 0 ) {}
 
     EvtStreamInputIterator( const EvtStreamInputIterator& other ) :
-        _counter( other._counter ? other._counter->clone() : nullptr ),
-        _currentValue( other._currentValue )
+        m_counter( other.m_counter ? other.m_counter->clone() : nullptr ),
+        m_currentValue( other.m_currentValue )
     {
     }
 
     EvtStreamInputIterator( EvtStreamAdapter<Point>& counter ) :
-        _counter( counter.clone() )
+        m_counter( counter.clone() )
     {
-        _currentValue = _counter->currentValue();
+        m_currentValue = m_counter->currentValue();
     }
 
     ~EvtStreamInputIterator()
     {
-        if ( _counter )
-            delete _counter;
+        if ( m_counter )
+            delete m_counter;
     }
 
-    reference operator*() const { return _currentValue; }
+    reference operator*() const { return m_currentValue; }
 
     EvtStreamInputIterator& operator++()
     {
-        _read();
+        m_read();
         return *this;
     }
 
     EvtStreamInputIterator operator++( int )
     {
         EvtStreamInputIterator tmp = *this;
-        _read();
+        m_read();
         return tmp;
     }
 
@@ -82,23 +82,23 @@ class EvtStreamInputIterator {
     }
 
   protected:
-    EvtStreamAdapter<Point>* _counter;
-    value_type _currentValue;
+    EvtStreamAdapter<Point>* m_counter;
+    value_type m_currentValue;
 
     bool pastEnd() const
     {
         bool ret = true;
-        if ( _counter )
-            ret = _counter->pastEnd();
+        if ( m_counter )
+            ret = m_counter->pastEnd();
         return ret;
     }
 
     // Advances the iterator
 
-    void _read()
+    void m_read()
     {
-        _counter->advance();
-        _currentValue = _counter->currentValue();
+        m_counter->advance();
+        m_currentValue = m_counter->currentValue();
     }
 };
 

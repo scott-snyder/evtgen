@@ -54,21 +54,21 @@ void EvtSSSCPT::init()
 
 void EvtSSSCPT::setAmpCoeffs()
 {
-    P = EvtComplex( cos( -getArg( 0 ) ), sin( -getArg( 0 ) ) );
-    Q = EvtComplex( cos( getArg( 0 ) ), sin( getArg( 0 ) ) );
-    D = EvtComplex( getArg( 6 ) * cos( getArg( 7 ) ),
-                    getArg( 6 ) * sin( getArg( 7 ) ) );
-    Im = EvtComplex( 0.0, 1.0 );
+    m_P = EvtComplex( cos( -getArg( 0 ) ), sin( -getArg( 0 ) ) );
+    m_Q = EvtComplex( cos( getArg( 0 ) ), sin( getArg( 0 ) ) );
+    m_D = EvtComplex( getArg( 6 ) * cos( getArg( 7 ) ),
+                      getArg( 6 ) * sin( getArg( 7 ) ) );
+    m_Im = EvtComplex( 0.0, 1.0 );
 
-    A = EvtComplex( getArg( 2 ) * cos( getArg( 3 ) ),
-                    getArg( 2 ) * sin( getArg( 3 ) ) );
-    Abar = EvtComplex( getArg( 4 ) * cos( getArg( 5 ) ),
-                       getArg( 4 ) * sin( getArg( 5 ) ) );
+    m_A = EvtComplex( getArg( 2 ) * cos( getArg( 3 ) ),
+                      getArg( 2 ) * sin( getArg( 3 ) ) );
+    m_Abar = EvtComplex( getArg( 4 ) * cos( getArg( 5 ) ),
+                         getArg( 4 ) * sin( getArg( 5 ) ) );
 }
 
 void EvtSSSCPT::initProbMax()
 {
-    const double maxProb = 2.0 * abs2( A ) + 4.0 * abs2( Abar ) * abs2( D );
+    const double maxProb = 2.0 * abs2( m_A ) + 4.0 * abs2( m_Abar ) * abs2( m_D );
     setProbMax( maxProb );
 }
 
@@ -88,14 +88,14 @@ void EvtSSSCPT::decay( EvtParticle* p )
     EvtComplex amp;
 
     if ( other_b == B0B ) {
-        amp = A * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
-              Im * sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) *
-                  ( Q / P * A + 2.0 * D * Abar );
+        amp = m_A * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
+              m_Im * sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) *
+                  ( m_Q / m_P * m_A + 2.0 * m_D * m_Abar );
     }
     if ( other_b == B0 ) {
-        amp = Abar * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
-              Im * sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) *
-                  ( P / Q * A - 2.0 * D * Abar );
+        amp = m_Abar * cos( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) +
+              m_Im * sin( getArg( 1 ) * t / ( 2 * EvtConst::c ) ) *
+                  ( m_P / m_Q * m_A - 2.0 * m_D * m_Abar );
     }
 
     vertex( amp );

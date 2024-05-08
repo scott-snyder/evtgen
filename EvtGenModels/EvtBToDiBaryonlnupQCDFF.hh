@@ -31,8 +31,8 @@ class EvtBToDiBaryonlnupQCDFF {
   public:
     class FormFactors final {
       public:
-        double F1, F2, F3, F4, F5;
-        double G1, G2, G3, G4, G5;
+        double m_F1, m_F2, m_F3, m_F4, m_F5;
+        double m_G1, m_G2, m_G3, m_G4, m_G5;
     };
 
     EvtBToDiBaryonlnupQCDFF();
@@ -49,8 +49,8 @@ class EvtBToDiBaryonlnupQCDFF {
                 EvtBToDiBaryonlnupQCDFF::FormFactors& FF ) const;
 
   private:
-    std::vector<double> DPars;
-    int nDPars;
+    std::vector<double> m_DPars;
+    int m_nDPars;
 };
 
 #endif

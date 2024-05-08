@@ -45,7 +45,7 @@ EvtDecayBase* EvtMelikhov::clone()
 void EvtMelikhov::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
-    calcamp->CalcAmp( p, _amp2, Melikhovffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_Melikhovffmodel.get() );
 }
 
 void EvtMelikhov::init()
@@ -62,8 +62,8 @@ void EvtMelikhov::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::NEUTRINO );
 
-    Melikhovffmodel = std::make_unique<EvtMelikhovFF>( getArg( 0 ) );
-    calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+    m_Melikhovffmodel = std::make_unique<EvtMelikhovFF>( getArg( 0 ) );
+    m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
 }
 
 void EvtMelikhov::initProbMax()

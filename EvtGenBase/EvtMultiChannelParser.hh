@@ -39,7 +39,7 @@ enum
 
 class EvtMultiChannelParser {
   public:
-    EvtMultiChannelParser() : _pdfMax( -1. ), _nScan( 0 ), _dm( 0. ) {}
+    EvtMultiChannelParser() : m_pdfMax( -1. ), m_nScan( 0 ), m_dm( 0. ) {}
     ~EvtMultiChannelParser() {}
 
     static EvtDecayMode getDecayMode( const char* file );
@@ -52,39 +52,39 @@ class EvtMultiChannelParser {
     static double parseRealCoef( int& i, const std::vector<std::string>& v );
     static bool isKeyword( const std::string& s );
 
-    inline double pdfMax() const { return _pdfMax; }
-    inline int nScan() const { return _nScan; }
-    inline double dm() const { return _dm; }
-    inline double mixPhase() const { return _mixPhase; }
-    inline double mixAmpli() const { return _mixAmpli; }
+    inline double pdfMax() const { return m_pdfMax; }
+    inline int nScan() const { return m_nScan; }
+    inline double dm() const { return m_dm; }
+    inline double mixPhase() const { return m_mixPhase; }
+    inline double mixAmpli() const { return m_mixAmpli; }
 
-    inline std::vector<std::string> amp( int i ) const { return _amp[i]; }
+    inline std::vector<std::string> amp( int i ) const { return m_amp[i]; }
     inline std::vector<std::string> ampConj( int i ) const
     {
-        return _ampConj[i];
+        return m_ampConj[i];
     }
-    inline EvtComplex ampCoef( int i ) const { return _ampCoef[i]; }
-    inline EvtComplex ampConjCoef( int i ) const { return _ampConjCoef[i]; }
+    inline EvtComplex ampCoef( int i ) const { return m_ampCoef[i]; }
+    inline EvtComplex ampConjCoef( int i ) const { return m_ampConjCoef[i]; }
 
-    inline int coefFormat( int i ) const { return _coefFormat[i]; }
-    inline int coefConjFormat( int i ) const { return _coefConjFormat[i]; }
+    inline int coefFormat( int i ) const { return m_coefFormat[i]; }
+    inline int coefConjFormat( int i ) const { return m_coefConjFormat[i]; }
 
-    inline int getNAmp() const { return _amp.size(); }
-    inline int getNAmpConj() const { return _ampConj.size(); }
+    inline int getNAmp() const { return m_amp.size(); }
+    inline int getNAmpConj() const { return m_ampConj.size(); }
 
   private:
-    double _pdfMax;
-    int _nScan;
-    double _dm;
-    double _mixPhase;
-    double _mixAmpli;
+    double m_pdfMax;
+    int m_nScan;
+    double m_dm;
+    double m_mixPhase;
+    double m_mixAmpli;
 
-    std::vector<std::vector<std::string>> _amp;
-    std::vector<std::vector<std::string>> _ampConj;
-    std::vector<EvtComplex> _ampCoef;
-    std::vector<int> _coefFormat;
-    std::vector<EvtComplex> _ampConjCoef;
-    std::vector<int> _coefConjFormat;
+    std::vector<std::vector<std::string>> m_amp;
+    std::vector<std::vector<std::string>> m_ampConj;
+    std::vector<EvtComplex> m_ampCoef;
+    std::vector<int> m_coefFormat;
+    std::vector<EvtComplex> m_ampConjCoef;
+    std::vector<int> m_coefConjFormat;
 };
 
 #endif

@@ -53,7 +53,7 @@ class EvtSLDiBaryonAmp {
         const EvtVector4R& gMtmTerms, const EvtVector4R& fMtmTerms ) const;
 
   private:
-    EvtBToDiBaryonlnupQCDFF ffModel_;
+    EvtBToDiBaryonlnupQCDFF m_ffModel;
 };
 
 #endif

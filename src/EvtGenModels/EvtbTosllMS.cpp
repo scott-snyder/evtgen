@@ -36,12 +36,12 @@
 
 EvtbTosllMS::~EvtbTosllMS()
 {
-    //  if ( _wilscoeff ) delete _wilscoeff;
-    //  if ( _msffmodel ) delete _msffmodel;
-    //  if ( _calcamp )   delete _calcamp ;
-    delete _wilscoeff;
-    delete _msffmodel;
-    delete _calcamp;
+    //  if ( m_wilscoeff ) delete m_wilscoeff;
+    //  if ( m_msffmodel ) delete m_msffmodel;
+    //  if ( m_calcamp )   delete m_calcamp ;
+    delete m_wilscoeff;
+    delete m_msffmodel;
+    delete m_calcamp;
 }
 
 // The module name specification
@@ -102,13 +102,13 @@ void EvtbTosllMS::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::DIRAC );
 
-    _msffmodel = new EvtbTosllMSFF();
-    _wilscoeff = new EvtbTosllWilsCoeffNLO();
+    m_msffmodel = new EvtbTosllMSFF();
+    m_wilscoeff = new EvtbTosllWilsCoeffNLO();
     if ( mesontype == EvtSpinType::VECTOR ) {
-        _calcamp = new EvtbTosllVectorAmpNew();
+        m_calcamp = new EvtbTosllVectorAmpNew();
     }
     if ( mesontype == EvtSpinType::SCALAR ) {
-        _calcamp = new EvtbTosllScalarAmpNew();
+        m_calcamp = new EvtbTosllScalarAmpNew();
     }
 }
 
@@ -136,9 +136,10 @@ void EvtbTosllMS::initProbMax()
     double CKM_barrho = getArg( 6 );
     double CKM_bareta = getArg( 7 );
 
-    mymaxprob = _calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num, _msffmodel,
-                                       _wilscoeff, mu, Nf, res_swch, ias, CKM_A,
-                                       CKM_lambda, CKM_barrho, CKM_bareta );
+    mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num,
+                                        m_msffmodel, m_wilscoeff, mu, Nf,
+                                        res_swch, ias, CKM_A, CKM_lambda,
+                                        CKM_barrho, CKM_bareta );
 
     if ( mymaxprob <= 0.0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -169,8 +170,8 @@ void EvtbTosllMS::decay( EvtParticle* p )
     // and
     // the class "EvtbTosllMSFF" is the derived class of the
     // class  "EvtbTosllFFNew" (see the file "EvtbTosllMSFF.hh")
-    _calcamp->CalcAmp( p, _amp2, _msffmodel, _wilscoeff, mu, Nf, res_swch, ias,
-                       CKM_A, CKM_lambda, CKM_barrho, CKM_bareta );
+    m_calcamp->CalcAmp( p, m_amp2, m_msffmodel, m_wilscoeff, mu, Nf, res_swch,
+                        ias, CKM_A, CKM_lambda, CKM_barrho, CKM_bareta );
 
     //  EvtGenReport(EVTGEN_NOTICE,"EvtGen") << "\n The function EvtbTosllMS::decay(...) passed with arguments:"
     //                        << "\n mu = " << mu << " Nf =" << Nf

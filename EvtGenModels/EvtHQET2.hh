@@ -42,7 +42,7 @@ class EvtHQET2 : public EvtDecayAmp {
     void init() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> hqetffmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_hqetffmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
 };
 #endif

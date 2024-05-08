@@ -36,15 +36,15 @@ using std::fstream;
 
 EvtParticleDecayList::EvtParticleDecayList( const EvtParticleDecayList& o )
 {
-    _nmode = o._nmode;
-    _rawbrfrsum = o._rawbrfrsum;
-    _decaylist = new EvtParticleDecayPtr[_nmode];
+    m_nmode = o.m_nmode;
+    m_rawbrfrsum = o.m_rawbrfrsum;
+    m_decaylist = new EvtParticleDecayPtr[m_nmode];
 
     int i;
-    for ( i = 0; i < _nmode; i++ ) {
-        _decaylist[i] = new EvtParticleDecay;
+    for ( i = 0; i < m_nmode; i++ ) {
+        m_decaylist[i] = new EvtParticleDecay;
 
-        EvtDecayBase* tModel = o._decaylist[i]->getDecayModel();
+        EvtDecayBase* tModel = o.m_decaylist[i]->getDecayModel();
 
         EvtDecayBase* tModelNew = tModel->clone();
         if ( tModel->getFSR() ) {
@@ -65,50 +65,50 @@ EvtParticleDecayList::EvtParticleDecayList( const EvtParticleDecayList& o )
                                   tModel->getDaugs(), tModel->getNArg(), args,
                                   tModel->getModelName(),
                                   tModel->getBranchingFraction() );
-        _decaylist[i]->setDecayModel( tModelNew );
+        m_decaylist[i]->setDecayModel( tModelNew );
 
-        _decaylist[i]->setBrfrSum( o._decaylist[i]->getBrfrSum() );
-        _decaylist[i]->setMassMin( o._decaylist[i]->getMassMin() );
+        m_decaylist[i]->setBrfrSum( o.m_decaylist[i]->getBrfrSum() );
+        m_decaylist[i]->setMassMin( o.m_decaylist[i]->getMassMin() );
     }
 }
 
 EvtParticleDecayList::~EvtParticleDecayList()
 {
     int i;
-    for ( i = 0; i < _nmode; i++ ) {
-        delete _decaylist[i];
+    for ( i = 0; i < m_nmode; i++ ) {
+        delete m_decaylist[i];
     }
 
-    if ( _decaylist != nullptr )
-        delete[] _decaylist;
+    if ( m_decaylist != nullptr )
+        delete[] m_decaylist;
 }
 
 void EvtParticleDecayList::printSummary()
 {
     int i;
-    for ( i = 0; i < _nmode; i++ ) {
-        _decaylist[i]->printSummary();
+    for ( i = 0; i < m_nmode; i++ ) {
+        m_decaylist[i]->printSummary();
     }
 }
 
 void EvtParticleDecayList::removeDecay()
 {
     int i;
-    for ( i = 0; i < _nmode; i++ ) {
-        delete _decaylist[i];
+    for ( i = 0; i < m_nmode; i++ ) {
+        delete m_decaylist[i];
     }
 
-    delete[] _decaylist;
-    _decaylist = nullptr;
-    _nmode = 0;
-    _rawbrfrsum = 0.0;
+    delete[] m_decaylist;
+    m_decaylist = nullptr;
+    m_nmode = 0;
+    m_rawbrfrsum = 0.0;
 }
 
 EvtDecayBase* EvtParticleDecayList::getDecayModel( int imode )
 {
     EvtDecayBase* theModel( nullptr );
-    if ( imode >= 0 && imode < _nmode ) {
-        EvtParticleDecay* theDecay = _decaylist[imode];
+    if ( imode >= 0 && imode < m_nmode ) {
+        EvtParticleDecay* theDecay = m_decaylist[imode];
         if ( theDecay != nullptr ) {
             theModel = theDecay->getDecayModel();
         }
@@ -213,65 +213,65 @@ EvtDecayBase* EvtParticleDecayList::getDecayModel( EvtParticle* p )
 
 void EvtParticleDecayList::setNMode( int nmode )
 {
-    EvtParticleDecayPtr* _decaylist_new = new EvtParticleDecayPtr[nmode];
+    EvtParticleDecayPtr* m_decaylist_new = new EvtParticleDecayPtr[nmode];
 
-    if ( _nmode != 0 ) {
+    if ( m_nmode != 0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "Error _nmode not equal to zero!!!" << endl;
+            << "Error m_nmode not equal to zero!!!" << endl;
         ::abort();
     }
-    if ( _decaylist != nullptr ) {
-        delete[] _decaylist;
+    if ( m_decaylist != nullptr ) {
+        delete[] m_decaylist;
     }
-    _decaylist = _decaylist_new;
-    _nmode = nmode;
+    m_decaylist = m_decaylist_new;
+    m_nmode = nmode;
 }
 
 EvtParticleDecay& EvtParticleDecayList::getDecay( int nchannel ) const
 {
-    if ( nchannel >= _nmode ) {
+    if ( nchannel >= m_nmode ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "Error getting channel:" << nchannel << " with only " << _nmode
+            << "Error getting channel:" << nchannel << " with only " << m_nmode
             << " stored!" << endl;
         ::abort();
     }
-    return *( _decaylist[nchannel] );
+    return *( m_decaylist[nchannel] );
 }
 
 void EvtParticleDecayList::makeChargeConj( EvtParticleDecayList* conjDecayList )
 {
-    _rawbrfrsum = conjDecayList->_rawbrfrsum;
+    m_rawbrfrsum = conjDecayList->m_rawbrfrsum;
 
-    setNMode( conjDecayList->_nmode );
+    setNMode( conjDecayList->m_nmode );
 
     int i;
 
-    for ( i = 0; i < _nmode; i++ ) {
-        _decaylist[i] = new EvtParticleDecay;
-        _decaylist[i]->chargeConj( conjDecayList->_decaylist[i] );
+    for ( i = 0; i < m_nmode; i++ ) {
+        m_decaylist[i] = new EvtParticleDecay;
+        m_decaylist[i]->chargeConj( conjDecayList->m_decaylist[i] );
     }
 }
 
 void EvtParticleDecayList::addMode( EvtDecayBase* decay, double brfrsum,
                                     double massmin )
 {
-    EvtParticleDecayPtr* newlist = new EvtParticleDecayPtr[_nmode + 1];
+    EvtParticleDecayPtr* newlist = new EvtParticleDecayPtr[m_nmode + 1];
 
     int i;
-    for ( i = 0; i < _nmode; i++ ) {
-        newlist[i] = _decaylist[i];
+    for ( i = 0; i < m_nmode; i++ ) {
+        newlist[i] = m_decaylist[i];
     }
 
-    _rawbrfrsum = brfrsum;
+    m_rawbrfrsum = brfrsum;
 
-    newlist[_nmode] = new EvtParticleDecay;
+    newlist[m_nmode] = new EvtParticleDecay;
 
-    newlist[_nmode]->setDecayModel( decay );
-    newlist[_nmode]->setBrfrSum( brfrsum );
-    newlist[_nmode]->setMassMin( massmin );
+    newlist[m_nmode]->setDecayModel( decay );
+    newlist[m_nmode]->setBrfrSum( brfrsum );
+    newlist[m_nmode]->setMassMin( massmin );
 
-    EvtDecayBase* newDec = newlist[_nmode]->getDecayModel();
-    for ( i = 0; i < _nmode; i++ ) {
+    EvtDecayBase* newDec = newlist[m_nmode]->getDecayModel();
+    for ( i = 0; i < m_nmode; i++ ) {
         if ( newDec->matchingDecay( *( newlist[i]->getDecayModel() ) ) ) {
             //sometimes its ok..
             if ( newDec->getModelName() == "JETSET" ||
@@ -300,41 +300,41 @@ void EvtParticleDecayList::addMode( EvtDecayBase* decay, double brfrsum,
         }
     }
 
-    if ( _nmode != 0 ) {
-        delete[] _decaylist;
+    if ( m_nmode != 0 ) {
+        delete[] m_decaylist;
     }
 
-    if ( ( _nmode == 0 ) && ( _decaylist != nullptr ) )
-        delete[] _decaylist;
+    if ( ( m_nmode == 0 ) && ( m_decaylist != nullptr ) )
+        delete[] m_decaylist;
 
-    _nmode++;
+    m_nmode++;
 
-    _decaylist = newlist;
+    m_decaylist = newlist;
 }
 
 void EvtParticleDecayList::finalize()
 {
-    if ( _nmode > 0 ) {
-        if ( _rawbrfrsum < 0.000001 ) {
+    if ( m_nmode > 0 ) {
+        if ( m_rawbrfrsum < 0.000001 ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Please give me a "
                 << "branching fraction sum greater than 0\n";
             assert( 0 );
         }
-        if ( fabs( _rawbrfrsum - 1.0 ) > 0.0001 ) {
+        if ( fabs( m_rawbrfrsum - 1.0 ) > 0.0001 ) {
             EvtGenReport( EVTGEN_INFO, "EvtGen" )
                 << "Warning, sum of branching fractions for "
-                << EvtPDL::name( _decaylist[0]->getDecayModel()->getParentId() )
+                << EvtPDL::name( m_decaylist[0]->getDecayModel()->getParentId() )
                        .c_str()
-                << " is " << _rawbrfrsum << endl;
+                << " is " << m_rawbrfrsum << endl;
             EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "rescaled to one! " << endl;
         }
 
         int i;
 
-        for ( i = 0; i < _nmode; i++ ) {
-            double brfrsum = _decaylist[i]->getBrfrSum() / _rawbrfrsum;
-            _decaylist[i]->setBrfrSum( brfrsum );
+        for ( i = 0; i < m_nmode; i++ ) {
+            double brfrsum = m_decaylist[i]->getBrfrSum() / m_rawbrfrsum;
+            m_decaylist[i]->setBrfrSum( brfrsum );
         }
     }
 }
@@ -343,15 +343,15 @@ EvtParticleDecayList& EvtParticleDecayList::operator=( const EvtParticleDecayLis
 {
     if ( this != &o ) {
         removeDecay();
-        _nmode = o._nmode;
-        _rawbrfrsum = o._rawbrfrsum;
-        _decaylist = new EvtParticleDecayPtr[_nmode];
+        m_nmode = o.m_nmode;
+        m_rawbrfrsum = o.m_rawbrfrsum;
+        m_decaylist = new EvtParticleDecayPtr[m_nmode];
 
         int i;
-        for ( i = 0; i < _nmode; i++ ) {
-            _decaylist[i] = new EvtParticleDecay;
+        for ( i = 0; i < m_nmode; i++ ) {
+            m_decaylist[i] = new EvtParticleDecay;
 
-            EvtDecayBase* tModel = o._decaylist[i]->getDecayModel();
+            EvtDecayBase* tModel = o.m_decaylist[i]->getDecayModel();
 
             EvtDecayBase* tModelNew = tModel->clone();
             if ( tModel->getFSR() ) {
@@ -372,11 +372,11 @@ EvtParticleDecayList& EvtParticleDecayList::operator=( const EvtParticleDecayLis
                                       tModel->getDaugs(), tModel->getNArg(),
                                       args, tModel->getModelName(),
                                       tModel->getBranchingFraction() );
-            _decaylist[i]->setDecayModel( tModelNew );
+            m_decaylist[i]->setDecayModel( tModelNew );
 
-            //_decaylist[i]->setDecayModel(tModel);
-            _decaylist[i]->setBrfrSum( o._decaylist[i]->getBrfrSum() );
-            _decaylist[i]->setMassMin( o._decaylist[i]->getMassMin() );
+            //m_decaylist[i]->setDecayModel(tModel);
+            m_decaylist[i]->setBrfrSum( o.m_decaylist[i]->getBrfrSum() );
+            m_decaylist[i]->setMassMin( o.m_decaylist[i]->getMassMin() );
         }
     }
     return *this;
@@ -390,8 +390,8 @@ void EvtParticleDecayList::removeMode( EvtDecayBase* decay )
     int i;
     double match_bf;
 
-    for ( i = 0; i < _nmode; i++ ) {
-        if ( decay->matchingDecay( *( _decaylist[i]->getDecayModel() ) ) ) {
+    for ( i = 0; i < m_nmode; i++ ) {
+        if ( decay->matchingDecay( *( m_decaylist[i]->getDecayModel() ) ) ) {
             match = i;
         }
     }
@@ -409,14 +409,14 @@ void EvtParticleDecayList::removeMode( EvtDecayBase* decay )
     }
 
     if ( match == 0 ) {
-        match_bf = _decaylist[match]->getBrfrSum();
+        match_bf = m_decaylist[match]->getBrfrSum();
     } else {
-        match_bf = ( _decaylist[match]->getBrfrSum() -
-                     _decaylist[match - 1]->getBrfrSum() );
+        match_bf = ( m_decaylist[match]->getBrfrSum() -
+                     m_decaylist[match - 1]->getBrfrSum() );
     }
 
     double divisor = 1 - match_bf;
-    if ( divisor < 0.000001 && _nmode > 1 ) {
+    if ( divisor < 0.000001 && m_nmode > 1 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Removing requested mode leaves "
             << EvtPDL::name( decay->getParentId() ).c_str()
@@ -425,26 +425,26 @@ void EvtParticleDecayList::removeMode( EvtDecayBase* decay )
         ::abort();
     }
 
-    EvtParticleDecayPtr* newlist = new EvtParticleDecayPtr[_nmode - 1];
+    EvtParticleDecayPtr* newlist = new EvtParticleDecayPtr[m_nmode - 1];
 
     for ( i = 0; i < match; i++ ) {
-        newlist[i] = _decaylist[i];
+        newlist[i] = m_decaylist[i];
         newlist[i]->setBrfrSum( newlist[i]->getBrfrSum() / divisor );
     }
-    for ( i = match + 1; i < _nmode; i++ ) {
-        newlist[i - 1] = _decaylist[i];
+    for ( i = match + 1; i < m_nmode; i++ ) {
+        newlist[i - 1] = m_decaylist[i];
         newlist[i - 1]->setBrfrSum(
             ( newlist[i - 1]->getBrfrSum() - match_bf ) / divisor );
     }
 
-    delete[] _decaylist;
+    delete[] m_decaylist;
 
-    _nmode--;
+    m_nmode--;
 
-    _decaylist = newlist;
+    m_decaylist = newlist;
 
-    if ( _nmode == 0 ) {
-        delete[] _decaylist;
+    if ( m_nmode == 0 ) {
+        delete[] m_decaylist;
     }
 }
 

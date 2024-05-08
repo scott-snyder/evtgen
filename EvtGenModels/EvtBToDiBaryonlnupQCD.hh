@@ -45,8 +45,8 @@ class EvtBToDiBaryonlnupQCD : public EvtDecayAmp {
     void init() override;
 
   private:
-    std::unique_ptr<EvtBToDiBaryonlnupQCDFF> ffModel_;
-    std::unique_ptr<EvtSLDiBaryonAmp> calcAmp_;
+    std::unique_ptr<EvtBToDiBaryonlnupQCDFF> m_ffModel;
+    std::unique_ptr<EvtSLDiBaryonAmp> m_calcAmp;
 };
 
 #endif

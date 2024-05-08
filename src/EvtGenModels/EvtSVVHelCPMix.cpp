@@ -58,18 +58,18 @@ void EvtSVVHelCPMix::init()
     checkSpinDaughter( 0, EvtSpinType::VECTOR );
     checkSpinDaughter( 1, EvtSpinType::VECTOR );
 
-    hp = EvtComplex( getArg( 0 ) * cos( getArg( 1 ) ),
-                     getArg( 0 ) * sin( getArg( 1 ) ) );
-    h0 = EvtComplex( getArg( 2 ) * cos( getArg( 3 ) ),
-                     getArg( 2 ) * sin( getArg( 3 ) ) );
-    hm = EvtComplex( getArg( 4 ) * cos( getArg( 5 ) ),
-                     getArg( 4 ) * sin( getArg( 5 ) ) );
-    averageM = getArg( 6 );
-    deltaM = getArg( 7 );
-    gamma = getArg( 8 );
-    deltagamma = getArg( 9 );
-    weakmixingphase = EvtComplex( cos( getArg( 10 ) ), sin( getArg( 10 ) ) );
-    weakdirectphase = EvtComplex( cos( getArg( 11 ) ), sin( getArg( 11 ) ) );
+    m_hp = EvtComplex( getArg( 0 ) * cos( getArg( 1 ) ),
+                       getArg( 0 ) * sin( getArg( 1 ) ) );
+    m_h0 = EvtComplex( getArg( 2 ) * cos( getArg( 3 ) ),
+                       getArg( 2 ) * sin( getArg( 3 ) ) );
+    m_hm = EvtComplex( getArg( 4 ) * cos( getArg( 5 ) ),
+                       getArg( 4 ) * sin( getArg( 5 ) ) );
+    m_averageM = getArg( 6 );
+    m_deltaM = getArg( 7 );
+    m_gamma = getArg( 8 );
+    m_deltagamma = getArg( 9 );
+    m_weakmixingphase = EvtComplex( cos( getArg( 10 ) ), sin( getArg( 10 ) ) );
+    m_weakdirectphase = EvtComplex( cos( getArg( 11 ) ), sin( getArg( 11 ) ) );
 }
 
 void EvtSVVHelCPMix::initProbMax()
@@ -81,7 +81,7 @@ void EvtSVVHelCPMix::initProbMax()
 void EvtSVVHelCPMix::decay( EvtParticle* p )
 {
     EvtParticle* parent = p;
-    EvtAmp& amp = _amp2;
+    EvtAmp& amp = m_amp2;
     EvtId n_v1 = getDaug( 0 );
     EvtId n_v2 = getDaug( 1 );
 
@@ -114,30 +114,30 @@ void EvtSVVHelCPMix::decay( EvtParticle* p )
     EvtTensor3C M;    // Tensor as defined in EvtGen manual, equ 117
     EvtComplex a, b,
         c;    // Helicity amplitudes; EvtGen manual eqns 126-128, also see Phys Lett B 369 p144-150 eqn 15
-    //EvtComplex deltamu = EvtComplex(deltaM, -0.5*deltagamma); // See Phys Rev D 34 p1404
+    //EvtComplex deltamu = EvtComplex(m_deltaM, -0.5*m_deltagamma); // See Phys Rev D 34 p1404
 
     // conversion from times in mm/c to natural units [GeV]^-1
     double t = ( ( parent->getLifetime() ) / 2.998e11 ) * 6.58e-25;
 
     // The following two quantities defined in Phys Rev D 34 p1404
-    EvtComplex fplus = EvtComplex( cos( averageM * t ),
-                                   -1. * sin( averageM * t ) ) *
-                       exp( -( gamma / 2.0 ) * t ) *
-                       ( cos( 0.5 * deltaM * t ) * cosh( 0.25 * deltagamma * t ) +
-                         EvtComplex( 0.0, sin( 0.5 * deltaM * t ) *
-                                              sinh( 0.25 * deltagamma * t ) ) );
+    EvtComplex fplus =
+        EvtComplex( cos( m_averageM * t ), -1. * sin( m_averageM * t ) ) *
+        exp( -( m_gamma / 2.0 ) * t ) *
+        ( cos( 0.5 * m_deltaM * t ) * cosh( 0.25 * m_deltagamma * t ) +
+          EvtComplex( 0.0, sin( 0.5 * m_deltaM * t ) *
+                               sinh( 0.25 * m_deltagamma * t ) ) );
     EvtComplex fminus =
-        EvtComplex( cos( averageM * t ), -1. * sin( averageM * t ) ) *
-        exp( -( gamma / 2.0 ) * t ) * EvtComplex( 0.0, 1.0 ) *
-        ( sin( 0.5 * deltaM * t ) * cosh( 0.25 * deltagamma * t ) -
-          EvtComplex( 0.0, 1.0 ) * sinh( 0.25 * deltagamma * t ) *
-              cos( 0.5 * deltaM * t ) );
+        EvtComplex( cos( m_averageM * t ), -1. * sin( m_averageM * t ) ) *
+        exp( -( m_gamma / 2.0 ) * t ) * EvtComplex( 0.0, 1.0 ) *
+        ( sin( 0.5 * m_deltaM * t ) * cosh( 0.25 * m_deltagamma * t ) -
+          EvtComplex( 0.0, 1.0 ) * sinh( 0.25 * m_deltagamma * t ) *
+              cos( 0.5 * m_deltaM * t ) );
 
     // See EvtGen manual pp 106-107
 
-    a = -0.5 * ( hp + hm );
-    b = EvtComplex( 0.0, 0.5 ) * ( hp - hm );
-    c = ( h0 + 0.5 * ( hp + hm ) );
+    a = -0.5 * ( m_hp + m_hm );
+    b = EvtComplex( 0.0, 0.5 ) * ( m_hp - m_hm );
+    c = ( m_h0 + 0.5 * ( m_hp + m_hm ) );
 
     M = a * EvtTensor3C::id() + b * EvtGenFunctions::eps( v1dir ) +
         c * EvtGenFunctions::directProd( v1dir, v1dir );
@@ -160,69 +160,69 @@ void EvtSVVHelCPMix::decay( EvtParticle* p )
     // First the Bs state:
 
     if ( parent->getId() == Bs ) {
-        amplSum00 = ( fplus * weakdirectphase * t0 * eps0 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum00 = ( fplus * m_weakdirectphase * t0 * eps0 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t0 * eps0 );
-        amplSum01 = ( fplus * weakdirectphase * t0 * eps1 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum01 = ( fplus * m_weakdirectphase * t0 * eps1 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t0 * eps1 );
-        amplSum02 = ( fplus * weakdirectphase * t0 * eps2 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum02 = ( fplus * m_weakdirectphase * t0 * eps2 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t0 * eps2 );
 
-        amplSum10 = ( fplus * weakdirectphase * t1 * eps0 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum10 = ( fplus * m_weakdirectphase * t1 * eps0 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t1 * eps0 );
-        amplSum11 = ( fplus * weakdirectphase * t1 * eps1 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum11 = ( fplus * m_weakdirectphase * t1 * eps1 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t1 * eps1 );
-        amplSum12 = ( fplus * weakdirectphase * t1 * eps2 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum12 = ( fplus * m_weakdirectphase * t1 * eps2 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t1 * eps2 );
 
-        amplSum20 = ( fplus * weakdirectphase * t2 * eps0 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum20 = ( fplus * m_weakdirectphase * t2 * eps0 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t2 * eps0 );
-        amplSum21 = ( fplus * weakdirectphase * t2 * eps1 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum21 = ( fplus * m_weakdirectphase * t2 * eps1 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t2 * eps1 );
-        amplSum22 = ( fplus * weakdirectphase * t2 * eps2 ) +
-                    ( fminus * ( 1.0 / weakdirectphase ) * weakmixingphase *
+        amplSum22 = ( fplus * m_weakdirectphase * t2 * eps2 ) +
+                    ( fminus * ( 1.0 / m_weakdirectphase ) * m_weakmixingphase *
                       t2 * eps2 );
     }
 
     // Now the anti-Bs state:
 
     if ( parent->getId() == antiBs ) {
-        amplSum00 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+        amplSum00 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t0 * eps0 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t0 * eps0 );
-        amplSum01 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t0 * eps0 );
+        amplSum01 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t0 * eps1 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t0 * eps1 );
-        amplSum02 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t0 * eps1 );
+        amplSum02 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t0 * eps2 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t0 * eps2 );
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t0 * eps2 );
 
-        amplSum10 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+        amplSum10 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t1 * eps0 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t1 * eps0 );
-        amplSum11 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t1 * eps0 );
+        amplSum11 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t1 * eps1 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t1 * eps1 );
-        amplSum12 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t1 * eps1 );
+        amplSum12 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t1 * eps2 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t1 * eps2 );
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t1 * eps2 );
 
-        amplSum20 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+        amplSum20 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t2 * eps0 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t2 * eps0 );
-        amplSum21 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t2 * eps0 );
+        amplSum21 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t2 * eps1 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t2 * eps1 );
-        amplSum22 = ( fminus * weakdirectphase * ( 1.0 / weakmixingphase ) *
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t2 * eps1 );
+        amplSum22 = ( fminus * m_weakdirectphase * ( 1.0 / m_weakmixingphase ) *
                       t2 * eps2 ) +
-                    ( fplus * ( 1.0 / weakdirectphase ) * t2 * eps2 );
+                    ( fplus * ( 1.0 / m_weakdirectphase ) * t2 * eps2 );
     }
 
     // Now set the amplitudes

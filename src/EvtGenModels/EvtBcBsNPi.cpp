@@ -25,20 +25,20 @@
 
 EvtBcBsNPi::EvtBcBsNPi()
 {
-    _beta = -0.108;
-    _mRho = 0.775;
-    _gammaRho = 0.149;
-    _mRhopr = 1.364;
-    _gammaRhopr = 0.400;
-    _mA1 = 1.23;
-    _gammaA1 = 0.4;
+    m_beta = -0.108;
+    m_mRho = 0.775;
+    m_gammaRho = 0.149;
+    m_mRhopr = 1.364;
+    m_gammaRhopr = 0.400;
+    m_mA1 = 1.23;
+    m_gammaA1 = 0.4;
     //		Fp_N=1.3; Fp_c1=0.30; Fp_c2=0.069;
-    Fp_N = 3 * 1.3;
-    Fp_c1 = 0.30;
-    Fp_c2 = 0.069;
-    Fm_N = 0.0;
-    Fm_c1 = 0.0;
-    Fm_c2 = 0.0;
+    m_Fp_N = 3 * 1.3;
+    m_Fp_c1 = 0.30;
+    m_Fp_c2 = 0.069;
+    m_Fm_N = 0.0;
+    m_Fm_c1 = 0.0;
+    m_Fm_c2 = 0.0;
 }
 
 std::string EvtBcBsNPi::getName()

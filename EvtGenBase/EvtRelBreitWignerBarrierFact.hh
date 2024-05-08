@@ -42,13 +42,13 @@ class EvtRelBreitWignerBarrierFact : public EvtAbsLineShape {
     double getRandMass( EvtId* parId, int nDaug, EvtId* dauId, EvtId* othDaugId,
                         double maxMass, double* dauMasses ) override;
 
-    void reSetBlatt( double blatt ) override { _blattDecay = blatt; }
-    void reSetBlattBirth( double blatt ) override { _blattBirth = blatt; }
+    void reSetBlatt( double blatt ) override { m_blattDecay = blatt; }
+    void reSetBlattBirth( double blatt ) override { m_blattBirth = blatt; }
 
   protected:
-    double _blattDecay;
-    double _blattBirth;
-    bool _errorCond;
+    double m_blattDecay;
+    double m_blattBirth;
+    bool m_errorCond;
 };
 
 #endif

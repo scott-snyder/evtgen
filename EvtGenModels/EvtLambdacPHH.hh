@@ -47,7 +47,7 @@ class EvtLambdacPHH : public EvtDecayAmp {
 
   protected:
     // Resonance enumeration
-    enum LcResLabel
+    enum class LcResLabel
     {
         NonReson = 0,
         Kstar,
@@ -82,22 +82,22 @@ class EvtLambdacPHH : public EvtDecayAmp {
 
   private:
     // Daughter ordering for K-, pi+, p
-    int _d1, _d2, _d3;
+    int m_d1, m_d2, m_d3;
 
     // Resonance parameters
-    double _Nplusplus, _Nplusminus, _Nminusplus, _Nminusminus;
-    double _phiNplusplus, _phiNplusminus, _phiNminusplus, _phiNminusminus;
-    double _E1, _phiE1, _E2, _phiE2, _E3, _phiE3, _E4, _phiE4;
-    double _F1, _phiF1, _F2, _phiF2, _H1, _phiH1, _H2, _phiH2;
+    double m_Nplusplus, m_Nplusminus, m_Nminusplus, m_Nminusminus;
+    double m_phiNplusplus, m_phiNplusminus, m_phiNminusplus, m_phiNminusminus;
+    double m_E1, m_phiE1, m_E2, m_phiE2, m_E3, m_phiE3, m_E4, m_phiE4;
+    double m_F1, m_phiF1, m_F2, m_phiF2, m_H1, m_phiH1, m_H2, m_phiH2;
 
-    double _NRNorm, _KstarNorm, _DeltaNorm, _LambdaNorm;
-    double _KstarM, _KstarW, _KstarR;
-    double _DeltaM, _DeltaW, _DeltaR;
-    double _LambdaM, _LambdaW, _LambdaR;
-    double _Lambda_cR;
+    double m_NRNorm, m_KstarNorm, m_DeltaNorm, m_LambdaNorm;
+    double m_KstarM, m_KstarW, m_KstarR;
+    double m_DeltaM, m_DeltaW, m_DeltaR;
+    double m_LambdaM, m_LambdaW, m_LambdaR;
+    double m_Lambda_cR;
 
-    EvtVector4R _zprime, _p4_Lambda_c;
-    double _zpMag, _p4_Lambdac_Mag;
+    EvtVector4R m_zprime, m_p4_Lambda_c;
+    double m_zpMag, m_p4_Lambdac_Mag;
 };
 
 #endif

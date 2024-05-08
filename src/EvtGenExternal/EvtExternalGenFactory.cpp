@@ -36,18 +36,18 @@ using std::endl;
 
 EvtExternalGenFactory::EvtExternalGenFactory()
 {
-    _extGenMap.clear();
+    m_extGenMap.clear();
 }
 
 EvtExternalGenFactory::~EvtExternalGenFactory()
 {
     ExtGenMap::iterator iter;
-    for ( iter = _extGenMap.begin(); iter != _extGenMap.end(); ++iter ) {
+    for ( iter = m_extGenMap.begin(); iter != m_extGenMap.end(); ++iter ) {
         EvtAbsExternalGen* theGenerator = iter->second;
         delete theGenerator;
     }
 
-    _extGenMap.clear();
+    m_extGenMap.clear();
 }
 
 EvtExternalGenFactory* EvtExternalGenFactory::getInstance()
@@ -67,7 +67,7 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string xmlDir,
                                                    bool convertPhysCodes,
                                                    bool useEvtGenRandom )
 {
-    int genId = EvtExternalGenFactory::PythiaGenId;
+    GenId genId = EvtExternalGenFactory::PythiaGenId;
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << "Defining EvtPythiaEngine: data tables defined in " << xmlDir << endl;
@@ -87,7 +87,7 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string xmlDir,
 
     EvtAbsExternalGen* pythiaGenerator =
         new EvtPythiaEngine( xmlDir, convertPhysCodes, useEvtGenRandom );
-    _extGenMap[genId] = pythiaGenerator;
+    m_extGenMap[genId] = pythiaGenerator;
 }
 #else
 void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
@@ -98,12 +98,12 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
 #ifdef EVTGEN_TAUOLA
 void EvtExternalGenFactory::defineTauolaGenerator( bool useEvtGenRandom )
 {
-    int genId = EvtExternalGenFactory::TauolaGenId;
+    GenId genId = EvtExternalGenFactory::TauolaGenId;
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Defining EvtTauolaEngine." << endl;
 
     EvtAbsExternalGen* tauolaGenerator = new EvtTauolaEngine( useEvtGenRandom );
-    _extGenMap[genId] = tauolaGenerator;
+    m_extGenMap[genId] = tauolaGenerator;
 }
 #else
 void EvtExternalGenFactory::defineTauolaGenerator( bool )
@@ -111,13 +111,13 @@ void EvtExternalGenFactory::defineTauolaGenerator( bool )
 }
 #endif
 
-EvtAbsExternalGen* EvtExternalGenFactory::getGenerator( int genId )
+EvtAbsExternalGen* EvtExternalGenFactory::getGenerator( GenId genId )
 {
     EvtAbsExternalGen* theGenerator( nullptr );
 
     ExtGenMap::iterator iter;
 
-    if ( ( iter = _extGenMap.find( genId ) ) != _extGenMap.end() ) {
+    if ( ( iter = m_extGenMap.find( genId ) ) != m_extGenMap.end() ) {
         // Retrieve the external generator engine
         theGenerator = iter->second;
 
@@ -133,7 +133,7 @@ EvtAbsExternalGen* EvtExternalGenFactory::getGenerator( int genId )
 void EvtExternalGenFactory::initialiseAllGenerators()
 {
     ExtGenMap::iterator iter;
-    for ( iter = _extGenMap.begin(); iter != _extGenMap.end(); ++iter ) {
+    for ( iter = m_extGenMap.begin(); iter != m_extGenMap.end(); ++iter ) {
         EvtAbsExternalGen* theGenerator = iter->second;
         if ( theGenerator != nullptr ) {
             theGenerator->initialise();

@@ -34,18 +34,18 @@ class EvtPredGen {
   public:
     typedef typename Generator::result_type result_type;
 
-    EvtPredGen() : itsTried( 0 ), itsPassed( 0 ) {}
+    EvtPredGen() : m_tried( 0 ), m_passed( 0 ) {}
 
     EvtPredGen( Generator gen, Predicate pred ) :
-        itsGen( gen ), itsPred( pred ), itsTried( 0 ), itsPassed( 0 )
+        m_gen( gen ), m_pred( pred ), m_tried( 0 ), m_passed( 0 )
     {
     }
 
     EvtPredGen( const EvtPredGen& other ) :
-        itsGen( other.itsGen ),
-        itsPred( other.itsPred ),
-        itsTried( other.itsTried ),
-        itsPassed( other.itsPassed )
+        m_gen( other.m_gen ),
+        m_pred( other.m_pred ),
+        m_tried( other.m_tried ),
+        m_passed( other.m_passed )
     {
     }
 
@@ -56,10 +56,10 @@ class EvtPredGen {
         int i = 0;
         int MAX = 10000;
         while ( i++ < MAX ) {
-            itsTried++;
-            result_type point = itsGen();
-            if ( itsPred( point ) ) {
-                itsPassed++;
+            m_tried++;
+            result_type point = m_gen();
+            if ( m_pred( point ) ) {
+                m_passed++;
                 return point;
             }
         }
@@ -67,17 +67,17 @@ class EvtPredGen {
         printf( "No random point generated after %d attempts\n", MAX );
         printf( "Sharp peak? Consider using pole compensation.\n" );
         printf( "I will now pick a point at random to return.\n" );
-        return itsGen();
+        return m_gen();
     }
 
-    inline int getTried() const { return itsTried; }
-    inline int getPassed() const { return itsPassed; }
+    inline int getTried() const { return m_tried; }
+    inline int getPassed() const { return m_passed; }
 
   protected:
-    Generator itsGen;
-    Predicate itsPred;
-    int itsTried;
-    int itsPassed;
+    Generator m_gen;
+    Predicate m_pred;
+    int m_tried;
+    int m_passed;
 };
 
 #endif

@@ -34,11 +34,11 @@ class EvtBtoXsgammaFlatEnergy : public EvtBtoXsgammaAbsModel {
 
   private:
     //Input parameters
-    double _eMin;
-    double _eMax;
+    double m_eMin;
+    double m_eMax;
     //
-    double _mB0;
-    double _eRange;
+    double m_mB0;
+    double m_eRange;
 };
 
 #endif

@@ -47,48 +47,48 @@ void EvtRareLbToLllFFlQCD::init()
     const double m2 = EvtPDL::getMass( LID );
     const double mB = EvtPDL::getMass( BID );
     const double mK = EvtPDL::getMass( KID );
-    t0 = ( m1 - m2 ) * ( m1 - m2 );
-    tplus = ( mB + mK ) * ( mB + mK );
+    m_t0 = ( m1 - m2 ) * ( m1 - m2 );
+    m_tplus = ( mB + mK ) * ( mB + mK );
 
-    fconsts[0][0] = 0.4221;
-    fconsts[0][1] = -1.1386;
-    fconsts[0][2] = 5.416;
-    fconsts[1][0] = 0.5182;
-    fconsts[1][1] = -1.3495;
-    fconsts[1][2] = 5.416;
-    fconsts[2][0] = 0.3725;
-    fconsts[2][1] = -0.9389;
-    fconsts[2][2] = 5.711;
+    m_fconsts[0][0] = 0.4221;
+    m_fconsts[0][1] = -1.1386;
+    m_fconsts[0][2] = 5.416;
+    m_fconsts[1][0] = 0.5182;
+    m_fconsts[1][1] = -1.3495;
+    m_fconsts[1][2] = 5.416;
+    m_fconsts[2][0] = 0.3725;
+    m_fconsts[2][1] = -0.9389;
+    m_fconsts[2][2] = 5.711;
 
-    gconsts[0][0] = 0.3563;
-    gconsts[0][1] = -1.0612;
-    gconsts[0][2] = 5.750;
-    gconsts[1][0] = 0.3563;
-    gconsts[1][1] = -1.1357;
-    gconsts[1][2] = 5.750;
-    gconsts[2][0] = 0.4028;
-    gconsts[2][1] = -1.0290;
-    gconsts[2][2] = 5.367;
+    m_gconsts[0][0] = 0.3563;
+    m_gconsts[0][1] = -1.0612;
+    m_gconsts[0][2] = 5.750;
+    m_gconsts[1][0] = 0.3563;
+    m_gconsts[1][1] = -1.1357;
+    m_gconsts[1][2] = 5.750;
+    m_gconsts[2][0] = 0.4028;
+    m_gconsts[2][1] = -1.0290;
+    m_gconsts[2][2] = 5.367;
 
-    hconsts[0][0] = 0.4960;
-    hconsts[0][1] = -1.1275;
-    hconsts[0][2] = 5.416;
-    hconsts[1][0] = 0.3876;
-    hconsts[1][1] = -0.9623;
-    hconsts[1][2] = 5.416;
-    hconsts[2][0] = 0;
-    hconsts[2][1] = 0;
-    hconsts[2][2] = 0;
+    m_hconsts[0][0] = 0.4960;
+    m_hconsts[0][1] = -1.1275;
+    m_hconsts[0][2] = 5.416;
+    m_hconsts[1][0] = 0.3876;
+    m_hconsts[1][1] = -0.9623;
+    m_hconsts[1][2] = 5.416;
+    m_hconsts[2][0] = 0;
+    m_hconsts[2][1] = 0;
+    m_hconsts[2][2] = 0;
 
-    htildaconsts[0][0] = 0.3403;
-    htildaconsts[0][1] = -0.7697;
-    htildaconsts[0][2] = 5.750;
-    htildaconsts[1][0] = 0.3403;
-    htildaconsts[1][1] = -0.8008;
-    htildaconsts[1][2] = 5.750;
-    htildaconsts[2][0] = 0;
-    htildaconsts[2][1] = 0;
-    htildaconsts[2][2] = 0;
+    m_htildaconsts[0][0] = 0.3403;
+    m_htildaconsts[0][1] = -0.7697;
+    m_htildaconsts[0][2] = 5.750;
+    m_htildaconsts[1][0] = 0.3403;
+    m_htildaconsts[1][1] = -0.8008;
+    m_htildaconsts[1][2] = 5.750;
+    m_htildaconsts[2][0] = 0;
+    m_htildaconsts[2][1] = 0;
+    m_htildaconsts[2][2] = 0;
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << " EvtRareLbToLll is using form factors from arXiv:1602.01399 "
@@ -124,61 +124,61 @@ void EvtRareLbToLllFFlQCD::getFF( const EvtParticle& parent,
     double htilda[2];
 
     for ( int i = 0; i <= 2; ++i ) {
-        f[i] = formFactorParametrization( q2, fconsts[i][0], fconsts[i][1],
-                                          fconsts[i][2] );
-        g[i] = formFactorParametrization( q2, gconsts[i][0], gconsts[i][1],
-                                          gconsts[i][2] );
+        f[i] = formFactorParametrization( q2, m_fconsts[i][0], m_fconsts[i][1],
+                                          m_fconsts[i][2] );
+        g[i] = formFactorParametrization( q2, m_gconsts[i][0], m_gconsts[i][1],
+                                          m_gconsts[i][2] );
     }
     for ( int i = 0; i <= 1; ++i ) {
-        h[i] = formFactorParametrization( q2, hconsts[i][0], hconsts[i][1],
-                                          hconsts[i][2] );
-        htilda[i] = formFactorParametrization( q2, htildaconsts[i][0],
-                                               htildaconsts[i][1],
-                                               htildaconsts[i][2] );
+        h[i] = formFactorParametrization( q2, m_hconsts[i][0], m_hconsts[i][1],
+                                          m_hconsts[i][2] );
+        htilda[i] = formFactorParametrization( q2, m_htildaconsts[i][0],
+                                               m_htildaconsts[i][1],
+                                               m_htildaconsts[i][2] );
     }
 
     // Both v^2==v'^2==1 by definition
-    FF.F_[0] = f[1];
-    FF.F_[1] = m1 *
-               ( ( f[1] - f[0] ) * massSum +
-                 massDiff *
-                     ( q2 * ( f[2] - f[1] ) - ( f[2] - f[0] ) * massSumSq ) /
-                     q2 ) /
-               q2Sum;
-    FF.F_[2] = -m2 *
-               ( massSum * ( f[0] - f[1] ) +
-                 massDiff *
-                     ( q2 * ( f[2] - f[1] ) - massSumSq * ( f[2] - f[0] ) ) /
-                     q2 ) /
-               q2Sum;
+    FF.m_F[0] = f[1];
+    FF.m_F[1] = m1 *
+                ( ( f[1] - f[0] ) * massSum +
+                  massDiff *
+                      ( q2 * ( f[2] - f[1] ) - ( f[2] - f[0] ) * massSumSq ) /
+                      q2 ) /
+                q2Sum;
+    FF.m_F[2] = -m2 *
+                ( massSum * ( f[0] - f[1] ) +
+                  massDiff *
+                      ( q2 * ( f[2] - f[1] ) - massSumSq * ( f[2] - f[0] ) ) /
+                      q2 ) /
+                q2Sum;
 
-    FF.G_[0] = g[1];
-    FF.G_[1] = m1 / q2Diff *
-               ( massDiff * ( g[0] - g[1] ) +
-                 massSum *
-                     ( q2 * ( g[1] - g[2] ) + massDiffSq * ( g[2] - g[0] ) ) /
-                     q2 );
-    FF.G_[2] = -m2 / q2Diff *
-               ( massDiff * ( g[1] - g[0] ) +
-                 massSum *
-                     ( q2 * ( g[1] - g[2] ) + massDiffSq * ( g[2] - g[0] ) ) /
-                     q2 );
+    FF.m_G[0] = g[1];
+    FF.m_G[1] = m1 / q2Diff *
+                ( massDiff * ( g[0] - g[1] ) +
+                  massSum *
+                      ( q2 * ( g[1] - g[2] ) + massDiffSq * ( g[2] - g[0] ) ) /
+                      q2 );
+    FF.m_G[2] = -m2 / q2Diff *
+                ( massDiff * ( g[1] - g[0] ) +
+                  massSum *
+                      ( q2 * ( g[1] - g[2] ) + massDiffSq * ( g[2] - g[0] ) ) /
+                      q2 );
 
-    FF.FT_[0] = -massSum * h[1];
+    FF.m_FT[0] = -massSum * h[1];
 
-    FF.FT_[1] = -m1 / q2Sum *
-                ( 2 * h[1] * m2 * massSum - h[0] * ( q2 - massSum * massDiff ) );
-    FF.FT_[2] = -m2 / q2Sum *
-                ( 2 * h[1] * m1 * massSum - h[0] * ( q2 + massSum * massDiff ) );
+    FF.m_FT[1] = -m1 / q2Sum *
+                 ( 2 * h[1] * m2 * massSum - h[0] * ( q2 - massSum * massDiff ) );
+    FF.m_FT[2] = -m2 / q2Sum *
+                 ( 2 * h[1] * m1 * massSum - h[0] * ( q2 + massSum * massDiff ) );
 
-    FF.GT_[0] = massDiff * htilda[1];
+    FF.m_GT[0] = massDiff * htilda[1];
 
-    FF.GT_[1] = m1 / q2Diff *
-                ( 2 * htilda[1] * massDiff * m2 +
-                  htilda[0] * ( q2 - massSum * massDiff ) );
-    FF.GT_[2] = m2 / q2Diff *
-                ( -2 * htilda[1] * massDiff * m1 +
-                  htilda[0] * ( q2 + massSum * massDiff ) );
+    FF.m_GT[1] = m1 / q2Diff *
+                 ( 2 * htilda[1] * massDiff * m2 +
+                   htilda[0] * ( q2 - massSum * massDiff ) );
+    FF.m_GT[2] = m2 / q2Diff *
+                 ( -2 * htilda[1] * massDiff * m1 +
+                   htilda[0] * ( q2 + massSum * massDiff ) );
 
     return;
 }
@@ -194,8 +194,8 @@ double EvtRareLbToLllFFlQCD::formFactorParametrization( const double q2,
 
 double EvtRareLbToLllFFlQCD::zvar( const double q2 ) const
 {
-    const double a = std::sqrt( tplus - q2 );
-    const double b = std::sqrt( tplus - t0 );
+    const double a = std::sqrt( m_tplus - q2 );
+    const double b = std::sqrt( m_tplus - m_t0 );
 
     return ( a - b ) / ( a + b );
 }

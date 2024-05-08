@@ -65,71 +65,71 @@ class EvtVubBLNPHybrid : public EvtDecayIncoherent {
         nParameters = 10,
         nVariables = 3
     };
-    bool _noHybrid = false;
-    bool _storeWhat = true;
-    int _nbins = 0;
-    double _masscut = 0.28;
-    std::vector<double> _bins_mX;
-    std::vector<double> _bins_q2;
-    std::vector<double> _bins_El;
-    std::vector<double> _weights;
+    bool m_noHybrid = false;
+    bool m_storeWhat = true;
+    int m_nbins = 0;
+    double m_masscut = 0.28;
+    std::vector<double> m_bins_mX;
+    std::vector<double> m_bins_q2;
+    std::vector<double> m_bins_El;
+    std::vector<double> m_weights;
 
     // Input parameters
-    double mBB;
-    double lambda2;
+    double m_mBB;
+    double m_lambda2;
 
     // Shape function parameters
-    double b;
-    double Lambda;
-    double Ecut;
-    double wzero;
+    double m_b;
+    double m_Lambda;
+    double m_Ecut;
+    double m_wzero;
 
     // SF and SSF modes
-    int itype;
-    double dtype;
-    int isubl;
+    int m_itype;
+    double m_dtype;
+    int m_isubl;
 
     // flags
-    int flag1;
-    int flag2;
-    int flag3;
+    int m_flag1;
+    int m_flag2;
+    int m_flag3;
 
     // Quark mass
-    double mb;
+    double m_mb;
 
     // Matching scales
-    double muh;
-    double mui;
-    double mubar;
+    double m_muh;
+    double m_mui;
+    double m_mubar;
 
     // Perturbative quantities
-    double CF;
-    double CA;
+    double m_CF;
+    double m_CA;
 
-    double beta0;
-    double beta1;
-    double beta2;
+    double m_beta0;
+    double m_beta1;
+    double m_beta2;
 
-    double zeta3;
+    double m_zeta3;
 
-    double Gamma0;
-    double Gamma1;
-    double Gamma2;
+    double m_Gamma0;
+    double m_Gamma1;
+    double m_Gamma2;
 
-    double gp0;
-    double gp1;
+    double m_gp0;
+    double m_gp1;
 
-    double Lbar;
-    double mupisq;
-    double moment2;
+    double m_Lbar;
+    double m_mupisq;
+    double m_moment2;
 
-    int flagpower;
-    int flag2loop;
+    int m_flagpower;
+    int m_flag2loop;
 
-    int maxLoop;
-    double precision;
+    int m_maxLoop;
+    double m_precision;
 
-    std::vector<double> gvars;
+    std::vector<double> m_gvars;
 
     double rate3( double Pp, double Pl, double Pm );
     double F1( double Pp, double Pm, double muh, double mui, double mubar,
@@ -175,7 +175,7 @@ class EvtVubBLNPHybrid : public EvtDecayIncoherent {
     static double gamser( double a, double x, double LogGamma );
     static double gammcf( double a, double x, double LogGamma );
     double findBLNPWhat();
-    std::vector<double> _pf;
+    std::vector<double> m_pf;
 };
 
 #endif

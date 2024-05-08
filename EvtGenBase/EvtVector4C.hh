@@ -67,7 +67,7 @@ class EvtVector4C final {
     double dot( const EvtVector4C& p2 );
 
   private:
-    EvtComplex v[4];
+    EvtComplex m_v[4];
 };
 
 EvtVector4C rotateEuler( const EvtVector4C& e, double alpha, double beta,
@@ -77,54 +77,54 @@ EvtVector4C boostTo( const EvtVector4C& e, const EvtVector3R boost );
 
 inline EvtVector4C& EvtVector4C::operator+=( const EvtVector4C& v2 )
 {
-    v[0] += v2.v[0];
-    v[1] += v2.v[1];
-    v[2] += v2.v[2];
-    v[3] += v2.v[3];
+    m_v[0] += v2.m_v[0];
+    m_v[1] += v2.m_v[1];
+    m_v[2] += v2.m_v[2];
+    m_v[3] += v2.m_v[3];
 
     return *this;
 }
 
 inline EvtVector4C& EvtVector4C::operator-=( const EvtVector4C& v2 )
 {
-    v[0] -= v2.v[0];
-    v[1] -= v2.v[1];
-    v[2] -= v2.v[2];
-    v[3] -= v2.v[3];
+    m_v[0] -= v2.m_v[0];
+    m_v[1] -= v2.m_v[1];
+    m_v[2] -= v2.m_v[2];
+    m_v[3] -= v2.m_v[3];
 
     return *this;
 }
 
 inline void EvtVector4C::set( int i, const EvtComplex& c )
 {
-    v[i] = c;
+    m_v[i] = c;
 }
 
 inline EvtVector3C EvtVector4C::vec() const
 {
-    return EvtVector3C( v[1], v[2], v[3] );
+    return EvtVector3C( m_v[1], m_v[2], m_v[3] );
 }
 
 inline void EvtVector4C::set( const EvtComplex& e, const EvtComplex& p1,
                               const EvtComplex& p2, const EvtComplex& p3 )
 {
-    v[0] = e;
-    v[1] = p1;
-    v[2] = p2;
-    v[3] = p3;
+    m_v[0] = e;
+    m_v[1] = p1;
+    m_v[2] = p2;
+    m_v[3] = p3;
 }
 
 inline void EvtVector4C::set( double e, double p1, double p2, double p3 )
 {
-    v[0] = EvtComplex( e );
-    v[1] = EvtComplex( p1 );
-    v[2] = EvtComplex( p2 );
-    v[3] = EvtComplex( p3 );
+    m_v[0] = EvtComplex( e );
+    m_v[1] = EvtComplex( p1 );
+    m_v[2] = EvtComplex( p2 );
+    m_v[3] = EvtComplex( p3 );
 }
 
 inline const EvtComplex& EvtVector4C::get( int i ) const
 {
-    return v[i];
+    return m_v[i];
 }
 
 inline EvtVector4C operator+( const EvtVector4C& v1, const EvtVector4C& v2 )
@@ -139,22 +139,24 @@ inline EvtVector4C operator-( const EvtVector4C& v1, const EvtVector4C& v2 )
 
 inline EvtComplex EvtVector4C::cont( const EvtVector4C& v4 ) const
 {
-    return v[0] * v4.v[0] - v[1] * v4.v[1] - v[2] * v4.v[2] - v[3] * v4.v[3];
+    return m_v[0] * v4.m_v[0] - m_v[1] * v4.m_v[1] - m_v[2] * v4.m_v[2] -
+           m_v[3] * v4.m_v[3];
 }
 
 inline EvtVector4C& EvtVector4C::operator*=( const EvtComplex& c )
 {
-    v[0] *= c;
-    v[1] *= c;
-    v[2] *= c;
-    v[3] *= c;
+    m_v[0] *= c;
+    m_v[1] *= c;
+    m_v[2] *= c;
+    m_v[3] *= c;
 
     return *this;
 }
 
 inline EvtVector4C operator*( double d, const EvtVector4C& v2 )
 {
-    return EvtVector4C( v2.v[0] * d, v2.v[1] * d, v2.v[2] * d, v2.v[3] * d );
+    return EvtVector4C( v2.m_v[0] * d, v2.m_v[1] * d, v2.m_v[2] * d,
+                        v2.m_v[3] * d );
 }
 
 inline EvtVector4C operator*( const EvtComplex& c, const EvtVector4C& v2 )
@@ -175,34 +177,34 @@ inline EvtVector4C operator*( const EvtComplex& c, const EvtVector4R& v2 )
 
 inline EvtVector4C::EvtVector4C( const EvtVector4R& v1 )
 {
-    v[0] = EvtComplex( v1.get( 0 ) );
-    v[1] = EvtComplex( v1.get( 1 ) );
-    v[2] = EvtComplex( v1.get( 2 ) );
-    v[3] = EvtComplex( v1.get( 3 ) );
+    m_v[0] = EvtComplex( v1.get( 0 ) );
+    m_v[1] = EvtComplex( v1.get( 1 ) );
+    m_v[2] = EvtComplex( v1.get( 2 ) );
+    m_v[3] = EvtComplex( v1.get( 3 ) );
 }
 
 inline EvtComplex operator*( const EvtVector4R& v1, const EvtVector4C& v2 )
 {
-    return v1.get( 0 ) * v2.v[0] - v1.get( 1 ) * v2.v[1] -
-           v1.get( 2 ) * v2.v[2] - v1.get( 3 ) * v2.v[3];
+    return v1.get( 0 ) * v2.m_v[0] - v1.get( 1 ) * v2.m_v[1] -
+           v1.get( 2 ) * v2.m_v[2] - v1.get( 3 ) * v2.m_v[3];
 }
 
 inline EvtComplex operator*( const EvtVector4C& v1, const EvtVector4R& v2 )
 {
-    return v1.v[0] * v2.get( 0 ) - v1.v[1] * v2.get( 1 ) -
-           v1.v[2] * v2.get( 2 ) - v1.v[3] * v2.get( 3 );
+    return v1.m_v[0] * v2.get( 0 ) - v1.m_v[1] * v2.get( 1 ) -
+           v1.m_v[2] * v2.get( 2 ) - v1.m_v[3] * v2.get( 3 );
 }
 
 inline EvtComplex operator*( const EvtVector4C& v1, const EvtVector4C& v2 )
 {
-    return v1.v[0] * v2.v[0] - v1.v[1] * v2.v[1] - v1.v[2] * v2.v[2] -
-           v1.v[3] * v2.v[3];
+    return v1.m_v[0] * v2.m_v[0] - v1.m_v[1] * v2.m_v[1] -
+           v1.m_v[2] * v2.m_v[2] - v1.m_v[3] * v2.m_v[3];
 }
 
 inline EvtVector4C EvtVector4C::conj() const
 {
-    return EvtVector4C( ::conj( v[0] ), ::conj( v[1] ), ::conj( v[2] ),
-                        ::conj( v[3] ) );
+    return EvtVector4C( ::conj( m_v[0] ), ::conj( m_v[1] ), ::conj( m_v[2] ),
+                        ::conj( m_v[3] ) );
 }
 
 #endif

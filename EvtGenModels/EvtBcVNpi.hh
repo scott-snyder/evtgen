@@ -44,10 +44,10 @@ class EvtBcVNpi : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   protected:
-    int nCall;
-    int whichfit, idVector;
-    std::unique_ptr<EvtBCVFF> ffmodel;
-    std::unique_ptr<EvtWnPi> wcurr;
+    int m_nCall;
+    int m_whichfit, m_idVector;
+    std::unique_ptr<EvtBCVFF> m_ffmodel;
+    std::unique_ptr<EvtWnPi> m_wcurr;
 
     EvtComplex Fpi( EvtVector4R q1, EvtVector4R q2 );
     EvtComplex BWa( EvtVector4R q );

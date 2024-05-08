@@ -36,7 +36,7 @@ EvtTensor3C::EvtTensor3C( const EvtTensor3C& t1 )
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] = t1.t[i][j];
+            m_t[i][j] = t1.m_t[i][j];
         }
     }
 }
@@ -47,13 +47,13 @@ EvtTensor3C::EvtTensor3C( double d11, double d22, double d33 )
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] = 0.0;
+            m_t[i][j] = 0.0;
         }
     }
 
-    t[0][0] = d11;
-    t[1][1] = d22;
-    t[2][2] = d33;
+    m_t[0][0] = d11;
+    m_t[1][1] = d22;
+    m_t[2][2] = d33;
 }
 
 EvtTensor3C& EvtTensor3C::operator=( const EvtTensor3C& t1 )
@@ -62,7 +62,7 @@ EvtTensor3C& EvtTensor3C::operator=( const EvtTensor3C& t1 )
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] = t1.t[i][j];
+            m_t[i][j] = t1.m_t[i][j];
         }
     }
     return *this;
@@ -76,7 +76,7 @@ EvtTensor3C EvtTensor3C::conj() const
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            temp.set( j, i, ::conj( t[i][j] ) );
+            temp.set( j, i, ::conj( m_t[i][j] ) );
         }
     }
     return temp;
@@ -87,7 +87,7 @@ void EvtTensor3C::zero()
     int i, j;
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] = EvtComplex( 0.0, 0.0 );
+            m_t[i][j] = EvtComplex( 0.0, 0.0 );
         }
     }
 }
@@ -98,7 +98,7 @@ EvtTensor3C::EvtTensor3C()
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] = EvtComplex( 0.0, 0.0 );
+            m_t[i][j] = EvtComplex( 0.0, 0.0 );
         }
     }
 }
@@ -109,7 +109,7 @@ EvtTensor3C EvtTensor3C::operator+=( const EvtTensor3C& t2 )
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] += t2.t[i][j];
+            m_t[i][j] += t2.m_t[i][j];
         }
     }
     return *this;
@@ -121,7 +121,7 @@ EvtTensor3C EvtTensor3C::operator-=( const EvtTensor3C& t2 )
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] -= t2.t[i][j];
+            m_t[i][j] -= t2.m_t[i][j];
         }
     }
     return *this;
@@ -133,7 +133,7 @@ EvtTensor3C EvtTensor3C::operator*=( const EvtComplex& c )
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] *= c;
+            m_t[i][j] *= c;
         }
     }
     return *this;
@@ -145,7 +145,7 @@ EvtTensor3C EvtTensor3C::operator*=( const double c )
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] *= EvtComplex( c );
+            m_t[i][j] *= EvtComplex( c );
         }
     }
     return *this;
@@ -187,7 +187,7 @@ EvtTensor3C EvtGenFunctions::directProd( const EvtVector3R& c1,
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            temp.t[i][j] = EvtComplex( c1.get( i ) * c2.get( j ), 0.0 );
+            temp.m_t[i][j] = EvtComplex( c1.get( i ) * c2.get( j ), 0.0 );
         }
     }
     return temp;
@@ -251,8 +251,8 @@ EvtVector3C EvtTensor3C::cont1( const EvtVector3C& v ) const
     int i;
 
     for ( i = 0; i < 3; i++ ) {
-        temp.set( i, t[0][i] * v.get( 0 ) + t[1][i] * v.get( 1 ) +
-                         t[2][i] * v.get( 2 ) );
+        temp.set( i, m_t[0][i] * v.get( 0 ) + m_t[1][i] * v.get( 1 ) +
+                         m_t[2][i] * v.get( 2 ) );
     }
 
     return temp;
@@ -265,8 +265,8 @@ EvtVector3C EvtTensor3C::cont2( const EvtVector3C& v ) const
     int i;
 
     for ( i = 0; i < 3; i++ ) {
-        temp.set( i, t[i][0] * v.get( 0 ) + t[i][1] * v.get( 1 ) +
-                         t[i][2] * v.get( 2 ) );
+        temp.set( i, m_t[i][0] * v.get( 0 ) + m_t[i][1] * v.get( 1 ) +
+                         m_t[i][2] * v.get( 2 ) );
     }
 
     return temp;
@@ -279,8 +279,8 @@ EvtVector3C EvtTensor3C::cont1( const EvtVector3R& v ) const
     int i;
 
     for ( i = 0; i < 3; i++ ) {
-        temp.set( i, t[0][i] * v.get( 0 ) + t[1][i] * v.get( 1 ) +
-                         t[2][i] * v.get( 2 ) );
+        temp.set( i, m_t[0][i] * v.get( 0 ) + m_t[1][i] * v.get( 1 ) +
+                         m_t[2][i] * v.get( 2 ) );
     }
 
     return temp;
@@ -293,8 +293,8 @@ EvtVector3C EvtTensor3C::cont2( const EvtVector3R& v ) const
     int i;
 
     for ( i = 0; i < 3; i++ ) {
-        temp.set( i, t[i][0] * v.get( 0 ) + t[i][1] * v.get( 1 ) +
-                         t[i][2] * v.get( 2 ) );
+        temp.set( i, m_t[i][0] * v.get( 0 ) + m_t[i][1] * v.get( 1 ) +
+                         m_t[i][2] * v.get( 2 ) );
     }
 
     return temp;
@@ -304,18 +304,18 @@ EvtTensor3C EvtGenFunctions::eps( const EvtVector3R& v )
 {
     EvtTensor3C temp;
 
-    temp.t[0][0] = 0.0;
-    temp.t[1][1] = 0.0;
-    temp.t[2][2] = 0.0;
+    temp.m_t[0][0] = 0.0;
+    temp.m_t[1][1] = 0.0;
+    temp.m_t[2][2] = 0.0;
 
-    temp.t[0][1] = v.get( 2 );
-    temp.t[0][2] = -v.get( 1 );
+    temp.m_t[0][1] = v.get( 2 );
+    temp.m_t[0][2] = -v.get( 1 );
 
-    temp.t[1][0] = -v.get( 2 );
-    temp.t[1][2] = v.get( 0 );
+    temp.m_t[1][0] = -v.get( 2 );
+    temp.m_t[1][2] = v.get( 0 );
 
-    temp.t[2][0] = v.get( 1 );
-    temp.t[2][1] = -v.get( 0 );
+    temp.m_t[2][0] = v.get( 1 );
+    temp.m_t[2][1] = -v.get( 0 );
 
     return temp;
 }
@@ -330,11 +330,12 @@ const EvtTensor3C& EvtTensor3C::id()
 ostream& operator<<( ostream& s, const EvtTensor3C& v )
 {
     s << endl
-      << "(" << v.t[0][0] << "," << v.t[0][1] << "," << v.t[0][2] << ")";
+      << "(" << v.m_t[0][0] << "," << v.m_t[0][1] << "," << v.m_t[0][2] << ")";
     s << endl
-      << "(" << v.t[1][0] << "," << v.t[1][1] << "," << v.t[1][2] << ")";
+      << "(" << v.m_t[1][0] << "," << v.m_t[1][1] << "," << v.m_t[1][2] << ")";
     s << endl
-      << "(" << v.t[2][0] << "," << v.t[2][1] << "," << v.t[2][2] << ")" << endl;
+      << "(" << v.m_t[2][0] << "," << v.m_t[2][1] << "," << v.m_t[2][2] << ")"
+      << endl;
 
     return s;
 }
@@ -377,16 +378,16 @@ void EvtTensor3C::applyRotateEuler( double phi, double theta, double ksi )
         for ( j = 0; j < 3; j++ ) {
             temp[i][j] = 0.0;
             for ( k = 0; k < 3; k++ ) {
-                temp[i][j] += r[i][k] * t[k][j];
+                temp[i][j] += r[i][k] * m_t[k][j];
             }
         }
     }
 
     for ( i = 0; i < 3; i++ ) {
         for ( j = 0; j < 3; j++ ) {
-            t[i][j] = 0.0;
+            m_t[i][j] = 0.0;
             for ( k = 0; k < 3; k++ ) {
-                t[i][j] += r[i][k] * temp[j][k];
+                m_t[i][j] += r[i][k] * temp[j][k];
             }
         }
     }

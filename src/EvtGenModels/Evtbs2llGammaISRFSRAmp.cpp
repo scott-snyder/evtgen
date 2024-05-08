@@ -385,8 +385,6 @@ void Evtbs2llGammaISRFSRAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
     EvtVector4C E1, E2;
     EvtComplex E3;
 
-    EvtVector4C epsG;    // photon polarisation vector
-
     int i;    // photon polarisations counter
 
     EvtVector4C lvc11, lvc12;    // spin structures for
@@ -578,26 +576,30 @@ void Evtbs2llGammaISRFSRAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
                     CKM_factor = 0.0 * unit1;
                 }
 
-                amp.vertex(
-                    i, 1, 1,
-                    conj( CKM_factor ) *
-                        ( lvc11 * E1 + lac11 * E2 + uniti * lsc11 * E3 +    // -?
-                          uniti * ( ( ltc11.cont2( hatp ) ) * epsG ) * brammT ) );
-                amp.vertex(
-                    i, 1, 0,
-                    conj( CKM_factor ) *
-                        ( lvc12 * E1 + lac12 * E2 + uniti * lsc12 * E3 +    // -?
-                          uniti * ( ( ltc12.cont2( hatp ) ) * epsG ) * brammT ) );
-                amp.vertex(
-                    i, 0, 1,
-                    conj( CKM_factor ) *
-                        ( lvc21 * E1 + lac21 * E2 + uniti * lsc21 * E3 +    // -?
-                          uniti * ( ( ltc21.cont2( hatp ) ) * epsG ) * brammT ) );
-                amp.vertex(
-                    i, 0, 0,
-                    conj( CKM_factor ) *
-                        ( lvc22 * E1 + lac22 * E2 + uniti * lsc22 * E3 +    // -?
-                          uniti * ( ( ltc22.cont2( hatp ) ) * epsG ) * brammT ) );
+                amp.vertex( i, 1, 1,
+                            conj( CKM_factor ) *
+                                ( lvc11 * E1 + lac11 * E2 +
+                                  uniti * lsc11 * E3 +    // -?
+                                  uniti * ( ( ltc11.cont2( hatp ) ) * barepsG ) *
+                                      brammT ) );
+                amp.vertex( i, 1, 0,
+                            conj( CKM_factor ) *
+                                ( lvc12 * E1 + lac12 * E2 +
+                                  uniti * lsc12 * E3 +    // -?
+                                  uniti * ( ( ltc12.cont2( hatp ) ) * barepsG ) *
+                                      brammT ) );
+                amp.vertex( i, 0, 1,
+                            conj( CKM_factor ) *
+                                ( lvc21 * E1 + lac21 * E2 +
+                                  uniti * lsc21 * E3 +    // -?
+                                  uniti * ( ( ltc21.cont2( hatp ) ) * barepsG ) *
+                                      brammT ) );
+                amp.vertex( i, 0, 0,
+                            conj( CKM_factor ) *
+                                ( lvc22 * E1 + lac22 * E2 +
+                                  uniti * lsc22 * E3 +    // -?
+                                  uniti * ( ( ltc22.cont2( hatp ) ) * barepsG ) *
+                                      brammT ) );
             }
 
         } else {

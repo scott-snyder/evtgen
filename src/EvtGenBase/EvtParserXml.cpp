@@ -39,8 +39,8 @@ bool EvtParserXml::open( std::string filename )
         return false;
     }
 
-    _fin.open( filename.c_str() );
-    if ( !_fin ) {
+    m_fin.open( filename.c_str() );
+    if ( !m_fin ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Could not open file '" << filename.c_str() << "'" << endl;
         return false;
@@ -51,7 +51,7 @@ bool EvtParserXml::open( std::string filename )
 
 bool EvtParserXml::close()
 {
-    _fin.close();
+    m_fin.close();
     return true;
 }
 
@@ -59,91 +59,91 @@ bool EvtParserXml::readNextTag()
 {
     if ( !processTagTree() ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "Unexpected end tag " << _tagTitle << " found near line "
-            << _lineNo << endl;
+            << "Unexpected end tag " << m_tagTitle << " found near line "
+            << m_lineNo << endl;
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Will terminate execution!" << endl;
         return false;
     }    //first process the previous tag to find out where we are in the tag tree
 
-    while ( _line.find( "<" ) ==
+    while ( m_line.find( "<" ) ==
             std::string::npos ) {    //add lines until we find start of a tag
         std::string addLine;
-        if ( !std::getline( _fin, addLine ) )
+        if ( !std::getline( m_fin, addLine ) )
             return false;
-        _lineNo++;
-        _line += " ";
-        _line += addLine;
+        m_lineNo++;
+        m_line += " ";
+        m_line += addLine;
     }
 
     unsigned int startTag;
     unsigned int endTag;
     unsigned int endTagTitle;
 
-    startTag = _line.find( "<" );
+    startTag = m_line.find( "<" );
 
-    if ( _line[startTag + 1] ==
+    if ( m_line[startTag + 1] ==
          '?' ) {    //XML header tag - ignore then read the next tag
-        while ( _line.find( "?>", startTag ) == std::string::npos ) {
+        while ( m_line.find( "?>", startTag ) == std::string::npos ) {
             std::string addLine;
-            if ( !std::getline( _fin, addLine ) )
+            if ( !std::getline( m_fin, addLine ) )
                 return false;
-            _lineNo++;
-            _line += " ";
-            _line += addLine;
+            m_lineNo++;
+            m_line += " ";
+            m_line += addLine;
         }
-        endTag = _line.find( "?>", startTag );
-        _line = _line.substr( endTag + 2 );
+        endTag = m_line.find( "?>", startTag );
+        m_line = m_line.substr( endTag + 2 );
         return readNextTag();
-    } else if ( _line[startTag + 1] ==
+    } else if ( m_line[startTag + 1] ==
                 '!' ) {    //XML comment tag - ignore then read the next tag
-        while ( _line.find( "-->", startTag ) == std::string::npos ) {
+        while ( m_line.find( "-->", startTag ) == std::string::npos ) {
             std::string addLine;
-            if ( !std::getline( _fin, addLine ) )
+            if ( !std::getline( m_fin, addLine ) )
                 return false;
-            _lineNo++;
-            _line += " ";
-            _line += addLine;
+            m_lineNo++;
+            m_line += " ";
+            m_line += addLine;
         }
-        endTag = _line.find( "-->", startTag );
-        _line = _line.substr( endTag + 3 );
-        _tagTitle = "";
-        _tag = "";
+        endTag = m_line.find( "-->", startTag );
+        m_line = m_line.substr( endTag + 3 );
+        m_tagTitle = "";
+        m_tag = "";
         return readNextTag();
     } else {    //parsable
 
-        while ( _line.find( ">", startTag ) ==
+        while ( m_line.find( ">", startTag ) ==
                 std::string::npos ) {    //find end of a tag
             std::string addLine;
-            if ( !std::getline( _fin, addLine ) )
+            if ( !std::getline( m_fin, addLine ) )
                 return false;
-            _lineNo++;
-            _line += " ";
-            _line += addLine;
+            m_lineNo++;
+            m_line += " ";
+            m_line += addLine;
         }
-        endTag = _line.find( ">", startTag );
-        _inLineTag = false;
-        if ( _line.find( "/>", startTag ) < endTag ) {
+        endTag = m_line.find( ">", startTag );
+        m_inLineTag = false;
+        if ( m_line.find( "/>", startTag ) < endTag ) {
             endTag--;
-            _inLineTag = true;
+            m_inLineTag = true;
         }
 
-        if ( _line.find( " ", startTag ) != std::string::npos &&
-             _line.find( " ", startTag ) <
+        if ( m_line.find( " ", startTag ) != std::string::npos &&
+             m_line.find( " ", startTag ) <
                  endTag ) {    //find end of the first word in the tag
-            endTagTitle = _line.find( " ", startTag );
+            endTagTitle = m_line.find( " ", startTag );
         } else {
             endTagTitle = endTag;
         }
 
-        _tagTitle = _line.substr( startTag + 1, endTagTitle - startTag - 1 );
-        _tag = _line.substr( startTag + 1, endTag - startTag - 1 );
+        m_tagTitle = m_line.substr( startTag + 1, endTagTitle - startTag - 1 );
+        m_tag = m_line.substr( startTag + 1, endTag - startTag - 1 );
 
         //now we have the tag lets remove it from the line
-        if ( _inLineTag ) {
-            _line = _line.substr( endTag + 2 );
+        if ( m_inLineTag ) {
+            m_line = m_line.substr( endTag + 2 );
         } else {
-            _line = _line.substr( endTag + 1 );
+            m_line = m_line.substr( endTag + 1 );
         }
         return true;
     }
@@ -151,10 +151,10 @@ bool EvtParserXml::readNextTag()
 
 std::string EvtParserXml::getParentTagTitle()
 {
-    if ( _tagTree.empty() )
+    if ( m_tagTree.empty() )
         return "";
     else
-        return _tagTree.back();
+        return m_tagTree.back();
 }
 
 std::string EvtParserXml::readAttribute( std::string attribute,
@@ -164,11 +164,11 @@ std::string EvtParserXml::readAttribute( std::string attribute,
     for ( unsigned int i = 0; i < whitespace.size(); i++ ) {
         //find any whitespace followed by the attribute name followed by an '='
         std::string attName = whitespace[i] + attribute + "=";
-        if ( _tag.find( attName ) != std::string::npos ) {
-            int startAttri = _tag.find( attName );
-            int startQuote = _tag.find( "\"", startAttri + 1 );
-            int endQuote = _tag.find( "\"", startQuote + 1 );
-            return _tag.substr( startQuote + 1, endQuote - startQuote - 1 );
+        if ( m_tag.find( attName ) != std::string::npos ) {
+            int startAttri = m_tag.find( attName );
+            int startQuote = m_tag.find( "\"", startAttri + 1 );
+            int endQuote = m_tag.find( "\"", startQuote + 1 );
+            return m_tag.substr( startQuote + 1, endQuote - startQuote - 1 );
         }
     }
     return defaultValue;
@@ -210,16 +210,16 @@ double EvtParserXml::readAttributeDouble( std::string attribute,
 
 bool EvtParserXml::processTagTree()
 {
-    if ( _tagTitle == "" )
+    if ( m_tagTitle == "" )
         return true;
-    if ( _tagTitle[0] == '/' ) {
-        if ( _tagTitle.substr( 1 ) == _tagTree.back() ) {
-            _tagTree.pop_back();
+    if ( m_tagTitle[0] == '/' ) {
+        if ( m_tagTitle.substr( 1 ) == m_tagTree.back() ) {
+            m_tagTree.pop_back();
         } else {
             return false;
         }
-    } else if ( !_inLineTag ) {
-        _tagTree.push_back( _tagTitle );
+    } else if ( !m_inLineTag ) {
+        m_tagTree.push_back( m_tagTitle );
     }
     return true;
 }

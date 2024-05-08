@@ -25,7 +25,7 @@
 #include "EvtGenBase/EvtPatches.hh"
 
 EvtHepMCEvent::EvtHepMCEvent() :
-    _theEvent( nullptr ), _translation( 0.0, 0.0, 0.0, 0.0 )
+    m_theEvent( nullptr ), m_translation( 0.0, 0.0, 0.0, 0.0 )
 {
 }
 
@@ -36,10 +36,10 @@ EvtHepMCEvent::~EvtHepMCEvent()
 
 void EvtHepMCEvent::deleteEvent()
 {
-    if ( _theEvent != nullptr ) {
-        _theEvent->clear();
-        delete _theEvent;
-        _theEvent = nullptr;
+    if ( m_theEvent != nullptr ) {
+        m_theEvent->clear();
+        delete m_theEvent;
+        m_theEvent = nullptr;
     }
 }
 
@@ -60,8 +60,8 @@ void EvtHepMCEvent::constructEvent( EvtParticle* baseParticle,
         return;
     }
 
-    _theEvent = new GenEvent( Units::GEV, Units::MM );
-    _translation = translation;
+    m_theEvent = new GenEvent( Units::GEV, Units::MM );
+    m_translation = translation;
 
     // Use the recursive function addVertex to add a vertex with incoming/outgoing
     // particles. Adds a new vertex for any EvtParticles with decay daughters.
@@ -127,7 +127,7 @@ void EvtHepMCEvent::addVertex( EvtParticle* inEvtParticle,
     // be the same GenParticle pointer, hence the reason for using it as a 2nd argument
     // in this function.
 
-    if ( _theEvent == nullptr || inEvtParticle == nullptr ||
+    if ( m_theEvent == nullptr || inEvtParticle == nullptr ||
          inGenParticle == nullptr ) {
         return;
     }
@@ -137,7 +137,7 @@ void EvtHepMCEvent::addVertex( EvtParticle* inEvtParticle,
     GenVertexPtr theVertex = newGenVertexPtr( vtxCoord );
 
     // Add the vertex to the event
-    _theEvent->add_vertex( theVertex );
+    m_theEvent->add_vertex( theVertex );
 
     // Set the incoming particle
     theVertex->add_particle_in( inGenParticle );
@@ -181,7 +181,7 @@ FourVector EvtHepMCEvent::getVertexCoord( EvtParticle* theParticle )
         EvtParticle* daugParticle = theParticle->getDaug( 0 );
 
         if ( daugParticle != nullptr ) {
-            EvtVector4R vtxPosition = daugParticle->get4Pos() + _translation;
+            EvtVector4R vtxPosition = daugParticle->get4Pos() + m_translation;
 
             // Create the HepMC 4 vector of the position (x,y,z,t)
             vertexCoord.setX( vtxPosition.get( 1 ) );

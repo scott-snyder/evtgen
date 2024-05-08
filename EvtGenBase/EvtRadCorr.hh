@@ -42,9 +42,9 @@ class EvtRadCorr {
     static void setNormalRadCorr();
 
   private:
-    static EvtAbsRadCorr* _fsrEngine;
-    static bool _alwaysRadCorr;
-    static bool _neverRadCorr;
+    static EvtAbsRadCorr* m_fsrEngine;
+    static bool m_alwaysRadCorr;
+    static bool m_neverRadCorr;
 };
 
 #endif

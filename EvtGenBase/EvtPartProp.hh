@@ -33,54 +33,54 @@ class EvtPartProp {
     EvtPartProp();
     EvtPartProp( const EvtPartProp& x );
 
-    double getMass() { return _lineShape->getMass(); }
-    double getMassMin() { return _lineShape->getMassMin(); }
-    double getMassMax() { return _lineShape->getMassMax(); }
-    double getMaxRange() { return _lineShape->getMaxRange(); }
-    double getWidth() { return _lineShape->getWidth(); }
+    double getMass() { return m_lineShape->getMass(); }
+    double getMassMin() { return m_lineShape->getMassMin(); }
+    double getMassMax() { return m_lineShape->getMassMax(); }
+    double getMaxRange() { return m_lineShape->getMaxRange(); }
+    double getWidth() { return m_lineShape->getWidth(); }
 
     double getRandMass( EvtId* parId, int nDaug, EvtId* dauId, EvtId* othDauId,
                         double maxMass, double* dauMasses )
     {
-        return _lineShape->getRandMass( parId, nDaug, dauId, othDauId, maxMass,
-                                        dauMasses );
+        return m_lineShape->getRandMass( parId, nDaug, dauId, othDauId, maxMass,
+                                         dauMasses );
     }
     double getMassProb( double mass, double massPar, int nDaug, double* massDau )
     {
-        return _lineShape->getMassProb( mass, massPar, nDaug, massDau );
+        return m_lineShape->getMassProb( mass, massPar, nDaug, massDau );
     }
 
-    double getctau() { return _ctau; }
-    void setctau( double tau ) { _ctau = tau; }
+    double getctau() { return m_ctau; }
+    void setctau( double tau ) { m_ctau = tau; }
 
-    int getChg3() { return _chg3; }
-    void setChg3( int c3 ) { _chg3 = c3; }
+    int getChg3() { return m_chg3; }
+    void setChg3( int c3 ) { m_chg3 = c3; }
 
-    EvtSpinType::spintype getSpinType() { return _spintype; }
-    void setSpinType( EvtSpinType::spintype stype ) { _spintype = stype; }
+    EvtSpinType::spintype getSpinType() { return m_spintype; }
+    void setSpinType( EvtSpinType::spintype stype ) { m_spintype = stype; }
 
-    const std::string& getName() { return _name; }
+    const std::string& getName() { return m_name; }
     void setName( std::string pname );
 
-    EvtId getId() { return _id; }
-    void setId( EvtId id ) { _id = id; }
+    EvtId getId() { return m_id; }
+    void setId( EvtId id ) { m_id = id; }
 
-    EvtId getIdChgConj() { return _idchgconj; }
-    void setIdChgConj( EvtId idchgconj ) { _idchgconj = idchgconj; }
+    EvtId getIdChgConj() { return m_idchgconj; }
+    void setIdChgConj( EvtId idchgconj ) { m_idchgconj = idchgconj; }
 
-    int getStdHep() { return _stdhep; }
-    void setStdHep( int stdhep ) { _stdhep = stdhep; }
+    int getStdHep() { return m_stdhep; }
+    void setStdHep( int stdhep ) { m_stdhep = stdhep; }
 
-    int getLundKC() { return _lundkc; }
-    void setLundKC( int lundkc ) { _lundkc = lundkc; }
+    int getLundKC() { return m_lundkc; }
+    void setLundKC( int lundkc ) { m_lundkc = lundkc; }
 
-    EvtAbsLineShape* getLineShape() { return _lineShape.get(); }
+    EvtAbsLineShape* getLineShape() { return m_lineShape.get(); }
     void initLineShape( double mass, double width, double maxRange );
     //  void initLineShape(double mass, double width, double maxRange, double mDaug1, double mDaug2, int l);
 
     // setLineShape takes ownership of l
-    void setLineShape( EvtAbsLineShape* l ) { _lineShape.reset( l ); }
-    double rollMass() { return _lineShape->rollMass(); }
+    void setLineShape( EvtAbsLineShape* l ) { m_lineShape.reset( l ); }
+    double rollMass() { return m_lineShape->rollMass(); }
 
     EvtPartProp& operator=( const EvtPartProp& x );
 
@@ -98,16 +98,16 @@ class EvtPartProp {
     void setPWForBirthL( int spin, EvtId par, EvtId othD );
 
   private:
-    std::unique_ptr<EvtAbsLineShape> _lineShape;
+    std::unique_ptr<EvtAbsLineShape> m_lineShape;
 
-    double _ctau;
-    EvtId _id;
-    EvtId _idchgconj;
-    EvtSpinType::spintype _spintype;
-    int _chg3;
-    int _stdhep;
-    int _lundkc;
-    std::string _name;
+    double m_ctau;
+    EvtId m_id;
+    EvtId m_idchgconj;
+    EvtSpinType::spintype m_spintype;
+    int m_chg3;
+    int m_stdhep;
+    int m_lundkc;
+    std::string m_name;
 };
 
 #endif

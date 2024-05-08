@@ -58,8 +58,8 @@ void EvtCBTo3piMPP::init()
     int iset( 10000 );
     double realA, imgA, realbarA, imgbarA;
 
-    generator.Evt3piMPP( alpha, iset, p4[0], p4[1], p4[2], realA, imgA,
-                         realbarA, imgbarA );
+    m_generator.Evt3piMPP( alpha, iset, p4[0], p4[1], p4[2], realA, imgA,
+                           realbarA, imgbarA );
 }
 
 void EvtCBTo3piMPP::initProbMax()
@@ -86,8 +86,8 @@ void EvtCBTo3piMPP::decay( EvtParticle* p )
     int iset( 0 );
     double realA, imgA, realbarA, imgbarA;
 
-    generator.Evt3piMPP( alpha, iset, p4[0], p4[1], p4[2], realA, imgA,
-                         realbarA, imgbarA );
+    m_generator.Evt3piMPP( alpha, iset, p4[0], p4[1], p4[2], realA, imgA,
+                           realbarA, imgbarA );
 
     pi1->init( getDaug( 0 ), p4[0] );
     pi2->init( getDaug( 1 ), p4[1] );

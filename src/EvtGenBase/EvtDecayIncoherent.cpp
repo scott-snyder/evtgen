@@ -32,10 +32,10 @@ void EvtDecayIncoherent::makeDecay( EvtParticle* p, bool recursive )
     //initialize this the hard way..
     //Lange June 26, 2000
     for ( size_t i = 0; i < static_cast<unsigned int>( MAX_DAUG ); i++ ) {
-        spinDensitySet[i] = 0;
+        m_spinDensitySet[i] = 0;
     }
 
-    _daugsDecayedByParentModel = false;
+    m_daugsDecayedByParentModel = false;
 
     decay( p );
     p->setDecayProb( 1.0 );

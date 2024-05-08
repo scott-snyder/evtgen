@@ -49,7 +49,7 @@ using namespace EvtCyclic3;
 void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                                      bool conj )
 {
-    if ( _verbose ) {
+    if ( m_verbose ) {
         printf( "Make %samplitude\n", conj ? "CP conjugate" : "" );
         unsigned i;
         for ( i = 0; i < vv.size(); i++ )
@@ -67,7 +67,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
          Experimental amplitudes
   */
     if ( vv[0] == "PHASESPACE" ) {
-        pdf = std::make_unique<EvtDalitzFlatPdf>( _dp );
+        pdf = std::make_unique<EvtDalitzFlatPdf>( m_dp );
         amp = std::make_unique<EvtFlatAmp<EvtDalitzPoint>>();
         name = "NR";
     } else if ( !vv[0].find( "NONRES" ) ) {
@@ -82,8 +82,8 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
             alpha = strtod( vv[2].c_str(), nullptr );
         } else
             assert( 0 );
-        pdf = std::make_unique<EvtDalitzFlatPdf>( _dp );
-        amp = std::make_unique<EvtNonresonantAmp>( &_dp, typeNRes, pairRes,
+        pdf = std::make_unique<EvtDalitzFlatPdf>( m_dp );
+        amp = std::make_unique<EvtNonresonantAmp>( &m_dp, typeNRes, pairRes,
                                                    alpha );
     } else if ( vv[0] == "LASS" || vv[0] == "LASS_ELASTIC" ||
                 vv[0] == "LASS_RESONANT" ) {
@@ -93,9 +93,9 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
         double a = strtod( vv[4].c_str(), nullptr );
         double r = strtod( vv[5].c_str(), nullptr );
         double cutoff = strtod( vv[6].c_str(), nullptr );
-        pdf = std::make_unique<EvtDalitzResPdf>( _dp, m0, g0, pairRes );
-        amp = std::make_unique<EvtLASSAmp>( &_dp, pairRes, m0, g0, a, r, cutoff,
-                                            vv[0] );
+        pdf = std::make_unique<EvtDalitzResPdf>( m_dp, m0, g0, pairRes );
+        amp = std::make_unique<EvtLASSAmp>( &m_dp, pairRes, m0, g0, a, r,
+                                            cutoff, vv[0] );
     }
 
     /*
@@ -111,7 +111,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
         double mR, gR;
         name = vv[2];
         EvtId resId = EvtPDL::getId( vv[2] );
-        if ( _verbose )
+        if ( m_verbose )
             printf( "Particles %s form %sresonance %s\n", vv[1].c_str(),
                     vv[2].c_str(), conj ? "(conj) " : "" );
 
@@ -161,7 +161,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
             // explicitly
 
             if ( vv[3] != "ANGULAR" ) {
-                if ( _verbose )
+                if ( m_verbose )
                     printf( "Setting m(%s)=%s g(%s)=%s\n", vv[2].c_str(),
                             vv[3].c_str(), vv[2].c_str(), vv[4].c_str() );
 
@@ -178,7 +178,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
             exit( 0 );
         }
         Pair pairAng = strToPair( vv[++i].c_str() );
-        if ( _verbose )
+        if ( m_verbose )
             printf( "Angle is measured between particles %s\n", vv[i].c_str() );
 
         // TYPE stanza
@@ -186,38 +186,40 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
         std::string typeName = vv[++i];
         assert( typeName == "TYPE" );
         std::string type = vv[++i];
-        if ( _verbose )
+        if ( m_verbose )
             printf( "Propagator type %s\n", vv[i].c_str() );
 
         if ( type == "NBW" ) {
             EvtPropBreitWigner prop( mR, gR );
-            partAmp = std::make_unique<EvtPto3PAmp>( _dp, pairAng, pairRes, spinR,
-                                                     prop, EvtPto3PAmp::NBW );
+            partAmp = std::make_unique<EvtPto3PAmp>( m_dp, pairAng, pairRes,
+                                                     spinR, prop,
+                                                     EvtPto3PAmp::NBW );
         } else if ( type == "RBW_ZEMACH" ) {
             EvtPropBreitWignerRel prop( mR, gR );
-            partAmp = std::make_unique<EvtPto3PAmp>( _dp, pairAng, pairRes,
+            partAmp = std::make_unique<EvtPto3PAmp>( m_dp, pairAng, pairRes,
                                                      spinR, prop,
                                                      EvtPto3PAmp::RBW_ZEMACH );
         } else if ( type == "RBW_KUEHN" ) {
             EvtPropBreitWignerRel prop( mR, gR );
-            partAmp = std::make_unique<EvtPto3PAmp>( _dp, pairAng, pairRes,
+            partAmp = std::make_unique<EvtPto3PAmp>( m_dp, pairAng, pairRes,
                                                      spinR, prop,
                                                      EvtPto3PAmp::RBW_KUEHN );
         } else if ( type == "RBW_CLEO" ) {
             EvtPropBreitWignerRel prop( mR, gR );
-            partAmp = std::make_unique<EvtPto3PAmp>( _dp, pairAng, pairRes,
+            partAmp = std::make_unique<EvtPto3PAmp>( m_dp, pairAng, pairRes,
                                                      spinR, prop,
                                                      EvtPto3PAmp::RBW_CLEO );
         } else if ( type == "FLATTE" ) {
-            double m1a = _dp.m( first( pairRes ) );
-            double m1b = _dp.m( second( pairRes ) );
+            double m1a = m_dp.m( first( pairRes ) );
+            double m1b = m_dp.m( second( pairRes ) );
             // 2nd channel
             double g2 = strtod( vv[++i].c_str(), nullptr );
             double m2a = strtod( vv[++i].c_str(), nullptr );
             double m2b = strtod( vv[++i].c_str(), nullptr );
             EvtPropFlatte prop( mR, gR, m1a, m1b, g2, m2a, m2b );
-            partAmp = std::make_unique<EvtPto3PAmp>( _dp, pairAng, pairRes, spinR,
-                                                     prop, EvtPto3PAmp::FLATTE );
+            partAmp = std::make_unique<EvtPto3PAmp>( m_dp, pairAng, pairRes,
+                                                     spinR, prop,
+                                                     EvtPto3PAmp::FLATTE );
         } else
             assert( 0 );
 
@@ -238,7 +240,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
             if ( vv[i + 1] == "BVFF" ) {
                 i++;
                 if ( vv[++i] == "BLATTWEISSKOPF" ) {
-                    if ( _verbose )
+                    if ( m_verbose )
                         printf( "BVFF=%s\n", vv[i].c_str() );
                     double R = strtod( vv[++i].c_str(), nullptr );
                     partAmp->set_fb( R );
@@ -255,7 +257,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 if ( vv[i + 1] == "MIN" ) {
                     i++;
                     double min = strtod( vv[++i].c_str(), nullptr );
-                    if ( _verbose )
+                    if ( m_verbose )
                         std::cout << "CUTOFF MIN = " << min << " " << minwidths
                                   << std::endl;
                     //ensure against cutting off too close to the resonance
@@ -264,7 +266,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 } else if ( vv[i + 1] == "MAX" ) {
                     i++;
                     double max = strtod( vv[++i].c_str(), nullptr );
-                    if ( _verbose )
+                    if ( m_verbose )
                         std::cout << "CUTOFF MAX = " << max << " " << minwidths
                                   << std::endl;
                     //ensure against cutting off too close to the resonance
@@ -282,7 +284,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 if ( vv[i + 1] == "MIN" ) {
                     i++;
                     double min = strtod( vv[++i].c_str(), nullptr );
-                    if ( _verbose )
+                    if ( m_verbose )
                         std::cout << "CUTOFF MIN = " << min << std::endl;
                     //ensure against cutting off too close to the resonance
                     assert( min < ( mR - minwidths * gR ) );
@@ -290,7 +292,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
                 } else if ( vv[i + 1] == "MAX" ) {
                     i++;
                     double max = strtod( vv[++i].c_str(), nullptr );
-                    if ( _verbose )
+                    if ( m_verbose )
                         std::cout << "CUTOFF MAX = " << max << std::endl;
                     //ensure against cutting off too close to the resonance
                     assert( max > ( mR + minwidths * gR ) );
@@ -302,7 +304,7 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
 
         i++;
 
-        pdf = std::make_unique<EvtDalitzResPdf>( _dp, mR, gR, pairRes );
+        pdf = std::make_unique<EvtDalitzResPdf>( m_dp, mR, gR, pairRes );
         amp = std::move( partAmp );
     }
 
@@ -312,13 +314,13 @@ void EvtPto3PAmpFactory::processAmp( EvtComplex c, std::vector<std::string> vv,
     double scale = matchIsobarCoef( *amp, *pdf, pairRes );
 
     if ( !conj ) {
-        _amp->addOwnedTerm( c, std::move( amp ) );
+        m_amp->addOwnedTerm( c, std::move( amp ) );
     } else {
-        _ampConj->addOwnedTerm( c, std::move( amp ) );
+        m_ampConj->addOwnedTerm( c, std::move( amp ) );
     }
-    _pc->addOwnedTerm( abs2( c ) * scale, std::move( pdf ) );
+    m_pc->addOwnedTerm( abs2( c ) * scale, std::move( pdf ) );
 
-    _names.push_back( name );
+    m_names.push_back( name );
 }
 
 double EvtPto3PAmpFactory::matchIsobarCoef( EvtAmplitude<EvtDalitzPoint>& amp,
@@ -338,19 +340,19 @@ double EvtPto3PAmpFactory::matchIsobarCoef( EvtAmplitude<EvtDalitzPoint>& amp,
     // Trapezoidal integral
     int N = 10000;
 
-    double di = ( _dp.qAbsMax( ipair ) - _dp.qAbsMin( ipair ) ) / ( (double)N );
+    double di = ( m_dp.qAbsMax( ipair ) - m_dp.qAbsMin( ipair ) ) / ( (double)N );
 
-    double siMin = _dp.qAbsMin( ipair );
+    double siMin = m_dp.qAbsMin( ipair );
 
     double s[3];    // playing with fire
     for ( int i = 1; i < N; i++ ) {
         s[ipair] = siMin + di * i;
-        s[jpair] = _dp.q( jpair, 0.9999, ipair, s[ipair] );
-        s[kpair] = _dp.bigM() * _dp.bigM() - s[ipair] - s[jpair] +
-                   _dp.mA() * _dp.mA() + _dp.mB() * _dp.mB() +
-                   _dp.mC() * _dp.mC();
+        s[jpair] = m_dp.q( jpair, 0.9999, ipair, s[ipair] );
+        s[kpair] = m_dp.bigM() * m_dp.bigM() - s[ipair] - s[jpair] +
+                   m_dp.mA() * m_dp.mA() + m_dp.mB() * m_dp.mB() +
+                   m_dp.mC() * m_dp.mC();
 
-        EvtDalitzPoint point( _dp.mA(), _dp.mB(), _dp.mC(), s[EvtCyclic3::AB],
+        EvtDalitzPoint point( m_dp.mA(), m_dp.mB(), m_dp.mC(), s[EvtCyclic3::AB],
                               s[EvtCyclic3::BC], s[EvtCyclic3::CA] );
 
         if ( !point.isValid() )
@@ -362,7 +364,7 @@ double EvtPto3PAmpFactory::matchIsobarCoef( EvtAmplitude<EvtDalitzPoint>& amp,
         double itg = abs2( amp.evaluate( point ) ) * di * 4 * q * p;
         Iamp2 += itg;
     }
-    if ( _verbose )
+    if ( m_verbose )
         std::cout << "integral = " << Iamp2 << "  pdf=" << Ipdf << std::endl;
 
     assert( Ipdf > 0 && Iamp2 > 0 );

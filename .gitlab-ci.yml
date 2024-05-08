@@ -77,6 +77,16 @@ check_test_json_files:
     - cd test
     - python checkJsonFiles.py
 
+check_member_varnames:
+  extends:
+    - .check_template
+  script:
+    - mkdir build && cd build
+    - cmake -DEVTGEN_HEPMC3:BOOL=ON -DEVTGEN_PYTHIA:BOOL=ON -DEVTGEN_PHOTOS:BOOL=ON -DEVTGEN_TAUOLA:BOOL=ON -DEVTGEN_BUILD_TESTS:BOOL=OFF -DEVTGEN_BUILD_DOXYGEN:BOOL=ON $CI_PROJECT_DIR
+    - cmake --build . --target doc
+    - curl -o renameMemberVars.py "https://gitlab.cern.ch/evtgen/utilities/raw/master/RenameMemberVars/renameMemberVars.py?inline=false"
+    - python renameMemberVars.py check $CI_PROJECT_DIR doxygen/html
+
 build_clang_opt:
   variables:
     LCG_COMPILER: "clang$CLANG_VERSION-opt"

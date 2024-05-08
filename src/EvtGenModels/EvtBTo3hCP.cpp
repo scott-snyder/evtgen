@@ -48,16 +48,19 @@
 
 void EvtBTo3hCP::setConstants( double balpha, double bbeta )
 {
-    alphaCP = balpha;
-    double calpha = cos( alphaCP );
-    double salpha = sin( alphaCP );
-    betaCP = bbeta;
-    double cbeta = cos( betaCP );
-    double sbeta = sin( betaCP );
+    m_alphaCP = balpha;
+    double calpha = cos( m_alphaCP );
+    double salpha = sin( m_alphaCP );
+    m_betaCP = bbeta;
+    double cbeta = cos( m_betaCP );
+    double sbeta = sin( m_betaCP );
 
-    MA2 = square( M_B ) + square( M_pip ) + square( M_pi0 ) + square( M_pi0 );
-    MB2 = square( M_B ) + square( M_pip ) + square( M_pim ) + square( M_pi0 );
-    MC2 = square( M_B ) + square( M_Kp ) + square( M_pim ) + square( M_pi0 );
+    m_MA2 = square( m_M_B ) + square( m_M_pip ) + square( m_M_pi0 ) +
+            square( m_M_pi0 );
+    m_MB2 = square( m_M_B ) + square( m_M_pip ) + square( m_M_pim ) +
+            square( m_M_pi0 );
+    m_MC2 = square( m_M_B ) + square( m_M_Kp ) + square( m_M_pim ) +
+            square( m_M_pi0 );
 
     double StrongPhase = 0;
     EvtComplex StrongExp( cos( StrongPhase ), sin( StrongPhase ) );
@@ -100,33 +103,33 @@ void EvtBTo3hCP::setConstants( double balpha, double bbeta )
     Mat_Tpm = StrongExp * Mat_Tpm;
     Nat_Tpm = StrongExp * Nat_Tpm;
 
-    Mat_S1 = Mat_Tp0 + 2. * Mat_P1;
-    Mat_S2 = Mat_T0p - 2. * Mat_P1;
-    Mat_S3 = Mat_Tpm + Mat_P1 + Mat_P0;
-    Mat_S4 = Mat_Tmp - Mat_P1 + Mat_P0;
-    Mat_S5 = -Mat_Tpm - Mat_Tmp + Mat_Tp0 + Mat_T0p - 2. * Mat_P0;
+    m_Mat_S1 = Mat_Tp0 + 2. * Mat_P1;
+    m_Mat_S2 = Mat_T0p - 2. * Mat_P1;
+    m_Mat_S3 = Mat_Tpm + Mat_P1 + Mat_P0;
+    m_Mat_S4 = Mat_Tmp - Mat_P1 + Mat_P0;
+    m_Mat_S5 = -Mat_Tpm - Mat_Tmp + Mat_Tp0 + Mat_T0p - 2. * Mat_P0;
 
-    Nat_S1 = Nat_Tp0 + 2. * Nat_P1;
-    Nat_S2 = Nat_T0p - 2. * Nat_P1;
-    Nat_S3 = Nat_Tpm + Nat_P1 + Nat_P0;
-    Nat_S4 = Nat_Tmp - Nat_P1 + Nat_P0;
-    Nat_S5 = -Nat_Tpm - Nat_Tmp + Nat_Tp0 + Nat_T0p - 2. * Nat_P0;
+    m_Nat_S1 = Nat_Tp0 + 2. * Nat_P1;
+    m_Nat_S2 = Nat_T0p - 2. * Nat_P1;
+    m_Nat_S3 = Nat_Tpm + Nat_P1 + Nat_P0;
+    m_Nat_S4 = Nat_Tmp - Nat_P1 + Nat_P0;
+    m_Nat_S5 = -Nat_Tpm - Nat_Tmp + Nat_Tp0 + Nat_T0p - 2. * Nat_P0;
 
     // B0    -->-- K*+ pi- Amplitudes (Trees + Penguins)
-    MatKstarp = EvtComplex( calpha, -salpha ) * EvtComplex( 0.220, 0. ) +
-                EvtComplex( cbeta, sbeta ) * EvtComplex( -1.200, 0. );
+    m_MatKstarp = EvtComplex( calpha, -salpha ) * EvtComplex( 0.220, 0. ) +
+                  EvtComplex( cbeta, sbeta ) * EvtComplex( -1.200, 0. );
     // B0    -->-- K*0 pi0 Amplitudes (Trees + Penguins)
-    MatKstar0 = EvtComplex( calpha, -salpha ) * EvtComplex( 0.015, 0. ) +
-                EvtComplex( cbeta, sbeta ) * EvtComplex( 0.850, 0. );
+    m_MatKstar0 = EvtComplex( calpha, -salpha ) * EvtComplex( 0.015, 0. ) +
+                  EvtComplex( cbeta, sbeta ) * EvtComplex( 0.850, 0. );
     // B0    -->-- K+ rho- Amplitudes (Trees + Penguins)
-    MatKrho = EvtComplex( calpha, -salpha ) * EvtComplex( 0.130, 0. ) +
-              EvtComplex( cbeta, sbeta ) * EvtComplex( 0.160, 0. );
+    m_MatKrho = EvtComplex( calpha, -salpha ) * EvtComplex( 0.130, 0. ) +
+                EvtComplex( cbeta, sbeta ) * EvtComplex( 0.160, 0. );
     // B0bar -->-- K*+ pi- Amplitudes (Trees + Penguins)
-    NatKstarp = EvtComplex( 0., 0. );
+    m_NatKstarp = EvtComplex( 0., 0. );
     // B0bar -->-- K*0 pi0 Amplitudes (Trees + Penguins)
-    NatKstar0 = EvtComplex( 0., 0. );
+    m_NatKstar0 = EvtComplex( 0., 0. );
     // B0bar -->-- K+ rho- Amplitudes (Trees + Penguins)
-    NatKrho = EvtComplex( 0., 0. );
+    m_NatKrho = EvtComplex( 0., 0. );
 }
 
 void EvtBTo3hCP::Evt3pi( double alpha, int iset, EvtVector4R& p_pi_plus,
@@ -143,9 +146,9 @@ void EvtBTo3hCP::Evt3pi( double alpha, int iset, EvtVector4R& p_pi_plus,
     setConstants( alpha, 0.362 );
 
     if ( iset == 0 ) {
-        p_pi_plus.set( M_pip, 0, 0, 0 );
-        p_p2.set( M_pi0, 0, 0, 0 );
-        p_pi_minus.set( M_pim, 0, 0, 0 );
+        p_pi_plus.set( m_M_pip, 0, 0, 0 );
+        p_p2.set( m_M_pi0, 0, 0, 0 );
+        p_pi_minus.set( m_M_pim, 0, 0, 0 );
 
         do {
             firstStep( p_pi_plus, p_p2, p_pi_minus, 1 );
@@ -163,13 +166,13 @@ void EvtBTo3hCP::Evt3pi( double alpha, int iset, EvtVector4R& p_pi_plus,
         }
     } else    // iset > 0
     {
-        factor_max = 0;
+        m_factor_max = 0;
 
         int endLoop = iset;
         for ( int i = 0; i < endLoop; ++i ) {
-            p_pi_plus.set( M_pip, 0, 0, 0 );
-            p_p2.set( M_pi0, 0, 0, 0 );
-            p_pi_minus.set( M_pim, 0, 0, 0 );
+            p_pi_plus.set( m_M_pip, 0, 0, 0 );
+            p_p2.set( m_M_pi0, 0, 0, 0 );
+            p_pi_minus.set( m_M_pim, 0, 0, 0 );
 
             firstStep( p_pi_plus, p_p2, p_pi_minus, 1 );
             ierr = compute3pi( p_pi_plus, p_p2, p_pi_minus, Real_B0, Imag_B0,
@@ -184,16 +187,16 @@ void EvtBTo3hCP::Evt3pi( double alpha, int iset, EvtVector4R& p_pi_plus,
             R2 = ( 2.0 * Ainter ) / ( AB0 + AB0bar );
             factor = ( 1.0 + sqrt( square( R1 ) + square( R2 ) ) ) *
                      ( AB0 + AB0bar ) / 2.0;
-            if ( factor > factor_max )
-                factor_max = factor;
+            if ( factor > m_factor_max )
+                m_factor_max = factor;
         }
-        factor_max = 1.0 / std::sqrt( factor_max );
+        m_factor_max = 1.0 / std::sqrt( m_factor_max );
     }
 
-    Real_B0 *= factor_max;
-    Imag_B0 *= factor_max;
-    Real_B0bar *= factor_max;
-    Imag_B0bar *= factor_max;
+    Real_B0 *= m_factor_max;
+    Imag_B0 *= m_factor_max;
+    Real_B0bar *= m_factor_max;
+    Imag_B0bar *= m_factor_max;
 
     if ( iset < 0 ) {
         return;
@@ -218,9 +221,9 @@ void EvtBTo3hCP::Evt3piMPP( double alpha, int iset, EvtVector4R& p_p1,
     setConstants( alpha, 0.362 );
 
     if ( iset == 0 ) {
-        p_p1.set( M_pim, 0, 0, 0 );
-        p_p2.set( M_pip, 0, 0, 0 );
-        p_p3.set( M_pip, 0, 0, 0 );
+        p_p1.set( m_M_pim, 0, 0, 0 );
+        p_p2.set( m_M_pip, 0, 0, 0 );
+        p_p3.set( m_M_pip, 0, 0, 0 );
 
         do {
             firstStep( p_p1, p_p2, p_p3, 2 );
@@ -237,13 +240,13 @@ void EvtBTo3hCP::Evt3piMPP( double alpha, int iset, EvtVector4R& p_p1,
         }
     } else    // iset > 0
     {
-        factor_max = 0;
+        m_factor_max = 0;
 
         int endLoop = iset;
         for ( int i = 0; i < endLoop; ++i ) {
-            p_p1.set( M_pim, 0, 0, 0 );
-            p_p2.set( M_pip, 0, 0, 0 );
-            p_p3.set( M_pip, 0, 0, 0 );
+            p_p1.set( m_M_pim, 0, 0, 0 );
+            p_p2.set( m_M_pip, 0, 0, 0 );
+            p_p3.set( m_M_pip, 0, 0, 0 );
 
             firstStep( p_p1, p_p2, p_p3, 2 );
             ierr = compute3piMPP( p_p1, p_p2, p_p3, Real_B0, Imag_B0,
@@ -253,18 +256,18 @@ void EvtBTo3hCP::Evt3piMPP( double alpha, int iset, EvtVector4R& p_p1,
             }
             ABp = square( Real_B0 ) + square( Imag_B0 );
             ABm = square( Real_B0bar ) + square( Imag_B0bar );
-            if ( ABp > factor_max )
-                factor_max = ABp;
-            if ( ABm > factor_max )
-                factor_max = ABm;
+            if ( ABp > m_factor_max )
+                m_factor_max = ABp;
+            if ( ABm > m_factor_max )
+                m_factor_max = ABm;
         }
-        factor_max = 1.0 / std::sqrt( factor_max );
+        m_factor_max = 1.0 / std::sqrt( m_factor_max );
     }
 
-    Real_B0 *= factor_max;
-    Imag_B0 *= factor_max;
-    Real_B0bar *= factor_max;
-    Imag_B0bar *= factor_max;
+    Real_B0 *= m_factor_max;
+    Imag_B0 *= m_factor_max;
+    Real_B0bar *= m_factor_max;
+    Imag_B0bar *= m_factor_max;
 
     if ( iset < 0 ) {
         return;
@@ -289,9 +292,9 @@ void EvtBTo3hCP::Evt3piP00( double alpha, int iset, EvtVector4R& p_p1,
     setConstants( alpha, 0.362 );
 
     if ( iset == 0 ) {
-        p_p1.set( M_pip, 0, 0, 0 );
-        p_p2.set( M_pi0, 0, 0, 0 );
-        p_p3.set( M_pi0, 0, 0, 0 );
+        p_p1.set( m_M_pip, 0, 0, 0 );
+        p_p2.set( m_M_pi0, 0, 0, 0 );
+        p_p3.set( m_M_pi0, 0, 0, 0 );
 
         do {
             firstStep( p_p1, p_p2, p_p3, 3 );
@@ -310,13 +313,13 @@ void EvtBTo3hCP::Evt3piP00( double alpha, int iset, EvtVector4R& p_p1,
         }
     } else    // iset > 0
     {
-        factor_max = 0;
+        m_factor_max = 0;
 
         int endLoop = iset;
         for ( int i = 0; i < endLoop; ++i ) {
-            p_p1.set( M_pip, 0, 0, 0 );
-            p_p2.set( M_pi0, 0, 0, 0 );
-            p_p3.set( M_pi0, 0, 0, 0 );
+            p_p1.set( m_M_pip, 0, 0, 0 );
+            p_p2.set( m_M_pi0, 0, 0, 0 );
+            p_p3.set( m_M_pi0, 0, 0, 0 );
 
             firstStep( p_p1, p_p2, p_p3, 3 );
             ierr = compute3piP00( p_p1, p_p2, p_p3, Real_B0, Imag_B0,
@@ -326,18 +329,18 @@ void EvtBTo3hCP::Evt3piP00( double alpha, int iset, EvtVector4R& p_p1,
             }
             ABp = square( Real_B0 ) + square( Imag_B0 );
             ABm = square( Real_B0bar ) + square( Imag_B0bar );
-            if ( ABp > factor_max )
-                factor_max = ABp;
-            if ( ABm > factor_max )
-                factor_max = ABm;
+            if ( ABp > m_factor_max )
+                m_factor_max = ABp;
+            if ( ABm > m_factor_max )
+                m_factor_max = ABm;
         }
-        factor_max = 1.0 / std::sqrt( factor_max );
+        m_factor_max = 1.0 / std::sqrt( m_factor_max );
     }
 
-    Real_B0 *= factor_max;
-    Imag_B0 *= factor_max;
-    Real_B0bar *= factor_max;
-    Imag_B0bar *= factor_max;
+    Real_B0 *= m_factor_max;
+    Imag_B0 *= m_factor_max;
+    Real_B0bar *= m_factor_max;
+    Imag_B0bar *= m_factor_max;
 
     if ( iset < 0 ) {
         return;
@@ -364,9 +367,9 @@ void EvtBTo3hCP::EvtKpipi( double alpha, double beta, int iset,
     setConstants( alpha, beta );
 
     if ( iset == 0 ) {
-        p_K_plus.set( M_Kp, 0, 0, 0 );
-        p_pi_minus.set( M_pim, 0, 0, 0 );
-        p_p3.set( M_pi0, 0, 0, 0 );
+        p_K_plus.set( m_M_Kp, 0, 0, 0 );
+        p_pi_minus.set( m_M_pim, 0, 0, 0 );
+        p_p3.set( m_M_pi0, 0, 0, 0 );
 
         do {
             firstStep( p_K_plus, p_pi_minus, p_p3, 0 );
@@ -384,13 +387,13 @@ void EvtBTo3hCP::EvtKpipi( double alpha, double beta, int iset,
         }
     } else    // iset > 0
     {
-        factor_max = 0;
+        m_factor_max = 0;
 
         int endLoop = iset;
         for ( int i = 0; i < endLoop; ++i ) {
-            p_K_plus.set( M_Kp, 0, 0, 0 );
-            p_pi_minus.set( M_pim, 0, 0, 0 );
-            p_p3.set( M_pi0, 0, 0, 0 );
+            p_K_plus.set( m_M_Kp, 0, 0, 0 );
+            p_pi_minus.set( m_M_pim, 0, 0, 0 );
+            p_p3.set( m_M_pi0, 0, 0, 0 );
             firstStep( p_K_plus, p_pi_minus, p_p3, 0 );
             ierr = computeKpipi( p_K_plus, p_pi_minus, p_p3, Real_B0, Imag_B0,
                                  Real_B0bar, Imag_B0bar, iset );
@@ -400,20 +403,20 @@ void EvtBTo3hCP::EvtKpipi( double alpha, double beta, int iset,
             ABp = square( Real_B0 ) + square( Imag_B0 );
             ABm = square( Real_B0bar ) + square( Imag_B0bar );
 
-            if ( ABp > factor_max ) {
-                factor_max = ABp;
+            if ( ABp > m_factor_max ) {
+                m_factor_max = ABp;
             }
-            if ( ABm > factor_max ) {
-                factor_max = ABm;
+            if ( ABm > m_factor_max ) {
+                m_factor_max = ABm;
             }
         }
-        factor_max = 1.0 / std::sqrt( factor_max );
+        m_factor_max = 1.0 / std::sqrt( m_factor_max );
     }
 
-    Real_B0 *= factor_max;
-    Imag_B0 *= factor_max;
-    Real_B0bar *= factor_max;
-    Imag_B0bar *= factor_max;
+    Real_B0 *= m_factor_max;
+    Imag_B0 *= m_factor_max;
+    Real_B0bar *= m_factor_max;
+    Imag_B0bar *= m_factor_max;
 
     if ( iset < 0 ) {
         return;
@@ -434,9 +437,9 @@ void EvtBTo3hCP::firstStep( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
     const double m3sq = p3.mass2();
     double min_m12, min_m13, min_m23;
 
-    double max_m12 = square( M_B );
-    double max_m13 = square( M_B );
-    double max_m23 = square( M_B );
+    double max_m12 = square( m_M_B );
+    double max_m13 = square( m_M_B );
+    double max_m23 = square( m_M_B );
 
     if ( mode == 0 ) {
         min_m12 = m1sq + m2sq + 2 * sqrt( m1sq * m2sq );
@@ -464,16 +467,16 @@ void EvtBTo3hCP::firstStep( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
     do {
         switch ( mode ) {
             case 0:
-                generateSqMasses_Kpipi( m12, m13, m23, MC2, m1sq, m2sq, m3sq );
+                generateSqMasses_Kpipi( m12, m13, m23, m_MC2, m1sq, m2sq, m3sq );
                 break;
             case 1:
-                generateSqMasses_3pi( m12, m13, m23, MB2, m1sq, m2sq, m3sq );
+                generateSqMasses_3pi( m12, m13, m23, m_MB2, m1sq, m2sq, m3sq );
                 break;
             case 2:
-                generateSqMasses_3piMPP( m12, m13, m23, MB2, m1sq, m2sq, m3sq );
+                generateSqMasses_3piMPP( m12, m13, m23, m_MB2, m1sq, m2sq, m3sq );
                 break;
             case 3:
-                generateSqMasses_3piP00( m12, m13, m23, MA2, m1sq, m2sq, m3sq );
+                generateSqMasses_3piP00( m12, m13, m23, m_MA2, m1sq, m2sq, m3sq );
                 break;
             default:
                 break;
@@ -487,9 +490,9 @@ void EvtBTo3hCP::firstStep( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
             continue;
 
         // Now check the cosines of the angles
-        E1 = ( square( M_B ) + m1sq - m23 ) / ( 2. * M_B );
-        E2 = ( square( M_B ) + m2sq - m13 ) / ( 2. * M_B );
-        E3 = ( square( M_B ) + m3sq - m12 ) / ( 2. * M_B );
+        E1 = ( square( m_M_B ) + m1sq - m23 ) / ( 2. * m_M_B );
+        E2 = ( square( m_M_B ) + m2sq - m13 ) / ( 2. * m_M_B );
+        E3 = ( square( m_M_B ) + m3sq - m12 ) / ( 2. * m_M_B );
         p1mom = square( E1 ) - m1sq;
         p2mom = square( E2 ) - m2sq;
         p3mom = square( E3 ) - m3sq;
@@ -527,17 +530,17 @@ void EvtBTo3hCP::firstStep( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
     if ( p3.get( 0 ) < p3.d3mag() ) {
         std::cout << "Unphysical p3 generated: " << p3 << std::endl;
     }
-    double testMB2 = MB2;
+    double testMB2 = m_MB2;
     switch ( mode ) {
         case 0:
-            testMB2 = MC2;
+            testMB2 = m_MC2;
             break;
         case 1:
         case 2:
-            testMB2 = MB2;
+            testMB2 = m_MB2;
             break;
         case 3:
-            testMB2 = MA2;
+            testMB2 = m_MA2;
             break;
     }
 
@@ -566,13 +569,13 @@ void EvtBTo3hCP::generateSqMasses_Kpipi( double& m12, double& m13, double& m23,
   */
     static bool phaseSpace = false;
 
-    double max_m12 = square( M_B );
+    double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq + 2 * sqrt( m1sq * m2sq );
 
-    double max_m13 = square( M_B );
+    double max_m13 = square( m_M_B );
     double min_m13 = m1sq + m3sq + 2 * sqrt( m1sq * m3sq );
 
-    double max_m23 = square( M_B );
+    double max_m23 = square( m_M_B );
     double min_m23 = m2sq + m3sq + 2 * sqrt( m2sq * m3sq );
 
     double z = 3. * EvtRandom::Flat();
@@ -581,9 +584,9 @@ void EvtBTo3hCP::generateSqMasses_Kpipi( double& m12, double& m13, double& m23,
         if ( phaseSpace ) {
             m13 = EvtRandom::Flat() * ( max_m13 - min_m13 ) + min_m13;
         } else {
-            double y = EvtRandom::Flat() * pi - pi / 2;
+            double y = EvtRandom::Flat() * m_pi - m_pi / 2;
             double x = std::tan( y );
-            double mass = x * Gam_Kstarp / 2. + Mass_Kstarp;
+            double mass = x * m_Gam_Kstarp / 2. + m_Mass_Kstarp;
             m13 = square( mass );
         }
         m12 = EvtRandom::Flat() * ( max_m12 - min_m12 ) + min_m12;
@@ -593,9 +596,9 @@ void EvtBTo3hCP::generateSqMasses_Kpipi( double& m12, double& m13, double& m23,
         if ( phaseSpace ) {
             m12 = EvtRandom::Flat() * ( max_m12 - min_m12 ) + min_m12;
         } else {
-            double y = EvtRandom::Flat() * pi - pi / 2;
+            double y = EvtRandom::Flat() * m_pi - m_pi / 2;
             double x = std::tan( y );
-            double mass = x * Gam_Kstar0 / 2. + Mass_Kstar0;
+            double mass = x * m_Gam_Kstar0 / 2. + m_Mass_Kstar0;
             m12 = square( mass );
         }
         m13 = EvtRandom::Flat() * ( max_m13 - min_m13 ) + min_m13;
@@ -605,9 +608,9 @@ void EvtBTo3hCP::generateSqMasses_Kpipi( double& m12, double& m13, double& m23,
         if ( phaseSpace ) {
             m23 = EvtRandom::Flat() * ( max_m23 - min_m23 ) + min_m23;
         } else {
-            double y = EvtRandom::Flat() * pi - pi / 2;
+            double y = EvtRandom::Flat() * m_pi - m_pi / 2;
             double x = std::tan( y );
-            double mass = x * Gam_rho / 2. + Mass_rho;
+            double mass = x * m_Gam_rho / 2. + m_Mass_rho;
             m23 = square( mass );
         }
         m13 = EvtRandom::Flat() * ( max_m13 - min_m13 ) + min_m13;
@@ -634,20 +637,20 @@ void EvtBTo3hCP::generateSqMasses_3pi( double& m12, double& m13, double& m23,
   */
     static bool phaseSpace = false;
 
-    double max_m12 = square( M_B );
+    double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq;
 
-    double max_m13 = square( M_B );
+    double max_m13 = square( m_M_B );
     double min_m13 = m1sq + m3sq;
 
-    double max_m23 = square( M_B );
+    double max_m23 = square( m_M_B );
     double min_m23 = m2sq + m3sq;
     double mass = 0;
 
     if ( !phaseSpace ) {
-        double y = EvtRandom::Flat() * pi - pi / 2;
+        double y = EvtRandom::Flat() * m_pi - m_pi / 2;
         double x = std::tan( y );
-        mass = x * Gam_rho / 2. + Mass_rho;
+        mass = x * m_Gam_rho / 2. + m_Mass_rho;
     }
 
     double z = 3. * EvtRandom::Flat();
@@ -697,18 +700,18 @@ void EvtBTo3hCP::generateSqMasses_3piMPP( double& m12, double& m13, double& m23,
   */
     static bool phaseSpace = false;
 
-    double max_m12 = square( M_B );
+    double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq;
 
-    double max_m13 = square( M_B );
+    double max_m13 = square( m_M_B );
     double min_m13 = m1sq + m3sq;
 
     double mass = 0;
 
     if ( !phaseSpace ) {
-        double y = EvtRandom::Flat() * pi - pi / 2;
+        double y = EvtRandom::Flat() * m_pi - m_pi / 2;
         double x = std::tan( y );
-        mass = x * Gam_rho / 2. + Mass_rho;
+        mass = x * m_Gam_rho / 2. + m_Mass_rho;
     }
 
     double z = EvtRandom::Flat();
@@ -750,18 +753,18 @@ void EvtBTo3hCP::generateSqMasses_3piP00( double& m12, double& m13, double& m23,
   */
     static bool phaseSpace = false;
 
-    double max_m12 = square( M_B );
+    double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq;
 
-    double max_m13 = square( M_B );
+    double max_m13 = square( m_M_B );
     double min_m13 = m1sq + m3sq;
 
     double mass = 0;
 
     if ( !phaseSpace ) {
-        double y = EvtRandom::Flat() * pi - pi / 2;
+        double y = EvtRandom::Flat() * m_pi - m_pi / 2;
         double x = std::tan( y );
-        mass = x * Gam_rho / 2. + Mass_rho;
+        mass = x * m_Gam_rho / 2. + m_Mass_rho;
     }
 
     double z = EvtRandom::Flat();
@@ -793,12 +796,12 @@ int EvtBTo3hCP::compute3pi( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
     double m13 = ( p1 + p3 ).mass();
     double m23 = ( p2 + p3 ).mass();
 
-    double W12 = 1. /
-                 ( ( square( Mass_rho - m12 ) + square( Gam_rho / 2. ) ) * m12 );
-    double W13 = 1. /
-                 ( ( square( Mass_rho - m13 ) + square( Gam_rho / 2. ) ) * m13 );
-    double W23 = 1. /
-                 ( ( square( Mass_rho - m23 ) + square( Gam_rho / 2. ) ) * m23 );
+    double W12 =
+        1. / ( ( square( m_Mass_rho - m12 ) + square( m_Gam_rho / 2. ) ) * m12 );
+    double W13 =
+        1. / ( ( square( m_Mass_rho - m13 ) + square( m_Gam_rho / 2. ) ) * m13 );
+    double W23 =
+        1. / ( ( square( m_Mass_rho - m23 ) + square( m_Gam_rho / 2. ) ) * m23 );
 
     double Wtot = 1.;
     if ( iset >= 0 ) {
@@ -809,15 +812,15 @@ int EvtBTo3hCP::compute3pi( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
     EvtComplex Mat_rhom = BreitWigner( p2, p3, p1, ierr );
     EvtComplex Mat_rho0 = BreitWigner( p1, p3, p2, ierr );
 
-    EvtComplex Mat_1 = Mat_S3 * Mat_rhop;
-    EvtComplex Mat_2 = Mat_S4 * Mat_rhom;
-    EvtComplex Mat_3 = Mat_S5 * Mat_rho0 * 0.5;
+    EvtComplex Mat_1 = m_Mat_S3 * Mat_rhop;
+    EvtComplex Mat_2 = m_Mat_S4 * Mat_rhom;
+    EvtComplex Mat_3 = m_Mat_S5 * Mat_rho0 * 0.5;
 
     EvtComplex MatBp = ( Mat_1 + Mat_2 + Mat_3 ) * Wtot;
 
-    Mat_1 = Nat_S3 * Mat_rhom;
-    Mat_2 = Nat_S4 * Mat_rhop;
-    Mat_3 = Nat_S5 * Mat_rho0 * 0.5;
+    Mat_1 = m_Nat_S3 * Mat_rhom;
+    Mat_2 = m_Nat_S4 * Mat_rhop;
+    Mat_3 = m_Nat_S5 * Mat_rho0 * 0.5;
 
     EvtComplex MatBm = ( Mat_1 + Mat_2 + Mat_3 ) * Wtot;
 
@@ -839,10 +842,10 @@ int EvtBTo3hCP::compute3piMPP( EvtVector4R& p1, EvtVector4R& p2,
     double m12 = ( p1 + p2 ).mass();
     double m13 = ( p1 + p3 ).mass();
 
-    double W12 = 1. /
-                 ( ( square( Mass_rho - m12 ) + square( Gam_rho / 2. ) ) * m12 );
-    double W13 = 1. /
-                 ( ( square( Mass_rho - m13 ) + square( Gam_rho / 2. ) ) * m13 );
+    double W12 =
+        1. / ( ( square( m_Mass_rho - m12 ) + square( m_Gam_rho / 2. ) ) * m12 );
+    double W13 =
+        1. / ( ( square( m_Mass_rho - m13 ) + square( m_Gam_rho / 2. ) ) * m13 );
 
     double Wtot = 1.;
     if ( iset >= 0 ) {
@@ -852,8 +855,8 @@ int EvtBTo3hCP::compute3piMPP( EvtVector4R& p1, EvtVector4R& p2,
     EvtComplex Mat_rhop = BreitWigner( p1, p2, p3, ierr ) +
                           BreitWigner( p1, p3, p2, ierr );
 
-    EvtComplex MatBp = Mat_S2 * Mat_rhop * Wtot * ASHQ;
-    EvtComplex MatBm = Nat_S2 * Mat_rhop * Wtot * ASHQ;
+    EvtComplex MatBp = m_Mat_S2 * Mat_rhop * Wtot * ASHQ;
+    EvtComplex MatBm = m_Nat_S2 * Mat_rhop * Wtot * ASHQ;
 
     real_B0 = real( MatBp );
     imag_B0 = imag( MatBp );
@@ -873,10 +876,10 @@ int EvtBTo3hCP::compute3piP00( EvtVector4R& p1, EvtVector4R& p2,
     double m12 = ( p1 + p2 ).mass();
     double m13 = ( p1 + p3 ).mass();
 
-    double W12 = 1. /
-                 ( ( square( Mass_rho - m12 ) + square( Gam_rho / 2. ) ) * m12 );
-    double W13 = 1. /
-                 ( ( square( Mass_rho - m13 ) + square( Gam_rho / 2. ) ) * m13 );
+    double W12 =
+        1. / ( ( square( m_Mass_rho - m12 ) + square( m_Gam_rho / 2. ) ) * m12 );
+    double W13 =
+        1. / ( ( square( m_Mass_rho - m13 ) + square( m_Gam_rho / 2. ) ) * m13 );
 
     double Wtot = 1.;
     if ( iset >= 0 ) {
@@ -886,8 +889,8 @@ int EvtBTo3hCP::compute3piP00( EvtVector4R& p1, EvtVector4R& p2,
     EvtComplex Mat_rhop = BreitWigner( p1, p2, p3, ierr ) +
                           BreitWigner( p1, p3, p2, ierr );
 
-    EvtComplex MatBp = Mat_S1 * Mat_rhop * Wtot * ASHQ;
-    EvtComplex MatBm = Nat_S1 * Mat_rhop * Wtot * ASHQ;
+    EvtComplex MatBp = m_Mat_S1 * Mat_rhop * Wtot * ASHQ;
+    EvtComplex MatBm = m_Nat_S1 * Mat_rhop * Wtot * ASHQ;
 
     real_B0 = real( MatBp );
     imag_B0 = imag( MatBp );
@@ -908,24 +911,24 @@ int EvtBTo3hCP::computeKpipi( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
     double m13 = ( p1 + p3 ).mass();
     double m23 = ( p2 + p3 ).mass();
 
-    double W12 = 1. /
-                 ( ( square( Mass_Kstar0 - m12 ) + square( Gam_Kstar0 / 2. ) ) *
-                   m12 );
-    double W13 = 1. /
-                 ( ( square( Mass_Kstarp - m13 ) + square( Gam_Kstarp / 2. ) ) *
-                   m13 );
-    double W23 = 1. /
-                 ( ( square( Mass_rho - m23 ) + square( Gam_rho / 2. ) ) * m23 );
+    double W12 =
+        1. / ( ( square( m_Mass_Kstar0 - m12 ) + square( m_Gam_Kstar0 / 2. ) ) *
+               m12 );
+    double W13 =
+        1. / ( ( square( m_Mass_Kstarp - m13 ) + square( m_Gam_Kstarp / 2. ) ) *
+               m13 );
+    double W23 =
+        1. / ( ( square( m_Mass_rho - m23 ) + square( m_Gam_rho / 2. ) ) * m23 );
 
     double Wtot = 1.;
     if ( iset >= 0 ) {
         Wtot = 1. / sqrt( W12 + W13 + W23 );
     }
 
-    EvtComplex BW13 = BreitWigner( p1, p3, p2, ierr, Mass_Kstarp, Gam_Kstarp );
+    EvtComplex BW13 = BreitWigner( p1, p3, p2, ierr, m_Mass_Kstarp, m_Gam_Kstarp );
     if ( ierr != 0 )
         return ierr;
-    EvtComplex BW12 = BreitWigner( p1, p2, p3, ierr, Mass_Kstar0, Gam_Kstar0 );
+    EvtComplex BW12 = BreitWigner( p1, p2, p3, ierr, m_Mass_Kstar0, m_Gam_Kstar0 );
     if ( ierr != 0 )
         return ierr;
     /*
@@ -937,8 +940,9 @@ int EvtBTo3hCP::computeKpipi( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
         return ierr;
 
     // Build up amplitudes
-    EvtComplex MatB0 = MatKstarp * BW13 + MatKstar0 * BW12 + MatKrho * BW23;
-    EvtComplex MatB0bar = NatKstarp * BW13 + NatKstar0 * BW12 + NatKrho * BW23;
+    EvtComplex MatB0 = m_MatKstarp * BW13 + m_MatKstar0 * BW12 + m_MatKrho * BW23;
+    EvtComplex MatB0bar = m_NatKstarp * BW13 + m_NatKstar0 * BW12 +
+                          m_NatKrho * BW23;
 
     real_B0 = real( MatB0 ) * Wtot;
     imag_B0 = imag( MatB0 ) * Wtot;
@@ -951,8 +955,8 @@ int EvtBTo3hCP::computeKpipi( EvtVector4R& p1, EvtVector4R& p2, EvtVector4R& p3,
 void EvtBTo3hCP::rotation( EvtVector4R& p, int newRot )
 {
     if ( newRot ) {
-        double phi2 = EvtRandom::Flat() * 2. * pi;
-        double phi3 = EvtRandom::Flat() * 2. * pi;
+        double phi2 = EvtRandom::Flat() * 2. * m_pi;
+        double phi3 = EvtRandom::Flat() * 2. * m_pi;
 
         double c1 = 2. * EvtRandom::Flat() - 1.;
         double c2 = cos( phi2 );
@@ -962,15 +966,15 @@ void EvtBTo3hCP::rotation( EvtVector4R& p, int newRot )
         double s2 = sin( phi2 );
         double s3 = sin( phi3 );
 
-        rotMatrix[0][0] = c1;
-        rotMatrix[0][1] = s1 * c3;
-        rotMatrix[0][2] = s1 * s3;
-        rotMatrix[1][0] = -s1 * c2;
-        rotMatrix[1][1] = c1 * c2 * c3 - s2 * s3;
-        rotMatrix[1][2] = c1 * c2 * s3 + s2 * c3;
-        rotMatrix[2][0] = s1 * s2;
-        rotMatrix[2][1] = -c1 * s2 * c3 - c2 * s3;
-        rotMatrix[2][2] = -c1 * s2 * s3 + c2 * c3;
+        m_rotMatrix[0][0] = c1;
+        m_rotMatrix[0][1] = s1 * c3;
+        m_rotMatrix[0][2] = s1 * s3;
+        m_rotMatrix[1][0] = -s1 * c2;
+        m_rotMatrix[1][1] = c1 * c2 * c3 - s2 * s3;
+        m_rotMatrix[1][2] = c1 * c2 * s3 + s2 * c3;
+        m_rotMatrix[2][0] = s1 * s2;
+        m_rotMatrix[2][1] = -c1 * s2 * c3 - c2 * s3;
+        m_rotMatrix[2][2] = -c1 * s2 * s3 + c2 * c3;
     }
 
     double mom[3];
@@ -980,7 +984,7 @@ void EvtBTo3hCP::rotation( EvtVector4R& p, int newRot )
     }
     for ( int i = 0; i < 3; ++i ) {
         for ( int j = 0; j < 3; ++j ) {
-            p.set( i + 1, p.get( i + 1 ) + rotMatrix[i][j] * mom[j] );
+            p.set( i + 1, p.get( i + 1 ) + m_rotMatrix[i][j] * mom[j] );
         }
     }
 }
@@ -992,7 +996,7 @@ void EvtBTo3hCP::gammaGamma( EvtVector4R& p, EvtVector4R& pgamma1,
 
     double cosThetaRot = EvtRandom::Flat() * 2. - 1.;
     double sinThetaRot = sqrt( 1. - square( cosThetaRot ) );
-    double PhiRot = EvtRandom::Flat() * 2. * pi;
+    double PhiRot = EvtRandom::Flat() * 2. * m_pi;
 
     pgamma1.set( 1, EGammaCmsPi0 * sinThetaRot * cos( PhiRot ) );
     pgamma1.set( 2, EGammaCmsPi0 * sinThetaRot * sin( PhiRot ) );
@@ -1051,11 +1055,11 @@ EvtComplex EvtBTo3hCP::BreitWigner( EvtVector4R& p1, EvtVector4R& p2,
             double m12_2 = square( m12 );
             result = coscms * EvtCRhoF_W( m12_2 );
         } else {
-            double factor = 2 * ( square( Mass_rho - m12 ) +
-                                  square( 0.5 * Gam_rho ) );
-            factor = coscms * Gam_rho / factor;
-            double numReal = ( Mass_rho - m12 ) * factor;
-            double numImg = 0.5 * Gam_rho * factor;
+            double factor = 2 * ( square( m_Mass_rho - m12 ) +
+                                  square( 0.5 * m_Gam_rho ) );
+            factor = coscms * m_Gam_rho / factor;
+            double numReal = ( m_Mass_rho - m12 ) * factor;
+            double numImg = 0.5 * m_Gam_rho * factor;
             result = EvtComplex( numReal, numImg );
         }
     } else {
@@ -1177,15 +1181,14 @@ EvtComplex EvtBTo3hCP::EvtcBW_GS( double s, double Am2, double Gam )
 
 double EvtBTo3hCP::d( double AmRho2 )
 {
-    const double lpi = 3.141593;
     const double AmPi = 0.13956995;
     const double AmPi2 = square( AmPi );
     double AmRho = sqrt( AmRho2 );
     double k_AmRho2 = k( AmRho2 );
-    double result = 3. / lpi * AmPi2 / square( k_AmRho2 ) *
+    double result = 3. / m_pi * AmPi2 / square( k_AmRho2 ) *
                         log( ( AmRho + 2. * k_AmRho2 ) / ( 2. * AmPi ) ) +
-                    AmRho / ( 2. * pi * k_AmRho2 ) -
-                    AmPi2 * AmRho / ( pi * ( square( k_AmRho2 ) * k_AmRho2 ) );
+                    AmRho / ( 2. * m_pi * k_AmRho2 ) -
+                    AmPi2 * AmRho / ( m_pi * ( square( k_AmRho2 ) * k_AmRho2 ) );
     return result;
 }
 
@@ -1207,17 +1210,15 @@ double EvtBTo3hCP::Evtfs( double s, double AmRho2, double GamRho )
 
 double EvtBTo3hCP::h( double s )
 {
-    const double pi = 3.141593;
     const double AmPi = 0.13956995;
     double sqrts = sqrt( s );
     double k_s = k( s );
-    return 2. / pi * ( k_s / sqrts ) *
+    return 2. / m_pi * ( k_s / sqrts ) *
            log( ( sqrts + 2. * k_s ) / ( 2. * AmPi ) );
 }
 
 double EvtBTo3hCP::dh_ds( double s )
 {
-    const double pi = 3.141593;
     return h( s ) * ( 1. / ( 8. * square( k( s ) ) ) - 1. / ( 2 * s ) ) +
-           1. / ( 2. * pi * s );
+           1. / ( 2. * m_pi * s );
 }

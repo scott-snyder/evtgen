@@ -46,8 +46,8 @@ EvtDecayBase* EvtSLPole::clone()
 
 void EvtSLPole::decay( EvtParticle* p )
 {
-    p->initializePhaseSpace( getNDaug(), getDaugs(), _resetDaughterTree );
-    calcamp->CalcAmp( p, _amp2, SLPoleffmodel.get() );
+    p->initializePhaseSpace( getNDaug(), getDaugs(), m_resetDaughterTree );
+    m_calcamp->CalcAmp( p, m_amp2, m_SLPoleffmodel.get() );
 }
 
 void EvtSLPole::initProbMax()
@@ -59,8 +59,8 @@ void EvtSLPole::initProbMax()
     lnum = getDaug( 1 );
     nunum = getDaug( 2 );
 
-    double mymaxprob = calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
-                                             SLPoleffmodel.get() );
+    double mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
+                                               m_SLPoleffmodel.get() );
 
     setProbMax( mymaxprob );
 }
@@ -78,22 +78,22 @@ void EvtSLPole::init()
 
     EvtSpinType::spintype mesontype = EvtPDL::getSpinType( getDaug( 0 ) );
 
-    SLPoleffmodel = std::make_unique<EvtSLPoleFF>( getNArg(), getArgs() );
+    m_SLPoleffmodel = std::make_unique<EvtSLPoleFF>( getNArg(), getArgs() );
 
     switch ( mesontype ) {
         case EvtSpinType::SCALAR:
-            calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
             break;
         case EvtSpinType::VECTOR:
-            calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
             break;
         case EvtSpinType::TENSOR:
-            calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
             break;
         default:;
     }
 
-    _resetDaughterTree = false;
+    m_resetDaughterTree = false;
     if ( getArgStr( getNArg() - 1 ) == "true" )
-        _resetDaughterTree = true;
+        m_resetDaughterTree = true;
 }

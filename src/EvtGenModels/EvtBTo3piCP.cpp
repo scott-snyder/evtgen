@@ -67,8 +67,8 @@ void EvtBTo3piCP::initProbMax()
 
     double realA, imgA, realbarA, imgbarA;
 
-    generator.Evt3pi( alpha, iset, p4piplus, p4piminus, p4gamm1, p4gamm2, realA,
-                      imgA, realbarA, imgbarA );
+    m_generator.Evt3pi( alpha, iset, p4piplus, p4piminus, p4gamm1, p4gamm2,
+                        realA, imgA, realbarA, imgbarA );
 
     setProbMax( 1.5 );
 }
@@ -105,8 +105,8 @@ void EvtBTo3piCP::decay( EvtParticle* p )
 
     double realA, imgA, realbarA, imgbarA;
 
-    generator.Evt3pi( alpha, iset, p4[0], p4[1], p4gamm1, p4gamm2, realA, imgA,
-                      realbarA, imgbarA );
+    m_generator.Evt3pi( alpha, iset, p4[0], p4[1], p4gamm1, p4gamm2, realA,
+                        imgA, realbarA, imgbarA );
 
     p4[2] = p4gamm1 + p4gamm2;
 

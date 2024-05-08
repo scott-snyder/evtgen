@@ -26,13 +26,13 @@
 #include <assert.h>
 
 EvtIntervalFlatPdf::EvtIntervalFlatPdf( double min, double max ) :
-    EvtPdf<EvtPoint1D>(), _min( min ), _max( max )
+    EvtPdf<EvtPoint1D>(), m_min( min ), m_max( max )
 {
     assert( max >= min );
 }
 
 EvtIntervalFlatPdf::EvtIntervalFlatPdf( const EvtIntervalFlatPdf& other ) :
-    EvtPdf<EvtPoint1D>( other ), _min( other._min ), _max( other._max )
+    EvtPdf<EvtPoint1D>( other ), m_min( other.m_min ), m_max( other.m_max )
 {
 }
 
@@ -48,10 +48,10 @@ double EvtIntervalFlatPdf::pdf( const EvtPoint1D& ) const
 
 EvtValError EvtIntervalFlatPdf::compute_integral() const
 {
-    return EvtValError( _max - _min, 0. );
+    return EvtValError( m_max - m_min, 0. );
 }
 
 EvtPoint1D EvtIntervalFlatPdf::randomPoint()
 {
-    return EvtPoint1D( _min, _max, EvtRandom::Flat( _min, _max ) );
+    return EvtPoint1D( m_min, m_max, EvtRandom::Flat( m_min, m_max ) );
 }

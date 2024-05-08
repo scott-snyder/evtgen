@@ -33,16 +33,16 @@
 //for DFN model
 EvtPFermi::EvtPFermi( const double& a, const double& mB, const double& mb )
 {
-    _a = a;
-    _mb = mb;
-    _mB = mB;
+    m_a = a;
+    m_mb = mb;
+    m_mB = mB;
 }
 
 // for BLNP modell
 EvtPFermi::EvtPFermi( const double& Lambda, const double& b )
 {
-    _Lambda = Lambda;
-    _b = b;
+    m_Lambda = Lambda;
+    m_b = b;
 }
 
 //-----------
@@ -52,14 +52,14 @@ EvtPFermi::EvtPFermi( const double& Lambda, const double& b )
 double EvtPFermi::getFPFermi( const double& kplus )
 {
     double FKplus;
-    double x = kplus / ( _mB - _mb );
+    double x = kplus / ( m_mB - m_mb );
 
     if ( x >= 1 )
         return 0;
-    if ( kplus <= -_mb )
+    if ( kplus <= -m_mb )
         return 0;
 
-    FKplus = pow( 1 - x, _a ) * exp( ( 1 + _a ) * x );
+    FKplus = pow( 1 - x, m_a ) * exp( ( 1 + m_a ) * x );
 
     return FKplus;
 }
@@ -82,8 +82,8 @@ double EvtPFermi::getSFBLNP( const double& what )
         << "Presumably, you are getting the wrong answer, so I abort..";
     ::abort();
 #else
-    SF = pow( _b, _b ) / ( tgamma( _b ) * _Lambda ) *
-         pow( what / _Lambda, _b - 1 ) * exp( -_b * what / _Lambda );
+    SF = pow( m_b, m_b ) / ( tgamma( m_b ) * m_Lambda ) *
+         pow( what / m_Lambda, m_b - 1 ) * exp( -m_b * what / m_Lambda );
 #endif
 
     return SF;

@@ -53,11 +53,11 @@ class EvtPythia : public EvtDecayIncoherent {
     void command( std::string ) override;
 
   protected:
-    EvtAbsExternalGen* _pythiaEngine;
+    EvtAbsExternalGen* m_pythiaEngine;
 
   private:
     void fixPolarisations( EvtParticle* p );
-    std::vector<std::string> _commandList;
+    std::vector<std::string> m_commandList;
 };
 
 #endif

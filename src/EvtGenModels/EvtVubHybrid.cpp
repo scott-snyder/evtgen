@@ -63,7 +63,7 @@ void EvtVubHybrid::init()
         EvtGenReport( EVTGEN_WARNING, "EvtVubHybrid" )
             << "EvtVub: generate B -> Xu l nu events "
             << "without using the hybrid reweighting." << endl;
-        _noHybrid = true;
+        m_noHybrid = true;
     } else if ( getNArg() < EvtVubHybrid::nParameters + EvtVubHybrid::nVariables ) {
         EvtGenReport( EVTGEN_ERROR, "EvtVubHybrid" )
             << "EvtVub could not read number of bins for "
@@ -76,15 +76,15 @@ void EvtVubHybrid::init()
     checkNDaug( 3 );
 
     // read minimum required parameters from decay.dec
-    _mb = getArg( 0 );
-    _a = getArg( 1 );
-    _alphas = getArg( 2 );
+    m_mb = getArg( 0 );
+    m_a = getArg( 1 );
+    m_alphas = getArg( 2 );
 
     // the maximum dGamma*p2 value depends on alpha_s only:
     const double dGMax0 = 3.;
-    _dGMax = 0.21344 + 8.905 * _alphas;
-    if ( _dGMax < dGMax0 )
-        _dGMax = dGMax0;
+    m_dGMax = 0.21344 + 8.905 * m_alphas;
+    if ( m_dGMax < dGMax0 )
+        m_dGMax = dGMax0;
 
     // for the Fermi Motion we need a B-Meson mass - but it's not critical
     // to get an exact value; in order to stay in the phase space for
@@ -94,41 +94,41 @@ void EvtVubHybrid::init()
     static double mBP = EvtPDL::getMaxMass( EvtPDL::getId( "B+" ) );
     static double mB = ( mB0 < mBP ? mB0 : mBP );
 
-    const double xlow = -_mb;
-    const double xhigh = mB - _mb;
+    const double xlow = -m_mb;
+    const double xhigh = mB - m_mb;
     const int aSize = 10000;
 
-    EvtPFermi pFermi( _a, mB, _mb );
+    EvtPFermi pFermi( m_a, mB, m_mb );
     // pf is the cumulative distribution normalized to 1.
-    _pf.resize( aSize );
+    m_pf.resize( aSize );
     for ( int i = 0; i < aSize; i++ ) {
         double kplus = xlow + (double)( i + 0.5 ) / ( (double)aSize ) *
                                   ( xhigh - xlow );
         if ( i == 0 )
-            _pf[i] = pFermi.getFPFermi( kplus );
+            m_pf[i] = pFermi.getFPFermi( kplus );
         else
-            _pf[i] = _pf[i - 1] + pFermi.getFPFermi( kplus );
+            m_pf[i] = m_pf[i - 1] + pFermi.getFPFermi( kplus );
     }
-    for ( size_t index = 0; index < _pf.size(); index++ ) {
-        _pf[index] /= _pf[_pf.size() - 1];
+    for ( size_t index = 0; index < m_pf.size(); index++ ) {
+        m_pf[index] /= m_pf[m_pf.size() - 1];
     }
 
-    _dGamma = std::make_unique<EvtVubdGamma>( _alphas );
+    m_dGamma = std::make_unique<EvtVubdGamma>( m_alphas );
 
-    if ( _noHybrid )
+    if ( m_noHybrid )
         return;    // Without hybrid weighting, nothing else to do
 
-    _bins_mX.resize( abs( (int)getArg( 3 ) ) );
-    _bins_q2.resize( abs( (int)getArg( 4 ) ) );
-    _bins_El.resize( abs( (int)getArg( 5 ) ) );
+    m_bins_mX.resize( abs( (int)getArg( 3 ) ) );
+    m_bins_q2.resize( abs( (int)getArg( 4 ) ) );
+    m_bins_El.resize( abs( (int)getArg( 5 ) ) );
 
     int nextArg = EvtVubHybrid::nParameters + EvtVubHybrid::nVariables;
 
-    _nbins = _bins_mX.size() * _bins_q2.size() *
-             _bins_El.size();    // Binning of weight table
+    m_nbins = m_bins_mX.size() * m_bins_q2.size() *
+              m_bins_El.size();    // Binning of weight table
 
-    int expectArgs = nextArg + _bins_mX.size() + _bins_q2.size() +
-                     _bins_El.size() + _nbins;
+    int expectArgs = nextArg + m_bins_mX.size() + m_bins_q2.size() +
+                     m_bins_El.size() + m_nbins;
 
     if ( getNArg() < expectArgs ) {
         EvtGenReport( EVTGEN_ERROR, "EvtVubHybrid" )
@@ -139,13 +139,13 @@ void EvtVubHybrid::init()
     }
 
     // read bin boundaries from decay.dec
-    for ( auto& b : _bins_mX )
+    for ( auto& b : m_bins_mX )
         b = getArg( nextArg++ );
-    _masscut = _bins_mX[0];
+    m_masscut = m_bins_mX[0];
 
-    for ( auto& b : _bins_q2 )
+    for ( auto& b : m_bins_q2 )
         b = getArg( nextArg++ );
-    for ( auto& b : _bins_El )
+    for ( auto& b : m_bins_El )
         b = getArg( nextArg++ );
 
     // read in weights (and rescale to range 0..1)
@@ -186,8 +186,8 @@ void EvtVubHybrid::decay( EvtParticle* p )
         mB = p->mass();
         ml = lepton->mass();
 
-        xlow = -_mb;
-        xhigh = mB - _mb;
+        xlow = -m_mb;
+        xhigh = mB - m_mb;
 
         // Fermi motion does not need to be computed inside the
         // tryit loop as m_b in Gamma0 does not need to be replaced by (m_b+kplus).
@@ -195,17 +195,17 @@ void EvtVubHybrid::decay( EvtParticle* p )
         // beyond the considered orders in the paper anyway ...
 
         // for alpha_S = 0 and a mass cut on X_u not all values of kplus are
-        // possible. The maximum value is mB/2-_mb + sqrt(mB^2/4-_masscut^2)
+        // possible. The maximum value is mB/2-m_mb + sqrt(mB^2/4-m_masscut^2)
         kplus = 2 * xhigh;
 
         while ( kplus >= xhigh || kplus <= xlow ||
-                ( _alphas == 0 &&
-                  kplus >= mB / 2 - _mb +
-                               sqrt( mB * mB / 4 - _masscut * _masscut ) ) ) {
+                ( m_alphas == 0 &&
+                  kplus >= mB / 2 - m_mb +
+                               sqrt( mB * mB / 4 - m_masscut * m_masscut ) ) ) {
             kplus = findPFermi();    //_pFermi->shoot();
             kplus = xlow + kplus * ( xhigh - xlow );
         }
-        qplus = mB - _mb - kplus;
+        qplus = mB - m_mb - kplus;
         if ( ( mB - qplus ) / 2. <= ml )
             continue;
 
@@ -222,11 +222,12 @@ void EvtVubHybrid::decay( EvtParticle* p )
                 if ( Eh > 0 && Eh < mB ) {
                     sh = p2 * pow( mB - qplus, 2 ) +
                          2 * qplus * ( Eh - qplus ) + qplus * qplus;
-                    if ( sh > _masscut * _masscut &&
+                    if ( sh > m_masscut * m_masscut &&
                          mB * mB + sh - 2 * mB * Eh > ml * ml ) {
                         double xran = EvtRandom::Flat();
 
-                        double y = _dGamma->getdGdxdzdp( x, z, p2 ) / _dGMax * p2;
+                        double y = m_dGamma->getdGdxdzdp( x, z, p2 ) / m_dGMax *
+                                   p2;
 
                         if ( y > 1 )
                             EvtGenReport( EVTGEN_WARNING, "EvtVubHybrid" )
@@ -244,10 +245,10 @@ void EvtVubHybrid::decay( EvtParticle* p )
         q2 = mB * mB + sh - 2 * mB * Eh;
 
         // Reweighting in bins of mX, q2, El (J. Dingfelder)
-        if ( !_weights.empty() ) {
+        if ( !m_weights.empty() ) {
             double xran1 = EvtRandom::Flat();
             double w = 1.0;
-            if ( !_noHybrid )
+            if ( !m_noHybrid )
                 w = getWeight( mX, q2, El );
             if ( w >= xran1 )
                 rew = false;
@@ -280,7 +281,7 @@ void EvtVubHybrid::decay( EvtParticle* p )
     p4.set( pHB[0], pHB[1], pHB[2], pHB[3] );
     xuhad->init( getDaug( 0 ), p4 );
 
-    if ( _storeQplus ) {
+    if ( m_storeQplus ) {
         // cludge to store the hidden parameter q+ with the decay;
         // the lifetime of the Xu is abused for this purpose.
         // tau = 1 ps corresponds to ctau = 0.3 mm -> in order to
@@ -380,21 +381,21 @@ void EvtVubHybrid::decay( EvtParticle* p )
 double EvtVubHybrid::findPFermi()
 {
     double ranNum = EvtRandom::Flat();
-    double oOverBins = 1.0 / ( float( _pf.size() ) );
+    double oOverBins = 1.0 / ( float( m_pf.size() ) );
     int nBinsBelow = 0;    // largest k such that I[k] is known to be <= rand
-    int nBinsAbove = _pf.size();    // largest k such that I[k] is known to be >  rand
+    int nBinsAbove = m_pf.size();    // largest k such that I[k] is known to be >  rand
     int middle;
 
     while ( nBinsAbove > nBinsBelow + 1 ) {
         middle = ( nBinsAbove + nBinsBelow + 1 ) >> 1;
-        if ( ranNum >= _pf[middle] ) {
+        if ( ranNum >= m_pf[middle] ) {
             nBinsBelow = middle;
         } else {
             nBinsAbove = middle;
         }
     }
 
-    double bSize = _pf[nBinsAbove] - _pf[nBinsBelow];
+    double bSize = m_pf[nBinsAbove] - m_pf[nBinsBelow];
     // binMeasure is always aProbFunc[nBinsBelow],
 
     if ( bSize == 0 ) {
@@ -404,7 +405,7 @@ double EvtVubHybrid::findPFermi()
         return ( nBinsBelow + .5 ) * oOverBins;
     }
 
-    double bFract = ( ranNum - _pf[nBinsBelow] ) / bSize;
+    double bFract = ( ranNum - m_pf[nBinsBelow] ) / bSize;
     return ( nBinsBelow + bFract ) * oOverBins;
 }
 
@@ -414,20 +415,20 @@ double EvtVubHybrid::getWeight( double mX, double q2, double El )
     int ibin_q2 = -1;
     int ibin_El = -1;
 
-    for ( unsigned i = 0; i < _bins_mX.size(); i++ ) {
-        if ( mX >= _bins_mX[i] )
+    for ( unsigned i = 0; i < m_bins_mX.size(); i++ ) {
+        if ( mX >= m_bins_mX[i] )
             ibin_mX = i;
     }
-    for ( unsigned i = 0; i < _bins_q2.size(); i++ ) {
-        if ( q2 >= _bins_q2[i] )
+    for ( unsigned i = 0; i < m_bins_q2.size(); i++ ) {
+        if ( q2 >= m_bins_q2[i] )
             ibin_q2 = i;
     }
-    for ( unsigned i = 0; i < _bins_El.size(); i++ ) {
-        if ( El >= _bins_El[i] )
+    for ( unsigned i = 0; i < m_bins_El.size(); i++ ) {
+        if ( El >= m_bins_El[i] )
             ibin_El = i;
     }
-    int ibin = ibin_mX + ibin_q2 * _bins_mX.size() +
-               ibin_El * _bins_mX.size() * _bins_q2.size();
+    int ibin = ibin_mX + ibin_q2 * m_bins_mX.size() +
+               ibin_El * m_bins_mX.size() * m_bins_q2.size();
 
     if ( ( ibin_mX < 0 ) || ( ibin_q2 < 0 ) || ( ibin_El < 0 ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtVubHybrid" )
@@ -437,15 +438,15 @@ double EvtVubHybrid::getWeight( double mX, double q2, double El )
         return 0.0;
     }
 
-    return _weights[ibin];
+    return m_weights[ibin];
 }
 
 void EvtVubHybrid::readWeights( int startArg )
 {
-    _weights.resize( _nbins );
+    m_weights.resize( m_nbins );
 
     double maxw = 0.0;
-    for ( auto& w : _weights ) {
+    for ( auto& w : m_weights ) {
         w = getArg( startArg++ );
         if ( w > maxw )
             maxw = w;
@@ -460,6 +461,6 @@ void EvtVubHybrid::readWeights( int startArg )
     }
 
     // rescale weights (to be in range 0..1)
-    for ( auto& w : _weights )
+    for ( auto& w : m_weights )
         w /= maxw;
 }

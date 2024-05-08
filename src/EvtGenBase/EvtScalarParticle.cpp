@@ -29,7 +29,7 @@
 void EvtScalarParticle::init( EvtId part_n, double e, double px, double py,
                               double pz )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( e, px, py, pz );
     setpart_num( part_n );
 
@@ -38,7 +38,7 @@ void EvtScalarParticle::init( EvtId part_n, double e, double px, double py,
 
 void EvtScalarParticle::init( EvtId part_n, const EvtVector4R& p4 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( part_n );
 

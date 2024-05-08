@@ -30,7 +30,7 @@
 
 class EvtExternalGenFactory {
   public:
-    enum genId
+    enum GenId
     {
         PythiaGenId = 0,
         TauolaGenId
@@ -38,7 +38,7 @@ class EvtExternalGenFactory {
 
     static EvtExternalGenFactory* getInstance();
 
-    EvtAbsExternalGen* getGenerator( int genId = 0 );
+    EvtAbsExternalGen* getGenerator( GenId genId = GenId::PythiaGenId );
 
     void initialiseAllGenerators();
 
@@ -54,14 +54,14 @@ class EvtExternalGenFactory {
     EvtExternalGenFactory();
     ~EvtExternalGenFactory();
 
-    typedef std::map<int, EvtAbsExternalGen*> ExtGenMap;
-    typedef std::map<int, std::map<std::string, std::vector<std::string>>> ExtGenCommandMap;
+    typedef std::map<GenId, EvtAbsExternalGen*> ExtGenMap;
+    //typedef std::map<GenId, std::map<std::string, std::vector<std::string>>> ExtGenCommandMap;
 
   private:
     EvtExternalGenFactory( const EvtExternalGenFactory& ){};
 
-    ExtGenMap _extGenMap;
-    ExtGenCommandMap _extGenCommandMap;
+    ExtGenMap m_extGenMap;
+    //ExtGenCommandMap m_extGenCommandMap;
 };
 
 #endif

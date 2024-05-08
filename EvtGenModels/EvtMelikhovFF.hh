@@ -49,7 +49,7 @@ class EvtMelikhovFF : public EvtSemiLeptonicFF {
                       double*, double*, double*, double*, double* ) override;
 
   private:
-    int whichfit;
+    int m_whichfit;
 };
 
 #endif

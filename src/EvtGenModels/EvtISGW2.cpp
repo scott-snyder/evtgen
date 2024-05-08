@@ -50,7 +50,7 @@ void EvtISGW2::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    calcamp->CalcAmp( p, _amp2, isgw2ffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_isgw2ffmodel.get() );
 }
 
 void EvtISGW2::initProbMax()
@@ -716,17 +716,17 @@ void EvtISGW2::init()
 
     EvtSpinType::spintype mesontype = EvtPDL::getSpinType( getDaug( 0 ) );
 
-    isgw2ffmodel = std::make_unique<EvtISGW2FF>();
+    m_isgw2ffmodel = std::make_unique<EvtISGW2FF>();
 
     switch ( mesontype ) {
         case EvtSpinType::SCALAR:
-            calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
             break;
         case EvtSpinType::VECTOR:
-            calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
             break;
         case EvtSpinType::TENSOR:
-            calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
             ;
             break;
         default:;

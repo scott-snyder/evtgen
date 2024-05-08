@@ -47,7 +47,7 @@ class EvtSSD_DirectCP : public EvtDecayAmp {
 
     //Arguments
 
-    double _acp;
+    double m_acp;
 };
 
 #endif

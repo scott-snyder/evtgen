@@ -47,17 +47,17 @@ class EvtModel {
   private:
     EvtModel();
 
-    static EvtModel* _instance;
+    static EvtModel* m_instance;
 
-    std::map<std::string, EvtDecayBase*> _modelNameHash;
-    std::map<std::string, EvtDecayBase*> _commandNameHash;
+    std::map<std::string, EvtDecayBase*> m_modelNameHash;
+    std::map<std::string, EvtDecayBase*> m_commandNameHash;
 };
 
 inline EvtModel& EvtModel::instance()
 {
-    if ( _instance == nullptr )
-        _instance = new EvtModel;
-    return *_instance;
+    if ( m_instance == nullptr )
+        m_instance = new EvtModel;
+    return *m_instance;
 }
 
 #endif

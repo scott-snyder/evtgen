@@ -23,12 +23,12 @@
 #include "EvtGenBase/EvtPatches.hh"
 
 EvtDalitzFlatPdf::EvtDalitzFlatPdf( const EvtDalitzPlot& dp ) :
-    EvtPdf<EvtDalitzPoint>(), _dp( dp )
+    EvtPdf<EvtDalitzPoint>(), m_dp( dp )
 {
 }
 
 EvtDalitzFlatPdf::EvtDalitzFlatPdf( const EvtDalitzFlatPdf& other ) :
-    EvtPdf<EvtDalitzPoint>( other ), _dp( other._dp )
+    EvtPdf<EvtDalitzPoint>( other ), m_dp( other.m_dp )
 {
 }
 
@@ -44,7 +44,7 @@ double EvtDalitzFlatPdf::pdf( const EvtDalitzPoint& ) const
 
 EvtValError EvtDalitzFlatPdf::compute_integral( int N ) const
 {
-    return EvtValError( _dp.getArea( N ), 0. );
+    return EvtValError( m_dp.getArea( N ), 0. );
 }
 
 EvtDalitzPoint EvtDalitzFlatPdf::randomPoint()
@@ -62,11 +62,13 @@ EvtDalitzPoint EvtDalitzFlatPdf::randomPoint()
     int n = 0;
     int maxTries = 1000;
     while ( n++ < maxTries ) {
-        double q1 = EvtRandom::Flat( _dp.qAbsMin( pair1 ), _dp.qAbsMax( pair2 ) );
-        double q2 = EvtRandom::Flat( _dp.qAbsMin( pair2 ), _dp.qAbsMax( pair2 ) );
+        double q1 = EvtRandom::Flat( m_dp.qAbsMin( pair1 ),
+                                     m_dp.qAbsMax( pair2 ) );
+        double q2 = EvtRandom::Flat( m_dp.qAbsMin( pair2 ),
+                                     m_dp.qAbsMax( pair2 ) );
 
         EvtDalitzCoord point( pair1, q1, pair2, q2 );
-        EvtDalitzPoint x( _dp, point );
+        EvtDalitzPoint x( m_dp, point );
 
         if ( x.isValid() )
             return x;

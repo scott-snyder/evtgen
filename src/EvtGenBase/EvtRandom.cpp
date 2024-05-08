@@ -32,23 +32,23 @@
 
 using std::endl;
 
-EvtRandomEngine* EvtRandom::_randomEngine = nullptr;
+EvtRandomEngine* EvtRandom::m_randomEngine = nullptr;
 
 void EvtRandom::setRandomEngine( EvtRandomEngine* randomEngine )
 {
-    _randomEngine = randomEngine;
+    m_randomEngine = randomEngine;
 }
 
 double EvtRandom::random()
 {
-    if ( _randomEngine == nullptr ) {
+    if ( m_randomEngine == nullptr ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "No random engine available in "
             << "EvtRandom::random()." << endl;
         ::abort();
     }
 
-    return _randomEngine->random();
+    return m_randomEngine->random();
 }
 
 // Random number routine to generate numbers between

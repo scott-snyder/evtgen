@@ -31,17 +31,17 @@ EvtResonance2& EvtResonance2::operator=( const EvtResonance2& n )
 {
     if ( &n == this )
         return *this;
-    _p4_p = n._p4_p;
-    _p4_d1 = n._p4_d1;
-    _p4_d2 = n._p4_d2;
-    _ampl = n._ampl;
-    _theta = n._theta;
-    _gamma = n._gamma;
-    _spin = n._spin;
-    _bwm = n._bwm;
-    _invmass_angdenom = n._invmass_angdenom;
-    _barrier1 = n._barrier1;
-    _barrier2 = n._barrier2;
+    m_p4_p = n.m_p4_p;
+    m_p4_d1 = n.m_p4_d1;
+    m_p4_d2 = n.m_p4_d2;
+    m_ampl = n.m_ampl;
+    m_theta = n.m_theta;
+    m_gamma = n.m_gamma;
+    m_spin = n.m_spin;
+    m_bwm = n.m_bwm;
+    m_invmass_angdenom = n.m_invmass_angdenom;
+    m_barrier1 = n.m_barrier1;
+    m_barrier2 = n.m_barrier2;
     return *this;
 }
 
@@ -50,17 +50,17 @@ EvtResonance2::EvtResonance2( const EvtVector4R& p4_p, const EvtVector4R& p4_d1,
                               double theta, double gamma, double bwm, int spin,
                               bool invmass_angdenom, double barrier1,
                               double barrier2 ) :
-    _p4_p( p4_p ),
-    _p4_d1( p4_d1 ),
-    _p4_d2( p4_d2 ),
-    _ampl( ampl ),
-    _theta( theta ),
-    _gamma( gamma ),
-    _bwm( bwm ),
-    _barrier1( barrier1 ),
-    _barrier2( barrier2 ),
-    _spin( spin ),
-    _invmass_angdenom( invmass_angdenom )
+    m_p4_p( p4_p ),
+    m_p4_d1( p4_d1 ),
+    m_p4_d2( p4_d2 ),
+    m_ampl( ampl ),
+    m_theta( theta ),
+    m_gamma( gamma ),
+    m_bwm( bwm ),
+    m_barrier1( barrier1 ),
+    m_barrier2( barrier2 ),
+    m_spin( spin ),
+    m_invmass_angdenom( invmass_angdenom )
 {
 }
 
@@ -69,7 +69,7 @@ EvtComplex EvtResonance2::resAmpl() const
     double pi180inv = 1.0 / EvtConst::radToDegrees;
 
     EvtComplex ampl;
-    EvtVector4R p4_d3 = _p4_p - _p4_d1 - _p4_d2;
+    EvtVector4R p4_d3 = m_p4_p - m_p4_d1 - m_p4_d2;
 
     //get cos of the angle between the daughters from their 4-momenta
     //and the 4-momentum of the parent
@@ -80,22 +80,22 @@ EvtComplex EvtResonance2::resAmpl() const
     //listed particles (12)
 
     //angle 3 makes with 2 in rest frame of 12 (CS3)
-    //double cos_phi_0 = EvtDecayAngle(_p4_p, _p4_d1+_p4_d2, _p4_d1);
+    //double cos_phi_0 = EvtDecayAngle(m_p4_p, m_p4_d1+m_p4_d2, m_p4_d1);
     //angle 3 makes with 1 in 12 is, of course, -cos_phi_0
 
     //first compute several quantities...follow CLEO preprint 00-23
 
-    double mAB = ( _p4_d1 + _p4_d2 ).mass();
-    double mBC = ( _p4_d2 + p4_d3 ).mass();
-    double mAC = ( _p4_d1 + p4_d3 ).mass();
-    double mA = _p4_d1.mass();
-    double mB = _p4_d2.mass();
-    double mD = _p4_p.mass();
+    double mAB = ( m_p4_d1 + m_p4_d2 ).mass();
+    double mBC = ( m_p4_d2 + p4_d3 ).mass();
+    double mAC = ( m_p4_d1 + p4_d3 ).mass();
+    double mA = m_p4_d1.mass();
+    double mB = m_p4_d2.mass();
+    double mD = m_p4_p.mass();
     double mC = p4_d3.mass();
 
-    double mR = _bwm;
-    double gammaR = _gamma;
-    double mdenom = _invmass_angdenom ? mAB : mR;
+    double mR = m_bwm;
+    double gammaR = m_gamma;
+    double mdenom = m_invmass_angdenom ? mAB : mR;
     double pAB = sqrt( ( ( ( mAB * mAB - mA * mA - mB * mB ) *
                            ( mAB * mAB - mA * mA - mB * mB ) / 4.0 ) -
                          mA * mA * mB * mB ) /
@@ -122,28 +122,28 @@ EvtComplex EvtResonance2::resAmpl() const
     double fR = 1;
     double fD = 1;
     int power = 0;
-    switch ( _spin ) {
+    switch ( m_spin ) {
         case 0:
             fR = 1.0;
             fD = 1.0;
             power = 1;
             break;
         case 1:
-            fR = sqrt( 1.0 + _barrier1 * _barrier1 * pR * pR ) /
-                 sqrt( 1.0 + _barrier1 * _barrier1 * pAB * pAB );
-            fD = sqrt( 1.0 + _barrier2 * _barrier2 * pD * pD ) /
-                 sqrt( 1.0 + _barrier2 * _barrier2 * pDAB * pDAB );
+            fR = sqrt( 1.0 + m_barrier1 * m_barrier1 * pR * pR ) /
+                 sqrt( 1.0 + m_barrier1 * m_barrier1 * pAB * pAB );
+            fD = sqrt( 1.0 + m_barrier2 * m_barrier2 * pD * pD ) /
+                 sqrt( 1.0 + m_barrier2 * m_barrier2 * pDAB * pDAB );
             power = 3;
             break;
         case 2:
-            fR = sqrt( ( 9 + 3 * pow( ( _barrier1 * pR ), 2 ) +
-                         pow( ( _barrier1 * pR ), 4 ) ) /
-                       ( 9 + 3 * pow( ( _barrier1 * pAB ), 2 ) +
-                         pow( ( _barrier1 * pAB ), 4 ) ) );
-            fD = sqrt( ( 9 + 3 * pow( ( _barrier2 * pD ), 2 ) +
-                         pow( ( _barrier2 * pD ), 4 ) ) /
-                       ( 9 + 3 * pow( ( _barrier2 * pDAB ), 2 ) +
-                         pow( ( _barrier2 * pDAB ), 4 ) ) );
+            fR = sqrt( ( 9 + 3 * pow( ( m_barrier1 * pR ), 2 ) +
+                         pow( ( m_barrier1 * pR ), 4 ) ) /
+                       ( 9 + 3 * pow( ( m_barrier1 * pAB ), 2 ) +
+                         pow( ( m_barrier1 * pAB ), 4 ) ) );
+            fD = sqrt( ( 9 + 3 * pow( ( m_barrier2 * pD ), 2 ) +
+                         pow( ( m_barrier2 * pD ), 4 ) ) /
+                       ( 9 + 3 * pow( ( m_barrier2 * pDAB ), 2 ) +
+                         pow( ( m_barrier2 * pDAB ), 4 ) ) );
             power = 5;
             break;
         default:
@@ -152,18 +152,18 @@ EvtComplex EvtResonance2::resAmpl() const
     }
 
     double gammaAB = gammaR * pow( pAB / pR, power ) * ( mR / mAB ) * fR * fR;
-    switch ( _spin ) {
+    switch ( m_spin ) {
         case 0:
-            ampl = _ampl *
-                   EvtComplex( cos( _theta * pi180inv ),
-                               sin( _theta * pi180inv ) ) *
+            ampl = m_ampl *
+                   EvtComplex( cos( m_theta * pi180inv ),
+                               sin( m_theta * pi180inv ) ) *
                    fR * fD /
                    ( mR * mR - mAB * mAB - EvtComplex( 0.0, mR * gammaAB ) );
             break;
         case 1:
-            ampl = _ampl *
-                   EvtComplex( cos( _theta * pi180inv ),
-                               sin( _theta * pi180inv ) ) *
+            ampl = m_ampl *
+                   EvtComplex( cos( m_theta * pi180inv ),
+                               sin( m_theta * pi180inv ) ) *
                    ( fR * fD *
                      ( mAC * mAC - mBC * mBC +
                        ( ( mD * mD - mC * mC ) * ( mB * mB - mA * mA ) /
@@ -171,9 +171,9 @@ EvtComplex EvtResonance2::resAmpl() const
                      ( mR * mR - mAB * mAB - EvtComplex( 0.0, mR * gammaAB ) ) );
             break;
         case 2:
-            ampl = _ampl *
-                   EvtComplex( cos( _theta * pi180inv ),
-                               sin( _theta * pi180inv ) ) *
+            ampl = m_ampl *
+                   EvtComplex( cos( m_theta * pi180inv ),
+                               sin( m_theta * pi180inv ) ) *
                    fR * fD /
                    ( mR * mR - mAB * mAB - EvtComplex( 0.0, mR * gammaAB ) ) *
                    ( pow( ( mBC * mBC - mAC * mAC +

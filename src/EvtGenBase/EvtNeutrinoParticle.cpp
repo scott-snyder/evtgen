@@ -33,7 +33,7 @@ using std::endl;
 
 void EvtNeutrinoParticle::init( EvtId part_n, const EvtVector4R& p4 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( part_n );
 
@@ -70,10 +70,10 @@ void EvtNeutrinoParticle::init( EvtId part_n, const EvtVector4R& p4 )
         cosa = cos( 0.5 * alpha );
         sina = sin( 0.5 * alpha );
 
-        spinor_parent.set( -norm * sinb * EvtComplex( cosa, -sina ),
-                           norm * cosb * EvtComplex( cosa, sina ),
-                           norm * sinb * EvtComplex( cosa, -sina ),
-                           -norm * cosb * EvtComplex( cosa, sina ) );
+        m_spinor_parent.set( -norm * sinb * EvtComplex( cosa, -sina ),
+                             norm * cosb * EvtComplex( cosa, sina ),
+                             norm * sinb * EvtComplex( cosa, -sina ),
+                             -norm * cosb * EvtComplex( cosa, sina ) );
 
     } else {
         px = -p4.get( 1 );
@@ -85,10 +85,10 @@ void EvtNeutrinoParticle::init( EvtId part_n, const EvtVector4R& p4 )
         pn = e;
         sqrpn = sqrt( pn - pz );
 
-        spinor_parent.set( ( 1.0 / sqrpn ) * EvtComplex( px, -py ),
-                           EvtComplex( sqrpn, 0.0 ),
-                           ( -1.0 / sqrpn ) * EvtComplex( px, -py ),
-                           -EvtComplex( sqrpn, 0.0 ) );
+        m_spinor_parent.set( ( 1.0 / sqrpn ) * EvtComplex( px, -py ),
+                             EvtComplex( sqrpn, 0.0 ),
+                             ( -1.0 / sqrpn ) * EvtComplex( px, -py ),
+                             -EvtComplex( sqrpn, 0.0 ) );
     }
 
     setLifetime();
@@ -96,7 +96,7 @@ void EvtNeutrinoParticle::init( EvtId part_n, const EvtVector4R& p4 )
 
 EvtDiracSpinor EvtNeutrinoParticle::spParentNeutrino() const
 {
-    return spinor_parent;
+    return m_spinor_parent;
 }
 
 EvtDiracSpinor EvtNeutrinoParticle::spNeutrino() const
@@ -107,7 +107,7 @@ EvtDiracSpinor EvtNeutrinoParticle::spNeutrino() const
 
     ::abort();
 
-    return spinor_rest;
+    return m_spinor_rest;
 }
 
 EvtSpinDensity EvtNeutrinoParticle::rotateToHelicityBasis() const

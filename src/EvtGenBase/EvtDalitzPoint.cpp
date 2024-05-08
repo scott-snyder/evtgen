@@ -28,13 +28,13 @@
 using namespace EvtCyclic3;
 
 EvtDalitzPoint::EvtDalitzPoint() :
-    _mA( -1. ), _mB( -1. ), _mC( -1. ), _qAB( -1. ), _qBC( -1. ), _qCA( -1. )
+    m_mA( -1. ), m_mB( -1. ), m_mC( -1. ), m_qAB( -1. ), m_qBC( -1. ), m_qCA( -1. )
 {
 }
 
 EvtDalitzPoint::EvtDalitzPoint( double mA, double mB, double mC, double qAB,
                                 double qBC, double qCA ) :
-    _mA( mA ), _mB( mB ), _mC( mC ), _qAB( qAB ), _qBC( qBC ), _qCA( qCA )
+    m_mA( mA ), m_mB( mB ), m_mC( mC ), m_qAB( qAB ), m_qBC( qBC ), m_qCA( qCA )
 {
 }
 
@@ -43,71 +43,71 @@ EvtDalitzPoint::EvtDalitzPoint( double mA, double mB, double mC, double qAB,
 EvtDalitzPoint::EvtDalitzPoint( double mA, double mB, double mC,
                                 EvtCyclic3::Pair i, double qres, double qhel,
                                 double qsum ) :
-    _mA( mA ), _mB( mB ), _mC( mC )
+    m_mA( mA ), m_mB( mB ), m_mC( mC )
 {
     double qi = qres + qsum / 3.;
     double qj = -qres / 2. + qhel + qsum / 3.;
     double qk = -qres / 2. - qhel + qsum / 3.;
 
     if ( i == AB ) {
-        _qAB = qi;
-        _qBC = qj;
-        _qCA = qk;
+        m_qAB = qi;
+        m_qBC = qj;
+        m_qCA = qk;
     } else if ( i == BC ) {
-        _qAB = qk;
-        _qBC = qi;
-        _qCA = qj;
+        m_qAB = qk;
+        m_qBC = qi;
+        m_qCA = qj;
     } else if ( i == CA ) {
-        _qAB = qj;
-        _qBC = qk;
-        _qCA = qi;
+        m_qAB = qj;
+        m_qBC = qk;
+        m_qCA = qi;
     }
 }
 
 EvtDalitzPoint::EvtDalitzPoint( const EvtDalitzPlot& dp,
                                 const EvtDalitzCoord& x ) :
-    _mA( dp.m( A ) ), _mB( dp.m( B ) ), _mC( dp.m( C ) )
+    m_mA( dp.m( A ) ), m_mB( dp.m( B ) ), m_mC( dp.m( C ) )
 {
     if ( x.pair1() == AB )
-        _qAB = x.q1();
+        m_qAB = x.q1();
     else if ( x.pair2() == AB )
-        _qAB = x.q2();
+        m_qAB = x.q2();
     else
-        _qAB = dp.sum() - x.q1() - x.q2();
+        m_qAB = dp.sum() - x.q1() - x.q2();
 
     if ( x.pair1() == BC )
-        _qBC = x.q1();
+        m_qBC = x.q1();
     else if ( x.pair2() == BC )
-        _qBC = x.q2();
+        m_qBC = x.q2();
     else
-        _qBC = dp.sum() - x.q1() - x.q2();
+        m_qBC = dp.sum() - x.q1() - x.q2();
 
     if ( x.pair1() == CA )
-        _qCA = x.q1();
+        m_qCA = x.q1();
     else if ( x.pair2() == CA )
-        _qCA = x.q2();
+        m_qCA = x.q2();
     else
-        _qCA = dp.sum() - x.q1() - x.q2();
+        m_qCA = dp.sum() - x.q1() - x.q2();
 }
 
 double EvtDalitzPoint::q( EvtCyclic3::Pair i ) const
 {
-    double ret = _qAB;
+    double ret = m_qAB;
     if ( BC == i )
-        ret = _qBC;
+        ret = m_qBC;
     else if ( CA == i )
-        ret = _qCA;
+        ret = m_qCA;
 
     return ret;
 }
 
 double EvtDalitzPoint::m( EvtCyclic3::Index i ) const
 {
-    double ret = _mA;
+    double ret = m_mA;
     if ( B == i )
-        ret = _mB;
+        ret = m_mB;
     else if ( C == i )
-        ret = _mC;
+        ret = m_mC;
 
     return ret;
 }
@@ -128,7 +128,7 @@ double EvtDalitzPoint::qhel( EvtCyclic3::Pair i ) const
 }
 double EvtDalitzPoint::qsum() const
 {
-    return _qAB + _qBC + _qCA;
+    return m_qAB + m_qBC + m_qCA;
 }
 
 double EvtDalitzPoint::qMin( EvtCyclic3::Pair i, EvtCyclic3::Pair j ) const
@@ -178,7 +178,7 @@ EvtDalitzCoord EvtDalitzPoint::getDalitzPoint( EvtCyclic3::Pair i,
 
 EvtDalitzPlot EvtDalitzPoint::getDalitzPlot() const
 {
-    return EvtDalitzPlot( _mA, _mB, _mC, bigM() );
+    return EvtDalitzPlot( m_mA, m_mB, m_mC, bigM() );
 }
 
 bool EvtDalitzPoint::isValid() const
@@ -186,9 +186,9 @@ bool EvtDalitzPoint::isValid() const
     // Check masses
 
     double M = bigM();
-    if ( _mA < 0 || _mB < 0 || _mC < 0 || M <= 0 )
+    if ( m_mA < 0 || m_mB < 0 || m_mC < 0 || M <= 0 )
         return false;
-    if ( M < _mA + _mB + _mC )
+    if ( M < m_mA + m_mB + m_mC )
         return false;
 
     // Check that first coordinate is within absolute limits
@@ -196,8 +196,8 @@ bool EvtDalitzPoint::isValid() const
     bool inside = false;
     EvtDalitzPlot dp = getDalitzPlot();
 
-    if ( dp.qAbsMin( AB ) <= _qAB && _qAB <= dp.qAbsMax( AB ) )
-        if ( qMin( BC, AB ) <= _qBC && _qBC <= qMax( BC, AB ) )
+    if ( dp.qAbsMin( AB ) <= m_qAB && m_qAB <= dp.qAbsMax( AB ) )
+        if ( qMin( BC, AB ) <= m_qBC && m_qBC <= qMax( BC, AB ) )
             inside = true;
 
     return inside;
@@ -205,11 +205,11 @@ bool EvtDalitzPoint::isValid() const
 
 double EvtDalitzPoint::bigM() const
 {
-    return sqrt( _qAB + _qBC + _qCA - _mA * _mA - _mB * _mB - _mC * _mC );
+    return sqrt( m_qAB + m_qBC + m_qCA - m_mA * m_mA - m_mB * m_mB - m_mC * m_mC );
 }
 
 void EvtDalitzPoint::print() const
 {
     getDalitzPlot().print();
-    printf( "%f %f %f\n", _qAB, _qBC, _qCA );
+    printf( "%f %f %f\n", m_qAB, m_qBC, m_qCA );
 }

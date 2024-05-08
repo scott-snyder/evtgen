@@ -78,39 +78,39 @@ class EvtPto3PAmp : public EvtAmplitude<EvtDalitzPoint> {
     void set_fd( double R );
     void set_fb( double R );
 
-    void setmin( double min ) { _min = min; }
-    void setmax( double max ) { _max = max; }
+    void setmin( double min ) { m_min = min; }
+    void setmax( double max ) { m_max = max; }
 
     virtual EvtComplex evalPropagator( double m ) const
     {
-        return _prop->evaluate( m );
+        return m_prop->evaluate( m );
     }
 
   private:
     // Pairing indices:
 
-    EvtCyclic3::Pair _pairAng;    // angular
-    EvtCyclic3::Pair _pairRes;    // resonance
+    EvtCyclic3::Pair m_pairAng;    // angular
+    EvtCyclic3::Pair m_pairRes;    // resonance
 
     // Spin
 
-    EvtSpinType::spintype _spin;
+    EvtSpinType::spintype m_spin;
 
     // Numerator type
 
-    NumType _typeN;
+    NumType m_typeN;
 
     // _Owned_ pointer to propagator factor
 
-    EvtPropagator* _prop;
-    double _g0;     // nominal width
-    double _min;    //min and max values on which
-    double _max;    //the resonance is defined
+    EvtPropagator* m_prop;
+    double m_g0;     // nominal width
+    double m_min;    //min and max values on which
+    double m_max;    //the resonance is defined
 
     // Vertices
 
-    EvtTwoBodyVertex _vb;
-    EvtTwoBodyVertex _vd;
+    EvtTwoBodyVertex m_vb;
+    EvtTwoBodyVertex m_vd;
 };
 
 #endif

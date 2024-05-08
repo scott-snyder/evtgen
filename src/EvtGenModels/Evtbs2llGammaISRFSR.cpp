@@ -34,9 +34,9 @@
 
 Evtbs2llGammaISRFSR::~Evtbs2llGammaISRFSR()
 {
-    delete _mntffmodel;
-    if ( _calcamp )
-        delete _calcamp;
+    delete m_mntffmodel;
+    if ( m_calcamp )
+        delete m_calcamp;
 }
 
 // The module name specification
@@ -101,10 +101,10 @@ void Evtbs2llGammaISRFSR::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::DIRAC );
 
-    _mntffmodel = new Evtbs2llGammaFFMNT();
-    _wilscoeff = new EvtbTosllWilsCoeffNLO();
+    m_mntffmodel = new Evtbs2llGammaFFMNT();
+    m_wilscoeff = new EvtbTosllWilsCoeffNLO();
     if ( photontype == EvtSpinType::PHOTON ) {
-        _calcamp = new Evtbs2llGammaISRFSRAmp();
+        m_calcamp = new Evtbs2llGammaISRFSRAmp();
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "The init()-function in the Evtbs2llGammaISRFSR generator:"
@@ -140,10 +140,11 @@ void Evtbs2llGammaISRFSR::initProbMax()
     if ( getNArg() == 11 )
         mumumass_min = getArg( 10 );
 
-    mymaxprob = _calcamp->CalcMaxProb( parnum, photnum, l1num, l2num, _mntffmodel,
-                                       _wilscoeff, mu, Nf, sr, res_swch, ias,
-                                       Egamma_min, CKM_A, CKM_lambda,
-                                       CKM_barrho, CKM_bareta, mumumass_min );
+    mymaxprob = m_calcamp->CalcMaxProb( parnum, photnum, l1num, l2num,
+                                        m_mntffmodel, m_wilscoeff, mu, Nf, sr,
+                                        res_swch, ias, Egamma_min, CKM_A,
+                                        CKM_lambda, CKM_barrho, CKM_bareta,
+                                        mumumass_min );
 
     if ( mymaxprob <= 0.0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -176,9 +177,9 @@ void Evtbs2llGammaISRFSR::decay( EvtParticle* p )
 
     // The class "Evtbs2llGammaFFMNT" is the derived class of the
     // class  "Evtbs2llGammaFF" (see the file "Evtbs2llGammaFF.hh")
-    _calcamp->CalcAmp( p, _amp2, _mntffmodel, _wilscoeff, mu, Nf, sr, res_swch,
-                       ias, Egamma_min, CKM_A, CKM_lambda, CKM_barrho,
-                       CKM_bareta, mumumass_min );
+    m_calcamp->CalcAmp( p, m_amp2, m_mntffmodel, m_wilscoeff, mu, Nf, sr,
+                        res_swch, ias, Egamma_min, CKM_A, CKM_lambda,
+                        CKM_barrho, CKM_bareta, mumumass_min );
 
     //  EvtGenReport(EVTGEN_NOTICE,"EvtGen") << "\n "
     //<< "\n The function Evtbs2llGammaISRFSR::decay(...) passed with arguments:"

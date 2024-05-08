@@ -44,14 +44,14 @@
 template <class T>
 class EvtIntervalDecayAmp : public EvtDecayAmp {
   public:
-    EvtIntervalDecayAmp() : _probMax( 0. ), _nScan( 0 ), _fact( nullptr ) {}
+    EvtIntervalDecayAmp() : m_probMax( 0. ), m_nScan( 0 ), m_fact( nullptr ) {}
 
     EvtIntervalDecayAmp( const EvtIntervalDecayAmp<T>& other ) :
-        _probMax( other._probMax ), _nScan( other._nScan ), COPY_PTR( _fact )
+        m_probMax( other.m_probMax ), m_nScan( other.m_nScan ), COPY_PTR( m_fact )
     {
     }
 
-    virtual ~EvtIntervalDecayAmp() { delete _fact; }
+    virtual ~EvtIntervalDecayAmp() { delete m_fact; }
 
     // Initialize model
 
@@ -71,39 +71,39 @@ class EvtIntervalDecayAmp : public EvtDecayAmp {
         if ( VERBOSE )
             EvtGenReport( EVTGEN_INFO, "EvtGen" )
                 << "Create factory and interval" << std::endl;
-        _fact = createFactory( parser );
+        m_fact = createFactory( parser );
 
         // Maximum PDF value over the Dalitz plot can be specified, or a scan
         // can be performed.
 
-        _probMax = parser.pdfMax();
-        _nScan = parser.nScan();
+        m_probMax = parser.pdfMax();
+        m_nScan = parser.nScan();
         if ( VERBOSE )
             EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                << "Pdf maximum " << _probMax << std::endl;
+                << "Pdf maximum " << m_probMax << std::endl;
         if ( VERBOSE )
             EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                << "Scan number " << _nScan << std::endl;
+                << "Scan number " << m_nScan << std::endl;
     }
 
     void initProbMax() override
     {
-        if ( 0 == _nScan ) {
-            if ( _probMax > 0 )
-                setProbMax( _probMax );
+        if ( 0 == m_nScan ) {
+            if ( m_probMax > 0 )
+                setProbMax( m_probMax );
             else
                 assert( 0 );
         } else {
             double factor = 1.2;    // increase maximum probability by 20%
-            EvtAmpPdf<T> pdf( *_fact->getAmp() );
-            EvtPdfSum<T>* pc = _fact->getPC();
+            EvtAmpPdf<T> pdf( *m_fact->getAmp() );
+            EvtPdfSum<T>* pc = m_fact->getPC();
             EvtPdfDiv<T> pdfdiv( pdf, *pc );
-            printf( "Sampling %d points to find maximum\n", _nScan );
-            EvtPdfMax<T> x = pdfdiv.findMax( *pc, _nScan );
-            _probMax = factor * x.value();
+            printf( "Sampling %d points to find maximum\n", m_nScan );
+            EvtPdfMax<T> x = pdfdiv.findMax( *pc, m_nScan );
+            m_probMax = factor * x.value();
             printf( "Found maximum %f\n", x.value() );
-            printf( "Increase to   %f\n", _probMax );
-            setProbMax( _probMax );
+            printf( "Increase to   %f\n", m_probMax );
+            setProbMax( m_probMax );
         }
     }
 
@@ -120,20 +120,20 @@ class EvtIntervalDecayAmp : public EvtDecayAmp {
         // Sample using pole-compensator pdf
 
         EvtPdfSum<T>* pc = getPC();
-        _x = pc->randomPoint();
+        m_x = pc->randomPoint();
 
-        if ( _fact->isCPModel() ) {
+        if ( m_fact->isCPModel() ) {
             // Time-dependent Dalitz plot changes
             // Dec 2005 (ddujmic@slac.stanford.edu)
 
-            EvtComplex A = _fact->getAmp()->evaluate( _x );
-            EvtComplex Abar = _fact->getAmpConj()->evaluate( _x );
+            EvtComplex A = m_fact->getAmp()->evaluate( m_x );
+            EvtComplex Abar = m_fact->getAmpConj()->evaluate( m_x );
 
             EvtCPUtil::getInstance()->OtherB( p, t, other_b );
 
-            double dm = _fact->dm();
-            double mixAmpli = _fact->mixAmpli();
-            double mixPhase = _fact->mixPhase();
+            double dm = m_fact->dm();
+            double mixAmpli = m_fact->mixAmpli();
+            double mixPhase = m_fact->mixPhase();
             EvtComplex qoverp( cos( mixPhase ) * mixAmpli,
                                sin( mixPhase ) * mixAmpli );
             EvtComplex poverq( cos( mixPhase ) / mixAmpli,
@@ -149,19 +149,19 @@ class EvtIntervalDecayAmp : public EvtDecayAmp {
                            sin( dm * t / ( 2 * EvtConst::c ) ) * poverq;
 
         } else {
-            ampl = amplNonCP( _x );
+            ampl = amplNonCP( m_x );
         }
 
         // Pole-compensate
 
-        double comp = sqrt( pc->evaluate( _x ) );
+        double comp = sqrt( pc->evaluate( m_x ) );
         assert( comp > 0 );
         vertex( ampl / comp );
 
         // Now generate random angles, rotate and setup
         // the daughters
 
-        std::vector<EvtVector4R> v = initDaughters( _x );
+        std::vector<EvtVector4R> v = initDaughters( m_x );
 
         size_t N = p->getNDaug();
         if ( v.size() != N ) {
@@ -183,19 +183,19 @@ class EvtIntervalDecayAmp : public EvtDecayAmp {
 
     // provide access to the decay point and to the amplitude of any decay point.
     // this is used by EvtBtoKD3P:
-    const T& x() const { return _x; }
+    const T& x() const { return m_x; }
     EvtComplex amplNonCP( const T& x )
     {
-        return _fact->getAmp()->evaluate( x );
+        return m_fact->getAmp()->evaluate( x );
     }
-    EvtPdfSum<T>* getPC() { return _fact->getPC(); }
+    EvtPdfSum<T>* getPC() { return m_fact->getPC(); }
 
   protected:
-    double _probMax;    // Maximum probability
-    int _nScan;         // Number of points for max prob DP scan
-    T _x;               // Decay point
+    double m_probMax;    // Maximum probability
+    int m_nScan;         // Number of points for max prob DP scan
+    T m_x;               // Decay point
 
-    EvtAmpFactory<T>* _fact;    // factory
+    EvtAmpFactory<T>* m_fact;    // factory
 };
 
 #endif

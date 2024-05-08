@@ -37,16 +37,16 @@ using namespace std;
 #ifdef D0
 #undef D0
 #endif
-EvtLb2plnuLQCD::EvtLb2plnuLQCD() : ffmodel( nullptr ), calcamp( nullptr )
+EvtLb2plnuLQCD::EvtLb2plnuLQCD() : m_ffmodel( nullptr ), m_calcamp( nullptr )
 {
 }
 
 EvtLb2plnuLQCD::~EvtLb2plnuLQCD()
 {
-    delete ffmodel;
-    ffmodel = nullptr;
-    delete calcamp;
-    calcamp = nullptr;
+    delete m_ffmodel;
+    m_ffmodel = nullptr;
+    delete m_calcamp;
+    m_calcamp = nullptr;
 }
 
 std::string EvtLb2plnuLQCD::getName()
@@ -77,7 +77,7 @@ void EvtLb2plnuLQCD::decay( EvtParticle* p )
     EvtComplex r10( getArg( 2 ), 0.0 );
     EvtComplex r11( getArg( 3 ), 0.0 );
 
-    calcamp->CalcAmp( p, _amp2, ffmodel, r00, r01, r10, r11 );
+    m_calcamp->CalcAmp( p, m_amp2, m_ffmodel, r00, r01, r10, r11 );
 }
 
 void EvtLb2plnuLQCD::initProbMax()
@@ -158,11 +158,11 @@ void EvtLb2plnuLQCD::init()
         ::abort();
     }
 
-    //set ffmodel
-    ffmodel = new EvtLb2plnuLQCDFF;
+    //set m_ffmodel
+    m_ffmodel = new EvtLb2plnuLQCDFF;
 
     if ( baryontype == EvtSpinType::DIRAC ) {
-        calcamp = new EvtSLBaryonAmp;
+        m_calcamp = new EvtSLBaryonAmp;
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Wrong baryon spin type in EvtLb2plnuLQCD.cc "

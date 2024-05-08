@@ -345,8 +345,6 @@ void EvtbTosllVectorAmpNewExt::CalcAmp(
 
     EvtTensor4C T1, T2;    // hadronic matrix element tensor structures
 
-    EvtVector4C epsV;    // vector meson polarisation vector
-
     int i;    // vector meson polarisations counter
 
     EvtVector4C lvc11, lvc12;    // spin structures for

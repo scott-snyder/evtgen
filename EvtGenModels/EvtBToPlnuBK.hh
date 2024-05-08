@@ -43,8 +43,8 @@ class EvtBToPlnuBK : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> BKmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_BKmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
 };
 
 #endif

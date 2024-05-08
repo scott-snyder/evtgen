@@ -53,14 +53,14 @@ class EvtHQET2FF : public EvtSemiLeptonicFF {
                       double*, double*, double*, double*, double* ) override;
 
   private:
-    double r1_1;
-    double rho2;
-    double r2_1;
-    double ha1_1;
-    double v1_1;
-    double r0_1;
-    double delta;
-    bool extended;
+    double m_r1_1;
+    double m_rho2;
+    double m_r2_1;
+    double m_ha1_1;
+    double m_v1_1;
+    double m_r0_1;
+    double m_delta;
+    bool m_extended;
 };
 
 #endif

@@ -32,10 +32,10 @@ class EvtMTRandomEngine : public EvtRandomEngine {
     virtual double random();
 
   private:
-    std::mt19937 engine_;
+    std::mt19937 m_engine;
 
     typedef std::uniform_real_distribution<double> URDist;
-    URDist distribution_;
+    URDist m_distribution;
 };
 
 #endif

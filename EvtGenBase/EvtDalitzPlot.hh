@@ -52,9 +52,9 @@ class EvtDalitzPlot {
     double qResAbsMax( EvtCyclic3::Pair i ) const;
     double qHelAbsMin( EvtCyclic3::Pair i ) const;
     double qHelAbsMax( EvtCyclic3::Pair i ) const;
-    inline double qSumMin() const { return sum() + _ldel; }
-    inline double qSumMax() const { return sum() + _rdel; }
-    inline bool fuzzy() const { return ( _rdel - _ldel != 0. ); }
+    inline double qSumMin() const { return sum() + m_ldel; }
+    inline double qSumMax() const { return sum() + m_rdel; }
+    inline bool fuzzy() const { return ( m_rdel - m_ldel != 0. ); }
 
     // Find the area of the Dalitz plot by numeric integration. (N bins for variable q(i) are used).
     // Very large numbers of N can result in a very long calculation. It should not
@@ -92,10 +92,10 @@ class EvtDalitzPlot {
     // Accessors
 
     double sum() const;
-    inline double bigM() const { return _bigM; }
-    inline double mA() const { return _mA; }
-    inline double mB() const { return _mB; }
-    inline double mC() const { return _mC; }
+    inline double bigM() const { return m_bigM; }
+    inline double mA() const { return m_mA; }
+    inline double mB() const { return m_mB; }
+    inline double mC() const { return m_mC; }
     double m( EvtCyclic3::Index i ) const;
 
     void print() const;
@@ -105,15 +105,15 @@ class EvtDalitzPlot {
   protected:
     // Defines two dimensional dalitz plot
 
-    double _mA;
-    double _mB;
-    double _mC;
-    double _bigM;
+    double m_mA;
+    double m_mB;
+    double m_mC;
+    double m_bigM;
 
     // Defines third dimension, or fuzziness. M^2 + ldel < M^2 < M^2 + rdel
 
-    double _ldel;
-    double _rdel;
+    double m_ldel;
+    double m_rdel;
 };
 
 #endif

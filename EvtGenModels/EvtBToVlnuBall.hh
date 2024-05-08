@@ -42,7 +42,7 @@ class EvtBToVlnuBall : public EvtDecayAmp {
     void init() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> _Ballmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> _calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_Ballmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
 };
 #endif

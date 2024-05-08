@@ -48,9 +48,9 @@ EvtDecayBase* EvtbTosllAli::clone()
 void EvtbTosllAli::decay( EvtParticle* p )
 {
     setWeight( p->initializePhaseSpace( getNDaug(), getDaugs(), false,
-                                        _poleSize, 1, 2 ) );
+                                        m_poleSize, 1, 2 ) );
 
-    _calcamp->CalcAmp( p, _amp2, _aliffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_aliffmodel.get() );
 }
 
 void EvtbTosllAli::initProbMax()
@@ -62,9 +62,9 @@ void EvtbTosllAli::initProbMax()
     l1num = getDaug( 1 );
     l2num = getDaug( 2 );
 
-    //This routine sets the _poleSize.
-    double mymaxprob = _calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num,
-                                              _aliffmodel.get(), _poleSize );
+    //This routine sets the m_poleSize.
+    double mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num,
+                                               m_aliffmodel.get(), m_poleSize );
     mymaxprob *= 1.25;    // Increase to avoid maxprob errors
     setProbMax( mymaxprob );
 }
@@ -95,11 +95,11 @@ void EvtbTosllAli::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::DIRAC );
 
-    _aliffmodel = std::make_unique<EvtbTosllAliFF>();
+    m_aliffmodel = std::make_unique<EvtbTosllAliFF>();
     if ( mesontype == EvtSpinType::SCALAR ) {
-        _calcamp = std::make_unique<EvtbTosllScalarAmp>();
+        m_calcamp = std::make_unique<EvtbTosllScalarAmp>();
     }
     if ( mesontype == EvtSpinType::VECTOR ) {
-        _calcamp = std::make_unique<EvtbTosllVectorAmp>();
+        m_calcamp = std::make_unique<EvtbTosllVectorAmp>();
     }
 }

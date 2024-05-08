@@ -25,14 +25,14 @@
 
 class EvtSimpleRandomEngine : public EvtRandomEngine {
   public:
-    EvtSimpleRandomEngine() { _next = 1; }
+    EvtSimpleRandomEngine() { m_next = 1; }
 
-    void reset() { _next = 1; }
+    void reset() { m_next = 1; }
 
     double random() override;
 
   private:
-    unsigned long int _next;
+    unsigned long int m_next;
 };
 
 #endif

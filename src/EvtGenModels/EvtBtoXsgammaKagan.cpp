@@ -44,8 +44,8 @@
 using std::endl;
 using std::fstream;
 
-bool EvtBtoXsgammaKagan::bbprod = false;
-double EvtBtoXsgammaKagan::intervalMH = 0;
+bool EvtBtoXsgammaKagan::m_bbprod = false;
+double EvtBtoXsgammaKagan::m_intervalMH = 0;
 
 void EvtBtoXsgammaKagan::init( int nArg, double* args )
 {
@@ -62,10 +62,10 @@ void EvtBtoXsgammaKagan::init( int nArg, double* args )
     }
 
     if ( nArg == 1 ) {
-        bbprod = true;
+        m_bbprod = true;
         getDefaultHadronicMass();
     } else {
-        bbprod = false;
+        m_bbprod = false;
         computeHadronicMass( nArg, args );
     }
 
@@ -73,92 +73,92 @@ void EvtBtoXsgammaKagan::init( int nArg, double* args )
     double mHmaxLimit = 4.5;
 
     if ( nArg > 10 ) {
-        _mHmin = args[10];
-        _mHmax = args[11];
-        if ( _mHmin > _mHmax ) {
+        m_mHmin = args[10];
+        m_mHmax = args[11];
+        if ( m_mHmin > m_mHmax ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Minimum hadronic mass exceeds maximum " << endl;
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Will terminate execution!" << endl;
             ::abort();
         }
-        if ( _mHmin < mHminLimit ) {
+        if ( m_mHmin < mHminLimit ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Minimum hadronic mass below K pi threshold" << endl;
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Resetting to K pi threshold" << endl;
-            _mHmin = mHminLimit;
+            m_mHmin = mHminLimit;
         }
-        if ( _mHmax > mHmaxLimit ) {
+        if ( m_mHmax > mHmaxLimit ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Maximum hadronic mass above 4.5 GeV/c^2" << endl;
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Resetting to 4.5 GeV/c^2" << endl;
-            _mHmax = mHmaxLimit;
+            m_mHmax = mHmaxLimit;
         }
     } else {
-        _mHmin = mHminLimit;    //  usually just above K pi threshold for Xsd/u
-        _mHmax = mHmaxLimit;
+        m_mHmin = mHminLimit;    //  usually just above K pi threshold for Xsd/u
+        m_mHmax = mHmaxLimit;
     }
 }
 
 void EvtBtoXsgammaKagan::getDefaultHadronicMass()
 {
-    massHad = { 0,        0.0625995, 0.125199, 0.187798, 0.250398, 0.312997,
-                0.375597, 0.438196,  0.500796, 0.563395, 0.625995, 0.688594,
-                0.751194, 0.813793,  0.876392, 0.938992, 1.00159,  1.06419,
-                1.12679,  1.18939,   1.25199,  1.31459,  1.37719,  1.43979,
-                1.50239,  1.56499,   1.62759,  1.69019,  1.75278,  1.81538,
-                1.87798,  1.94058,   2.00318,  2.06578,  2.12838,  2.19098,
-                2.25358,  2.31618,   2.37878,  2.44138,  2.50398,  2.56658,
-                2.62918,  2.69178,   2.75438,  2.81698,  2.87958,  2.94217,
-                3.00477,  3.06737,   3.12997,  3.19257,  3.25517,  3.31777,
-                3.38037,  3.44297,   3.50557,  3.56817,  3.63077,  3.69337,
-                3.75597,  3.81857,   3.88117,  3.94377,  4.00637,  4.06896,
-                4.13156,  4.19416,   4.25676,  4.31936,  4.38196,  4.44456,
-                4.50716,  4.56976,   4.63236,  4.69496,  4.75756,  4.82016,
-                4.88276,  4.94536,   5.00796 };
-    brHad = { 0,           1.03244e-09, 3.0239e-08,  1.99815e-07, 7.29392e-07,
-              1.93129e-06, 4.17806e-06, 7.86021e-06, 1.33421e-05, 2.09196e-05,
-              3.07815e-05, 4.29854e-05, 5.74406e-05, 7.3906e-05,  9.2003e-05,
-              0.000111223, 0.000130977, 0.000150618, 0.000169483, 0.000186934,
-              0.000202392, 0.000215366, 0.000225491, 0.000232496, 0.000236274,
-              0.000236835, 0.000234313, 0.000228942, 0.000221042, 0.000210994,
-              0.000199215, 0.000186137, 0.000172194, 0.000157775, 0.000143255,
-              0.000128952, 0.000115133, 0.000102012, 8.97451e-05, 7.84384e-05,
-              6.81519e-05, 5.89048e-05, 5.06851e-05, 4.34515e-05, 3.71506e-05,
-              3.1702e-05,  2.70124e-05, 2.30588e-05, 1.96951e-05, 1.68596e-05,
-              1.44909e-05, 1.25102e-05, 1.08596e-05, 9.48476e-06, 8.34013e-06,
-              7.38477e-06, 6.58627e-06, 5.91541e-06, 5.35022e-06, 4.87047e-06,
-              4.46249e-06, 4.11032e-06, 3.80543e-06, 3.54051e-06, 3.30967e-06,
-              3.10848e-06, 2.93254e-06, 2.78369e-06, 2.65823e-06, 2.55747e-06,
-              2.51068e-06, 2.57179e-06, 2.74684e-06, 3.02719e-06, 3.41182e-06,
-              3.91387e-06, 4.56248e-06, 5.40862e-06, 6.53915e-06, 8.10867e-06,
-              1.04167e-05 };
-    massHad.resize( 81 );
-    brHad.resize( 81 );
+    m_massHad = { 0,        0.0625995, 0.125199, 0.187798, 0.250398, 0.312997,
+                  0.375597, 0.438196,  0.500796, 0.563395, 0.625995, 0.688594,
+                  0.751194, 0.813793,  0.876392, 0.938992, 1.00159,  1.06419,
+                  1.12679,  1.18939,   1.25199,  1.31459,  1.37719,  1.43979,
+                  1.50239,  1.56499,   1.62759,  1.69019,  1.75278,  1.81538,
+                  1.87798,  1.94058,   2.00318,  2.06578,  2.12838,  2.19098,
+                  2.25358,  2.31618,   2.37878,  2.44138,  2.50398,  2.56658,
+                  2.62918,  2.69178,   2.75438,  2.81698,  2.87958,  2.94217,
+                  3.00477,  3.06737,   3.12997,  3.19257,  3.25517,  3.31777,
+                  3.38037,  3.44297,   3.50557,  3.56817,  3.63077,  3.69337,
+                  3.75597,  3.81857,   3.88117,  3.94377,  4.00637,  4.06896,
+                  4.13156,  4.19416,   4.25676,  4.31936,  4.38196,  4.44456,
+                  4.50716,  4.56976,   4.63236,  4.69496,  4.75756,  4.82016,
+                  4.88276,  4.94536,   5.00796 };
+    m_brHad = { 0,           1.03244e-09, 3.0239e-08,  1.99815e-07, 7.29392e-07,
+                1.93129e-06, 4.17806e-06, 7.86021e-06, 1.33421e-05, 2.09196e-05,
+                3.07815e-05, 4.29854e-05, 5.74406e-05, 7.3906e-05,  9.2003e-05,
+                0.000111223, 0.000130977, 0.000150618, 0.000169483, 0.000186934,
+                0.000202392, 0.000215366, 0.000225491, 0.000232496, 0.000236274,
+                0.000236835, 0.000234313, 0.000228942, 0.000221042, 0.000210994,
+                0.000199215, 0.000186137, 0.000172194, 0.000157775, 0.000143255,
+                0.000128952, 0.000115133, 0.000102012, 8.97451e-05, 7.84384e-05,
+                6.81519e-05, 5.89048e-05, 5.06851e-05, 4.34515e-05, 3.71506e-05,
+                3.1702e-05,  2.70124e-05, 2.30588e-05, 1.96951e-05, 1.68596e-05,
+                1.44909e-05, 1.25102e-05, 1.08596e-05, 9.48476e-06, 8.34013e-06,
+                7.38477e-06, 6.58627e-06, 5.91541e-06, 5.35022e-06, 4.87047e-06,
+                4.46249e-06, 4.11032e-06, 3.80543e-06, 3.54051e-06, 3.30967e-06,
+                3.10848e-06, 2.93254e-06, 2.78369e-06, 2.65823e-06, 2.55747e-06,
+                2.51068e-06, 2.57179e-06, 2.74684e-06, 3.02719e-06, 3.41182e-06,
+                3.91387e-06, 4.56248e-06, 5.40862e-06, 6.53915e-06, 8.10867e-06,
+                1.04167e-05 };
+    m_massHad.resize( 81 );
+    m_brHad.resize( 81 );
 
-    intervalMH = 80;
+    m_intervalMH = 80;
 }
 
 void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
 {
     //Input parameters
     int fermiFunction = (int)args[1];
-    _mB = args[2];
-    _mb = args[3];
-    _mu = args[4];
-    _lam1 = args[5];
-    _delta = args[6];
-    _z = args[7];
-    _nIntervalS = args[8];
-    _nIntervalmH = args[9];
-    std::vector<double> mHVect( int( _nIntervalmH + 1.0 ) );
-    massHad.clear();
-    massHad.resize( int( _nIntervalmH + 1.0 ) );
-    brHad.clear();
-    brHad.resize( int( _nIntervalmH + 1.0 ) );
-    intervalMH = _nIntervalmH;
+    m_mB = args[2];
+    m_mb = args[3];
+    m_mu = args[4];
+    m_lam1 = args[5];
+    m_delta = args[6];
+    m_z = args[7];
+    m_nIntervalS = args[8];
+    m_nIntervalmH = args[9];
+    std::vector<double> mHVect( int( m_nIntervalmH + 1.0 ) );
+    m_massHad.clear();
+    m_massHad.resize( int( m_nIntervalmH + 1.0 ) );
+    m_brHad.clear();
+    m_brHad.resize( int( m_nIntervalmH + 1.0 ) );
+    m_intervalMH = m_nIntervalmH;
 
     //Going to have to add a new entry into the data file - takes ages...
     EvtGenReport( EVTGEN_WARNING, "EvtGen" )
@@ -169,56 +169,56 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
     //the current parameters
 
     //A few more parameters
-    double _mubar = _mu;
-    _mW = 80.33;
-    _mt = 175.0;
-    _alpha = 1. / 137.036;
-    _lambdabar = _mB - _mb;
-    _kappabar = 3.382 - 4.14 * ( sqrt( _z ) - 0.29 );
-    _fz = Fz( _z );
-    _rer8 = ( 44. / 9. ) - ( 8. / 27. ) * pow( EvtConst::pi, 2. );
-    _r7 = ( -10. / 3. ) - ( 8. / 9. ) * pow( EvtConst::pi, 2. );
-    _rer2 = -4.092 + 12.78 * ( sqrt( _z ) - .29 );
-    _gam77 = 32. / 3.;
-    _gam27 = 416. / 81.;
-    _gam87 = -32. / 9.;
-    _lam2 = .12;
-    _beta0 = 23. / 3.;
-    _beta1 = 116. / 3.;
-    _alphasmZ = .118;
-    _mZ = 91.187;
-    _ms = _mb / 50.;
+    double _mubar = m_mu;
+    m_mW = 80.33;
+    m_mt = 175.0;
+    m_alpha = 1. / 137.036;
+    m_lambdabar = m_mB - m_mb;
+    m_kappabar = 3.382 - 4.14 * ( sqrt( m_z ) - 0.29 );
+    m_fz = Fz( m_z );
+    m_rer8 = ( 44. / 9. ) - ( 8. / 27. ) * pow( EvtConst::pi, 2. );
+    m_r7 = ( -10. / 3. ) - ( 8. / 9. ) * pow( EvtConst::pi, 2. );
+    m_rer2 = -4.092 + 12.78 * ( sqrt( m_z ) - .29 );
+    m_gam77 = 32. / 3.;
+    m_gam27 = 416. / 81.;
+    m_gam87 = -32. / 9.;
+    m_lam2 = .12;
+    m_beta0 = 23. / 3.;
+    m_beta1 = 116. / 3.;
+    m_alphasmZ = .118;
+    m_mZ = 91.187;
+    m_ms = m_mb / 50.;
 
-    double eGammaMin = 0.5 * _mB * ( 1. - _delta );
-    double eGammaMax = 0.5 * _mB;
-    double yMin = 2. * eGammaMin / _mB;
-    double yMax = 2. * eGammaMax / _mB;
+    double eGammaMin = 0.5 * m_mB * ( 1. - m_delta );
+    double eGammaMax = 0.5 * m_mB;
+    double yMin = 2. * eGammaMin / m_mB;
+    double yMax = 2. * eGammaMax / m_mB;
     double _CKMrat = 0.976;
     double Nsl = 1.0;
 
     //Calculate alpha the various scales
-    _alphasmW = CalcAlphaS( _mW );
-    _alphasmt = CalcAlphaS( _mt );
-    _alphasmu = CalcAlphaS( _mu );
-    _alphasmubar = CalcAlphaS( _mubar );
+    m_alphasmW = CalcAlphaS( m_mW );
+    m_alphasmt = CalcAlphaS( m_mt );
+    m_alphasmu = CalcAlphaS( m_mu );
+    m_alphasmubar = CalcAlphaS( _mubar );
 
     //Calculate the Wilson Coefficients and Delta
-    _etamu = _alphasmW / _alphasmu;
-    _kSLemmu = ( 12. / 23. ) * ( ( 1. / _etamu ) - 1. );
+    m_etamu = m_alphasmW / m_alphasmu;
+    m_kSLemmu = ( 12. / 23. ) * ( ( 1. / m_etamu ) - 1. );
     CalcWilsonCoeffs();
     CalcDelta();
 
     //Build s22 and s27 vector - saves time because double
     //integration is required otherwise
-    std::vector<double> s22Coeffs( int( _nIntervalS + 1.0 ) );
-    std::vector<double> s27Coeffs( int( _nIntervalS + 1.0 ) );
-    std::vector<double> s28Coeffs( int( _nIntervalS + 1.0 ) );
+    std::vector<double> s22Coeffs( int( m_nIntervalS + 1.0 ) );
+    std::vector<double> s27Coeffs( int( m_nIntervalS + 1.0 ) );
+    std::vector<double> s28Coeffs( int( m_nIntervalS + 1.0 ) );
 
-    double dy = ( yMax - yMin ) / _nIntervalS;
+    double dy = ( yMax - yMin ) / m_nIntervalS;
     double yp = yMin;
 
     std::vector<double> sCoeffs( 1 );
-    sCoeffs[0] = _z;
+    sCoeffs[0] = m_z;
 
     //Define s22 and s27 functions
     auto mys22Func = EvtItgPtrFunction{ &s22Func, 0., yMax + 0.1, sCoeffs };
@@ -230,9 +230,9 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
 
     int i;
 
-    for ( i = 0; i < int( _nIntervalS + 1.0 ); i++ ) {
+    for ( i = 0; i < int( m_nIntervalS + 1.0 ); i++ ) {
         s22Coeffs[i] = ( 16. / 27. ) * mys22Simp.evaluate( 1.0e-20, yp );
-        s27Coeffs[i] = ( -8. / 9. ) * _z * mys27Simp.evaluate( 1.0e-20, yp );
+        s27Coeffs[i] = ( -8. / 9. ) * m_z * mys27Simp.evaluate( 1.0e-20, yp );
         s28Coeffs[i] = -s27Coeffs[i] / 3.;
         yp = yp + dy;
     }
@@ -245,16 +245,16 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
     std::vector<double> s88Coeffs( 2 );
     std::vector<double> sInitCoeffs( 3 );
 
-    varCoeffs[0] = _mB;
-    varCoeffs[1] = _mb;
+    varCoeffs[0] = m_mB;
+    varCoeffs[1] = m_mb;
     varCoeffs[2] = 0.;
 
-    DeltaCoeffs[0] = _alphasmu;
+    DeltaCoeffs[0] = m_alphasmu;
 
-    s88Coeffs[0] = _mb;
-    s88Coeffs[1] = _ms;
+    s88Coeffs[0] = m_mb;
+    s88Coeffs[1] = m_ms;
 
-    sInitCoeffs[0] = _nIntervalS;
+    sInitCoeffs[0] = m_nIntervalS;
     sInitCoeffs[1] = yMin;
     sInitCoeffs[2] = yMax;
 
@@ -277,21 +277,23 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
     //Calculate quantities for the fermi function to be used
     //Distinguish among the different shape functions
     if ( fermiFunction == 1 ) {
-        FermiCoeffs[1] = _lambdabar;
-        FermiCoeffs[2] = ( -3. * pow( _lambdabar, 2. ) / _lam1 ) - 1.;
-        FermiCoeffs[3] = _lam1;
+        FermiCoeffs[1] = m_lambdabar;
+        FermiCoeffs[2] = ( -3. * pow( m_lambdabar, 2. ) / m_lam1 ) - 1.;
+        FermiCoeffs[3] = m_lam1;
         FermiCoeffs[4] = 1.0;
 
         auto myNormFunc = std::make_unique<EvtItgPtrFunction>(
-            &EvtBtoXsgammaFermiUtil::FermiExpFunc, -_mb, _mB - _mb, FermiCoeffs );
+            &EvtBtoXsgammaFermiUtil::FermiExpFunc, -m_mb, m_mB - m_mb,
+            FermiCoeffs );
         auto myNormSimp =
             std::make_unique<EvtItgSimpsonIntegrator>( *myNormFunc, 1.0e-4, 40 );
         FermiCoeffs[4] = myNormSimp->normalisation();
 
     } else if ( fermiFunction == 2 ) {
-        double a = EvtBtoXsgammaFermiUtil::FermiGaussFuncRoot( _lambdabar, _lam1,
-                                                               _mb, gammaCoeffs );
-        FermiCoeffs[1] = _lambdabar;
+        double a = EvtBtoXsgammaFermiUtil::FermiGaussFuncRoot( m_lambdabar,
+                                                               m_lam1, m_mb,
+                                                               gammaCoeffs );
+        FermiCoeffs[1] = m_lambdabar;
         FermiCoeffs[2] = a;
         FermiCoeffs[3] =
             EvtBtoXsgammaFermiUtil::Gamma( ( 2.0 + a ) / 2., gammaCoeffs ) /
@@ -299,23 +301,23 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
         FermiCoeffs[4] = 1.0;
 
         auto myNormFunc = std::make_unique<EvtItgPtrFunction>(
-            &EvtBtoXsgammaFermiUtil::FermiGaussFunc, -_mb, _mB - _mb,
+            &EvtBtoXsgammaFermiUtil::FermiGaussFunc, -m_mb, m_mB - m_mb,
             FermiCoeffs );
         auto myNormSimp =
             std::make_unique<EvtItgSimpsonIntegrator>( *myNormFunc, 1.0e-4, 40 );
         FermiCoeffs[4] = myNormSimp->normalisation();
 
     } else if ( fermiFunction == 3 ) {
-        double rho = EvtBtoXsgammaFermiUtil::FermiRomanFuncRoot( _lambdabar,
-                                                                 _lam1 );
-        FermiCoeffs[1] = _mB;
-        FermiCoeffs[2] = _mb;
+        double rho = EvtBtoXsgammaFermiUtil::FermiRomanFuncRoot( m_lambdabar,
+                                                                 m_lam1 );
+        FermiCoeffs[1] = m_mB;
+        FermiCoeffs[2] = m_mb;
         FermiCoeffs[3] = rho;
-        FermiCoeffs[4] = _lambdabar;
+        FermiCoeffs[4] = m_lambdabar;
         FermiCoeffs[5] = 1.0;
 
         auto myNormFunc = std::make_unique<EvtItgPtrFunction>(
-            &EvtBtoXsgammaFermiUtil::FermiRomanFunc, -_mb, _mB - _mb,
+            &EvtBtoXsgammaFermiUtil::FermiRomanFunc, -m_mb, m_mB - m_mb,
             FermiCoeffs );
         auto myNormSimp =
             std::make_unique<EvtItgSimpsonIntegrator>( *myNormFunc, 1.0e-4, 40 );
@@ -323,26 +325,26 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
     }
 
     //Define functions
-    auto myDeltaFermiFunc = EvtItgThreeCoeffFcn{ &DeltaFermiFunc, -_mb,
-                                                 _mB - _mb,       FermiCoeffs,
+    auto myDeltaFermiFunc = EvtItgThreeCoeffFcn{ &DeltaFermiFunc, -m_mb,
+                                                 m_mB - m_mb,     FermiCoeffs,
                                                  varCoeffs,       DeltaCoeffs };
-    auto mys88FermiFunc = EvtItgThreeCoeffFcn{ &s88FermiFunc, -_mb,
-                                               _mB - _mb,     FermiCoeffs,
+    auto mys88FermiFunc = EvtItgThreeCoeffFcn{ &s88FermiFunc, -m_mb,
+                                               m_mB - m_mb,   FermiCoeffs,
                                                varCoeffs,     s88Coeffs };
-    auto mys77FermiFunc = EvtItgTwoCoeffFcn{ &s77FermiFunc, -_mb, _mB - _mb,
+    auto mys77FermiFunc = EvtItgTwoCoeffFcn{ &s77FermiFunc, -m_mb, m_mB - m_mb,
                                              FermiCoeffs, varCoeffs };
-    auto mys78FermiFunc = EvtItgTwoCoeffFcn{ &s78FermiFunc, -_mb, _mB - _mb,
+    auto mys78FermiFunc = EvtItgTwoCoeffFcn{ &s78FermiFunc, -m_mb, m_mB - m_mb,
                                              FermiCoeffs, varCoeffs };
-    auto mys22FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -_mb,
-                                              _mB - _mb,   FermiCoeffs,
+    auto mys22FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -m_mb,
+                                              m_mB - m_mb, FermiCoeffs,
                                               varCoeffs,   sInitCoeffs,
                                               s22Coeffs };
-    auto mys27FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -_mb,
-                                              _mB - _mb,   FermiCoeffs,
+    auto mys27FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -m_mb,
+                                              m_mB - m_mb, FermiCoeffs,
                                               varCoeffs,   sInitCoeffs,
                                               s27Coeffs };
-    auto mys28FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -_mb,
-                                              _mB - _mb,   FermiCoeffs,
+    auto mys28FermiFunc = EvtItgFourCoeffFcn{ &sFermiFunc, -m_mb,
+                                              m_mB - m_mb, FermiCoeffs,
                                               varCoeffs,   sInitCoeffs,
                                               s28Coeffs };
 
@@ -357,15 +359,15 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
     auto mys28FermiSimp = EvtItgSimpsonIntegrator{ mys28FermiFunc, 1.0e-4, 40 };
 
     //Finally calculate mHVect for the range of hadronic masses
-    double mHmin = sqrt( _mB * _mB - 2. * _mB * eGammaMax );
-    double mHmax = sqrt( _mB * _mB - 2. * _mB * eGammaMin );
-    double dmH = ( mHmax - mHmin ) / _nIntervalmH;
+    double mHmin = sqrt( m_mB * m_mB - 2. * m_mB * eGammaMax );
+    double mHmax = sqrt( m_mB * m_mB - 2. * m_mB * eGammaMin );
+    double dmH = ( mHmax - mHmin ) / m_nIntervalmH;
 
     double mH = mHmin;
 
     //Calculating the Branching Fractions
-    for ( i = 0; i < int( _nIntervalmH + 1.0 ); i++ ) {
-        double ymH = 1. - ( ( mH * mH ) / ( _mB * _mB ) );
+    for ( i = 0; i < int( m_nIntervalmH + 1.0 ); i++ ) {
+        double ymH = 1. - ( ( mH * mH ) / ( m_mB * m_mB ) );
 
         //Need to set ymH as one of the input parameters
         myDeltaFermiFunc.setCoeff( 2, 2, ymH );
@@ -378,33 +380,33 @@ void EvtBtoXsgammaKagan::computeHadronicMass( int /*nArg*/, double* args )
 
         //Integrate
 
-        double deltaResult = myDeltaFermiSimp.evaluate( ( _mB * ymH - _mb ),
-                                                        _mB - _mb );
-        double s77Result = mys77FermiSimp.evaluate( ( _mB * ymH - _mb ),
-                                                    _mB - _mb );
-        double s88Result = mys88FermiSimp.evaluate( ( _mB * ymH - _mb ),
-                                                    _mB - _mb );
-        double s78Result = mys78FermiSimp.evaluate( ( _mB * ymH - _mb ),
-                                                    _mB - _mb );
-        double s22Result = mys22FermiSimp.evaluate( ( _mB * ymH - _mb ),
-                                                    _mB - _mb );
-        double s27Result = mys27FermiSimp.evaluate( ( _mB * ymH - _mb ),
-                                                    _mB - _mb );
-        mys28FermiSimp.evaluate( ( _mB * ymH - _mb ), _mB - _mb );
+        double deltaResult = myDeltaFermiSimp.evaluate( ( m_mB * ymH - m_mb ),
+                                                        m_mB - m_mb );
+        double s77Result = mys77FermiSimp.evaluate( ( m_mB * ymH - m_mb ),
+                                                    m_mB - m_mb );
+        double s88Result = mys88FermiSimp.evaluate( ( m_mB * ymH - m_mb ),
+                                                    m_mB - m_mb );
+        double s78Result = mys78FermiSimp.evaluate( ( m_mB * ymH - m_mb ),
+                                                    m_mB - m_mb );
+        double s22Result = mys22FermiSimp.evaluate( ( m_mB * ymH - m_mb ),
+                                                    m_mB - m_mb );
+        double s27Result = mys27FermiSimp.evaluate( ( m_mB * ymH - m_mb ),
+                                                    m_mB - m_mb );
+        mys28FermiSimp.evaluate( ( m_mB * ymH - m_mb ), m_mB - m_mb );
 
         double py =
-            ( pow( _CKMrat, 2. ) * ( 6. / _fz ) * ( _alpha / EvtConst::pi ) *
-              ( deltaResult * _cDeltatot +
-                ( _alphasmu / EvtConst::pi ) *
-                    ( s77Result * pow( _c70mu, 2. ) +
-                      s27Result * _c2mu * ( _c70mu - _c80mu / 3. ) +
-                      s78Result * _c70mu * _c80mu + s22Result * _c2mu * _c2mu +
-                      s88Result * _c80mu * _c80mu ) ) );
+            ( pow( _CKMrat, 2. ) * ( 6. / m_fz ) * ( m_alpha / EvtConst::pi ) *
+              ( deltaResult * m_cDeltatot +
+                ( m_alphasmu / EvtConst::pi ) *
+                    ( s77Result * pow( m_c70mu, 2. ) +
+                      s27Result * m_c2mu * ( m_c70mu - m_c80mu / 3. ) +
+                      s78Result * m_c70mu * m_c80mu + s22Result * m_c2mu * m_c2mu +
+                      s88Result * m_c80mu * m_c80mu ) ) );
 
-        mHVect[i] = 2. * ( mH / ( _mB * _mB ) ) * 0.105 * Nsl * py;
+        mHVect[i] = 2. * ( mH / ( m_mB * m_mB ) ) * 0.105 * Nsl * py;
 
-        massHad[i] = mH;
-        brHad[i] = 2. * ( mH / ( _mB * _mB ) ) * 0.105 * Nsl * py;
+        m_massHad[i] = mH;
+        m_brHad[i] = 2. * ( mH / ( m_mB * m_mB ) ) * 0.105 * Nsl * py;
 
         mH = mH + dmH;
     }
@@ -414,30 +416,32 @@ double EvtBtoXsgammaKagan::GetMass( int /*Xscode*/ )
 {
     //  Get hadronic mass for the event according to the hadronic mass spectra computed in computeHadronicMass
     double mass = 0.0;
-    double min = _mHmin;
-    if ( bbprod )
+    double min = m_mHmin;
+    if ( m_bbprod )
         min = 1.1;
     //  double max=4.5;
-    double max = _mHmax;
+    double max = m_mHmax;
     double xbox( 0 ), ybox( 0 );
     double boxheight( 0 );
     double trueHeight( 0 );
     double boxwidth = max - min;
     double wgt( 0. );
 
-    for ( int i = 0; i < int( intervalMH + 1.0 ); i++ ) {
-        if ( brHad[i] > boxheight )
-            boxheight = brHad[i];
+    for ( int i = 0; i < int( m_intervalMH + 1.0 ); i++ ) {
+        if ( m_brHad[i] > boxheight )
+            boxheight = m_brHad[i];
     }
     while ( ( mass > max ) || ( mass < min ) ) {
         xbox = EvtRandom::Flat( boxwidth ) + min;
         ybox = EvtRandom::Flat( boxheight );
         trueHeight = 0.0;
         // Correction by Peter Richardson
-        for ( int i = 1; i < int( intervalMH + 1.0 ); ++i ) {
-            if ( ( massHad[i] >= xbox ) && ( 0.0 == trueHeight ) ) {
-                wgt = ( xbox - massHad[i - 1] ) / ( massHad[i] - massHad[i - 1] );
-                trueHeight = brHad[i - 1] + wgt * ( brHad[i] - brHad[i - 1] );
+        for ( int i = 1; i < int( m_intervalMH + 1.0 ); ++i ) {
+            if ( ( m_massHad[i] >= xbox ) && ( 0.0 == trueHeight ) ) {
+                wgt = ( xbox - m_massHad[i - 1] ) /
+                      ( m_massHad[i] - m_massHad[i - 1] );
+                trueHeight = m_brHad[i - 1] +
+                             wgt * ( m_brHad[i] - m_brHad[i - 1] );
             }
         }
 
@@ -453,24 +457,25 @@ double EvtBtoXsgammaKagan::GetMass( int /*Xscode*/ )
 
 double EvtBtoXsgammaKagan::CalcAlphaS( double scale )
 {
-    double v = 1. - _beta0 * ( _alphasmZ / ( 2. * EvtConst::pi ) ) *
-                        ( log( _mZ / scale ) );
-    return ( _alphasmZ / v ) *
-           ( 1. - ( ( _beta1 / _beta0 ) *
-                    ( _alphasmZ / ( 4. * EvtConst::pi ) ) * ( log( v ) / v ) ) );
+    double v = 1. - m_beta0 * ( m_alphasmZ / ( 2. * EvtConst::pi ) ) *
+                        ( log( m_mZ / scale ) );
+    return ( m_alphasmZ / v ) *
+           ( 1. - ( ( m_beta1 / m_beta0 ) *
+                    ( m_alphasmZ / ( 4. * EvtConst::pi ) ) * ( log( v ) / v ) ) );
 }
 
 void EvtBtoXsgammaKagan::CalcWilsonCoeffs()
 {
-    double mtatmw = _mt * pow( ( _alphasmW / _alphasmt ), ( 12. / 23. ) ) *
+    double mtatmw = m_mt * pow( ( m_alphasmW / m_alphasmt ), ( 12. / 23. ) ) *
                     ( 1 +
                       ( 12. / 23. ) * ( ( 253. / 18. ) - ( 116. / 23. ) ) *
-                          ( ( _alphasmW - _alphasmt ) / ( 4.0 * EvtConst::pi ) ) -
-                      ( 4. / 3. ) * ( _alphasmt / EvtConst::pi ) );
-    double xt = pow( mtatmw, 2. ) / pow( _mW, 2. );
+                          ( ( m_alphasmW - m_alphasmt ) / ( 4.0 * EvtConst::pi ) ) -
+                      ( 4. / 3. ) * ( m_alphasmt / EvtConst::pi ) );
+    double xt = pow( mtatmw, 2. ) / pow( m_mW, 2. );
 
     /////LO
-    _c2mu = .5 * pow( _etamu, ( -12. / 23. ) ) + .5 * pow( _etamu, ( 6. / 23. ) );
+    m_c2mu = .5 * pow( m_etamu, ( -12. / 23. ) ) +
+             .5 * pow( m_etamu, ( 6. / 23. ) );
 
     double c7mWsm = ( ( 3. * pow( xt, 3. ) - 2. * pow( xt, 2. ) ) /
                       ( 4. * pow( ( xt - 1. ), 4. ) ) ) *
@@ -483,28 +488,29 @@ void EvtBtoXsgammaKagan::CalcWilsonCoeffs()
                     ( ( -pow( xt, 3. ) + 5. * pow( xt, 2. ) + 2. * xt ) /
                       ( 8. * pow( ( xt - 1. ), 3. ) ) );
 
-    double c7constmu = ( 626126. / 272277. ) * pow( _etamu, ( 14. / 23. ) ) -
-                       ( 56281. / 51730. ) * pow( _etamu, ( 16. / 23. ) ) -
-                       ( 3. / 7. ) * pow( _etamu, ( 6. / 23. ) ) -
-                       ( 1. / 14. ) * pow( _etamu, ( -12. / 23. ) ) -
-                       .6494 * pow( _etamu, .4086 ) -
-                       .038 * pow( _etamu, -.423 ) -
-                       .0186 * pow( _etamu, -.8994 ) -
-                       .0057 * pow( _etamu, .1456 );
+    double c7constmu = ( 626126. / 272277. ) * pow( m_etamu, ( 14. / 23. ) ) -
+                       ( 56281. / 51730. ) * pow( m_etamu, ( 16. / 23. ) ) -
+                       ( 3. / 7. ) * pow( m_etamu, ( 6. / 23. ) ) -
+                       ( 1. / 14. ) * pow( m_etamu, ( -12. / 23. ) ) -
+                       .6494 * pow( m_etamu, .4086 ) -
+                       .038 * pow( m_etamu, -.423 ) -
+                       .0186 * pow( m_etamu, -.8994 ) -
+                       .0057 * pow( m_etamu, .1456 );
 
-    _c70mu = c7mWsm * pow( _etamu, ( 16. / 23. ) ) +
-             ( 8. / 3. ) *
-                 ( pow( _etamu, ( 14. / 23. ) ) - pow( _etamu, ( 16. / 23. ) ) ) *
-                 c8mWsm +
-             c7constmu;
+    m_c70mu = c7mWsm * pow( m_etamu, ( 16. / 23. ) ) +
+              ( 8. / 3. ) *
+                  ( pow( m_etamu, ( 14. / 23. ) ) -
+                    pow( m_etamu, ( 16. / 23. ) ) ) *
+                  c8mWsm +
+              c7constmu;
 
-    double c8constmu = ( 313063. / 363036. ) * pow( _etamu, ( 14. / 23. ) ) -
-                       .9135 * pow( _etamu, .4086 ) +
-                       .0873 * pow( _etamu, -.423 ) -
-                       .0571 * pow( _etamu, -.8994 ) +
-                       .0209 * pow( _etamu, .1456 );
+    double c8constmu = ( 313063. / 363036. ) * pow( m_etamu, ( 14. / 23. ) ) -
+                       .9135 * pow( m_etamu, .4086 ) +
+                       .0873 * pow( m_etamu, -.423 ) -
+                       .0571 * pow( m_etamu, -.8994 ) +
+                       .0209 * pow( m_etamu, .1456 );
 
-    _c80mu = c8mWsm * pow( _etamu, ( 14. / 23. ) ) + c8constmu;
+    m_c80mu = c8mWsm * pow( m_etamu, ( 14. / 23. ) ) + c8constmu;
 
     //Compute the dilogarithm (PolyLog(2,x)) with the Simpson integrator
     //The dilogarithm is defined as: Li_2(x)=Int_0^x(-log(1.-z)/z)
@@ -577,82 +583,86 @@ void EvtBtoXsgammaKagan::CalcWilsonCoeffs()
     double g8 = .0225;
 
     double c71constmu =
-        ( ( e1 * _etamu * E1 + f1 + g1 * _etamu ) * pow( _etamu, ( 14. / 23. ) ) +
-          ( e2 * _etamu * E1 + f2 + g2 * _etamu ) * pow( _etamu, ( 16. / 23. ) ) +
-          ( e3 * _etamu * E1 + f3 + g3 * _etamu ) * pow( _etamu, ( 6. / 23. ) ) +
-          ( e4 * _etamu * E1 + f4 + g4 * _etamu ) * pow( _etamu, ( -12. / 23. ) ) +
-          ( e5 * _etamu * E1 + f5 + g5 * _etamu ) * pow( _etamu, .4086 ) +
-          ( e6 * _etamu * E1 + f6 + g6 * _etamu ) * pow( _etamu, ( -.423 ) ) +
-          ( e7 * _etamu * E1 + f7 + g7 * _etamu ) * pow( _etamu, ( -.8994 ) ) +
-          ( e8 * _etamu * E1 + f8 + g8 * _etamu ) * pow( _etamu, .1456 ) );
+        ( ( e1 * m_etamu * E1 + f1 + g1 * m_etamu ) *
+              pow( m_etamu, ( 14. / 23. ) ) +
+          ( e2 * m_etamu * E1 + f2 + g2 * m_etamu ) *
+              pow( m_etamu, ( 16. / 23. ) ) +
+          ( e3 * m_etamu * E1 + f3 + g3 * m_etamu ) * pow( m_etamu, ( 6. / 23. ) ) +
+          ( e4 * m_etamu * E1 + f4 + g4 * m_etamu ) *
+              pow( m_etamu, ( -12. / 23. ) ) +
+          ( e5 * m_etamu * E1 + f5 + g5 * m_etamu ) * pow( m_etamu, .4086 ) +
+          ( e6 * m_etamu * E1 + f6 + g6 * m_etamu ) * pow( m_etamu, ( -.423 ) ) +
+          ( e7 * m_etamu * E1 + f7 + g7 * m_etamu ) * pow( m_etamu, ( -.8994 ) ) +
+          ( e8 * m_etamu * E1 + f8 + g8 * m_etamu ) * pow( m_etamu, .1456 ) );
 
-    double c71pmu =
-        ( ( ( 297664. / 14283. * pow( _etamu, ( 16. / 23. ) ) -
-              7164416. / 357075. * pow( _etamu, ( 14. / 23. ) ) +
-              256868. / 14283. * pow( _etamu, ( 37. / 23. ) ) -
-              6698884. / 357075. * pow( _etamu, ( 39. / 23. ) ) ) *
-            ( c8mWsm ) ) +
-          37208. / 4761. *
-              ( pow( _etamu, ( 39. / 23. ) ) - pow( _etamu, ( 16. / 23. ) ) ) *
-              ( c7mWsm ) +
-          c71constmu );
+    double c71pmu = ( ( ( 297664. / 14283. * pow( m_etamu, ( 16. / 23. ) ) -
+                          7164416. / 357075. * pow( m_etamu, ( 14. / 23. ) ) +
+                          256868. / 14283. * pow( m_etamu, ( 37. / 23. ) ) -
+                          6698884. / 357075. * pow( m_etamu, ( 39. / 23. ) ) ) *
+                        ( c8mWsm ) ) +
+                      37208. / 4761. *
+                          ( pow( m_etamu, ( 39. / 23. ) ) -
+                            pow( m_etamu, ( 16. / 23. ) ) ) *
+                          ( c7mWsm ) +
+                      c71constmu );
 
-    _c71mu = ( _alphasmW / _alphasmu *
-                   ( pow( _etamu, ( 16. / 23. ) ) * c7mWsm1 +
-                     8. / 3. *
-                         ( pow( _etamu, ( 14. / 23. ) ) -
-                           pow( _etamu, ( 16. / 23. ) ) ) *
-                         c8mWsm1 ) +
-               c71pmu );
+    m_c71mu = ( m_alphasmW / m_alphasmu *
+                    ( pow( m_etamu, ( 16. / 23. ) ) * c7mWsm1 +
+                      8. / 3. *
+                          ( pow( m_etamu, ( 14. / 23. ) ) -
+                            pow( m_etamu, ( 16. / 23. ) ) ) *
+                          c8mWsm1 ) +
+                c71pmu );
 
-    _c7emmu = ( ( 32. / 75. * pow( _etamu, ( -9. / 23. ) ) -
-                  40. / 69. * pow( _etamu, ( -7. / 23. ) ) +
-                  88. / 575. * pow( _etamu, ( 16. / 23. ) ) ) *
-                    c7mWsm +
-                ( -32. / 575. * pow( _etamu, ( -9. / 23. ) ) +
-                  32. / 1449. * pow( _etamu, ( -7. / 23. ) ) +
-                  640. / 1449. * pow( _etamu, ( 14. / 23. ) ) -
-                  704. / 1725. * pow( _etamu, ( 16. / 23. ) ) ) *
-                    c8mWsm -
-                190. / 8073. * pow( _etamu, ( -35. / 23. ) ) -
-                359. / 3105. * pow( _etamu, ( -17. / 23. ) ) +
-                4276. / 121095. * pow( _etamu, ( -12. / 23. ) ) +
-                350531. / 1009125. * pow( _etamu, ( -9. / 23. ) ) +
-                2. / 4347. * pow( _etamu, ( -7. / 23. ) ) -
-                5956. / 15525. * pow( _etamu, ( 6. / 23. ) ) +
-                38380. / 169533. * pow( _etamu, ( 14. / 23. ) ) -
-                748. / 8625. * pow( _etamu, ( 16. / 23. ) ) );
+    m_c7emmu = ( ( 32. / 75. * pow( m_etamu, ( -9. / 23. ) ) -
+                   40. / 69. * pow( m_etamu, ( -7. / 23. ) ) +
+                   88. / 575. * pow( m_etamu, ( 16. / 23. ) ) ) *
+                     c7mWsm +
+                 ( -32. / 575. * pow( m_etamu, ( -9. / 23. ) ) +
+                   32. / 1449. * pow( m_etamu, ( -7. / 23. ) ) +
+                   640. / 1449. * pow( m_etamu, ( 14. / 23. ) ) -
+                   704. / 1725. * pow( m_etamu, ( 16. / 23. ) ) ) *
+                     c8mWsm -
+                 190. / 8073. * pow( m_etamu, ( -35. / 23. ) ) -
+                 359. / 3105. * pow( m_etamu, ( -17. / 23. ) ) +
+                 4276. / 121095. * pow( m_etamu, ( -12. / 23. ) ) +
+                 350531. / 1009125. * pow( m_etamu, ( -9. / 23. ) ) +
+                 2. / 4347. * pow( m_etamu, ( -7. / 23. ) ) -
+                 5956. / 15525. * pow( m_etamu, ( 6. / 23. ) ) +
+                 38380. / 169533. * pow( m_etamu, ( 14. / 23. ) ) -
+                 748. / 8625. * pow( m_etamu, ( 16. / 23. ) ) );
 
     // Wilson coefficients values as according to Kagan's program
-    // _c2mu=1.10566;
-    //_c70mu=-0.314292;
-    // _c80mu=-0.148954;
-    // _c71mu=0.480964;
-    // _c7emmu=0.0323219;
+    // m_c2mu=1.10566;
+    //m_c70mu=-0.314292;
+    // m_c80mu=-0.148954;
+    // m_c71mu=0.480964;
+    // m_c7emmu=0.0323219;
 }
 
 void EvtBtoXsgammaKagan::CalcDelta()
 {
     double cDelta77 = ( 1. +
-                        ( _alphasmu / ( 2. * EvtConst::pi ) ) *
-                            ( _r7 - ( 16. / 3. ) + _gam77 * log( _mb / _mu ) ) +
-                        ( ( pow( ( 1. - _z ), 4. ) / _fz ) - 1. ) *
-                            ( 6. * _lam2 / pow( _mb, 2. ) ) +
-                        ( _alphasmubar / ( 2. * EvtConst::pi ) ) * _kappabar ) *
-                      pow( _c70mu, 2. );
+                        ( m_alphasmu / ( 2. * EvtConst::pi ) ) *
+                            ( m_r7 - ( 16. / 3. ) + m_gam77 * log( m_mb / m_mu ) ) +
+                        ( ( pow( ( 1. - m_z ), 4. ) / m_fz ) - 1. ) *
+                            ( 6. * m_lam2 / pow( m_mb, 2. ) ) +
+                        ( m_alphasmubar / ( 2. * EvtConst::pi ) ) * m_kappabar ) *
+                      pow( m_c70mu, 2. );
 
-    double cDelta27 = ( ( _alphasmu / ( 2. * EvtConst::pi ) ) *
-                            ( _rer2 + _gam27 * log( _mb / _mu ) ) -
-                        ( _lam2 / ( 9. * _z * pow( _mb, 2. ) ) ) ) *
-                      _c2mu * _c70mu;
+    double cDelta27 = ( ( m_alphasmu / ( 2. * EvtConst::pi ) ) *
+                            ( m_rer2 + m_gam27 * log( m_mb / m_mu ) ) -
+                        ( m_lam2 / ( 9. * m_z * pow( m_mb, 2. ) ) ) ) *
+                      m_c2mu * m_c70mu;
 
-    double cDelta78 = ( _alphasmu / ( 2. * EvtConst::pi ) ) *
-                      ( _rer8 + _gam87 * log( _mb / _mu ) ) * _c70mu * _c80mu;
+    double cDelta78 = ( m_alphasmu / ( 2. * EvtConst::pi ) ) *
+                      ( m_rer8 + m_gam87 * log( m_mb / m_mu ) ) * m_c70mu *
+                      m_c80mu;
 
-    _cDeltatot = cDelta77 + cDelta27 + cDelta78 +
-                 ( _alphasmu / ( 2. * EvtConst::pi ) ) * _c71mu * _c70mu +
-                 ( _alpha / _alphasmu ) *
-                     ( 2. * _c7emmu * _c70mu - _kSLemmu * pow( _c70mu, 2. ) );
+    m_cDeltatot = cDelta77 + cDelta27 + cDelta78 +
+                  ( m_alphasmu / ( 2. * EvtConst::pi ) ) * m_c71mu * m_c70mu +
+                  ( m_alpha / m_alphasmu ) * ( 2. * m_c7emmu * m_c70mu -
+                                               m_kSLemmu * pow( m_c70mu, 2. ) );
 }
 
 double EvtBtoXsgammaKagan::Delta( double y, double alphasMu )

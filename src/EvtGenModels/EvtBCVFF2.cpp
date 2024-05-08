@@ -24,9 +24,8 @@ using namespace std;
 
 EvtBCVFF2::EvtBCVFF2( int idV, int fit )
 {
-    idVector = idV;
-    whichfit = fit;
-    //cout<<"==== EvtBCVFF2:: idVector="<<idVector<<" whichfit="<<whichfit<<endl;
+    m_idVector = idV;
+    m_whichfit = fit;
     return;
 }
 
@@ -35,7 +34,7 @@ void EvtBCVFF2::getvectorff( EvtId, EvtId, double t, double, double* a1f,
 {
     double q2 = t;
 
-    if ( whichfit == 0 ) {
+    if ( m_whichfit == 0 ) {
         *vf = 0;
         *a0f = 0;
         *a1f = 1;
@@ -44,8 +43,9 @@ void EvtBCVFF2::getvectorff( EvtId, EvtId, double t, double, double* a1f,
         return;
     };
 
-    if ( idVector == EvtPDL::getId( "J/psi" ).getId() ) {    // Bc -> J/psi
-        if ( whichfit == 1 ) {    // SR form factor set from [Kiselev, hep-ph/0211021]
+    if ( m_idVector == EvtPDL::getId( "J/psi" ).getId() ) {    // Bc -> J/psi
+        if ( m_whichfit ==
+             1 ) {    // SR form factor set from [Kiselev, hep-ph/0211021]
             double Mbc = 6.277, Mpsi = 3.0967;    // Experimental values
             double Mpole2 = 4.5 * 4.5, den = 1. / ( 1. - q2 / Mpole2 );
             double FV = 0.11 * den, FAp = -0.071 * den, FA0 = 5.9 * den,
@@ -57,7 +57,7 @@ void EvtBCVFF2::getvectorff( EvtId, EvtId, double t, double, double* a1f,
                      ( Mbc - Mpsi ) * ( *a2f ) ) /
                    ( 2 * Mpsi );
             return;
-        } else if ( whichfit ==
+        } else if ( m_whichfit ==
                     2 ) {    // form factor set from  [Ebert, hep-ph/0306306]
             *vf = ( 0.49077824756158533 - 0.0012925655191347828 * q2 ) /
                   ( 1 - 0.06292520325875656 * q2 );
@@ -70,9 +70,9 @@ void EvtBCVFF2::getvectorff( EvtId, EvtId, double t, double, double* a1f,
                    ( 1 - 0.04885587273651653 * q2 );
             return;
         };
-    } else if ( idVector ==
+    } else if ( m_idVector ==
                 EvtPDL::getId( "psi(2S)" ).getId() ) {    // Bc -> psi((2S)
-        if ( whichfit == 1 ) {
+        if ( m_whichfit == 1 ) {
             ////cout<<"BC2:: psi2S, Kiselev, q2="<<q2<<endl;
             double Mbc = 6.277, Mpsi = 3.0967, Mpsi2S = 3.686,
                    kappa = Mpsi / Mpsi2S;    // Experimental values
@@ -87,7 +87,7 @@ void EvtBCVFF2::getvectorff( EvtId, EvtId, double t, double, double* a1f,
                      ( Mbc - Mpsi2S ) * ( *a2f ) ) /
                    ( 2 * Mpsi2S );
             return;
-        } else if ( whichfit == 2 ) {
+        } else if ( m_whichfit == 2 ) {
             ////cout<<"BC2:: psi2S, Ebert, q2="<<q2<<endl;
             *vf = ( 0.24177223968739653 - 0.053589051007278135 * q2 ) /
                   ( 1 - 0.0977848994260899 * q2 );

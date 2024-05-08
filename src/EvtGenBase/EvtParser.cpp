@@ -32,31 +32,31 @@ using namespace std;
 
 EvtParser::EvtParser()
 {
-    _ntoken = 0;
-    _lengthoftokenlist = 0;
-    _tokenlist = nullptr;
-    _linelist = nullptr;
+    m_ntoken = 0;
+    m_lengthoftokenlist = 0;
+    m_tokenlist = nullptr;
+    m_linelist = nullptr;
 }
 
 EvtParser::~EvtParser()
 {
-    delete[] _tokenlist;
-    delete[] _linelist;
+    delete[] m_tokenlist;
+    delete[] m_linelist;
 }
 
 int EvtParser::getNToken()
 {
-    return _ntoken;
+    return m_ntoken;
 }
 
 const std::string& EvtParser::getToken( int i )
 {
-    return _tokenlist[i];
+    return m_tokenlist[i];
 }
 
 int EvtParser::getLineofToken( int i )
 {
-    return _linelist[i];
+    return m_linelist[i];
 }
 
 int EvtParser::read( const std::string filename )
@@ -128,35 +128,35 @@ int EvtParser::read( const std::string filename )
 
 void EvtParser::addToken( int line, const std::string& string )
 {
-    //EvtGenReport(EVTGEN_INFO,"EvtGen") <<_ntoken<<" "<<line<<" "<<string<<endl;
+    //EvtGenReport(EVTGEN_INFO,"EvtGen") <<m_ntoken<<" "<<line<<" "<<string<<endl;
 
-    if ( _ntoken == _lengthoftokenlist ) {
-        int new_length = 1000 + 4 * _lengthoftokenlist;
+    if ( m_ntoken == m_lengthoftokenlist ) {
+        int new_length = 1000 + 4 * m_lengthoftokenlist;
 
         int* newlinelist = new int[new_length];
         std::string* newtokenlist = new std::string[new_length];
 
         int i;
 
-        for ( i = 0; i < _ntoken; i++ ) {
-            newlinelist[i] = _linelist[i];
-            newtokenlist[i] = _tokenlist[i];
+        for ( i = 0; i < m_ntoken; i++ ) {
+            newlinelist[i] = m_linelist[i];
+            newtokenlist[i] = m_tokenlist[i];
         }
 
-        delete[] _tokenlist;
-        delete[] _linelist;
+        delete[] m_tokenlist;
+        delete[] m_linelist;
 
-        _tokenlist = newtokenlist;
-        _linelist = newlinelist;
+        m_tokenlist = newtokenlist;
+        m_linelist = newlinelist;
 
-        _lengthoftokenlist = new_length;
+        m_lengthoftokenlist = new_length;
     }
 
-    _tokenlist[_ntoken] = string;
+    m_tokenlist[m_ntoken] = string;
 
-    _linelist[_ntoken] = line;
+    m_linelist[m_ntoken] = line;
 
-    _ntoken++;
+    m_ntoken++;
 
-    //EvtGenReport(EVTGEN_INFO,"EvtGen") << "First:"<<_tokenlist[0]<<" last:"<<_tokenlist[_ntoken-1]<<endl;
+    //EvtGenReport(EVTGEN_INFO,"EvtGen") << "First:"<<m_tokenlist[0]<<" last:"<<m_tokenlist[m_ntoken-1]<<endl;
 }

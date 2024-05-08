@@ -37,7 +37,7 @@ class EvtSymTable {
     static std::string get( const std::string& name, int& ierr );
 
   private:
-    static std::map<std::string, std::string> _symMap;
+    static std::map<std::string, std::string> m_symMap;
 };
 
 #endif

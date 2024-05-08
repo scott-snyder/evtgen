@@ -34,16 +34,16 @@ class EvtModelAlias {
     EvtModelAlias operator=( const EvtModelAlias& copyMe );
     bool matchAlias( const std::string& cand )
     {
-        if ( cand == _aliasName )
+        if ( cand == m_aliasName )
             return true;
         return false;
     }
-    std::string getName() { return _model; }
+    std::string getName() { return m_model; }
     std::vector<std::string> getArgList();
 
   private:
-    std::string _aliasName;
-    std::string _model;
-    std::vector<std::string> _modelArgs;
+    std::string m_aliasName;
+    std::string m_model;
+    std::vector<std::string> m_modelArgs;
 };
 #endif

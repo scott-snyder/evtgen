@@ -50,14 +50,14 @@ class EvtBtoXsll : public EvtDecayIncoherent {
     void decay( EvtParticle* p ) override;
 
   private:
-    std::unique_ptr<EvtBtoXsllUtil> _calcprob;
-    double _dGdsProbMax;
-    double _dGdsdupProbMax;
-    double _mb;
-    double _ms;
-    double _mq;
-    double _pf;
-    double _mxmin;
+    std::unique_ptr<EvtBtoXsllUtil> m_calcprob;
+    double m_dGdsProbMax;
+    double m_dGdsdupProbMax;
+    double m_mb;
+    double m_ms;
+    double m_mq;
+    double m_pf;
+    double m_mxmin;
 };
 
 #endif

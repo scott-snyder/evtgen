@@ -51,18 +51,18 @@ class EvtBLLNuLAmp {
 
         EvtComplex propagator( double qSq, int numForm = 0 ) const;
 
-        double getMass() const { return m0_; }
-        double getMassSq() const { return m0Sq_; }
-        double getWidth() const { return w0_; }
-        double getCoupling() const { return c_; }
+        double getMass() const { return m_m0; }
+        double getMassSq() const { return m_m0Sq; }
+        double getWidth() const { return m_w0; }
+        double getCoupling() const { return m_c; }
 
       private:
-        double m0_;    // pole mass
-        double m0Sq_;
-        double w0_;    // width
-        double c_;     // coupling constant
-        EvtComplex I_;
-        EvtComplex Imw_;
+        double m_m0;    // pole mass
+        double m_m0Sq;
+        double m_w0;    // width
+        double m_c;     // coupling constant
+        EvtComplex m_I;
+        EvtComplex m_Imw;
     };
 
   protected:
@@ -84,35 +84,35 @@ class EvtBLLNuLAmp {
 
   private:
     // Kinematic cut-offs
-    double qSqMin_;
-    double kSqMin_;
+    double m_qSqMin;
+    double m_kSqMin;
 
     // If we have identical charged lepton flavours
-    bool symmetry_;
+    bool m_symmetry;
 
     // B+, B- Ids
-    EvtId BpId_, BnId_;
+    EvtId m_BpId, m_BnId;
 
     // Form factor constants
-    double coupling_, sqrt2_;
-    double fBu_;
+    double m_coupling, m_sqrt2;
+    double m_fBu;
 
     // Resonance poles
-    EvtBLLNuLAmp::ResPole Bstar_, Upsilon_;
+    EvtBLLNuLAmp::ResPole m_Bstar, m_Upsilon;
 
-    std::vector<EvtBLLNuLAmp::ResPole> resPoles_;
-    int nPoles_;
+    std::vector<EvtBLLNuLAmp::ResPole> m_resPoles;
+    int m_nPoles;
 
     // Complex number constants
-    EvtComplex zero_, unitI_;
+    EvtComplex m_zero, m_unitI;
 };
 
 inline void EvtBLLNuLAmp::setParameters( double qSqMin, double kSqMin,
                                          bool symmetry )
 {
-    qSqMin_ = qSqMin;
-    kSqMin_ = kSqMin;
-    symmetry_ = symmetry;
+    m_qSqMin = qSqMin;
+    m_kSqMin = kSqMin;
+    m_symmetry = symmetry;
 }
 
 #endif

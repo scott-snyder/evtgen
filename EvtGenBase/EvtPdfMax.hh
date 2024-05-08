@@ -30,34 +30,34 @@
 template <class Point>
 class EvtPdfMax {
   public:
-    EvtPdfMax() : _value( -1 ), _valueKnown( false ), _locKnown( false ) {}
+    EvtPdfMax() : m_value( -1 ), m_valueKnown( false ), m_locKnown( false ) {}
     EvtPdfMax( double value ) :
-        _value( value ), _valueKnown( true ), _locKnown( false )
+        m_value( value ), m_valueKnown( true ), m_locKnown( false )
     {
     }
     EvtPdfMax( Point p, double value ) :
-        _value( value ), _valueKnown( true ), _locKnown( true ), _loc( p )
+        m_value( value ), m_valueKnown( true ), m_locKnown( true ), m_loc( p )
     {
     }
 
-    bool valueKnown() const { return _valueKnown; }
+    bool valueKnown() const { return m_valueKnown; }
     double value() const
     {
-        assert( _valueKnown );
-        return _value;
+        assert( m_valueKnown );
+        return m_value;
     }
-    bool locKnown() const { return _locKnown; }
+    bool locKnown() const { return m_locKnown; }
     Point loc() const
     {
-        assert( _locKnown );
-        return _loc;
+        assert( m_locKnown );
+        return m_loc;
     }
 
   private:
-    double _value;
-    bool _valueKnown;
-    bool _locKnown;
-    Point _loc;
+    double m_value;
+    bool m_valueKnown;
+    bool m_locKnown;
+    Point m_loc;
 };
 
 #endif

@@ -36,17 +36,17 @@ class EvtDecayIncoherent : public EvtDecayBase {
 
     void setDaughterSpinDensity( int daughter )
     {
-        spinDensitySet[daughter] = 1;
+        m_spinDensitySet[daughter] = 1;
         return;
     }
 
     int isDaughterSpinDensitySet( int daughter )
     {
-        return spinDensitySet[daughter];
+        return m_spinDensitySet[daughter];
     }
 
   private:
-    int spinDensitySet[MAX_DAUG];
+    int m_spinDensitySet[MAX_DAUG];
 };
 
 #endif

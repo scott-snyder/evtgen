@@ -29,10 +29,10 @@
 #include <string>
 
 EvtSLBKPoleFF::EvtSLBKPoleFF( int numarg, double* arglist )
-{                                //modified
-    numSLBKPoleargs = numarg;    //modified
+{                                  //modified
+    m_numSLBKPoleargs = numarg;    //modified
     for ( int i = 0; i < numarg; i++ ) {
-        SLBKPoleargs[i] = arglist[i];
+        m_SLBKPoleargs[i] = arglist[i];
     }    //modified
 
     return;
@@ -44,34 +44,30 @@ void EvtSLBKPoleFF::getscalarff( EvtId parent, EvtId daught, double t,
     // Form factors have a general form, with parameters passed in
     // from the arguments.
 
-    if ( numSLBKPoleargs != 4 ) {    //modified
+    if ( m_numSLBKPoleargs != 4 ) {    //modified
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Problem in EvtSLBKPoleFF::getscalarff\n";
         EvtGenReport( EVTGEN_ERROR, "EvtGen" ) << "wrong number of arguments!\n";
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "number args:" << numSLBKPoleargs << " (expected 4)\n";
+            << "number args:" << m_numSLBKPoleargs << " (expected 4)\n";
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Parent:" << EvtPDL::name( parent ) << "\n";
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Daughter:" << EvtPDL::name( daught ) << "\n";
     }
 
-    double f0, af, powf;
+    double f0 = m_SLBKPoleargs[0];    //f0
+    double af = m_SLBKPoleargs[1];    //alpha
 
-    //double a_0, a_1, a_2, a_3, a_4, a_5, a_6, a_7;
-
-    f0 = SLBKPoleargs[0];    //f0
-    af = SLBKPoleargs[1];    //alpha
-    //bf = SLBKPoleargs[2];
-    double mass_star2 = SLBKPoleargs[3] * SLBKPoleargs[3];
-    powf = 1.0;
+    double mass_star2 = m_SLBKPoleargs[3] * m_SLBKPoleargs[3];
+    double powf = 1.0;
     *fpf = f0 / ( pow( 1.0 - ( 1.0 + af ) * ( t / mass_star2 ) +
                            ( af * ( ( t / mass_star2 ) * ( t / mass_star2 ) ) ),
                        powf ) );    //modified
 
-    f0 = SLBKPoleargs[0];    //f0
-    af = SLBKPoleargs[2];    //beta
-    //bf = SLBKPoleargs[6];
+    f0 = m_SLBKPoleargs[0];    //f0
+    af = m_SLBKPoleargs[2];    //beta
+
     powf = 1.0;
 
     *f0f = f0 / ( pow( 1.0 - ( t / mass_star2 / af ), powf ) );    //modified
@@ -83,14 +79,13 @@ void EvtSLBKPoleFF::getvectorff( EvtId parent, EvtId /*daught*/, double t,
                                  double /*mass*/, double* a1f, double* a2f,
                                  double* vf, double* a0f )
 {
-    if ( numSLBKPoleargs != 8 ) {    //modified
+    if ( m_numSLBKPoleargs != 8 ) {    //modified
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Problem in EvtSLBKPoleFF::getvectorff\n";    //modified
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "wrong number of arguements!!!\n";
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << numSLBKPoleargs << "\n";    //modified
-        //     printf("\n*********************%d*********************",numSLBKPoleargs);
+            << m_numSLBKPoleargs << "\n";    //modified
     }
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -150,37 +145,35 @@ void EvtSLBKPoleFF::getvectorff( EvtId parent, EvtId /*daught*/, double t,
     }
     //modified-end
 
-    double f0, af, bf, powf;
-
-    f0 = SLBKPoleargs[2];                                      //A1
-    af = SLBKPoleargs[6];                                      //b'
-    bf = 0;                                                    //0
-    powf = 1.0;                                                //1.0
+    double f0 = m_SLBKPoleargs[2];                             //A1
+    double af = m_SLBKPoleargs[6];                             //b'
+    double bf = 0;                                             //0
+    double powf = 1.0;                                         //1.0
     *a1f = f0 / ( pow( 1.0 - af * t / mass_star2, powf ) );    //modified
 
-    f0 = SLBKPoleargs[3];    //A2
-    af = SLBKPoleargs[6];    //b'
-    bf = SLBKPoleargs[7];    //b''==0
-    powf = 1.0;              //1.0
+    f0 = m_SLBKPoleargs[3];    //A2
+    af = m_SLBKPoleargs[6];    //b'
+    bf = m_SLBKPoleargs[7];    //b''==0
+    powf = 1.0;                //1.0
 
     *a2f = f0 /
            ( pow( 1.0 - ( af + bf ) * ( t / mass_star2 ) +
                       ( af * bf ) * ( ( t / mass_star2 ) * ( t / mass_star2 ) ),
                   powf ) );    //modified
 
-    f0 = SLBKPoleargs[0];    //V0
-    af = SLBKPoleargs[4];    //a
-    bf = 0;                  //0
-    powf = 1.0;              //1.0
+    f0 = m_SLBKPoleargs[0];    //V0
+    af = m_SLBKPoleargs[4];    //a
+    bf = 0;                    //0
+    powf = 1.0;                //1.0
 
     *vf = f0 / ( pow( 1.0 - ( 1.0 + af ) * ( t / mass_star2 ) +
                           af * ( t / mass_star2 ) * ( t / mass_star2 ),
                       powf ) );    //modified
 
-    f0 = SLBKPoleargs[1];    //A0
-    af = SLBKPoleargs[5];    //a'
-    bf = 0;                  //0
-    powf = 1.0;              //1.0
+    f0 = m_SLBKPoleargs[1];    //A0
+    af = m_SLBKPoleargs[5];    //a'
+    bf = 0;                    //0
+    powf = 1.0;                //1.0
 
     *a0f = f0 / ( pow( 1.0 - ( 1.0 + af ) * ( t / mb2 ) +
                            af * ( ( t / mb2 ) * ( t / mb2 ) ),
@@ -192,7 +185,7 @@ void EvtSLBKPoleFF::gettensorff( EvtId parent, EvtId /*daught*/, double t,
                                  double /*mass*/, double* hf, double* kf,
                                  double* bpf, double* bmf )
 {
-    if ( numSLBKPoleargs != 16 ) {
+    if ( m_numSLBKPoleargs != 16 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Problem in EvtSLBKPoleFF::gettensorff\n";
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -205,38 +198,36 @@ void EvtSLBKPoleFF::gettensorff( EvtId parent, EvtId /*daught*/, double t,
     double mb = EvtPDL::getMeanMass( parent );
     double mb2 = mb * mb;
 
-    double f0, af, bf, powf;
-
-    f0 = SLBKPoleargs[0];
-    af = SLBKPoleargs[1];
-    bf = SLBKPoleargs[2];
-    powf = SLBKPoleargs[3];
+    double f0 = m_SLBKPoleargs[0];
+    double af = m_SLBKPoleargs[1];
+    double bf = m_SLBKPoleargs[2];
+    double powf = m_SLBKPoleargs[3];
     *hf = f0 /
           ( pow( 1.0 + ( af * t / mb2 ) + ( bf * ( ( t / mb2 ) * ( t / mb2 ) ) ),
                  powf ) );
 
-    f0 = SLBKPoleargs[4];
-    af = SLBKPoleargs[5];
-    bf = SLBKPoleargs[6];
-    powf = SLBKPoleargs[7];
+    f0 = m_SLBKPoleargs[4];
+    af = m_SLBKPoleargs[5];
+    bf = m_SLBKPoleargs[6];
+    powf = m_SLBKPoleargs[7];
 
     *kf = f0 /
           ( pow( 1.0 + ( af * t / mb2 ) + ( bf * ( ( t / mb2 ) * ( t / mb2 ) ) ),
                  powf ) );
 
-    f0 = SLBKPoleargs[8];
-    af = SLBKPoleargs[9];
-    bf = SLBKPoleargs[10];
-    powf = SLBKPoleargs[11];
+    f0 = m_SLBKPoleargs[8];
+    af = m_SLBKPoleargs[9];
+    bf = m_SLBKPoleargs[10];
+    powf = m_SLBKPoleargs[11];
 
     *bpf = f0 /
            ( pow( 1.0 + ( af * t / mb2 ) + ( bf * ( ( t / mb2 ) * ( t / mb2 ) ) ),
                   powf ) );
 
-    f0 = SLBKPoleargs[12];
-    af = SLBKPoleargs[13];
-    bf = SLBKPoleargs[14];
-    powf = SLBKPoleargs[15];
+    f0 = m_SLBKPoleargs[12];
+    af = m_SLBKPoleargs[13];
+    bf = m_SLBKPoleargs[14];
+    powf = m_SLBKPoleargs[15];
 
     *bmf = f0 /
            ( pow( 1.0 + ( af * t / mb2 ) + ( bf * ( ( t / mb2 ) * ( t / mb2 ) ) ),

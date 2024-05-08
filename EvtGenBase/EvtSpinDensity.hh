@@ -43,8 +43,8 @@ class EvtSpinDensity {
     int check();
 
   private:
-    EvtComplexPtrPtr rho;
-    int dim;
+    EvtComplexPtrPtr m_rho;
+    int m_dim;
 };
 
 #endif

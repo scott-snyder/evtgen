@@ -46,7 +46,7 @@ void EvtKKLambdaC::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    _calcamp->CalcAmp( p, _amp2, _ffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_ffmodel.get() );
 }
 
 void EvtKKLambdaC::initProbMax()
@@ -58,8 +58,8 @@ void EvtKKLambdaC::initProbMax()
     lnum = getDaug( 1 );
     nunum = getDaug( 2 );
 
-    //double mymaxprob = _calcamp->CalcMaxProb(parnum,mesnum,
-    //                           lnum,nunum,_ffmodel);
+    //double mymaxprob = m_calcamp->CalcMaxProb(parnum,mesnum,
+    //                           lnum,nunum,m_ffmodel);
     double mymaxprob = 1e3;
     setProbMax( mymaxprob );
 }
@@ -76,7 +76,7 @@ void EvtKKLambdaC::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::NEUTRINO );
 
-    _ffmodel = std::make_unique<EvtKKLambdaCFF>( getNArg(), getArgs() );
+    m_ffmodel = std::make_unique<EvtKKLambdaCFF>( getNArg(), getArgs() );
 
-    _calcamp = std::make_unique<EvtSemiLeptonicBaryonAmp>();
+    m_calcamp = std::make_unique<EvtSemiLeptonicBaryonAmp>();
 }

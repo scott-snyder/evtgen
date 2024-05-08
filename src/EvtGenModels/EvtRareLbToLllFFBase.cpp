@@ -28,23 +28,23 @@ EvtRareLbToLllFFBase::FormFactors::FormFactors()
 void EvtRareLbToLllFFBase::FormFactors::areZero()
 {
     for ( unsigned int i = 0; i < 4; ++i ) {
-        F_[i] = 0;
-        G_[i] = 0;
-        FT_[i] = 0;
-        GT_[i] = 0;
+        m_F[i] = 0;
+        m_G[i] = 0;
+        m_FT[i] = 0;
+        m_GT[i] = 0;
     }
 }
 
 EvtRareLbToLllFFBase::EvtRareLbToLllFFBase() :
-    natural_{ "Lambda0",       "anti-Lambda0",
-              "Lambda(1520)0", "anti-Lambda(1520)0",
-              "Lambda(1600)0", "anti-Lambda(1600)0" }
+    m_natural{ "Lambda0",       "anti-Lambda0",
+               "Lambda(1520)0", "anti-Lambda(1520)0",
+               "Lambda(1600)0", "anti-Lambda(1600)0" }
 {
 }
 
 bool EvtRareLbToLllFFBase::isNatural( const EvtParticle& lambda ) const
 {
-    return natural_.contains( lambda.getId() );
+    return m_natural.contains( lambda.getId() );
 }
 
 double EvtRareLbToLllFFBase::calculateVdotV( const EvtParticle& parent,

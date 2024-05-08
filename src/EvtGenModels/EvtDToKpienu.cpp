@@ -48,52 +48,52 @@ void EvtDToKpienu::init()
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << "EvtDToKpienu ==> Initialization !" << std::endl;
-    nAmps = 2;
+    m_nAmps = 2;
 
-    rS = -11.57;    // S-wave
-    rS1 = 0.08;
-    a_delta = 1.94;
-    b_delta = -0.81;
-    m0_1430_S = 1.425;
-    width0_1430_S = 0.270;
-    type[0] = 0;
+    m_rS = -11.57;    // S-wave
+    m_rS1 = 0.08;
+    m_a_delta = 1.94;
+    m_b_delta = -0.81;
+    m_m0_1430_S = 1.425;
+    m_width0_1430_S = 0.270;
+    m_type[0] = 0;
 
-    mV = 1.81;
-    mA = 2.61;
-    V_0 = 1.411;
-    A1_0 = 1;
-    A2_0 = 0.788;
+    m_mV = 1.81;
+    m_mA = 2.61;
+    m_V_0 = 1.411;
+    m_A1_0 = 1;
+    m_A2_0 = 0.788;
 
-    m0 = 0.8946;    // P-wave K*
-    width0 = 0.04642;
-    rBW = 3.07;
-    rho = 1;
-    phi = 0;
-    type[1] = 1;
+    m_m0 = 0.8946;    // P-wave K*
+    m_width0 = 0.04642;
+    m_rBW = 3.07;
+    m_rho = 1;
+    m_phi = 0;
+    m_type[1] = 1;
 
-    m0_1410 = 1.414;    // P-wave K*(1410)
-    width0_1410 = 0.232;
-    rho_1410 = 0.1;
-    phi_1410 = 0.;
-    type[2] = 2;
+    m_m0_1410 = 1.414;    // P-wave K*(1410)
+    m_width0_1410 = 0.232;
+    m_rho_1410 = 0.1;
+    m_phi_1410 = 0.;
+    m_type[2] = 2;
 
-    TV_0 = 1;    // D-wave K*2(1430)
-    T1_0 = 1;
-    T2_0 = 1;
-    m0_1430 = 1.4324;
-    width0_1430 = 0.109;
-    rho_1430 = 15;
-    phi_1430 = 0;
-    type[3] = 3;
+    m_TV_0 = 1;    // D-wave K*2(1430)
+    m_T1_0 = 1;
+    m_T2_0 = 1;
+    m_m0_1430 = 1.4324;
+    m_width0_1430 = 0.109;
+    m_rho_1430 = 15;
+    m_phi_1430 = 0;
+    m_type[3] = 3;
 
-    mD = 1.86962;
-    mPi = 0.13957;
-    mK = 0.49368;
-    Pi = atan2( 0.0, -1.0 );
-    root2 = sqrt( 2. );
-    root2d3 = sqrt( 2. / 3 );
-    root1d2 = sqrt( 0.5 );
-    root3d2 = sqrt( 1.5 );
+    m_mD = 1.86962;
+    m_mPi = 0.13957;
+    m_mK = 0.49368;
+    m_Pi = atan2( 0.0, -1.0 );
+    m_root2 = sqrt( 2. );
+    m_root2d3 = sqrt( 2. / 3 );
+    m_root1d2 = sqrt( 0.5 );
+    m_root3d2 = sqrt( 1.5 );
 }
 
 void EvtDToKpienu::initProbMax()
@@ -209,20 +209,21 @@ double EvtDToKpienu::calPDF( const double m2, const double q2, const double cosV
     EvtComplex coef( 0.0, 0.0 );
     double amplitude_temp, delta_temp;
 
-    for ( int index = 0; index < nAmps; index++ ) {
-        switch ( type[index] ) {
+    for ( int index = 0; index < m_nAmps; index++ ) {
+        switch ( m_type[index] ) {
             case 0:    // calculate form factor of S wave
             {
-                NRS( m, q, rS, rS1, a_delta, b_delta, mA, m0_1430_S,
-                     width0_1430_S, amplitude_temp, delta_temp, f10 );
+                NRS( m, q, m_rS, m_rS1, m_a_delta, m_b_delta, m_mA, m_m0_1430_S,
+                     m_width0_1430_S, amplitude_temp, delta_temp, f10 );
                 F10 = F10 + f10;
                 break;
             }
             case 1:    // calculate form factor of P wave (K*)
             {
-                ResonanceP( m, q, mV, mA, V_0, A1_0, A2_0, m0, width0, rBW,
-                            amplitude_temp, delta_temp, f11, f21, f31 );
-                coef = getCoef( rho, phi );
+                ResonanceP( m, q, m_mV, m_mA, m_V_0, m_A1_0, m_A2_0, m_m0,
+                            m_width0, m_rBW, amplitude_temp, delta_temp, f11,
+                            f21, f31 );
+                coef = getCoef( m_rho, m_phi );
                 F11 = F11 + coef * f11;
                 F21 = F21 + coef * f21;
                 F31 = F31 + coef * f31;
@@ -230,9 +231,10 @@ double EvtDToKpienu::calPDF( const double m2, const double q2, const double cosV
             }
             case 2:    // calculate form factor of P wave (K*(1410))
             {
-                ResonanceP( m, q, mV, mA, V_0, A1_0, A2_0, m0_1410, width0_1410,
-                            rBW, amplitude_temp, delta_temp, f11, f21, f31 );
-                coef = getCoef( rho_1410, phi_1410 );
+                ResonanceP( m, q, m_mV, m_mA, m_V_0, m_A1_0, m_A2_0, m_m0_1410,
+                            m_width0_1410, m_rBW, amplitude_temp, delta_temp,
+                            f11, f21, f31 );
+                coef = getCoef( m_rho_1410, m_phi_1410 );
                 F11 = F11 + coef * f11;
                 F21 = F21 + coef * f21;
                 F31 = F31 + coef * f31;
@@ -240,9 +242,10 @@ double EvtDToKpienu::calPDF( const double m2, const double q2, const double cosV
             }
             case 3:    // calculate form factor of D wave
             {
-                ResonanceD( m, q, mV, mA, TV_0, T1_0, T2_0, m0_1430, width0_1430,
-                            rBW, amplitude_temp, delta_temp, f12, f22, f32 );
-                coef = getCoef( rho_1430, phi_1430 );
+                ResonanceD( m, q, m_mV, m_mA, m_TV_0, m_T1_0, m_T2_0, m_m0_1430,
+                            m_width0_1430, m_rBW, amplitude_temp, delta_temp,
+                            f12, f22, f32 );
+                coef = getCoef( m_rho_1430, m_phi_1430 );
                 F12 = F12 + coef * f12;
                 F22 = F22 + coef * f22;
                 F32 = F32 + coef * f32;
@@ -264,8 +267,8 @@ double EvtDToKpienu::calPDF( const double m2, const double q2, const double cosV
     double sinV2 = sinV * sinV;
 
     EvtComplex F1 = F10 + F11 * cosV + F12 * ( 1.5 * cosV2 - 0.5 );
-    EvtComplex F2 = F21 * root1d2 + F22 * cosV * root3d2;
-    EvtComplex F3 = F31 * root1d2 + F32 * cosV * root3d2;
+    EvtComplex F2 = F21 * m_root1d2 + F22 * cosV * m_root3d2;
+    EvtComplex F3 = F31 * m_root1d2 + F32 * cosV * m_root3d2;
 
     I1 = 0.25 * ( abs2( F1 ) + 1.5 * sinV2 * ( abs2( F2 ) + abs2( F3 ) ) );
     I2 = -0.25 * ( abs2( F1 ) - 0.5 * sinV2 * ( abs2( F2 ) + abs2( F3 ) ) );
@@ -301,19 +304,19 @@ void EvtDToKpienu::ResonanceP( const double m, const double q, const double mV,
                                double& delta, EvtComplex& F11, EvtComplex& F21,
                                EvtComplex& F31 ) const
 {
-    double pKPi = getPStar( mD, m, q );
-    double mD2 = mD * mD;
+    double pKPi = getPStar( m_mD, m, q );
+    double mD2 = m_mD * m_mD;
     double m2 = m * m;
     double m02 = m0 * m0;
     double q2 = q * q;
     double mV2 = mV * mV;
     double mA2 = mA * mA;
-    double summDm = mD + m;
+    double summDm = m_mD + m;
     double V = V_0 / ( 1.0 - q2 / ( mV2 ) );
     double A1 = A1_0 / ( 1.0 - q2 / ( mA2 ) );
     double A2 = A2_0 / ( 1.0 - q2 / ( mA2 ) );
     double A = summDm * A1;
-    double B = 2.0 * mD * pKPi / summDm * V;
+    double B = 2.0 * m_mD * pKPi / summDm * V;
 
     // construct the helicity form factor
     double H0 = 0.5 / ( m * q ) *
@@ -324,12 +327,12 @@ void EvtDToKpienu::ResonanceP( const double m, const double q, const double mV,
 
     // calculate alpha
     double B_Kstar = 2. / 3.;    // B_Kstar = Br(Kstar(892)->k pi)
-    double pStar0 = getPStar( m0, mPi, mK );
-    double alpha = sqrt( 3. * Pi * B_Kstar / ( pStar0 * width0 ) );
+    double pStar0 = getPStar( m0, m_mPi, m_mK );
+    double alpha = sqrt( 3. * m_Pi * B_Kstar / ( pStar0 * width0 ) );
 
     // construct amplitudes of (non)resonance
-    double F = getF1( m, m0, mPi, mK, rBW );
-    double width = getWidth1( m, m0, mPi, mK, width0, rBW );
+    double F = getF1( m, m0, m_mPi, m_mK, rBW );
+    double width = getWidth1( m, m0, m_mPi, m_mK, width0, rBW );
 
     EvtComplex C( m0 * width0 * F, 0.0 );
     double AA = m02 - m2;
@@ -339,7 +342,7 @@ void EvtDToKpienu::ResonanceP( const double m, const double q, const double mV,
     delta = atan2( imag( amp ), real( amp ) );
 
     double alpham2 = alpha * 2.0;
-    F11 = amp * alpham2 * q * H0 * root2;
+    F11 = amp * alpham2 * q * H0 * m_root2;
     F21 = amp * alpham2 * q * ( Hp + Hm );
     F31 = amp * alpham2 * q * ( Hp - Hm );
 }
@@ -350,16 +353,16 @@ void EvtDToKpienu::NRS( const double m, const double q, const double rS,
                         const double width0, double& amplitude, double& delta,
                         EvtComplex& F10 ) const
 {
-    static const double tmp = ( mK + mPi ) * ( mK + mPi );
+    static const double tmp = ( m_mK + m_mPi ) * ( m_mK + m_mPi );
 
     double m2 = m * m;
     double q2 = q * q;
     double mA2 = mA * mA;
-    double pKPi = getPStar( mD, m, q );
+    double pKPi = getPStar( m_mD, m, q );
     double m_K0_1430 = m0;
     double width_K0_1430 = width0;
     double m2_K0_1430 = m_K0_1430 * m_K0_1430;
-    double width = getWidth0( m, m_K0_1430, mPi, mK, width_K0_1430 );
+    double width = getWidth0( m, m_K0_1430, m_mPi, m_mK, width_K0_1430 );
 
     // calculate modul of the amplitude
     double x, Pm;
@@ -375,21 +378,21 @@ void EvtDToKpienu::NRS( const double m, const double q, const double rS,
     }
 
     // calculate phase of the amplitude
-    double pStar = getPStar( m, mPi, mK );
+    double pStar = getPStar( m, m_mPi, m_mK );
     double delta_bg = atan( 2. * a_delta * pStar /
                             ( 2. + a_delta * b_delta * pStar * pStar ) );
-    delta_bg = ( delta_bg > 0 ) ? delta_bg : ( delta_bg + Pi );
+    delta_bg = ( delta_bg > 0 ) ? delta_bg : ( delta_bg + m_Pi );
 
     double delta_K0_1430 = atan( m_K0_1430 * width / ( m2_K0_1430 - m2 ) );
     delta_K0_1430 = ( delta_K0_1430 > 0 ) ? delta_K0_1430
-                                          : ( delta_K0_1430 + Pi );
+                                          : ( delta_K0_1430 + m_Pi );
     delta = delta_bg + delta_K0_1430;
 
     EvtComplex ci( cos( delta ), sin( delta ) );
     EvtComplex amp = ci * rS * Pm;
     amplitude = rS * Pm;
 
-    F10 = amp * pKPi * mD / ( 1. - q2 / mA2 );
+    F10 = amp * pKPi * m_mD / ( 1. - q2 / mA2 );
 }
 
 void EvtDToKpienu::ResonanceD( const double m, const double q, const double mV,
@@ -400,21 +403,21 @@ void EvtDToKpienu::ResonanceD( const double m, const double q, const double mV,
                                double& delta, EvtComplex& F12, EvtComplex& F22,
                                EvtComplex& F32 ) const
 {
-    double pKPi = getPStar( mD, m, q );
-    double mD2 = mD * mD;
+    double pKPi = getPStar( m_mD, m, q );
+    double mD2 = m_mD * m_mD;
     double m2 = m * m;
     double m02 = m0 * m0;
     double q2 = q * q;
     double mV2 = mV * mV;
     double mA2 = mA * mA;
-    double summDm = mD + m;
+    double summDm = m_mD + m;
     double TV = TV_0 / ( 1.0 - q2 / ( mV2 ) );
     double T1 = T1_0 / ( 1.0 - q2 / ( mA2 ) );
     double T2 = T2_0 / ( 1.0 - q2 / ( mA2 ) );
 
     // construct amplitudes of (non)resonance
-    double F = getF2( m, m0, mPi, mK, rBW );
-    double width = getWidth2( m, m0, mPi, mK, width0, rBW );
+    double F = getF2( m, m0, m_mPi, m_mK, rBW );
+    double width = getWidth2( m, m0, m_mPi, m_mK, width0, rBW );
     EvtComplex C( m0 * width0 * F, 0.0 );
     double AA = m02 - m2;
     double BB = -m0 * width;
@@ -423,10 +426,10 @@ void EvtDToKpienu::ResonanceD( const double m, const double q, const double mV,
     amplitude = abs( amp );
     delta = atan2( imag( amp ), real( amp ) );
 
-    F12 = amp * mD * pKPi / 3. *
+    F12 = amp * m_mD * pKPi / 3. *
           ( ( mD2 - m2 - q2 ) * summDm * T1 - mD2 * pKPi * pKPi / summDm * T2 );
-    F22 = amp * root2d3 * mD * m * q * pKPi * summDm * T1;
-    F32 = amp * root2d3 * 2. * mD2 * m * q * pKPi * pKPi / summDm * TV;
+    F22 = amp * m_root2d3 * m_mD * m * q * pKPi * summDm * T1;
+    F32 = amp * m_root2d3 * 2. * mD2 * m * q * pKPi * pKPi / summDm * TV;
 }
 
 double EvtDToKpienu::getPStar( const double m, const double m1,

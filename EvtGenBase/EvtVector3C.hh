@@ -66,70 +66,70 @@ class EvtVector3C final {
     double dot( const EvtVector3C& p2 );
 
   private:
-    EvtComplex v[3];
+    EvtComplex m_v[3];
 };
 
 inline EvtVector3C::EvtVector3C( const EvtVector3R& v1 )
 {
-    v[0] = EvtComplex( v1.get( 0 ), 0.0 );
-    v[1] = EvtComplex( v1.get( 1 ), 0.0 );
-    v[2] = EvtComplex( v1.get( 2 ), 0.0 );
+    m_v[0] = EvtComplex( v1.get( 0 ), 0.0 );
+    m_v[1] = EvtComplex( v1.get( 1 ), 0.0 );
+    m_v[2] = EvtComplex( v1.get( 2 ), 0.0 );
 }
 
 inline void EvtVector3C::set( const int i, const EvtComplex& c )
 {
-    v[i] = c;
+    m_v[i] = c;
 }
 
 inline void EvtVector3C::set( const EvtComplex& x, const EvtComplex& y,
                               const EvtComplex& z )
 {
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
+    m_v[0] = x;
+    m_v[1] = y;
+    m_v[2] = z;
 }
 
 inline void EvtVector3C::set( double x, double y, double z )
 {
-    v[0] = EvtComplex( x );
-    v[1] = EvtComplex( y );
-    v[2] = EvtComplex( z );
+    m_v[0] = EvtComplex( x );
+    m_v[1] = EvtComplex( y );
+    m_v[2] = EvtComplex( z );
 }
 
 inline const EvtComplex& EvtVector3C::get( int i ) const
 {
-    return v[i];
+    return m_v[i];
 }
 
 inline EvtVector3C& EvtVector3C::operator*=( const EvtComplex& c )
 {
-    v[0] *= c;
-    v[1] *= c;
-    v[2] *= c;
+    m_v[0] *= c;
+    m_v[1] *= c;
+    m_v[2] *= c;
     return *this;
 }
 
 inline EvtVector3C& EvtVector3C::operator/=( const EvtComplex& c )
 {
-    v[0] /= c;
-    v[1] /= c;
-    v[2] /= c;
+    m_v[0] /= c;
+    m_v[1] /= c;
+    m_v[2] /= c;
     return *this;
 }
 
 inline EvtVector3C& EvtVector3C::operator+=( const EvtVector3C& v2 )
 {
-    v[0] += v2.v[0];
-    v[1] += v2.v[1];
-    v[2] += v2.v[2];
+    m_v[0] += v2.m_v[0];
+    m_v[1] += v2.m_v[1];
+    m_v[2] += v2.m_v[2];
     return *this;
 }
 
 inline EvtVector3C& EvtVector3C::operator-=( const EvtVector3C& v2 )
 {
-    v[0] -= v2.v[0];
-    v[1] -= v2.v[1];
-    v[2] -= v2.v[2];
+    m_v[0] -= v2.m_v[0];
+    m_v[1] -= v2.m_v[1];
+    m_v[2] -= v2.m_v[2];
     return *this;
 }
 
@@ -160,22 +160,24 @@ inline EvtVector3C operator*( const EvtComplex& c, const EvtVector3R& v2 )
 
 inline EvtComplex operator*( const EvtVector3R& v1, const EvtVector3C& v2 )
 {
-    return v1.get( 0 ) * v2.v[0] + v1.get( 1 ) * v2.v[1] + v1.get( 2 ) * v2.v[2];
+    return v1.get( 0 ) * v2.m_v[0] + v1.get( 1 ) * v2.m_v[1] +
+           v1.get( 2 ) * v2.m_v[2];
 }
 
 inline EvtComplex operator*( const EvtVector3C& v1, const EvtVector3R& v2 )
 {
-    return v1.v[0] * v2.get( 0 ) + v1.v[1] * v2.get( 1 ) + v1.v[2] * v2.get( 2 );
+    return v1.m_v[0] * v2.get( 0 ) + v1.m_v[1] * v2.get( 1 ) +
+           v1.m_v[2] * v2.get( 2 );
 }
 
 inline EvtComplex operator*( const EvtVector3C& v1, const EvtVector3C& v2 )
 {
-    return v1.v[0] * v2.v[0] + v1.v[1] * v2.v[1] + v1.v[2] * v2.v[2];
+    return v1.m_v[0] * v2.m_v[0] + v1.m_v[1] * v2.m_v[1] + v1.m_v[2] * v2.m_v[2];
 }
 
 inline EvtVector3C EvtVector3C::conj() const
 {
-    return EvtVector3C( ::conj( v[0] ), ::conj( v[1] ), ::conj( v[2] ) );
+    return EvtVector3C( ::conj( m_v[0] ), ::conj( m_v[1] ), ::conj( m_v[2] ) );
 }
 
 #endif

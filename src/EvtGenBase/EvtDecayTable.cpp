@@ -48,12 +48,12 @@ using std::ifstream;
 
 EvtDecayTable::EvtDecayTable()
 {
-    _decaytable.clear();
+    m_decaytable.clear();
 }
 
 EvtDecayTable::~EvtDecayTable()
 {
-    _decaytable.clear();
+    m_decaytable.clear();
 }
 
 EvtDecayTable* EvtDecayTable::getInstance()
@@ -69,18 +69,18 @@ EvtDecayTable* EvtDecayTable::getInstance()
 
 int EvtDecayTable::getNMode( int ipar )
 {
-    return _decaytable[ipar].getNMode();
+    return m_decaytable[ipar].getNMode();
 }
 
 EvtDecayBase* EvtDecayTable::getDecay( int ipar, int imode )
 {
-    return _decaytable[ipar].getDecayModel( imode );
+    return m_decaytable[ipar].getDecayModel( imode );
 }
 
 void EvtDecayTable::printSummary()
 {
     for ( size_t i = 0; i < EvtPDL::entries(); i++ ) {
-        _decaytable[i].printSummary();
+        m_decaytable[i].printSummary();
     }
 }
 
@@ -90,15 +90,15 @@ EvtDecayBase* EvtDecayTable::getDecayFunc( EvtParticle* p )
 
     partnum = p->getId().getAlias();
 
-    if ( _decaytable[partnum].getNMode() == 0 )
+    if ( m_decaytable[partnum].getNMode() == 0 )
         return nullptr;
-    return _decaytable[partnum].getDecayModel( p );
+    return m_decaytable[partnum].getDecayModel( p );
 }
 
 void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
 {
-    if ( _decaytable.size() < EvtPDL::entries() )
-        _decaytable.resize( EvtPDL::entries() );
+    if ( m_decaytable.size() < EvtPDL::entries() )
+        m_decaytable.resize( EvtPDL::entries() );
     EvtModel& modelist = EvtModel::instance();
     EvtExtGeneratorCommandsTable* extGenCommands =
         EvtExtGeneratorCommandsTable::getInstance();
@@ -232,8 +232,8 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
             }
 
             EvtPDL::alias( id, newname );
-            if ( _decaytable.size() < EvtPDL::entries() )
-                _decaytable.resize( EvtPDL::entries() );
+            if ( m_decaytable.size() < EvtPDL::entries() )
+                m_decaytable.resize( EvtPDL::entries() );
 
         } else if ( token == "ModelAlias" ) {
             std::vector<std::string> modelArgList;
@@ -379,18 +379,18 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
 
             EvtId cipar = EvtPDL::chargeConj( ipar );
 
-            if ( _decaytable[ipar.getAlias()].getNMode() != 0 ) {
+            if ( m_decaytable[ipar.getAlias()].getNMode() != 0 ) {
                 if ( verbose )
                     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                         << "Redefined decay of " << name.c_str() << " in CDecay"
                         << endl;
 
-                _decaytable[ipar.getAlias()].removeDecay();
+                m_decaytable[ipar.getAlias()].removeDecay();
             }
 
             //take contents of cipar and conjugate and store in ipar
-            _decaytable[ipar.getAlias()].makeChargeConj(
-                &_decaytable[cipar.getAlias()] );
+            m_decaytable[ipar.getAlias()].makeChargeConj(
+                &m_decaytable[cipar.getAlias()] );
 
         } else if ( token == "Define" ) {
             std::string name;
@@ -576,10 +576,10 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                 ::abort();
             }
 
-            if ( _decaytable[ipar.getAlias()].getNMode() != 0 ) {
+            if ( m_decaytable[ipar.getAlias()].getNMode() != 0 ) {
                 EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                     << "Redefined decay of " << parent.c_str() << endl;
-                _decaytable[ipar.getAlias()].removeDecay();
+                m_decaytable[ipar.getAlias()].removeDecay();
             }
 
             do {
@@ -661,7 +661,7 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                     model = parser.getToken( itoken++ );
 
                     bool fsr = false;
-                    bool verbose = false;
+                    bool verboseModel = false;
                     bool summary = false;
 
                     do {
@@ -675,7 +675,7 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                             model = parser.getToken( itoken++ );
                         }
                         if ( model == "VERBOSE" ) {
-                            verbose = true;
+                            verboseModel = true;
                             model = parser.getToken( itoken++ );
                         }
                         if ( model == "SUMMARY" ) {
@@ -715,8 +715,7 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                     if ( fsr ) {
                         temp_fcn_new->setFSR();
                     }
-
-                    if ( verbose ) {
+                    if ( verboseModel ) {
                         temp_fcn_new->setVerbose();
                     }
                     if ( summary ) {
@@ -746,7 +745,7 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                                 }
                             }
                             //int isname=EvtPDL::getId(name).getId()>=0;
-                            int ismodel = modelist.isModel( name );
+                            ismodel = modelist.isModel( name );
                             if ( ismodel ) {
                                 EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                                     << "Expected ';' but found:" << name.c_str()
@@ -787,12 +786,12 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                         }
                     }
 
-                    _decaytable[ipar.getAlias()].addMode( temp_fcn_new, brfrsum,
-                                                          massmin );
+                    m_decaytable[ipar.getAlias()].addMode( temp_fcn_new,
+                                                           brfrsum, massmin );
                 }
             } while ( token != "Enddecay" );
 
-            _decaytable[ipar.getAlias()].finalize();
+            m_decaytable[ipar.getAlias()].finalize();
 
         }
         // Allow copying of decays from one particle to another; useful
@@ -823,12 +822,12 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                     << "Will terminate execution!" << endl;
                 ::abort();
             }
-            if ( _decaytable[newipar.getAlias()].getNMode() != 0 ) {
+            if ( m_decaytable[newipar.getAlias()].getNMode() != 0 ) {
                 EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                     << "Redefining decay of " << newname << endl;
-                _decaytable[newipar.getAlias()].removeDecay();
+                m_decaytable[newipar.getAlias()].removeDecay();
             }
-            _decaytable[newipar.getAlias()] = _decaytable[oldipar.getAlias()];
+            m_decaytable[newipar.getAlias()] = m_decaytable[oldipar.getAlias()];
         }
         // Enable decay deletion; intended primarily for aliases
         // Peter Onyisi, March 2008
@@ -845,7 +844,7 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                 ::abort();
             }
 
-            if ( _decaytable[ipar.getAlias()].getNMode() == 0 ) {
+            if ( m_decaytable[ipar.getAlias()].getNMode() == 0 ) {
                 EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                     << "No decays to delete for " << parent.c_str() << endl;
             } else {
@@ -890,7 +889,7 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
                     temp_fcn_new->saveDecayInfo( ipar, n_daugh, daught, 0,
                                                  temp_fcn_new_args,
                                                  temp_fcn_new_model, 0. );
-                    _decaytable[ipar.getAlias()].removeMode( temp_fcn_new );
+                    m_decaytable[ipar.getAlias()].removeMode( temp_fcn_new );
                 }
             } while ( token != "Enddecay" );
             itoken++;
@@ -919,7 +918,7 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
         int jj;
         double minMass = EvtPDL::getMaxMass( temp );
         for ( jj = 0; jj < nModTot; jj++ ) {
-            double tmass = _decaytable[ii].getDecay( jj ).getMassMin();
+            double tmass = m_decaytable[ii].getDecay( jj ).getMassMin();
             if ( tmass < minMass )
                 minMass = tmass;
         }
@@ -936,8 +935,8 @@ void EvtDecayTable::readDecayFile( const std::string dec_name, bool verbose )
 
 void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
 {
-    if ( _decaytable.size() < EvtPDL::entries() )
-        _decaytable.resize( EvtPDL::entries() );
+    if ( m_decaytable.size() < EvtPDL::entries() )
+        m_decaytable.resize( EvtPDL::entries() );
     EvtModel& modelist = EvtModel::instance();
     EvtExtGeneratorCommandsTable* extGenCommands =
         EvtExtGeneratorCommandsTable::getInstance();
@@ -990,8 +989,8 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                 EvtId id = EvtPDL::getId( particle );
 
                 EvtPDL::alias( id, alias );
-                if ( _decaytable.size() < EvtPDL::entries() )
-                    _decaytable.resize( EvtPDL::entries() );
+                if ( m_decaytable.size() < EvtPDL::entries() )
+                    m_decaytable.resize( EvtPDL::entries() );
 
             } else if ( parser.getTagTitle() == "modelAlias" ) {
                 std::vector<std::string> modelArgList;
@@ -1045,18 +1044,18 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                 checkParticle( particle );
                 checkParticle( abar.getName() );
 
-                if ( _decaytable[a.getAlias()].getNMode() != 0 ) {
+                if ( m_decaytable[a.getAlias()].getNMode() != 0 ) {
                     if ( verbose )
                         EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                             << "Redefined decay of " << particle.c_str()
                             << " in ConjDecay" << endl;
 
-                    _decaytable[a.getAlias()].removeDecay();
+                    m_decaytable[a.getAlias()].removeDecay();
                 }
 
                 //take contents of abar and conjugate and store in a
-                _decaytable[a.getAlias()].makeChargeConj(
-                    &_decaytable[abar.getAlias()] );
+                m_decaytable[a.getAlias()].makeChargeConj(
+                    &m_decaytable[abar.getAlias()] );
 
             } else if ( parser.getTagTitle() == "define" ) {
                 std::string name = parser.readAttribute( "name" );
@@ -1192,10 +1191,10 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                 checkParticle( decayParent );
                 ipar = EvtPDL::getId( decayParent );
 
-                if ( _decaytable[ipar.getAlias()].getNMode() != 0 ) {
+                if ( m_decaytable[ipar.getAlias()].getNMode() != 0 ) {
                     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                         << "Redefined decay of " << decayParent.c_str() << endl;
-                    _decaytable[ipar.getAlias()].removeDecay();
+                    m_decaytable[ipar.getAlias()].removeDecay();
                 }
 
             } else if ( parser.getTagTitle() == "copyDecay" ) {
@@ -1208,19 +1207,20 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                 checkParticle( particle );
                 checkParticle( copy );
 
-                if ( _decaytable[newipar.getAlias()].getNMode() != 0 ) {
+                if ( m_decaytable[newipar.getAlias()].getNMode() != 0 ) {
                     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                         << "Redefining decay of " << particle << endl;
-                    _decaytable[newipar.getAlias()].removeDecay();
+                    m_decaytable[newipar.getAlias()].removeDecay();
                 }
-                _decaytable[newipar.getAlias()] = _decaytable[oldipar.getAlias()];
+                m_decaytable[newipar.getAlias()] =
+                    m_decaytable[oldipar.getAlias()];
 
             } else if ( parser.getTagTitle() == "removeDecay" ) {
                 decayParent = parser.readAttribute( "particle" );
                 checkParticle( decayParent );
                 ipar = EvtPDL::getId( decayParent );
 
-                if ( _decaytable[ipar.getAlias()].getNMode() == 0 ) {
+                if ( m_decaytable[ipar.getAlias()].getNMode() == 0 ) {
                     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
                         << "No decays to delete for " << decayParent.c_str()
                         << endl;
@@ -1399,11 +1399,11 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                     }
                 }
 
-                _decaytable[ipar.getAlias()].addMode( temp_fcn_new, brfrSum,
-                                                      massMin );
+                m_decaytable[ipar.getAlias()].addMode( temp_fcn_new, brfrSum,
+                                                       massMin );
 
             } else if ( parser.getTagTitle() == "/decay" ) {    //end of a particle
-                _decaytable[ipar.getAlias()].finalize();
+                m_decaytable[ipar.getAlias()].finalize();
             } else
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
                     << "Unexpected tag " << parser.getTagTitle()
@@ -1431,7 +1431,7 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
                 temp_fcn_new->saveDecayInfo( ipar, nDaughters, daughter, 0,
                                              temp_fcn_new_args,
                                              temp_fcn_new_model, 0. );
-                _decaytable[ipar.getAlias()].removeMode( temp_fcn_new );
+                m_decaytable[ipar.getAlias()].removeMode( temp_fcn_new );
             } else if ( parser.getTagTitle() != "/removeDecay" ) {
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
                     << "Unexpected tag " << parser.getTagTitle()
@@ -1462,7 +1462,7 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
         int jj;
         double minMass = EvtPDL::getMaxMass( temp );
         for ( jj = 0; jj < nModTot; jj++ ) {
-            double tmass = _decaytable[ii].getDecay( jj ).getMassMin();
+            double tmass = m_decaytable[ii].getDecay( jj ).getMassMin();
             if ( tmass < minMass )
                 minMass = tmass;
         }
@@ -1508,7 +1508,7 @@ EvtDecayBase* EvtDecayTable::findDecayModel( int aliasInt, int modeInt )
     EvtDecayBase* theModel( nullptr );
 
     if ( aliasInt >= 0 && aliasInt < (int)EvtPDL::entries() ) {
-        theModel = _decaytable[aliasInt].getDecayModel( modeInt );
+        theModel = m_decaytable[aliasInt].getDecayModel( modeInt );
     }
 
     return theModel;
@@ -1524,7 +1524,7 @@ bool EvtDecayTable::hasPythia( int aliasInt )
 {
     bool hasPythia( false );
     if ( aliasInt >= 0 && aliasInt < (int)EvtPDL::entries() ) {
-        hasPythia = _decaytable[aliasInt].isJetSet();
+        hasPythia = m_decaytable[aliasInt].isJetSet();
     }
 
     return hasPythia;
@@ -1541,7 +1541,7 @@ int EvtDecayTable::getNModes( int aliasInt )
     int nModes( 0 );
 
     if ( aliasInt >= 0 && aliasInt < (int)EvtPDL::entries() ) {
-        nModes = _decaytable[aliasInt].getNMode();
+        nModes = m_decaytable[aliasInt].getNMode();
     }
 
     return nModes;
@@ -1554,18 +1554,18 @@ int EvtDecayTable::findChannel( EvtId parent, std::string model, int ndaug,
     EvtId daugs_scratch[50];
     int nmatch, k;
 
-    for ( i = 0; i < _decaytable[parent.getAlias()].getNMode(); i++ ) {
+    for ( i = 0; i < m_decaytable[parent.getAlias()].getNMode(); i++ ) {
         right = 1;
 
-        right = right && model == _decaytable[parent.getAlias()]
+        right = right && model == m_decaytable[parent.getAlias()]
                                       .getDecay( i )
                                       .getDecayModel()
                                       ->getModelName();
-        right = right && ( ndaug == _decaytable[parent.getAlias()]
+        right = right && ( ndaug == m_decaytable[parent.getAlias()]
                                         .getDecay( i )
                                         .getDecayModel()
                                         ->getNDaug() );
-        right = right && ( narg == _decaytable[parent.getAlias()]
+        right = right && ( narg == m_decaytable[parent.getAlias()]
                                        .getDecay( i )
                                        .getDecayModel()
                                        ->getNArg() );
@@ -1577,13 +1577,13 @@ int EvtDecayTable::findChannel( EvtId parent, std::string model, int ndaug,
 
             nmatch = 0;
 
-            for ( j = 0; j < _decaytable[parent.getAlias()]
+            for ( j = 0; j < m_decaytable[parent.getAlias()]
                                  .getDecay( i )
                                  .getDecayModel()
                                  ->getNDaug();
                   j++ ) {
                 for ( k = 0; k < ndaug; k++ ) {
-                    if ( daugs_scratch[k] == _decaytable[parent.getAlias()]
+                    if ( daugs_scratch[k] == m_decaytable[parent.getAlias()]
                                                  .getDecay( i )
                                                  .getDecayModel()
                                                  ->getDaug( j ) ) {
@@ -1596,12 +1596,12 @@ int EvtDecayTable::findChannel( EvtId parent, std::string model, int ndaug,
 
             right = right && ( nmatch == ndaug );
 
-            for ( j = 0; j < _decaytable[parent.getAlias()]
+            for ( j = 0; j < m_decaytable[parent.getAlias()]
                                  .getDecay( i )
                                  .getDecayModel()
                                  ->getNArg();
                   j++ ) {
-                right = right && ( args[j] == _decaytable[parent.getAlias()]
+                right = right && ( args[j] == m_decaytable[parent.getAlias()]
                                                   .getDecay( i )
                                                   .getDecayModel()
                                                   ->getArgStr( j ) );
@@ -1627,11 +1627,11 @@ int EvtDecayTable::inChannelList( EvtId parent, int ndaug, EvtId* daugs )
 
     int ipar = parent.getAlias();
 
-    int nmode = _decaytable[ipar].getNMode();
+    int nmode = m_decaytable[ipar].getNMode();
 
     for ( i = 0; i < nmode; i++ ) {
         EvtDecayBase* thedecaymodel =
-            _decaytable[ipar].getDecay( i ).getDecayModel();
+            m_decaytable[ipar].getDecay( i ).getDecayModel();
 
         if ( thedecaymodel->getDSum() == dsum ) {
             int nd = thedecaymodel->getNDaug();

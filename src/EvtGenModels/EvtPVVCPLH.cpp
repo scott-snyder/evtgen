@@ -171,7 +171,7 @@ void EvtPVVCPLH::decay( EvtParticle* p )
     AP = ( cG1P + cG1M ) / sqrt( 2.0 );
     AM = ( cG1P - cG1M ) / sqrt( 2.0 );
 
-    EvtSVVHelAmp::SVVHel( p, _amp2, getDaug( 0 ), getDaug( 1 ), AP, A0, AM );
+    EvtSVVHelAmp::SVVHel( p, m_amp2, getDaug( 0 ), getDaug( 1 ), AP, A0, AM );
 
     return;
 }

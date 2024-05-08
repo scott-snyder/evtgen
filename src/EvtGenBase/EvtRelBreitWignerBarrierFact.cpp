@@ -37,32 +37,32 @@ EvtRelBreitWignerBarrierFact::EvtRelBreitWignerBarrierFact(
     EvtAbsLineShape( mass, width, maxRange, sp )
 {    // double mDaug1, double mDaug2, int l) {
 
-    _includeDecayFact = true;
-    _includeBirthFact = true;
-    _mass = mass;
-    _width = width;
-    _spin = sp;
-    _blattDecay = 3.0;
-    _blattBirth = 1.0;
-    _maxRange = maxRange;
-    _errorCond = false;
+    m_includeDecayFact = true;
+    m_includeBirthFact = true;
+    m_mass = mass;
+    m_width = width;
+    m_spin = sp;
+    m_blattDecay = 3.0;
+    m_blattBirth = 1.0;
+    m_maxRange = maxRange;
+    m_errorCond = false;
 
     double maxdelta = 15.0 * width;
 
     if ( maxRange > 0.00001 ) {
-        _massMax = mass + maxdelta;
-        _massMin = mass - maxRange;
+        m_massMax = mass + maxdelta;
+        m_massMin = mass - maxRange;
     } else {
-        _massMax = mass + maxdelta;
-        _massMin = mass - 15.0 * width;
+        m_massMax = mass + maxdelta;
+        m_massMin = mass - 15.0 * width;
     }
 
-    _massMax = mass + maxdelta;
-    if ( _massMin < 0. ) {
-        if ( _width > 0.0001 ) {
-            _massMin = 0.00011;
+    m_massMax = mass + maxdelta;
+    if ( m_massMin < 0. ) {
+        if ( m_width > 0.0001 ) {
+            m_massMin = 0.00011;
         } else {
-            _massMin = 0.;
+            m_massMin = 0.;
         }
     }
 }
@@ -71,30 +71,30 @@ EvtRelBreitWignerBarrierFact::EvtRelBreitWignerBarrierFact(
     const EvtRelBreitWignerBarrierFact& x ) :
     EvtAbsLineShape( x )
 {
-    _massMax = x._massMax;
-    _massMin = x._massMin;
-    _blattDecay = x._blattDecay;
-    _blattBirth = x._blattBirth;
-    _maxRange = x._maxRange;
-    _includeDecayFact = x._includeDecayFact;
-    _includeBirthFact = x._includeBirthFact;
-    _errorCond = x._errorCond;
+    m_massMax = x.m_massMax;
+    m_massMin = x.m_massMin;
+    m_blattDecay = x.m_blattDecay;
+    m_blattBirth = x.m_blattBirth;
+    m_maxRange = x.m_maxRange;
+    m_includeDecayFact = x.m_includeDecayFact;
+    m_includeBirthFact = x.m_includeBirthFact;
+    m_errorCond = x.m_errorCond;
 }
 
 EvtRelBreitWignerBarrierFact& EvtRelBreitWignerBarrierFact::operator=(
     const EvtRelBreitWignerBarrierFact& x )
 {
-    _mass = x._mass;
-    _width = x._width;
-    _spin = x._spin;
-    _massMax = x._massMax;
-    _massMin = x._massMin;
-    _blattDecay = x._blattDecay;
-    _blattBirth = x._blattBirth;
-    _maxRange = x._maxRange;
-    _includeDecayFact = x._includeDecayFact;
-    _includeBirthFact = x._includeBirthFact;
-    _errorCond = x._errorCond;
+    m_mass = x.m_mass;
+    m_width = x.m_width;
+    m_spin = x.m_spin;
+    m_massMax = x.m_massMax;
+    m_massMin = x.m_massMin;
+    m_blattDecay = x.m_blattDecay;
+    m_blattBirth = x.m_blattBirth;
+    m_maxRange = x.m_maxRange;
+    m_includeDecayFact = x.m_includeDecayFact;
+    m_includeBirthFact = x.m_includeBirthFact;
+    m_errorCond = x.m_errorCond;
 
     return *this;
 }
@@ -107,7 +107,7 @@ EvtAbsLineShape* EvtRelBreitWignerBarrierFact::clone()
 double EvtRelBreitWignerBarrierFact::getMassProb( double mass, double massPar,
                                                   int nDaug, double* massDau )
 {
-    _errorCond = false;
+    m_errorCond = false;
     //return EvtAbsLineShape::getMassProb(mass,massPar,nDaug,massDau);
     if ( nDaug != 2 )
         return EvtAbsLineShape::getMassProb( mass, massPar, nDaug, massDau );
@@ -124,7 +124,7 @@ double EvtRelBreitWignerBarrierFact::getMassProb( double mass, double massPar,
     if ( ( mass < dTotMass ) )
         return 0.;
 
-    if ( _width < 0.0001 )
+    if ( m_width < 0.0001 )
         return 1.;
 
     if ( massPar > 0.0000000001 ) {
@@ -132,7 +132,7 @@ double EvtRelBreitWignerBarrierFact::getMassProb( double mass, double massPar,
             return 0.;
     }
 
-    if ( _errorCond )
+    if ( m_errorCond )
         return 0.;
 
     // we did all the work in getRandMass
@@ -148,8 +148,8 @@ double EvtRelBreitWignerBarrierFact::getRandMass( EvtId* parId, int nDaug,
         return EvtAbsLineShape::getRandMass( parId, nDaug, dauId, othDaugId,
                                              maxMass, dauMasses );
 
-    if ( _width < 0.00001 )
-        return _mass;
+    if ( m_width < 0.00001 )
+        return m_mass;
 
     //first figure out L - take the lowest allowed.
 
@@ -158,17 +158,17 @@ double EvtRelBreitWignerBarrierFact::getRandMass( EvtId* parId, int nDaug,
 
     int t1 = EvtSpinType::getSpin2( spinD1 );
     int t2 = EvtSpinType::getSpin2( spinD2 );
-    int t3 = EvtSpinType::getSpin2( _spin );
+    int t3 = EvtSpinType::getSpin2( m_spin );
 
     int Lmin = -10;
 
     // the user has overridden the partial wave to use.
-    for ( unsigned int vC = 0; vC < _userSetPW.size(); vC++ ) {
-        if ( dauId[0] == _userSetPWD1[vC] && dauId[1] == _userSetPWD2[vC] ) {
-            Lmin = 2 * _userSetPW[vC];
+    for ( unsigned int vC = 0; vC < m_userSetPW.size(); vC++ ) {
+        if ( dauId[0] == m_userSetPWD1[vC] && dauId[1] == m_userSetPWD2[vC] ) {
+            Lmin = 2 * m_userSetPW[vC];
         }
-        if ( dauId[0] == _userSetPWD2[vC] && dauId[1] == _userSetPWD1[vC] ) {
-            Lmin = 2 * _userSetPW[vC];
+        if ( dauId[0] == m_userSetPWD2[vC] && dauId[1] == m_userSetPWD1[vC] ) {
+            Lmin = 2 * m_userSetPW[vC];
         }
     }
 
@@ -198,7 +198,7 @@ double EvtRelBreitWignerBarrierFact::getRandMass( EvtId* parId, int nDaug,
     double massD2 = dauMasses[1];
 
     // I'm not sure how to define the vertex factor here - so retreat to nonRel code.
-    if ( ( massD1 + massD2 ) > _mass )
+    if ( ( massD1 + massD2 ) > m_mass )
         return EvtAbsLineShape::getRandMass( parId, nDaug, dauId, othDaugId,
                                              maxMass, dauMasses );
 
@@ -212,7 +212,7 @@ double EvtRelBreitWignerBarrierFact::getRandMass( EvtId* parId, int nDaug,
 
         int tt1 = EvtSpinType::getSpin2( spinOth );
         int tt2 = EvtSpinType::getSpin2( spinPar );
-        int tt3 = EvtSpinType::getSpin2( _spin );
+        int tt3 = EvtSpinType::getSpin2( m_spin );
 
         //figure the min and max allowwed "spins" for the daughters state
         if ( ( tt1 <= 4 ) && ( tt2 <= 4 ) ) {
@@ -226,14 +226,14 @@ double EvtRelBreitWignerBarrierFact::getRandMass( EvtId* parId, int nDaug,
         }
 
         // allow user to override
-        for ( size_t vC = 0; vC < _userSetBirthPW.size(); vC++ ) {
-            if ( *othDaugId == _userSetBirthOthD[vC] &&
-                 *parId == _userSetBirthPar[vC] ) {
-                birthl = 2 * _userSetBirthPW[vC];
+        for ( size_t vC = 0; vC < m_userSetBirthPW.size(); vC++ ) {
+            if ( *othDaugId == m_userSetBirthOthD[vC] &&
+                 *parId == m_userSetBirthPar[vC] ) {
+                birthl = 2 * m_userSetBirthPW[vC];
             }
         }
     }
-    double massM = _massMax;
+    double massM = m_massMax;
     if ( ( maxMass > -0.5 ) && ( maxMass < massM ) )
         massM = maxMass;
 
@@ -242,19 +242,19 @@ double EvtRelBreitWignerBarrierFact::getRandMass( EvtId* parId, int nDaug,
 
     // Define relativistic propagator amplitude
 
-    EvtTwoBodyVertex vd( massD1, massD2, _mass, Lmin / 2 );
-    vd.set_f( _blattDecay );
-    EvtPropBreitWignerRel bw( _mass, _width );
+    EvtTwoBodyVertex vd( massD1, massD2, m_mass, Lmin / 2 );
+    vd.set_f( m_blattDecay );
+    EvtPropBreitWignerRel bw( m_mass, m_width );
     EvtMassAmp amp( bw, vd );
 
-    if ( _includeDecayFact ) {
+    if ( m_includeDecayFact ) {
         amp.addDeathFact();
         amp.addDeathFactFF();
     }
     if ( massParent > -1. ) {
-        if ( _includeBirthFact ) {
-            EvtTwoBodyVertex vb( _mass, massOthD, massParent, birthl / 2 );
-            vb.set_f( _blattBirth );
+        if ( m_includeBirthFact ) {
+            EvtTwoBodyVertex vb( m_mass, massOthD, massParent, birthl / 2 );
+            vb.set_f( m_blattBirth );
             amp.setBirthVtx( vb );
             amp.addBirthFact();
             amp.addBirthFactFF();
@@ -265,21 +265,21 @@ double EvtRelBreitWignerBarrierFact::getRandMass( EvtId* parId, int nDaug,
 
     // Estimate maximum and create predicate for accept reject
 
-    double tempMaxLoc = _mass;
-    if ( maxMass > -0.5 && maxMass < _mass )
+    double tempMaxLoc = m_mass;
+    if ( maxMass > -0.5 && maxMass < m_mass )
         tempMaxLoc = maxMass;
-    double tempMax = _massMax;
-    if ( maxMass > -0.5 && maxMass < _massMax )
+    double tempMax = m_massMax;
+    if ( maxMass > -0.5 && maxMass < m_massMax )
         tempMax = maxMass;
-    double tempMinMass = _massMin;
-    if ( massD1 + massD2 > _massMin )
+    double tempMinMass = m_massMin;
+    if ( massD1 + massD2 > m_massMin )
         tempMinMass = massD1 + massD2;
 
     //redo sanity check - is there a solution to our problem.
     //if not return an error condition that is caught by the
     //mass prob calculation above.
     if ( tempMinMass > tempMax ) {
-        _errorCond = true;
+        m_errorCond = true;
         return tempMinMass;
     }
 

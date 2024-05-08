@@ -35,33 +35,33 @@ using std::endl;
 
 EvtAmp::EvtAmp()
 {
-    _ndaug = 0;
-    _pstates = 0;
-    _nontrivial = 0;
+    m_ndaug = 0;
+    m_pstates = 0;
+    m_nontrivial = 0;
 }
 
 EvtAmp::EvtAmp( const EvtAmp& amp )
 {
     int i;
 
-    _ndaug = amp._ndaug;
-    _pstates = amp._pstates;
-    for ( i = 0; i < _ndaug; i++ ) {
-        dstates[i] = amp.dstates[i];
-        _dnontrivial[i] = amp._dnontrivial[i];
+    m_ndaug = amp.m_ndaug;
+    m_pstates = amp.m_pstates;
+    for ( i = 0; i < m_ndaug; i++ ) {
+        m_dstates[i] = amp.m_dstates[i];
+        m_dnontrivial[i] = amp.m_dnontrivial[i];
     }
-    _nontrivial = amp._nontrivial;
+    m_nontrivial = amp.m_nontrivial;
 
     int namp = 1;
 
-    for ( i = 0; i < _nontrivial; i++ ) {
-        _nstate[i] = amp._nstate[i];
-        namp *= _nstate[i];
+    for ( i = 0; i < m_nontrivial; i++ ) {
+        m_nstate[i] = amp.m_nstate[i];
+        namp *= m_nstate[i];
     }
 
     for ( i = 0; i < namp; i++ ) {
         assert( i < 125 );
-        _amp[i] = amp._amp[i];
+        m_amp[i] = amp.m_amp[i];
     }
 }
 
@@ -82,32 +82,32 @@ void EvtAmp::init( EvtId p, int ndaugs, EvtId* daug )
 
 void EvtAmp::setNDaug( int n )
 {
-    _ndaug = n;
+    m_ndaug = n;
 }
 
 void EvtAmp::setNState( int parent_states, int* daug_states )
 {
-    _nontrivial = 0;
-    _pstates = parent_states;
+    m_nontrivial = 0;
+    m_pstates = parent_states;
 
-    if ( _pstates > 1 ) {
-        _nstate[_nontrivial] = _pstates;
-        _nontrivial++;
+    if ( m_pstates > 1 ) {
+        m_nstate[m_nontrivial] = m_pstates;
+        m_nontrivial++;
     }
 
     int i;
 
-    for ( i = 0; i < _ndaug; i++ ) {
-        dstates[i] = daug_states[i];
-        _dnontrivial[i] = -1;
+    for ( i = 0; i < m_ndaug; i++ ) {
+        m_dstates[i] = daug_states[i];
+        m_dnontrivial[i] = -1;
         if ( daug_states[i] > 1 ) {
-            _nstate[_nontrivial] = daug_states[i];
-            _dnontrivial[i] = _nontrivial;
-            _nontrivial++;
+            m_nstate[m_nontrivial] = daug_states[i];
+            m_dnontrivial[i] = m_nontrivial;
+            m_nontrivial++;
         }
     }
 
-    if ( _nontrivial > 5 ) {
+    if ( m_nontrivial > 5 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Too many nontrivial states in EvtAmp!" << endl;
     }
@@ -118,12 +118,12 @@ void EvtAmp::setAmp( int* ind, const EvtComplex& a )
     int nstatepad = 1;
     int position = ind[0];
 
-    for ( int i = 1; i < _nontrivial; i++ ) {
-        nstatepad *= _nstate[i - 1];
+    for ( int i = 1; i < m_nontrivial; i++ ) {
+        nstatepad *= m_nstate[i - 1];
         position += nstatepad * ind[i];
     }
     assert( position < 125 );
-    _amp[position] = a;
+    m_amp[position] = a;
 }
 
 const EvtComplex& EvtAmp::getAmp( int* ind ) const
@@ -131,26 +131,26 @@ const EvtComplex& EvtAmp::getAmp( int* ind ) const
     int nstatepad = 1;
     int position = ind[0];
 
-    for ( int i = 1; i < _nontrivial; i++ ) {
-        nstatepad *= _nstate[i - 1];
+    for ( int i = 1; i < m_nontrivial; i++ ) {
+        nstatepad *= m_nstate[i - 1];
         position += nstatepad * ind[i];
     }
 
-    return _amp[position];
+    return m_amp[position];
 }
 
 EvtSpinDensity EvtAmp::getSpinDensity()
 {
     EvtSpinDensity rho;
-    rho.setDim( _pstates );
+    rho.setDim( m_pstates );
 
     EvtComplex temp;
 
     int i, j, n;
 
-    if ( _pstates == 1 ) {
-        if ( _nontrivial == 0 ) {
-            rho.set( 0, 0, _amp[0] * conj( _amp[0] ) );
+    if ( m_pstates == 1 ) {
+        if ( m_nontrivial == 0 ) {
+            rho.set( 0, 0, m_amp[0] * conj( m_amp[0] ) );
             return rho;
         }
 
@@ -158,12 +158,12 @@ EvtSpinDensity EvtAmp::getSpinDensity()
 
         temp = EvtComplex( 0.0 );
 
-        for ( i = 0; i < _nontrivial; i++ ) {
-            n *= _nstate[i];
+        for ( i = 0; i < m_nontrivial; i++ ) {
+            n *= m_nstate[i];
         }
 
         for ( i = 0; i < n; i++ ) {
-            temp += _amp[i] * conj( _amp[i] );
+            temp += m_amp[i] * conj( m_amp[i] );
         }
 
         rho.set( 0, 0, temp );
@@ -174,23 +174,23 @@ EvtSpinDensity EvtAmp::getSpinDensity()
     }
 
     else {
-        for ( i = 0; i < _pstates; i++ ) {
-            for ( j = 0; j < _pstates; j++ ) {
+        for ( i = 0; i < m_pstates; i++ ) {
+            for ( j = 0; j < m_pstates; j++ ) {
                 temp = EvtComplex( 0.0 );
 
                 int kk;
 
                 int allloop = 1;
-                for ( kk = 0; kk < _ndaug; kk++ ) {
-                    allloop *= dstates[kk];
+                for ( kk = 0; kk < m_ndaug; kk++ ) {
+                    allloop *= m_dstates[kk];
                 }
 
                 for ( kk = 0; kk < allloop; kk++ ) {
-                    temp += _amp[_pstates * kk + i] *
-                            conj( _amp[_pstates * kk + j] );
+                    temp += m_amp[m_pstates * kk + i] *
+                            conj( m_amp[m_pstates * kk + j] );
                 }
 
-                //        if (_nontrivial>3){
+                //        if (m_nontrivial>3){
                 //EvtGenReport(EVTGEN_ERROR,"EvtGen") << "Can't handle so many states in EvtAmp!"<<endl;
                 //}
 
@@ -205,9 +205,9 @@ EvtSpinDensity EvtAmp::getBackwardSpinDensity( EvtSpinDensity* rho_list )
 {
     EvtSpinDensity rho;
 
-    rho.setDim( _pstates );
+    rho.setDim( m_pstates );
 
-    if ( _pstates == 1 ) {
+    if ( m_pstates == 1 ) {
         rho.set( 0, 0, EvtComplex( 1.0, 0.0 ) );
         return rho;
     }
@@ -218,9 +218,9 @@ EvtSpinDensity EvtAmp::getBackwardSpinDensity( EvtSpinDensity* rho_list )
 
     ampprime = ( *this );
 
-    for ( k = 0; k < _ndaug; k++ ) {
-        if ( dstates[k] != 1 ) {
-            ampprime = ampprime.contract( _dnontrivial[k], rho_list[k + 1] );
+    for ( k = 0; k < m_ndaug; k++ ) {
+        if ( m_dstates[k] != 1 ) {
+            ampprime = ampprime.contract( m_dnontrivial[k], rho_list[k + 1] );
         }
     }
 
@@ -231,11 +231,11 @@ EvtSpinDensity EvtAmp::getForwardSpinDensity( EvtSpinDensity* rho_list, int i )
 {
     EvtSpinDensity rho;
 
-    rho.setDim( dstates[i] );
+    rho.setDim( m_dstates[i] );
 
     int k;
 
-    if ( dstates[i] == 1 ) {
+    if ( m_dstates[i] == 1 ) {
         rho.set( 0, 0, EvtComplex( 1.0, 0.0 ) );
 
         return rho;
@@ -245,17 +245,17 @@ EvtSpinDensity EvtAmp::getForwardSpinDensity( EvtSpinDensity* rho_list, int i )
 
     ampprime = ( *this );
 
-    if ( _pstates != 1 ) {
+    if ( m_pstates != 1 ) {
         ampprime = ampprime.contract( 0, rho_list[0] );
     }
 
     for ( k = 0; k < i; k++ ) {
-        if ( dstates[k] != 1 ) {
-            ampprime = ampprime.contract( _dnontrivial[k], rho_list[k + 1] );
+        if ( m_dstates[k] != 1 ) {
+            ampprime = ampprime.contract( m_dnontrivial[k], rho_list[k + 1] );
         }
     }
 
-    return ampprime.contract( _dnontrivial[i], ( *this ) );
+    return ampprime.contract( m_dnontrivial[i], ( *this ) );
 }
 
 EvtAmp EvtAmp::contract( int k, const EvtSpinDensity& rho )
@@ -263,22 +263,22 @@ EvtAmp EvtAmp::contract( int k, const EvtSpinDensity& rho )
     EvtAmp temp;
 
     int i, j;
-    temp._ndaug = _ndaug;
-    temp._pstates = _pstates;
-    temp._nontrivial = _nontrivial;
+    temp.m_ndaug = m_ndaug;
+    temp.m_pstates = m_pstates;
+    temp.m_nontrivial = m_nontrivial;
 
-    for ( i = 0; i < _ndaug; i++ ) {
-        temp.dstates[i] = dstates[i];
-        temp._dnontrivial[i] = _dnontrivial[i];
+    for ( i = 0; i < m_ndaug; i++ ) {
+        temp.m_dstates[i] = m_dstates[i];
+        temp.m_dnontrivial[i] = m_dnontrivial[i];
     }
 
-    if ( _nontrivial == 0 ) {
+    if ( m_nontrivial == 0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Should not be here EvtAmp!" << endl;
     }
 
-    for ( i = 0; i < _nontrivial; i++ ) {
-        temp._nstate[i] = _nstate[i];
+    for ( i = 0; i < m_nontrivial; i++ ) {
+        temp.m_nstate[i] = m_nstate[i];
     }
 
     EvtComplex c;
@@ -290,14 +290,14 @@ EvtAmp EvtAmp::contract( int k, const EvtSpinDensity& rho )
 
     int allloop = 1;
     int indflag, ii;
-    for ( i = 0; i < _nontrivial; i++ ) {
-        allloop *= _nstate[i];
+    for ( i = 0; i < m_nontrivial; i++ ) {
+        allloop *= m_nstate[i];
     }
 
     for ( i = 0; i < allloop; i++ ) {
         c = EvtComplex( 0.0 );
         int tempint = index[k];
-        for ( j = 0; j < _nstate[k]; j++ ) {
+        for ( j = 0; j < m_nstate[k]; j++ ) {
             index[k] = j;
             c += rho.get( j, tempint ) * getAmp( index );
         }
@@ -306,9 +306,9 @@ EvtAmp EvtAmp::contract( int k, const EvtSpinDensity& rho )
         temp.setAmp( index, c );
 
         indflag = 0;
-        for ( ii = 0; ii < _nontrivial; ii++ ) {
+        for ( ii = 0; ii < m_nontrivial; ii++ ) {
             if ( indflag == 0 ) {
-                if ( index[ii] == ( _nstate[ii] - 1 ) ) {
+                if ( index[ii] == ( m_nstate[ii] - 1 ) ) {
                     index[ii] = 0;
                 } else {
                     indflag = 1;
@@ -327,20 +327,20 @@ EvtSpinDensity EvtAmp::contract( int k, const EvtAmp& amp2 )
     EvtComplex temp;
     EvtSpinDensity rho;
 
-    rho.setDim( _nstate[k] );
+    rho.setDim( m_nstate[k] );
 
     int allloop = 1;
     int indflag, ii;
-    for ( i = 0; i < _nontrivial; i++ ) {
-        allloop *= _nstate[i];
+    for ( i = 0; i < m_nontrivial; i++ ) {
+        allloop *= m_nstate[i];
     }
 
     int index[10];
     int index1[10];
     //  int l;
-    for ( i = 0; i < _nstate[k]; i++ ) {
-        for ( j = 0; j < _nstate[k]; j++ ) {
-            if ( _nontrivial == 0 ) {
+    for ( i = 0; i < m_nstate[k]; i++ ) {
+        for ( j = 0; j < m_nstate[k]; j++ ) {
+            if ( m_nontrivial == 0 ) {
                 EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                     << "Should not be here1 EvtAmp!" << endl;
                 rho.set( 0, 0, EvtComplex( 1.0, 0.0 ) );
@@ -356,13 +356,13 @@ EvtSpinDensity EvtAmp::contract( int k, const EvtAmp& amp2 )
 
             temp = EvtComplex( 0.0 );
 
-            for ( l = 0; l < int( allloop / _nstate[k] ); l++ ) {
+            for ( l = 0; l < int( allloop / m_nstate[k] ); l++ ) {
                 temp += getAmp( index ) * conj( amp2.getAmp( index1 ) );
                 indflag = 0;
-                for ( ii = 0; ii < _nontrivial; ii++ ) {
+                for ( ii = 0; ii < m_nontrivial; ii++ ) {
                     if ( ii != k ) {
                         if ( indflag == 0 ) {
-                            if ( index[ii] == ( _nstate[ii] - 1 ) ) {
+                            if ( index[ii] == ( m_nstate[ii] - 1 ) ) {
                                 index[ii] = 0;
                                 index1[ii] = 0;
                             } else {
@@ -398,29 +398,29 @@ void EvtAmp::dump()
     }
 
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
-        << "Number of daugthers:" << _ndaug << endl;
+        << "Number of daugthers:" << m_ndaug << endl;
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
-        << "Number of states of the parent:" << _pstates << endl;
+        << "Number of states of the parent:" << m_pstates << endl;
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << "Number of states on daughters:";
-    for ( i = 0; i < _ndaug; i++ ) {
-        EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << dstates[i] << " ";
+    for ( i = 0; i < m_ndaug; i++ ) {
+        EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << m_dstates[i] << " ";
     }
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << endl;
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << "Nontrivial index of  daughters:";
-    for ( i = 0; i < _ndaug; i++ ) {
-        EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << _dnontrivial[i] << " ";
+    for ( i = 0; i < m_ndaug; i++ ) {
+        EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << m_dnontrivial[i] << " ";
     }
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << endl;
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
-        << "number of nontrivial states:" << _nontrivial << endl;
+        << "number of nontrivial states:" << m_nontrivial << endl;
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" )
         << "Nontrivial particles number of states:";
-    for ( i = 0; i < _nontrivial; i++ ) {
-        EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << _nstate[i] << " ";
+    for ( i = 0; i < m_nontrivial; i++ ) {
+        EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << m_nstate[i] << " ";
     }
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << endl;
     EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << "Amplitudes:" << endl;
-    if ( _nontrivial == 0 ) {
+    if ( m_nontrivial == 0 ) {
         list[0] = 0;
         EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << getAmp( list ) << endl;
     }
@@ -431,15 +431,15 @@ void EvtAmp::dump()
     }
 
     allloop[0] = 1;
-    for ( i = 0; i < _nontrivial; i++ ) {
+    for ( i = 0; i < m_nontrivial; i++ ) {
         if ( i == 0 ) {
-            allloop[i] *= _nstate[i];
+            allloop[i] *= m_nstate[i];
         } else {
-            allloop[i] = allloop[i - 1] * _nstate[i];
+            allloop[i] = allloop[i - 1] * m_nstate[i];
         }
     }
     int index = 0;
-    for ( i = 0; i < allloop[_nontrivial - 1]; i++ ) {
+    for ( i = 0; i < allloop[m_nontrivial - 1]; i++ ) {
         EvtGenReport( EVTGEN_DEBUG, "EvtGen" ) << getAmp( list ) << " ";
         if ( i == allloop[index] - 1 ) {
             index++;
@@ -491,24 +491,24 @@ EvtAmp& EvtAmp::operator=( const EvtAmp& amp )
 {
     int i;
 
-    _ndaug = amp._ndaug;
-    _pstates = amp._pstates;
-    for ( i = 0; i < _ndaug; i++ ) {
-        dstates[i] = amp.dstates[i];
-        _dnontrivial[i] = amp._dnontrivial[i];
+    m_ndaug = amp.m_ndaug;
+    m_pstates = amp.m_pstates;
+    for ( i = 0; i < m_ndaug; i++ ) {
+        m_dstates[i] = amp.m_dstates[i];
+        m_dnontrivial[i] = amp.m_dnontrivial[i];
     }
-    _nontrivial = amp._nontrivial;
+    m_nontrivial = amp.m_nontrivial;
 
     int namp = 1;
 
-    for ( i = 0; i < _nontrivial; i++ ) {
-        _nstate[i] = amp._nstate[i];
-        namp *= _nstate[i];
+    for ( i = 0; i < m_nontrivial; i++ ) {
+        m_nstate[i] = amp.m_nstate[i];
+        namp *= m_nstate[i];
     }
 
     for ( i = 0; i < namp; i++ ) {
         assert( i < 125 );
-        _amp[i] = amp._amp[i];
+        m_amp[i] = amp.m_amp[i];
     }
 
     return *this;

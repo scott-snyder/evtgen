@@ -30,7 +30,7 @@
 #include "EvtGenBase/EvtTensor4C.hh"
 
 EvtSLDiBaryonAmp::EvtSLDiBaryonAmp( const EvtBToDiBaryonlnupQCDFF& formFactors ) :
-    ffModel_( formFactors )
+    m_ffModel( formFactors )
 {
 }
 
@@ -146,31 +146,31 @@ void EvtSLDiBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
     if ( type1 == EvtSpinType::DIRAC && type2 == EvtSpinType::DIRAC ) {
         // Form factor parameters
         EvtBToDiBaryonlnupQCDFF::FormFactors FF;
-        ffModel_.getDiracFF( parent, m_dibaryon, FF );
+        m_ffModel.getDiracFF( parent, m_dibaryon, FF );
 
         if ( sameParity == 1 ) {
-            f1 = FF.F1;
-            f2 = FF.F2;
-            f3 = FF.F3;
-            f4 = FF.F4;
-            f5 = FF.F5;
-            g1 = FF.G1;
-            g2 = FF.G2;
-            g3 = FF.G3;
-            g4 = FF.G4;
-            g5 = FF.G5;
+            f1 = FF.m_F1;
+            f2 = FF.m_F2;
+            f3 = FF.m_F3;
+            f4 = FF.m_F4;
+            f5 = FF.m_F5;
+            g1 = FF.m_G1;
+            g2 = FF.m_G2;
+            g3 = FF.m_G3;
+            g4 = FF.m_G4;
+            g5 = FF.m_G5;
         } else {
             // Swap coeffs: f_i <--> g_i
-            f1 = FF.G1;
-            f2 = FF.G2;
-            f3 = FF.G3;
-            f4 = FF.G4;
-            f5 = FF.G5;
-            g1 = FF.F1;
-            g2 = FF.F2;
-            g3 = FF.F3;
-            g4 = FF.F4;
-            g5 = FF.F5;
+            f1 = FF.m_G1;
+            f2 = FF.m_G2;
+            f3 = FF.m_G3;
+            f4 = FF.m_G4;
+            f5 = FF.m_G5;
+            g1 = FF.m_F1;
+            g2 = FF.m_F2;
+            g3 = FF.m_F3;
+            g4 = FF.m_F4;
+            g5 = FF.m_F5;
         }
 
         EvtVector4R gMtmTerms = g3 * p + g4 * pSum + g5 * pDiff;
@@ -223,31 +223,31 @@ void EvtSLDiBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
 
         // Form factor parameters
         EvtBToDiBaryonlnupQCDFF::FormFactors FF;
-        ffModel_.getRaritaFF( parent, m_dibaryon, FF );
+        m_ffModel.getRaritaFF( parent, m_dibaryon, FF );
 
         if ( sameParity == 1 ) {
-            f1 = FF.F1;
-            f2 = FF.F2;
-            f3 = FF.F3;
-            f4 = FF.F4;
-            f5 = FF.F5;
-            g1 = FF.G1;
-            g2 = FF.G2;
-            g3 = FF.G3;
-            g4 = FF.G4;
-            g5 = FF.G5;
+            f1 = FF.m_F1;
+            f2 = FF.m_F2;
+            f3 = FF.m_F3;
+            f4 = FF.m_F4;
+            f5 = FF.m_F5;
+            g1 = FF.m_G1;
+            g2 = FF.m_G2;
+            g3 = FF.m_G3;
+            g4 = FF.m_G4;
+            g5 = FF.m_G5;
         } else {
             // Swap coeffs: f_i <--> g_i
-            f1 = FF.G1;
-            f2 = FF.G2;
-            f3 = FF.G3;
-            f4 = FF.G4;
-            f5 = FF.G5;
-            g1 = FF.F1;
-            g2 = FF.F2;
-            g3 = FF.F3;
-            g4 = FF.F4;
-            g5 = FF.F5;
+            f1 = FF.m_G1;
+            f2 = FF.m_G2;
+            f3 = FF.m_G3;
+            f4 = FF.m_G4;
+            f5 = FF.m_G5;
+            g1 = FF.m_F1;
+            g2 = FF.m_F2;
+            g3 = FF.m_F3;
+            g4 = FF.m_F4;
+            g5 = FF.m_F5;
         }
 
         EvtVector4R gMtmTerms = g3 * p + g4 * pSum + g5 * pDiff;

@@ -29,81 +29,81 @@ using std::endl;
 using std::ostream;
 
 EvtValError::EvtValError() :
-    _valKnown( 0 ), _val( 0. ), _errKnown( 0 ), _err( 0. )
+    m_valKnown( 0 ), m_val( 0. ), m_errKnown( 0 ), m_err( 0. )
 {
 }
 
 EvtValError::EvtValError( double val ) :
-    _valKnown( 1 ), _val( val ), _errKnown( 0 ), _err( 0. )
+    m_valKnown( 1 ), m_val( val ), m_errKnown( 0 ), m_err( 0. )
 {
 }
 
 EvtValError::EvtValError( double val, double err ) :
-    _valKnown( 1 ), _val( val ), _errKnown( 1 ), _err( err )
+    m_valKnown( 1 ), m_val( val ), m_errKnown( 1 ), m_err( err )
 {
 }
 
 EvtValError::EvtValError( const EvtValError& other ) :
-    _valKnown( other._valKnown ),
-    _val( other._val ),
-    _errKnown( other._errKnown ),
-    _err( other._err )
+    m_valKnown( other.m_valKnown ),
+    m_val( other.m_val ),
+    m_errKnown( other.m_errKnown ),
+    m_err( other.m_err )
 {
 }
 
 double EvtValError::prec() const
 {
-    assert( _valKnown && _errKnown );
-    return ( _val != 0 ) ? _err / _val : 0;
+    assert( m_valKnown && m_errKnown );
+    return ( m_val != 0 ) ? m_err / m_val : 0;
 }
 
 void EvtValError::operator=( const EvtValError& other )
 {
-    _valKnown = other._valKnown;
-    _val = other._val;
-    _errKnown = other._errKnown;
-    _err = other._err;
+    m_valKnown = other.m_valKnown;
+    m_val = other.m_val;
+    m_errKnown = other.m_errKnown;
+    m_err = other.m_err;
 }
 
 void EvtValError::operator*=( const EvtValError& other )
 {
-    assert( _valKnown && other._valKnown );
+    assert( m_valKnown && other.m_valKnown );
 
     // Relative errors add in quadrature
-    if ( _errKnown && other._errKnown )
-        _err = _val * other._val *
-               sqrt( prec() * prec() + other.prec() * other.prec() );
+    if ( m_errKnown && other.m_errKnown )
+        m_err = m_val * other.m_val *
+                sqrt( prec() * prec() + other.prec() * other.prec() );
     else
-        _errKnown = 0;
+        m_errKnown = 0;
 
     // Modify the value
-    _val *= other._val;
+    m_val *= other.m_val;
 }
 
 void EvtValError::operator/=( const EvtValError& other )
 {
-    assert( _valKnown && other._valKnown && other._val != 0. );
+    assert( m_valKnown && other.m_valKnown && other.m_val != 0. );
 
     // Relative errors add in quadrature
-    if ( _errKnown && other._errKnown )
-        _err = _val / other._val *
-               sqrt( prec() * prec() + other.prec() * other.prec() );
+    if ( m_errKnown && other.m_errKnown )
+        m_err = m_val / other.m_val *
+                sqrt( prec() * prec() + other.prec() * other.prec() );
     else
-        _errKnown = 0;
+        m_errKnown = 0;
 
     // Modify the value
-    _val /= other._val;
+    m_val /= other.m_val;
 }
 
 void EvtValError::print( ostream& os ) const
 {
-    if ( _valKnown )
-        os << _val;
+    if ( m_valKnown )
+        os << m_val;
     else
         os << "Undef";
     os << " +/- ";
-    if ( _errKnown )
-        os << _err;
+    if ( m_errKnown )
+        os << m_err;
     else
         os << "Undef";
     os << endl;
@@ -111,25 +111,25 @@ void EvtValError::print( ostream& os ) const
 
 void EvtValError::operator+=( const EvtValError& other )
 {
-    assert( _valKnown );
-    assert( other._valKnown );
-    _val += other._val;
+    assert( m_valKnown );
+    assert( other.m_valKnown );
+    m_val += other.m_val;
 
     // add errors in quadrature
 
-    if ( _errKnown && other._errKnown ) {
-        _err = sqrt( _err * _err + other._err * other._err );
+    if ( m_errKnown && other.m_errKnown ) {
+        m_err = sqrt( m_err * m_err + other.m_err * other.m_err );
     } else {
-        _errKnown = 0;
+        m_errKnown = 0;
     }
 }
 
 void EvtValError::operator*=( double c )
 {
-    assert( _valKnown );
-    _val *= c;
-    if ( _errKnown )
-        _err *= c;
+    assert( m_valKnown );
+    m_val *= c;
+    if ( m_errKnown )
+        m_err *= c;
 }
 
 EvtValError operator*( const EvtValError& x1, const EvtValError& x2 )

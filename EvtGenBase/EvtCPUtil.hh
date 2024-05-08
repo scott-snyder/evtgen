@@ -39,8 +39,8 @@ class EvtCPUtil {
 
     static EvtCPUtil* getInstance();
 
-    void setMixingType( int mixingType ) { _mixingType = mixingType; }
-    int getMixingType() { return _mixingType; }
+    void setMixingType( int mixingType ) { m_mixingType = mixingType; }
+    int getMixingType() { return m_mixingType; }
 
     void fractB0CP( EvtComplex Af, EvtComplex Abarf, double deltam, double beta,
                     double& fract );
@@ -77,8 +77,8 @@ class EvtCPUtil {
     double getDeltaM( const EvtId id );
 
   private:
-    bool _enableFlip;
-    int _mixingType;
+    bool m_enableFlip;
+    int m_mixingType;
 };
 
 #endif

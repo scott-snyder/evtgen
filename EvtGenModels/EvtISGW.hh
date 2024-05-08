@@ -38,8 +38,8 @@ class EvtISGW : public EvtDecayAmp {
     void initProbMax() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> isgwffmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_isgwffmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
 };
 
 #endif

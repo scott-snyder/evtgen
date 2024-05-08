@@ -32,28 +32,28 @@
 // 2003-10-09 : Patrick Robbe
 //-----------------------------------------------------------------------------
 
-bool EvtIncoherentMixing::_doB0Mixing = false;
-bool EvtIncoherentMixing::_doBsMixing = false;
-bool EvtIncoherentMixing::_enableFlip = false;
-double EvtIncoherentMixing::_dGammad = 0.;
-double EvtIncoherentMixing::_deltamd = 0.502e12;
+bool EvtIncoherentMixing::m_doB0Mixing = false;
+bool EvtIncoherentMixing::m_doBsMixing = false;
+bool EvtIncoherentMixing::m_enableFlip = false;
+double EvtIncoherentMixing::m_dGammad = 0.;
+double EvtIncoherentMixing::m_deltamd = 0.502e12;
 // dGamma_s corresponds to DeltaGamma / Gamma = 10 %
-double EvtIncoherentMixing::_dGammas = 6.852e10;
-double EvtIncoherentMixing::_deltams = 20.e12;
+double EvtIncoherentMixing::m_dGammas = 6.852e10;
+double EvtIncoherentMixing::m_deltams = 20.e12;
 
 //=============================================================================
 // Standard constructor, initializes variables
 //=============================================================================
 EvtIncoherentMixing::EvtIncoherentMixing()
 {
-    _doB0Mixing = false;
-    _doBsMixing = false;
-    _dGammad = 0.;
+    m_doB0Mixing = false;
+    m_doBsMixing = false;
+    m_dGammad = 0.;
     // dGammas corresponds to DeltaGamma / Gamma = 10 %
-    _dGammas = 6.852e10;
-    _deltamd = 0.502e12;
-    _deltams = 20.e12;
-    _enableFlip = false;
+    m_dGammas = 6.852e10;
+    m_deltamd = 0.502e12;
+    m_deltams = 20.e12;
+    m_enableFlip = false;
 }
 //=============================================================================
 void EvtIncoherentMixing::incoherentB0Mix( const EvtId id, double& t, int& mix )
@@ -247,78 +247,78 @@ void EvtIncoherentMixing::OtherB( EvtParticle* p, double& t, EvtId& otherb )
 // activate or desactivate the Bs mixing
 void EvtIncoherentMixing::setB0Mixing()
 {
-    _doB0Mixing = true;
+    m_doB0Mixing = true;
 }
 void EvtIncoherentMixing::unsetB0Mixing()
 {
-    _doB0Mixing = false;
+    m_doB0Mixing = false;
 }
 
 // activate or desactivate the B0 mixing
 void EvtIncoherentMixing::setBsMixing()
 {
-    _doBsMixing = true;
+    m_doBsMixing = true;
 }
 void EvtIncoherentMixing::unsetBsMixing()
 {
-    _doBsMixing = false;
+    m_doBsMixing = false;
 }
 
 // is mixing activated ?
 bool EvtIncoherentMixing::doB0Mixing()
 {
-    return _doB0Mixing;
+    return m_doB0Mixing;
 }
 bool EvtIncoherentMixing::doBsMixing()
 {
-    return _doBsMixing;
+    return m_doBsMixing;
 }
 
 // set values for the mixing
 void EvtIncoherentMixing::setdGammad( double value )
 {
-    _dGammad = value;
+    m_dGammad = value;
 }
 void EvtIncoherentMixing::setdeltamd( double value )
 {
-    _deltamd = value;
+    m_deltamd = value;
 }
 void EvtIncoherentMixing::setdGammas( double value )
 {
-    _dGammas = value;
+    m_dGammas = value;
 }
 void EvtIncoherentMixing::setdeltams( double value )
 {
-    _deltams = value;
+    m_deltams = value;
 }
 
 // get parameters for mixing
 double EvtIncoherentMixing::getdGammad()
 {
-    return _dGammad;
+    return m_dGammad;
 }
 double EvtIncoherentMixing::getdeltamd()
 {
-    return _deltamd;
+    return m_deltamd;
 }
 double EvtIncoherentMixing::getdGammas()
 {
-    return _dGammas;
+    return m_dGammas;
 }
 double EvtIncoherentMixing::getdeltams()
 {
-    return _deltams;
+    return m_deltams;
 }
 
 bool EvtIncoherentMixing::flipIsEnabled()
 {
-    return _enableFlip;
+    return m_enableFlip;
 }
 void EvtIncoherentMixing::enableFlip()
 {
-    _enableFlip = true;
+    m_enableFlip = true;
 }
 void EvtIncoherentMixing::disableFlip()
 {
-    _enableFlip = false;
+    m_enableFlip = false;
 }

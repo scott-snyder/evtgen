@@ -155,7 +155,7 @@ class EvtWilsonCoefficients {
         m_C8eff0, m_C9, m_C9tilda, m_C10, m_C10tilda, m_P0;
     double m_A, m_B, m_C, m_D, m_E, m_F, m_Y, m_Z, m_PE;
 
-    double k[6][8], a[8], h[8], p[8], r[2][8], s[8], q[8], g[8];
+    double m_k[6][8], m_a[8], m_h[8], m_p[8], m_r[2][8], m_s[8], m_q[8], m_g[8];
 };
 
 #endif

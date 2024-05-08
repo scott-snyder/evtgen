@@ -66,13 +66,13 @@ class EvtBtoKD3P : public EvtDecayAmp {
 
   protected:
     // parameters:
-    double _r;
-    EvtComplex _exp;
+    double m_r;
+    EvtComplex m_exp;
 
     // other:
-    const EvtDecayBase* _model1 = nullptr;
-    const EvtDecayBase* _model2 = nullptr;
-    bool _decayedOnce = false;
+    const EvtDecayBase* m_model1 = nullptr;
+    const EvtDecayBase* m_model2 = nullptr;
+    bool m_decayedOnce = false;
 };
 
 #endif

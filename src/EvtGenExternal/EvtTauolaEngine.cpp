@@ -43,15 +43,15 @@ using std::endl;
 EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom )
 {
     // PDG standard code integer ID for tau particle
-    _tauPDG = 15;
+    m_tauPDG = 15;
     // Number of possible decay modes in Tauola
-    _nTauolaModes = 22;
+    m_nTauolaModes = 22;
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Setting up TAUOLA." << endl;
 
     // These three lines are not really necessary since they are the default.
     // But they are here so that we know what the initial conditions are.
-    Tauolapp::Tauola::setDecayingParticle( _tauPDG );    // tau PDG code
+    Tauolapp::Tauola::setDecayingParticle( m_tauPDG );    // tau PDG code
     Tauolapp::Tauola::setSameParticleDecayMode(
         Tauolapp::Tauola::All );    // all modes allowed
     Tauolapp::Tauola::setOppositeParticleDecayMode(
@@ -76,12 +76,12 @@ EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom )
 
     // Initialise various default parameters
     // Neutral and charged spin propagator choices
-    _neutPropType = 0;
-    _posPropType = 0;
-    _negPropType = 0;
+    m_neutPropType = 0;
+    m_posPropType = 0;
+    m_negPropType = 0;
 
     // Set-up possible decay modes _after_ we have read the (user) decay file
-    _initialised = false;
+    m_initialised = false;
 }
 
 void EvtTauolaEngine::initialise()
@@ -92,11 +92,11 @@ void EvtTauolaEngine::initialise()
     // first to get lists of particle modes and their alias definitions
     // (for creating EvtParticles with the right history information).
 
-    if ( _initialised == false ) {
+    if ( m_initialised == false ) {
         this->setUpPossibleTauModes();
         this->setOtherParameters();
 
-        _initialised = true;
+        m_initialised = true;
     }
 }
 
@@ -120,7 +120,7 @@ void EvtTauolaEngine::setUpPossibleTauModes()
         EvtId particleId = EvtPDL::getEntry( iPDL );
         int PDGId = EvtPDL::getStdHep( particleId );
 
-        if ( abs( PDGId ) == _tauPDG && gotAnyTauolaModes == false ) {
+        if ( abs( PDGId ) == m_tauPDG && gotAnyTauolaModes == false ) {
             int aliasInt = particleId.getAlias();
 
             // Get the list of decay modes for this tau particle (alias)
@@ -130,9 +130,9 @@ void EvtTauolaEngine::setUpPossibleTauModes()
             // Vector to store tau mode branching fractions.
             // The size of this vector equals the total number of possible
             // Tauola decay modes. Initialise all BFs to zero.
-            std::vector<double> tauolaModeBFs( _nTauolaModes );
+            std::vector<double> tauolaModeBFs( m_nTauolaModes );
 
-            for ( iTauMode = 0; iTauMode < _nTauolaModes; iTauMode++ ) {
+            for ( iTauMode = 0; iTauMode < m_nTauolaModes; iTauMode++ ) {
                 tauolaModeBFs[iTauMode] = 0.0;
             }
 
@@ -157,7 +157,7 @@ void EvtTauolaEngine::setUpPossibleTauModes()
                         double BF = decayModel->getBranchingFraction();
                         int modeArrayInt = this->getModeInt( decayModel ) - 1;
 
-                        if ( modeArrayInt >= 0 && modeArrayInt < _nTauolaModes ) {
+                        if ( modeArrayInt >= 0 && modeArrayInt < m_nTauolaModes ) {
                             tauolaModeBFs[modeArrayInt] = BF;
                             totalTauModeBF += BF;
                         }
@@ -184,7 +184,7 @@ void EvtTauolaEngine::setUpPossibleTauModes()
                     << "Setting TAUOLA BF modes using the definitions for the particle "
                     << EvtPDL::name( particleId ) << endl;
 
-                for ( iTauMode = 0; iTauMode < _nTauolaModes; iTauMode++ ) {
+                for ( iTauMode = 0; iTauMode < m_nTauolaModes; iTauMode++ ) {
                     tauolaModeBFs[iTauMode] /= totalTauModeBF;
                     double modeBF = tauolaModeBFs[iTauMode];
                     EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -228,20 +228,20 @@ void EvtTauolaEngine::setOtherParameters()
     int iErr( 0 );
     std::string neutPropName = EvtSymTable::get( "TauolaNeutralProp", iErr );
     if ( neutPropName == "Z0" || neutPropName == "Z" ) {
-        _neutPropType = Tauolapp::TauolaParticle::Z0;
+        m_neutPropType = Tauolapp::TauolaParticle::Z0;
     } else if ( neutPropName == "Gamma" ) {
-        _neutPropType = Tauolapp::TauolaParticle::GAMMA;
+        m_neutPropType = Tauolapp::TauolaParticle::GAMMA;
     } else if ( neutPropName == "Higgs" ) {
-        _neutPropType = Tauolapp::TauolaParticle::HIGGS;
+        m_neutPropType = Tauolapp::TauolaParticle::HIGGS;
     } else if ( neutPropName == "PseudoHiggs" ) {
-        _neutPropType = Tauolapp::TauolaParticle::HIGGS_A;
+        m_neutPropType = Tauolapp::TauolaParticle::HIGGS_A;
     } else if ( neutPropName == "MixedHiggs" ) {
-        _neutPropType = Tauolapp::Tauola::getHiggsScalarPseudoscalarPDG();
+        m_neutPropType = Tauolapp::Tauola::getHiggsScalarPseudoscalarPDG();
     }
 
-    if ( _neutPropType != 0 ) {
+    if ( m_neutPropType != 0 ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << "TAUOLA neutral spin propagator PDG id set to " << _neutPropType
+            << "TAUOLA neutral spin propagator PDG id set to " << m_neutPropType
             << endl;
     }
 
@@ -249,23 +249,23 @@ void EvtTauolaEngine::setOtherParameters()
     // "W" (default), "Higgs" (H+/H-)
     std::string chargedPropName = EvtSymTable::get( "TauolaChargedProp", iErr );
     if ( chargedPropName == "W" ) {
-        _negPropType = Tauolapp::TauolaParticle::W_MINUS;
-        _posPropType = Tauolapp::TauolaParticle::W_PLUS;
+        m_negPropType = Tauolapp::TauolaParticle::W_MINUS;
+        m_posPropType = Tauolapp::TauolaParticle::W_PLUS;
     } else if ( chargedPropName == "Higgs" ) {
-        _negPropType = Tauolapp::TauolaParticle::HIGGS_MINUS;
-        _posPropType = Tauolapp::TauolaParticle::HIGGS_PLUS;
+        m_negPropType = Tauolapp::TauolaParticle::HIGGS_MINUS;
+        m_posPropType = Tauolapp::TauolaParticle::HIGGS_PLUS;
     }
 
-    if ( _negPropType != 0 ) {
+    if ( m_negPropType != 0 ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "TAUOLA negative charge spin propagator PDG id set to "
-            << _negPropType << endl;
+            << m_negPropType << endl;
     }
 
-    if ( _posPropType != 0 ) {
+    if ( m_posPropType != 0 ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "TAUOLA positive charge spin propagator PDG id set to "
-            << _posPropType << endl;
+            << m_posPropType << endl;
     }
 
     // 3) TauolaHiggsMixingAngle: Specify the mixing angle between the neutral scalar & pseudoscalar Higgs
@@ -322,7 +322,7 @@ void EvtTauolaEngine::setOtherParameters()
 
 bool EvtTauolaEngine::doDecay( EvtParticle* tauParticle )
 {
-    if ( _initialised == false ) {
+    if ( m_initialised == false ) {
         this->initialise();
     }
 
@@ -332,7 +332,7 @@ bool EvtTauolaEngine::doDecay( EvtParticle* tauParticle )
 
     // Check that we have a tau particle.
     EvtId partId = tauParticle->getId();
-    if ( abs( EvtPDL::getStdHep( partId ) ) != _tauPDG ) {
+    if ( abs( EvtPDL::getStdHep( partId ) ) != m_tauPDG ) {
         return false;
     }
 
@@ -423,7 +423,7 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
                 EvtId theId = theDaughter->getId();
                 int PDGInt = EvtPDL::getStdHep( theId );
 
-                if ( abs( PDGInt ) == _tauPDG ) {
+                if ( abs( PDGInt ) == m_tauPDG ) {
                     // Delete any siblings for the tau particle
                     if ( theDaughter->getNDaug() > 0 ) {
                         theDaughter->deleteDaughters( false );
@@ -440,16 +440,16 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
 
         // For the parent particle, artifically set the PDG to a boson with the same 4-momentum
         // so that spin correlations are calculated inside Tauola.
-        // This leaves the original parent _EvtParticle_ unchanged
+        // This leaves the original parent m_EvtParticle_ unchanged
         if ( nTaus > 0 && hepMCParent ) {
             int parCharge = EvtPDL::chg3( origParentId ) /
                             3;    // (3*particle charge)/3 = particle charge
-            if ( parCharge == 0 && _neutPropType != 0 ) {
-                hepMCParent->set_pdg_id( _neutPropType );
-            } else if ( parCharge == -1 && _negPropType != 0 ) {
-                hepMCParent->set_pdg_id( _negPropType );
-            } else if ( parCharge == 1 && _posPropType != 0 ) {
-                hepMCParent->set_pdg_id( _posPropType );
+            if ( parCharge == 0 && m_neutPropType != 0 ) {
+                hepMCParent->set_pdg_id( m_neutPropType );
+            } else if ( parCharge == -1 && m_negPropType != 0 ) {
+                hepMCParent->set_pdg_id( m_negPropType );
+            } else if ( parCharge == 1 && m_posPropType != 0 ) {
+                hepMCParent->set_pdg_id( m_posPropType );
             }
         }
 
@@ -489,7 +489,7 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
         HepMC::GenParticle* aParticle = ( *eventIter );
 #endif
 
-        if ( aParticle && abs( aParticle->pdg_id() ) == _tauPDG ) {
+        if ( aParticle && abs( aParticle->pdg_id() ) == m_tauPDG ) {
             // Find out what EvtParticle corresponds to the HepMC particle.
             // We need this to create and attach EvtParticle daughters.
             EvtParticle* tauEvtParticle = tauMap[aParticle];

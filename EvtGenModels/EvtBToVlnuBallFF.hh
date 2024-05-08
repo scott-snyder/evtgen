@@ -52,14 +52,14 @@ class EvtBToVlnuBallFF : public EvtSemiLeptonicFF {
                       double*, double*, double*, double*, double* ) override;
 
   private:
-    double _r2_A1;
-    double _mfit2_A1;
-    double _r1_A2;
-    double _r2_A2;
-    double _mfit2_A2;
-    double _r1_V;
-    double _r2_V;
-    double _mfit2_V;
+    double m_r2_A1;
+    double m_mfit2_A1;
+    double m_r1_A2;
+    double m_r2_A2;
+    double m_mfit2_A2;
+    double m_r1_V;
+    double m_r2_V;
+    double m_mfit2_V;
 };
 
 #endif

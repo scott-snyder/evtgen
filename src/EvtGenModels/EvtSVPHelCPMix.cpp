@@ -146,7 +146,7 @@ void EvtSVPHelCPMix::decay( EvtParticle* p )
     }
 
     //Compute the decay amplitudes from the time-dependent helicity amplitudes
-    EvtSVPHelAmp::SVPHel( p, _amp2, getDaug( 0 ), getDaug( 1 ), hp, hm );
+    EvtSVPHelAmp::SVPHel( p, m_amp2, getDaug( 0 ), getDaug( 1 ), hp, hm );
 
     return;
 }

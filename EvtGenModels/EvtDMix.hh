@@ -38,9 +38,9 @@ class EvtDMix : public EvtDecayIncoherent {
     void decay( EvtParticle* p ) override;
 
   private:
-    double _rd;
-    double _xpr;
-    double _ypr;
+    double m_rd;
+    double m_xpr;
+    double m_ypr;
 };
 
 #endif

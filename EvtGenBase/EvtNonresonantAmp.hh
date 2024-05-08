@@ -45,15 +45,15 @@ class EvtNonresonantAmp : public EvtAmplitude<EvtDalitzPoint> {
     }
 
   private:
-    EvtDalitzPlot* _dalitzSpace;
+    EvtDalitzPlot* m_dalitzSpace;
 
-    EvtPto3PAmp::NumType _type;
+    EvtPto3PAmp::NumType m_type;
 
-    EvtCyclic3::Pair _pair1, _pair2;
+    EvtCyclic3::Pair m_pair1, m_pair2;
 
-    double _par1, _par2;
+    double m_par1, m_par2;
 
-    EvtSpinType::spintype _spin;
+    EvtSpinType::spintype m_spin;
 };
 
 #endif

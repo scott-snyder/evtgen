@@ -27,8 +27,8 @@
 //      the fermi motion distribution according to
 //      hep-ph/9905351 v2
 //   BLNP model:
-//      F(what,Lambda,b) = pow(_b,_b)/(tgamma(_b)*_Lambda)*pow(what/_Lambda,_b-1)*
-//                           exp(-_b*what/Lambda);
+//      F(what,Lambda,b) = pow(b,b)/(tgamma(b)*Lambda)*pow(what/Lambda,b-1)*
+//                           exp(-b*what/Lambda);
 //      the leading order shape function (exp) (hep-ph/0504071)
 
 class EvtPFermi final {
@@ -57,11 +57,11 @@ class EvtPFermi final {
 
     // Data members
 
-    double _a;
-    double _mb;
-    double _mB;
-    double _Lambda;
-    double _b;
+    double m_a;
+    double m_mb;
+    double m_mB;
+    double m_Lambda;
+    double m_b;
 };
 
 #endif    // EVTPFERMI_HH

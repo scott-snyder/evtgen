@@ -58,9 +58,9 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
 
   protected:
   private:
-    bool _initialised;
-    int _tauPDG, _nTauolaModes;
-    int _neutPropType, _posPropType, _negPropType;
+    bool m_initialised;
+    int m_tauPDG, m_nTauolaModes;
+    int m_neutPropType, m_posPropType, m_negPropType;
 
     GenParticlePtr createGenParticle( EvtParticle* theParticle );
 

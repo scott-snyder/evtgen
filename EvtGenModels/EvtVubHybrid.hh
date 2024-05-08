@@ -69,23 +69,23 @@ class EvtVubHybrid : public EvtDecayIncoherent {
         nVariables = 3
     };
 
-    bool _noHybrid =
-        false;    // _noHybrid will be set TRUE if the DECAY.DEC file has no binning or weights
-    bool _storeQplus =
-        true;    // _storeQplus should alwasy be TRUE: writes out Fermi motion parameter
+    bool m_noHybrid =
+        false;    // m_noHybrid will be set TRUE if the DECAY.DEC file has no binning or weights
+    bool m_storeQplus =
+        true;    // m_storeQplus should alwasy be TRUE: writes out Fermi motion parameter
 
-    double _mb = 4.62;        // the b-quark pole mass in GeV (try 4.65 to 4.9)
-    double _a = 2.27;         // Parameter for the Fermi Motion (1.29 is good)
-    double _alphas = 0.22;    // Strong Coupling at m_b (around 0.24)
-    double _dGMax = 3.;       // max dGamma*p2 value;
-    int _nbins = 0;
-    double _masscut = 0.28;
-    std::vector<double> _bins_mX;
-    std::vector<double> _bins_q2;
-    std::vector<double> _bins_El;
-    std::vector<double> _weights;
-    std::unique_ptr<EvtVubdGamma> _dGamma;    // calculates the decay rate
-    std::vector<double> _pf;
+    double m_mb = 4.62;        // the b-quark pole mass in GeV (try 4.65 to 4.9)
+    double m_a = 2.27;         // Parameter for the Fermi Motion (1.29 is good)
+    double m_alphas = 0.22;    // Strong Coupling at m_b (around 0.24)
+    double m_dGMax = 3.;       // max dGamma*p2 value;
+    int m_nbins = 0;
+    double m_masscut = 0.28;
+    std::vector<double> m_bins_mX;
+    std::vector<double> m_bins_q2;
+    std::vector<double> m_bins_El;
+    std::vector<double> m_weights;
+    std::unique_ptr<EvtVubdGamma> m_dGamma;    // calculates the decay rate
+    std::vector<double> m_pf;
 };
 
 #endif

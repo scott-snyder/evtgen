@@ -36,8 +36,8 @@ using std::endl;
 
 EvtCPUtil::EvtCPUtil( int mixingType )
 {
-    _enableFlip = false;
-    _mixingType = mixingType;
+    m_enableFlip = false;
+    m_mixingType = mixingType;
 }
 
 EvtCPUtil* EvtCPUtil::getInstance()
@@ -142,10 +142,10 @@ void EvtCPUtil::fractB0nonCP( EvtComplex Af, EvtComplex Abarf, EvtComplex Afbar,
 
 void EvtCPUtil::OtherB( EvtParticle* p, double& t, EvtId& otherb, double probB0 )
 {
-    if ( _mixingType == EvtCPUtil::Coherent ) {
+    if ( m_mixingType == EvtCPUtil::Coherent ) {
         OtherCoherentB( p, t, otherb, probB0 );
 
-    } else if ( _mixingType == EvtCPUtil::Incoherent ) {
+    } else if ( m_mixingType == EvtCPUtil::Incoherent ) {
         OtherIncoherentB( p, t, otherb, probB0 );
     }
 }
@@ -565,13 +565,13 @@ double EvtCPUtil::getDeltaM( const EvtId id )
 
 bool EvtCPUtil::flipIsEnabled()
 {
-    return _enableFlip;
+    return m_enableFlip;
 }
 void EvtCPUtil::enableFlip()
 {
-    _enableFlip = true;
+    m_enableFlip = true;
 }
 void EvtCPUtil::disableFlip()
 {
-    _enableFlip = false;
+    m_enableFlip = false;
 }

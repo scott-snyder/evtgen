@@ -31,43 +31,43 @@ using std::ostream;
 
 void EvtSecondary::init()
 {
-    _npart = 0;
+    m_npart = 0;
 }
 
 int EvtSecondary::getNPart()
 {
-    return _npart;
+    return m_npart;
 }
 
 void EvtSecondary::createSecondary( int stdhepindex, EvtParticle* prnt )
 {
-    _stdhepindex[_npart] = stdhepindex;
+    m_stdhepindex[m_npart] = stdhepindex;
     if ( prnt->getNDaug() == 0 ) {
-        _id1[_npart] = 0;
-        _id2[_npart] = 0;
-        _id3[_npart] = 0;
-        _npart++;
+        m_id1[m_npart] = 0;
+        m_id2[m_npart] = 0;
+        m_id3[m_npart] = 0;
+        m_npart++;
         return;
     }
     if ( prnt->getNDaug() == 1 ) {
-        _id1[_npart] = EvtPDL::getStdHep( prnt->getDaug( 0 )->getId() );
-        _id2[_npart] = 0;
-        _id3[_npart] = 0;
-        _npart++;
+        m_id1[m_npart] = EvtPDL::getStdHep( prnt->getDaug( 0 )->getId() );
+        m_id2[m_npart] = 0;
+        m_id3[m_npart] = 0;
+        m_npart++;
         return;
     }
     if ( prnt->getNDaug() == 2 ) {
-        _id1[_npart] = EvtPDL::getStdHep( prnt->getDaug( 0 )->getId() );
-        _id2[_npart] = EvtPDL::getStdHep( prnt->getDaug( 1 )->getId() );
-        _id3[_npart] = 0;
-        _npart++;
+        m_id1[m_npart] = EvtPDL::getStdHep( prnt->getDaug( 0 )->getId() );
+        m_id2[m_npart] = EvtPDL::getStdHep( prnt->getDaug( 1 )->getId() );
+        m_id3[m_npart] = 0;
+        m_npart++;
         return;
     }
     if ( prnt->getNDaug() == 3 ) {
-        _id1[_npart] = EvtPDL::getStdHep( prnt->getDaug( 0 )->getId() );
-        _id2[_npart] = EvtPDL::getStdHep( prnt->getDaug( 1 )->getId() );
-        _id3[_npart] = EvtPDL::getStdHep( prnt->getDaug( 2 )->getId() );
-        _npart++;
+        m_id1[m_npart] = EvtPDL::getStdHep( prnt->getDaug( 0 )->getId() );
+        m_id2[m_npart] = EvtPDL::getStdHep( prnt->getDaug( 1 )->getId() );
+        m_id3[m_npart] = EvtPDL::getStdHep( prnt->getDaug( 2 )->getId() );
+        m_npart++;
         return;
     }
 
@@ -81,10 +81,11 @@ ostream& operator<<( ostream& s, const EvtSecondary& secondary )
     s << "Secondary decays:" << endl;
 
     int i;
-    for ( i = 0; i < secondary._npart; i++ ) {
+    for ( i = 0; i < secondary.m_npart; i++ ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << i << " " << secondary._stdhepindex[i] << " " << secondary._id1[i]
-            << " " << secondary._id2[i] << " " << secondary._id3[i] << endl;
+            << i << " " << secondary.m_stdhepindex[i] << " "
+            << secondary.m_id1[i] << " " << secondary.m_id2[i] << " "
+            << secondary.m_id3[i] << endl;
     }
 
     s << endl;

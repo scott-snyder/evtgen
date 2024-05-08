@@ -67,16 +67,16 @@ void EvtSVVNONCPEIGEN::init()
     int j = ( getNArg() - 3 ) / 2;
 
     for ( i = 0; i < j; ++i ) {
-        _A_f[i] = getArg( ( 2 * i ) + 3 ) *
-                  EvtComplex( cos( getArg( ( 2 * i ) + 4 ) ),
-                              sin( getArg( ( 2 * i ) + 4 ) ) );
+        m_A_f[i] = getArg( ( 2 * i ) + 3 ) *
+                   EvtComplex( cos( getArg( ( 2 * i ) + 4 ) ),
+                               sin( getArg( ( 2 * i ) + 4 ) ) );
     }
 
     //  If only 6 amplitudes are specified, calculate the last 6 from the first 6:
     if ( 6 == j ) {
         for ( i = 0; i < 3; ++i ) {
-            _A_f[6 + i] = _A_f[3 + i];
-            _A_f[9 + i] = _A_f[i];
+            m_A_f[6 + i] = m_A_f[3 + i];
+            m_A_f[9 + i] = m_A_f[i];
         }
     }
 }
@@ -85,7 +85,7 @@ void EvtSVVNONCPEIGEN::initProbMax()
 {
     double probMax = 0;
     for ( int i = 0; i < 12; ++i ) {
-        double amp = abs( _A_f[i] );
+        double amp = abs( m_A_f[i] );
         probMax += amp * amp;
     }
 
@@ -124,16 +124,16 @@ void EvtSVVNONCPEIGEN::decay( EvtParticle* p )
         if ( other_b == B0B ) {
             // At t=0 we have a B0
             for ( int i = 0; i < 3; ++i ) {
-                amp[i] = _A_f[i] * cos( dmt2 ) +
+                amp[i] = m_A_f[i] * cos( dmt2 ) +
                          eMinusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) *
-                             _A_f[i + 3];
+                             m_A_f[i + 3];
             }
         }
         if ( other_b == B0 ) {
             // At t=0 we have a B0bar
             for ( int i = 0; i < 3; ++i ) {
-                amp[i] = _A_f[i] * ePlusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) +
-                         _A_f[i + 3] * cos( dmt2 );
+                amp[i] = m_A_f[i] * ePlusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) +
+                         m_A_f[i + 3] * cos( dmt2 );
             }
         }
     } else {
@@ -146,21 +146,22 @@ void EvtSVVNONCPEIGEN::decay( EvtParticle* p )
             // count the B0bar helicities backwards. (Equivalently, one could flip the chi angle.)
 
             for ( int i = 0; i < 3; ++i ) {
-                amp[i] = _A_f[8 - i] * cos( dmt2 ) +
+                amp[i] = m_A_f[8 - i] * cos( dmt2 ) +
                          eMinusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) *
-                             _A_f[11 - i];
+                             m_A_f[11 - i];
             }
         }
         if ( other_b == B0 ) {
             // At t=0 we have a B0bar
             for ( int i = 0; i < 3; ++i ) {
-                amp[i] = _A_f[8 - i] * ePlusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) +
-                         _A_f[11 - i] * cos( dmt2 );
+                amp[i] = m_A_f[8 - i] * ePlusIPhi *
+                             EvtComplex( 0.0, sin( dmt2 ) ) +
+                         m_A_f[11 - i] * cos( dmt2 );
             }
         }
     }
 
-    EvtSVVHelAmp::SVVHel( p, _amp2, daugs[0], daugs[1], amp[0], amp[1], amp[2] );
+    EvtSVVHelAmp::SVVHel( p, m_amp2, daugs[0], daugs[1], amp[0], amp[1], amp[2] );
 
     return;
 }

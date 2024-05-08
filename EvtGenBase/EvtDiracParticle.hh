@@ -34,15 +34,18 @@ class EvtDiracParticle : public EvtParticle {
     void init( EvtId part_n, const EvtVector4R& p4, const EvtDiracSpinor&,
                const EvtDiracSpinor&, const EvtDiracSpinor&,
                const EvtDiracSpinor& );
-    EvtDiracSpinor spParent( int i ) const override { return _spinorParent[i]; }
-    EvtDiracSpinor sp( int i ) const override { return _spinorRest[i]; }
+    EvtDiracSpinor spParent( int i ) const override
+    {
+        return m_spinorParent[i];
+    }
+    EvtDiracSpinor sp( int i ) const override { return m_spinorRest[i]; }
     EvtSpinDensity rotateToHelicityBasis() const override;
     EvtSpinDensity rotateToHelicityBasis( double alpha, double beta,
                                           double gamma ) const override;
 
   private:
-    EvtDiracSpinor _spinorRest[2];
-    EvtDiracSpinor _spinorParent[2];
+    EvtDiracSpinor m_spinorRest[2];
+    EvtDiracSpinor m_spinorParent[2];
     EvtDiracParticle( const EvtDiracParticle& d );
     EvtDiracParticle& operator=( const EvtDiracParticle& d );
 };

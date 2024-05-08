@@ -34,9 +34,9 @@ using namespace std;
 
 EvtBCTFF::EvtBCTFF( int idT, int fit )
 {
-    idTensor = idT;
-    whichfit = fit;
-    MBc = EvtPDL::getMeanMass( EvtPDL::getId( "B_c+" ) );
+    m_idTensor = idT;
+    m_whichfit = fit;
+    m_MBc = EvtPDL::getMeanMass( EvtPDL::getId( "B_c+" ) );
     return;
 }
 
@@ -60,7 +60,7 @@ void EvtBCTFF::gettensorff( EvtId /*p*/, EvtId /*d*/, double t, double /*mass*/,
 {
     double q2 = t;
 
-    if ( whichfit == 0 ) {
+    if ( m_whichfit == 0 ) {
         *hf = 0;
         *kf = 0;
         *bpf = 0;
@@ -68,9 +68,9 @@ void EvtBCTFF::gettensorff( EvtId /*p*/, EvtId /*d*/, double t, double /*mass*/,
         return;
     }
 
-    if ( idTensor == EvtPDL::getId( "chi_c2" ).getId() ) {    // Bc -> chi_c1
-        if ( whichfit == 3 ) {    // FF from Wang et al 10.1103/PhysRevD.79.114018
-            double ratio = q2 / ( MBc * MBc );
+    if ( m_idTensor == EvtPDL::getId( "chi_c2" ).getId() ) {    // Bc -> chi_c1
+        if ( m_whichfit == 3 ) {    // FF from Wang et al 10.1103/PhysRevD.79.114018
+            double ratio = q2 / ( m_MBc * m_MBc );
 
             double hf_0 = 0.022;
             double hf_c1 = 2.58;

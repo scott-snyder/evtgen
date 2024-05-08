@@ -76,7 +76,7 @@ class EvtSVVNONCPEIGEN : public EvtDecayAmp {
     std::string getParamDefault( int i ) override;
 
   private:
-    EvtComplex _A_f[12];
+    EvtComplex m_A_f[12];
 };
 
 #endif

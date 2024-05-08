@@ -75,7 +75,7 @@ class EvtPHOTOS : public EvtAbsRadCorr {
 
     bool m_initialised = false;
 
-    static std::mutex photos_mutex;
+    static std::mutex m_photos_mutex;
 };
 
 #endif

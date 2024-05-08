@@ -35,13 +35,13 @@
 //=============================================================================
 
 EvtRareLbToLllFF::FormFactorDependence::FormFactorDependence() :
-    a0_( 0 ), a2_( 0 ), a4_( 0 ), al_( 0 ), ap_( 0 )
+    m_a0( 0 ), m_a2( 0 ), m_a4( 0 ), m_al( 0 ), m_ap( 0 )
 {
 }
 
 EvtRareLbToLllFF::FormFactorDependence::FormFactorDependence( const double al,
                                                               const double ap ) :
-    a0_( 0 ), a2_( 0 ), a4_( 0 ), al_( al ), ap_( ap )
+    m_a0( 0 ), m_a2( 0 ), m_a4( 0 ), m_al( al ), m_ap( ap )
 {
 }
 
@@ -50,24 +50,25 @@ EvtRareLbToLllFF::FormFactorDependence::FormFactorDependence( const double a0,
                                                               const double a4,
                                                               const double al,
                                                               const double ap ) :
-    a0_( a0 ), a2_( a2 ), a4_( a4 ), al_( al ), ap_( ap )
+    m_a0( a0 ), m_a2( a2 ), m_a4( a4 ), m_al( al ), m_ap( ap )
 {
 }
 
 EvtRareLbToLllFF::FormFactorDependence::FormFactorDependence(
     const EvtRareLbToLllFF::FormFactorDependence& other ) :
-    a0_( other.a0_ ),
-    a2_( other.a2_ ),
-    a4_( other.a4_ ),
-    al_( other.al_ ),
-    ap_( other.ap_ )
+    m_a0( other.m_a0 ),
+    m_a2( other.m_a2 ),
+    m_a4( other.m_a4 ),
+    m_al( other.m_al ),
+    m_ap( other.m_ap )
 {
 }
 
 EvtRareLbToLllFF::FormFactorDependence*
 EvtRareLbToLllFF::FormFactorDependence::clone() const
 {
-    return new EvtRareLbToLllFF::FormFactorDependence( a0_, a2_, a4_, al_, ap_ );
+    return new EvtRareLbToLllFF::FormFactorDependence( m_a0, m_a2, m_a4, m_al,
+                                                       m_ap );
 }
 
 EvtRareLbToLllFF::FormFactorSet::FormFactorSet()
@@ -76,28 +77,28 @@ EvtRareLbToLllFF::FormFactorSet::FormFactorSet()
 
 EvtRareLbToLllFF::FormFactorSet::FormFactorSet(
     const EvtRareLbToLllFF::FormFactorSet& other ) :
-    F1( other.F1 ),
-    F2( other.F2 ),
-    F3( other.F3 ),
-    F4( other.F4 ),
-    G1( other.G1 ),
-    G2( other.G2 ),
-    G3( other.G3 ),
-    G4( other.G4 ),
-    H1( other.H1 ),
-    H2( other.H2 ),
-    H3( other.H3 ),
-    H4( other.H4 ),
-    H5( other.H5 ),
-    H6( other.H6 )
+    m_F1( other.m_F1 ),
+    m_F2( other.m_F2 ),
+    m_F3( other.m_F3 ),
+    m_F4( other.m_F4 ),
+    m_G1( other.m_G1 ),
+    m_G2( other.m_G2 ),
+    m_G3( other.m_G3 ),
+    m_G4( other.m_G4 ),
+    m_H1( other.m_H1 ),
+    m_H2( other.m_H2 ),
+    m_H3( other.m_H3 ),
+    m_H4( other.m_H4 ),
+    m_H5( other.m_H5 ),
+    m_H6( other.m_H6 )
 {
 }
 
 void EvtRareLbToLllFF::FormFactorDependence::param( const double al,
                                                     const double ap )
 {
-    al_ = al;
-    ap_ = ap;
+    m_al = al;
+    m_ap = ap;
 }
 
 void EvtRareLbToLllFF::FormFactorDependence::param( const double a0,
@@ -106,55 +107,55 @@ void EvtRareLbToLllFF::FormFactorDependence::param( const double a0,
                                                     const double al,
                                                     const double ap )
 {
-    a0_ = a0;
-    a2_ = a2;
-    a4_ = a4;
-    al_ = al;
-    ap_ = ap;
+    m_a0 = a0;
+    m_a2 = a2;
+    m_a4 = a4;
+    m_al = al;
+    m_ap = ap;
 }
 
 void EvtRareLbToLllFF::init()
 {
     // Parameters for Lambda0
     auto L1115 = std::make_unique<EvtRareLbToLllFF::FormFactorSet>();
-    L1115->F1.param( 1.21, 0.319, -0.0177, 0.387, 0.372 );
-    L1115->F2.param( -0.202, -0.219, 0.0103, 0.387, 0.372 );
-    L1115->F3.param( -0.0615, 0.00102, -0.00139, 0.387, 0.372 );
-    L1115->F4.param( 0.387, 0.372 );
-    L1115->G1.param( 0.927, 0.104, -0.00553, 0.387, 0.372 );
-    L1115->G2.param( -0.236, -0.233, 0.0110, 0.387, 0.372 );
-    L1115->G3.param( 0.0756, 0.0195, -0.00115, 0.387, 0.372 );
-    L1115->G4.param( 0.387, 0.372 );
-    L1115->H1.param( 0.936, 0.0722, -0.00643, 0.387, 0.372 );
-    L1115->H2.param( 0.227, 0.265, -0.0101, 0.387, 0.372 );
-    L1115->H3.param( -0.0757, -0.0195, 0.00116, 0.387, 0.372 );
-    L1115->H4.param( -0.0174, -0.00986, -0.000524, 0.387, 0.372 );
-    L1115->H5.param( 0.387, 0.372 );
-    L1115->H6.param( 0.387, 0.372 );
+    L1115->m_F1.param( 1.21, 0.319, -0.0177, 0.387, 0.372 );
+    L1115->m_F2.param( -0.202, -0.219, 0.0103, 0.387, 0.372 );
+    L1115->m_F3.param( -0.0615, 0.00102, -0.00139, 0.387, 0.372 );
+    L1115->m_F4.param( 0.387, 0.372 );
+    L1115->m_G1.param( 0.927, 0.104, -0.00553, 0.387, 0.372 );
+    L1115->m_G2.param( -0.236, -0.233, 0.0110, 0.387, 0.372 );
+    L1115->m_G3.param( 0.0756, 0.0195, -0.00115, 0.387, 0.372 );
+    L1115->m_G4.param( 0.387, 0.372 );
+    L1115->m_H1.param( 0.936, 0.0722, -0.00643, 0.387, 0.372 );
+    L1115->m_H2.param( 0.227, 0.265, -0.0101, 0.387, 0.372 );
+    L1115->m_H3.param( -0.0757, -0.0195, 0.00116, 0.387, 0.372 );
+    L1115->m_H4.param( -0.0174, -0.00986, -0.000524, 0.387, 0.372 );
+    L1115->m_H5.param( 0.387, 0.372 );
+    L1115->m_H6.param( 0.387, 0.372 );
 
     // Parameters for Lambda(Lambda(1520)0)
     auto L1520 = std::make_unique<EvtRareLbToLllFF::FormFactorSet>();
-    L1520->F1.param( -1.66, -0.295, 0.00924, 0.333, 0.308 );
-    L1520->F2.param( 0.544, 0.194, -0.00420, 0.333, 0.308 );
-    L1520->F3.param( 0.126, 0.00799, -0.000635, 0.333, 0.308 );
-    L1520->F4.param( -0.0330, -0.00977, 0.00211, 0.303, 0.308 );
-    L1520->G1.param( -0.964, -0.100, 0.00264, 0.333, 0.308 );
-    L1520->G2.param( 0.625, 0.219, -0.00508, 0.333, 0.308 );
-    L1520->G3.param( -0.183, -0.0380, 0.00351, 0.333, 0.308 );
-    L1520->G4.param( 0.0530, 0.0161, -0.00221, 0.333, 0.308 );
-    L1520->H1.param( -1.08, -0.0732, 0.00464, 0.333, 0.308 );
-    L1520->H2.param( -0.507, -0.246, 0.00309, 0.333, 0.308 );
-    L1520->H3.param( 0.187, 0.0295, -0.00107, 0.333, 0.308 );
-    L1520->H4.param( 0.0772, 0.0267, -0.00217, 0.333, 0.308 );
-    L1520->H5.param( -0.0517, -0.0173, 0.00259, 0.333, 0.308 );
-    L1520->H6.param( 0.0206, 0.00679, -0.000220, 0.333, 0.308 );
+    L1520->m_F1.param( -1.66, -0.295, 0.00924, 0.333, 0.308 );
+    L1520->m_F2.param( 0.544, 0.194, -0.00420, 0.333, 0.308 );
+    L1520->m_F3.param( 0.126, 0.00799, -0.000635, 0.333, 0.308 );
+    L1520->m_F4.param( -0.0330, -0.00977, 0.00211, 0.303, 0.308 );
+    L1520->m_G1.param( -0.964, -0.100, 0.00264, 0.333, 0.308 );
+    L1520->m_G2.param( 0.625, 0.219, -0.00508, 0.333, 0.308 );
+    L1520->m_G3.param( -0.183, -0.0380, 0.00351, 0.333, 0.308 );
+    L1520->m_G4.param( 0.0530, 0.0161, -0.00221, 0.333, 0.308 );
+    L1520->m_H1.param( -1.08, -0.0732, 0.00464, 0.333, 0.308 );
+    L1520->m_H2.param( -0.507, -0.246, 0.00309, 0.333, 0.308 );
+    L1520->m_H3.param( 0.187, 0.0295, -0.00107, 0.333, 0.308 );
+    L1520->m_H4.param( 0.0772, 0.0267, -0.00217, 0.333, 0.308 );
+    L1520->m_H5.param( -0.0517, -0.0173, 0.00259, 0.333, 0.308 );
+    L1520->m_H6.param( 0.0206, 0.00679, -0.000220, 0.333, 0.308 );
 
-    FFMap_[EvtPDL::getId( "Lambda0" ).getId()] = L1115.get();
-    FFMap_[EvtPDL::getId( "anti-Lambda0" ).getId()] = L1115.get();
-    FFMap_[EvtPDL::getId( "Lambda(1520)0" ).getId()] = L1520.get();
-    FFMap_[EvtPDL::getId( "anti-Lambda(1520)0" ).getId()] = L1520.get();
+    m_FFMap[EvtPDL::getId( "Lambda0" ).getId()] = L1115.get();
+    m_FFMap[EvtPDL::getId( "anti-Lambda0" ).getId()] = L1115.get();
+    m_FFMap[EvtPDL::getId( "Lambda(1520)0" ).getId()] = L1520.get();
+    m_FFMap[EvtPDL::getId( "anti-Lambda(1520)0" ).getId()] = L1520.get();
 
-    FF_ = { std::move( L1115 ), std::move( L1520 ) };
+    m_FF = { std::move( L1115 ), std::move( L1520 ) };
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << " EvtRareLbToLll is using form factors from arXiv:1108.6129 "
@@ -169,10 +170,10 @@ double EvtRareLbToLllFF::func(
     static const double mq = 0.2848;
     static const double mtilde = 1.122;
 
-    const double asq = 0.5 * ( dep.al_ * dep.al_ + dep.ap_ * dep.ap_ );
+    const double asq = 0.5 * ( dep.m_al * dep.m_al + dep.m_ap * dep.m_ap );
     const double psq = p * p;
 
-    return ( dep.a0_ + dep.a2_ * psq + dep.a4_ * psq * psq ) *
+    return ( dep.m_a0 + dep.m_a2 * psq + dep.m_a4 * psq * psq ) *
            exp( -( 3. * mq * mq * psq ) / ( 2. * mtilde * mtilde * asq ) );
 }
 
@@ -187,39 +188,39 @@ void EvtRareLbToLllFF::DiracFF( const EvtParticle& parent,
     const double vdotv = calculateVdotV( parent, lambda );
     const double p = lambda.getP4().d3mag();
 
-    FF.F_[0] = func( p, dep.F1 );
-    FF.F_[1] = func( p, dep.F2 );
-    FF.F_[2] = func( p, dep.F3 );
+    FF.m_F[0] = func( p, dep.m_F1 );
+    FF.m_F[1] = func( p, dep.m_F2 );
+    FF.m_F[2] = func( p, dep.m_F3 );
 
-    FF.G_[0] = func( p, dep.G1 );
-    FF.G_[1] = func( p, dep.G2 );
-    FF.G_[2] = func( p, dep.G3 );
+    FF.m_G[0] = func( p, dep.m_G1 );
+    FF.m_G[1] = func( p, dep.m_G2 );
+    FF.m_G[2] = func( p, dep.m_G3 );
 
-    const double H1 = func( p, dep.H1 );
-    const double H2 = func( p, dep.H2 );
-    const double H3 = func( p, dep.H3 );
-    const double H4 = func( p, dep.H4 );
+    const double H1 = func( p, dep.m_H1 );
+    const double H2 = func( p, dep.m_H2 );
+    const double H3 = func( p, dep.m_H3 );
+    const double H4 = func( p, dep.m_H4 );
 
     if ( isNatural( lambda ) ) {
-        FF.FT_[0] = -( MB + M ) * H1 - ( MB - M * vdotv ) * H2 -
-                    ( MB * vdotv - M ) * H3;
-        FF.FT_[1] = MB * H1 + ( MB - M ) * H2 + ( MB * vdotv - M ) * H4;
-        FF.FT_[2] = M * H1 + ( MB - M ) * H3 - ( MB - M * vdotv ) * H4;
+        FF.m_FT[0] = -( MB + M ) * H1 - ( MB - M * vdotv ) * H2 -
+                     ( MB * vdotv - M ) * H3;
+        FF.m_FT[1] = MB * H1 + ( MB - M ) * H2 + ( MB * vdotv - M ) * H4;
+        FF.m_FT[2] = M * H1 + ( MB - M ) * H3 - ( MB - M * vdotv ) * H4;
 
-        FF.GT_[0] = ( MB - M ) * H1 - M * ( 1. - vdotv ) * H2 -
-                    MB * ( 1. - vdotv ) * H3;
-        FF.GT_[1] = MB * H1 - M * H2 - MB * H3;
-        FF.GT_[2] = M * H1 + M * H2 + MB * H3;
+        FF.m_GT[0] = ( MB - M ) * H1 - M * ( 1. - vdotv ) * H2 -
+                     MB * ( 1. - vdotv ) * H3;
+        FF.m_GT[1] = MB * H1 - M * H2 - MB * H3;
+        FF.m_GT[2] = M * H1 + M * H2 + MB * H3;
     } else {
-        FF.FT_[0] = ( MB - M ) * H1 - ( MB - M * vdotv ) * H2 -
-                    ( MB * vdotv - M ) * H3;
-        FF.FT_[1] = MB * H1 - ( MB + M ) * H2 + ( MB * vdotv - M ) * H4;
-        FF.FT_[2] = M * H1 - ( MB + M ) * H3 - ( MB - M * vdotv ) * H4;
+        FF.m_FT[0] = ( MB - M ) * H1 - ( MB - M * vdotv ) * H2 -
+                     ( MB * vdotv - M ) * H3;
+        FF.m_FT[1] = MB * H1 - ( MB + M ) * H2 + ( MB * vdotv - M ) * H4;
+        FF.m_FT[2] = M * H1 - ( MB + M ) * H3 - ( MB - M * vdotv ) * H4;
 
-        FF.GT_[0] = -( MB + M ) * H1 + M * ( 1. + vdotv ) * H2 +
-                    MB * ( 1. + vdotv ) * H3;
-        FF.GT_[1] = MB * H1 - M * H2 - MB * H3;
-        FF.GT_[2] = M * H1 - M * H2 - MB * H3;
+        FF.m_GT[0] = -( MB + M ) * H1 + M * ( 1. + vdotv ) * H2 +
+                     MB * ( 1. + vdotv ) * H3;
+        FF.m_GT[1] = MB * H1 - M * H2 - MB * H3;
+        FF.m_GT[2] = M * H1 - M * H2 - MB * H3;
     }
 }
 
@@ -234,47 +235,49 @@ void EvtRareLbToLllFF::RaritaSchwingerFF(
     const double vdotv = calculateVdotV( parent, lambda );
     const double p = lambda.getP4().d3mag();
 
-    FF.F_[0] = func( p, FFset.F1 );
-    FF.F_[1] = func( p, FFset.F2 );
-    FF.F_[2] = func( p, FFset.F3 );
-    FF.F_[3] = func( p, FFset.F4 );
+    FF.m_F[0] = func( p, FFset.m_F1 );
+    FF.m_F[1] = func( p, FFset.m_F2 );
+    FF.m_F[2] = func( p, FFset.m_F3 );
+    FF.m_F[3] = func( p, FFset.m_F4 );
 
-    FF.G_[0] = func( p, FFset.G1 );
-    FF.G_[1] = func( p, FFset.G2 );
-    FF.G_[2] = func( p, FFset.G3 );
-    FF.G_[3] = func( p, FFset.G4 );
+    FF.m_G[0] = func( p, FFset.m_G1 );
+    FF.m_G[1] = func( p, FFset.m_G2 );
+    FF.m_G[2] = func( p, FFset.m_G3 );
+    FF.m_G[3] = func( p, FFset.m_G4 );
 
-    const double H1 = func( p, FFset.H1 );
-    const double H2 = func( p, FFset.H2 );
-    const double H3 = func( p, FFset.H3 );
-    const double H4 = func( p, FFset.H4 );
-    const double H5 = func( p, FFset.H5 );
-    const double H6 = func( p, FFset.H6 );
+    const double H1 = func( p, FFset.m_H1 );
+    const double H2 = func( p, FFset.m_H2 );
+    const double H3 = func( p, FFset.m_H3 );
+    const double H4 = func( p, FFset.m_H4 );
+    const double H5 = func( p, FFset.m_H5 );
+    const double H6 = func( p, FFset.m_H6 );
 
     if ( isNatural( lambda ) ) {
-        FF.FT_[0] = -( MB + M ) * H1 - ( MB - M * vdotv ) * H2 -
-                    ( MB * vdotv - M ) * H3 - MB * H5;
-        FF.FT_[1] = MB * H1 + ( MB - M ) * H2 + ( MB * vdotv - M ) * H4 - MB * H6;
-        FF.FT_[2] = M * H1 + ( MB - M ) * H3 - ( MB - M * vdotv ) * H4;
-        FF.FT_[3] = ( MB - M ) * H5 + ( MB - M * vdotv ) * H6;
+        FF.m_FT[0] = -( MB + M ) * H1 - ( MB - M * vdotv ) * H2 -
+                     ( MB * vdotv - M ) * H3 - MB * H5;
+        FF.m_FT[1] = MB * H1 + ( MB - M ) * H2 + ( MB * vdotv - M ) * H4 -
+                     MB * H6;
+        FF.m_FT[2] = M * H1 + ( MB - M ) * H3 - ( MB - M * vdotv ) * H4;
+        FF.m_FT[3] = ( MB - M ) * H5 + ( MB - M * vdotv ) * H6;
 
-        FF.GT_[0] = ( MB - M ) * H1 - M * ( 1. - vdotv ) * H2 -
-                    MB * ( 1. - vdotv ) * H3 + MB * H5 + M * H6;
-        FF.GT_[1] = MB * H1 - M * H2 - MB * H3;
-        FF.GT_[2] = M * H1 + M * H2 + MB * H3 - M * H6;
-        FF.GT_[3] = ( MB + M ) * H5 + M * ( 1. + vdotv ) * H6;
+        FF.m_GT[0] = ( MB - M ) * H1 - M * ( 1. - vdotv ) * H2 -
+                     MB * ( 1. - vdotv ) * H3 + MB * H5 + M * H6;
+        FF.m_GT[1] = MB * H1 - M * H2 - MB * H3;
+        FF.m_GT[2] = M * H1 + M * H2 + MB * H3 - M * H6;
+        FF.m_GT[3] = ( MB + M ) * H5 + M * ( 1. + vdotv ) * H6;
     } else {
-        FF.FT_[0] = ( MB - M ) * H1 - ( MB - M * vdotv ) * H2 -
-                    ( MB * vdotv - M ) * H3 - MB * H5;
-        FF.FT_[1] = MB * H1 - ( MB + M ) * H2 + ( MB * vdotv - M ) * H4 - MB * H6;
-        FF.FT_[2] = M * H1 - ( MB + M ) * H3 - ( MB - M * vdotv ) * H4;
-        FF.FT_[3] = -( MB + M ) * H5 + ( MB - M * vdotv ) * H6;
+        FF.m_FT[0] = ( MB - M ) * H1 - ( MB - M * vdotv ) * H2 -
+                     ( MB * vdotv - M ) * H3 - MB * H5;
+        FF.m_FT[1] = MB * H1 - ( MB + M ) * H2 + ( MB * vdotv - M ) * H4 -
+                     MB * H6;
+        FF.m_FT[2] = M * H1 - ( MB + M ) * H3 - ( MB - M * vdotv ) * H4;
+        FF.m_FT[3] = -( MB + M ) * H5 + ( MB - M * vdotv ) * H6;
 
-        FF.GT_[0] = -( MB + M ) * H1 + M * ( 1. + vdotv ) * H2 +
-                    MB * ( 1. + vdotv ) * H3 + MB * H5 + M * H6;
-        FF.GT_[1] = MB * H1 - M * H2 - MB * H3;
-        FF.GT_[2] = M * H1 - M * H2 - MB * H3 - M * H6;
-        FF.GT_[3] = -( MB - M ) * H5 - M * ( 1. - vdotv ) * H6;
+        FF.m_GT[0] = -( MB + M ) * H1 + M * ( 1. + vdotv ) * H2 +
+                     MB * ( 1. + vdotv ) * H3 + MB * H5 + M * H6;
+        FF.m_GT[1] = MB * H1 - M * H2 - MB * H3;
+        FF.m_GT[2] = M * H1 - M * H2 - MB * H3 - M * H6;
+        FF.m_GT[3] = -( MB - M ) * H5 - M * ( 1. - vdotv ) * H6;
     }
 }
 
@@ -286,9 +289,9 @@ void EvtRareLbToLllFF::getFF( const EvtParticle& parent,
     FF.areZero();
 
     // Are the FF's for the particle known?
-    auto it = FFMap_.find( lambda.getId().getId() );
+    auto it = m_FFMap.find( lambda.getId().getId() );
 
-    if ( it == FFMap_.end() ) {
+    if ( it == m_FFMap.end() ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << " EvtRareLbToLll does not contain FF for " << lambda.getId()
             << std::endl;

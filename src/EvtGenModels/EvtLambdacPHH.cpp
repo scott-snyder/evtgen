@@ -35,51 +35,51 @@
 #include <utility>
 
 EvtLambdacPHH::EvtLambdacPHH() :
-    _d1( 0 ),
-    _d2( 1 ),
-    _d3( 3 ),
-    _Nplusplus( 0.46 ),
-    _Nplusminus( 1.0 ),
-    _Nminusplus( 0.18 ),
-    _Nminusminus( 0.94 ),
-    _phiNplusplus( 3.48 ),
-    _phiNplusminus( 0.00 ),
-    _phiNminusplus( 0.75 ),
-    _phiNminusminus( 1.13 ),
-    _E1( 0.52 ),
-    _phiE1( -1.01 ),
-    _E2( 0.20 ),
-    _phiE2( 2.35 ),
-    _E3( 0.21 ),
-    _phiE3( 3.46 ),
-    _E4( 0.16 ),
-    _phiE4( 5.29 ),
-    _F1( 0.17 ),
-    _phiF1( 4.98 ),
-    _F2( 0.38 ),
-    _phiF2( 4.88 ),
-    _H1( 0.18 ),
-    _phiH1( 5.93 ),
-    _H2( 0.20 ),
-    _phiH2( -0.06 ),
-    _NRNorm( 1.0 ),
-    _KstarNorm( 1.0 ),
-    _DeltaNorm( 1.0 ),
-    _LambdaNorm( 1.0 ),
-    _KstarM( 0.890 ),
-    _KstarW( 0.0498 ),
-    _KstarR( 3.40 ),
-    _DeltaM( 1.232 ),
-    _DeltaW( 0.1120 ),
-    _DeltaR( 5.22 ),
-    _LambdaM( 1.520 ),
-    _LambdaW( 0.0156 ),
-    _LambdaR( 6.29 ),
-    _Lambda_cR( 5.07 ),
-    _zprime(),
-    _p4_Lambda_c(),
-    _zpMag( 0.0 ),
-    _p4_Lambdac_Mag( 0.0 )
+    m_d1( 0 ),
+    m_d2( 1 ),
+    m_d3( 3 ),
+    m_Nplusplus( 0.46 ),
+    m_Nplusminus( 1.0 ),
+    m_Nminusplus( 0.18 ),
+    m_Nminusminus( 0.94 ),
+    m_phiNplusplus( 3.48 ),
+    m_phiNplusminus( 0.00 ),
+    m_phiNminusplus( 0.75 ),
+    m_phiNminusminus( 1.13 ),
+    m_E1( 0.52 ),
+    m_phiE1( -1.01 ),
+    m_E2( 0.20 ),
+    m_phiE2( 2.35 ),
+    m_E3( 0.21 ),
+    m_phiE3( 3.46 ),
+    m_E4( 0.16 ),
+    m_phiE4( 5.29 ),
+    m_F1( 0.17 ),
+    m_phiF1( 4.98 ),
+    m_F2( 0.38 ),
+    m_phiF2( 4.88 ),
+    m_H1( 0.18 ),
+    m_phiH1( 5.93 ),
+    m_H2( 0.20 ),
+    m_phiH2( -0.06 ),
+    m_NRNorm( 1.0 ),
+    m_KstarNorm( 1.0 ),
+    m_DeltaNorm( 1.0 ),
+    m_LambdaNorm( 1.0 ),
+    m_KstarM( 0.890 ),
+    m_KstarW( 0.0498 ),
+    m_KstarR( 3.40 ),
+    m_DeltaM( 1.232 ),
+    m_DeltaW( 0.1120 ),
+    m_DeltaR( 5.22 ),
+    m_LambdaM( 1.520 ),
+    m_LambdaW( 0.0156 ),
+    m_LambdaR( 6.29 ),
+    m_Lambda_cR( 5.07 ),
+    m_zprime(),
+    m_p4_Lambda_c(),
+    m_zpMag( 0.0 ),
+    m_p4_Lambdac_Mag( 0.0 )
 {
     // Fermilab E791 values from MINUIT fit arXiv:hep-ex/9912003v1
 }
@@ -146,9 +146,9 @@ void EvtLambdacPHH::init()
     if ( parnum == LAMBDAC || parnum == LAMBDACB ) {
         if ( daughters[0].first == KM && daughters[1].first == PIP &&
              daughters[2].first == PROTON ) {
-            _d1 = daughters[0].second;
-            _d2 = daughters[1].second;
-            _d3 = daughters[2].second;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[1].second;
+            m_d3 = daughters[2].second;
         }
     }
 
@@ -183,15 +183,15 @@ void EvtLambdacPHH::calcNormalisations()
         // Generate uniform 4 momenta
         EvtGenKine::PhaseSpace( nDaug, mDaug, p4Daug, mParent );
 
-        EvtResonance2 LambdacpKpi1( p0, p4Daug[0], p4Daug[1], 1.0, 0.0, _KstarW,
-                                    _KstarM, 1, true, _KstarR,
-                                    _Lambda_cR );    // K*0 -> K- and pi+; L = 1
-        EvtResonance2 LambdacpKpi2( p0, p4Daug[2], p4Daug[1], 1.0, 0.0, _DeltaW,
-                                    _DeltaM, 1, true, _DeltaR,
-                                    _Lambda_cR );    // Delta++ -> p and pi+; L = 1
+        EvtResonance2 LambdacpKpi1( p0, p4Daug[0], p4Daug[1], 1.0, 0.0,
+                                    m_KstarW, m_KstarM, 1, true, m_KstarR,
+                                    m_Lambda_cR );    // K*0 -> K- and pi+; L = 1
+        EvtResonance2 LambdacpKpi2( p0, p4Daug[2], p4Daug[1], 1.0, 0.0,
+                                    m_DeltaW, m_DeltaM, 1, true, m_DeltaR,
+                                    m_Lambda_cR );    // Delta++ -> p and pi+; L = 1
         EvtResonance2 LambdacpKpi3(
-            p0, p4Daug[2], p4Daug[0], 1.0, 0.0, _LambdaW, _LambdaM, 2, true,
-            _LambdaR, _Lambda_cR );    // Lambda(1520) -> K- and p; L = 2
+            p0, p4Daug[2], p4Daug[0], 1.0, 0.0, m_LambdaW, m_LambdaM, 2, true,
+            m_LambdaR, m_Lambda_cR );    // Lambda(1520) -> K- and p; L = 2
 
         // Sum amplitude magnitude squared
         norm[0] += abs2( LambdacpKpi1.resAmpl() );
@@ -203,20 +203,20 @@ void EvtLambdacPHH::calcNormalisations()
     double N0( N * 1.0 );
 
     // Scale NR to get sensible relative fit fractions
-    _NRNorm = 1.0 / 3.0;
+    m_NRNorm = 1.0 / 3.0;
     // Set this using a decay file parameter if required
     if ( getNArg() > 1 ) {
-        _NRNorm = getArg( 1 );
+        m_NRNorm = getArg( 1 );
     }
 
     if ( norm[0] > 0.0 ) {
-        _KstarNorm = sqrt( N0 / norm[0] );
+        m_KstarNorm = sqrt( N0 / norm[0] );
     }
     if ( norm[1] > 0.0 ) {
-        _DeltaNorm = sqrt( N0 / norm[1] );
+        m_DeltaNorm = sqrt( N0 / norm[1] );
     }
     if ( norm[2] > 0.0 ) {
-        _LambdaNorm = sqrt( N0 / norm[2] );
+        m_LambdaNorm = sqrt( N0 / norm[2] );
     }
 }
 
@@ -247,24 +247,24 @@ void EvtLambdacPHH::getFitFractions()
 
         EvtResonance2 LambdacpKpi0( p0, p4Daug[0], p4Daug[1], 1.0, 0.0, 0.0, 0.0,
                                     0, true, 0.0, 0.0 );    // Non resonant (NR)
-        EvtResonance2 LambdacpKpi1( p0, p4Daug[0], p4Daug[1], 1.0, 0.0, _KstarW,
-                                    _KstarM, 1, true, _KstarR,
-                                    _Lambda_cR );    // K*0 -> K- and pi+; L = 1
-        EvtResonance2 LambdacpKpi2( p0, p4Daug[2], p4Daug[1], 1.0, 0.0, _DeltaW,
-                                    _DeltaM, 1, true, _DeltaR,
-                                    _Lambda_cR );    // Delta++ -> p and pi+; L = 1
+        EvtResonance2 LambdacpKpi1( p0, p4Daug[0], p4Daug[1], 1.0, 0.0,
+                                    m_KstarW, m_KstarM, 1, true, m_KstarR,
+                                    m_Lambda_cR );    // K*0 -> K- and pi+; L = 1
+        EvtResonance2 LambdacpKpi2( p0, p4Daug[2], p4Daug[1], 1.0, 0.0,
+                                    m_DeltaW, m_DeltaM, 1, true, m_DeltaR,
+                                    m_Lambda_cR );    // Delta++ -> p and pi+; L = 1
         EvtResonance2 LambdacpKpi3(
-            p0, p4Daug[2], p4Daug[0], 1.0, 0.0, _LambdaW, _LambdaM, 2, true,
-            _LambdaR, _Lambda_cR );    // Lambda(1520) -> K- and p; L = 2
+            p0, p4Daug[2], p4Daug[0], 1.0, 0.0, m_LambdaW, m_LambdaM, 2, true,
+            m_LambdaR, m_Lambda_cR );    // Lambda(1520) -> K- and p; L = 2
 
         std::vector<EvtComplex> ampNonRes =
-            calcResAmpTerms( EvtLambdacPHH::NonReson, LambdacpKpi0, _NRNorm );
+            calcResAmpTerms( LcResLabel::NonReson, LambdacpKpi0, m_NRNorm );
         std::vector<EvtComplex> ampKstar =
-            calcResAmpTerms( EvtLambdacPHH::Kstar, LambdacpKpi1, _KstarNorm );
+            calcResAmpTerms( LcResLabel::Kstar, LambdacpKpi1, m_KstarNorm );
         std::vector<EvtComplex> ampDelta =
-            calcResAmpTerms( EvtLambdacPHH::Delta, LambdacpKpi2, _DeltaNorm );
+            calcResAmpTerms( LcResLabel::Delta, LambdacpKpi2, m_DeltaNorm );
         std::vector<EvtComplex> ampLambda =
-            calcResAmpTerms( EvtLambdacPHH::Lambda, LambdacpKpi3, _LambdaNorm );
+            calcResAmpTerms( LcResLabel::Lambda, LambdacpKpi3, m_LambdaNorm );
 
         // Combine resonance amplitudes for a given spin configuration
         EvtComplex amp00 = ampNonRes[0] + ampKstar[0] + ampDelta[0] +
@@ -316,23 +316,23 @@ void EvtLambdacPHH::decay( EvtParticle* p )
 
     // 4-momenta in the rest frame of the Lambda_c
     EvtVector4R p4_p( p->mass(), 0.0, 0.0, 0.0 );
-    EvtVector4R moms1 = p->getDaug( _d1 )->getP4();
-    EvtVector4R moms2 = p->getDaug( _d2 )->getP4();
-    EvtVector4R moms3 = p->getDaug( _d3 )->getP4();
+    EvtVector4R moms1 = p->getDaug( m_d1 )->getP4();
+    EvtVector4R moms2 = p->getDaug( m_d2 )->getP4();
+    EvtVector4R moms3 = p->getDaug( m_d3 )->getP4();
 
     // Lambda_c decay mode resonances. Spin L values from strong decay parity conservation:
     // parity(resonance) = parity(daug1)*parity(daug2)*(-1)^L
     EvtResonance2 LambdacpKpi0( p4_p, moms1, moms2, 1.0, 0.0, 0.0, 0.0, 0, true,
                                 0.0, 0.0 );    // Non-resonant L = 0
-    EvtResonance2 LambdacpKpi1( p4_p, moms1, moms2, 1.0, 0.0, _KstarW, _KstarM,
-                                1, true, _KstarR,
-                                _Lambda_cR );    // K*0 -> K- and pi+; L = 1
-    EvtResonance2 LambdacpKpi2( p4_p, moms3, moms2, 1.0, 0.0, _DeltaW, _DeltaM,
-                                1, true, _DeltaR,
-                                _Lambda_cR );    // Delta++ -> p and pi+; L = 1
-    EvtResonance2 LambdacpKpi3( p4_p, moms3, moms1, 1.0, 0.0, _LambdaW,
-                                _LambdaM, 2, true, _LambdaR,
-                                _Lambda_cR );    // Lambda(1520) -> K- and p; L = 2
+    EvtResonance2 LambdacpKpi1( p4_p, moms1, moms2, 1.0, 0.0, m_KstarW,
+                                m_KstarM, 1, true, m_KstarR,
+                                m_Lambda_cR );    // K*0 -> K- and pi+; L = 1
+    EvtResonance2 LambdacpKpi2( p4_p, moms3, moms2, 1.0, 0.0, m_DeltaW,
+                                m_DeltaM, 1, true, m_DeltaR,
+                                m_Lambda_cR );    // Delta++ -> p and pi+; L = 1
+    EvtResonance2 LambdacpKpi3( p4_p, moms3, moms1, 1.0, 0.0, m_LambdaW,
+                                m_LambdaM, 2, true, m_LambdaR,
+                                m_Lambda_cR );    // Lambda(1520) -> K- and p; L = 2
 
     // Define the "beam" direction, used in Fig 1 of hep-ex/9912003v1
     EvtVector4R beam( 0.0, 0.0, 0.0, 1.0 );
@@ -344,34 +344,34 @@ void EvtLambdacPHH::decay( EvtParticle* p )
         beam = p4_Lambda_c_mother;
     }
 
-    _p4_Lambda_c = p->getP4Lab();
-    _p4_Lambdac_Mag = _p4_Lambda_c.d3mag();
+    m_p4_Lambda_c = p->getP4Lab();
+    m_p4_Lambdac_Mag = m_p4_Lambda_c.d3mag();
 
     // Define the unit vector denoting the "z" axis in Fig 1
-    _zprime = -1.0 * _p4_Lambda_c.cross( beam );
-    _zprime.applyBoostTo( _p4_Lambda_c, true );    // From lab frame to Lambda_c
+    m_zprime = -1.0 * m_p4_Lambda_c.cross( beam );
+    m_zprime.applyBoostTo( m_p4_Lambda_c, true );    // From lab frame to Lambda_c
 
-    _zpMag = _zprime.d3mag();
+    m_zpMag = m_zprime.d3mag();
     // Check if zprime magnitude is non-zero
-    if ( _zpMag > 0.0 ) {
+    if ( m_zpMag > 0.0 ) {
         // Normalise
-        _zprime /= _zpMag;
+        m_zprime /= m_zpMag;
     } else {
         // Set as the z direction
-        _zprime.set( 0.0, 0.0, 0.0, 1.0 );
+        m_zprime.set( 0.0, 0.0, 0.0, 1.0 );
     }
     // Update normalised |z'|
-    _zpMag = 1.0;
+    m_zpMag = 1.0;
 
     // Get the amplitudes: non-resonant, K*, Delta and Lambda
-    std::vector<EvtComplex> ampNonRes = calcResAmpTerms( EvtLambdacPHH::NonReson,
-                                                         LambdacpKpi0, _NRNorm );
+    std::vector<EvtComplex> ampNonRes =
+        calcResAmpTerms( LcResLabel::NonReson, LambdacpKpi0, m_NRNorm );
     std::vector<EvtComplex> ampKstar =
-        calcResAmpTerms( EvtLambdacPHH::Kstar, LambdacpKpi1, _KstarNorm );
+        calcResAmpTerms( LcResLabel::Kstar, LambdacpKpi1, m_KstarNorm );
     std::vector<EvtComplex> ampDelta =
-        calcResAmpTerms( EvtLambdacPHH::Delta, LambdacpKpi2, _DeltaNorm );
+        calcResAmpTerms( LcResLabel::Delta, LambdacpKpi2, m_DeltaNorm );
     std::vector<EvtComplex> ampLambda =
-        calcResAmpTerms( EvtLambdacPHH::Lambda, LambdacpKpi3, _LambdaNorm );
+        calcResAmpTerms( LcResLabel::Lambda, LambdacpKpi3, m_LambdaNorm );
 
     // Combine resonance amplitudes for a given spin configuration
     EvtComplex amp00 = ampNonRes[0] + ampKstar[0] + ampDelta[0] + ampLambda[0];
@@ -404,7 +404,7 @@ std::vector<EvtComplex> EvtLambdacPHH::calcResAmpTerms(
     EvtComplex resAmp( norm, 0.0 );
 
     // Angles are not needed for the non-resonant amplitude
-    if ( resIndex != EvtLambdacPHH::NonReson ) {
+    if ( resIndex != LcResLabel::NonReson ) {
         resAmp = res.resAmpl() * norm;
         // Resonance and daughter 4 momenta
         EvtVector4R p4d1 = res.p4_d1();
@@ -415,7 +415,7 @@ std::vector<EvtComplex> EvtLambdacPHH::calcResAmpTerms(
         double p4ResMag = p4Res.d3mag();
 
         // 4-momenta for theta' and phi' angles
-        EvtVector4R yRes = -1.0 * p4_d3.cross( _zprime );
+        EvtVector4R yRes = -1.0 * p4_d3.cross( m_zprime );
 
         EvtVector4R res_d1 = p4d1;
         res_d1.applyBoostTo( p4Res, true );
@@ -435,10 +435,10 @@ std::vector<EvtComplex> EvtLambdacPHH::calcResAmpTerms(
         double Lc_atproton_mag = Lc_atproton.d3mag();
 
         // Check that the momentum of the Lambda_c is not zero, as well as a valid zprime vector
-        if ( _p4_Lambdac_Mag > 0.0 && _zpMag > 0.0 ) {
-            thetaRes = getACos( -1.0 * p4Res.dot( _zprime ), p4ResMag );
-            phiRes = getASin( -1.0 * p4Res.dot( _p4_Lambda_c ),
-                              sin( thetaRes ) * _p4_Lambdac_Mag * p4ResMag );
+        if ( m_p4_Lambdac_Mag > 0.0 && m_zpMag > 0.0 ) {
+            thetaRes = getACos( -1.0 * p4Res.dot( m_zprime ), p4ResMag );
+            phiRes = getASin( -1.0 * p4Res.dot( m_p4_Lambda_c ),
+                              sin( thetaRes ) * m_p4_Lambdac_Mag * p4ResMag );
             phiPrimeDaug = getASin( res_d1.dot( yRes ), sin( thetaPrimeDaug ) *
                                                             res_d1_Mag *
                                                             yRes.d3mag() );
@@ -463,8 +463,7 @@ std::vector<EvtComplex> EvtLambdacPHH::calcResAmpTerms(
     }
 
     // Find the spin-dependent amplitudes
-    if ( resIndex == EvtLambdacPHH::NonReson ||
-         resIndex == EvtLambdacPHH::Kstar ) {
+    if ( resIndex == LcResLabel::NonReson || resIndex == LcResLabel::Kstar ) {
         term1 = resAmp * DecayAmp3( resIndex, 1, 1, thetaRes, phiRes,
                                     thetaPrimeDaug, phiPrimeDaug );
         term2 = resAmp * DecayAmp3( resIndex, 1, -1, thetaRes, phiRes,
@@ -515,111 +514,111 @@ EvtComplex EvtLambdacPHH::DecayAmp3( EvtLambdacPHH::LcResLabel resonance, int m,
     // Wigner d-functions use 2*spin, e.g. d(1/2, 1/2, 1/2) -> d(1, 1, 1)
     EvtComplex term1( 0.0, 0.0 ), term2( 0.0, 0.0 );
 
-    if ( resonance == EvtLambdacPHH::NonReson ) {
+    if ( resonance == LcResLabel::NonReson ) {
         // Non-resonant: table 6
         if ( m == 1 && mprime == 1 ) {
-            term1 = _Nplusplus *
-                    EvtComplex( cos( _phiNplusplus ), sin( _phiNplusplus ) );
+            term1 = m_Nplusplus *
+                    EvtComplex( cos( m_phiNplusplus ), sin( m_phiNplusplus ) );
 
         } else if ( m == 1 && mprime == -1 ) {
-            term1 = _Nplusminus *
-                    EvtComplex( cos( _phiNplusminus ), sin( _phiNplusminus ) );
+            term1 = m_Nplusminus * EvtComplex( cos( m_phiNplusminus ),
+                                               sin( m_phiNplusminus ) );
 
         } else if ( m == -1 && mprime == 1 ) {
-            term1 = _Nminusplus *
-                    EvtComplex( cos( _phiNminusplus ), sin( _phiNminusplus ) );
+            term1 = m_Nminusplus * EvtComplex( cos( m_phiNminusplus ),
+                                               sin( m_phiNminusplus ) );
 
         } else if ( m == -1 && mprime == -1 ) {
-            term1 = _Nminusminus * EvtComplex( cos( _phiNminusminus ),
-                                               sin( _phiNminusminus ) );
+            term1 = m_Nminusminus * EvtComplex( cos( m_phiNminusminus ),
+                                                sin( m_phiNminusminus ) );
         }
 
-    } else if ( resonance == EvtLambdacPHH::Kstar ) {
+    } else if ( resonance == LcResLabel::Kstar ) {
         // K*0(1-) resonance: table 3
         if ( m == 1 && mprime == 1 ) {
-            term1 = fampl3( _E1, _phiE1, 1, 1, 1, theta_res, 2, 2, 0,
+            term1 = fampl3( m_E1, m_phiE1, 1, 1, 1, theta_res, 2, 2, 0,
                             theta_prime_daughter_res, phi_prime_daughter_res );
-            term2 = fampl3( _E2, _phiE2, 1, 1, -1, theta_res, 2, 0, 0,
+            term2 = fampl3( m_E2, m_phiE2, 1, 1, -1, theta_res, 2, 0, 0,
                             theta_prime_daughter_res, phi_res );
 
         } else if ( m == 1 && mprime == -1 ) {
-            term1 = fampl3( _E3, _phiE3, 1, 1, 1, theta_res, 2, 0, 0,
+            term1 = fampl3( m_E3, m_phiE3, 1, 1, 1, theta_res, 2, 0, 0,
                             theta_prime_daughter_res, 0.0 );
-            term2 = fampl3( _E4, _phiE4, 1, 1, -1, theta_res, 2, -2, 0,
+            term2 = fampl3( m_E4, m_phiE4, 1, 1, -1, theta_res, 2, -2, 0,
                             theta_prime_daughter_res,
                             phi_res - phi_prime_daughter_res );
 
         } else if ( m == -1 && mprime == 1 ) {
-            term1 = fampl3( _E1, _phiE1, 1, -1, 1, theta_res, 2, 2, 0,
+            term1 = fampl3( m_E1, m_phiE1, 1, -1, 1, theta_res, 2, 2, 0,
                             theta_prime_daughter_res,
                             -( phi_res - phi_prime_daughter_res ) );
-            term2 = fampl3( _E2, _phiE2, 1, -1, -1, theta_res, 2, 0, 0,
+            term2 = fampl3( m_E2, m_phiE2, 1, -1, -1, theta_res, 2, 0, 0,
                             theta_prime_daughter_res, 0.0 );
 
         } else if ( m == -1 && mprime == -1 ) {
-            term1 = fampl3( _E3, _phiE3, 1, -1, 1, theta_res, 2, 0, 0,
+            term1 = fampl3( m_E3, m_phiE3, 1, -1, 1, theta_res, 2, 0, 0,
                             theta_prime_daughter_res, -phi_res );
-            term2 = fampl3( _E4, _phiE4, 1, -1, -1, theta_res, 2, -2, 0,
+            term2 = fampl3( m_E4, m_phiE4, 1, -1, -1, theta_res, 2, -2, 0,
                             theta_prime_daughter_res, -phi_prime_daughter_res );
         }
 
-    } else if ( resonance == EvtLambdacPHH::Delta ) {
+    } else if ( resonance == LcResLabel::Delta ) {
         // Delta++(3/2+) resonance: table 4
         if ( m == 1 && mprime == 1 ) {
-            term1 = fampl3( _F1, _phiF1, 1, 1, 1, theta_res, 3, 1, 1,
+            term1 = fampl3( m_F1, m_phiF1, 1, 1, 1, theta_res, 3, 1, 1,
                             theta_prime_daughter_res, 0.0 );
-            term2 = fampl3( _F2, _phiF2, 1, 1, -1, theta_res, 3, -1, 1,
+            term2 = fampl3( m_F2, m_phiF2, 1, 1, -1, theta_res, 3, -1, 1,
                             theta_prime_daughter_res,
                             phi_res - phi_prime_daughter_res );
 
         } else if ( m == 1 && mprime == -1 ) {
-            term1 = fampl3( _F1, _phiF1, 1, 1, 1, theta_res, 3, 1, -1,
+            term1 = fampl3( m_F1, m_phiF1, 1, 1, 1, theta_res, 3, 1, -1,
                             theta_prime_daughter_res, phi_prime_daughter_res );
-            term2 = fampl3( _F2, _phiF2, 1, 1, -1, theta_res, 3, -1, -1,
+            term2 = fampl3( m_F2, m_phiF2, 1, 1, -1, theta_res, 3, -1, -1,
                             theta_prime_daughter_res, phi_res );
 
         } else if ( m == -1 && mprime == 1 ) {
-            term1 = fampl3( _F1, _phiF1, 1, -1, 1, theta_res, 3, 1, 1,
+            term1 = fampl3( m_F1, m_phiF1, 1, -1, 1, theta_res, 3, 1, 1,
                             theta_prime_daughter_res, -phi_res );
-            term2 = fampl3( _F2, _phiF2, 1, -1, -1, theta_res, 3, -1, 1,
+            term2 = fampl3( m_F2, m_phiF2, 1, -1, -1, theta_res, 3, -1, 1,
                             theta_prime_daughter_res, -phi_prime_daughter_res );
 
         } else if ( m == -1 && mprime == -1 ) {
-            term1 = fampl3( _F1, _phiF1, 1, -1, 1, theta_res, 3, 1, -1,
+            term1 = fampl3( m_F1, m_phiF1, 1, -1, 1, theta_res, 3, 1, -1,
                             theta_prime_daughter_res,
                             -( phi_res - phi_prime_daughter_res ) );
-            term2 = fampl3( _F2, _phiF2, 1, -1, -1, theta_res, 3, -1, -1,
+            term2 = fampl3( m_F2, m_phiF2, 1, -1, -1, theta_res, 3, -1, -1,
                             theta_prime_daughter_res, 0.0 );
         }
 
-    } else if ( resonance == EvtLambdacPHH::Lambda ) {
+    } else if ( resonance == LcResLabel::Lambda ) {
         // Lambda(1520)(3/2-) resonance: table 5
         if ( m == 1 && mprime == 1 ) {
-            term1 = fampl3( _H1, _phiH1, 1, 1, 1, theta_res, 3, 1, 1,
+            term1 = fampl3( m_H1, m_phiH1, 1, 1, 1, theta_res, 3, 1, 1,
                             theta_prime_daughter_res, 0.0 );
-            term2 = fampl3( _H2, _phiH2, 1, 1, -1, theta_res, 3, -1, 1,
+            term2 = fampl3( m_H2, m_phiH2, 1, 1, -1, theta_res, 3, -1, 1,
                             theta_prime_daughter_res,
                             phi_res - phi_prime_daughter_res );
 
         } else if ( m == 1 && mprime == -1 ) {
-            term1 = -1.0 * fampl3( _H1, _phiH1, 1, 1, 1, theta_res, 3, 1, -1,
+            term1 = -1.0 * fampl3( m_H1, m_phiH1, 1, 1, 1, theta_res, 3, 1, -1,
                                    theta_prime_daughter_res,
                                    phi_prime_daughter_res );
-            term2 = -1.0 * fampl3( _H2, _phiH2, 1, 1, -1, theta_res, 3, -1, -1,
-                                   theta_prime_daughter_res, phi_res );
+            term2 = -1.0 * fampl3( m_H2, m_phiH2, 1, 1, -1, theta_res, 3, -1,
+                                   -1, theta_prime_daughter_res, phi_res );
 
         } else if ( m == -1 && mprime == 1 ) {
-            term1 = fampl3( _H1, _phiH1, 1, -1, 1, theta_res, 3, 1, 1,
+            term1 = fampl3( m_H1, m_phiH1, 1, -1, 1, theta_res, 3, 1, 1,
                             theta_prime_daughter_res, -phi_res );
-            term2 = fampl3( _H2, _phiH2, 1, -1, -1, theta_res, 3, -1, 1,
+            term2 = fampl3( m_H2, m_phiH2, 1, -1, -1, theta_res, 3, -1, 1,
                             theta_prime_daughter_res, -phi_prime_daughter_res );
 
         } else if ( m == -1 && mprime == -1 ) {
-            term1 = -1.0 * fampl3( _H1, _phiH1, 1, -1, 1, theta_res, 3, 1, -1,
+            term1 = -1.0 * fampl3( m_H1, m_phiH1, 1, -1, 1, theta_res, 3, 1, -1,
                                    theta_prime_daughter_res,
                                    -( phi_res - phi_prime_daughter_res ) );
-            term2 = -1.0 * fampl3( _H2, _phiH2, 1, -1, -1, theta_res, 3, -1, -1,
-                                   theta_prime_daughter_res, 0.0 );
+            term2 = -1.0 * fampl3( m_H2, m_phiH2, 1, -1, -1, theta_res, 3, -1,
+                                   -1, theta_prime_daughter_res, 0.0 );
         }
     }
 

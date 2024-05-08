@@ -46,7 +46,7 @@ class EvtBLLNuL : public EvtDecayAmp {
     virtual void decay( EvtParticle* p ) override;
 
   private:
-    EvtBLLNuLAmp calcAmp_;
+    EvtBLLNuLAmp m_calcAmp;
 };
 
 #endif

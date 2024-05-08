@@ -32,26 +32,26 @@
 using namespace EvtCyclic3;
 
 EvtDalitzPlot::EvtDalitzPlot() :
-    _mA( 0. ), _mB( 0. ), _mC( 0. ), _bigM( 0. ), _ldel( 0. ), _rdel( 0. )
+    m_mA( 0. ), m_mB( 0. ), m_mC( 0. ), m_bigM( 0. ), m_ldel( 0. ), m_rdel( 0. )
 {
 }
 
 EvtDalitzPlot::EvtDalitzPlot( double mA, double mB, double mC, double bigM,
                               double ldel, double rdel ) :
-    _mA( mA ), _mB( mB ), _mC( mC ), _bigM( bigM ), _ldel( ldel ), _rdel( rdel )
+    m_mA( mA ), m_mB( mB ), m_mC( mC ), m_bigM( bigM ), m_ldel( ldel ), m_rdel( rdel )
 {
     sanityCheck();
 }
 
 EvtDalitzPlot::EvtDalitzPlot( const EvtDecayMode& mode, double ldel, double rdel )
 {
-    _mA = EvtPDL::getMeanMass( EvtPDL::getId( mode.dau( A ) ) );
-    _mB = EvtPDL::getMeanMass( EvtPDL::getId( mode.dau( B ) ) );
-    _mC = EvtPDL::getMeanMass( EvtPDL::getId( mode.dau( C ) ) );
-    _bigM = EvtPDL::getMeanMass( EvtPDL::getId( mode.mother() ) );
+    m_mA = EvtPDL::getMeanMass( EvtPDL::getId( mode.dau( A ) ) );
+    m_mB = EvtPDL::getMeanMass( EvtPDL::getId( mode.dau( B ) ) );
+    m_mC = EvtPDL::getMeanMass( EvtPDL::getId( mode.dau( C ) ) );
+    m_bigM = EvtPDL::getMeanMass( EvtPDL::getId( mode.mother() ) );
 
-    _ldel = ldel;
-    _rdel = rdel;
+    m_ldel = ldel;
+    m_rdel = rdel;
 
     sanityCheck();
 }
@@ -59,8 +59,8 @@ EvtDalitzPlot::EvtDalitzPlot( const EvtDecayMode& mode, double ldel, double rdel
 bool EvtDalitzPlot::operator==( const EvtDalitzPlot& other ) const
 {
     bool ret = false;
-    if ( _mA == other._mA && _mB == other._mB && _mC == other._mC &&
-         _bigM == other._bigM )
+    if ( m_mA == other.m_mA && m_mB == other.m_mB && m_mC == other.m_mC &&
+         m_bigM == other.m_bigM )
         ret = true;
 
     return ret;
@@ -73,29 +73,29 @@ const EvtDalitzPlot* EvtDalitzPlot::clone() const
 
 void EvtDalitzPlot::sanityCheck() const
 {
-    if ( _mA < 0 || _mB < 0 || _mC < 0 || _bigM <= 0 ||
-         _bigM - _mA - _mB - _mC < 0. ) {
-        printf( "Invalid Dalitz plot %f %f %f %f\n", _mA, _mB, _mC, _bigM );
+    if ( m_mA < 0 || m_mB < 0 || m_mC < 0 || m_bigM <= 0 ||
+         m_bigM - m_mA - m_mB - m_mC < 0. ) {
+        printf( "Invalid Dalitz plot %f %f %f %f\n", m_mA, m_mB, m_mC, m_bigM );
         assert( 0 );
     }
-    assert( _ldel <= 0. );
-    assert( _rdel >= 0. );
+    assert( m_ldel <= 0. );
+    assert( m_rdel >= 0. );
 }
 
 double EvtDalitzPlot::m( Index i ) const
 {
-    double m = _mA;
+    double m = m_mA;
     if ( i == B )
-        m = _mB;
+        m = m_mB;
     else if ( i == C )
-        m = _mC;
+        m = m_mC;
 
     return m;
 }
 
 double EvtDalitzPlot::sum() const
 {
-    return _mA * _mA + _mB * _mB + _mC * _mC + _bigM * _bigM;
+    return m_mA * m_mA + m_mB * m_mB + m_mC * m_mC + m_bigM * m_bigM;
 }
 
 double EvtDalitzPlot::qAbsMin( Pair i ) const
@@ -109,7 +109,7 @@ double EvtDalitzPlot::qAbsMin( Pair i ) const
 double EvtDalitzPlot::qAbsMax( Pair i ) const
 {
     Index j = other( i );
-    return ( _bigM - m( j ) ) * ( _bigM - m( j ) );
+    return ( m_bigM - m( j ) ) * ( m_bigM - m( j ) );
 }
 
 double EvtDalitzPlot::qResAbsMin( EvtCyclic3::Pair i ) const
@@ -307,9 +307,9 @@ void EvtDalitzPlot::print() const
 {
     // masses
     printf( "Mass  M    %f\n", bigM() );
-    printf( "Mass mA    %f\n", _mA );
-    printf( "Mass mB    %f\n", _mB );
-    printf( "Mass mC    %f\n", _mC );
+    printf( "Mass mA    %f\n", m_mA );
+    printf( "Mass mB    %f\n", m_mB );
+    printf( "Mass mC    %f\n", m_mC );
     // limits
     printf( "Limits qAB %f : %f\n", qAbsMin( AB ), qAbsMax( AB ) );
     printf( "Limits qBC %f : %f\n", qAbsMin( BC ), qAbsMax( BC ) );

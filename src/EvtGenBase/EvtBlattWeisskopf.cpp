@@ -29,7 +29,7 @@
 using std::endl;
 
 EvtBlattWeisskopf::EvtBlattWeisskopf( int LL, double R, double p0 ) :
-    _LL( LL ), _radial( R ), _p0( p0 )
+    m_LL( LL ), m_radial( R ), m_p0( p0 )
 {
     if ( R < 0 ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -37,27 +37,30 @@ EvtBlattWeisskopf::EvtBlattWeisskopf( int LL, double R, double p0 ) :
         assert( 0 );
     }
 
-    _radial = R;
+    m_radial = R;
 
     // compute formula for nominal momentum
 
-    _F0 = compute( _p0 );
-    if ( _F0 <= 0 ) {
+    m_F0 = compute( m_p0 );
+    if ( m_F0 <= 0 ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << "Invalid nominal form factor computed " << _F0 << endl;
+            << "Invalid nominal form factor computed " << m_F0 << endl;
         assert( 0 );
     }
 }
 
 EvtBlattWeisskopf::EvtBlattWeisskopf( const EvtBlattWeisskopf& other ) :
-    _LL( other._LL ), _radial( other._radial ), _p0( other._p0 ), _F0( other._F0 )
+    m_LL( other.m_LL ),
+    m_radial( other.m_radial ),
+    m_p0( other.m_p0 ),
+    m_F0( other.m_F0 )
 {
 }
 
 double EvtBlattWeisskopf::operator()( double p ) const
 {
-    double ret = compute( p ) / _F0;
-    //  EvtGenReport(EVTGEN_INFO,"EvtGen") << p << " " << _p0 << " " << _F0 << " " << _LL << " " << _radial << " " << ret << endl;
+    double ret = compute( p ) / m_F0;
+    //  EvtGenReport(EVTGEN_INFO,"EvtGen") << p << " " << m_p0 << " " << m_F0 << " " << m_LL << " " << m_radial << " " << ret << endl;
     return ret;
 }
 
@@ -77,23 +80,23 @@ double EvtBlattWeisskopf::compute( double p ) const
 {
     double value( 1.0 );
 
-    double z = p * _radial;
+    double z = p * m_radial;
     double zSq = z * z;
 
-    if ( _LL == 0 ) {
+    if ( m_LL == 0 ) {
         value = 1.0;
-    } else if ( _LL == 1 ) {
+    } else if ( m_LL == 1 ) {
         value = sqrt( 1.0 / ( 1.0 + zSq ) );
-    } else if ( _LL == 2 ) {
+    } else if ( m_LL == 2 ) {
         value = sqrt( 1.0 / ( zSq * ( zSq + 3.0 ) + 9.0 ) );
-    } else if ( _LL == 3 ) {
+    } else if ( m_LL == 3 ) {
         double denom = zSq * ( zSq * ( zSq + 6.0 ) + 45.0 ) + 225.0;
         value = sqrt( 1.0 / denom );
-    } else if ( _LL == 4 ) {
+    } else if ( m_LL == 4 ) {
         double denom = zSq * ( zSq * ( zSq * ( zSq + 10.0 ) + 135.0 ) + 1575.0 ) +
                        11025.0;
         value = sqrt( 1.0 / denom );
-    } else if ( _LL == 5 ) {
+    } else if ( m_LL == 5 ) {
         double denom =
             zSq * ( zSq * ( zSq * ( zSq * ( zSq + 15.0 ) + 315.0 ) + 6300.0 ) +
                     99225.0 ) +

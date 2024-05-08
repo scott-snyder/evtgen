@@ -172,7 +172,7 @@ void EvtDDalitz::init()
   std::cout << std::endl;
 */
 
-    _flag = 0;
+    m_flag = 0;
 
     // D0 or anti-D0 modes. We only need to check the particle modes, since anti-particle
     // modes have their ordered daughter ids charged-conjugated above
@@ -181,37 +181,37 @@ void EvtDDalitz::init()
         // Look for D0 to K- pi+ pi0
         if ( daughters[0].first == KM && daughters[1].first == PI0 &&
              daughters[2].first == PIP ) {
-            _flag = 4;
-            _d1 = daughters[0].second;
-            _d2 = daughters[2].second;
-            _d3 = daughters[1].second;
+            m_flag = 4;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[2].second;
+            m_d3 = daughters[1].second;
         }
 
         // Look for D0 to KB pi- pi+
         if ( isNeutralKaon( daughters[0].first ) == true &&
              daughters[1].first == PIM && daughters[2].first == PIP ) {
-            _flag = 3;
-            _d1 = daughters[0].second;
-            _d2 = daughters[1].second;
-            _d3 = daughters[2].second;
+            m_flag = 3;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[1].second;
+            m_d3 = daughters[2].second;
         }
 
         // Look for D0 to KB K+ K-
         if ( isNeutralKaon( daughters[0].first ) == true &&
              daughters[1].first == KM && daughters[2].first == KP ) {
-            _flag = 5;
-            _d1 = daughters[0].second;
-            _d2 = daughters[2].second;
-            _d3 = daughters[1].second;
+            m_flag = 5;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[2].second;
+            m_d3 = daughters[1].second;
         }
 
         // Look for D0 to pi- pi+ pi0
         if ( daughters[0].first == PIM && daughters[1].first == PI0 &&
              daughters[2].first == PIP ) {
-            _flag = 12;
-            _d1 = daughters[0].second;
-            _d2 = daughters[2].second;
-            _d3 = daughters[1].second;
+            m_flag = 12;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[2].second;
+            m_d3 = daughters[1].second;
         }
     }
 
@@ -220,46 +220,46 @@ void EvtDDalitz::init()
         // Look for D+ to KB pi+ pi0
         if ( isNeutralKaon( daughters[0].first ) == true &&
              daughters[1].first == PI0 && daughters[2].first == PIP ) {
-            _flag = 2;
-            _d1 = daughters[0].second;
-            _d2 = daughters[2].second;
-            _d3 = daughters[1].second;
+            m_flag = 2;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[2].second;
+            m_d3 = daughters[1].second;
         }
 
         // Look for D+ to K- pi+ pi+
         if ( daughters[0].first == KM && daughters[1].first == PIP &&
              daughters[2].first == PIP ) {
-            _flag = 1;
-            _d1 = daughters[0].second;
-            _d2 = daughters[1].second;
-            _d3 = daughters[2].second;
+            m_flag = 1;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[1].second;
+            m_d3 = daughters[2].second;
         }
 
         // Look for D+ to K- K+ pi+
         if ( daughters[0].first == KM && daughters[1].first == PIP &&
              daughters[2].first == KP ) {
-            _flag = 7;
-            _d1 = daughters[0].second;
-            _d2 = daughters[2].second;
-            _d3 = daughters[1].second;
+            m_flag = 7;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[2].second;
+            m_d3 = daughters[1].second;
         }
 
         // Look for D+ to pi- pi+ K+
         if ( daughters[0].first == PIM && daughters[1].first == PIP &&
              daughters[2].first == KP ) {
-            _flag = 8;
-            _d1 = daughters[0].second;
-            _d2 = daughters[1].second;
-            _d3 = daughters[2].second;
+            m_flag = 8;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[1].second;
+            m_d3 = daughters[2].second;
         }
 
         // Look for D+ to pi- pi+ pi+
         if ( daughters[0].first == PIM && daughters[1].first == PIP &&
              daughters[2].first == PIP ) {
-            _flag = 10;
-            _d1 = daughters[0].second;
-            _d2 = daughters[1].second;
-            _d3 = daughters[2].second;
+            m_flag = 10;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[1].second;
+            m_d3 = daughters[2].second;
         }
     }
 
@@ -268,37 +268,37 @@ void EvtDDalitz::init()
         // Look for Ds+ to K- K+ pi+
         if ( daughters[0].first == KM && daughters[1].first == PIP &&
              daughters[2].first == KP ) {
-            _flag = 6;
-            _d1 = daughters[0].second;
-            _d2 = daughters[2].second;
-            _d3 = daughters[1].second;
+            m_flag = 6;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[2].second;
+            m_d3 = daughters[1].second;
         }
 
         // Look for Ds+ to pi- pi+ K+
         if ( daughters[0].first == PIM && daughters[1].first == PIP &&
              daughters[2].first == KP ) {
-            _flag = 9;
-            _d1 = daughters[0].second;
-            _d2 = daughters[1].second;
-            _d3 = daughters[2].second;
+            m_flag = 9;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[1].second;
+            m_d3 = daughters[2].second;
         }
 
         // Look for Ds+ to pi- pi+ pi+
         if ( daughters[0].first == PIM && daughters[1].first == PIP &&
              daughters[2].first == PIP ) {
-            _flag = 11;
-            _d1 = daughters[0].second;
-            _d2 = daughters[1].second;
-            _d3 = daughters[2].second;
+            m_flag = 11;
+            m_d1 = daughters[0].second;
+            m_d2 = daughters[1].second;
+            m_d3 = daughters[2].second;
         }
     }
 
-    if ( _flag == 6 ) {
-        _kkpi_params.push_back( EvtFlatteParam( MPI, MPI, 0.406 ) );
-        _kkpi_params.push_back( EvtFlatteParam( MKP, MKP, 0.800 ) );
+    if ( m_flag == 6 ) {
+        m_kkpi_params.push_back( EvtFlatteParam( MPI, MPI, 0.406 ) );
+        m_kkpi_params.push_back( EvtFlatteParam( MKP, MKP, 0.800 ) );
     }
 
-    if ( _flag == 0 ) {
+    if ( m_flag == 0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "EvtDDaltiz: Invalid mode." << endl;
         assert( 0 );
@@ -306,10 +306,10 @@ void EvtDDalitz::init()
 
     /*
   EvtGenReport(EVTGEN_INFO,"EvtGen") << "DDALITZ ordering for " << parnum.getName()
-			<< " with mode = " << _flag << ": "
-			<< getDaug(_d1).getName() << " "
-			<< getDaug(_d2).getName() << " "
-			<< getDaug(_d3).getName() << std::endl;
+			<< " with mode = " << m_flag << ": "
+			<< getDaug(m_d1).getName() << " "
+			<< getDaug(m_d2).getName() << " "
+			<< getDaug(m_d3).getName() << std::endl;
   */
 }
 
@@ -317,40 +317,40 @@ void EvtDDalitz::initProbMax()
 {
     // probmax different for different modes!
 
-    if ( _flag == 1 ) {
+    if ( m_flag == 1 ) {
         setProbMax( 2500.0 );
     }
-    if ( _flag == 2 ) {
+    if ( m_flag == 2 ) {
         setProbMax( 150.0 );
     }
-    if ( _flag == 3 ) {
+    if ( m_flag == 3 ) {
         setProbMax( 3000.0 );
     }
-    if ( _flag == 4 ) {
+    if ( m_flag == 4 ) {
         setProbMax( 600.0 );
     }
-    if ( _flag == 5 ) {
+    if ( m_flag == 5 ) {
         setProbMax( 2500000.0 );
     }
-    if ( _flag == 6 ) {
+    if ( m_flag == 6 ) {
         setProbMax( 45000.0 );
     }
-    if ( _flag == 7 ) {
+    if ( m_flag == 7 ) {
         setProbMax( 35000.0 );
     }
-    if ( _flag == 8 ) {
+    if ( m_flag == 8 ) {
         setProbMax( 2500.0 );
     }
-    if ( _flag == 9 ) {
+    if ( m_flag == 9 ) {
         setProbMax( 1700.0 );
     }
-    if ( _flag == 10 ) {
+    if ( m_flag == 10 ) {
         setProbMax( 1300.0 );
     }
-    if ( _flag == 11 ) {
+    if ( m_flag == 11 ) {
         setProbMax( 2200.0 );
     }
-    if ( _flag == 12 ) {
+    if ( m_flag == 12 ) {
         setProbMax( 1000.0 );
     }
 }
@@ -380,9 +380,9 @@ void EvtDDalitz::decay( EvtParticle* p )
     //same structure for all of these decays
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
-    EvtVector4R moms1 = p->getDaug( _d1 )->getP4();
-    EvtVector4R moms2 = p->getDaug( _d2 )->getP4();
-    EvtVector4R moms3 = p->getDaug( _d3 )->getP4();
+    EvtVector4R moms1 = p->getDaug( m_d1 )->getP4();
+    EvtVector4R moms2 = p->getDaug( m_d2 )->getP4();
+    EvtVector4R moms3 = p->getDaug( m_d3 )->getP4();
 
     EvtVector4R p4_p;
     p4_p.set( p->mass(), 0.0, 0.0, 0.0 );
@@ -396,7 +396,7 @@ void EvtDDalitz::decay( EvtParticle* p )
     //(Mark III results) for D+ -> K0bar pi+ pi0.
     //CLEO results for D0->k-pi+pi0
 
-    if ( _flag == 1 ) {
+    if ( m_flag == 1 ) {
         // D+ -> K- pi+ pi+ decay, or charge conjugate
 
         //     //Anjos etal e691 - Phys Rev D48, 56 (1993)
@@ -444,7 +444,7 @@ void EvtDDalitz::decay( EvtParticle* p )
         //amp = amp+oneby2*(-DplusRes11.resAmpl()+DplusRes12.resAmpl());
     }
 
-    if ( _flag == 2 ) {
+    if ( m_flag == 2 ) {
         //have a D+ -> K0bar pi+ pi0 decay
         //adler etal MarkIII - Phys Lett B196, 107 (1987)
         // Results in this paper:
@@ -465,7 +465,7 @@ void EvtDDalitz::decay( EvtParticle* p )
                   DplusKpipi0Res2.relBrWig( 1 );
     }
 
-    if ( _flag == 3 ) {
+    if ( m_flag == 3 ) {
         // D0 -> K0bar pi- pi+ & CC
         // If it does not come from a B->DK, decay it as D0 or D0bar separately
         // if p4_p is D0, moms1 is K0, moms2 is pi-, moms3 is pi+
@@ -522,7 +522,7 @@ void EvtDDalitz::decay( EvtParticle* p )
         }
     }
 
-    if ( _flag == 4 ) {
+    if ( m_flag == 4 ) {
         // D0 to K- pi+ pi0
         EvtResonance2 DKpipi0Res1( p4_p, moms2, moms3, 1.0, 0.0, 0.1507, 0.770,
                                    1 );    //rho
@@ -550,7 +550,7 @@ void EvtDDalitz::decay( EvtParticle* p )
               DKpipi0Res7.resAmpl();
     }
 
-    if ( _flag == 5 ) {
+    if ( m_flag == 5 ) {
         // D0 -> K0bar K+ K- & CC
         // If it does not come from a B->DK, decay it as D0 or D0bar separately
         // if p4_p is D0, moms1 is K0, moms2 is pi-, moms3 is pi+
@@ -609,13 +609,13 @@ void EvtDDalitz::decay( EvtParticle* p )
 
     // Ds+ -> K- K+ pi+
     //Babar, arxiv:1011.4190
-    if ( _flag == 6 ) {
+    if ( m_flag == 6 ) {
         EvtResonance2 DsKKpiRes1( p4_p, moms3, moms1, 1.0, 0.0, 0.0455, 0.8944,
                                   1, true );    // K*(892)
         EvtResonance2 DsKKpiRes2( p4_p, moms3, moms1, 1.48, 138., 0.290, 1.414,
                                   0 );    // K*_0(1430)
         EvtFlatte DsKKpiRes3( p4_p, moms1, moms2, 5.07, 156., 0.965,
-                              _kkpi_params );    // f_0(980)
+                              m_kkpi_params );    // f_0(980)
         EvtResonance2 DsKKpiRes4( p4_p, moms1, moms2, 1.15, -10., 0.00426,
                                   1.019455, 1, true );    // phi(1020)
         EvtResonance2 DsKKpiRes5( p4_p, moms1, moms2, 1.28, 53., 0.265, 1.350,
@@ -628,7 +628,7 @@ void EvtDDalitz::decay( EvtParticle* p )
 
     //D+ -> K- K+ pi+
     //CLEO PRD 78, 072003 (2008) Fit A
-    if ( _flag == 7 ) {
+    if ( m_flag == 7 ) {
         EvtResonance2 DpKKpiRes1( p4_p, moms3, moms1, 1.0, 0.0, 0.0503, 0.8960,
                                   1, true );    // K*(892)
         EvtResonance2 DpKKpiRes2( p4_p, moms3, moms1, 3.7, 73.0, 0.290, 1.414,
@@ -653,7 +653,7 @@ void EvtDDalitz::decay( EvtParticle* p )
     // thus the magnitudes appearing below come from dividing the ones appearing in the paper by the sqrt of the
     // integral over the DP of the corresponding squared amplitude. Writing as pi- pi+ K+ so pipi resonances are (12)
     // and Kpi resonances are (31); masses and widths corresponds to PDG 2010
-    if ( _flag == 8 ) {
+    if ( m_flag == 8 ) {
         EvtResonance2 DpKpipiDCSRes1( p4_p, moms1, moms2, 1.0, 0.0, 0.149,
                                       0.775, 1, true );    // rho(770)
         EvtResonance2 DpKpipiDCSRes2( p4_p, moms3, moms1, 1.0971, -167.1,
@@ -673,7 +673,7 @@ void EvtDDalitz::decay( EvtParticle* p )
     // and Kpi resonances are (31); masses and widths corresponds to PDG 2010
     // PROBLEM: by simply doing the procedure for D+, the resulting DP and projections do not resemble what is
     // in the paper; the best model is by adding 180 to the vector Kpi resonances
-    if ( _flag == 9 ) {
+    if ( m_flag == 9 ) {
         EvtResonance2 DsKpipiCSRes1( p4_p, moms1, moms2, 1.0, 0.0, 0.149, 0.775,
                                      1, true );    // rho(770)
         EvtResonance2 DsKpipiCSRes2( p4_p, moms3, moms1, 0.7236, -18.3, 0.0487,
@@ -696,7 +696,7 @@ void EvtDDalitz::decay( EvtParticle* p )
     // (although not explicit) so magnitudes here are obtained after correcting for that
     // Breit-Wigner has a factor of (-1) there which changes the relative phase of the NR wrt to the resonances
     // thus the NR magnitude is set as negative
-    if ( _flag == 10 ) {
+    if ( m_flag == 10 ) {
         EvtResonance2 DppipipiRes11( p4_p, moms1, moms2, 1.0, 0.0, 0.150, 0.769,
                                      1, true );    // rho(770)
         EvtResonance2 DppipipiRes12( p4_p, moms3, moms1, 1.0, 0.0, 0.150, 0.769,
@@ -736,7 +736,7 @@ void EvtDDalitz::decay( EvtParticle* p )
     // (although not explicit) so magnitudes here are obtained after correcting for that
     // Breit-Wigner has a factor of (-1) there which changes the relative phase of the NR wrt to the resonances
     // thus the NR magnitude is set as negative
-    if ( _flag == 11 ) {
+    if ( m_flag == 11 ) {
         EvtResonance2 DspipipiRes11( p4_p, moms1, moms2, 0.288, 109., 0.150,
                                      0.769, 1, true );    // rho(770)
         EvtResonance2 DspipipiRes12( p4_p, moms3, moms1, 0.288, 109., 0.150,
@@ -772,7 +772,7 @@ void EvtDDalitz::decay( EvtParticle* p )
     //arXiv:hep-ex/0703037
     // Amplitude magnitudes taken from the above paper, but corrected for normalization
     // For details, see https://phab.hepforge.org/T219
-    if ( _flag == 12 ) {
+    if ( m_flag == 12 ) {
         EvtResonance2 DpipipiRes1p( p4_p, moms2, moms3, 1.0, 0.0, 0.149, 0.775,
                                     1, true );    //rho+(770)
         EvtResonance2 DpipipiRes1( p4_p, moms1, moms2, 0.6237, 16.2, 0.149,

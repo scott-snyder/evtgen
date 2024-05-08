@@ -37,5 +37,5 @@ EvtAmplitude<EvtPoint1D>* EvtPropBreitWignerRel::clone() const
 EvtComplex EvtPropBreitWignerRel::amplitude( const EvtPoint1D& x ) const
 {
     double m = x.value();
-    return 1. / ( _m0 * _m0 - m * m - EvtComplex( 0., _m0 * _g0 ) );
+    return 1. / ( m_m0 * m_m0 - m * m - EvtComplex( 0., m_m0 * m_g0 ) );
 }

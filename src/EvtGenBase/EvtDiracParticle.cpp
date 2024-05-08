@@ -35,7 +35,7 @@ using std::endl;
 
 void EvtDiracParticle::init( EvtId part_n, const EvtVector4R& p4 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( part_n );
 
@@ -47,26 +47,26 @@ void EvtDiracParticle::init( EvtId part_n, const EvtVector4R& p4 )
     }
 
     if ( EvtPDL::getStdHep( part_n ) > 0 ) {
-        _spinorRest[0].set( EvtComplex( sqrt( 2.0 * mass() ), 0.0 ),
-                            EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ),
-                            EvtComplex( 0.0, 0.0 ) );
-        _spinorRest[1].set( EvtComplex( 0.0, 0.0 ),
-                            EvtComplex( sqrt( 2.0 * mass() ), 0.0 ),
-                            EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ) );
+        m_spinorRest[0].set( EvtComplex( sqrt( 2.0 * mass() ), 0.0 ),
+                             EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ),
+                             EvtComplex( 0.0, 0.0 ) );
+        m_spinorRest[1].set( EvtComplex( 0.0, 0.0 ),
+                             EvtComplex( sqrt( 2.0 * mass() ), 0.0 ),
+                             EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ) );
 
-        _spinorParent[0] = boostTo( _spinorRest[0], p4 );
-        _spinorParent[1] = boostTo( _spinorRest[1], p4 );
+        m_spinorParent[0] = boostTo( m_spinorRest[0], p4 );
+        m_spinorParent[1] = boostTo( m_spinorRest[1], p4 );
 
     } else {
-        _spinorRest[0].set( EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ),
-                            EvtComplex( sqrt( 2.0 * mass() ), 0.0 ),
-                            EvtComplex( 0.0, 0.0 ) );
-        _spinorRest[1].set( EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ),
-                            EvtComplex( 0.0, 0.0 ),
-                            EvtComplex( sqrt( 2.0 * mass() ), 0.0 ) );
+        m_spinorRest[0].set( EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ),
+                             EvtComplex( sqrt( 2.0 * mass() ), 0.0 ),
+                             EvtComplex( 0.0, 0.0 ) );
+        m_spinorRest[1].set( EvtComplex( 0.0, 0.0 ), EvtComplex( 0.0, 0.0 ),
+                             EvtComplex( 0.0, 0.0 ),
+                             EvtComplex( sqrt( 2.0 * mass() ), 0.0 ) );
 
-        _spinorParent[0] = boostTo( _spinorRest[0], p4 );
-        _spinorParent[1] = boostTo( _spinorRest[1], p4 );
+        m_spinorParent[0] = boostTo( m_spinorRest[0], p4 );
+        m_spinorParent[1] = boostTo( m_spinorRest[1], p4 );
     }
 
     setLifetime();
@@ -78,7 +78,7 @@ void EvtDiracParticle::init( EvtId part_n, const EvtVector4R& p4,
                              const EvtDiracSpinor& rest1,
                              const EvtDiracSpinor& rest2 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( part_n );
 
@@ -88,10 +88,10 @@ void EvtDiracParticle::init( EvtId part_n, const EvtVector4R& p4,
             << std::endl;
         ::abort();
     }
-    _spinorRest[0] = rest1;
-    _spinorRest[1] = rest2;
-    _spinorParent[0] = prod1;
-    _spinorParent[1] = prod2;
+    m_spinorRest[0] = rest1;
+    m_spinorRest[1] = rest2;
+    m_spinorParent[0] = prod1;
+    m_spinorParent[1] = prod2;
 
     setLifetime();
 }
@@ -115,8 +115,8 @@ EvtSpinDensity EvtDiracParticle::rotateToHelicityBasis() const
     R.setDim( 2 );
 
     for ( int i = 0; i < 2; i++ ) {
-        R.set( 0, i, ( spplus * _spinorRest[i] ) / sqmt2 );
-        R.set( 1, i, ( spminus * _spinorRest[i] ) / sqmt2 );
+        R.set( 0, i, ( spplus * m_spinorRest[i] ) / sqmt2 );
+        R.set( 1, i, ( spminus * m_spinorRest[i] ) / sqmt2 );
     }
 
     return R;
@@ -145,8 +145,8 @@ EvtSpinDensity EvtDiracParticle::rotateToHelicityBasis( double alpha, double bet
     R.setDim( 2 );
 
     for ( int i = 0; i < 2; i++ ) {
-        R.set( 0, i, ( spplus * _spinorRest[i] ) / sqmt2 );
-        R.set( 1, i, ( spminus * _spinorRest[i] ) / sqmt2 );
+        R.set( 0, i, ( spplus * m_spinorRest[i] ) / sqmt2 );
+        R.set( 1, i, ( spminus * m_spinorRest[i] ) / sqmt2 );
     }
 
     return R;

@@ -36,7 +36,7 @@ EvtTensor4C::EvtTensor4C( const EvtTensor4C& t1 )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] = t1.t[i][j];
+            m_t[i][j] = t1.m_t[i][j];
         }
     }
 }
@@ -54,7 +54,7 @@ EvtTensor4C& EvtTensor4C::operator=( const EvtTensor4C& t1 )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] = t1.t[i][j];
+            m_t[i][j] = t1.m_t[i][j];
         }
     }
     return *this;
@@ -68,7 +68,7 @@ EvtTensor4C EvtTensor4C::conj() const
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            temp.set( j, i, ::conj( t[i][j] ) );
+            temp.set( j, i, ::conj( m_t[i][j] ) );
         }
     }
     return temp;
@@ -162,16 +162,16 @@ void EvtTensor4C::applyBoostTo( const EvtVector3R& boost )
         for ( j = 0; j < 4; j++ ) {
             tt[i][j] = EvtComplex( 0.0 );
             for ( k = 0; k < 4; k++ ) {
-                tt[i][j] = tt[i][j] + lambda[j][k] * t[i][k];
+                tt[i][j] = tt[i][j] + lambda[j][k] * m_t[i][k];
             }
         }
     }
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] = EvtComplex( 0.0 );
+            m_t[i][j] = EvtComplex( 0.0 );
             for ( k = 0; k < 4; k++ ) {
-                t[i][j] = t[i][j] + lambda[i][k] * tt[k][j];
+                m_t[i][j] = m_t[i][j] + lambda[i][k] * tt[k][j];
             }
         }
     }
@@ -182,7 +182,7 @@ void EvtTensor4C::zero()
     int i, j;
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] = EvtComplex( 0.0, 0.0 );
+            m_t[i][j] = EvtComplex( 0.0, 0.0 );
         }
     }
 }
@@ -193,7 +193,7 @@ ostream& operator<<( ostream& s, const EvtTensor4C& t )
     s << endl;
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            s << t.t[i][j];
+            s << t.m_t[i][j];
         }
         s << endl;
     }
@@ -202,22 +202,22 @@ ostream& operator<<( ostream& s, const EvtTensor4C& t )
 
 void EvtTensor4C::setdiag( double g00, double g11, double g22, double g33 )
 {
-    t[0][0] = EvtComplex( g00 );
-    t[1][1] = EvtComplex( g11 );
-    t[2][2] = EvtComplex( g22 );
-    t[3][3] = EvtComplex( g33 );
-    t[0][1] = EvtComplex( 0.0 );
-    t[0][2] = EvtComplex( 0.0 );
-    t[0][3] = EvtComplex( 0.0 );
-    t[1][0] = EvtComplex( 0.0 );
-    t[1][2] = EvtComplex( 0.0 );
-    t[1][3] = EvtComplex( 0.0 );
-    t[2][0] = EvtComplex( 0.0 );
-    t[2][1] = EvtComplex( 0.0 );
-    t[2][3] = EvtComplex( 0.0 );
-    t[3][0] = EvtComplex( 0.0 );
-    t[3][1] = EvtComplex( 0.0 );
-    t[3][2] = EvtComplex( 0.0 );
+    m_t[0][0] = EvtComplex( g00 );
+    m_t[1][1] = EvtComplex( g11 );
+    m_t[2][2] = EvtComplex( g22 );
+    m_t[3][3] = EvtComplex( g33 );
+    m_t[0][1] = EvtComplex( 0.0 );
+    m_t[0][2] = EvtComplex( 0.0 );
+    m_t[0][3] = EvtComplex( 0.0 );
+    m_t[1][0] = EvtComplex( 0.0 );
+    m_t[1][2] = EvtComplex( 0.0 );
+    m_t[1][3] = EvtComplex( 0.0 );
+    m_t[2][0] = EvtComplex( 0.0 );
+    m_t[2][1] = EvtComplex( 0.0 );
+    m_t[2][3] = EvtComplex( 0.0 );
+    m_t[3][0] = EvtComplex( 0.0 );
+    m_t[3][1] = EvtComplex( 0.0 );
+    m_t[3][2] = EvtComplex( 0.0 );
 }
 
 EvtTensor4C& EvtTensor4C::operator+=( const EvtTensor4C& t2 )
@@ -226,7 +226,7 @@ EvtTensor4C& EvtTensor4C::operator+=( const EvtTensor4C& t2 )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] += t2.get( i, j );
+            m_t[i][j] += t2.get( i, j );
         }
     }
     return *this;
@@ -238,7 +238,7 @@ EvtTensor4C& EvtTensor4C::operator-=( const EvtTensor4C& t2 )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] -= t2.get( i, j );
+            m_t[i][j] -= t2.get( i, j );
         }
     }
     return *this;
@@ -250,7 +250,7 @@ EvtTensor4C& EvtTensor4C::operator*=( const EvtComplex& c )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] *= c;
+            m_t[i][j] *= c;
         }
     }
     return *this;
@@ -272,7 +272,7 @@ EvtTensor4C& EvtTensor4C::operator*=( double d )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] *= EvtComplex( d, 0.0 );
+            m_t[i][j] *= EvtComplex( d, 0.0 );
         }
     }
     return *this;
@@ -296,9 +296,9 @@ EvtComplex cont( const EvtTensor4C& t1, const EvtTensor4C& t2 )
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
             if ( ( i == 0 && j != 0 ) || ( j == 0 && i != 0 ) ) {
-                sum -= t1.t[i][j] * t2.t[i][j];
+                sum -= t1.m_t[i][j] * t2.m_t[i][j];
             } else {
-                sum += t1.t[i][j] * t2.t[i][j];
+                sum += t1.m_t[i][j] * t2.m_t[i][j];
             }
         }
     }
@@ -342,7 +342,7 @@ EvtTensor4C EvtGenFunctions::directProd( const EvtVector4R& c1,
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            temp.t[i][j] = EvtComplex( c1.get( i ) * c2.get( j ), 0.0 );
+            temp.m_t[i][j] = EvtComplex( c1.get( i ) * c2.get( j ), 0.0 );
         }
     }
     return temp;
@@ -355,7 +355,7 @@ EvtTensor4C& EvtTensor4C::addDirProd( const EvtVector4R& p1,
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] += p1.get( i ) * p2.get( j );
+            m_t[i][j] += p1.get( i ) * p2.get( j );
         }
     }
     return *this;
@@ -451,8 +451,8 @@ EvtVector4C EvtTensor4C::cont1( const EvtVector4C& v4 ) const
     int i;
 
     for ( i = 0; i < 4; i++ ) {
-        temp.set( i, t[0][i] * v4.get( 0 ) - t[1][i] * v4.get( 1 ) -
-                         t[2][i] * v4.get( 2 ) - t[3][i] * v4.get( 3 ) );
+        temp.set( i, m_t[0][i] * v4.get( 0 ) - m_t[1][i] * v4.get( 1 ) -
+                         m_t[2][i] * v4.get( 2 ) - m_t[3][i] * v4.get( 3 ) );
     }
 
     return temp;
@@ -465,8 +465,8 @@ EvtVector4C EvtTensor4C::cont2( const EvtVector4C& v4 ) const
     int i;
 
     for ( i = 0; i < 4; i++ ) {
-        temp.set( i, t[i][0] * v4.get( 0 ) - t[i][1] * v4.get( 1 ) -
-                         t[i][2] * v4.get( 2 ) - t[i][3] * v4.get( 3 ) );
+        temp.set( i, m_t[i][0] * v4.get( 0 ) - m_t[i][1] * v4.get( 1 ) -
+                         m_t[i][2] * v4.get( 2 ) - m_t[i][3] * v4.get( 3 ) );
     }
 
     return temp;
@@ -479,8 +479,8 @@ EvtVector4C EvtTensor4C::cont1( const EvtVector4R& v4 ) const
     int i;
 
     for ( i = 0; i < 4; i++ ) {
-        temp.set( i, t[0][i] * v4.get( 0 ) - t[1][i] * v4.get( 1 ) -
-                         t[2][i] * v4.get( 2 ) - t[3][i] * v4.get( 3 ) );
+        temp.set( i, m_t[0][i] * v4.get( 0 ) - m_t[1][i] * v4.get( 1 ) -
+                         m_t[2][i] * v4.get( 2 ) - m_t[3][i] * v4.get( 3 ) );
     }
 
     return temp;
@@ -493,8 +493,8 @@ EvtVector4C EvtTensor4C::cont2( const EvtVector4R& v4 ) const
     int i;
 
     for ( i = 0; i < 4; i++ ) {
-        temp.set( i, t[i][0] * v4.get( 0 ) - t[i][1] * v4.get( 1 ) -
-                         t[i][2] * v4.get( 2 ) - t[i][3] * v4.get( 3 ) );
+        temp.set( i, m_t[i][0] * v4.get( 0 ) - m_t[i][1] * v4.get( 1 ) -
+                         m_t[i][2] * v4.get( 2 ) - m_t[i][3] * v4.get( 3 ) );
     }
 
     return temp;
@@ -539,16 +539,16 @@ void EvtTensor4C::applyRotateEuler( double phi, double theta, double ksi )
         for ( j = 0; j < 4; j++ ) {
             tt[i][j] = EvtComplex( 0.0 );
             for ( k = 0; k < 4; k++ ) {
-                tt[i][j] += lambda[j][k] * t[i][k];
+                tt[i][j] += lambda[j][k] * m_t[i][k];
             }
         }
     }
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            t[i][j] = EvtComplex( 0.0 );
+            m_t[i][j] = EvtComplex( 0.0 );
             for ( k = 0; k < 4; k++ ) {
-                t[i][j] += lambda[i][k] * tt[k][j];
+                m_t[i][j] += lambda[i][k] * tt[k][j];
             }
         }
     }

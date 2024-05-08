@@ -48,7 +48,7 @@ void EvtISGW::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    calcamp->CalcAmp( p, _amp2, isgwffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_isgwffmodel.get() );
 }
 
 void EvtISGW::init()
@@ -65,17 +65,17 @@ void EvtISGW::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::NEUTRINO );
 
-    isgwffmodel = std::make_unique<EvtISGWFF>();
+    m_isgwffmodel = std::make_unique<EvtISGWFF>();
 
     switch ( mesontype ) {
         case EvtSpinType::SCALAR:
-            calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
             break;
         case EvtSpinType::VECTOR:
-            calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
             break;
         case EvtSpinType::TENSOR:
-            calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
             break;
         default:;
     }

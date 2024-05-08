@@ -57,7 +57,7 @@ void EvtVVP::init()
         checkSpinDaughter( 1, EvtSpinType::DIRAC );
         checkSpinDaughter( 2, EvtSpinType::DIRAC );
         checkNArg( 1 );
-        delta = getArg( 0 );
+        m_delta = getArg( 0 );
     }
 }
 
@@ -145,7 +145,7 @@ void EvtVVP::decay_3body( EvtParticle* root )
     }
 
     // Extra checks to make sure we are not dividing by zero
-    double dSq = delta * delta;
+    double dSq = m_delta * m_delta;
     double dSqDenom = dSq - kSq;
     if ( fabs( dSqDenom ) < 1e-10 ) {
         validAmp = false;

@@ -33,14 +33,14 @@ EvtBToVlnuBallFF::EvtBToVlnuBallFF( double r2_A1, double mfit2_A1, double r1_A2,
                                     double r2_A2, double mfit2_A2, double r1_V,
                                     double r2_V, double mfit2_V )
 {
-    _r2_A1 = r2_A1;
-    _mfit2_A1 = mfit2_A1;
-    _r1_A2 = r1_A2;
-    _r2_A2 = r2_A2;
-    _mfit2_A2 = mfit2_A2;
-    _r1_V = r1_V;
-    _r2_V = r2_V;
-    _mfit2_V = mfit2_V;
+    m_r2_A1 = r2_A1;
+    m_mfit2_A1 = mfit2_A1;
+    m_r1_A2 = r1_A2;
+    m_r2_A2 = r2_A2;
+    m_mfit2_A2 = mfit2_A2;
+    m_r1_V = r1_V;
+    m_r2_V = r2_V;
+    m_mfit2_V = mfit2_V;
 
     return;
 }
@@ -60,10 +60,11 @@ void EvtBToVlnuBallFF::getvectorff( EvtId parent, EvtId /*daught*/, double t,
         mBstar = EvtPDL::getMeanMass( EvtPDL::getId( "B*+" ) );
 
     double q2 = t;
-    *a1f = _r2_A1 / ( 1. - q2 / _mfit2_A1 );
-    *a2f = _r1_A2 / ( 1. - q2 / _mfit2_A2 ) +
-           _r2_A2 / pow( 1. - q2 / _mfit2_A2, 2. );
-    *vf = _r1_V / ( 1. - q2 / mBstar / mBstar ) + _r2_V / ( 1. - q2 / _mfit2_V );
+    *a1f = m_r2_A1 / ( 1. - q2 / m_mfit2_A1 );
+    *a2f = m_r1_A2 / ( 1. - q2 / m_mfit2_A2 ) +
+           m_r2_A2 / pow( 1. - q2 / m_mfit2_A2, 2. );
+    *vf = m_r1_V / ( 1. - q2 / mBstar / mBstar ) +
+          m_r2_V / ( 1. - q2 / m_mfit2_V );
     *a0f = 0.0;
 
     return;

@@ -81,41 +81,41 @@ class EvtDiracSpinor final {
     EvtDiracSpinor adjoint() const;
 
   private:
-    EvtComplex spinor[4];
+    EvtComplex m_spinor[4];
 };
 
 EvtDiracSpinor::EvtDiracSpinor()
 {
-    spinor[0] = EvtComplex();
-    spinor[1] = EvtComplex();
-    spinor[2] = EvtComplex();
-    spinor[3] = EvtComplex();
+    m_spinor[0] = EvtComplex();
+    m_spinor[1] = EvtComplex();
+    m_spinor[2] = EvtComplex();
+    m_spinor[3] = EvtComplex();
 }
 
 EvtDiracSpinor::EvtDiracSpinor( const EvtDiracSpinor& dspinor )
 {
-    spinor[0] = dspinor.spinor[0];
-    spinor[1] = dspinor.spinor[1];
-    spinor[2] = dspinor.spinor[2];
-    spinor[3] = dspinor.spinor[3];
+    m_spinor[0] = dspinor.m_spinor[0];
+    m_spinor[1] = dspinor.m_spinor[1];
+    m_spinor[2] = dspinor.m_spinor[2];
+    m_spinor[3] = dspinor.m_spinor[3];
 }
 
 EvtDiracSpinor& EvtDiracSpinor::operator=( const EvtDiracSpinor& dspinor )
 {
-    spinor[0] = dspinor.spinor[0];
-    spinor[1] = dspinor.spinor[1];
-    spinor[2] = dspinor.spinor[2];
-    spinor[3] = dspinor.spinor[3];
+    m_spinor[0] = dspinor.m_spinor[0];
+    m_spinor[1] = dspinor.m_spinor[1];
+    m_spinor[2] = dspinor.m_spinor[2];
+    m_spinor[3] = dspinor.m_spinor[3];
 
     return *this;
 }
 
 inline EvtDiracSpinor& EvtDiracSpinor::operator+=( const EvtDiracSpinor& u2 )
 {
-    spinor[0] += u2.spinor[0];
-    spinor[1] += u2.spinor[1];
-    spinor[2] += u2.spinor[2];
-    spinor[3] += u2.spinor[3];
+    m_spinor[0] += u2.m_spinor[0];
+    m_spinor[1] += u2.m_spinor[1];
+    m_spinor[2] += u2.m_spinor[2];
+    m_spinor[3] += u2.m_spinor[3];
 
     return *this;
 }
@@ -128,10 +128,10 @@ inline EvtDiracSpinor operator+( const EvtDiracSpinor& u1,
 
 inline EvtDiracSpinor& EvtDiracSpinor::operator-=( const EvtDiracSpinor& u2 )
 {
-    spinor[0] -= u2.spinor[0];
-    spinor[1] -= u2.spinor[1];
-    spinor[2] -= u2.spinor[2];
-    spinor[3] -= u2.spinor[3];
+    m_spinor[0] -= u2.m_spinor[0];
+    m_spinor[1] -= u2.m_spinor[1];
+    m_spinor[2] -= u2.m_spinor[2];
+    m_spinor[3] -= u2.m_spinor[3];
 
     return *this;
 }

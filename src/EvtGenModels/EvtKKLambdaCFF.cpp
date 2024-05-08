@@ -30,9 +30,9 @@
 
 EvtKKLambdaCFF::EvtKKLambdaCFF( int numarg, double* arglist )
 {
-    _nargs = numarg;
+    m_nargs = numarg;
     for ( int i = 0; i < numarg; i++ ) {
-        _args[i] = arglist[i];
+        m_args[i] = arglist[i];
     }
 
     return;
@@ -42,7 +42,7 @@ void EvtKKLambdaCFF::getbaryonff( EvtId /*parent*/, EvtId /*daught*/, double t,
                                   double /*mass*/, double* f1v, double* f1a,
                                   double* f2v, double* f2a )
 {
-    *f1v = ( _args[0] ) / ( 1.0 - ( t / ( _args[1] * _args[1] ) ) );
+    *f1v = ( m_args[0] ) / ( 1.0 - ( t / ( m_args[1] * m_args[1] ) ) );
 
     *f2v = 0.;
     *f2a = 0.;

@@ -55,8 +55,8 @@ void EvtBToPlnuBK::initProbMax()
     lnum = getDaug( 1 );
     nunum = getDaug( 2 );
 
-    double mymaxprob = calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
-                                             BKmodel.get() );
+    double mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
+                                               m_BKmodel.get() );
 
     setProbMax( mymaxprob );
 }
@@ -75,8 +75,8 @@ void EvtBToPlnuBK::init()
     EvtSpinType::spintype d1type = EvtPDL::getSpinType( getDaug( 0 ) );
     if ( d1type == EvtSpinType::SCALAR ) {
         checkNArg( 2 );
-        BKmodel = std::make_unique<EvtBToPlnuBKFF>( getArg( 0 ), getArg( 1 ) );
-        calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
+        m_BKmodel = std::make_unique<EvtBToPlnuBKFF>( getArg( 0 ), getArg( 1 ) );
+        m_calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "BK model handles only scalar meson daughters. Sorry." << endl;
@@ -87,5 +87,5 @@ void EvtBToPlnuBK::init()
 void EvtBToPlnuBK::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
-    calcamp->CalcAmp( p, _amp2, BKmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_BKmodel.get() );
 }

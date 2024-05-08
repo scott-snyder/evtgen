@@ -32,12 +32,12 @@ using std::string;
 using std::vector;
 
 EvtDecayMode::EvtDecayMode( std::string mother, vector<string> dau ) :
-    _mother( mother ), _dau( dau )
+    m_mother( mother ), m_dau( dau )
 {
 }
 
 EvtDecayMode::EvtDecayMode( const EvtDecayMode& other ) :
-    _mother( other._mother ), _dau( other._dau )
+    m_mother( other.m_mother ), m_dau( other.m_dau )
 {
 }
 
@@ -65,7 +65,7 @@ EvtDecayMode::EvtDecayMode( const char* decay )
         assert( 0 );
     }
 
-    _mother = string( s, i, j - i );
+    m_mother = string( s, i, j - i );
 
     i = s.find_first_not_of( " ", j );
     j = s.find_first_of( "->", j );
@@ -83,46 +83,46 @@ EvtDecayMode::EvtDecayMode( const char* decay )
         if ( i == string::npos )
             break;
         if ( j == string::npos ) {
-            _dau.push_back( string( s, i, s.size() - i + 1 ) );
+            m_dau.push_back( string( s, i, s.size() - i + 1 ) );
             break;
         } else {
-            _dau.push_back( string( s, i, j - i ) );
+            m_dau.push_back( string( s, i, j - i ) );
         }
     }
 }
 
 const char* EvtDecayMode::mother() const
 {
-    return _mother.c_str();
+    return m_mother.c_str();
 }
 
 int EvtDecayMode::nD() const
 {
-    return _dau.size();
+    return m_dau.size();
 }
 
 const char* EvtDecayMode::dau( int i ) const
 {
-    assert( 0 <= i && i < (int)_dau.size() );
-    return _dau[i].c_str();
+    assert( 0 <= i && i < (int)m_dau.size() );
+    return m_dau[i].c_str();
 }
 
 std::string EvtDecayMode::mode() const
 {
-    string ret = _mother + string( " -> " );
+    string ret = m_mother + string( " -> " );
 
-    for ( size_t i = 0; i < _dau.size() - 1; i++ ) {
-        ret += string( _dau[i] ) + string( " " );
+    for ( size_t i = 0; i < m_dau.size() - 1; i++ ) {
+        ret += string( m_dau[i] ) + string( " " );
     }
-    ret += _dau[_dau.size() - 1];
+    ret += m_dau[m_dau.size() - 1];
     return ret;
 }
 
 ostream& EvtDecayMode::print( ostream& os ) const
 {
-    os << _mother.c_str() << " ->";
-    for ( size_t i = 0; i < _dau.size(); i++ ) {
-        os << " " << _dau[i].c_str();
+    os << m_mother.c_str() << " ->";
+    for ( size_t i = 0; i < m_dau.size(); i++ ) {
+        os << " " << m_dau[i].c_str();
     }
     return os;
 }

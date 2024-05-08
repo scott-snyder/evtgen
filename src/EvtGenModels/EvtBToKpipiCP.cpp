@@ -63,8 +63,8 @@ void EvtBToKpipiCP::init()
 
     double realA, imgA, realbarA, imgbarA;
 
-    generator.EvtKpipi( alpha, beta, iset, p4Kplus, p4piminus, p4gamm1, p4gamm2,
-                        realA, imgA, realbarA, imgbarA );
+    m_generator.EvtKpipi( alpha, beta, iset, p4Kplus, p4piminus, p4gamm1,
+                          p4gamm2, realA, imgA, realbarA, imgbarA );
 }
 
 void EvtBToKpipiCP::initProbMax()
@@ -103,8 +103,8 @@ void EvtBToKpipiCP::decay( EvtParticle* p )
 
     double realA, imgA, realbarA, imgbarA;
 
-    generator.EvtKpipi( alpha, beta, iset, p4[0], p4[1], p4gamm1, p4gamm2,
-                        realA, imgA, realbarA, imgbarA );
+    m_generator.EvtKpipi( alpha, beta, iset, p4[0], p4[1], p4gamm1, p4gamm2,
+                          realA, imgA, realbarA, imgbarA );
 
     p4[2] = p4gamm1 + p4gamm2;
 

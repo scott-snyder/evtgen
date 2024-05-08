@@ -53,38 +53,38 @@ class EvtVector3R final {
     double d3mag() const;
 
   private:
-    double v[3];
+    double m_v[3];
 };
 
 inline EvtVector3R& EvtVector3R::operator*=( const double c )
 {
-    v[0] *= c;
-    v[1] *= c;
-    v[2] *= c;
+    m_v[0] *= c;
+    m_v[1] *= c;
+    m_v[2] *= c;
     return *this;
 }
 
 inline EvtVector3R& EvtVector3R::operator/=( const double c )
 {
-    v[0] /= c;
-    v[1] /= c;
-    v[2] /= c;
+    m_v[0] /= c;
+    m_v[1] /= c;
+    m_v[2] /= c;
     return *this;
 }
 
 inline EvtVector3R& EvtVector3R::operator+=( const EvtVector3R& v2 )
 {
-    v[0] += v2.v[0];
-    v[1] += v2.v[1];
-    v[2] += v2.v[2];
+    m_v[0] += v2.m_v[0];
+    m_v[1] += v2.m_v[1];
+    m_v[2] += v2.m_v[2];
     return *this;
 }
 
 inline EvtVector3R& EvtVector3R::operator-=( const EvtVector3R& v2 )
 {
-    v[0] -= v2.v[0];
-    v[1] -= v2.v[1];
-    v[2] -= v2.v[2];
+    m_v[0] -= v2.m_v[0];
+    m_v[1] -= v2.m_v[1];
+    m_v[2] -= v2.m_v[2];
     return *this;
 }
 
@@ -105,7 +105,7 @@ inline EvtVector3R operator/( const EvtVector3R& v1, double c )
 
 inline double operator*( const EvtVector3R& v1, const EvtVector3R& v2 )
 {
-    return v1.v[0] * v2.v[0] + v1.v[1] * v2.v[1] + v1.v[2] * v2.v[2];
+    return v1.m_v[0] * v2.m_v[0] + v1.m_v[1] * v2.m_v[1] + v1.m_v[2] * v2.m_v[2];
 }
 
 inline EvtVector3R operator+( const EvtVector3R& v1, const EvtVector3R& v2 )
@@ -120,19 +120,19 @@ inline EvtVector3R operator-( const EvtVector3R& v1, const EvtVector3R& v2 )
 
 inline double EvtVector3R::get( int i ) const
 {
-    return v[i];
+    return m_v[i];
 }
 
 inline void EvtVector3R::set( int i, double d )
 {
-    v[i] = d;
+    m_v[i] = d;
 }
 
 inline void EvtVector3R::set( double x, double y, double z )
 {
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
+    m_v[0] = x;
+    m_v[1] = y;
+    m_v[2] = z;
 }
 
 #endif

@@ -30,19 +30,19 @@ using std::ostream;
 
 EvtVector4C::EvtVector4C()
 {
-    v[0] = EvtComplex( 0.0 );
-    v[1] = EvtComplex( 0.0 );
-    v[2] = EvtComplex( 0.0 );
-    v[3] = EvtComplex( 0.0 );
+    m_v[0] = EvtComplex( 0.0 );
+    m_v[1] = EvtComplex( 0.0 );
+    m_v[2] = EvtComplex( 0.0 );
+    m_v[3] = EvtComplex( 0.0 );
 }
 
 EvtVector4C::EvtVector4C( const EvtComplex& e0, const EvtComplex& e1,
                           const EvtComplex& e2, const EvtComplex& e3 )
 {
-    v[0] = e0;
-    v[1] = e1;
-    v[2] = e2;
-    v[3] = e3;
+    m_v[0] = e0;
+    m_v[1] = e1;
+    m_v[2] = e2;
+    m_v[3] = e3;
 }
 
 EvtVector4C rotateEuler( const EvtVector4C& rs, double alpha, double beta,
@@ -110,18 +110,18 @@ void EvtVector4C::applyBoostTo( const EvtVector3R& boost )
     double gby = gamma * by;
     double gbz = gamma * bz;
 
-    EvtComplex e2 = v[0];
-    EvtComplex px2 = v[1];
-    EvtComplex py2 = v[2];
-    EvtComplex pz2 = v[3];
+    EvtComplex e2 = m_v[0];
+    EvtComplex px2 = m_v[1];
+    EvtComplex py2 = m_v[2];
+    EvtComplex pz2 = m_v[3];
 
-    v[0] = gamma * e2 + gbx * px2 + gby * py2 + gbz * pz2;
+    m_v[0] = gamma * e2 + gbx * px2 + gby * py2 + gbz * pz2;
 
-    v[1] = gbx * e2 + gb2 * bxx * px2 + px2 + gb2xy * py2 + gb2xz * pz2;
+    m_v[1] = gbx * e2 + gb2 * bxx * px2 + px2 + gb2xy * py2 + gb2xz * pz2;
 
-    v[2] = gby * e2 + gb2 * byy * py2 + py2 + gb2xy * px2 + gb2yz * pz2;
+    m_v[2] = gby * e2 + gb2 * byy * py2 + py2 + gb2xy * px2 + gb2yz * pz2;
 
-    v[3] = gbz * e2 + gb2 * bzz * pz2 + pz2 + gb2yz * py2 + gb2xz * px2;
+    m_v[3] = gbz * e2 + gb2 * bzz * pz2 + pz2 + gb2yz * py2 + gb2xz * px2;
 
     return;
 }
@@ -135,20 +135,21 @@ void EvtVector4C::applyRotateEuler( double phi, double theta, double ksi )
     double ct = cos( theta );
     double ck = cos( ksi );
 
-    EvtComplex x = ( ck * ct * cp - sk * sp ) * v[1] +
-                   ( -sk * ct * cp - ck * sp ) * v[2] + st * cp * v[3];
-    EvtComplex y = ( ck * ct * sp + sk * cp ) * v[1] +
-                   ( -sk * ct * sp + ck * cp ) * v[2] + st * sp * v[3];
-    EvtComplex z = -ck * st * v[1] + sk * st * v[2] + ct * v[3];
+    EvtComplex x = ( ck * ct * cp - sk * sp ) * m_v[1] +
+                   ( -sk * ct * cp - ck * sp ) * m_v[2] + st * cp * m_v[3];
+    EvtComplex y = ( ck * ct * sp + sk * cp ) * m_v[1] +
+                   ( -sk * ct * sp + ck * cp ) * m_v[2] + st * sp * m_v[3];
+    EvtComplex z = -ck * st * m_v[1] + sk * st * m_v[2] + ct * m_v[3];
 
-    v[1] = x;
-    v[2] = y;
-    v[3] = z;
+    m_v[1] = x;
+    m_v[2] = y;
+    m_v[3] = z;
 }
 
 ostream& operator<<( ostream& s, const EvtVector4C& v )
 {
-    s << "(" << v.v[0] << "," << v.v[1] << "," << v.v[2] << "," << v.v[3] << ")";
+    s << "(" << v.m_v[0] << "," << v.m_v[1] << "," << v.m_v[2] << ","
+      << v.m_v[3] << ")";
 
     return s;
 }

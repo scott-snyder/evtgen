@@ -586,8 +586,6 @@ void EvtSLBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
 
         const double form_fact[8] = { f1, f2, f3, f4, g1, g2, g3, g4 };
 
-        EvtId l_num = parent->getDaug( 1 )->getId();
-
         EvtVector4C b11, b12, b21, b22, b13, b23, b14, b24, l1, l2;
 
         //  Lepton Current

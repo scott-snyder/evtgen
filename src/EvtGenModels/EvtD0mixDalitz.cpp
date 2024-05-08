@@ -31,21 +31,22 @@
 #include <cmath>    // for std::fabs
 
 // Initialize the static variables.
-const EvtSpinType::spintype& EvtD0mixDalitz::_SCALAR = EvtSpinType::SCALAR;
-const EvtSpinType::spintype& EvtD0mixDalitz::_VECTOR = EvtSpinType::VECTOR;
-const EvtSpinType::spintype& EvtD0mixDalitz::_TENSOR = EvtSpinType::TENSOR;
+const EvtSpinType::spintype& EvtD0mixDalitz::m_SCALAR = EvtSpinType::SCALAR;
+const EvtSpinType::spintype& EvtD0mixDalitz::m_VECTOR = EvtSpinType::VECTOR;
+const EvtSpinType::spintype& EvtD0mixDalitz::m_TENSOR = EvtSpinType::TENSOR;
 
-const EvtDalitzReso::CouplingType& EvtD0mixDalitz::_EtaPic = EvtDalitzReso::EtaPic;
-const EvtDalitzReso::CouplingType& EvtD0mixDalitz::_PicPicKK =
+const EvtDalitzReso::CouplingType& EvtD0mixDalitz::m_EtaPic = EvtDalitzReso::EtaPic;
+const EvtDalitzReso::CouplingType& EvtD0mixDalitz::m_PicPicKK =
     EvtDalitzReso::PicPicKK;
 
-const EvtDalitzReso::NumType& EvtD0mixDalitz::_RBW = EvtDalitzReso::RBW_CLEO_ZEMACH;
-const EvtDalitzReso::NumType& EvtD0mixDalitz::_GS = EvtDalitzReso::GS_CLEO_ZEMACH;
-const EvtDalitzReso::NumType& EvtD0mixDalitz::_KMAT = EvtDalitzReso::K_MATRIX;
+const EvtDalitzReso::NumType& EvtD0mixDalitz::m_RBW =
+    EvtDalitzReso::RBW_CLEO_ZEMACH;
+const EvtDalitzReso::NumType& EvtD0mixDalitz::m_GS = EvtDalitzReso::GS_CLEO_ZEMACH;
+const EvtDalitzReso::NumType& EvtD0mixDalitz::m_KMAT = EvtDalitzReso::K_MATRIX;
 
-const EvtCyclic3::Pair& EvtD0mixDalitz::_AB = EvtCyclic3::AB;
-const EvtCyclic3::Pair& EvtD0mixDalitz::_AC = EvtCyclic3::AC;
-const EvtCyclic3::Pair& EvtD0mixDalitz::_BC = EvtCyclic3::BC;
+const EvtCyclic3::Pair& EvtD0mixDalitz::m_AB = EvtCyclic3::AB;
+const EvtCyclic3::Pair& EvtD0mixDalitz::m_AC = EvtCyclic3::AC;
+const EvtCyclic3::Pair& EvtD0mixDalitz::m_BC = EvtCyclic3::BC;
 
 void EvtD0mixDalitz::init()
 {
@@ -54,17 +55,17 @@ void EvtD0mixDalitz::init()
 
     if ( getNArg() ) {
         if ( getNArg() == 2 ) {
-            _x = getArg( 0 );
-            _y = getArg( 1 );
+            m_x = getArg( 0 );
+            m_y = getArg( 1 );
         } else if ( getNArg() == 4 ) {
-            _x = getArg( 0 );
-            _y = getArg( 1 );
-            _qp = EvtComplex( getArg( 2 ), getArg( 3 ) );
+            m_x = getArg( 0 );
+            m_y = getArg( 1 );
+            m_qp = EvtComplex( getArg( 2 ), getArg( 3 ) );
         } else if ( getNArg() == 5 ) {
-            _x = getArg( 0 );
-            _y = getArg( 1 );
-            _qp = EvtComplex( getArg( 2 ), getArg( 3 ) );
-            _isRBWmodel = !getArg(
+            m_x = getArg( 0 );
+            m_y = getArg( 1 );
+            m_qp = EvtComplex( getArg( 2 ), getArg( 3 ) );
+            m_isRBWmodel = !getArg(
                 4 );    // RBW by default. If arg4 is set, do K-matrix.
         } else {
             EvtGenReport( EVTGEN_ERROR, "EvtD0mixDalitz" )
@@ -76,10 +77,10 @@ void EvtD0mixDalitz::init()
         }
     }
 
-    checkSpinParent( _SCALAR );
-    checkSpinDaughter( 0, _SCALAR );
-    checkSpinDaughter( 1, _SCALAR );
-    checkSpinDaughter( 2, _SCALAR );
+    checkSpinParent( m_SCALAR );
+    checkSpinDaughter( 0, m_SCALAR );
+    checkSpinDaughter( 1, m_SCALAR );
+    checkSpinDaughter( 2, m_SCALAR );
 
     readPDGValues();
 
@@ -90,53 +91,53 @@ void EvtD0mixDalitz::init()
     for ( int index = 0; index < 3; index++ )
         dau[index] = getDaug( index );
 
-    if ( parId == _D0 )    // Look for K0bar h+ h-. The order must be K[0SL] h+ h-
+    if ( parId == m_D0 )    // Look for K0bar h+ h-. The order must be K[0SL] h+ h-
         for ( int index = 0; index < 3; index++ )
-            if ( ( dau[index] == _K0B ) || ( dau[index] == _KS ) ||
-                 ( dau[index] == _KL ) )
-                _d1 = index;
-            else if ( ( dau[index] == _PIP ) || ( dau[index] == _KP ) )
-                _d2 = index;
-            else if ( ( dau[index] == _PIM ) || ( dau[index] == _KM ) )
-                _d3 = index;
+            if ( ( dau[index] == m_K0B ) || ( dau[index] == m_KS ) ||
+                 ( dau[index] == m_KL ) )
+                m_d1 = index;
+            else if ( ( dau[index] == m_PIP ) || ( dau[index] == m_KP ) )
+                m_d2 = index;
+            else if ( ( dau[index] == m_PIM ) || ( dau[index] == m_KM ) )
+                m_d3 = index;
             else
                 reportInvalidAndExit();
-    else if ( parId == _D0B )    // Look for K0 h+ h-. The order must be K[0SL] h- h+
+    else if ( parId == m_D0B )    // Look for K0 h+ h-. The order must be K[0SL] h- h+
         for ( int index = 0; index < 3; index++ )
-            if ( ( dau[index] == _K0 ) || ( dau[index] == _KS ) ||
-                 ( dau[index] == _KL ) )
-                _d1 = index;
-            else if ( ( dau[index] == _PIM ) || ( dau[index] == _KM ) )
-                _d2 = index;
-            else if ( ( dau[index] == _PIP ) || ( dau[index] == _KP ) )
-                _d3 = index;
+            if ( ( dau[index] == m_K0 ) || ( dau[index] == m_KS ) ||
+                 ( dau[index] == m_KL ) )
+                m_d1 = index;
+            else if ( ( dau[index] == m_PIM ) || ( dau[index] == m_KM ) )
+                m_d2 = index;
+            else if ( ( dau[index] == m_PIP ) || ( dau[index] == m_KP ) )
+                m_d3 = index;
             else
                 reportInvalidAndExit();
     else
         reportInvalidAndExit();
 
     // If the D meson is a D0bar, the expressions should use p/q instead of q/p.
-    if ( parId == _D0B )
-        _qp = 1.0 / _qp;
+    if ( parId == m_D0B )
+        m_qp = 1.0 / m_qp;
 
     // At this point, if parId is D0bar, the amplitude is the D0bar amplitude, the conjugated amplitude
-    //    is the amplitude of the D0 decay, and _qp means p/q, so it is like changing the meaning of
+    //    is the amplitude of the D0 decay, and m_qp means p/q, so it is like changing the meaning of
     //    A <-> Abar, and p <-> q. It is just a trick so after this point the code for D0bar can be the
     //    same as the code for D0.
 
     // Check if we're dealing with Ks pi pi or with Ks K K.
-    _isKsPiPi = false;
-    if ( dau[_d2] == _PIP || dau[_d2] == _PIM )
-        _isKsPiPi = true;
+    m_isKsPiPi = false;
+    if ( dau[m_d2] == m_PIP || dau[m_d2] == m_PIM )
+        m_isKsPiPi = true;
 }
 
 void EvtD0mixDalitz::decay( EvtParticle* part )
 {
     // Same structure for all of these decays.
     part->initializePhaseSpace( getNDaug(), getDaugs() );
-    EvtVector4R pA = part->getDaug( _d1 )->getP4();
-    EvtVector4R pB = part->getDaug( _d2 )->getP4();
-    EvtVector4R pC = part->getDaug( _d3 )->getP4();
+    EvtVector4R pA = part->getDaug( m_d1 )->getP4();
+    EvtVector4R pB = part->getDaug( m_d2 )->getP4();
+    EvtVector4R pC = part->getDaug( m_d3 )->getP4();
 
     // Squared invariant masses.
     double m2AB = ( pA + pB ).mass2();
@@ -147,15 +148,15 @@ void EvtD0mixDalitz::decay( EvtParticle* part )
     EvtComplex ampDalitz;
     EvtComplex ampAntiDalitz;
 
-    if ( _isKsPiPi ) {    // For Ks pi pi
-        EvtDalitzPoint point( _mKs, _mPi, _mPi, m2AB, m2BC, m2AC );
-        EvtDalitzPoint antiPoint( _mKs, _mPi, _mPi, m2AC, m2BC, m2AB );
+    if ( m_isKsPiPi ) {    // For Ks pi pi
+        EvtDalitzPoint point( m_mKs, m_mPi, m_mPi, m2AB, m2BC, m2AC );
+        EvtDalitzPoint antiPoint( m_mKs, m_mPi, m_mPi, m2AC, m2BC, m2AB );
 
         ampDalitz = dalitzKsPiPi( point );
         ampAntiDalitz = dalitzKsPiPi( antiPoint );
     } else {    // For Ks K K
-        EvtDalitzPoint point( _mKs, _mK, _mK, m2AB, m2BC, m2AC );
-        EvtDalitzPoint antiPoint( _mKs, _mK, _mK, m2AC, m2BC, m2AB );
+        EvtDalitzPoint point( m_mKs, m_mK, m_mK, m2AB, m2BC, m2AC );
+        EvtDalitzPoint antiPoint( m_mKs, m_mK, m_mK, m2AC, m2BC, m2AB );
 
         ampDalitz = dalitzKsKK( point );
         ampAntiDalitz = dalitzKsKK( antiPoint );
@@ -164,15 +165,15 @@ void EvtD0mixDalitz::decay( EvtParticle* part )
     // Assume there's no direct CP violation.
     EvtComplex barAOverA = ampAntiDalitz / ampDalitz;
 
-    // CP violation in the interference. _qp implements CP violation in the mixing.
-    EvtComplex chi = _qp * barAOverA;
+    // CP violation in the interference. m_qp implements CP violation in the mixing.
+    EvtComplex chi = m_qp * barAOverA;
 
     // Generate a negative exponential life time. p( gt ) = ( 1 - y ) * e^{ - ( 1 - y ) gt }
-    double gt = -log( EvtRandom::Flat() ) / ( 1.0 - std::fabs( _y ) );
-    part->setLifetime( gt / _gamma );
+    double gt = -log( EvtRandom::Flat() ) / ( 1.0 - std::fabs( m_y ) );
+    part->setLifetime( gt / m_gamma );
 
     // Compute time dependent amplitude.
-    EvtComplex amp = 0.5 * ampDalitz * exp( -std::fabs( _y ) * gt / 2.0 ) *
+    EvtComplex amp = 0.5 * ampDalitz * exp( -std::fabs( m_y ) * gt / 2.0 ) *
                      ( ( 1.0 + chi ) * h1( gt ) + ( 1.0 - chi ) * h2( gt ) );
 
     vertex( amp );
@@ -183,64 +184,66 @@ void EvtD0mixDalitz::decay( EvtParticle* part )
 void EvtD0mixDalitz::readPDGValues()
 {
     // Define the EvtIds.
-    _D0 = EvtPDL::getId( "D0" );
-    _D0B = EvtPDL::getId( "anti-D0" );
-    _KM = EvtPDL::getId( "K-" );
-    _KP = EvtPDL::getId( "K+" );
-    _K0 = EvtPDL::getId( "K0" );
-    _K0B = EvtPDL::getId( "anti-K0" );
-    _KL = EvtPDL::getId( "K_L0" );
-    _KS = EvtPDL::getId( "K_S0" );
-    _PIM = EvtPDL::getId( "pi-" );
-    _PIP = EvtPDL::getId( "pi+" );
+    m_D0 = EvtPDL::getId( "D0" );
+    m_D0B = EvtPDL::getId( "anti-D0" );
+    m_KM = EvtPDL::getId( "K-" );
+    m_KP = EvtPDL::getId( "K+" );
+    m_K0 = EvtPDL::getId( "K0" );
+    m_K0B = EvtPDL::getId( "anti-K0" );
+    m_KL = EvtPDL::getId( "K_L0" );
+    m_KS = EvtPDL::getId( "K_S0" );
+    m_PIM = EvtPDL::getId( "pi-" );
+    m_PIP = EvtPDL::getId( "pi+" );
 
     // Read the relevant masses.
-    _mD0 = EvtPDL::getMass( _D0 );
-    _mKs = EvtPDL::getMass( _KS );
-    _mPi = EvtPDL::getMass( _PIP );
-    _mK = EvtPDL::getMass( _KP );
+    m_mD0 = EvtPDL::getMass( m_D0 );
+    m_mKs = EvtPDL::getMass( m_KS );
+    m_mPi = EvtPDL::getMass( m_PIP );
+    m_mK = EvtPDL::getMass( m_KP );
 
     // Compute the decay rate from the parameter in the evt.pdl file.
-    _ctau = EvtPDL::getctau( EvtPDL::getId( "D0" ) );
+    m_ctau = EvtPDL::getctau( EvtPDL::getId( "D0" ) );
 
-    _gamma = 1.0 / _ctau;    // ALERT: Gamma is not 1 / tau.
+    m_gamma = 1.0 / m_ctau;    // ALERT: Gamma is not 1 / tau.
 }
 
 EvtComplex EvtD0mixDalitz::dalitzKsPiPi( const EvtDalitzPoint& point )
 {
-    static const EvtDalitzPlot plot( _mKs, _mPi, _mPi, _mD0 );
+    static const EvtDalitzPlot plot( m_mKs, m_mPi, m_mPi, m_mD0 );
 
     EvtComplex amp = 0.;
 
-    if ( _isRBWmodel ) {
+    if ( m_isRBWmodel ) {
         // This corresponds to relativistic Breit-Wigner distributions. Not K-matrix.
         // Defining resonances.
-        static EvtDalitzReso KStarm( plot, _BC, _AC, _VECTOR, 0.893606,
-                                     0.0463407, _RBW );
-        static EvtDalitzReso KStarp( plot, _BC, _AB, _VECTOR, 0.893606,
-                                     0.0463407, _RBW );
-        static EvtDalitzReso rho0( plot, _AC, _BC, _VECTOR, 0.7758, 0.1464, _GS );
-        static EvtDalitzReso omega( plot, _AC, _BC, _VECTOR, 0.78259, 0.00849,
-                                    _RBW );
-        static EvtDalitzReso f0_980( plot, _AC, _BC, _SCALAR, 0.975, 0.044, _RBW );
-        static EvtDalitzReso f0_1370( plot, _AC, _BC, _SCALAR, 1.434, 0.173,
-                                      _RBW );
-        static EvtDalitzReso f2_1270( plot, _AC, _BC, _TENSOR, 1.2754, 0.1851,
-                                      _RBW );
-        static EvtDalitzReso K0Starm_1430( plot, _BC, _AC, _SCALAR, 1.459,
-                                           0.175, _RBW );
-        static EvtDalitzReso K0Starp_1430( plot, _BC, _AB, _SCALAR, 1.459,
-                                           0.175, _RBW );
-        static EvtDalitzReso K2Starm_1430( plot, _BC, _AC, _TENSOR, 1.4256,
-                                           0.0985, _RBW );
-        static EvtDalitzReso K2Starp_1430( plot, _BC, _AB, _TENSOR, 1.4256,
-                                           0.0985, _RBW );
-        static EvtDalitzReso sigma( plot, _AC, _BC, _SCALAR, 0.527699, 0.511861,
-                                    _RBW );
-        static EvtDalitzReso sigma2( plot, _AC, _BC, _SCALAR, 1.03327,
-                                     0.0987890, _RBW );
-        static EvtDalitzReso KStarm_1680( plot, _BC, _AC, _VECTOR, 1.677, 0.205,
-                                          _RBW );
+        static EvtDalitzReso KStarm( plot, m_BC, m_AC, m_VECTOR, 0.893606,
+                                     0.0463407, m_RBW );
+        static EvtDalitzReso KStarp( plot, m_BC, m_AB, m_VECTOR, 0.893606,
+                                     0.0463407, m_RBW );
+        static EvtDalitzReso rho0( plot, m_AC, m_BC, m_VECTOR, 0.7758, 0.1464,
+                                   m_GS );
+        static EvtDalitzReso omega( plot, m_AC, m_BC, m_VECTOR, 0.78259,
+                                    0.00849, m_RBW );
+        static EvtDalitzReso f0_980( plot, m_AC, m_BC, m_SCALAR, 0.975, 0.044,
+                                     m_RBW );
+        static EvtDalitzReso f0_1370( plot, m_AC, m_BC, m_SCALAR, 1.434, 0.173,
+                                      m_RBW );
+        static EvtDalitzReso f2_1270( plot, m_AC, m_BC, m_TENSOR, 1.2754,
+                                      0.1851, m_RBW );
+        static EvtDalitzReso K0Starm_1430( plot, m_BC, m_AC, m_SCALAR, 1.459,
+                                           0.175, m_RBW );
+        static EvtDalitzReso K0Starp_1430( plot, m_BC, m_AB, m_SCALAR, 1.459,
+                                           0.175, m_RBW );
+        static EvtDalitzReso K2Starm_1430( plot, m_BC, m_AC, m_TENSOR, 1.4256,
+                                           0.0985, m_RBW );
+        static EvtDalitzReso K2Starp_1430( plot, m_BC, m_AB, m_TENSOR, 1.4256,
+                                           0.0985, m_RBW );
+        static EvtDalitzReso sigma( plot, m_AC, m_BC, m_SCALAR, 0.527699,
+                                    0.511861, m_RBW );
+        static EvtDalitzReso sigma2( plot, m_AC, m_BC, m_SCALAR, 1.03327,
+                                     0.0987890, m_RBW );
+        static EvtDalitzReso KStarm_1680( plot, m_BC, m_AC, m_VECTOR, 1.677,
+                                          0.205, m_RBW );
 
         // Adding terms to the amplitude with their corresponding amplitude and phase terms.
         amp += EvtComplex( 0.848984, 0.893618 );
@@ -261,42 +264,43 @@ EvtComplex EvtD0mixDalitz::dalitzKsPiPi( const EvtDalitzPoint& point )
     } else {
         // This corresponds to the complete model (RBW, GS, LASS and K-matrix).
         // Defining resonances.
-        static EvtDalitzReso KStarm( plot, _BC, _AC, _VECTOR, 0.893619,
-                                     0.0466508, _RBW );
-        static EvtDalitzReso KStarp( plot, _BC, _AB, _VECTOR, 0.893619,
-                                     0.0466508, _RBW );
-        static EvtDalitzReso rho0( plot, _AC, _BC, _VECTOR, 0.7758, 0.1464, _GS );
-        static EvtDalitzReso omega( plot, _AC, _BC, _VECTOR, 0.78259, 0.00849,
-                                    _RBW );
-        static EvtDalitzReso f2_1270( plot, _AC, _BC, _TENSOR, 1.2754, 0.1851,
-                                      _RBW );
-        static EvtDalitzReso K0Starm_1430( plot, _AC, 1.46312, 0.232393, 1.0746,
+        static EvtDalitzReso KStarm( plot, m_BC, m_AC, m_VECTOR, 0.893619,
+                                     0.0466508, m_RBW );
+        static EvtDalitzReso KStarp( plot, m_BC, m_AB, m_VECTOR, 0.893619,
+                                     0.0466508, m_RBW );
+        static EvtDalitzReso rho0( plot, m_AC, m_BC, m_VECTOR, 0.7758, 0.1464,
+                                   m_GS );
+        static EvtDalitzReso omega( plot, m_AC, m_BC, m_VECTOR, 0.78259,
+                                    0.00849, m_RBW );
+        static EvtDalitzReso f2_1270( plot, m_AC, m_BC, m_TENSOR, 1.2754,
+                                      0.1851, m_RBW );
+        static EvtDalitzReso K0Starm_1430( plot, m_AC, 1.46312, 0.232393, 1.0746,
                                            -1.83214, .803516, 2.32788, 1.0,
                                            -5.31306 );    // LASS
-        static EvtDalitzReso K0Starp_1430( plot, _AB, 1.46312, 0.232393, 1.0746,
+        static EvtDalitzReso K0Starp_1430( plot, m_AB, 1.46312, 0.232393, 1.0746,
                                            -1.83214, .803516, 2.32788, 1.0,
                                            -5.31306 );    // LASS
-        static EvtDalitzReso K2Starm_1430( plot, _BC, _AC, _TENSOR, 1.4256,
-                                           0.0985, _RBW );
-        static EvtDalitzReso K2Starp_1430( plot, _BC, _AB, _TENSOR, 1.4256,
-                                           0.0985, _RBW );
-        static EvtDalitzReso KStarm_1680( plot, _BC, _AC, _VECTOR, 1.677, 0.205,
-                                          _RBW );
+        static EvtDalitzReso K2Starm_1430( plot, m_BC, m_AC, m_TENSOR, 1.4256,
+                                           0.0985, m_RBW );
+        static EvtDalitzReso K2Starp_1430( plot, m_BC, m_AB, m_TENSOR, 1.4256,
+                                           0.0985, m_RBW );
+        static EvtDalitzReso KStarm_1680( plot, m_BC, m_AC, m_VECTOR, 1.677,
+                                          0.205, m_RBW );
 
         // Defining K-matrix.
         static EvtComplex fr12( 1.87981, -0.628378 );
         static EvtComplex fr13( 4.3242, 2.75019 );
         static EvtComplex fr14( 3.22336, 0.271048 );
         static EvtComplex fr15( 0.0, 0.0 );
-        static EvtDalitzReso Pole1( plot, _BC, "Pole1", _KMAT, fr12, fr13, fr14,
-                                    fr15, -0.0694725 );
-        static EvtDalitzReso Pole2( plot, _BC, "Pole2", _KMAT, fr12, fr13, fr14,
-                                    fr15, -0.0694725 );
-        static EvtDalitzReso Pole3( plot, _BC, "Pole3", _KMAT, fr12, fr13, fr14,
-                                    fr15, -0.0694725 );
-        static EvtDalitzReso Pole4( plot, _BC, "Pole4", _KMAT, fr12, fr13, fr14,
-                                    fr15, -0.0694725 );
-        static EvtDalitzReso kmatrix( plot, _BC, "f11prod", _KMAT, fr12, fr13,
+        static EvtDalitzReso Pole1( plot, m_BC, "Pole1", m_KMAT, fr12, fr13,
+                                    fr14, fr15, -0.0694725 );
+        static EvtDalitzReso Pole2( plot, m_BC, "Pole2", m_KMAT, fr12, fr13,
+                                    fr14, fr15, -0.0694725 );
+        static EvtDalitzReso Pole3( plot, m_BC, "Pole3", m_KMAT, fr12, fr13,
+                                    fr14, fr15, -0.0694725 );
+        static EvtDalitzReso Pole4( plot, m_BC, "Pole4", m_KMAT, fr12, fr13,
+                                    fr14, fr15, -0.0694725 );
+        static EvtDalitzReso kmatrix( plot, m_BC, "f11prod", m_KMAT, fr12, fr13,
                                       fr14, fr15, -0.0694725 );
 
         // Adding terms to the amplitude with their corresponding amplitude and phase terms.
@@ -325,23 +329,29 @@ EvtComplex EvtD0mixDalitz::dalitzKsPiPi( const EvtDalitzPoint& point )
 
 EvtComplex EvtD0mixDalitz::dalitzKsKK( const EvtDalitzPoint& point )
 {
-    static const EvtDalitzPlot plot( _mKs, _mK, _mK, _mD0 );
+    static const EvtDalitzPlot plot( m_mKs, m_mK, m_mK, m_mD0 );
 
     // Defining resonances.
-    static EvtDalitzReso a00_980( plot, _AC, _BC, _SCALAR, 0.999, _RBW,
-                                  0.550173, 0.324, _EtaPic );
-    static EvtDalitzReso phi( plot, _AC, _BC, _VECTOR, 1.01943, 0.00459319, _RBW );
-    static EvtDalitzReso a0p_980( plot, _AC, _AB, _SCALAR, 0.999, _RBW,
-                                  0.550173, 0.324, _EtaPic );
-    static EvtDalitzReso f0_1370( plot, _AC, _BC, _SCALAR, 1.350, 0.265, _RBW );
-    static EvtDalitzReso a0m_980( plot, _AB, _AC, _SCALAR, 0.999, _RBW,
-                                  0.550173, 0.324, _EtaPic );
-    static EvtDalitzReso f0_980( plot, _AC, _BC, _SCALAR, 0.965, _RBW, 0.695,
-                                 0.165, _PicPicKK );
-    static EvtDalitzReso f2_1270( plot, _AC, _BC, _TENSOR, 1.2754, 0.1851, _RBW );
-    static EvtDalitzReso a00_1450( plot, _AC, _BC, _SCALAR, 1.474, 0.265, _RBW );
-    static EvtDalitzReso a0p_1450( plot, _AC, _AB, _SCALAR, 1.474, 0.265, _RBW );
-    static EvtDalitzReso a0m_1450( plot, _AB, _AC, _SCALAR, 1.474, 0.265, _RBW );
+    static EvtDalitzReso a00_980( plot, m_AC, m_BC, m_SCALAR, 0.999, m_RBW,
+                                  0.550173, 0.324, m_EtaPic );
+    static EvtDalitzReso phi( plot, m_AC, m_BC, m_VECTOR, 1.01943, 0.00459319,
+                              m_RBW );
+    static EvtDalitzReso a0p_980( plot, m_AC, m_AB, m_SCALAR, 0.999, m_RBW,
+                                  0.550173, 0.324, m_EtaPic );
+    static EvtDalitzReso f0_1370( plot, m_AC, m_BC, m_SCALAR, 1.350, 0.265,
+                                  m_RBW );
+    static EvtDalitzReso a0m_980( plot, m_AB, m_AC, m_SCALAR, 0.999, m_RBW,
+                                  0.550173, 0.324, m_EtaPic );
+    static EvtDalitzReso f0_980( plot, m_AC, m_BC, m_SCALAR, 0.965, m_RBW,
+                                 0.695, 0.165, m_PicPicKK );
+    static EvtDalitzReso f2_1270( plot, m_AC, m_BC, m_TENSOR, 1.2754, 0.1851,
+                                  m_RBW );
+    static EvtDalitzReso a00_1450( plot, m_AC, m_BC, m_SCALAR, 1.474, 0.265,
+                                   m_RBW );
+    static EvtDalitzReso a0p_1450( plot, m_AC, m_AB, m_SCALAR, 1.474, 0.265,
+                                   m_RBW );
+    static EvtDalitzReso a0m_1450( plot, m_AB, m_AC, m_SCALAR, 1.474, 0.265,
+                                   m_RBW );
 
     // Adding terms to the amplitude with their corresponding amplitude and phase terms.
     EvtComplex amp( 0., 0. );    // Phase space amplitude.
@@ -365,10 +375,10 @@ EvtComplex EvtD0mixDalitz::dalitzKsKK( const EvtDalitzPoint& point )
 // e{1,2}( gt ) = exp( -gt / 2 ) * h{1,2}( gt ).
 EvtComplex EvtD0mixDalitz::h1( const double& gt ) const
 {
-    return exp( -EvtComplex( _y, _x ) * gt / 2. );
+    return exp( -EvtComplex( m_y, m_x ) * gt / 2. );
 }
 
 EvtComplex EvtD0mixDalitz::h2( const double& gt ) const
 {
-    return exp( EvtComplex( _y, _x ) * gt / 2. );
+    return exp( EvtComplex( m_y, m_x ) * gt / 2. );
 }

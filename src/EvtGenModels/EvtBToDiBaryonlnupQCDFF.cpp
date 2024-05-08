@@ -23,40 +23,40 @@
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtPatches.hh"
 
-EvtBToDiBaryonlnupQCDFF::EvtBToDiBaryonlnupQCDFF() : DPars(), nDPars( 0 )
+EvtBToDiBaryonlnupQCDFF::EvtBToDiBaryonlnupQCDFF() : m_DPars(), m_nDPars( 0 )
 {
 }
 
 EvtBToDiBaryonlnupQCDFF::EvtBToDiBaryonlnupQCDFF( std::vector<double>& DParameters ) :
-    DPars( DParameters ), nDPars( DParameters.size() )
+    m_DPars( DParameters ), m_nDPars( DParameters.size() )
 {
 }
 
 void EvtBToDiBaryonlnupQCDFF::getFF( EvtParticle*, double dibaryonMass,
                                      EvtBToDiBaryonlnupQCDFF::FormFactors& FF ) const
 {
-    if ( nDPars == 6 && dibaryonMass > 0.0 ) {
+    if ( m_nDPars == 6 && dibaryonMass > 0.0 ) {
         // 5/3*[1/M^2]^3
         double t = 5.0 / ( 3.0 * pow( dibaryonMass, 6.0 ) );
 
-        double Dp = DPars[0];
-        double Dpb = DPars[1];
-        double D2 = DPars[2];
-        double D3 = DPars[3];
-        double D4 = DPars[4];
-        double D5 = DPars[5];
+        double Dp = m_DPars[0];
+        double Dpb = m_DPars[1];
+        double D2 = m_DPars[2];
+        double D3 = m_DPars[3];
+        double D4 = m_DPars[4];
+        double D5 = m_DPars[5];
 
-        FF.F1 = ( Dp + 0.2 * Dpb ) * t;
-        FF.F2 = -D2 * t;
-        FF.F3 = -D3 * t;
-        FF.F4 = -D4 * t;
-        FF.F5 = -D5 * t;
+        FF.m_F1 = ( Dp + 0.2 * Dpb ) * t;
+        FF.m_F2 = -D2 * t;
+        FF.m_F3 = -D3 * t;
+        FF.m_F4 = -D4 * t;
+        FF.m_F5 = -D5 * t;
 
-        FF.G1 = ( Dp - 0.2 * Dpb ) * t;
-        FF.G2 = -FF.F2;
-        FF.G3 = -FF.F3;
-        FF.G4 = -FF.F4;
-        FF.G5 = -FF.F5;
+        FF.m_G1 = ( Dp - 0.2 * Dpb ) * t;
+        FF.m_G2 = -FF.m_F2;
+        FF.m_G3 = -FF.m_F3;
+        FF.m_G4 = -FF.m_F4;
+        FF.m_G5 = -FF.m_F5;
     }
 }
 

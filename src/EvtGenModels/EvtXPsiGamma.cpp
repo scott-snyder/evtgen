@@ -185,7 +185,7 @@ void EvtXPsiGamma::decay( EvtParticle* parent )
                               parent->getDaug( 1 )->mass() ) );
     }
 
-    calcAmp( *parent, _amp2 );
+    calcAmp( *parent, m_amp2 );
 }
 
 void EvtXPsiGamma::calcAmp( EvtParticle& parent, EvtAmp& amp )

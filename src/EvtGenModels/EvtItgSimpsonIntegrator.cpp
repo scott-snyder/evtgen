@@ -46,8 +46,8 @@ using std::endl;
 EvtItgSimpsonIntegrator::EvtItgSimpsonIntegrator(
     const EvtItgAbsFunction& theFunction, double precision, int maxLoop ) :
     EvtItgAbsIntegrator( theFunction ),
-    _precision( precision ),
-    _maxLoop( maxLoop )
+    m_precision( precision ),
+    m_maxLoop( maxLoop )
 {
 }
 
@@ -67,17 +67,17 @@ double EvtItgSimpsonIntegrator::evaluateIt( double lower, double higher ) const
     st = trapezoid( lower, higher, j, result );
     s = ( 4.0 * st - ost ) / 3.0;
 
-    if ( fabs( s - olds ) < _precision * fabs( olds ) ||
+    if ( fabs( s - olds ) < m_precision * fabs( olds ) ||
          ( s == 0.0 && olds == 0.0 ) )
         return s;
 
     ost = st;
 
-    for ( j = 5; j < _maxLoop; j++ ) {
+    for ( j = 5; j < m_maxLoop; j++ ) {
         st = trapezoid( lower, higher, j, result );
         s = ( 4.0 * st - ost ) / 3.0;
 
-        if ( fabs( s - olds ) < _precision * fabs( olds ) ||
+        if ( fabs( s - olds ) < m_precision * fabs( olds ) ||
              ( s == 0.0 && olds == 0.0 ) )
             return s;
         olds = s;
@@ -86,7 +86,7 @@ double EvtItgSimpsonIntegrator::evaluateIt( double lower, double higher ) const
 
     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
         << "Severe error in EvtItgSimpsonIntegrator.  Failed to converge after loop with 2**"
-        << _maxLoop << " calls to the integrand in." << endl;
+        << m_maxLoop << " calls to the integrand in." << endl;
 
     return 0.0;
 }

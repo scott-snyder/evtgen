@@ -39,9 +39,9 @@ class EvtTwoBodyKine {
 
     // Accessors
 
-    inline double mA() const { return _mA; }
-    inline double mB() const { return _mB; }
-    inline double mAB() const { return _mAB; }
+    inline double mA() const { return m_mA; }
+    inline double mB() const { return m_mB; }
+    inline double mAB() const { return m_mAB; }
     double m( Index i ) const;
 
     // Momentum of the other two particles in the
@@ -56,9 +56,9 @@ class EvtTwoBodyKine {
     void print( std::ostream& os ) const;
 
   private:
-    double _mA;
-    double _mB;
-    double _mAB;
+    double m_mA;
+    double m_mB;
+    double m_mAB;
 };
 
 std::ostream& operator<<( std::ostream& os, const EvtTwoBodyKine& p );

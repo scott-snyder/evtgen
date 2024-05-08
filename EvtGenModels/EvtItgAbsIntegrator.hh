@@ -42,10 +42,10 @@ class EvtItgAbsIntegrator {
 
     virtual double evaluateIt( double lower, double higher ) const = 0;
 
-    double myFunction( double x ) const { return _myFunction( x ); }
+    double myFunction( double x ) const { return m_myFunction( x ); }
 
   private:
-    const EvtItgAbsFunction& _myFunction;
+    const EvtItgAbsFunction& m_myFunction;
 
     void boundsCheck( double&, double& ) const;
 

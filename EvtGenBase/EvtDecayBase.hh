@@ -58,28 +58,28 @@ class EvtDecayBase {
 
     virtual bool matchingDecay( const EvtDecayBase& other ) const;
 
-    EvtId getParentId() const { return _parent; }
-    double getBranchingFraction() const { return _brfr; }
-    void disableCheckQ() { _chkCharge = false; };
+    EvtId getParentId() const { return m_parent; }
+    double getBranchingFraction() const { return m_brfr; }
+    void disableCheckQ() { m_chkCharge = false; };
     void checkQ();
-    int getNDaug() const { return _ndaug; }
-    EvtId* getDaugs() { return _daug.data(); }
-    EvtId getDaug( int i ) const { return _daug[i]; }
-    int getNArg() const { return _narg; }
-    bool getFSR() const { return _fsr; }
-    void setFSR() { _fsr = true; }
-    void setVerbose() { _verbose = true; }
-    void setSummary() { _summary = true; }
+    int getNDaug() const { return m_ndaug; }
+    EvtId* getDaugs() { return m_daug.data(); }
+    EvtId getDaug( int i ) const { return m_daug[i]; }
+    int getNArg() const { return m_narg; }
+    bool getFSR() const { return m_fsr; }
+    void setFSR() { m_fsr = true; }
+    void setVerbose() { m_verbose = true; }
+    void setSummary() { m_summary = true; }
     double* getArgs();
-    std::string* getArgsStr() { return _args.data(); }
+    std::string* getArgsStr() { return m_args.data(); }
     double getArg( unsigned int j );
-    double getStoredArg( int j ) const { return _storedArgs.at( j ); }
-    double getNStoredArg() const { return _storedArgs.size(); }
-    std::string getArgStr( int j ) const { return _args[j]; }
-    std::string getModelName() const { return _modelname; }
-    int getDSum() const { return _dsum; }
-    bool summary() const { return _summary; }
-    bool verbose() const { return _verbose; }
+    double getStoredArg( int j ) const { return m_storedArgs.at( j ); }
+    double getNStoredArg() const { return m_storedArgs.size(); }
+    std::string getArgStr( int j ) const { return m_args[j]; }
+    std::string getModelName() const { return m_modelname; }
+    int getDSum() const { return m_dsum; }
+    bool summary() const { return m_summary; }
+    bool verbose() const { return m_verbose; }
 
     void saveDecayInfo( EvtId ipar, int ndaug, EvtId* daug, int narg,
                         std::vector<std::string>& args, std::string name,
@@ -105,41 +105,42 @@ class EvtDecayBase {
 
     // lange - some models can take more daughters
     // than they really have to fool aliases (VSSBMIX for example)
-    virtual int nRealDaughters() { return _ndaug; }
+    virtual int nRealDaughters() { return m_ndaug; }
 
   protected:
-    bool _daugsDecayedByParentModel;
-    bool daugsDecayedByParentModel() { return _daugsDecayedByParentModel; }
+    bool m_daugsDecayedByParentModel;
+    bool daugsDecayedByParentModel() { return m_daugsDecayedByParentModel; }
 
   private:
-    std::vector<double> _storedArgs;
-    std::vector<EvtId> _daug;
-    std::vector<double> _argsD;
-    std::vector<std::string> _args;
+    std::vector<double> m_storedArgs;
+    std::vector<EvtId> m_daug;
+    std::vector<double> m_argsD;
+    std::vector<std::string> m_args;
 
-    std::string _modelname = "**********";
+    std::string m_modelname = "**********";
 
-    EvtId _parent = EvtId( -1, -1 );
-    int _ndaug = 0;
-    int _narg = 0;
-    double _brfr = 0;
-    int _dsum = 0;
+    EvtId m_parent = EvtId( -1, -1 );
+    int m_ndaug = 0;
+    int m_narg = 0;
+    double m_brfr = 0;
+    int m_dsum = 0;
 
-    bool _fsr = false;
-    bool _summary = false;
-    bool _verbose = false;
+    bool m_fsr = false;
+    bool m_summary = false;
+    bool m_verbose = false;
 
     // The default is that the user module does _not_ set any probmax.
-    bool defaultprobmax = true;
-    int ntimes_prob = 0;
-    double probmax = 0.0;
+    bool m_defaultprobmax = true;
+    int m_ntimes_prob = 0;
+    double m_probmax = 0.0;
 
+    //Should charge conservation be checked when model is created?
     //Default is to check that charge is conserved
-    bool _chkCharge = true;
+    bool m_chkCharge = true;
 
     //These are used for gathering statistics.
-    double sum_prob = 0.0;
-    double max_prob = 0.0;
+    double m_sum_prob = 0.0;
+    double m_max_prob = 0.0;
 };
 
 #endif

@@ -36,24 +36,24 @@ class EvtResonance final {
 
     //accessors
     //return 4-momenta of the particles involved
-    inline const EvtVector4R& p4_p() { return _p4_p; }
-    inline const EvtVector4R& p4_d1() { return _p4_d1; }
-    inline const EvtVector4R& p4_d2() { return _p4_d2; }
+    inline const EvtVector4R& p4_p() { return m_p4_p; }
+    inline const EvtVector4R& p4_d1() { return m_p4_d1; }
+    inline const EvtVector4R& p4_d2() { return m_p4_d2; }
 
     //return amplitude
-    inline double amplitude() { return _ampl; }
+    inline double amplitude() { return m_ampl; }
 
     //return theta
-    inline double theta() { return _theta; }
+    inline double theta() { return m_theta; }
 
     //return gamma
-    inline double gamma() { return _gamma; }
+    inline double gamma() { return m_gamma; }
 
     //return bwm
-    inline double bwm() { return _bwm; }
+    inline double bwm() { return m_bwm; }
 
     //return spin
-    inline int spin() { return _spin; }
+    inline int spin() { return m_spin; }
 
     //calculate amplitude for this resonance
     EvtComplex resAmpl();
@@ -62,9 +62,9 @@ class EvtResonance final {
     EvtComplex relBrWig( int i );
 
   private:
-    EvtVector4R _p4_p, _p4_d1, _p4_d2;
-    double _ampl, _theta, _gamma, _bwm;
-    int _spin;
+    EvtVector4R m_p4_p, m_p4_d1, m_p4_d2;
+    double m_ampl, m_theta, m_gamma, m_bwm;
+    int m_spin;
 };
 
 #endif

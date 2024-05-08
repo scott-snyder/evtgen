@@ -65,7 +65,7 @@ class EvtVector4R {
     double magr3( const EvtVector4R& p1 ) const;
 
   private:
-    double v[4];
+    double m_v[4];
 
     inline double Square( double x ) const { return x * x; }
 };
@@ -79,27 +79,27 @@ EvtVector4R boostTo( const EvtVector4R& rs, const EvtVector3R& boost,
 
 inline EvtVector4R& EvtVector4R::operator+=( const EvtVector4R& v2 )
 {
-    v[0] += v2.v[0];
-    v[1] += v2.v[1];
-    v[2] += v2.v[2];
-    v[3] += v2.v[3];
+    m_v[0] += v2.m_v[0];
+    m_v[1] += v2.m_v[1];
+    m_v[2] += v2.m_v[2];
+    m_v[3] += v2.m_v[3];
 
     return *this;
 }
 
 inline EvtVector4R& EvtVector4R::operator-=( const EvtVector4R& v2 )
 {
-    v[0] -= v2.v[0];
-    v[1] -= v2.v[1];
-    v[2] -= v2.v[2];
-    v[3] -= v2.v[3];
+    m_v[0] -= v2.m_v[0];
+    m_v[1] -= v2.m_v[1];
+    m_v[2] -= v2.m_v[2];
+    m_v[3] -= v2.m_v[3];
 
     return *this;
 }
 
 inline double EvtVector4R::mass2() const
 {
-    return v[0] * v[0] - v[1] * v[1] - v[2] * v[2] - v[3] * v[3];
+    return m_v[0] * m_v[0] - m_v[1] * m_v[1] - m_v[2] * m_v[2] - m_v[3] * m_v[3];
 }
 
 inline EvtVector4R operator*( double c, const EvtVector4R& v2 )
@@ -119,10 +119,10 @@ inline EvtVector4R operator/( const EvtVector4R& v2, double c )
 
 inline EvtVector4R& EvtVector4R::operator*=( double c )
 {
-    v[0] *= c;
-    v[1] *= c;
-    v[2] *= c;
-    v[3] *= c;
+    m_v[0] *= c;
+    m_v[1] *= c;
+    m_v[2] *= c;
+    m_v[3] *= c;
 
     return *this;
 }
@@ -130,23 +130,24 @@ inline EvtVector4R& EvtVector4R::operator*=( double c )
 inline EvtVector4R& EvtVector4R::operator/=( double c )
 {
     double cinv = 1.0 / c;
-    v[0] *= cinv;
-    v[1] *= cinv;
-    v[2] *= cinv;
-    v[3] *= cinv;
+    m_v[0] *= cinv;
+    m_v[1] *= cinv;
+    m_v[2] *= cinv;
+    m_v[3] *= cinv;
 
     return *this;
 }
 
 inline double operator*( const EvtVector4R& v1, const EvtVector4R& v2 )
 {
-    return v1.v[0] * v2.v[0] - v1.v[1] * v2.v[1] - v1.v[2] * v2.v[2] -
-           v1.v[3] * v2.v[3];
+    return v1.m_v[0] * v2.m_v[0] - v1.m_v[1] * v2.m_v[1] -
+           v1.m_v[2] * v2.m_v[2] - v1.m_v[3] * v2.m_v[3];
 }
 
 inline double EvtVector4R::cont( const EvtVector4R& v4 ) const
 {
-    return v[0] * v4.v[0] - v[1] * v4.v[1] - v[2] * v4.v[2] - v[3] * v4.v[3];
+    return m_v[0] * v4.m_v[0] - m_v[1] * v4.m_v[1] - m_v[2] * v4.m_v[2] -
+           m_v[3] * v4.m_v[3];
 }
 
 inline EvtVector4R operator-( const EvtVector4R& v1, const EvtVector4R& v2 )
@@ -161,20 +162,20 @@ inline EvtVector4R operator+( const EvtVector4R& v1, const EvtVector4R& v2 )
 
 inline double EvtVector4R::get( int i ) const
 {
-    return v[i];
+    return m_v[i];
 }
 
 inline void EvtVector4R::set( int i, double d )
 {
-    v[i] = d;
+    m_v[i] = d;
 }
 
 inline void EvtVector4R::set( double e, double p1, double p2, double p3 )
 {
-    v[0] = e;
-    v[1] = p1;
-    v[2] = p2;
-    v[3] = p3;
+    m_v[0] = e;
+    m_v[1] = p1;
+    m_v[2] = p2;
+    m_v[3] = p3;
 }
 
 #endif

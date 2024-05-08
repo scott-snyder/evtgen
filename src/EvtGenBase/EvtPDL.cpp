@@ -26,28 +26,25 @@
 #include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <ctype.h>
+#include <cstring>
 #include <fstream>
 #include <iostream>
-#include <stdlib.h>
-#include <string.h>
+
 using std::endl;
-using std::fstream;
-using std::ifstream;
 
 static int first = 1;
 
-unsigned int EvtPDL::_firstAlias;
-int EvtPDL::_nentries;
+unsigned int EvtPDL::m_firstAlias;
+int EvtPDL::m_nentries;
 
-std::map<std::string, int> EvtPDL::_particleNameLookup;
+std::map<std::string, int> EvtPDL::m_particleNameLookup;
 
 EvtPDL::EvtPDL()
 {
     if ( first != 0 ) {
         first = 0;
-        _nentries = 0;
-        _firstAlias = 999999;
+        m_nentries = 0;
+        m_firstAlias = 999999;
     }
 }
 
@@ -112,7 +109,7 @@ void EvtPDL::readPDT( std::istream& indec )
                 indec >> ctau;
                 indec >> lundkc;
 
-                i = EvtId( _nentries, _nentries );
+                i = EvtId( m_nentries, m_nentries );
 
                 EvtPartProp tmp;
 
@@ -154,8 +151,8 @@ void EvtPDL::readPDT( std::istream& indec )
                 tmp.setStdHep( stdhepid );
                 tmp.setLundKC( lundkc );
                 tmp.setName( pname );
-                if ( _particleNameLookup.find( std::string( pname ) ) !=
-                     _particleNameLookup.end() ) {
+                if ( m_particleNameLookup.find( std::string( pname ) ) !=
+                     m_particleNameLookup.end() ) {
                     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                         << "The particle name:" << pname
                         << " is already defined." << endl;
@@ -163,14 +160,14 @@ void EvtPDL::readPDT( std::istream& indec )
                         << "Will terminate execution.";
                     ::abort();
                 }
-                _particleNameLookup[std::string( pname )] = _nentries;
+                m_particleNameLookup[std::string( pname )] = m_nentries;
                 tmp.setctau( ctau );
                 tmp.setChg3( chg3 );
 
                 tmp.initLineShape( mass, pwidth, pmaxwidth );
 
                 partlist().push_back( tmp );
-                _nentries++;
+                m_nentries++;
             }
 
             // if find a set read information and discard it
@@ -255,8 +252,8 @@ EvtId EvtPDL::evtIdFromStdHep( int stdhep )
 
 void EvtPDL::alias( EvtId num, const std::string& newname )
 {
-    if ( _firstAlias < partlist().size() ) {
-        for ( size_t i = _firstAlias; i < partlist().size(); i-- ) {
+    if ( m_firstAlias < partlist().size() ) {
+        for ( size_t i = m_firstAlias; i < partlist().size(); i-- ) {
             if ( newname == partlist()[i].getName() ) {
                 EvtGenReport( EVTGEN_WARNING, "EvtGen" )
                     << "Redefining alias:" << newname.c_str()
@@ -265,20 +262,20 @@ void EvtPDL::alias( EvtId num, const std::string& newname )
             }
         }
     } else {
-        _firstAlias = partlist().size();
+        m_firstAlias = partlist().size();
     }
 
     partlist().push_back( partlist()[num.getId()] );
     int entry = partlist().size() - 1;
     partlist()[entry].setName( newname );
-    if ( _particleNameLookup.find( std::string( newname ) ) !=
-         _particleNameLookup.end() ) {
+    if ( m_particleNameLookup.find( std::string( newname ) ) !=
+         m_particleNameLookup.end() ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "The particle name:" << newname << " is already defined." << endl;
         EvtGenReport( EVTGEN_ERROR, "EvtGen" ) << "Will terminate execution.";
         ::abort();
     }
-    _particleNameLookup[std::string( newname )] = entry;
+    m_particleNameLookup[std::string( newname )] = entry;
     partlist()[entry].setId( EvtId( num.getId(), entry ) );
     //Lange - Dec7, 2003. Unset the charge conjugate.
     partlist()[entry].setIdChgConj( EvtId( -1, -1 ) );
@@ -286,9 +283,9 @@ void EvtPDL::alias( EvtId num, const std::string& newname )
 
 EvtId EvtPDL::getId( const std::string& name )
 {
-    std::map<std::string, int>::iterator it = _particleNameLookup.find(
+    std::map<std::string, int>::iterator it = m_particleNameLookup.find(
         std::string( name ) );
-    if ( it == _particleNameLookup.end() )
+    if ( it == m_particleNameLookup.end() )
         return EvtId( -1, -1 );
 
     return partlist()[it->second].getId();

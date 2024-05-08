@@ -37,13 +37,13 @@ extern "C" {
 using std::endl;
 
 EvtItgAbsIntegrator::EvtItgAbsIntegrator( const EvtItgAbsFunction& theFunction ) :
-    _myFunction( theFunction )
+    m_myFunction( theFunction )
 {
 }
 
 double EvtItgAbsIntegrator::normalisation() const
 {
-    return evaluateIt( _myFunction.lowerRange(), _myFunction.upperRange() );
+    return evaluateIt( m_myFunction.lowerRange(), m_myFunction.upperRange() );
 }
 
 double EvtItgAbsIntegrator::evaluate( double lower, double upper ) const
@@ -60,7 +60,7 @@ double EvtItgAbsIntegrator::trapezoid( double lower, double higher, int n,
 {
     if ( n == 1 )
         return 0.5 * ( higher - lower ) *
-               ( _myFunction( lower ) + _myFunction( higher ) );
+               ( m_myFunction( lower ) + m_myFunction( higher ) );
 
     int it, j;
 
@@ -76,7 +76,7 @@ double EvtItgAbsIntegrator::trapezoid( double lower, double higher, int n,
     double x( lower + 0.5 * deltaX );
 
     for ( j = 1; j <= it; j++ ) {
-        sum += _myFunction( x );
+        sum += m_myFunction( x );
         x += deltaX;
     }
 
@@ -87,23 +87,23 @@ double EvtItgAbsIntegrator::trapezoid( double lower, double higher, int n,
 
 void EvtItgAbsIntegrator::boundsCheck( double& lower, double& upper ) const
 {
-    if ( lower < _myFunction.lowerRange() ) {
+    if ( lower < m_myFunction.lowerRange() ) {
         EvtGenReport( EVTGEN_WARNING, "EvtGen" )
             << "Warning in EvtItgAbsIntegrator::evaluate.  Lower bound "
             << lower << " of integral "
-            << " is less than lower bound " << _myFunction.lowerRange()
+            << " is less than lower bound " << m_myFunction.lowerRange()
             << " of function.  No contribution from this range will be counted."
             << endl;
-        lower = _myFunction.lowerRange();
+        lower = m_myFunction.lowerRange();
     }
 
-    if ( upper > _myFunction.upperRange() ) {
+    if ( upper > m_myFunction.upperRange() ) {
         EvtGenReport( EVTGEN_WARNING, "EvtGen" )
             << "Warning in EvtItgAbsIntegrator::evaluate.  Upper bound "
             << upper << " of integral "
-            << " is greater than upper bound " << _myFunction.upperRange()
+            << " is greater than upper bound " << m_myFunction.upperRange()
             << " of function.  No contribution from this range will be counted."
             << endl;
-        upper = _myFunction.upperRange();
+        upper = m_myFunction.upperRange();
     }
 }

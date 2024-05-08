@@ -85,25 +85,25 @@ class EvtAmp {
     void setNState( int parent_states, int* daug_states );
 
     // the amplitudes
-    EvtComplex _amp[125];
+    EvtComplex m_amp[125];
 
     // the number of daughters
-    int _ndaug;
+    int m_ndaug;
 
     // the number of states of the parent
-    int _pstates;
+    int m_pstates;
 
     // number of states of the daughter
-    int dstates[10];
+    int m_dstates[10];
 
     // the nontrivial index of the daughter
-    int _dnontrivial[10];
+    int m_dnontrivial[10];
 
     // number of nontrivial daugts+parent
-    int _nontrivial;
+    int m_nontrivial;
 
     // compact nstates
-    int _nstate[5];
+    int m_nstate[5];
 };
 
 #endif

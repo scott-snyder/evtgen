@@ -25,37 +25,37 @@
 EvtMassAmp::EvtMassAmp( const EvtPropBreitWignerRel& prop,
                         const EvtTwoBodyVertex& vd ) :
     EvtAmplitude<EvtPoint1D>(),
-    _prop( prop ),
-    _vd( vd ),
-    _useBirthFact( false ),
-    _useDeathFact( false ),
-    _useBirthFactFF( false ),
-    _useDeathFactFF( false )
+    m_prop( prop ),
+    m_vd( vd ),
+    m_useBirthFact( false ),
+    m_useDeathFact( false ),
+    m_useBirthFactFF( false ),
+    m_useDeathFactFF( false )
 {
 }
 
 EvtMassAmp::EvtMassAmp( const EvtMassAmp& other ) :
     EvtAmplitude<EvtPoint1D>( other ),
-    _prop( other._prop ),
-    _vd( other._vd ),
-    _vb( other._vb ? new EvtTwoBodyVertex( *other._vb ) : nullptr ),
-    _useBirthFact( other._useBirthFact ),
-    _useDeathFact( other._useDeathFact ),
-    _useBirthFactFF( other._useBirthFactFF ),
-    _useDeathFactFF( other._useDeathFactFF )
+    m_prop( other.m_prop ),
+    m_vd( other.m_vd ),
+    m_vb( other.m_vb ? new EvtTwoBodyVertex( *other.m_vb ) : nullptr ),
+    m_useBirthFact( other.m_useBirthFact ),
+    m_useDeathFact( other.m_useDeathFact ),
+    m_useBirthFactFF( other.m_useBirthFactFF ),
+    m_useDeathFactFF( other.m_useDeathFactFF )
 {
 }
 
 EvtMassAmp& EvtMassAmp::operator=( const EvtMassAmp& other )
 {
     EvtAmplitude<EvtPoint1D>::operator=( other );
-    _prop = other._prop;
-    _vd = other._vd;
-    _vb.reset( other._vb ? new EvtTwoBodyVertex( *other._vb ) : nullptr );
-    _useBirthFact = other._useBirthFact;
-    _useDeathFact = other._useDeathFact;
-    _useBirthFactFF = other._useBirthFactFF;
-    _useDeathFactFF = other._useDeathFactFF;
+    m_prop = other.m_prop;
+    m_vd = other.m_vd;
+    m_vb.reset( other.m_vb ? new EvtTwoBodyVertex( *other.m_vb ) : nullptr );
+    m_useBirthFact = other.m_useBirthFact;
+    m_useDeathFact = other.m_useDeathFact;
+    m_useBirthFactFF = other.m_useBirthFactFF;
+    m_useDeathFactFF = other.m_useDeathFactFF;
     return *this;
 }
 
@@ -66,43 +66,43 @@ EvtComplex EvtMassAmp::amplitude( const EvtPoint1D& p ) const
     double m = p.value();
     // keep things from crashing..
 
-    if ( m < ( _vd.mA() + _vd.mB() ) )
+    if ( m < ( m_vd.mA() + m_vd.mB() ) )
         return EvtComplex( 0., 0. );
 
-    EvtTwoBodyKine vd( _vd.mA(), _vd.mB(), m );
+    EvtTwoBodyKine vd( m_vd.mA(), m_vd.mB(), m );
 
     // Compute mass-dependent width for relativistic propagator
 
-    EvtPropBreitWignerRel bw( _prop.m0(), _prop.g0() * _vd.widthFactor( vd ) );
+    EvtPropBreitWignerRel bw( m_prop.m0(), m_prop.g0() * m_vd.widthFactor( vd ) );
     EvtComplex amp = bw.evaluate( m );
 
     // Birth vertex factors
 
-    if ( _useBirthFact ) {
-        assert( _vb );
-        if ( ( m + _vb->mB() ) < _vb->mAB() ) {
-            EvtTwoBodyKine vb( m, _vb->mB(), _vb->mAB() );
-            amp *= _vb->phaseSpaceFactor( vb, EvtTwoBodyKine::AB );
-            amp *= sqrt( ( vb.p() / _vb->pD() ) );
+    if ( m_useBirthFact ) {
+        assert( m_vb );
+        if ( ( m + m_vb->mB() ) < m_vb->mAB() ) {
+            EvtTwoBodyKine vb( m, m_vb->mB(), m_vb->mAB() );
+            amp *= m_vb->phaseSpaceFactor( vb, EvtTwoBodyKine::AB );
+            amp *= sqrt( ( vb.p() / m_vb->pD() ) );
 
-            if ( _useBirthFactFF ) {
-                assert( _vb );
-                amp *= _vb->formFactor( vb );
+            if ( m_useBirthFactFF ) {
+                assert( m_vb );
+                amp *= m_vb->formFactor( vb );
             }
         } else {
-            if ( _vb->L() != 0 )
+            if ( m_vb->L() != 0 )
                 amp = 0.;
         }
     }
 
     // Decay vertex factors
 
-    if ( _useDeathFact ) {
-        amp *= _vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB );
-        amp *= sqrt( ( vd.p() / _vd.pD() ) );
+    if ( m_useDeathFact ) {
+        amp *= m_vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB );
+        amp *= sqrt( ( vd.p() / m_vd.pD() ) );
     }
-    if ( _useDeathFactFF )
-        amp *= _vd.formFactor( vd );
+    if ( m_useDeathFactFF )
+        amp *= m_vd.formFactor( vd );
 
     return amp;
 }

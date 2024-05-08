@@ -33,26 +33,26 @@
 void EvtVectorParticle::init( EvtId part_n, double e, double px, double py,
                               double pz )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( e, px, py, pz );
     setpart_num( part_n );
 
-    _eps[0].set( 0.0, 1.0, 0.0, 0.0 );
-    _eps[1].set( 0.0, 0.0, 1.0, 0.0 );
-    _eps[2].set( 0.0, 0.0, 0.0, 1.0 );
+    m_eps[0].set( 0.0, 1.0, 0.0, 0.0 );
+    m_eps[1].set( 0.0, 0.0, 1.0, 0.0 );
+    m_eps[2].set( 0.0, 0.0, 0.0, 1.0 );
 
     setLifetime();
 }
 
 void EvtVectorParticle::init( EvtId part_n, const EvtVector4R& p4 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( part_n );
 
-    _eps[0].set( 0.0, 1.0, 0.0, 0.0 );
-    _eps[1].set( 0.0, 0.0, 1.0, 0.0 );
-    _eps[2].set( 0.0, 0.0, 0.0, 1.0 );
+    m_eps[0].set( 0.0, 1.0, 0.0, 0.0 );
+    m_eps[1].set( 0.0, 0.0, 1.0, 0.0 );
+    m_eps[2].set( 0.0, 0.0, 0.0, 1.0 );
     setLifetime();
 }
 
@@ -61,13 +61,13 @@ void EvtVectorParticle::init( EvtId part_n, const EvtVector4R& p4,
                               const EvtVector4C& epsin2,
                               const EvtVector4C& epsin3 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( part_n );
 
-    _eps[0] = epsin1;
-    _eps[1] = epsin2;
-    _eps[2] = epsin3;
+    m_eps[0] = epsin1;
+    m_eps[1] = epsin2;
+    m_eps[2] = epsin3;
 
     setLifetime();
 }
@@ -88,9 +88,9 @@ EvtSpinDensity EvtVectorParticle::rotateToHelicityBasis() const
     R.setDim( 3 );
 
     for ( int i = 0; i < 3; i++ ) {
-        R.set( 0, i, (eplusC)*_eps[i] );
-        R.set( 1, i, (ezeroC)*_eps[i] );
-        R.set( 2, i, (eminusC)*_eps[i] );
+        R.set( 0, i, eplusC * m_eps[i] );
+        R.set( 1, i, ezeroC * m_eps[i] );
+        R.set( 2, i, eminusC * m_eps[i] );
     }
 
     return R;
@@ -114,9 +114,9 @@ EvtSpinDensity EvtVectorParticle::rotateToHelicityBasis( double alpha,
     R.setDim( 3 );
 
     for ( int i = 0; i < 3; i++ ) {
-        R.set( 0, i, ( eplus.conj() ) * _eps[i] );
-        R.set( 1, i, ( ezero.conj() ) * _eps[i] );
-        R.set( 2, i, ( eminus.conj() ) * _eps[i] );
+        R.set( 0, i, eplus.conj() * m_eps[i] );
+        R.set( 1, i, ezero.conj() * m_eps[i] );
+        R.set( 2, i, eminus.conj() * m_eps[i] );
     }
 
     return R;

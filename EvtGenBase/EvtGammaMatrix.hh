@@ -84,7 +84,7 @@ class EvtGammaMatrix final {
     EvtGammaMatrix& operator*=( const EvtGammaMatrix& g );
 
   private:
-    EvtComplex _gamma[4][4];
+    EvtComplex m_gamma[4][4];
 };
 
 inline EvtGammaMatrix operator+( const EvtGammaMatrix& g1,

@@ -33,16 +33,16 @@ using std::vector;
 class EvtFlatteParam {
   public:
     EvtFlatteParam( double m1, double m2, double g ) :
-        _m1( m1 ), _m2( m2 ), _g( g )
+        m_m1( m1 ), m_m2( m2 ), m_g( g )
     {
     }
 
-    inline double m1() const { return _m1; }
-    inline double m2() const { return _m2; }
-    inline double g() const { return _g; }
+    inline double m1() const { return m_m1; }
+    inline double m2() const { return m_m2; }
+    inline double g() const { return m_g; }
 
   private:
-    double _m1, _m2, _g;
+    double m_m1, m_m2, m_g;
 };
 
 //class declaration
@@ -55,25 +55,22 @@ class EvtFlatte final {
     //constructor with all information about the resonance
     EvtFlatte( const EvtVector4R& p4_p, const EvtVector4R& p4_d1,
                const EvtVector4R& p4_d2, double ampl, double theta, double mass,
-               vector<EvtFlatteParam>& params
-               //           double m1a = 0.0, double m1b = 0.0, double g1 = 0.0,
-               //           double m2a = 0.0, double m2b = 0.0, double g2 = 0.0
-    );
+               vector<EvtFlatteParam>& params );
 
     //accessors
     //return 4-momenta of the particles involved
-    inline const EvtVector4R& p4_p() { return _p4_p; }
-    inline const EvtVector4R& p4_d1() { return _p4_d1; }
-    inline const EvtVector4R& p4_d2() { return _p4_d2; }
+    inline const EvtVector4R& p4_p() { return m_p4_p; }
+    inline const EvtVector4R& p4_d1() { return m_p4_d1; }
+    inline const EvtVector4R& p4_d2() { return m_p4_d2; }
 
     //return amplitude
-    inline double amplitude() { return _ampl; }
+    inline double amplitude() { return m_ampl; }
 
     //return theta
-    inline double theta() { return _theta; }
+    inline double theta() { return m_theta; }
 
     //return bwm
-    inline double mass() { return _mass; }
+    inline double mass() { return m_mass; }
 
     //functions
 
@@ -87,11 +84,9 @@ class EvtFlatte final {
                           : EvtComplex( 0, sqrt( -in ) );
     }
 
-    EvtVector4R _p4_p, _p4_d1, _p4_d2;
-    double _ampl, _theta, _mass;
-    vector<EvtFlatteParam> _params;
-    //      double _m1a, _m1b, _g1;
-    //      double _m2a, _m2b, _g2;
+    EvtVector4R m_p4_p, m_p4_d1, m_p4_d2;
+    double m_ampl, m_theta, m_mass;
+    vector<EvtFlatteParam> m_params;
 };
 
 #endif

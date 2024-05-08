@@ -34,16 +34,16 @@ class EvtStdHep {
 
     void init();
 
-    int getFirstMother( int i ) { return _prntfirst[i]; }
-    int getLastMother( int i ) { return _prntlast[i]; }
-    int getFirstDaughter( int i ) { return _daugfirst[i]; }
-    int getLastDaughter( int i ) { return _dauglast[i]; }
+    int getFirstMother( int i ) { return m_prntfirst[i]; }
+    int getLastMother( int i ) { return m_prntlast[i]; }
+    int getFirstDaughter( int i ) { return m_daugfirst[i]; }
+    int getLastDaughter( int i ) { return m_dauglast[i]; }
 
-    int getStdHepID( int i ) { return _id[i]; }
-    int getIStat( int i ) { return _istat[i]; }
+    int getStdHepID( int i ) { return m_id[i]; }
+    int getIStat( int i ) { return m_istat[i]; }
 
-    EvtVector4R getP4( int i ) { return _p4[i]; }
-    EvtVector4R getX4( int i ) { return _x[i]; }
+    EvtVector4R getP4( int i ) { return m_p4[i]; }
+    EvtVector4R getX4( int i ) { return m_x[i]; }
 
     void translate( EvtVector4R d );
 
@@ -54,15 +54,15 @@ class EvtStdHep {
     friend std::ostream& operator<<( std::ostream& s, const EvtStdHep& stdhep );
 
   private:
-    int _npart;
-    EvtVector4R _p4[EVTSTDHEPLENGTH];
-    EvtVector4R _x[EVTSTDHEPLENGTH];
-    int _prntfirst[EVTSTDHEPLENGTH];
-    int _prntlast[EVTSTDHEPLENGTH];
-    int _daugfirst[EVTSTDHEPLENGTH];
-    int _dauglast[EVTSTDHEPLENGTH];
-    int _id[EVTSTDHEPLENGTH];
-    int _istat[EVTSTDHEPLENGTH];
+    int m_npart;
+    EvtVector4R m_p4[EVTSTDHEPLENGTH];
+    EvtVector4R m_x[EVTSTDHEPLENGTH];
+    int m_prntfirst[EVTSTDHEPLENGTH];
+    int m_prntlast[EVTSTDHEPLENGTH];
+    int m_daugfirst[EVTSTDHEPLENGTH];
+    int m_dauglast[EVTSTDHEPLENGTH];
+    int m_id[EVTSTDHEPLENGTH];
+    int m_istat[EVTSTDHEPLENGTH];
 };
 
 #endif

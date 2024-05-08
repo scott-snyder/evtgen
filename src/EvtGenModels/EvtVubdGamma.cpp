@@ -32,10 +32,10 @@
 
 EvtVubdGamma::EvtVubdGamma( const double& alphas )
 {
-    _alphas = alphas;
+    m_alphas = alphas;
 
-    // the range for the delta distribution in p2 is from _epsilon1 to
-    // _epsilon2. It was checked with the single differential formulae
+    // the range for the delta distribution in p2 is from m_epsilon1 to
+    // m_epsilon2. It was checked with the single differential formulae
     // in the paper that these values are small enough to imitate p2 = 0
     // for the regular terms.
     // The ()* distributions, however need further treatment. In order to
@@ -44,10 +44,10 @@ EvtVubdGamma::EvtVubdGamma( const double& alphas )
     // for z=1 p2=0 is not allowed and therefore the part of dGamma proportional
     // to delta(p2) should go to 0 for z->1.
     // Using equation (3.1) and (3.2) it is possible to find the correct value
-    // for log(_epsilon3) from this requirement.
+    // for log(m_epsilon3) from this requirement.
 
-    _epsilon1 = 1e-10;
-    _epsilon2 = 1e-5;
+    m_epsilon1 = 1e-10;
+    m_epsilon2 = 1e-5;
     if ( alphas > 0 ) {
         double lne3 = 9. / 16. - 2 * EvtConst::pi * EvtConst::pi / 3. +
                       6 * EvtConst::pi / 4 / alphas;
@@ -55,9 +55,9 @@ EvtVubdGamma::EvtVubdGamma( const double& alphas )
             lne3 = -7. / 4. - sqrt( lne3 );
         else
             lne3 = -7. / 4.;
-        _epsilon3 = exp( lne3 );
+        m_epsilon3 = exp( lne3 );
     } else
-        _epsilon3 = 1;
+        m_epsilon3 = 1;
 }
 
 //-----------
@@ -85,7 +85,7 @@ double EvtVubdGamma::getdGdxdzdp( const double& x, const double& z,
 
     double dG;
 
-    if ( p2 > _epsilon1 && p2 < _epsilon2 ) {
+    if ( p2 > m_epsilon1 && p2 < m_epsilon2 ) {
         double W1 = getW1delta( x, z );
         double W4plus5 = getW4plus5delta( x, z );
 
@@ -110,8 +110,8 @@ double EvtVubdGamma::delta( const double& x, const double& xmin,
 {
     if ( xmin > 0 || xmax < 0 )
         return 0.;
-    if ( _epsilon1 < x && x < _epsilon2 )
-        return 1. / ( _epsilon2 - _epsilon1 );
+    if ( m_epsilon1 < x && x < m_epsilon2 )
+        return 1. / ( m_epsilon2 - m_epsilon1 );
     return 0.0;
 }
 
@@ -134,10 +134,10 @@ double EvtVubdGamma::getW1delta( const double&, const double& z )
     double dl = 4. * EvtDiLog::DiLog( mz ) + 4. * pow( EvtConst::pi, 2 ) / 3.;
 
     double w = -( 8. * pow( log( z ), 2 ) - 10. * log( z ) + 2. * lz + dl + 5. ) +
-               ( 8. * log( z ) - 7. ) * log( _epsilon3 ) -
-               2. * pow( log( _epsilon3 ), 2 );
+               ( 8. * log( z ) - 7. ) * log( m_epsilon3 ) -
+               2. * pow( log( m_epsilon3 ), 2 );
 
-    return ( 1. + w * _alphas / 3. / EvtConst::pi );
+    return ( 1. + w * m_alphas / 3. / EvtConst::pi );
 }
 
 double EvtVubdGamma::getW1nodelta( const double&, const double& z,
@@ -148,15 +148,15 @@ double EvtVubdGamma::getW1nodelta( const double&, const double& z,
     double t = sqrt( t2 );
 
     double w = 0;
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w += 4. / p2 * ( log( ( 1. + t ) / ( 1. - t ) ) / t + log( p2 / z2 ) ) +
              1. - ( 8. - z ) * ( 2. - z ) / z2 / t2 +
              ( ( 2. - z ) / 2. / z + ( 8. - z ) * ( 2. - z ) / 2. / z2 / t2 ) *
                  log( ( 1. + t ) / ( 1. - t ) ) / t;
-    if ( p2 > _epsilon3 )
+    if ( p2 > m_epsilon3 )
         w += ( 8. * log( z ) - 7. ) / p2 - 4. * log( p2 ) / p2;
 
-    return w * _alphas / 3. / EvtConst::pi;
+    return w * m_alphas / 3. / EvtConst::pi;
 }
 
 double EvtVubdGamma::getW2nodelta( const double&, const double& z,
@@ -168,13 +168,13 @@ double EvtVubdGamma::getW2nodelta( const double&, const double& z,
     double w11 = ( 32. - 8. * z + z2 ) / 4. / z / t2;
 
     double w = 0;
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w -= ( z * t2 / 8. + ( 4. - z ) / 4. + w11 / 2. ) *
              log( ( 1. + t ) / ( 1. - t ) ) / t;
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w += ( 8. - z ) / 4. + w11;
 
-    return ( w * _alphas / 3. / EvtConst::pi );
+    return ( w * m_alphas / 3. / EvtConst::pi );
 }
 
 double EvtVubdGamma::getW3nodelta( const double&, const double& z,
@@ -187,16 +187,16 @@ double EvtVubdGamma::getW3nodelta( const double&, const double& z,
 
     double w = 0;
 
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w += ( z * t2 / 16. + 5. * ( 4. - z ) / 16. -
                ( 64. + 56. * z - 7. * z2 ) / 16. / z / t2 +
                3. * ( 12. - z ) / 16. / t4 ) *
              log( ( 1. + t ) / ( 1. - t ) ) / t;
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w += -( 8. - 3. * z ) / 8. + ( 32. + 22. * z - 3. * z2 ) / 4. / z / t2 -
              3. * ( 12. - z ) / 8. / t4;
 
-    return ( w * _alphas / 3. / EvtConst::pi );
+    return ( w * m_alphas / 3. / EvtConst::pi );
 }
 
 double EvtVubdGamma::getW4nodelta( const double&, const double& z,
@@ -209,15 +209,15 @@ double EvtVubdGamma::getW4nodelta( const double&, const double& z,
 
     double w = 0;
 
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w -= ( ( 8. - 3. * z ) / 4. / z - ( 22. - 3. * z ) / 2. / z / t2 +
                3. * ( 12. - z ) / 4. / z / t4 ) *
              log( ( 1. + t ) / ( 1. - t ) ) / t;
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w += -1. - ( 32. - 5. * z ) / 2. / z / t2 +
              3. * ( 12. - z ) / 2. / z / t4;
 
-    return w * _alphas / 3. / EvtConst::pi;
+    return w * m_alphas / 3. / EvtConst::pi;
 }
 
 double EvtVubdGamma::getW4plus5delta( const double&, const double& z )
@@ -229,7 +229,7 @@ double EvtVubdGamma::getW4plus5delta( const double&, const double& z )
     else
         w = 2. * log( z ) / ( 1. - z );
 
-    return ( w * _alphas / 3. / EvtConst::pi );
+    return ( w * m_alphas / 3. / EvtConst::pi );
 }
 
 double EvtVubdGamma::getW5nodelta( const double&, const double& z,
@@ -241,12 +241,12 @@ double EvtVubdGamma::getW5nodelta( const double&, const double& z,
     double t = sqrt( t2 );
 
     double w = 0;
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w += ( 1. / 4. / z - ( 2. - z ) / 2. / z2 / t2 +
                3. * ( 12. - z ) / 4. / z2 / t4 ) *
              log( ( 1. + t ) / ( 1. - t ) ) / t;
-    if ( p2 > _epsilon2 )
+    if ( p2 > m_epsilon2 )
         w += -( 8. + z ) / 2. / z2 / t2 - 3. * ( 12. - z ) / 2. / z2 / t4;
 
-    return ( w * _alphas / 3. / EvtConst::pi );
+    return ( w * m_alphas / 3. / EvtConst::pi );
 }

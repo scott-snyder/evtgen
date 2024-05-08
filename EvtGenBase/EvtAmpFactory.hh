@@ -44,13 +44,13 @@ class EvtAmpFactory {
   protected:
     EvtAmpFactory( EvtAmpFactory<T>&& ) = default;
     EvtAmpFactory( const EvtAmpFactory<T>& other ) :
-        _amp( other._amp ? other._amp->clone() : nullptr ),
-        _ampConj( other._ampConj ? other._ampConj->clone() : nullptr ),
-        _pc( other._pc ? other._pc->clone() : nullptr ),
-        _names( other._names ),
-        _dm( other._dm ),
-        _mixPhase( other._mixPhase ),
-        _verbose( other._verbose )
+        m_amp( other.m_amp ? other.m_amp->clone() : nullptr ),
+        m_ampConj( other.m_ampConj ? other.m_ampConj->clone() : nullptr ),
+        m_pc( other.m_pc ? other.m_pc->clone() : nullptr ),
+        m_names( other.m_names ),
+        m_dm( other.m_dm ),
+        m_mixPhase( other.m_mixPhase ),
+        m_verbose( other.m_verbose )
     {
     }
 
@@ -61,12 +61,12 @@ class EvtAmpFactory {
 
     virtual void build( const EvtMultiChannelParser& parser, int nItg )
     {
-        _amp = std::make_unique<EvtAmplitudeSum<T>>();
-        _ampConj = std::make_unique<EvtAmplitudeSum<T>>();
-        _pc = std::make_unique<EvtPdfSum<T>>();
-        _dm = parser.dm();
-        _mixAmpli = parser.mixAmpli();
-        _mixPhase = parser.mixPhase();
+        m_amp = std::make_unique<EvtAmplitudeSum<T>>();
+        m_ampConj = std::make_unique<EvtAmplitudeSum<T>>();
+        m_pc = std::make_unique<EvtPdfSum<T>>();
+        m_dm = parser.dm();
+        m_mixAmpli = parser.mixAmpli();
+        m_mixPhase = parser.mixPhase();
 
         printf( "Amplitude with %d terms\n", parser.getNAmp() );
         int i;
@@ -85,7 +85,7 @@ class EvtAmpFactory {
 
         printf( "Calculating pole compensator integrals %d steps\n", nItg );
         if ( nItg > 0 )
-            _pc->getItg( nItg );
+            m_pc->getItg( nItg );
 
         printf( "End build\n" );
     }
@@ -95,50 +95,52 @@ class EvtAmpFactory {
 
     inline bool isCPModel() const
     {
-        return ( _ampConj->nTerms() > 0 ? true : false );
+        return ( m_ampConj->nTerms() > 0 ? true : false );
     }
-    inline double dm() const { return _dm; }
-    inline double mixAmpli() const { return _mixAmpli; }
-    inline double mixPhase() const { return _mixPhase; }
+    inline double dm() const { return m_dm; }
+    inline double mixAmpli() const { return m_mixAmpli; }
+    inline double mixPhase() const { return m_mixPhase; }
 
-    void setVerbose() { _verbose = true; }
+    void setVerbose() { m_verbose = true; }
 
-    EvtAmplitudeSum<T>* getAmp() const { return _amp.get(); }
-    EvtAmplitudeSum<T>* getAmpConj() const { return _ampConj.get(); }
-    EvtPdfSum<T>* getPC() const { return _pc.get(); }
-    EvtAmplitude<T>* getAmp( int i ) const { return _amp->getTerm( i ); }
-    EvtPdf<T>* getPC( int i ) const { return _pc->getPdf( i ); }
-    const char* compName( int i ) const { return _names[i].c_str(); }
+    EvtAmplitudeSum<T>* getAmp() const { return m_amp.get(); }
+    EvtAmplitudeSum<T>* getAmpConj() const { return m_ampConj.get(); }
+    EvtPdfSum<T>* getPC() const { return m_pc.get(); }
+    EvtAmplitude<T>* getAmp( int i ) const { return m_amp->getTerm( i ); }
+    EvtPdf<T>* getPC( int i ) const { return m_pc->getPdf( i ); }
+    const char* compName( int i ) const { return m_names[i].c_str(); }
 
-    EvtComplex getCoeff( int i ) const { return _amp->c( i ); }
+    EvtComplex getCoeff( int i ) const { return m_amp->c( i ); }
 
-    double getTermCoeff( int i ) const { return abs2( _amp->c( i ) ); }
+    double getTermCoeff( int i ) const { return abs2( m_amp->c( i ) ); }
     double getTermCoeff( int type, int i, int j ) const
     {
         switch ( type ) {
             case 0:
-                return 2 * real( _amp->c( i ) * conj( _amp->c( j ) ) );    //posre
+                return 2 * real( m_amp->c( i ) * conj( m_amp->c( j ) ) );    //posre
             case 1:
-                return -2 * real( _amp->c( i ) * conj( _amp->c( j ) ) );    //negre
+                return -2 *
+                       real( m_amp->c( i ) * conj( m_amp->c( j ) ) );    //negre
             case 2:
-                return -2 * imag( _amp->c( i ) * conj( _amp->c( j ) ) );    //posim
+                return -2 *
+                       imag( m_amp->c( i ) * conj( m_amp->c( j ) ) );    //posim
             case 3:
-                return 2 * imag( _amp->c( i ) * conj( _amp->c( j ) ) );    //negim
+                return 2 * imag( m_amp->c( i ) * conj( m_amp->c( j ) ) );    //negim
             default:
                 assert( 0 );
         }
     }
 
   protected:
-    std::unique_ptr<EvtAmplitudeSum<T>> _amp;        // _owned_ amplitude
-    std::unique_ptr<EvtAmplitudeSum<T>> _ampConj;    // _owned_ conjugate amplitude
-    std::unique_ptr<EvtPdfSum<T>> _pc;               // _owned_ pole compensator
-    std::vector<std::string> _names;    // names of partial amplitudes
+    std::unique_ptr<EvtAmplitudeSum<T>> m_amp;        // _owned_ amplitude
+    std::unique_ptr<EvtAmplitudeSum<T>> m_ampConj;    // _owned_ conjugate amplitude
+    std::unique_ptr<EvtPdfSum<T>> m_pc;    // _owned_ pole compensator
+    std::vector<std::string> m_names;      // names of partial amplitudes
 
-    double _dm = 0;      // Mass difference for conjugate amplitude
-    double _mixPhase;    // mixing phase
-    double _mixAmpli;    // cpv in mixing
-    bool _verbose = false;
+    double m_dm = 0;      // Mass difference for conjugate amplitude
+    double m_mixPhase;    // mixing phase
+    double m_mixAmpli;    // cpv in mixing
+    bool m_verbose = false;
 };
 
 #endif

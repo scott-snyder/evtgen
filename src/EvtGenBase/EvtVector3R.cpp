@@ -28,14 +28,14 @@ using std::ostream;
 
 EvtVector3R::EvtVector3R()
 {
-    v[0] = v[1] = v[2] = 0.0;
+    m_v[0] = m_v[1] = m_v[2] = 0.0;
 }
 
 EvtVector3R::EvtVector3R( double x, double y, double z )
 {
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
+    m_v[0] = x;
+    m_v[1] = y;
+    m_v[2] = z;
 }
 
 EvtVector3R rotateEuler( const EvtVector3R& v, double alpha, double beta,
@@ -58,20 +58,20 @@ void EvtVector3R::applyRotateEuler( double phi, double theta, double ksi )
     ct = cos( theta );
     ck = cos( ksi );
 
-    temp[0] = ( ck * ct * cp - sk * sp ) * v[0] +
-              ( -sk * ct * cp - ck * sp ) * v[1] + st * cp * v[2];
-    temp[1] = ( ck * ct * sp + sk * cp ) * v[0] +
-              ( -sk * ct * sp + ck * cp ) * v[1] + st * sp * v[2];
-    temp[2] = -ck * st * v[0] + sk * st * v[1] + ct * v[2];
+    temp[0] = ( ck * ct * cp - sk * sp ) * m_v[0] +
+              ( -sk * ct * cp - ck * sp ) * m_v[1] + st * cp * m_v[2];
+    temp[1] = ( ck * ct * sp + sk * cp ) * m_v[0] +
+              ( -sk * ct * sp + ck * cp ) * m_v[1] + st * sp * m_v[2];
+    temp[2] = -ck * st * m_v[0] + sk * st * m_v[1] + ct * m_v[2];
 
-    v[0] = temp[0];
-    v[1] = temp[1];
-    v[2] = temp[2];
+    m_v[0] = temp[0];
+    m_v[1] = temp[1];
+    m_v[2] = temp[2];
 }
 
 ostream& operator<<( ostream& s, const EvtVector3R& v )
 {
-    s << "(" << v.v[0] << "," << v.v[1] << "," << v.v[2] << ")";
+    s << "(" << v.m_v[0] << "," << v.m_v[1] << "," << v.m_v[2] << ")";
 
     return s;
 }
@@ -81,9 +81,9 @@ EvtVector3R cross( const EvtVector3R& p1, const EvtVector3R& p2 )
     //Calcs the cross product.  Added by djl on July 27, 1995.
     //Modified for real vectros by ryd Aug 28-96
 
-    return EvtVector3R( p1.v[1] * p2.v[2] - p1.v[2] * p2.v[1],
-                        p1.v[2] * p2.v[0] - p1.v[0] * p2.v[2],
-                        p1.v[0] * p2.v[1] - p1.v[1] * p2.v[0] );
+    return EvtVector3R( p1.m_v[1] * p2.m_v[2] - p1.m_v[2] * p2.m_v[1],
+                        p1.m_v[2] * p2.m_v[0] - p1.m_v[0] * p2.m_v[2],
+                        p1.m_v[0] * p2.m_v[1] - p1.m_v[1] * p2.m_v[0] );
 }
 
 double EvtVector3R::d3mag() const
@@ -91,7 +91,7 @@ double EvtVector3R::d3mag() const
     // Returns the 3 momentum mag
     double temp;
 
-    temp = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+    temp = m_v[0] * m_v[0] + m_v[1] * m_v[1] + m_v[2] * m_v[2];
     temp = sqrt( temp );
 
     return temp;
@@ -101,9 +101,9 @@ double EvtVector3R::dot( const EvtVector3R& p2 )
 {
     double temp;
 
-    temp = v[0] * p2.v[0];
-    temp += v[1] * p2.v[1];
-    temp += v[2] * p2.v[2];
+    temp = m_v[0] * p2.m_v[0];
+    temp += m_v[1] * p2.m_v[1];
+    temp += m_v[2] * p2.m_v[2];
 
     return temp;
 }

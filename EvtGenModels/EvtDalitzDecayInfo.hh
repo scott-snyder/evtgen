@@ -32,34 +32,34 @@
 class EvtDalitzDecayInfo final {
   public:
     EvtDalitzDecayInfo( EvtId d1, EvtId d2, EvtId d3 ) :
-        _d1( d1 ), _d2( d2 ), _d3( d3 ), _probMax( 0. )
+        m_d1( d1 ), m_d2( d2 ), m_d3( d3 ), m_probMax( 0. )
     {
     }
 
     void addResonance( EvtComplex amp, EvtDalitzReso res )
     {
-        _resonances.push_back( std::pair<EvtComplex, EvtDalitzReso>( amp, res ) );
+        m_resonances.push_back( std::pair<EvtComplex, EvtDalitzReso>( amp, res ) );
     }
     void addResonance( std::pair<EvtComplex, EvtDalitzReso> res )
     {
-        _resonances.push_back( res );
+        m_resonances.push_back( res );
     }
-    void setProbMax( double probMax ) { _probMax = probMax; }
+    void setProbMax( double probMax ) { m_probMax = probMax; }
 
     const std::vector<std::pair<EvtComplex, EvtDalitzReso>>& getResonances() const
     {
-        return _resonances;
+        return m_resonances;
     }
-    double getProbMax() const { return _probMax; }
+    double getProbMax() const { return m_probMax; }
 
-    inline const EvtId& daughter1() const { return _d1; }
-    inline const EvtId& daughter2() const { return _d2; }
-    inline const EvtId& daughter3() const { return _d3; }
+    inline const EvtId& daughter1() const { return m_d1; }
+    inline const EvtId& daughter2() const { return m_d2; }
+    inline const EvtId& daughter3() const { return m_d3; }
 
   private:
-    EvtId _d1, _d2, _d3;
-    std::vector<std::pair<EvtComplex, EvtDalitzReso>> _resonances;
-    double _probMax;
+    EvtId m_d1, m_d2, m_d3;
+    std::vector<std::pair<EvtComplex, EvtDalitzReso>> m_resonances;
+    double m_probMax;
 };
 
 #endif

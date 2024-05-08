@@ -28,7 +28,7 @@ using std::ostream;
 
 ostream& operator<<( ostream& s, const EvtId& id )
 {
-    s << "(Id=" << id._id << " Alias=" << id._alias << ")";
+    s << "(Id=" << id.m_id << " Alias=" << id.m_alias << ")";
 
     return s;
 }

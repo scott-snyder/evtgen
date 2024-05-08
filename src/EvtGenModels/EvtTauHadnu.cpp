@@ -64,23 +64,23 @@ void EvtTauHadnu::init()
         //pipinu
         validndaug = true;
         checkNArg( 7 );
-        _beta = getArg( 0 );
-        _mRho = getArg( 1 );
-        _gammaRho = getArg( 2 );
-        _mRhopr = getArg( 3 );
-        _gammaRhopr = getArg( 4 );
-        _mA1 = getArg( 5 );
-        _gammaA1 = getArg( 6 );
+        m_beta = getArg( 0 );
+        m_mRho = getArg( 1 );
+        m_gammaRho = getArg( 2 );
+        m_mRhopr = getArg( 3 );
+        m_gammaRhopr = getArg( 4 );
+        m_mA1 = getArg( 5 );
+        m_gammaA1 = getArg( 6 );
     }
     if ( getNDaug() == 3 ) {
         //pipinu
         validndaug = true;
         checkNArg( 5 );
-        _beta = getArg( 0 );
-        _mRho = getArg( 1 );
-        _gammaRho = getArg( 2 );
-        _mRhopr = getArg( 3 );
-        _gammaRhopr = getArg( 4 );
+        m_beta = getArg( 0 );
+        m_mRho = getArg( 1 );
+        m_gammaRho = getArg( 2 );
+        m_mRhopr = getArg( 3 );
+        m_gammaRhopr = getArg( 4 );
     }
     if ( getNDaug() == 2 ) {
         //pipinu
@@ -187,13 +187,13 @@ void EvtTauHadnu::decay( EvtParticle* p )
 
             EvtVector4R Q = q1 + q2 + q3;
             double Q2 = Q.mass2();
-            double _mA12 = _mA1 * _mA1;
+            double mA12 = m_mA1 * m_mA1;
 
-            double _gammaA1X = _gammaA1 * gFunc( Q2, samePi1 ) /
-                               gFunc( _mA12, samePi1 );
+            double gammaA1X = m_gammaA1 * gFunc( Q2, samePi1 ) /
+                              gFunc( mA12, samePi1 );
 
-            EvtComplex denBW_A1( _mA12 - Q2, -1. * _mA1 * _gammaA1X );
-            EvtComplex BW_A1 = _mA12 / denBW_A1;
+            EvtComplex denBW_A1( mA12 - Q2, -1. * m_mA1 * gammaA1X );
+            EvtComplex BW_A1 = mA12 / denBW_A1;
 
             hadCurr = BW_A1 *
                       ( ( ( q1 - q3 ) - ( Q * ( Q * ( q1 - q3 ) ) / Q2 ) ) *
@@ -227,7 +227,7 @@ double EvtTauHadnu::gFunc( double Q2, int dupD )
 {
     double mpi = EvtPDL::getMeanMass( getDaug( dupD ) );
     double mpi2 = pow( mpi, 2. );
-    if ( Q2 < pow( _mRho + mpi, 2. ) ) {
+    if ( Q2 < pow( m_mRho + mpi, 2. ) ) {
         double arg = Q2 - 9. * mpi2;
         return 4.1 * pow( arg, 3. ) * ( 1. - 3.3 * arg + 5.8 * pow( arg, 2. ) );
     } else
@@ -237,10 +237,10 @@ double EvtTauHadnu::gFunc( double Q2, int dupD )
 
 EvtComplex EvtTauHadnu::Fpi( double s, double xm1, double xm2 )
 {
-    EvtComplex BW_rho = BW( s, _mRho, _gammaRho, xm1, xm2 );
-    EvtComplex BW_rhopr = BW( s, _mRhopr, _gammaRhopr, xm1, xm2 );
+    EvtComplex BW_rho = BW( s, m_mRho, m_gammaRho, xm1, xm2 );
+    EvtComplex BW_rhopr = BW( s, m_mRhopr, m_gammaRhopr, xm1, xm2 );
 
-    return ( BW_rho + _beta * BW_rhopr ) / ( 1. + _beta );
+    return ( BW_rho + m_beta * BW_rhopr ) / ( 1. + m_beta );
 }
 
 EvtComplex EvtTauHadnu::BW( double s, double m, double gamma, double xm1,

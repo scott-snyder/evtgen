@@ -45,7 +45,7 @@ class EvtSVP : public EvtDecayAmp {
   private:
     void decay_2body( EvtParticle* p );
     void decay_3body( EvtParticle* p );
-    double delta;    // form factor parameter
+    double m_delta;    // form factor parameter
 };
 
 #endif

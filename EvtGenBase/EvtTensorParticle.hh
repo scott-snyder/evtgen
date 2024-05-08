@@ -44,7 +44,7 @@ class EvtTensorParticle : public EvtParticle {
                                           double gamma ) const override;
 
   private:
-    std::array<EvtTensor4C, 5> eps;    //eps1,eps2,eps3,eps4,eps5;
+    std::array<EvtTensor4C, 5> m_eps;    //eps1,eps2,eps3,eps4,eps5;
 
     EvtTensorParticle( const EvtTensorParticle& tensor );
     EvtTensorParticle& operator=( const EvtTensorParticle& tensor );

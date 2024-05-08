@@ -48,9 +48,9 @@ EvtDecayBase* EvtbTosllBall::clone()
 void EvtbTosllBall::decay( EvtParticle* p )
 {
     setWeight( p->initializePhaseSpace( getNDaug(), getDaugs(), false,
-                                        _poleSize, 1, 2 ) );
+                                        m_poleSize, 1, 2 ) );
 
-    _calcamp->CalcAmp( p, _amp2, _ballffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_ballffmodel.get() );
 }
 
 void EvtbTosllBall::initProbMax()
@@ -62,9 +62,9 @@ void EvtbTosllBall::initProbMax()
     l1num = getDaug( 1 );
     l2num = getDaug( 2 );
 
-    //This routine sets the _poleSize.
-    double mymaxprob = _calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num,
-                                              _ballffmodel.get(), _poleSize );
+    //This routine sets the m_poleSize.
+    double mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num,
+                                               m_ballffmodel.get(), m_poleSize );
 
     setProbMax( mymaxprob );
 }
@@ -109,10 +109,10 @@ void EvtbTosllBall::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::DIRAC );
 
-    _ballffmodel = std::make_unique<EvtbTosllBallFF>( theFormFactorModel );
+    m_ballffmodel = std::make_unique<EvtbTosllBallFF>( theFormFactorModel );
     if ( mesontype == EvtSpinType::SCALAR ) {
-        _calcamp = std::make_unique<EvtbTosllScalarAmp>();
+        m_calcamp = std::make_unique<EvtbTosllScalarAmp>();
     } else if ( mesontype == EvtSpinType::VECTOR ) {
-        _calcamp = std::make_unique<EvtbTosllVectorAmp>();
+        m_calcamp = std::make_unique<EvtbTosllVectorAmp>();
     }
 }

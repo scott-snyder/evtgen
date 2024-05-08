@@ -186,7 +186,7 @@ void EvtVtoSll::decay( EvtParticle* parent )
         parent->initializePhaseSpace( getNDaug(), getDaugs() );
     }
 
-    calcAmp( *parent, _amp2 );
+    calcAmp( *parent, m_amp2 );
 }
 
 void EvtVtoSll::calcAmp( const EvtParticle& parent, EvtAmp& amp ) const

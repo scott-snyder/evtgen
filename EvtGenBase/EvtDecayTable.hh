@@ -57,7 +57,7 @@ class EvtDecayTable {
 
     void checkConj();
 
-    std::vector<EvtParticleDecayList> getDecayTable() { return _decaytable; };
+    std::vector<EvtParticleDecayList> getDecayTable() { return m_decaytable; };
 
     EvtDecayBase* findDecayModel( int aliasInt, int modeInt );
     EvtDecayBase* findDecayModel( EvtId id, int modeInt );
@@ -76,7 +76,7 @@ class EvtDecayTable {
     ~EvtDecayTable();
 
   private:
-    std::vector<EvtParticleDecayList> _decaytable;
+    std::vector<EvtParticleDecayList> m_decaytable;
 
     EvtDecayTable( const EvtDecayTable& ){};
     //EvtDecayTable& operator=(const EvtDecayTable&) {};

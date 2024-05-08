@@ -91,29 +91,29 @@ class EvtBTo3hCP {
     double h( double s );
     double dh_ds( double s );
 
-    EvtComplex Mat_S1, Mat_S2, Mat_S3, Mat_S4, Mat_S5, Nat_S1, Nat_S2, Nat_S3,
-        Nat_S4, Nat_S5, MatKstarp, MatKstar0, MatKrho, NatKstarp, NatKstar0,
-        NatKrho;
-    double alphaCP = 1.365;
-    double betaCP = 0.362;
-    double MA2 = 27.927981186;
-    double MB2 = 27.929242450;
-    double MC2 = 28.153482608;
-    double pi = 3.141592653;
-    double Mass_rho = 0.770;
-    double Gam_rho = 0.150;
-    double M_B = 5.2794;
-    double M_pip = 0.13957;
-    double M_pim = 0.13957;
-    double M_pi0 = 0.134976;
-    double M_Kp = 0.49368;
-    double Mass_Kstarp = 0.8916;
-    double Mass_Kstar0 = 0.8961;
-    double Gam_Kstarp = 0.0498;
-    double Gam_Kstar0 = 0.0505;
+    EvtComplex m_Mat_S1, m_Mat_S2, m_Mat_S3, m_Mat_S4, m_Mat_S5, m_Nat_S1,
+        m_Nat_S2, m_Nat_S3, m_Nat_S4, m_Nat_S5, m_MatKstarp, m_MatKstar0,
+        m_MatKrho, m_NatKstarp, m_NatKstar0, m_NatKrho;
+    double m_alphaCP = 1.365;
+    double m_betaCP = 0.362;
+    double m_MA2 = 27.927981186;
+    double m_MB2 = 27.929242450;
+    double m_MC2 = 28.153482608;
+    double m_pi = 3.141592653;
+    double m_Mass_rho = 0.770;
+    double m_Gam_rho = 0.150;
+    double m_M_B = 5.2794;
+    double m_M_pip = 0.13957;
+    double m_M_pim = 0.13957;
+    double m_M_pi0 = 0.134976;
+    double m_M_Kp = 0.49368;
+    double m_Mass_Kstarp = 0.8916;
+    double m_Mass_Kstar0 = 0.8961;
+    double m_Gam_Kstarp = 0.0498;
+    double m_Gam_Kstar0 = 0.0505;
 
-    double rotMatrix[3][3];
-    double factor_max = 1;
+    double m_rotMatrix[3][3];
+    double m_factor_max = 1;
 };
 
 #endif

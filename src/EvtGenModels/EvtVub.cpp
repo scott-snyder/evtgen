@@ -58,17 +58,17 @@ void EvtVub::init()
         ::abort();
     }
 
-    _mb = getArg( 0 );
-    _a = getArg( 1 );
-    _alphas = getArg( 2 );
-    _nbins = abs( (int)getArg( 3 ) );
-    _storeQplus = ( getArg( 3 ) < 0 ? 1 : 0 );
-    _masses = std::vector<double>( _nbins );
-    _weights = std::vector<double>( _nbins );
+    m_mb = getArg( 0 );
+    m_a = getArg( 1 );
+    m_alphas = getArg( 2 );
+    m_nbins = abs( (int)getArg( 3 ) );
+    m_storeQplus = ( getArg( 3 ) < 0 ? 1 : 0 );
+    m_masses = std::vector<double>( m_nbins );
+    m_weights = std::vector<double>( m_nbins );
 
-    if ( getNArg() - 4 != 2 * _nbins ) {
+    if ( getNArg() - 4 != 2 * m_nbins ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "EvtVub generator expected " << _nbins
+            << "EvtVub generator expected " << m_nbins
             << " masses and weights but found: " << ( getNArg() - 4 ) / 2
             << endl;
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -77,26 +77,26 @@ void EvtVub::init()
     }
     int i, j = 4;
     double maxw = 0.;
-    for ( i = 0; i < _nbins; i++ ) {
-        _masses[i] = getArg( j++ );
-        if ( i > 0 && _masses[i] <= _masses[i - 1] ) {
+    for ( i = 0; i < m_nbins; i++ ) {
+        m_masses[i] = getArg( j++ );
+        if ( i > 0 && m_masses[i] <= m_masses[i - 1] ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "EvtVub generator expected "
                 << " mass bins in ascending order!"
                 << "Will terminate execution!" << endl;
             ::abort();
         }
-        _weights[i] = getArg( j++ );
-        if ( _weights[i] < 0 ) {
+        m_weights[i] = getArg( j++ );
+        if ( m_weights[i] < 0 ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "EvtVub generator expected "
-                << " weights >= 0, but found: " << _weights[i] << endl;
+                << " weights >= 0, but found: " << m_weights[i] << endl;
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Will terminate execution!" << endl;
             ::abort();
         }
-        if ( _weights[i] > maxw )
-            maxw = _weights[i];
+        if ( m_weights[i] > maxw )
+            maxw = m_weights[i];
     }
     if ( maxw == 0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -105,15 +105,15 @@ void EvtVub::init()
             << "Will terminate execution!" << endl;
         ::abort();
     }
-    for ( i = 0; i < _nbins; i++ )
-        _weights[i] /= maxw;
+    for ( i = 0; i < m_nbins; i++ )
+        m_weights[i] /= maxw;
 
     // the maximum dGamma*p2 value depends on alpha_s only:
 
     const double dGMax0 = 3.;
-    _dGMax = 0.21344 + 8.905 * _alphas;
-    if ( _dGMax < dGMax0 )
-        _dGMax = dGMax0;
+    m_dGMax = 0.21344 + 8.905 * m_alphas;
+    if ( m_dGMax < dGMax0 )
+        m_dGMax = dGMax0;
 
     // for the Fermi Motion we need a B-Meson mass - but it's not critical
     // to get an exact value; in order to stay in the phase space for
@@ -127,30 +127,30 @@ void EvtVub::init()
 
     double mB = ( mB0 < mBP ? mB0 : mBP );
 
-    const double xlow = -_mb;
-    const double xhigh = mB - _mb;
+    const double xlow = -m_mb;
+    const double xhigh = mB - m_mb;
     const int aSize = 10000;
 
-    EvtPFermi pFermi( _a, mB, _mb );
+    EvtPFermi pFermi( m_a, mB, m_mb );
     // pf is the cumulative distribution
     // normalized to 1.
-    _pf.resize( aSize );
+    m_pf.resize( aSize );
     for ( i = 0; i < aSize; i++ ) {
         double kplus = xlow + (double)( i + 0.5 ) / ( (double)aSize ) *
                                   ( xhigh - xlow );
         if ( i == 0 )
-            _pf[i] = pFermi.getFPFermi( kplus );
+            m_pf[i] = pFermi.getFPFermi( kplus );
         else
-            _pf[i] = _pf[i - 1] + pFermi.getFPFermi( kplus );
+            m_pf[i] = m_pf[i - 1] + pFermi.getFPFermi( kplus );
     }
-    for ( size_t index = 0; index < _pf.size(); index++ ) {
-        _pf[index] /= _pf[_pf.size() - 1];
+    for ( size_t index = 0; index < m_pf.size(); index++ ) {
+        m_pf[index] /= m_pf[m_pf.size() - 1];
     }
 
     //  static EvtHepRandomEngine myEngine;
 
     //  _pFermi = new RandGeneral(myEngine,pf,aSize,0);
-    _dGamma = std::make_unique<EvtVubdGamma>( _alphas );
+    m_dGamma = std::make_unique<EvtVubdGamma>( m_alphas );
 
     // check that there are 3 daughters
     checkNDaug( 3 );
@@ -188,8 +188,8 @@ void EvtVub::decay( EvtParticle* p )
         mB = p->mass();
         ml = lepton->mass();
 
-        xlow = -_mb;
-        xhigh = mB - _mb;
+        xlow = -m_mb;
+        xhigh = mB - m_mb;
 
         // Fermi motion does not need to be computed inside the
         // tryit loop as m_b in Gamma0 does not need to be replaced by (m_b+kplus).
@@ -197,17 +197,17 @@ void EvtVub::decay( EvtParticle* p )
         // beyond the considered orders in the paper anyway ...
 
         // for alpha_S = 0 and a mass cut on X_u not all values of kplus are
-        // possible. The maximum value is mB/2-_mb + sqrt(mB^2/4-_masses[0]^2)
+        // possible. The maximum value is mB/2-m_mb + sqrt(mB^2/4-m_masses[0]^2)
         kplus = 2 * xhigh;
 
         while ( kplus >= xhigh || kplus <= xlow ||
-                ( _alphas == 0 &&
-                  kplus >= mB / 2 - _mb +
-                               sqrt( mB * mB / 4 - _masses[0] * _masses[0] ) ) ) {
+                ( m_alphas == 0 &&
+                  kplus >= mB / 2 - m_mb +
+                               sqrt( mB * mB / 4 - m_masses[0] * m_masses[0] ) ) ) {
             kplus = findPFermi();    //_pFermi->shoot();
             kplus = xlow + kplus * ( xhigh - xlow );
         }
-        qplus = mB - _mb - kplus;
+        qplus = mB - m_mb - kplus;
         if ( ( mB - qplus ) / 2. <= ml )
             continue;
 
@@ -224,11 +224,12 @@ void EvtVub::decay( EvtParticle* p )
                 if ( Eh > 0 && Eh < mB ) {
                     sh = p2 * pow( mB - qplus, 2 ) +
                          2 * qplus * ( Eh - qplus ) + qplus * qplus;
-                    if ( sh > _masses[0] * _masses[0] &&
+                    if ( sh > m_masses[0] * m_masses[0] &&
                          mB * mB + sh - 2 * mB * Eh > ml * ml ) {
                         double xran = EvtRandom::Flat();
 
-                        double y = _dGamma->getdGdxdzdp( x, z, p2 ) / _dGMax * p2;
+                        double y = m_dGamma->getdGdxdzdp( x, z, p2 ) / m_dGMax *
+                                   p2;
 
                         if ( y > 1 )
                             EvtGenReport( EVTGEN_WARNING, "EvtGen" )
@@ -241,13 +242,13 @@ void EvtVub::decay( EvtParticle* p )
             }
         }
         // reweight the Mx distribution
-        if ( _nbins > 0 ) {
+        if ( m_nbins > 0 ) {
             double xran1 = EvtRandom::Flat();
             double m = sqrt( sh );
             j = 0;
-            while ( j < _nbins && m > _masses[j] )
+            while ( j < m_nbins && m > m_masses[j] )
                 j++;
-            double w = _weights[j - 1];
+            double w = m_weights[j - 1];
             if ( w >= xran1 )
                 rew = false;
         } else {
@@ -279,7 +280,7 @@ void EvtVub::decay( EvtParticle* p )
     p4.set( pHB[0], pHB[1], pHB[2], pHB[3] );
     xuhad->init( getDaug( 0 ), p4 );
 
-    if ( _storeQplus ) {
+    if ( m_storeQplus ) {
         // cludge to store the hidden parameter q+ with the decay;
         // the lifetime of the Xu is abused for this purpose.
         // tau = 1 ps corresponds to ctau = 0.3 mm -> in order to
@@ -376,21 +377,21 @@ void EvtVub::decay( EvtParticle* p )
 double EvtVub::findPFermi()
 {
     double ranNum = EvtRandom::Flat();
-    double oOverBins = 1.0 / ( float( _pf.size() ) );
+    double oOverBins = 1.0 / ( float( m_pf.size() ) );
     int nBinsBelow = 0;    // largest k such that I[k] is known to be <= rand
-    int nBinsAbove = _pf.size();    // largest k such that I[k] is known to be >  rand
+    int nBinsAbove = m_pf.size();    // largest k such that I[k] is known to be >  rand
     int middle;
 
     while ( nBinsAbove > nBinsBelow + 1 ) {
         middle = ( nBinsAbove + nBinsBelow + 1 ) >> 1;
-        if ( ranNum >= _pf[middle] ) {
+        if ( ranNum >= m_pf[middle] ) {
             nBinsBelow = middle;
         } else {
             nBinsAbove = middle;
         }
     }
 
-    double bSize = _pf[nBinsAbove] - _pf[nBinsBelow];
+    double bSize = m_pf[nBinsAbove] - m_pf[nBinsBelow];
     // binMeasure is always aProbFunc[nBinsBelow],
 
     if ( bSize == 0 ) {
@@ -400,7 +401,7 @@ double EvtVub::findPFermi()
         return ( nBinsBelow + .5 ) * oOverBins;
     }
 
-    double bFract = ( ranNum - _pf[nBinsBelow] ) / bSize;
+    double bFract = ( ranNum - m_pf[nBinsBelow] ) / bSize;
 
     return ( nBinsBelow + bFract ) * oOverBins;
 }

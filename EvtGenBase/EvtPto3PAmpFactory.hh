@@ -33,7 +33,7 @@
 class EvtPto3PAmpFactory final : public EvtAmpFactory<EvtDalitzPoint> {
   public:
     EvtPto3PAmpFactory( const EvtDalitzPlot& dp ) :
-        EvtAmpFactory<EvtDalitzPoint>(), _dp( dp )
+        EvtAmpFactory<EvtDalitzPoint>(), m_dp( dp )
     {
     }
     EvtPto3PAmpFactory( EvtPto3PAmpFactory&& ) = default;
@@ -51,7 +51,7 @@ class EvtPto3PAmpFactory final : public EvtAmpFactory<EvtDalitzPoint> {
     double matchIsobarCoef( EvtAmplitude<EvtDalitzPoint>& amp,
                             EvtPdf<EvtDalitzPoint>& pdf, EvtCyclic3::Pair i );
 
-    EvtDalitzPlot _dp;
+    EvtDalitzPlot m_dp;
 };
 
 #endif

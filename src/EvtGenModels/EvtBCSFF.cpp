@@ -34,10 +34,10 @@ using namespace std;
 
 EvtBCSFF::EvtBCSFF( int idS, int fit )
 {
-    idScalar = idS;
-    whichfit = fit;
-    MBc = EvtPDL::getMeanMass( EvtPDL::getId( "B_c+" ) );
-    MD0 = EvtPDL::getMeanMass( EvtPDL::getId( "D0" ) );
+    m_idScalar = idS;
+    m_whichfit = fit;
+    m_MBc = EvtPDL::getMeanMass( EvtPDL::getId( "B_c+" ) );
+    m_MD0 = EvtPDL::getMeanMass( EvtPDL::getId( "D0" ) );
     return;
 }
 
@@ -46,15 +46,15 @@ void EvtBCSFF::getscalarff( EvtId /*p*/, EvtId /*d*/, double t, double /*mass*/,
 {
     double q2 = t;
 
-    if ( whichfit == 0 ) {
+    if ( m_whichfit == 0 ) {
         *fpf = 1;
         *f0f = 0;
         return;
     }
 
-    if ( idScalar == EvtPDL::getId( "chi_c0" ).getId() ) {    // Bc -> chi_c0
-        if ( whichfit == 3 ) {    // FF from Wang et al 10.1103/PhysRevD.79.114018
-            double ratio = q2 / ( MBc * MBc );
+    if ( m_idScalar == EvtPDL::getId( "chi_c0" ).getId() ) {    // Bc -> chi_c0
+        if ( m_whichfit == 3 ) {    // FF from Wang et al 10.1103/PhysRevD.79.114018
+            double ratio = q2 / ( m_MBc * m_MBc );
 
             double fpf_0 = 0.47;
             double fpf_c1 = 2.03;
@@ -73,10 +73,10 @@ void EvtBCSFF::getscalarff( EvtId /*p*/, EvtId /*d*/, double t, double /*mass*/,
                 << "Must choose 0 (fpf = 1) or 3 (Wang).\n";
             ::abort();
         }
-    } else if ( idScalar == EvtPDL::getId( "D0" ).getId() ||
-                idScalar == EvtPDL::getId( "anti-D0" ).getId() ) {    // Bc -> D0
-        if ( whichfit == 1 ) {    // FF from Kiselev:2002vz, tables III, IV
-            double q2invmass = q2 / ( MBc * MBc - MD0 * MD0 );
+    } else if ( m_idScalar == EvtPDL::getId( "D0" ).getId() ||
+                m_idScalar == EvtPDL::getId( "anti-D0" ).getId() ) {    // Bc -> D0
+        if ( m_whichfit == 1 ) {    // FF from Kiselev:2002vz, tables III, IV
+            double q2invmass = q2 / ( m_MBc * m_MBc - m_MD0 * m_MD0 );
             double den = 1 - q2 / ( 5.0 * 5.0 );
             if ( fabs( den ) < 1e-10 ) {
                 *fpf = 0;
@@ -87,8 +87,8 @@ void EvtBCSFF::getscalarff( EvtId /*p*/, EvtId /*d*/, double t, double /*mass*/,
                 *fpf = fPlus;
                 *f0f = q2invmass * fMinus + fPlus;
             }
-        } else if ( whichfit == 2 ) {    // FF from Ebert:2003cn, Fig 9
-            double ratio = q2 / MBc / MBc;
+        } else if ( m_whichfit == 2 ) {    // FF from Ebert:2003cn, Fig 9
+            double ratio = q2 / m_MBc / m_MBc;
             double const fPlus_0 = 0.143, fPlus_a = 0.7, fPlus_b = 2.13;
             double const f0_0 = 0.136, f0_a = 1.63, f0_b = -0.139;
             *fpf = fPlus_0 / ( 1 - fPlus_a * ratio - fPlus_b * ratio * ratio );

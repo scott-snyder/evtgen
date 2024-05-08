@@ -38,7 +38,7 @@
 #include <string>
 using std::fstream;
 
-EvtModel* EvtModel::_instance = nullptr;
+EvtModel* EvtModel::m_instance = nullptr;
 
 EvtModel::EvtModel()
 {
@@ -47,8 +47,8 @@ EvtModel::EvtModel()
 EvtDecayBase* EvtModel::getFcn( std::string model_name )
 {
     EvtDecayBase* model = nullptr;
-    if ( _modelNameHash.find( model_name ) != _modelNameHash.end() ) {
-        model = _modelNameHash[model_name];
+    if ( m_modelNameHash.find( model_name ) != m_modelNameHash.end() ) {
+        model = m_modelNameHash[model_name];
     }
 
     if ( !model ) {
@@ -64,18 +64,18 @@ void EvtModel::registerModel( EvtDecayBase* prototype )
 {
     std::string modelName = prototype->getName();
 
-    _modelNameHash[modelName] = prototype;
+    m_modelNameHash[modelName] = prototype;
 
     std::string commandName = prototype->commandName();
 
     if ( commandName != "" ) {
-        _commandNameHash[commandName] = prototype;
+        m_commandNameHash[commandName] = prototype;
     }
 }
 
 int EvtModel::isModel( std::string model_name )
 {
-    if ( _modelNameHash.find( model_name ) != _modelNameHash.end() ) {
+    if ( m_modelNameHash.find( model_name ) != m_modelNameHash.end() ) {
         return 1;
     }
     return 0;
@@ -83,7 +83,7 @@ int EvtModel::isModel( std::string model_name )
 
 int EvtModel::isCommand( std::string cmd )
 {
-    if ( _commandNameHash.find( cmd ) != _commandNameHash.end() ) {
+    if ( m_commandNameHash.find( cmd ) != m_commandNameHash.end() ) {
         return 1;
     }
     return 0;
@@ -92,8 +92,8 @@ int EvtModel::isCommand( std::string cmd )
 void EvtModel::storeCommand( std::string cmd, std::string cnfgstr )
 {
     EvtDecayBase* model = nullptr;
-    if ( _commandNameHash.find( cmd ) != _commandNameHash.end() ) {
-        model = _commandNameHash[cmd];
+    if ( m_commandNameHash.find( cmd ) != m_commandNameHash.end() ) {
+        model = m_commandNameHash[cmd];
     }
 
     assert( model );

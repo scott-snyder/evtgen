@@ -43,8 +43,8 @@ class EvtRaritaSchwingerParticle : public EvtParticle {
                                           double gamma ) const override;
 
   private:
-    EvtRaritaSchwinger _spinorRest[4];
-    EvtRaritaSchwinger _spinor[4];
+    EvtRaritaSchwinger m_spinorRest[4];
+    EvtRaritaSchwinger m_spinor[4];
     EvtRaritaSchwingerParticle( const EvtRaritaSchwingerParticle& d );
     EvtRaritaSchwingerParticle& operator=( const EvtRaritaSchwingerParticle& d );
 };

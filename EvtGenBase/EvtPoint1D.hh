@@ -22,7 +22,7 @@
 #define EVT_POINT_1D_HH
 
 // Point on a finite 1-D interval. isValid shows whether for a given specification,
-// the coordinate _value is inside the interval defined by _min, _max.
+// the coordinate m_value is inside the interval defined by m_min, m_max.
 
 class EvtPoint1D final {
   public:
@@ -30,17 +30,17 @@ class EvtPoint1D final {
     EvtPoint1D( double value );
     EvtPoint1D( double min, double max, double value );
 
-    bool isValid() const { return _valid; }
+    bool isValid() const { return m_valid; }
 
-    double value() const { return _value; }
+    double value() const { return m_value; }
 
     void print() const;
 
   private:
-    double _min;    // interval minimum
-    double _max;    // interval maximum
-    double _value;
-    bool _valid;    // valid point inside the interval?
+    double m_min;    // interval minimum
+    double m_max;    // interval maximum
+    double m_value;
+    bool m_valid;    // valid point inside the interval?
 };
 
 #endif

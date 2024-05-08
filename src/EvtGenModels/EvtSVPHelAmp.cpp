@@ -64,7 +64,7 @@ void EvtSVPHelAmp::init()
 
 void EvtSVPHelAmp::decay( EvtParticle* p )
 {
-    SVPHel( p, _amp2, getDaug( 0 ), getDaug( 1 ),
+    SVPHel( p, m_amp2, getDaug( 0 ), getDaug( 1 ),
             EvtComplex( getArg( 0 ) * cos( getArg( 1 ) ),
                         getArg( 0 ) * sin( getArg( 1 ) ) ),
             EvtComplex( getArg( 2 ) * cos( getArg( 3 ) ),

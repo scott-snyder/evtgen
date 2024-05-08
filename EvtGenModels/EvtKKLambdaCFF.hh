@@ -48,8 +48,8 @@ class EvtKKLambdaCFF : public EvtSemiLeptonicFF {
                       double*, double*, double*, double*, double* ) override;
 
   private:
-    int _nargs;
-    double _args[2];
+    int m_nargs;
+    double m_args[2];
 };
 
 #endif

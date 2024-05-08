@@ -32,7 +32,7 @@
 
 void EvtHighSpinParticle::init( EvtId id, const EvtVector4R& p4 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( id );
 
@@ -53,8 +53,6 @@ EvtSpinDensity EvtHighSpinParticle::rotateToHelicityBasis( double alpha,
                                                            double beta,
                                                            double gamma ) const
 {
-    int i, j;
-
     int n = EvtSpinType::getSpinStates( EvtPDL::getSpinType( getId() ) );
 
     EvtSpinDensity R;
@@ -67,8 +65,8 @@ EvtSpinDensity EvtHighSpinParticle::rotateToHelicityBasis( double alpha,
 
     auto lambda2 = [J2]( int i ) { return J2 - i * 2; };
 
-    for ( i = 0; i < n; i++ ) {
-        for ( j = 0; j < n; j++ ) {
+    for ( int i = 0; i < n; i++ ) {
+        for ( int j = 0; j < n; j++ ) {
             R.set( i, j,
                    EvtdFunction::d( J2, lambda2( j ), lambda2( i ), beta ) *
                        exp( EvtComplex( 0.0, 0.5 * ( alpha * lambda2( i ) -

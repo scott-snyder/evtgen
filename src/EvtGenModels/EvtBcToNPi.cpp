@@ -34,8 +34,8 @@ using std::endl;
 
 EvtBcToNPi::EvtBcToNPi( bool printAuthorInfo )
 {
-    nCall = 0;
-    maxAmp2 = 0;
+    m_nCall = 0;
+    m_maxAmp2 = 0;
     if ( printAuthorInfo == true ) {
         this->printAuthorInfo();
     }
@@ -61,41 +61,41 @@ void EvtBcToNPi::init()
         checkSpinDaughter( i, EvtSpinType::SCALAR );
     };
 
-    _beta = -0.108;
-    _mRho = 0.775;
-    _gammaRho = 0.149;
-    _mRhopr = 1.364;
-    _gammaRhopr = 0.400;
-    _mA1 = 1.23;
-    _gammaA1 = 0.4;
+    m_beta = -0.108;
+    m_mRho = 0.775;
+    m_gammaRho = 0.149;
+    m_mRhopr = 1.364;
+    m_gammaRhopr = 0.400;
+    m_mA1 = 1.23;
+    m_gammaA1 = 0.4;
 
     // read arguments
     if ( EvtPDL::getSpinType( getDaug( 0 ) ) == EvtSpinType::VECTOR ) {
         checkNArg( 10 );
         int n = 0;
-        _maxProb = getArg( n++ );
-        FA0_N = getArg( n++ );
-        FA0_c1 = getArg( n++ );
-        FA0_c2 = getArg( n++ );
-        FAp_N = getArg( n++ );
-        FAp_c1 = getArg( n++ );
-        FAp_c2 = getArg( n++ );
-        FV_N = getArg( n++ );
-        FV_c1 = getArg( n++ );
-        FV_c2 = getArg( n++ );
-        FAm_N = 0;
-        FAm_c1 = 0;
-        FAm_c2 = 0;
+        m_maxProb = getArg( n++ );
+        m_FA0_N = getArg( n++ );
+        m_FA0_c1 = getArg( n++ );
+        m_FA0_c2 = getArg( n++ );
+        m_FAp_N = getArg( n++ );
+        m_FAp_c1 = getArg( n++ );
+        m_FAp_c2 = getArg( n++ );
+        m_FV_N = getArg( n++ );
+        m_FV_c1 = getArg( n++ );
+        m_FV_c2 = getArg( n++ );
+        m_FAm_N = 0;
+        m_FAm_c1 = 0;
+        m_FAm_c2 = 0;
     } else if ( EvtPDL::getSpinType( getDaug( 0 ) ) == EvtSpinType::SCALAR ) {
         checkNArg( 4 );
         int n = 0;
-        _maxProb = getArg( n++ );
-        Fp_N = getArg( n++ );
-        Fp_c1 = getArg( n++ );
-        Fp_c2 = getArg( n++ );
-        Fm_N = 0;
-        Fm_c1 = 0;
-        Fm_c2 = 0;
+        m_maxProb = getArg( n++ );
+        m_Fp_N = getArg( n++ );
+        m_Fp_c1 = getArg( n++ );
+        m_Fp_c2 = getArg( n++ );
+        m_Fm_N = 0;
+        m_Fm_c1 = 0;
+        m_Fm_c2 = 0;
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Have not yet implemented this final state in BCPSINPI model"
@@ -121,21 +121,21 @@ void EvtBcToNPi::init()
     }
 }
 
-double EvtBcToNPi::_ee( double M, double m1, double m2 )
+double EvtBcToNPi::energy1( double M, double m1, double m2 )
 {
     return ( M * M + m1 * m1 - m2 * m2 ) / ( 2 * M );
 }
 
-double EvtBcToNPi::_pp( double M, double m1, double m2 )
+double EvtBcToNPi::mom1( double M, double m1, double m2 )
 {
-    double __ee = _ee( M, m1, m2 );
-    return sqrt( __ee * __ee - m1 * m1 );
+    double e1 = energy1( M, m1, m2 );
+    return sqrt( e1 * e1 - m1 * m1 );
 }
 
 void EvtBcToNPi::initProbMax()
 {
-    if ( _maxProb > 0. )
-        setProbMax( _maxProb );
+    if ( m_maxProb > 0. )
+        setProbMax( m_maxProb );
     else {
         EvtId id = getParentId();
         EvtScalarParticle* p = new EvtScalarParticle();
@@ -149,26 +149,26 @@ void EvtBcToNPi::initProbMax()
             double M = EvtPDL::getMass( id ),
                    m1 = EvtPDL::getMass( getDaug( 0 ) ),
                    m2 = EvtPDL::getMass( getDaug( 1 ) );
-            double __pp = _pp( M, m1, m2 );
+            double p1 = mom1( M, m1, m2 );
             p->getDaug( 0 )->setP4(
-                EvtVector4R( _ee( M, m1, m2 ), 0., 0., __pp ) );
+                EvtVector4R( energy1( M, m1, m2 ), 0., 0., p1 ) );
             p->getDaug( 1 )->setP4(
-                EvtVector4R( _ee( M, m2, m1 ), 0., 0., -__pp ) );
+                EvtVector4R( energy1( M, m2, m1 ), 0., 0., -p1 ) );
         } else if ( getNDaug() == 3 ) {
             double M = EvtPDL::getMass( id ),
                    m1 = EvtPDL::getMass( getDaug( 0 ) ),
                    m2 = EvtPDL::getMass( getDaug( 1 ) ),
                    m3 = EvtPDL::getMass( getDaug( 2 ) );
-            double __ppRho = _pp( M, m1, _mRho ), __ppPi = _pp( _mRho, m2, m3 );
+            double pRho = mom1( M, m1, m_mRho ), pPi = mom1( m_mRho, m2, m3 );
             p->getDaug( 0 )->setP4(
-                EvtVector4R( _ee( M, m1, _mRho ), 0., 0., __ppRho ) );
-            EvtVector4R _pRho( _ee( M, _mRho, m1 ), 0., 0., -__ppRho );
-            EvtVector4R _p2( _ee( _mRho, m2, m3 ), 0., 0., __ppPi );
-            _p2.applyBoostTo( _pRho );
-            EvtVector4R _p3( _ee( _mRho, m2, m3 ), 0., 0., -__ppPi );
-            _p3.applyBoostTo( _pRho );
-            p->getDaug( 1 )->setP4( _p2 );
-            p->getDaug( 2 )->setP4( _p3 );
+                EvtVector4R( energy1( M, m1, m_mRho ), 0., 0., pRho ) );
+            EvtVector4R p4Rho( energy1( M, m_mRho, m1 ), 0., 0., -pRho );
+            EvtVector4R p4_2( energy1( m_mRho, m2, m3 ), 0., 0., pPi );
+            p4_2.applyBoostTo( p4Rho );
+            EvtVector4R p4_3( energy1( m_mRho, m2, m3 ), 0., 0., -pPi );
+            p4_3.applyBoostTo( p4Rho );
+            p->getDaug( 1 )->setP4( p4_2 );
+            p->getDaug( 2 )->setP4( p4_3 );
 
         } else if ( getNDaug() == 4 ) {
             double M = EvtPDL::getMass( id ),
@@ -176,31 +176,31 @@ void EvtBcToNPi::initProbMax()
                    m2 = EvtPDL::getMass( getDaug( 1 ) ),
                    m3 = EvtPDL::getMass( getDaug( 2 ) ),
                    m4 = EvtPDL::getMass( getDaug( 3 ) );
-            if ( M < m1 + _mA1 )
+            if ( M < m1 + m_mA1 )
                 return;
-            double __ppA1 = _pp( M, m1, _mA1 ), __ppRho = _pp( _mA1, _mRho, m4 ),
-                   __ppPi = _pp( _mRho, m2, m3 );
+            double pA1 = mom1( M, m1, m_mA1 ), pRho = mom1( m_mA1, m_mRho, m4 ),
+                   pPi = mom1( m_mRho, m2, m3 );
             p->getDaug( 0 )->setP4(
-                EvtVector4R( _ee( M, m1, _mRho ), 0., 0., __ppA1 ) );
-            EvtVector4R _pA1( _ee( M, _mA1, m1 ), 0., 0., -__ppA1 );
-            EvtVector4R _pRho( _ee( _mA1, _mRho, m4 ), 0, 0, __ppRho );
-            _pRho.applyBoostTo( _pA1 );
-            EvtVector4R _p4( _ee( _mA1, m4, _mRho ), 0, 0, -__ppRho );
-            _p4.applyBoostTo( _pA1 );
-            p->getDaug( 3 )->setP4( _p4 );
-            EvtVector4R _p2( _ee( _mRho, m2, m3 ), 0, 0, __ppPi );
-            _p2.applyBoostTo( _pRho );
-            p->getDaug( 1 )->setP4( _p2 );
-            EvtVector4R _p3( _ee( _mRho, m2, m3 ), 0, 0, -__ppPi );
-            _p2.applyBoostTo( _pRho );
-            p->getDaug( 2 )->setP4( _p3 );
+                EvtVector4R( energy1( M, m1, m_mRho ), 0., 0., pA1 ) );
+            EvtVector4R p4A1( energy1( M, m_mA1, m1 ), 0., 0., -pA1 );
+            EvtVector4R p4Rho( energy1( m_mA1, m_mRho, m4 ), 0, 0, pRho );
+            p4Rho.applyBoostTo( p4A1 );
+            EvtVector4R p4_4( energy1( m_mA1, m4, m_mRho ), 0, 0, -pRho );
+            p4_4.applyBoostTo( p4A1 );
+            p->getDaug( 3 )->setP4( p4_4 );
+            EvtVector4R p4_2( energy1( m_mRho, m2, m3 ), 0, 0, pPi );
+            p4_2.applyBoostTo( p4Rho );
+            p->getDaug( 1 )->setP4( p4_2 );
+            EvtVector4R p4_3( energy1( m_mRho, m2, m3 ), 0, 0, -pPi );
+            p4_2.applyBoostTo( p4Rho );
+            p->getDaug( 2 )->setP4( p4_3 );
         };
 
-        _amp2.init( p->getId(), getNDaug(), getDaugs() );
+        m_amp2.init( p->getId(), getNDaug(), getDaugs() );
 
         decay( p );
 
-        EvtSpinDensity rho = _amp2.getSpinDensity();
+        EvtSpinDensity rho = m_amp2.getSpinDensity();
 
         double prob = p->getSpinDensityForward().normalizedProb( rho );
 
@@ -211,7 +211,7 @@ void EvtBcToNPi::initProbMax()
 
 void EvtBcToNPi::decay( EvtParticle* root_particle )
 {
-    ++nCall;
+    ++m_nCall;
 
     EvtIdSet thePis{ "pi+", "pi-", "pi0" };
     EvtComplex I = EvtComplex( 0.0, 1.0 );
@@ -263,10 +263,10 @@ void EvtBcToNPi::decay( EvtParticle* root_particle )
         EvtVector4R p3 = root_particle->getDaug( diffPi )->getP4();
 
         EvtComplex BA1;
-        double GA1 = _gammaA1 * pi3G( Q2, samePi1 ) /
-                     pi3G( _mA1 * _mA1, samePi1 );
-        EvtComplex denBA1( _mA1 * _mA1 - Q.mass2(), -1. * _mA1 * GA1 );
-        BA1 = _mA1 * _mA1 / denBA1;
+        double GA1 = m_gammaA1 * pi3G( Q2, samePi1 ) /
+                     pi3G( m_mA1 * m_mA1, samePi1 );
+        EvtComplex denBA1( m_mA1 * m_mA1 - Q.mass2(), -1. * m_mA1 * GA1 );
+        BA1 = m_mA1 * m_mA1 / denBA1;
 
         hardCur = BA1 * ( ( p1 - p3 ) -
                           ( Q * ( Q * ( p1 - p3 ) ) / Q2 ) * Fpi( p2, p3 ) +
@@ -288,13 +288,13 @@ void EvtBcToNPi::decay( EvtParticle* root_particle )
         ::abort();
     };
 
-    EvtTensor4C H;
     double amp2 = 0.;
     if ( root_particle->getDaug( 0 )->getSpinType() == EvtSpinType::VECTOR ) {
-        double FA0 = FA0_N * exp( FA0_c1 * Q2 + FA0_c2 * Q2 * Q2 );
-        double FAp = FAp_N * exp( FAp_c1 * Q2 + FAp_c2 * Q2 * Q2 );
-        double FAm = FAm_N * exp( FAm_c1 * Q2 + FAm_c2 * Q2 * Q2 );
-        double FV = FV_N * exp( FV_c1 * Q2 + FV_c2 * Q2 * Q2 );
+        EvtTensor4C H;
+        double FA0 = m_FA0_N * exp( m_FA0_c1 * Q2 + m_FA0_c2 * Q2 * Q2 );
+        double FAp = m_FAp_N * exp( m_FAp_c1 * Q2 + m_FAp_c2 * Q2 * Q2 );
+        double FAm = m_FAm_N * exp( m_FAm_c1 * Q2 + m_FAm_c2 * Q2 * Q2 );
+        double FV = m_FV_N * exp( m_FV_c1 * Q2 + m_FV_c2 * Q2 * Q2 );
         H = -FA0 * EvtTensor4C::g() -
             FAp * EvtGenFunctions::directProd( p, p + k ) +
             FAm * EvtGenFunctions::directProd( p, p - k ) +
@@ -311,15 +311,15 @@ void EvtBcToNPi::decay( EvtParticle* root_particle )
         }
     } else if ( root_particle->getDaug( 0 )->getSpinType() ==
                 EvtSpinType::SCALAR ) {
-        double Fp = Fp_N * exp( Fp_c1 * Q2 + Fp_c2 * Q2 * Q2 );
-        double Fm = Fm_N * exp( Fm_c1 * Q2 + Fm_c2 * Q2 * Q2 );
+        double Fp = m_Fp_N * exp( m_Fp_c1 * Q2 + m_Fp_c2 * Q2 * Q2 );
+        double Fm = m_Fm_N * exp( m_Fm_c1 * Q2 + m_Fm_c2 * Q2 * Q2 );
         EvtVector4C H = Fp * ( p + k ) + Fm * ( p - k );
         EvtComplex amp = H * hardCur;
         vertex( amp );
         amp2 += pow( abs( amp ), 2 );
     };
-    if ( amp2 > maxAmp2 )
-        maxAmp2 = amp2;
+    if ( amp2 > m_maxAmp2 )
+        m_maxAmp2 = amp2;
 
     return;
 }
@@ -333,35 +333,35 @@ EvtComplex EvtBcToNPi::Fpi( EvtVector4R q1, EvtVector4R q2 )
     double mQ2 = Q * Q;
 
     // momenta in the rho->pipi decay
-    double dRho = _mRho * _mRho - m1 * m1 - m2 * m2;
-    double pPiRho = ( 1.0 / _mRho ) *
+    double dRho = m_mRho * m_mRho - m1 * m1 - m2 * m2;
+    double pPiRho = ( 1.0 / m_mRho ) *
                     sqrt( ( dRho * dRho ) / 4.0 - m1 * m1 * m2 * m2 );
 
-    double dRhopr = _mRhopr * _mRhopr - m1 * m1 - m2 * m2;
-    double pPiRhopr = ( 1.0 / _mRhopr ) *
+    double dRhopr = m_mRhopr * m_mRhopr - m1 * m1 - m2 * m2;
+    double pPiRhopr = ( 1.0 / m_mRhopr ) *
                       sqrt( ( dRhopr * dRhopr ) / 4.0 - m1 * m1 * m2 * m2 );
 
     double dQ = mQ2 - m1 * m1 - m2 * m2;
     double pPiQ = ( 1.0 / sqrt( mQ2 ) ) *
                   sqrt( ( dQ * dQ ) / 4.0 - m1 * m1 * m2 * m2 );
 
-    double gammaRho = _gammaRho * _mRho / sqrt( mQ2 ) *
+    double gammaRho = m_gammaRho * m_mRho / sqrt( mQ2 ) *
                       pow( ( pPiQ / pPiRho ), 3 );
-    EvtComplex BRhoDem( _mRho * _mRho - mQ2, -1.0 * _mRho * gammaRho );
-    EvtComplex BRho = _mRho * _mRho / BRhoDem;
+    EvtComplex BRhoDem( m_mRho * m_mRho - mQ2, -1.0 * m_mRho * gammaRho );
+    EvtComplex BRho = m_mRho * m_mRho / BRhoDem;
 
-    double gammaRhopr = _gammaRhopr * _mRhopr / sqrt( mQ2 ) *
+    double gammaRhopr = m_gammaRhopr * m_mRhopr / sqrt( mQ2 ) *
                         pow( ( pPiQ / pPiRhopr ), 3 );
-    EvtComplex BRhoprDem( _mRhopr * _mRhopr - mQ2, -1.0 * _mRho * gammaRhopr );
-    EvtComplex BRhopr = _mRhopr * _mRhopr / BRhoprDem;
+    EvtComplex BRhoprDem( m_mRhopr * m_mRhopr - mQ2, -1.0 * m_mRho * gammaRhopr );
+    EvtComplex BRhopr = m_mRhopr * m_mRhopr / BRhoprDem;
 
-    return ( BRho + _beta * BRhopr ) / ( 1 + _beta );
+    return ( BRho + m_beta * BRhopr ) / ( 1 + m_beta );
 }
 
 double EvtBcToNPi::pi3G( double m2, int dupD )
 {
     double mPi = EvtPDL::getMeanMass( getDaug( dupD ) );
-    if ( m2 > ( _mRho + mPi ) ) {
+    if ( m2 > ( m_mRho + mPi ) ) {
         return m2 * ( 1.623 + 10.38 / m2 - 9.32 / ( m2 * m2 ) +
                       0.65 / ( m2 * m2 * m2 ) );
     } else {

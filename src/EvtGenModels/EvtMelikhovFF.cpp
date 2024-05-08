@@ -31,7 +31,7 @@
 
 EvtMelikhovFF::EvtMelikhovFF( double arg1 )
 {
-    whichfit = int( arg1 + 0.1 );
+    m_whichfit = int( arg1 + 0.1 );
 }
 
 void EvtMelikhovFF::getvectorff( EvtId parent, EvtId, double t, double mass,
@@ -42,7 +42,7 @@ void EvtMelikhovFF::getvectorff( EvtId parent, EvtId, double t, double mass,
     double ma2( 0.0 ), ra2( 0.0 ), na2( 0.0 );
     double mv( 0.0 ), rv( 0.0 ), nv( 0.0 );
 
-    if ( whichfit == 1 ) {
+    if ( m_whichfit == 1 ) {
         ma1 = 7.07;
         ra1 = 0.27;
         na1 = 2.65;
@@ -53,7 +53,7 @@ void EvtMelikhovFF::getvectorff( EvtId parent, EvtId, double t, double mass,
         rv = 0.30;
         nv = 2.36;
     }
-    if ( whichfit == 2 ) {
+    if ( m_whichfit == 2 ) {
         ma1 = 6.78;
         ra1 = 0.20;
         na1 = 2.65;
@@ -64,7 +64,7 @@ void EvtMelikhovFF::getvectorff( EvtId parent, EvtId, double t, double mass,
         rv = 0.20;
         nv = 2.46;
     }
-    if ( whichfit == 3 ) {
+    if ( m_whichfit == 3 ) {
         ma1 = 6.50;
         ra1 = 0.21;
         na1 = 2.70;
@@ -75,7 +75,7 @@ void EvtMelikhovFF::getvectorff( EvtId parent, EvtId, double t, double mass,
         rv = 0.21;
         nv = 2.35;
     }
-    if ( whichfit == 4 ) {
+    if ( m_whichfit == 4 ) {
         ma1 = 5.68;
         ra1 = 0.29;
         na1 = 1.67;

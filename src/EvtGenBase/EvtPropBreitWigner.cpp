@@ -38,7 +38,7 @@ EvtAmplitude<EvtPoint1D>* EvtPropBreitWigner::clone() const
 EvtComplex EvtPropBreitWigner::amplitude( const EvtPoint1D& x ) const
 {
     double m = x.value();
-    EvtComplex value = sqrt( _g0 / EvtConst::twoPi ) /
-                       ( m - _m0 - EvtComplex( 0.0, _g0 / 2. ) );
+    EvtComplex value = sqrt( m_g0 / EvtConst::twoPi ) /
+                       ( m - m_m0 - EvtComplex( 0.0, m_g0 / 2. ) );
     return value;
 }

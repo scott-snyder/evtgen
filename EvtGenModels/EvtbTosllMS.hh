@@ -48,9 +48,9 @@ class EvtbTosllMS : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    EvtbTosllFFNew* _msffmodel;
-    EvtbTosllAmpNew* _calcamp;
-    EvtbTosllWilsCoeffNLO* _wilscoeff;
+    EvtbTosllFFNew* m_msffmodel;
+    EvtbTosllAmpNew* m_calcamp;
+    EvtbTosllWilsCoeffNLO* m_wilscoeff;
 };
 
 #endif

@@ -36,9 +36,9 @@
 
 EvtbTosllMSExt::~EvtbTosllMSExt()
 {
-    delete _msffmodel;
-    if ( _calcamp )
-        delete _calcamp;
+    delete m_msffmodel;
+    if ( m_calcamp )
+        delete m_calcamp;
 }
 
 // The module name specification
@@ -102,13 +102,13 @@ void EvtbTosllMSExt::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::DIRAC );
 
-    _msffmodel = new EvtbTosllMSFF();
-    _wilscoeff = new EvtbTosllWilsCoeffNLO();
+    m_msffmodel = new EvtbTosllMSFF();
+    m_wilscoeff = new EvtbTosllWilsCoeffNLO();
     if ( mesontype == EvtSpinType::VECTOR ) {
-        _calcamp = new EvtbTosllVectorAmpNewExt();
+        m_calcamp = new EvtbTosllVectorAmpNewExt();
     }
     if ( mesontype == EvtSpinType::SCALAR ) {
-        _calcamp = new EvtbTosllScalarAmpNewExt();
+        m_calcamp = new EvtbTosllScalarAmpNewExt();
     }
 }
 
@@ -140,10 +140,10 @@ void EvtbTosllMSExt::initProbMax()
     double ReA10 = getArg( 10 );
     double ImA10 = getArg( 11 );
 
-    mymaxprob = _calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num, _msffmodel,
-                                       _wilscoeff, mu, Nf, res_swch, ias, CKM_A,
-                                       CKM_lambda, CKM_barrho, CKM_bareta, ReA7,
-                                       ImA7, ReA10, ImA10 );
+    mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, l1num, l2num, m_msffmodel,
+                                        m_wilscoeff, mu, Nf, res_swch, ias,
+                                        CKM_A, CKM_lambda, CKM_barrho,
+                                        CKM_bareta, ReA7, ImA7, ReA10, ImA10 );
 
     if ( mymaxprob <= 0.0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -178,9 +178,9 @@ void EvtbTosllMSExt::decay( EvtParticle* p )
     // and
     // the class "EvtbTosllMSFF" is the derived class of the
     // class  "EvtbTosllFFNew" (see the file "EvtbTosllMSFF.hh")
-    _calcamp->CalcAmp( p, _amp2, _msffmodel, _wilscoeff, mu, Nf, res_swch, ias,
-                       CKM_A, CKM_lambda, CKM_barrho, CKM_bareta, ReA7, ImA7,
-                       ReA10, ImA10 );
+    m_calcamp->CalcAmp( p, m_amp2, m_msffmodel, m_wilscoeff, mu, Nf, res_swch,
+                        ias, CKM_A, CKM_lambda, CKM_barrho, CKM_bareta, ReA7,
+                        ImA7, ReA10, ImA10 );
 
     //  EvtGenReport(EVTGEN_NOTICE,"EvtGen") << "\n The function EvtbTosllMSExt::decay(...) passed with arguments:"
     //                        << "\n mu = " << mu << " Nf =" << Nf

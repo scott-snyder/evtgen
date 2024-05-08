@@ -36,37 +36,39 @@
 using std::fstream;
 void EvtParticleDecay::printSummary()
 {
-    if ( _decay != nullptr )
-        _decay->printSummary();
+    if ( m_decay != nullptr ) {
+        m_decay->printSummary();
+    }
 }
 
 void EvtParticleDecay::chargeConj( EvtParticleDecay* decay )
 {
-    _brfrsum = decay->_brfrsum;
-    _massmin = decay->_massmin;
+    m_brfrsum = decay->m_brfrsum;
+    m_massmin = decay->m_massmin;
 
-    _decay = decay->_decay->clone();
+    m_decay = decay->m_decay->clone();
 
-    int ndaug = decay->_decay->getNDaug();
-    int narg = decay->_decay->getNArg();
-    double brfr = decay->_decay->getBranchingFraction();
-    std::string name = decay->_decay->getName();
-    EvtId ipar = EvtPDL::chargeConj( decay->_decay->getParentId() );
+    int ndaug = decay->m_decay->getNDaug();
+    int narg = decay->m_decay->getNArg();
+    double brfr = decay->m_decay->getBranchingFraction();
+    std::string name = decay->m_decay->getName();
+    EvtId ipar = EvtPDL::chargeConj( decay->m_decay->getParentId() );
     int i;
     EvtId* daug = new EvtId[ndaug];
     for ( i = 0; i < ndaug; i++ ) {
-        daug[i] = EvtPDL::chargeConj( decay->_decay->getDaug( i ) );
+        daug[i] = EvtPDL::chargeConj( decay->m_decay->getDaug( i ) );
     }
     //Had to add 1 to make sure the vector is not empty!
     std::vector<std::string> args;
     for ( i = 0; i < narg; i++ ) {
-        args.push_back( decay->_decay->getArgStr( i ) );
+        args.push_back( decay->m_decay->getArgStr( i ) );
     }
 
-    _decay->saveDecayInfo( ipar, ndaug, daug, narg, args, name, brfr );
+    m_decay->saveDecayInfo( ipar, ndaug, daug, narg, args, name, brfr );
 
-    if ( decay->_decay->getFSR() )
-        _decay->setFSR();
+    if ( decay->m_decay->getFSR() ) {
+        m_decay->setFSR();
+    }
 
     delete[] daug;
 }

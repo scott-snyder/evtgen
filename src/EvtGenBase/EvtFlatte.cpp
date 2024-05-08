@@ -35,19 +35,13 @@ EvtFlatte& EvtFlatte::operator=( const EvtFlatte& n )
 {
     if ( &n == this )
         return *this;
-    _p4_p = n._p4_p;
-    _p4_d1 = n._p4_d1;
-    _p4_d2 = n._p4_d2;
-    _ampl = n._ampl;
-    _theta = n._theta;
-    _mass = n._mass;
-    _params = n._params;
-    //  _m1a = n._m1a;
-    //  _m1b = n._m1b;
-    //  _g1 = n._g1;
-    //  _m2a = n._m2a;
-    //  _m2b = n._m2b;
-    //  _g2 = n._g2;
+    m_p4_p = n.m_p4_p;
+    m_p4_d1 = n.m_p4_d1;
+    m_p4_d2 = n.m_p4_d2;
+    m_ampl = n.m_ampl;
+    m_theta = n.m_theta;
+    m_mass = n.m_mass;
+    m_params = n.m_params;
     return *this;
 }
 
@@ -55,19 +49,14 @@ EvtFlatte& EvtFlatte::operator=( const EvtFlatte& n )
 
 EvtFlatte::EvtFlatte( const EvtVector4R& p4_p, const EvtVector4R& p4_d1,
                       const EvtVector4R& p4_d2, double ampl, double theta,
-                      double mass, vector<EvtFlatteParam>& params
-                      //                   double m1a, double m1b, double g1,
-                      //                   double m2a, double m2b, double g2
-                      ) :
-    _p4_p( p4_p ),
-    _p4_d1( p4_d1 ),
-    _p4_d2( p4_d2 ),
-    _ampl( ampl ),
-    _theta( theta ),
-    _mass( mass ),
-    _params( params )
-//  _m1a(m1a), _m1b(m1b), _g1(g1),
-//  _m2a(m2a), _m2b(m2b), _g2(g2)
+                      double mass, vector<EvtFlatteParam>& params ) :
+    m_p4_p( p4_p ),
+    m_p4_d1( p4_d1 ),
+    m_p4_d2( p4_d2 ),
+    m_ampl( ampl ),
+    m_theta( theta ),
+    m_mass( mass ),
+    m_params( params )
 {
 }
 
@@ -77,30 +66,25 @@ EvtComplex EvtFlatte::resAmpl()
 {
     double pi180inv = 1.0 / EvtConst::radToDegrees;
 
-    //   EvtComplex ampl(cos(_theta*pi180inv), sin(_theta*pi180inv));
-    //   ampl *= _ampl;
-
     // SCALARS ONLY
-    double mR = ( _p4_d1 + _p4_d2 ).mass();
+    double mR = ( m_p4_d1 + m_p4_d2 ).mass();
 
     EvtComplex w;
 
-    for ( vector<EvtFlatteParam>::const_iterator param = _params.begin();
-          param != _params.end(); ++param ) {
+    for ( vector<EvtFlatteParam>::const_iterator param = m_params.begin();
+          param != m_params.end(); ++param ) {
         double m1 = ( *param ).m1();
         double m2 = ( *param ).m2();
         double g = ( *param ).g();
         w += ( g * g *
                sqrtCplx( ( 1 - ( ( m1 - m2 ) * ( m1 - m2 ) ) / ( mR * mR ) ) *
                          ( 1 - ( ( m1 + m2 ) * ( m1 + m2 ) ) / ( mR * mR ) ) ) );
-        //     cout << m1 << " " << mR << " " << w << endl;
     }
 
-    EvtComplex denom = _mass * _mass - mR * mR - EvtComplex( 0, 1 ) * w;
-    EvtComplex ampl = _ampl *
-                      EvtComplex( cos( _theta * pi180inv ),
-                                  sin( _theta * pi180inv ) ) /
+    EvtComplex denom = m_mass * m_mass - mR * mR - EvtComplex( 0, 1 ) * w;
+    EvtComplex ampl = m_ampl *
+                      EvtComplex( cos( m_theta * pi180inv ),
+                                  sin( m_theta * pi180inv ) ) /
                       denom;
-    //  cout << abs(1/denom) << endl;
     return ampl;
 }

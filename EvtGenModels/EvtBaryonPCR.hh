@@ -43,8 +43,8 @@ class EvtBaryonPCR : public EvtDecayAmp {
     void init() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> baryonpcrffmodel;
-    std::unique_ptr<EvtSemiLeptonicBaryonAmp> calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_baryonpcrffmodel;
+    std::unique_ptr<EvtSemiLeptonicBaryonAmp> m_calcamp;
 };
 
 #endif

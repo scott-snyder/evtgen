@@ -49,13 +49,13 @@ class EvtRareLbToLllFFGutsche : public EvtRareLbToLllFFBase {
     double formFactorParametrization( const double s, const double f0,
                                       const double a, const double b ) const;
 
-    double fVconsts[3][3];
-    double fAconsts[3][3];
-    double fTVconsts[3][3];
-    double fTAconsts[3][3];
+    double m_Vconsts[3][3];
+    double m_Aconsts[3][3];
+    double m_TVconsts[3][3];
+    double m_TAconsts[3][3];
 
-    const EvtIdSet fParents{ "Lambda_b0", "anti-Lambda_b0" };
-    const EvtIdSet fDaughters{ "Lambda0", "anti-Lambda0" };
+    const EvtIdSet m_Parents{ "Lambda_b0", "anti-Lambda_b0" };
+    const EvtIdSet m_Daughters{ "Lambda0", "anti-Lambda0" };
 };
 
 #endif    // EVTRARELBTOLLLFF_HH

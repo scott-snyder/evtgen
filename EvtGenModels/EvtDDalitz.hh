@@ -39,14 +39,14 @@ class EvtDDalitz : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    int _d1, _d2, _d3, _flag;
+    int m_d1, m_d2, m_d3, m_flag;
 
     EvtComplex amplDtoK0PiPi( EvtVector4R p4_p, EvtVector4R moms1,
                               EvtVector4R moms2, EvtVector4R moms3 );
     EvtComplex amplDtoK0KK( EvtVector4R p4_p, EvtVector4R moms1,
                             EvtVector4R moms2, EvtVector4R moms3 );
 
-    vector<EvtFlatteParam> _kkpi_params;
+    vector<EvtFlatteParam> m_kkpi_params;
 };
 
 #endif

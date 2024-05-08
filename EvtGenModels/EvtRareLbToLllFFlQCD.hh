@@ -54,13 +54,13 @@ class EvtRareLbToLllFFlQCD : public EvtRareLbToLllFFBase {
                                       const double a1, const double pole ) const;
     double zvar( const double q2 ) const;
 
-    double fconsts[3][3];
-    double gconsts[3][3];
-    double hconsts[3][3];
-    double htildaconsts[3][3];
+    double m_fconsts[3][3];
+    double m_gconsts[3][3];
+    double m_hconsts[3][3];
+    double m_htildaconsts[3][3];
 
-    double t0;
-    double tplus;
+    double m_t0;
+    double m_tplus;
 };
 
 #endif    // EVTRARELBTOLLLFF_HH

@@ -46,30 +46,30 @@ class EvtBcToNPi : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   protected:
-    int nCall;
-    double maxAmp2;
+    int m_nCall;
+    double m_maxAmp2;
 
     // Bc form factors
-    double _maxProb;
-    double FA0_N, FA0_c1, FA0_c2;
-    double FAm_N, FAm_c1, FAm_c2;
-    double FAp_N, FAp_c1, FAp_c2;
-    double FV_N, FV_c1, FV_c2;
+    double m_maxProb;
+    double m_FA0_N, m_FA0_c1, m_FA0_c2;
+    double m_FAm_N, m_FAm_c1, m_FAm_c2;
+    double m_FAp_N, m_FAp_c1, m_FAp_c2;
+    double m_FV_N, m_FV_c1, m_FV_c2;
 
-    double Fp_N, Fp_c1, Fp_c2;
-    double Fm_N, Fm_c1, Fm_c2;
+    double m_Fp_N, m_Fp_c1, m_Fp_c2;
+    double m_Fm_N, m_Fm_c1, m_Fm_c2;
 
     // W -> pi... form factors
-    double _beta;
-    double _mRho;
-    double _gammaRho;
-    double _mRhopr;
-    double _gammaRhopr;
-    double _mA1;
-    double _gammaA1;
+    double m_beta;
+    double m_mRho;
+    double m_gammaRho;
+    double m_mRhopr;
+    double m_gammaRhopr;
+    double m_mA1;
+    double m_gammaA1;
 
-    double _ee( double M, double m1, double m2 );
-    double _pp( double M, double m1, double m2 );
+    double energy1( double M, double m1, double m2 );
+    double mom1( double M, double m1, double m2 );
     EvtComplex Fpi( EvtVector4R q1, EvtVector4R q2 );
     double pi3G( double m2, int dupD );
 

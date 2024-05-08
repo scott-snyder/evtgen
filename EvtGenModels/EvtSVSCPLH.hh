@@ -41,11 +41,11 @@ class EvtSVSCPLH : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    EvtComplex _Af, _Abarf;
-    EvtComplex _qop, _poq;
+    EvtComplex m_Af, m_Abarf;
+    EvtComplex m_qop, m_poq;
 
-    double _dm;
-    double _dgamma;
+    double m_dm;
+    double m_dgamma;
 };
 
 #endif

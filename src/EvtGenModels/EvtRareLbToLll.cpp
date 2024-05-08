@@ -82,20 +82,20 @@ void EvtRareLbToLll::init()
         model = getArgStr( 0 );
     }
     if ( model == "Gutsche" ) {
-        ffmodel_ = std::make_unique<EvtRareLbToLllFFGutsche>();
+        m_ffmodel = std::make_unique<EvtRareLbToLllFFGutsche>();
     } else if ( model == "LQCD" ) {
-        ffmodel_ = std::make_unique<EvtRareLbToLllFFlQCD>();
+        m_ffmodel = std::make_unique<EvtRareLbToLllFFlQCD>();
     } else if ( model == "MR" ) {
-        ffmodel_ = std::make_unique<EvtRareLbToLllFF>();
+        m_ffmodel = std::make_unique<EvtRareLbToLllFF>();
     } else {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "  Unknown form-factor model, valid options are MR, LQCD, Gutsche."
             << "  Assuming LQCD form-factors... " << std::endl;
-        ffmodel_ = std::make_unique<EvtRareLbToLllFFlQCD>();
+        m_ffmodel = std::make_unique<EvtRareLbToLllFFlQCD>();
     }
-    wcmodel_ = std::make_unique<EvtRareLbToLllWC>();
+    m_wcmodel = std::make_unique<EvtRareLbToLllWC>();
 
-    ffmodel_->init();
+    m_ffmodel->init();
 
     return;
 }
@@ -209,7 +209,7 @@ void EvtRareLbToLll::decay( EvtParticle* parent )
     } else {
         parent->initializePhaseSpace( getNDaug(), getDaugs() );
     }
-    calcAmp( _amp2, *parent );
+    calcAmp( m_amp2, *parent );
 }
 
 bool EvtRareLbToLll::isParticle( const EvtParticle& parent ) const
@@ -268,11 +268,11 @@ void EvtRareLbToLll::calcAmp( EvtAmp& amp, const EvtParticle& parent )
 
     EvtRareLbToLllFF::FormFactors FF;
     //F, G, FT and GT
-    ffmodel_->getFF( parent, *lambda, FF );
+    m_ffmodel->getFF( parent, *lambda, FF );
 
-    EvtComplex C7eff = wcmodel_->GetC7Eff( qsq );
-    EvtComplex C9eff = wcmodel_->GetC9Eff( qsq );
-    EvtComplex C10eff = wcmodel_->GetC10Eff( qsq );
+    EvtComplex C7eff = m_wcmodel->GetC7Eff( qsq );
+    EvtComplex C9eff = m_wcmodel->GetC9Eff( qsq );
+    EvtComplex C10eff = m_wcmodel->GetC10Eff( qsq );
 
     EvtComplex AC[4];
     EvtComplex BC[4];
@@ -280,7 +280,7 @@ void EvtRareLbToLll::calcAmp( EvtAmp& amp, const EvtParticle& parent )
     EvtComplex EC[4];
 
     // check to see if particle is same or opposite parity to Lb
-    const int parity = ffmodel_->isNatural( *lambda ) ? 1 : -1;
+    const int parity = m_ffmodel->isNatural( *lambda ) ? 1 : -1;
 
     // Lambda spin type
     const EvtSpinType::spintype spin = EvtPDL::getSpinType( lambda->getId() );
@@ -290,15 +290,15 @@ void EvtRareLbToLll::calcAmp( EvtAmp& amp, const EvtParticle& parent )
     // Eq. 48 + 49
     for ( unsigned int i = 0; i < 4; ++i ) {
         if ( parity > 0 ) {
-            AC[i] = -2. * mb * C7eff * FF.FT_[i] / qsq + C9eff * FF.F_[i];
-            BC[i] = -2. * mb * C7eff * FF.GT_[i] / qsq - C9eff * FF.G_[i];
-            DC[i] = C10eff * FF.F_[i];
-            EC[i] = -C10eff * FF.G_[i];
+            AC[i] = -2. * mb * C7eff * FF.m_FT[i] / qsq + C9eff * FF.m_F[i];
+            BC[i] = -2. * mb * C7eff * FF.m_GT[i] / qsq - C9eff * FF.m_G[i];
+            DC[i] = C10eff * FF.m_F[i];
+            EC[i] = -C10eff * FF.m_G[i];
         } else {
-            AC[i] = -2. * mb * C7eff * FF.GT_[i] / qsq - C9eff * FF.G_[i];
-            BC[i] = -2. * mb * C7eff * FF.FT_[i] / qsq + C9eff * FF.F_[i];
-            DC[i] = -C10eff * FF.G_[i];
-            EC[i] = C10eff * FF.F_[i];
+            AC[i] = -2. * mb * C7eff * FF.m_GT[i] / qsq - C9eff * FF.m_G[i];
+            BC[i] = -2. * mb * C7eff * FF.m_FT[i] / qsq + C9eff * FF.m_F[i];
+            DC[i] = -C10eff * FF.m_G[i];
+            EC[i] = C10eff * FF.m_F[i];
         }
     }
 
@@ -459,8 +459,8 @@ void EvtRareLbToLll::HadronicAmpRS( const EvtParticle& parent,
 
     EvtDiracSpinor Sprime;
 
-    for ( int i = 0; i < 4; i++ ) {
-        Sprime.set_spinor( i, Sfinal.getVector( i ) * P );
+    for ( int ii = 0; ii < 4; ii++ ) {
+        Sprime.set_spinor( ii, Sfinal.getVector( ii ) * P );
     }
 
     const double Pmsq = P.mass2();
@@ -469,9 +469,9 @@ void EvtRareLbToLll::HadronicAmpRS( const EvtParticle& parent,
 
     EvtVector4C V1, V2;
 
-    for ( int i = 0; i < 4; i++ ) {
-        V1.set( i, EvtLeptonSCurrent( Sfinal.getSpinor( i ), Sinit ) );
-        V2.set( i, EvtLeptonPCurrent( Sfinal.getSpinor( i ), Sinit ) );
+    for ( int ii = 0; ii < 4; ii++ ) {
+        V1.set( ii, EvtLeptonSCurrent( Sfinal.getSpinor( ii ), Sinit ) );
+        V2.set( ii, EvtLeptonPCurrent( Sfinal.getSpinor( ii ), Sinit ) );
     }
 
     // \bar{u}_{alpha} v^{\alpha} \gamma^{\mu} u

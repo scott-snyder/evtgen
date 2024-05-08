@@ -31,26 +31,26 @@
 #include <cmath>
 
 EvtBLLNuLAmp::EvtBLLNuLAmp( double Vub ) :
-    qSqMin_( 0.0 ),
-    kSqMin_( 0.0 ),
-    symmetry_( false ),
-    BpId_( EvtPDL::getId( "B+" ) ),
-    BnId_( EvtPDL::getId( "B-" ) ),
-    coupling_( 0.0 ),
-    sqrt2_( sqrt( 2.0 ) ),
-    fBu_( 0.191 ),    // leptonic constant (GeV)
-    Bstar_( EvtBLLNuLAmp::ResPole( 5.32, 0.00658, 0.183 / 3.0 ) ),
-    Upsilon_( EvtBLLNuLAmp::ResPole( 9.64, 0.0, 0.0 ) ),
-    resPoles_(),
-    nPoles_( 0 ),
-    zero_( EvtComplex( 0.0, 0.0 ) ),
-    unitI_( EvtComplex( 0.0, 1.0 ) )
+    m_qSqMin( 0.0 ),
+    m_kSqMin( 0.0 ),
+    m_symmetry( false ),
+    m_BpId( EvtPDL::getId( "B+" ) ),
+    m_BnId( EvtPDL::getId( "B-" ) ),
+    m_coupling( 0.0 ),
+    m_sqrt2( sqrt( 2.0 ) ),
+    m_fBu( 0.191 ),    // leptonic constant (GeV)
+    m_Bstar( EvtBLLNuLAmp::ResPole( 5.32, 0.00658, 0.183 / 3.0 ) ),
+    m_Upsilon( EvtBLLNuLAmp::ResPole( 9.64, 0.0, 0.0 ) ),
+    m_resPoles(),
+    m_nPoles( 0 ),
+    m_zero( EvtComplex( 0.0, 0.0 ) ),
+    m_unitI( EvtComplex( 0.0, 1.0 ) )
 {
     double GF = 1.166371e-5;    // GeV^{-2}
     double alphaEM = 1.0 / 137.0;
 
     // Normalisation constant, multiplied by 1e4 to increase probability scale
-    coupling_ = 400.0 * GF * EvtConst::pi * alphaEM * Vub * 1e4 / sqrt2_;
+    m_coupling = 400.0 * GF * EvtConst::pi * alphaEM * Vub * 1e4 / m_sqrt2;
 
     // Define VMD resonance poles using PDG 2016 values with constants from
     // D.Melikhov, N.Nikitin and K.Toms, Phys. Atom. Nucl. 68, 1842 (2005)
@@ -58,37 +58,37 @@ EvtBLLNuLAmp::EvtBLLNuLAmp( double Vub ) :
     // Rho and omega resonances
     EvtBLLNuLAmp::ResPole rho = EvtBLLNuLAmp::ResPole( 0.77526, 0.1491,
                                                        1.0 / 5.04 );
-    resPoles_.push_back( rho );
+    m_resPoles.push_back( rho );
 
     EvtBLLNuLAmp::ResPole omega = EvtBLLNuLAmp::ResPole( 0.78265, 0.00849,
                                                          1.0 / 17.1 );
-    resPoles_.push_back( omega );
+    m_resPoles.push_back( omega );
 
-    nPoles_ = resPoles_.size();
+    m_nPoles = m_resPoles.size();
 }
 
 EvtBLLNuLAmp::EvtBLLNuLAmp( double qSqMin, double kSqMin, bool symmetry,
                             double Vub ) :
-    qSqMin_( qSqMin ),
-    kSqMin_( kSqMin ),
-    symmetry_( symmetry ),
-    BpId_( EvtPDL::getId( "B+" ) ),
-    BnId_( EvtPDL::getId( "B-" ) ),
-    coupling_( 0.0 ),
-    sqrt2_( sqrt( 2.0 ) ),
-    fBu_( 0.191 ),    // leptonic constant (GeV)
-    Bstar_( EvtBLLNuLAmp::ResPole( 5.32, 0.00658, 0.183 / 3.0 ) ),
-    Upsilon_( EvtBLLNuLAmp::ResPole( 9.64, 0.0, 0.0 ) ),
-    resPoles_(),
-    nPoles_( 0 ),
-    zero_( EvtComplex( 0.0, 0.0 ) ),
-    unitI_( EvtComplex( 0.0, 1.0 ) )
+    m_qSqMin( qSqMin ),
+    m_kSqMin( kSqMin ),
+    m_symmetry( symmetry ),
+    m_BpId( EvtPDL::getId( "B+" ) ),
+    m_BnId( EvtPDL::getId( "B-" ) ),
+    m_coupling( 0.0 ),
+    m_sqrt2( sqrt( 2.0 ) ),
+    m_fBu( 0.191 ),    // leptonic constant (GeV)
+    m_Bstar( EvtBLLNuLAmp::ResPole( 5.32, 0.00658, 0.183 / 3.0 ) ),
+    m_Upsilon( EvtBLLNuLAmp::ResPole( 9.64, 0.0, 0.0 ) ),
+    m_resPoles(),
+    m_nPoles( 0 ),
+    m_zero( EvtComplex( 0.0, 0.0 ) ),
+    m_unitI( EvtComplex( 0.0, 1.0 ) )
 {
     double GF = 1.166371e-5;    // GeV^{-2}
     double alphaEM = 1.0 / 137.0;
 
     // Normalisation constant, multiplied by 1e4 to increase probability scale
-    coupling_ = 400.0 * GF * EvtConst::pi * alphaEM * Vub * 1e4 / sqrt2_;
+    m_coupling = 400.0 * GF * EvtConst::pi * alphaEM * Vub * 1e4 / m_sqrt2;
 
     // Define VMD resonance poles using PDG 2016 values with constants from
     // D.Melikhov, N.Nikitin and K.Toms, Phys. Atom. Nucl. 68, 1842 (2005)
@@ -96,35 +96,35 @@ EvtBLLNuLAmp::EvtBLLNuLAmp( double qSqMin, double kSqMin, bool symmetry,
     // Rho and omega resonances
     EvtBLLNuLAmp::ResPole rho = EvtBLLNuLAmp::ResPole( 0.77526, 0.1491,
                                                        1.0 / 5.04 );
-    resPoles_.push_back( rho );
+    m_resPoles.push_back( rho );
 
     EvtBLLNuLAmp::ResPole omega = EvtBLLNuLAmp::ResPole( 0.78265, 0.00849,
                                                          1.0 / 17.1 );
-    resPoles_.push_back( omega );
+    m_resPoles.push_back( omega );
 
-    nPoles_ = resPoles_.size();
+    m_nPoles = m_resPoles.size();
 }
 
 // Storing resonance pole information
 EvtBLLNuLAmp::ResPole::ResPole( double mass, double width, double coupling ) :
-    m0_( mass ),
-    m0Sq_( mass * mass ),
-    w0_( width ),
-    c_( coupling ),
-    I_( EvtComplex( 0.0, 1.0 ) ),
-    Imw_( I_ * mass * width )
+    m_m0( mass ),
+    m_m0Sq( mass * mass ),
+    m_w0( width ),
+    m_c( coupling ),
+    m_I( EvtComplex( 0.0, 1.0 ) ),
+    m_Imw( m_I * mass * width )
 {
 }
 
 EvtComplex EvtBLLNuLAmp::ResPole::propagator( double qSq, int numForm ) const
 {
     // Numerator term: mass-squared (default) or mass
-    double num( m0Sq_ );
+    double num( m_m0Sq );
     if ( numForm == 1 ) {
-        num = m0_;
+        num = m_m0;
     }
 
-    EvtComplex result = num * c_ / ( ( qSq - m0Sq_ ) + Imw_ );
+    EvtComplex result = num * m_c / ( ( qSq - m_m0Sq ) + m_Imw );
     return result;
 }
 
@@ -166,7 +166,7 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
 
     // Check if we are above mass thresholds
     bool threshold( true );
-    if ( q12Sq < qSqMin_ || k34Sq < kSqMin_ ) {
+    if ( q12Sq < m_qSqMin || k34Sq < m_kSqMin ) {
         threshold = false;
     }
 
@@ -174,13 +174,13 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
     // 2nd and 3rd charged leptons: p2 <-> p4
     EvtVector4R q14, k23;
     double q14Sq( 0.0 ), k23Sq( 0.0 );
-    if ( symmetry_ ) {
+    if ( m_symmetry ) {
         q14 = p1 + p4;
         k23 = p2 + p3;
         q14Sq = q14.mass2();
         k23Sq = k23.mass2();
 
-        if ( q14Sq < qSqMin_ || k23Sq < kSqMin_ ) {
+        if ( q14Sq < m_qSqMin || k23Sq < m_kSqMin ) {
             threshold = false;
         }
     }
@@ -189,7 +189,7 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
     EvtId parId = parent->getId();
     // B+ or B- decays
     int sign( 1 );
-    if ( parId == BnId_ ) {
+    if ( parId == m_BnId ) {
         sign = -1;
     }
 
@@ -198,7 +198,7 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
 
     // When we need to include the symmetric terms
     EvtTensor4C THadronB;
-    if ( symmetry_ ) {
+    if ( m_symmetry ) {
         THadronB = getHadronTensor( q14, k23, q14Sq, k23Sq, MB, sign );
     }
 
@@ -220,7 +220,7 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
                 L2A = EvtLeptonVCurrent( lepB->spParent( i2 ),
                                          lepA->spParent( i1 ) );
 
-                if ( symmetry_ ) {
+                if ( m_symmetry ) {
                     // Swapping the 2nd and 3rd charged leptons
                     L1B = EvtLeptonVACurrent( lepB->spParent( i2 ),
                                               neu->spParentNeutrino() );
@@ -232,7 +232,7 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
                 L2A = EvtLeptonVCurrent( lepA->spParent( i1 ),
                                          lepB->spParent( i2 ) );
 
-                if ( symmetry_ ) {
+                if ( m_symmetry ) {
                     // Swapping the 2nd and 3rd charged leptons
                     L1B = EvtLeptonVACurrent( neu->spParentNeutrino(),
                                               lepB->spParent( i2 ) );
@@ -252,7 +252,7 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
                     L1A = EvtLeptonVACurrent( lepC->spParent( i4 ),
                                               neu->spParentNeutrino() );
 
-                    if ( symmetry_ ) {
+                    if ( m_symmetry ) {
                         // Swapping the 2nd and 3rd charged leptons
                         L2B = EvtLeptonVCurrent( lepC->spParent( i4 ),
                                                  lepA->spParent( i1 ) );
@@ -264,7 +264,7 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
                     L1A = EvtLeptonVACurrent( neu->spParentNeutrino(),
                                               lepC->spParent( i4 ) );
 
-                    if ( symmetry_ ) {
+                    if ( m_symmetry ) {
                         // Swapping the 2nd and 3rd charged leptons
                         L2B = EvtLeptonVCurrent( lepA->spParent( i1 ),
                                                  lepC->spParent( i4 ) );
@@ -273,14 +273,14 @@ void EvtBLLNuLAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
 
                 if ( threshold == false ) {
                     // Below kinematic thresholds
-                    amp.vertex( leptonSpins, zero_ );
+                    amp.vertex( leptonSpins, m_zero );
 
                 } else {
                     // Decay amplitude calculation: L_1^{\mu} Tfi_{\mu}
                     EvtComplex decAmp = L1A * THL2A;
 
                     // If we also need to swap the 2nd and 3rd charged leptons
-                    if ( symmetry_ ) {
+                    if ( m_symmetry ) {
                         // Hadronic current production term. L2B depends on i4 so we need
                         // it here instead of inside the i2 loop as was the case for THL2A
                         EvtVector4C THL2B = THadronB.cont2( L2B );
@@ -316,21 +316,22 @@ EvtTensor4C EvtBLLNuLAmp::getHadronTensor( const EvtVector4R& q,
     std::vector<EvtComplex> VMDAmps = getVMDTerms( qSq, kSq, MB );
 
     EvtComplex FF_ekq = BstarAmp + VMDAmps[0];
-    EvtComplex FF_g = VMDAmps[1] - fBu_;
+    EvtComplex FF_g = VMDAmps[1] - m_fBu;
     EvtComplex FF_qk = VMDAmps[2];
 
     // Full hadronic tensor
     EvtTensor4C THadron = sign * 2.0 * FF_ekq * epskq +
-                          unitI_ * ( 2.0 * FF_qk * qk - FF_g * EvtTensor4C::g() );
+                          m_unitI *
+                              ( 2.0 * FF_qk * qk - FF_g * EvtTensor4C::g() );
 
     // Kinematic cuts
     double coeffcut( 0.0 );
-    if ( qSq > qSqMin_ && kSq > kSqMin_ ) {
+    if ( qSq > m_qSqMin && kSq > m_kSqMin ) {
         coeffcut = 1.0 / qSq;
     }
 
     // Normalisation constant
-    THadron *= coeffcut * coupling_;
+    THadron *= coeffcut * m_coupling;
 
     return THadron;
 }
@@ -342,8 +343,8 @@ std::vector<EvtComplex> EvtBLLNuLAmp::getVMDTerms( double qSq, double kSq,
     EvtComplex VMD1( 0.0, 0.0 ), VMD2( 0.0, 0.0 ), VMD3( 0.0, 0.0 );
 
     // Loop over the VMD poles
-    for ( int iPole = 0; iPole < nPoles_; iPole++ ) {
-        auto pole = resPoles_[iPole];
+    for ( int iPole = 0; iPole < m_nPoles; iPole++ ) {
+        auto pole = m_resPoles[iPole];
 
         // Propagator term, common for all factors
         EvtComplex prop = pole.propagator( qSq );
@@ -373,8 +374,8 @@ std::vector<EvtComplex> EvtBLLNuLAmp::getVMDTerms( double qSq, double kSq,
 
 EvtComplex EvtBLLNuLAmp::getBStarTerm( double qSq, double kSq, double MB ) const
 {
-    EvtComplex amplitude = Bstar_.propagator( kSq, 1 ) * FF_B2Bstar( qSq ) /
-                           ( MB + Bstar_.getMass() );
+    EvtComplex amplitude = m_Bstar.propagator( kSq, 1 ) * FF_B2Bstar( qSq ) /
+                           ( MB + m_Bstar.getMass() );
     return amplitude;
 }
 
@@ -382,7 +383,7 @@ double EvtBLLNuLAmp::FF_B2Bstar( double qSq ) const
 {
     // Electromagnetic FF for B -> B* transition, when gamma is emitted from the b quark
     // D.Melikhov, private communication
-    double y = qSq / Upsilon_.getMassSq();
+    double y = qSq / m_Upsilon.getMassSq();
     double denom = ( 1.0 - y ) * ( 1.0 - 0.81 * y );
 
     double V( 0.0 );
@@ -396,8 +397,8 @@ double EvtBLLNuLAmp::FF_B2Bstar( double qSq ) const
 double EvtBLLNuLAmp::FF_V( double kSq ) const
 {
     // D. Melikhov and B. Stech, PRD 62, 014006 (2000) Table XV
-    double y = kSq / Bstar_.getMassSq();
-    double denom = sqrt2_ * ( 1.0 - y ) * ( 1.0 - 0.59 * y );
+    double y = kSq / m_Bstar.getMassSq();
+    double denom = m_sqrt2 * ( 1.0 - y ) * ( 1.0 - 0.59 * y );
 
     double V( 0.0 );
     if ( fabs( denom ) > 1e-10 ) {
@@ -410,8 +411,8 @@ double EvtBLLNuLAmp::FF_V( double kSq ) const
 double EvtBLLNuLAmp::FF_A1( double kSq ) const
 {
     // D. Melikhov and B. Stech, PRD 62, 014006 (2000) Table XV
-    double y = kSq / Bstar_.getMassSq();
-    double denom = ( ( 0.1 * y - 0.73 ) * y + 1.0 ) * sqrt2_;
+    double y = kSq / m_Bstar.getMassSq();
+    double denom = ( ( 0.1 * y - 0.73 ) * y + 1.0 ) * m_sqrt2;
 
     double A1( 0.0 );
     if ( fabs( denom ) > 1e-10 ) {
@@ -424,8 +425,8 @@ double EvtBLLNuLAmp::FF_A1( double kSq ) const
 double EvtBLLNuLAmp::FF_A2( double kSq ) const
 {
     // D. Melikhov and B. Stech, PRD 62, 014006 (2000) Table XV
-    double y = kSq / Bstar_.getMassSq();
-    double denom = ( ( 0.5 * y - 1.4 ) * y + 1.0 ) * sqrt2_;
+    double y = kSq / m_Bstar.getMassSq();
+    double denom = ( ( 0.5 * y - 1.4 ) * y + 1.0 ) * m_sqrt2;
 
     double A2( 0.0 );
     if ( fabs( denom ) > 1e-10 ) {

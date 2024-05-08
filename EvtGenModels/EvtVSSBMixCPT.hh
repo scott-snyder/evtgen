@@ -45,19 +45,19 @@ class EvtVSSBMixCPT : public EvtDecayAmp {
     std::string getParamDefault( int i ) override;
 
   private:
-    double _freq;    // mixing frequency in hbar/mm
-    double _dGamma;
-    EvtComplex _qoverp;
-    EvtComplex _poverq;
-    EvtComplex _z;
-    double _chib0_b0bar;
-    double _chib0bar_b0;
+    double m_freq;    // mixing frequency in hbar/mm
+    double m_dGamma;
+    EvtComplex m_qoverp;
+    EvtComplex m_poverq;
+    EvtComplex m_z;
+    double m_chib0_b0bar;
+    double m_chib0bar_b0;
 
-    EvtComplex _A_f;
-    EvtComplex _Abar_f;
+    EvtComplex m_A_f;
+    EvtComplex m_Abar_f;
 
-    EvtComplex _A_fbar;
-    EvtComplex _Abar_fbar;
+    EvtComplex m_A_fbar;
+    EvtComplex m_Abar_fbar;
 };
 
 #endif

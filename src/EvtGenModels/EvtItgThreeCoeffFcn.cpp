@@ -35,36 +35,36 @@ EvtItgThreeCoeffFcn::EvtItgThreeCoeffFcn(
     double lowerRange, double upperRange, const std::vector<double>& coeffs1,
     const std::vector<double>& coeffs2, const std::vector<double>& coeffs3 ) :
     EvtItgAbsFunction( lowerRange, upperRange ),
-    _myFunction( theFunction ),
-    _coeffs1( coeffs1 ),
-    _coeffs2( coeffs2 ),
-    _coeffs3( coeffs3 )
+    m_myFunction( theFunction ),
+    m_coeffs1( coeffs1 ),
+    m_coeffs2( coeffs2 ),
+    m_coeffs3( coeffs3 )
 {
 }
 
 double EvtItgThreeCoeffFcn::myFunction( double x ) const
 {
-    return _myFunction( x, _coeffs1, _coeffs2, _coeffs3 );
+    return m_myFunction( x, m_coeffs1, m_coeffs2, m_coeffs3 );
 }
 
 void EvtItgThreeCoeffFcn::setCoeff( int vect, int which, double value )
 {
     if ( vect == 1 )
-        _coeffs1[which] = value;
+        m_coeffs1[which] = value;
     else if ( vect == 2 )
-        _coeffs2[which] = value;
+        m_coeffs2[which] = value;
     else if ( vect == 3 )
-        _coeffs3[which] = value;
+        m_coeffs3[which] = value;
 }
 
 double EvtItgThreeCoeffFcn::getCoeff( int vect, int which )
 {
     if ( vect == 1 )
-        return _coeffs1[which];
+        return m_coeffs1[which];
     else if ( vect == 2 )
-        return _coeffs2[which];
+        return m_coeffs2[which];
     else if ( vect == 3 )
-        return _coeffs3[which];
+        return m_coeffs3[which];
     else {
         return 0;
     }

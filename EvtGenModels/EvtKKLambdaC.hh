@@ -41,8 +41,8 @@ class EvtKKLambdaC : public EvtDecayAmp {
     void init() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> _ffmodel;
-    std::unique_ptr<EvtSemiLeptonicAmp> _calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_ffmodel;
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
 };
 
 #endif

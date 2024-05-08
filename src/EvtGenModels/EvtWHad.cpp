@@ -24,64 +24,64 @@
 #include "EvtGenBase/EvtTensor4C.hh"
 
 EvtWHad::EvtWHad() :
-    mRho_(),
-    gamma0_(),
-    cK_( 0 ),
-    mK_(),
-    gammaK_(),
-    gKRho_(),
-    gKPi_(),
-    mPi_( EvtPDL::getMeanMass( EvtPDL::getId( "pi+" ) ) ),
-    mPiSq_( mPi_ * mPi_ )
+    m_mRho(),
+    m_gamma0(),
+    m_cK( 0 ),
+    m_mK(),
+    m_gammaK(),
+    m_gKRho(),
+    m_gKPi(),
+    m_mPi( EvtPDL::getMeanMass( EvtPDL::getId( "pi+" ) ) ),
+    m_mPiSq( m_mPi * m_mPi )
 {
     // cK coefficients from Eur. Phys. J. C39, 41 (2005), arXiv:hep-ph/0409080 [hep-ph]
 
     // rho(770)
-    mRho_.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "rho0" ) ) );
-    gamma0_.push_back( EvtPDL::getWidth( EvtPDL::getId( "rho0" ) ) );
-    cK_.push_back( 1.195 );
+    m_mRho.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "rho0" ) ) );
+    m_gamma0.push_back( EvtPDL::getWidth( EvtPDL::getId( "rho0" ) ) );
+    m_cK.push_back( 1.195 );
 
     // rho(1450)
-    mRho_.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "rho(2S)0" ) ) );
-    gamma0_.push_back( EvtPDL::getWidth( EvtPDL::getId( "rho(2S)0" ) ) );
-    cK_.push_back( -0.112 );
+    m_mRho.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "rho(2S)0" ) ) );
+    m_gamma0.push_back( EvtPDL::getWidth( EvtPDL::getId( "rho(2S)0" ) ) );
+    m_cK.push_back( -0.112 );
 
     // rho(1700)
-    mRho_.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "rho(3S)0" ) ) );
-    gamma0_.push_back( EvtPDL::getWidth( EvtPDL::getId( "rho(3S)0" ) ) );
-    cK_.push_back( -0.083 );
+    m_mRho.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "rho(3S)0" ) ) );
+    m_gamma0.push_back( EvtPDL::getWidth( EvtPDL::getId( "rho(3S)0" ) ) );
+    m_cK.push_back( -0.083 );
 
     // rho(2150), PRD 76 092005
-    mRho_.push_back( 2.150 );
-    gamma0_.push_back( 0.310 );
-    cK_.push_back( 0.0 );
+    m_mRho.push_back( 2.150 );
+    m_gamma0.push_back( 0.310 );
+    m_cK.push_back( 0.0 );
 
     // Storing K resonance information
 
     // K(892)
 
-    mK_.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "K*0" ) ) );
-    gammaK_.push_back( EvtPDL::getWidth( EvtPDL::getId( "K*0" ) ) );
-    gKRho_.push_back( 0.0 );
-    gKPi_.push_back( 3.26 );
+    m_mK.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "K*0" ) ) );
+    m_gammaK.push_back( EvtPDL::getWidth( EvtPDL::getId( "K*0" ) ) );
+    m_gKRho.push_back( 0.0 );
+    m_gKPi.push_back( 3.26 );
 
     // K1(1270)
 
-    mK_.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "K_10" ) ) );
-    gammaK_.push_back( EvtPDL::getWidth( EvtPDL::getId( "K_10" ) ) );
-    gKRho_.push_back( 2.71 );
-    gKPi_.push_back( 0.792 );
+    m_mK.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "K_10" ) ) );
+    m_gammaK.push_back( EvtPDL::getWidth( EvtPDL::getId( "K_10" ) ) );
+    m_gKRho.push_back( 2.71 );
+    m_gKPi.push_back( 0.792 );
 
     // K1(1400)
-    mK_.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "K'_10" ) ) );
-    gammaK_.push_back( EvtPDL::getWidth( EvtPDL::getId( "K'_10" ) ) );
-    gKRho_.push_back( 0.254 );
-    gKPi_.push_back( 2.509 );
+    m_mK.push_back( EvtPDL::getMeanMass( EvtPDL::getId( "K'_10" ) ) );
+    m_gammaK.push_back( EvtPDL::getWidth( EvtPDL::getId( "K'_10" ) ) );
+    m_gKRho.push_back( 0.254 );
+    m_gKPi.push_back( 2.509 );
 }
 
 EvtComplex EvtWHad::BWKK( double s, int i ) const
 {
-    const double m2 = mRho_[i] * mRho_[i];
+    const double m2 = m_mRho[i] * m_mRho[i];
     const EvtComplex qs = pcm( s );
     const EvtComplex qm = pcm( m2 );
     if ( abs( qm ) < 1e-10 ) {
@@ -94,7 +94,7 @@ EvtComplex EvtWHad::BWKK( double s, int i ) const
         return 0;
     }
 
-    const EvtComplex gamma = m2 * rat3 * gamma0_[i] / s;
+    const EvtComplex gamma = m2 * rat3 * m_gamma0[i] / s;
     const EvtComplex I( 0.0, 1.0 );
 
     const EvtComplex denBW = m2 - s - I * sqrt( s ) * gamma;
@@ -102,7 +102,7 @@ EvtComplex EvtWHad::BWKK( double s, int i ) const
         return 0;
     }
 
-    return cK_[i] * m2 / denBW;
+    return m_cK[i] * m2 / denBW;
 }
 
 EvtVector4C EvtWHad::WCurrent_KSK( const EvtVector4R& pKS,
@@ -199,8 +199,8 @@ EvtVector4C EvtWHad::WCurrent_KKP( const EvtVector4R& pKplus,
     const EvtComplex I( 0.0, 1.0 );
 
     const EvtComplex den1 = 1.0 / ( q2 - mA1 * mA1 + I * mA1 * gammaA1 );
-    const EvtComplex den2 = 1.0 / ( pK2 - mK_[0] * mK_[0] +
-                                    I * mK_[0] * gammaK_[0] );    //K(892)
+    const EvtComplex den2 = 1.0 / ( pK2 - m_mK[0] * m_mK[0] +
+                                    I * m_mK[0] * m_gammaK[0] );    //K(892)
 
     const EvtTensor4C ten = EvtTensor4C::g() -
                             ( 1.0 / q2 ) * EvtGenFunctions::directProd( q, q );
@@ -297,29 +297,29 @@ EvtVector4C EvtWHad::WCurrent_KPP( const EvtVector4R& pKplus,
     // W+ -> K1+(1270) -> K+ rho0 -> K+ pi+ pi-
 
     pp2 = ( pPiPlus + pPiMinus ).mass2();
-    curr1 = ( pPiPlus - pPiMinus ) * Den( q2, mK_[1], gammaK_[1], gKRho_[1] ) *
-            Den( pp2, mRho_[0], gamma0_[0], gRho_PiPi );    //K1(1270) and rho(770)
+    curr1 = ( pPiPlus - pPiMinus ) * Den( q2, m_mK[1], m_gammaK[1], m_gKRho[1] ) *
+            Den( pp2, m_mRho[0], m_gamma0[0], gRho_PiPi );    //K1(1270) and rho(770)
     curr = curr + cK1r * curr1;
 
     // W+ -> K1+(1270) -> K*(892)0 pi+ -> K+ pi- pi-
 
     pp2 = ( pKplus + pPiMinus ).mass2();
-    curr1 = ( pKplus - pPiMinus ) * Den( q2, mK_[1], gammaK_[1], gKPi_[1] ) *
-            Den( pp2, mK_[0], gammaK_[0], gKPi_[0] );    //K1(1270) and K(892)
+    curr1 = ( pKplus - pPiMinus ) * Den( q2, m_mK[1], m_gammaK[1], m_gKPi[1] ) *
+            Den( pp2, m_mK[0], m_gammaK[0], m_gKPi[0] );    //K1(1270) and K(892)
     curr = curr + cK1p * curr1;
 
     // W+ -> K1+(1400) -> K+ rho0 -> K+ pi+ pi-
 
     pp2 = ( pPiMinus + pPiPlus ).mass2();
-    curr1 = ( pPiPlus - pPiMinus ) * Den( q2, mK_[2], gammaK_[2], gKRho_[2] ) *
-            Den( pp2, mRho_[0], gamma0_[0], gRho_PiPi );    //K1(1400) and rho(770)
+    curr1 = ( pPiPlus - pPiMinus ) * Den( q2, m_mK[2], m_gammaK[2], m_gKRho[2] ) *
+            Den( pp2, m_mRho[0], m_gamma0[0], gRho_PiPi );    //K1(1400) and rho(770)
     curr = curr + cK2r * curr1;
 
     // W+ -> K1+(1400) -> K*(892)0 pi+ -> K+ pi- pi+
 
     pp2 = ( pKplus + pPiMinus ).mass2();
-    curr1 = ( pKplus - pPiPlus ) * Den( q2, mK_[2], gammaK_[2], gKPi_[2] ) *
-            Den( pp2, mK_[0], gammaK_[0], gKPi_[0] );    //K1(1400) and K(892)
+    curr1 = ( pKplus - pPiPlus ) * Den( q2, m_mK[2], m_gammaK[2], m_gKPi[2] ) *
+            Den( pp2, m_mK[0], m_gammaK[0], m_gKPi[0] );    //K1(1400) and K(892)
     curr = curr + cK2p * curr1;
 
     const EvtTensor4C ten = EvtTensor4C::g() -
@@ -369,17 +369,17 @@ EvtComplex EvtWHad::BWr( const EvtVector4R& q ) const
     const double beta( -0.108 );
 
     const double s = q.mass2();
-    const EvtComplex BW_rho = BW( s, mRho_[0], gamma0_[0], mPi_, mPi_ );
-    const EvtComplex BW_rhopr = BW( s, mRho_[1], gamma0_[1], mPi_, mPi_ );
+    const EvtComplex BW_rho = BW( s, m_mRho[0], m_gamma0[0], m_mPi, m_mPi );
+    const EvtComplex BW_rhopr = BW( s, m_mRho[1], m_gamma0[1], m_mPi, m_mPi );
     return ( BW_rho + beta * BW_rhopr ) / ( 1.0 + beta );
 }
 
 double EvtWHad::pi3G( double Q2 ) const
 {
-    const double mRhoPi = mRho_[0] + mPi_;
+    const double mRhoPi = m_mRho[0] + m_mPi;
     // Parameterisation of scaling factor for a1 (to 3pi) decay width
     if ( Q2 < mRhoPi * mRhoPi ) {
-        const double arg = Q2 - 9. * mPiSq_;
+        const double arg = Q2 - 9. * m_mPiSq;
         const double arg2 = arg * arg;
         const double arg3 = arg * arg2;
         return 4.1 * arg3 * ( 1. - 3.3 * arg + 5.8 * arg2 );
@@ -446,8 +446,8 @@ EvtVector4C EvtWHad::WCurrent_K4pi_nosymm( const EvtVector4R& p1,
 {
     const EvtComplex I( 0, 1 );
     const EvtVector4R pKstar = p1 + p4, pa1 = p2 + p3 + p5;
-    EvtComplex denKstar = pKstar * pKstar - mK_[0] * mK_[0] +
-                          I * mK_[0] * gammaK_[0];    //K(892)
+    EvtComplex denKstar = pKstar * pKstar - m_mK[0] * m_mK[0] +
+                          I * m_mK[0] * m_gammaK[0];    //K(892)
     if ( abs( denKstar ) < 1e-10 ) {
         denKstar = 1e10;
     }

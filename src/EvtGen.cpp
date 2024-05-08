@@ -108,7 +108,7 @@ void EvtGen::initialize( const std::string& decayName, std::istream& pdtTable,
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << "Main decay file name  :" << decayName << endl;
 
-    _pdl.readPDT( pdtTable );
+    m_pdl.readPDT( pdtTable );
 
     if ( useXml ) {
         EvtDecayTable::getInstance()->readXMLDecayFile( decayName, false );
@@ -116,10 +116,10 @@ void EvtGen::initialize( const std::string& decayName, std::istream& pdtTable,
         EvtDecayTable::getInstance()->readDecayFile( decayName, false );
     }
 
-    _mixingType = mixingType;
+    m_mixingType = mixingType;
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
-        << "Mixing type integer set to " << _mixingType << endl;
-    EvtCPUtil::getInstance()->setMixingType( _mixingType );
+        << "Mixing type integer set to " << m_mixingType << endl;
+    EvtCPUtil::getInstance()->setMixingType( m_mixingType );
 
     // Set the radiative correction engine
 

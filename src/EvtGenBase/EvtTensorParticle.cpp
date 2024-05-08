@@ -42,23 +42,23 @@ void EvtTensorParticle::init( EvtId part_n, const EvtVector4R& p4 )
 void EvtTensorParticle::init( EvtId part_n, double e, double px, double py,
                               double pz )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( e, px, py, pz );
     setpart_num( part_n );
 
-    eps[0].setdiag( 0.0, -1.0 / sqrt( 6.0 ), -1.0 / sqrt( 6.0 ),
-                    2.0 / sqrt( 6.0 ) );
-    eps[1].setdiag( 0.0, 1.0 / sqrt( 2.0 ), -1.0 / sqrt( 2.0 ), 0.0 );
-    eps[2].setdiag( 0.0, 0.0, 0.0, 0.0 );
-    eps[3].setdiag( 0.0, 0.0, 0.0, 0.0 );
-    eps[4].setdiag( 0.0, 0.0, 0.0, 0.0 );
+    m_eps[0].setdiag( 0.0, -1.0 / sqrt( 6.0 ), -1.0 / sqrt( 6.0 ),
+                      2.0 / sqrt( 6.0 ) );
+    m_eps[1].setdiag( 0.0, 1.0 / sqrt( 2.0 ), -1.0 / sqrt( 2.0 ), 0.0 );
+    m_eps[2].setdiag( 0.0, 0.0, 0.0, 0.0 );
+    m_eps[3].setdiag( 0.0, 0.0, 0.0, 0.0 );
+    m_eps[4].setdiag( 0.0, 0.0, 0.0, 0.0 );
 
-    eps[2].set( 1, 2, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
-    eps[2].set( 2, 1, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
-    eps[3].set( 1, 3, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
-    eps[3].set( 3, 1, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
-    eps[4].set( 2, 3, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
-    eps[4].set( 3, 2, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
+    m_eps[2].set( 1, 2, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
+    m_eps[2].set( 2, 1, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
+    m_eps[3].set( 1, 3, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
+    m_eps[3].set( 3, 1, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
+    m_eps[4].set( 2, 3, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
+    m_eps[4].set( 3, 2, EvtComplex( 1.0 / sqrt( 2.0 ), 0.0 ) );
 
     setLifetime();
 }
@@ -70,33 +70,31 @@ void EvtTensorParticle::init( EvtId part_n, const EvtVector4R& p4,
                               const EvtTensor4C& epsin4,
                               const EvtTensor4C& epsin5 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( part_n );
 
-    eps[0] = epsin1;
-    eps[1] = epsin2;
-    eps[2] = epsin3;
-    eps[3] = epsin4;
-    eps[4] = epsin5;
+    m_eps[0] = epsin1;
+    m_eps[1] = epsin2;
+    m_eps[2] = epsin3;
+    m_eps[3] = epsin4;
+    m_eps[4] = epsin5;
 
     setLifetime();
 }
 
 EvtTensor4C EvtTensorParticle::epsTensorParent( int i ) const
 {
-    assert( i >= 0 && i < eps.size() );
+    assert( i >= 0 && i < m_eps.size() );
 
-    return boostTo( eps[i], this->getP4() );
-
-}    //epsParent
+    return boostTo( m_eps[i], this->getP4() );
+}
 
 EvtTensor4C EvtTensorParticle::epsTensor( int i ) const
 {
-    assert( i >= 0 && i < eps.size() );
-    return eps[i];
-
-}    //eps
+    assert( i >= 0 && i < m_eps.size() );
+    return m_eps[i];
+}
 
 EvtSpinDensity EvtTensorParticle::rotateToHelicityBasis() const
 {
@@ -130,11 +128,11 @@ EvtSpinDensity EvtTensorParticle::rotateToHelicityBasis() const
     R.setDim( 5 );
 
     for ( int j = 0; j < 5; j++ ) {
-        R.set( 0, j, cont( es0, eps[j] ) );
-        R.set( 1, j, cont( es1, eps[j] ) );
-        R.set( 2, j, cont( es2, eps[j] ) );
-        R.set( 3, j, cont( es3, eps[j] ) );
-        R.set( 4, j, cont( es4, eps[j] ) );
+        R.set( 0, j, cont( es0, m_eps[j] ) );
+        R.set( 1, j, cont( es1, m_eps[j] ) );
+        R.set( 2, j, cont( es2, m_eps[j] ) );
+        R.set( 3, j, cont( es3, m_eps[j] ) );
+        R.set( 4, j, cont( es4, m_eps[j] ) );
     }
     return R;
 }
@@ -176,7 +174,7 @@ EvtSpinDensity EvtTensorParticle::rotateToHelicityBasis( double alpha,
 
     for ( int i = 0; i < 5; i++ )
         for ( int j = 0; j < 5; j++ )
-            R.set( i, j, cont( es[i], eps[j] ) );
+            R.set( i, j, cont( es[i], m_eps[j] ) );
 
     return R;
 }

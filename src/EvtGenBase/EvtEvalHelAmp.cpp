@@ -36,46 +36,46 @@ using std::endl;
 EvtEvalHelAmp::~EvtEvalHelAmp()
 {
     //deallocate memory
-    delete[] _lambdaA2;
-    delete[] _lambdaB2;
-    delete[] _lambdaC2;
+    delete[] m_lambdaA2;
+    delete[] m_lambdaB2;
+    delete[] m_lambdaC2;
 
     int ia, ib, ic;
-    for ( ib = 0; ib < _nB; ib++ ) {
-        delete[] _HBC[ib];
+    for ( ib = 0; ib < m_nB; ib++ ) {
+        delete[] m_HBC[ib];
     }
 
-    delete[] _HBC;
+    delete[] m_HBC;
 
-    for ( ia = 0; ia < _nA; ia++ ) {
-        delete[] _RA[ia];
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        delete[] m_RA[ia];
     }
-    delete[] _RA;
+    delete[] m_RA;
 
-    for ( ib = 0; ib < _nB; ib++ ) {
-        delete[] _RB[ib];
+    for ( ib = 0; ib < m_nB; ib++ ) {
+        delete[] m_RB[ib];
     }
-    delete[] _RB;
+    delete[] m_RB;
 
-    for ( ic = 0; ic < _nC; ic++ ) {
-        delete[] _RC[ic];
+    for ( ic = 0; ic < m_nC; ic++ ) {
+        delete[] m_RC[ic];
     }
-    delete[] _RC;
+    delete[] m_RC;
 
-    for ( ia = 0; ia < _nA; ia++ ) {
-        for ( ib = 0; ib < _nB; ib++ ) {
-            delete[] _amp[ia][ib];
-            delete[] _amp1[ia][ib];
-            delete[] _amp3[ia][ib];
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        for ( ib = 0; ib < m_nB; ib++ ) {
+            delete[] m_amp[ia][ib];
+            delete[] m_amp1[ia][ib];
+            delete[] m_amp3[ia][ib];
         }
-        delete[] _amp[ia];
-        delete[] _amp1[ia];
-        delete[] _amp3[ia];
+        delete[] m_amp[ia];
+        delete[] m_amp1[ia];
+        delete[] m_amp3[ia];
     }
 
-    delete[] _amp;
-    delete[] _amp1;
-    delete[] _amp3;
+    delete[] m_amp;
+    delete[] m_amp1;
+    delete[] m_amp3;
 }
 
 EvtEvalHelAmp::EvtEvalHelAmp( EvtId idA, EvtId idB, EvtId idC,
@@ -86,69 +86,69 @@ EvtEvalHelAmp::EvtEvalHelAmp( EvtId idA, EvtId idB, EvtId idC,
     EvtSpinType::spintype typeC = EvtPDL::getSpinType( idC );
 
     //find out how many states each particle have
-    _nA = EvtSpinType::getSpinStates( typeA );
-    _nB = EvtSpinType::getSpinStates( typeB );
-    _nC = EvtSpinType::getSpinStates( typeC );
+    m_nA = EvtSpinType::getSpinStates( typeA );
+    m_nB = EvtSpinType::getSpinStates( typeB );
+    m_nC = EvtSpinType::getSpinStates( typeC );
 
     //find out what 2 times the spin is
-    _JA2 = EvtSpinType::getSpin2( typeA );
-    _JB2 = EvtSpinType::getSpin2( typeB );
-    _JC2 = EvtSpinType::getSpin2( typeC );
+    m_JA2 = EvtSpinType::getSpin2( typeA );
+    m_JB2 = EvtSpinType::getSpin2( typeB );
+    m_JC2 = EvtSpinType::getSpin2( typeC );
 
     //allocate memory
-    _lambdaA2 = new int[_nA];
-    _lambdaB2 = new int[_nB];
-    _lambdaC2 = new int[_nC];
+    m_lambdaA2 = new int[m_nA];
+    m_lambdaB2 = new int[m_nB];
+    m_lambdaC2 = new int[m_nC];
 
-    _HBC = new EvtComplexPtr[_nB];
+    m_HBC = new EvtComplexPtr[m_nB];
     int ia, ib, ic;
-    for ( ib = 0; ib < _nB; ib++ ) {
-        _HBC[ib] = new EvtComplex[_nC];
+    for ( ib = 0; ib < m_nB; ib++ ) {
+        m_HBC[ib] = new EvtComplex[m_nC];
     }
 
-    _RA = new EvtComplexPtr[_nA];
-    for ( ia = 0; ia < _nA; ia++ ) {
-        _RA[ia] = new EvtComplex[_nA];
+    m_RA = new EvtComplexPtr[m_nA];
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        m_RA[ia] = new EvtComplex[m_nA];
     }
-    _RB = new EvtComplexPtr[_nB];
-    for ( ib = 0; ib < _nB; ib++ ) {
-        _RB[ib] = new EvtComplex[_nB];
+    m_RB = new EvtComplexPtr[m_nB];
+    for ( ib = 0; ib < m_nB; ib++ ) {
+        m_RB[ib] = new EvtComplex[m_nB];
     }
-    _RC = new EvtComplexPtr[_nC];
-    for ( ic = 0; ic < _nC; ic++ ) {
-        _RC[ic] = new EvtComplex[_nC];
+    m_RC = new EvtComplexPtr[m_nC];
+    for ( ic = 0; ic < m_nC; ic++ ) {
+        m_RC[ic] = new EvtComplex[m_nC];
     }
 
-    _amp = new EvtComplexPtrPtr[_nA];
-    _amp1 = new EvtComplexPtrPtr[_nA];
-    _amp3 = new EvtComplexPtrPtr[_nA];
-    for ( ia = 0; ia < _nA; ia++ ) {
-        _amp[ia] = new EvtComplexPtr[_nB];
-        _amp1[ia] = new EvtComplexPtr[_nB];
-        _amp3[ia] = new EvtComplexPtr[_nB];
-        for ( ib = 0; ib < _nB; ib++ ) {
-            _amp[ia][ib] = new EvtComplex[_nC];
-            _amp1[ia][ib] = new EvtComplex[_nC];
-            _amp3[ia][ib] = new EvtComplex[_nC];
+    m_amp = new EvtComplexPtrPtr[m_nA];
+    m_amp1 = new EvtComplexPtrPtr[m_nA];
+    m_amp3 = new EvtComplexPtrPtr[m_nA];
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        m_amp[ia] = new EvtComplexPtr[m_nB];
+        m_amp1[ia] = new EvtComplexPtr[m_nB];
+        m_amp3[ia] = new EvtComplexPtr[m_nB];
+        for ( ib = 0; ib < m_nB; ib++ ) {
+            m_amp[ia][ib] = new EvtComplex[m_nC];
+            m_amp1[ia][ib] = new EvtComplex[m_nC];
+            m_amp3[ia][ib] = new EvtComplex[m_nC];
         }
     }
 
     //find the allowed helicities (actually 2*times the helicity!)
 
-    fillHelicity( _lambdaA2, _nA, _JA2, idA );
-    fillHelicity( _lambdaB2, _nB, _JB2, idB );
-    fillHelicity( _lambdaC2, _nC, _JC2, idC );
+    fillHelicity( m_lambdaA2, m_nA, m_JA2, idA );
+    fillHelicity( m_lambdaB2, m_nB, m_JB2, idB );
+    fillHelicity( m_lambdaC2, m_nC, m_JC2, idC );
 
-    for ( ib = 0; ib < _nB; ib++ ) {
-        for ( ic = 0; ic < _nC; ic++ ) {
-            _HBC[ib][ic] = HBC[ib][ic];
+    for ( ib = 0; ib < m_nB; ib++ ) {
+        for ( ic = 0; ic < m_nC; ic++ ) {
+            m_HBC[ib][ic] = HBC[ib][ic];
         }
     }
 }
 
 double EvtEvalHelAmp::probMax()
 {
-    double c = 1.0 / sqrt( 4 * EvtConst::pi / ( _JA2 + 1 ) );
+    double c = 1.0 / sqrt( 4 * EvtConst::pi / ( m_JA2 + 1 ) );
 
     int ia, ib, ic;
 
@@ -159,24 +159,24 @@ double EvtEvalHelAmp::probMax()
 
     for ( itheta = -10; itheta <= 10; itheta++ ) {
         theta = acos( 0.099999 * itheta );
-        for ( ia = 0; ia < _nA; ia++ ) {
+        for ( ia = 0; ia < m_nA; ia++ ) {
             double prob = 0.0;
-            for ( ib = 0; ib < _nB; ib++ ) {
-                for ( ic = 0; ic < _nC; ic++ ) {
-                    _amp[ia][ib][ic] = 0.0;
-                    if ( abs( _lambdaB2[ib] - _lambdaC2[ic] ) <= _JA2 ) {
-                        _amp[ia][ib][ic] = c * _HBC[ib][ic] *
-                                           EvtdFunction::d( _JA2, _lambdaA2[ia],
-                                                            _lambdaB2[ib] -
-                                                                _lambdaC2[ic],
-                                                            theta );
-                        prob += real( _amp[ia][ib][ic] *
-                                      conj( _amp[ia][ib][ic] ) );
+            for ( ib = 0; ib < m_nB; ib++ ) {
+                for ( ic = 0; ic < m_nC; ic++ ) {
+                    m_amp[ia][ib][ic] = 0.0;
+                    if ( abs( m_lambdaB2[ib] - m_lambdaC2[ic] ) <= m_JA2 ) {
+                        m_amp[ia][ib][ic] =
+                            c * m_HBC[ib][ic] *
+                            EvtdFunction::d( m_JA2, m_lambdaA2[ia],
+                                             m_lambdaB2[ib] - m_lambdaC2[ic],
+                                             theta );
+                        prob += real( m_amp[ia][ib][ic] *
+                                      conj( m_amp[ia][ib][ic] ) );
                     }
                 }
             }
 
-            prob *= sqrt( 1.0 * _nA );
+            prob *= sqrt( 1.0 * m_nA );
 
             if ( prob > maxprob )
                 maxprob = prob;
@@ -195,29 +195,30 @@ void EvtEvalHelAmp::evalAmp( EvtParticle* p, EvtAmp& amp )
     double theta = acos( pB.get( 3 ) / pB.d3mag() );
     double phi = atan2( pB.get( 2 ), pB.get( 1 ) );
 
-    double c = sqrt( ( _JA2 + 1 ) / ( 4 * EvtConst::pi ) );
+    double c = sqrt( ( m_JA2 + 1 ) / ( 4 * EvtConst::pi ) );
 
     int ia, ib, ic;
 
     double prob1 = 0.0;
 
-    for ( ia = 0; ia < _nA; ia++ ) {
-        for ( ib = 0; ib < _nB; ib++ ) {
-            for ( ic = 0; ic < _nC; ic++ ) {
-                _amp[ia][ib][ic] = 0.0;
-                if ( abs( _lambdaB2[ib] - _lambdaC2[ic] ) <= _JA2 ) {
-                    double dfun = EvtdFunction::d( _JA2, _lambdaA2[ia],
-                                                   _lambdaB2[ib] - _lambdaC2[ic],
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        for ( ib = 0; ib < m_nB; ib++ ) {
+            for ( ic = 0; ic < m_nC; ic++ ) {
+                m_amp[ia][ib][ic] = 0.0;
+                if ( abs( m_lambdaB2[ib] - m_lambdaC2[ic] ) <= m_JA2 ) {
+                    double dfun = EvtdFunction::d( m_JA2, m_lambdaA2[ia],
+                                                   m_lambdaB2[ib] - m_lambdaC2[ic],
                                                    theta );
 
-                    _amp[ia][ib][ic] =
-                        c * _HBC[ib][ic] *
-                        exp( EvtComplex( 0.0, phi * 0.5 *
-                                                  ( _lambdaA2[ia] - _lambdaB2[ib] +
-                                                    _lambdaC2[ic] ) ) ) *
+                    m_amp[ia][ib][ic] =
+                        c * m_HBC[ib][ic] *
+                        exp( EvtComplex( 0.0,
+                                         phi * 0.5 *
+                                             ( m_lambdaA2[ia] - m_lambdaB2[ib] +
+                                               m_lambdaC2[ic] ) ) ) *
                         dfun;
                 }
-                prob1 += real( _amp[ia][ib][ic] * conj( _amp[ia][ib][ic] ) );
+                prob1 += real( m_amp[ia][ib][ic] * conj( m_amp[ia][ib][ic] ) );
             }
         }
     }
@@ -228,36 +229,36 @@ void EvtEvalHelAmp::evalAmp( EvtParticle* p, EvtAmp& amp )
 
     double prob2 = 0.0;
 
-    for ( ia = 0; ia < _nA; ia++ ) {
-        for ( ib = 0; ib < _nB; ib++ ) {
-            for ( ic = 0; ic < _nC; ic++ ) {
-                prob2 += real( _amp[ia][ib][ic] * conj( _amp[ia][ib][ic] ) );
-                if ( _nA == 1 ) {
-                    if ( _nB == 1 ) {
-                        if ( _nC == 1 ) {
-                            amp.vertex( _amp[ia][ib][ic] );
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        for ( ib = 0; ib < m_nB; ib++ ) {
+            for ( ic = 0; ic < m_nC; ic++ ) {
+                prob2 += real( m_amp[ia][ib][ic] * conj( m_amp[ia][ib][ic] ) );
+                if ( m_nA == 1 ) {
+                    if ( m_nB == 1 ) {
+                        if ( m_nC == 1 ) {
+                            amp.vertex( m_amp[ia][ib][ic] );
                         } else {
-                            amp.vertex( ic, _amp[ia][ib][ic] );
+                            amp.vertex( ic, m_amp[ia][ib][ic] );
                         }
                     } else {
-                        if ( _nC == 1 ) {
-                            amp.vertex( ib, _amp[ia][ib][ic] );
+                        if ( m_nC == 1 ) {
+                            amp.vertex( ib, m_amp[ia][ib][ic] );
                         } else {
-                            amp.vertex( ib, ic, _amp[ia][ib][ic] );
+                            amp.vertex( ib, ic, m_amp[ia][ib][ic] );
                         }
                     }
                 } else {
-                    if ( _nB == 1 ) {
-                        if ( _nC == 1 ) {
-                            amp.vertex( ia, _amp[ia][ib][ic] );
+                    if ( m_nB == 1 ) {
+                        if ( m_nC == 1 ) {
+                            amp.vertex( ia, m_amp[ia][ib][ic] );
                         } else {
-                            amp.vertex( ia, ic, _amp[ia][ib][ic] );
+                            amp.vertex( ia, ic, m_amp[ia][ib][ic] );
                         }
                     } else {
-                        if ( _nC == 1 ) {
-                            amp.vertex( ia, ib, _amp[ia][ib][ic] );
+                        if ( m_nC == 1 ) {
+                            amp.vertex( ia, ib, m_amp[ia][ib][ic] );
                         } else {
-                            amp.vertex( ia, ib, ic, _amp[ia][ib][ic] );
+                            amp.vertex( ia, ib, ic, m_amp[ia][ib][ic] );
                         }
                     }
                 }
@@ -309,7 +310,7 @@ void EvtEvalHelAmp::fillHelicity( int* lambda2, int n, int J2, EvtId id )
 void EvtEvalHelAmp::setUpRotationMatrices( EvtParticle* p, double theta,
                                            double phi )
 {
-    switch ( _JA2 ) {
+    switch ( m_JA2 ) {
         case 0:
         case 1:
         case 2:
@@ -327,11 +328,11 @@ void EvtEvalHelAmp::setUpRotationMatrices( EvtParticle* p, double theta,
 
             n = R.getDim();
 
-            assert( n == _nA );
+            assert( n == m_nA );
 
             for ( i = 0; i < n; i++ ) {
                 for ( j = 0; j < n; j++ ) {
-                    _RA[i][j] = R.get( i, j );
+                    m_RA[i][j] = R.get( i, j );
                 }
             }
 
@@ -341,11 +342,11 @@ void EvtEvalHelAmp::setUpRotationMatrices( EvtParticle* p, double theta,
 
         default:
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-                << "Spin2(_JA2)=" << _JA2 << " not supported!" << endl;
+                << "Spin2(m_JA2)=" << m_JA2 << " not supported!" << endl;
             ::abort();
     }
 
-    switch ( _JB2 ) {
+    switch ( m_JB2 ) {
         case 0:
         case 1:
         case 2:
@@ -364,11 +365,11 @@ void EvtEvalHelAmp::setUpRotationMatrices( EvtParticle* p, double theta,
 
             n = R.getDim();
 
-            assert( n == _nB );
+            assert( n == m_nB );
 
             for ( i = 0; i < n; i++ ) {
                 for ( j = 0; j < n; j++ ) {
-                    _RB[i][j] = conj( R.get( i, j ) );
+                    m_RB[i][j] = conj( R.get( i, j ) );
                 }
             }
 
@@ -378,11 +379,11 @@ void EvtEvalHelAmp::setUpRotationMatrices( EvtParticle* p, double theta,
 
         default:
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-                << "Spin2(_JB2)=" << _JB2 << " not supported!" << endl;
+                << "Spin2(m_JB2)=" << m_JB2 << " not supported!" << endl;
             ::abort();
     }
 
-    switch ( _JC2 ) {
+    switch ( m_JC2 ) {
         case 0:
         case 1:
         case 2:
@@ -401,11 +402,11 @@ void EvtEvalHelAmp::setUpRotationMatrices( EvtParticle* p, double theta,
 
             n = R.getDim();
 
-            assert( n == _nC );
+            assert( n == m_nC );
 
             for ( i = 0; i < n; i++ ) {
                 for ( j = 0; j < n; j++ ) {
-                    _RC[i][j] = conj( R.get( i, j ) );
+                    m_RC[i][j] = conj( R.get( i, j ) );
                 }
             }
 
@@ -415,7 +416,7 @@ void EvtEvalHelAmp::setUpRotationMatrices( EvtParticle* p, double theta,
 
         default:
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-                << "Spin2(_JC2)=" << _JC2 << " not supported!" << endl;
+                << "Spin2(m_JC2)=" << m_JC2 << " not supported!" << endl;
             ::abort();
     }
 }
@@ -426,38 +427,38 @@ void EvtEvalHelAmp::applyRotationMatrices()
 
     EvtComplex temp;
 
-    for ( ia = 0; ia < _nA; ia++ ) {
-        for ( ib = 0; ib < _nB; ib++ ) {
-            for ( ic = 0; ic < _nC; ic++ ) {
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        for ( ib = 0; ib < m_nB; ib++ ) {
+            for ( ic = 0; ic < m_nC; ic++ ) {
                 temp = 0;
-                for ( i = 0; i < _nC; i++ ) {
-                    temp += _RC[i][ic] * _amp[ia][ib][i];
+                for ( i = 0; i < m_nC; i++ ) {
+                    temp += m_RC[i][ic] * m_amp[ia][ib][i];
                 }
-                _amp1[ia][ib][ic] = temp;
+                m_amp1[ia][ib][ic] = temp;
             }
         }
     }
 
-    for ( ia = 0; ia < _nA; ia++ ) {
-        for ( ic = 0; ic < _nC; ic++ ) {
-            for ( ib = 0; ib < _nB; ib++ ) {
+    for ( ia = 0; ia < m_nA; ia++ ) {
+        for ( ic = 0; ic < m_nC; ic++ ) {
+            for ( ib = 0; ib < m_nB; ib++ ) {
                 temp = 0;
-                for ( i = 0; i < _nB; i++ ) {
-                    temp += _RB[i][ib] * _amp1[ia][i][ic];
+                for ( i = 0; i < m_nB; i++ ) {
+                    temp += m_RB[i][ib] * m_amp1[ia][i][ic];
                 }
-                _amp3[ia][ib][ic] = temp;
+                m_amp3[ia][ib][ic] = temp;
             }
         }
     }
 
-    for ( ib = 0; ib < _nB; ib++ ) {
-        for ( ic = 0; ic < _nC; ic++ ) {
-            for ( ia = 0; ia < _nA; ia++ ) {
+    for ( ib = 0; ib < m_nB; ib++ ) {
+        for ( ic = 0; ic < m_nC; ic++ ) {
+            for ( ia = 0; ia < m_nA; ia++ ) {
                 temp = 0;
-                for ( i = 0; i < _nA; i++ ) {
-                    temp += _RA[i][ia] * _amp3[i][ib][ic];
+                for ( i = 0; i < m_nA; i++ ) {
+                    temp += m_RA[i][ia] * m_amp3[i][ib][ic];
                 }
-                _amp[ia][ib][ic] = temp;
+                m_amp[ia][ib][ic] = temp;
             }
         }
     }

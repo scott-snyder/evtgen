@@ -36,14 +36,14 @@ using std::ifstream;
 
 EvtDalitzTable::EvtDalitzTable()
 {
-    _dalitztable.clear();
-    _readFiles.clear();
+    m_dalitztable.clear();
+    m_readFiles.clear();
 }
 
 EvtDalitzTable::~EvtDalitzTable()
 {
-    _dalitztable.clear();
-    _readFiles.clear();
+    m_dalitztable.clear();
+    m_readFiles.clear();
 }
 
 EvtDalitzTable* EvtDalitzTable::getInstance( const std::string dec_name,
@@ -64,8 +64,8 @@ EvtDalitzTable* EvtDalitzTable::getInstance( const std::string dec_name,
 
 bool EvtDalitzTable::fileHasBeenRead( const std::string dec_name )
 {
-    std::vector<std::string>::iterator i = _readFiles.begin();
-    for ( ; i != _readFiles.end(); i++ ) {
+    std::vector<std::string>::iterator i = m_readFiles.begin();
+    for ( ; i != m_readFiles.end(); i++ ) {
         if ( ( *i ).compare( dec_name ) == 0 ) {
             return true;
         }
@@ -81,7 +81,7 @@ void EvtDalitzTable::readXMLDecayFile( const std::string dec_name, bool verbose 
             << endl;
     }
 
-    _readFiles.push_back( dec_name );
+    m_readFiles.push_back( dec_name );
 
     EvtDalitzDecayInfo* dalitzDecay = nullptr;
     double probMax = 0;
@@ -152,7 +152,6 @@ void EvtDalitzTable::readXMLDecayFile( const std::string dec_name, bool verbose 
 
             } else if ( parser.getTagTitle() == "copyDalitz" ) {
                 int nDaughters = 0;
-                EvtId daughter[3];
                 int nCopyDaughters = 0;
                 EvtId copyDaughter[3];
 
@@ -443,10 +442,10 @@ void EvtDalitzTable::checkParticle( std::string particle )
 
 void EvtDalitzTable::addDecay( EvtId parent, const EvtDalitzDecayInfo& dec )
 {
-    if ( _dalitztable.find( parent ) != _dalitztable.end() ) {
-        _dalitztable[parent].push_back( dec );
+    if ( m_dalitztable.find( parent ) != m_dalitztable.end() ) {
+        m_dalitztable[parent].push_back( dec );
     } else {
-        _dalitztable[parent].push_back( dec );
+        m_dalitztable[parent].push_back( dec );
     }
 }
 
@@ -491,8 +490,8 @@ void EvtDalitzTable::copyDecay( EvtId parent, EvtId* daughters, EvtId copy,
 std::vector<EvtDalitzDecayInfo> EvtDalitzTable::getDalitzTable( const EvtId& parent )
 {
     std::vector<EvtDalitzDecayInfo> table;
-    if ( _dalitztable.find( parent ) != _dalitztable.end() ) {
-        table = _dalitztable[parent];
+    if ( m_dalitztable.find( parent ) != m_dalitztable.end() ) {
+        table = m_dalitztable[parent];
     }
 
     if ( table.empty() ) {

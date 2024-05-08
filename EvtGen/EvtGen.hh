@@ -66,8 +66,8 @@ class EvtGen {
                      const std::list<EvtDecayBase*>* extraModels = nullptr,
                      int mixingType = 1, bool useXml = false );
 
-    EvtPDL _pdl;
-    int _mixingType;
+    EvtPDL m_pdl;
+    int m_mixingType;
 };
 
 #endif

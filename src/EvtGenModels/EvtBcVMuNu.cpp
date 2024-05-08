@@ -48,7 +48,7 @@ EvtDecayBase* EvtBcVMuNu::clone()
 void EvtBcVMuNu::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
-    calcamp->CalcAmp( p, _amp2, ffmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_ffmodel.get() );
 }
 
 void EvtBcVMuNu::init()
@@ -65,12 +65,12 @@ void EvtBcVMuNu::init()
     checkSpinDaughter( 1, EvtSpinType::DIRAC );
     checkSpinDaughter( 2, EvtSpinType::NEUTRINO );
 
-    idVector = getDaug( 0 ).getId();
-    whichfit = int( getArg( 0 ) + 0.1 );
+    m_idVector = getDaug( 0 ).getId();
+    m_whichfit = int( getArg( 0 ) + 0.1 );
 
-    ffmodel = std::make_unique<EvtBCVFF>( idVector, whichfit );
+    m_ffmodel = std::make_unique<EvtBCVFF>( m_idVector, m_whichfit );
 
-    calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+    m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
 }
 
 void EvtBcVMuNu::initProbMax()
@@ -81,8 +81,8 @@ void EvtBcVMuNu::initProbMax()
     EvtId nuId = getDaug( 2 );
 
     int nQ2Bins = 200;
-    double maxProb = calcamp->CalcMaxProb( parId, mesonId, lepId, nuId,
-                                           ffmodel.get(), nQ2Bins );
+    double maxProb = m_calcamp->CalcMaxProb( parId, mesonId, lepId, nuId,
+                                             m_ffmodel.get(), nQ2Bins );
 
     if ( verbose() ) {
         EvtGenReport( EVTGEN_INFO, "EvtBcVMuNu" )

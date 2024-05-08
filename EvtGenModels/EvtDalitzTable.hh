@@ -66,8 +66,8 @@ class EvtDalitzTable {
         EvtId* resDaughter, EvtId* daughter,
         std::vector<std::pair<EvtCyclic3::Pair, EvtCyclic3::Pair>>& angAndResPairs );
 
-    std::map<EvtId, std::vector<EvtDalitzDecayInfo>> _dalitztable;
-    std::vector<std::string> _readFiles;
+    std::map<EvtId, std::vector<EvtDalitzDecayInfo>> m_dalitztable;
+    std::vector<std::string> m_readFiles;
 
     EvtDalitzTable( const EvtDalitzTable& );
     EvtDalitzTable& operator=( const EvtDalitzTable& );

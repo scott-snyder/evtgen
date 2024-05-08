@@ -26,7 +26,7 @@
 #include "EvtGenBase/EvtSpinType.hh"
 #include "EvtGenBase/EvtStringHash.hh"
 
-#include <iostream>
+#include <iosfwd>
 #include <map>
 #include <string>
 #include <vector>
@@ -84,8 +84,8 @@ class EvtPDL final {
   private:
     void setUpConstsPdt();
 
-    static unsigned int _firstAlias;
-    static int _nentries;
+    static unsigned int m_firstAlias;
+    static int m_nentries;
 
     static std::vector<EvtPartProp>& partlist()
     {
@@ -93,7 +93,7 @@ class EvtPDL final {
         return s_partlist;
     }
 
-    static std::map<std::string, int> _particleNameLookup;
+    static std::map<std::string, int> m_particleNameLookup;
 
 };    // EvtPDL.h
 

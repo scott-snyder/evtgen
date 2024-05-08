@@ -49,15 +49,15 @@ class EvtItgFourCoeffFcn : public EvtItgAbsFunction {
 
   private:
     // Data members
-    double ( *_myFunction )( double x, const std::vector<double>& coeffs1,
-                             const std::vector<double>& coeffs2,
-                             const std::vector<double>& coeffs3,
-                             const std::vector<double>& coeffs4 );
+    double ( *m_myFunction )( double x, const std::vector<double>& coeffs1,
+                              const std::vector<double>& coeffs2,
+                              const std::vector<double>& coeffs3,
+                              const std::vector<double>& coeffs4 );
 
-    std::vector<double> _coeffs1;
-    std::vector<double> _coeffs2;
-    std::vector<double> _coeffs3;
-    std::vector<double> _coeffs4;
+    std::vector<double> m_coeffs1;
+    std::vector<double> m_coeffs2;
+    std::vector<double> m_coeffs3;
+    std::vector<double> m_coeffs4;
 };
 
 #endif    // EvtITGPTRFUNCTION_HH

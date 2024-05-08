@@ -44,29 +44,29 @@ class EvtSSDCP : public EvtDecayAmp {
   private:
     //Arguments
 
-    double _dm;
+    double m_dm;
 
-    double _dgog;
+    double m_dgog;
 
-    EvtComplex _qoverp;
-    EvtComplex _poverq;
-    EvtComplex _z;    //FS CPTV parameter
+    EvtComplex m_qoverp;
+    EvtComplex m_poverq;
+    EvtComplex m_z;    //FS CPTV parameter
 
     // FS commented next line becuse not used
-    //  int _cp;
+    //  int m_cp;
 
-    EvtComplex _A_f;
-    EvtComplex _Abar_f;
+    EvtComplex m_A_f;
+    EvtComplex m_Abar_f;
 
-    EvtComplex _A_fbar;
-    EvtComplex _Abar_fbar;
+    EvtComplex m_A_fbar;
+    EvtComplex m_Abar_fbar;
 
     //Derived quantities
 
-    double _gamma;
-    double _dgamma;
+    double m_gamma;
+    double m_dgamma;
 
-    bool _eigenstate;
+    bool m_eigenstate;
 };
 
 #endif

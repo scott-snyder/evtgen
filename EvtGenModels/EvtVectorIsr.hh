@@ -48,9 +48,9 @@ class EvtVectorIsr : public EvtDecayIncoherent {
                  double& e02, double& f );
 
   private:
-    double csfrmn, csbkmn;
-    double fmax;
-    bool firstorder;
+    double m_csfrmn, m_csbkmn;
+    double m_fmax;
+    bool m_firstorder;
 };
 
 #endif

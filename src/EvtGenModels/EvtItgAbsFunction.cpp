@@ -33,18 +33,18 @@ extern "C" {
 using std::endl;
 
 EvtItgAbsFunction::EvtItgAbsFunction( double lowerRange, double upperRange ) :
-    _upperRange( upperRange ), _lowerRange( lowerRange )
+    m_upperRange( upperRange ), m_lowerRange( lowerRange )
 {
 }
 
 double EvtItgAbsFunction::value( double x ) const
 {
-    if ( x >= _lowerRange && x <= _upperRange )
+    if ( x >= m_lowerRange && x <= m_upperRange )
         return myFunction( x );
     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
         << "Error in EvtItgAbsFunction::value.  Given co-ordinate " << x
-        << " is outside of allowed range [" << _lowerRange << ", "
-        << _upperRange << "].  Returning 0.0" << endl;
+        << " is outside of allowed range [" << m_lowerRange << ", "
+        << m_upperRange << "].  Returning 0.0" << endl;
     return 0.0;    // Never get here
 }
 

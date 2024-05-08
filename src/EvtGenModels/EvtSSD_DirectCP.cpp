@@ -72,7 +72,7 @@ void EvtSSD_DirectCP::init()
         ::abort();
     }
 
-    _acp = getArg( 0 );    // A_CP defined as A_CP = (BR(fbar)-BR(f))/(BR(fbar)+BR(f))
+    m_acp = getArg( 0 );    // A_CP defined as A_CP = (BR(fbar)-BR(f))/(BR(fbar)+BR(f))
 }
 
 void EvtSSD_DirectCP::initProbMax()
@@ -167,7 +167,7 @@ void EvtSSD_DirectCP::decay( EvtParticle* parent )
     EvtId daugs[2];
 
     // decide it is B or Bbar:
-    if ( EvtRandom::Flat( 0., 1. ) < ( ( 1. - _acp ) / 2. ) ) {
+    if ( EvtRandom::Flat( 0., 1. ) < ( ( 1. - m_acp ) / 2. ) ) {
         // it is a B
         if ( EvtPDL::getStdHep( getParentId() ) < 0 )
             flip = true;
@@ -194,7 +194,7 @@ void EvtSSD_DirectCP::decay( EvtParticle* parent )
 
     parent->initializePhaseSpace( 2, daugs );
 
-    calcAmp( *parent, _amp2 );
+    calcAmp( *parent, m_amp2 );
 }
 
 bool EvtSSD_DirectCP::isB0Mixed( const EvtParticle& p )

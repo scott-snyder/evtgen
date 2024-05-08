@@ -41,20 +41,20 @@ class EvtPdfSum : public EvtPdf<T> {
     void addTerm( double c, const EvtPdf<T>& pdf )
     {
         assert( c >= 0. );
-        _c.push_back( c );
-        _term.push_back( pdf.clone() );
+        m_c.push_back( c );
+        m_term.push_back( pdf.clone() );
     }
 
     void addOwnedTerm( double c, std::unique_ptr<EvtPdf<T>> pdf )
     {
-        _c.push_back( c );
-        _term.push_back( pdf.release() );
+        m_c.push_back( c );
+        m_term.push_back( pdf.release() );
     }
 
-    size_t nTerms() const { return _term.size(); }    // number of terms
+    size_t nTerms() const { return m_term.size(); }    // number of terms
 
-    inline double c( int i ) const { return _c[i]; }
-    inline EvtPdf<T>* getPdf( int i ) const { return _term[i]; }
+    inline double c( int i ) const { return m_c[i]; }
+    inline EvtPdf<T>* getPdf( int i ) const { return m_term[i]; }
 
     // Integrals
 
@@ -65,24 +65,24 @@ class EvtPdfSum : public EvtPdf<T> {
   protected:
     double pdf( const T& p ) const override;
 
-    vector<double> _c;           // coefficients
-    vector<EvtPdf<T>*> _term;    // pointers to pdfs
+    vector<double> m_c;           // coefficients
+    vector<EvtPdf<T>*> m_term;    // pointers to pdfs
 };
 
 template <class T>
 EvtPdfSum<T>::EvtPdfSum( const EvtPdfSum<T>& other ) : EvtPdf<T>( other )
 {
     for ( size_t i = 0; i < other.nTerms(); i++ ) {
-        _c.push_back( other._c[i] );
-        _term.push_back( other._term[i]->clone() );
+        m_c.push_back( other.m_c[i] );
+        m_term.push_back( other.m_term[i]->clone() );
     }
 }
 
 template <class T>
 EvtPdfSum<T>::~EvtPdfSum()
 {
-    for ( size_t i = 0; i < _c.size(); i++ ) {
-        delete _term[i];
+    for ( size_t i = 0; i < m_c.size(); i++ ) {
+        delete m_term[i];
     }
 }
 
@@ -90,8 +90,8 @@ template <class T>
 double EvtPdfSum<T>::pdf( const T& p ) const
 {
     double ret = 0.;
-    for ( size_t i = 0; i < _c.size(); i++ ) {
-        ret += _c[i] * _term[i]->evaluate( p );
+    for ( size_t i = 0; i < m_c.size(); i++ ) {
+        ret += m_c[i] * m_term[i]->evaluate( p );
     }
     return ret;
 }
@@ -105,7 +105,7 @@ EvtValError EvtPdfSum<T>::compute_integral() const
 {
     EvtValError itg( 0.0, 0.0 );
     for ( size_t i = 0; i < nTerms(); i++ ) {
-        itg += _c[i] * _term[i]->getItg();
+        itg += m_c[i] * m_term[i]->getItg();
     }
     return itg;
 }
@@ -115,7 +115,7 @@ EvtValError EvtPdfSum<T>::compute_integral( int N ) const
 {
     EvtValError itg( 0.0, 0.0 );
     for ( size_t i = 0; i < nTerms(); i++ )
-        itg += _c[i] * _term[i]->getItg( N );
+        itg += m_c[i] * m_term[i]->getItg( N );
     return itg;
 }
 
@@ -128,22 +128,22 @@ EvtValError EvtPdfSum<T>::compute_integral( int N ) const
 template <class T>
 T EvtPdfSum<T>::randomPoint()
 {
-    if ( !this->_itg.valueKnown() )
-        this->_itg = compute_integral();
+    if ( !this->m_itg.valueKnown() )
+        this->m_itg = compute_integral();
 
-    double max = this->_itg.value();
+    double max = this->m_itg.value();
     double rnd = EvtRandom::Flat( 0, max );
 
     double sum = 0.;
     size_t i;
     for ( i = 0; i < nTerms(); i++ ) {
-        double itg = _term[i]->getItg().value();
-        sum += _c[i] * itg;
+        double itg = m_term[i]->getItg().value();
+        sum += m_c[i] * itg;
         if ( sum > rnd )
             break;
     }
 
-    return _term[i]->randomPoint();
+    return m_term[i]->randomPoint();
 }
 
 #endif

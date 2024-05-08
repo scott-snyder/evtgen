@@ -58,10 +58,10 @@ class EvtDalitzResPdf : public EvtPdf<EvtDalitzPoint> {
     double pdf( const EvtDalitzPoint& ) const override;
 
   private:
-    EvtDalitzPlot _dp;
-    double _m0;                // mass
-    double _g0;                // width
-    EvtCyclic3::Pair _pair;    // resonant pair
+    EvtDalitzPlot m_dp;
+    double m_m0;                // mass
+    double m_g0;                // width
+    EvtCyclic3::Pair m_pair;    // resonant pair
 };
 
 #endif

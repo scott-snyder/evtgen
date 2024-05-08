@@ -25,26 +25,26 @@
 
 EvtBcBsStarNPi::EvtBcBsStarNPi()
 {
-    _beta = -0.108;
-    _mRho = 0.775;
-    _gammaRho = 0.149;
-    _mRhopr = 1.364;
-    _gammaRhopr = 0.400;
-    _mA1 = 1.23;
-    _gammaA1 = 0.4;
+    m_beta = -0.108;
+    m_mRho = 0.775;
+    m_gammaRho = 0.149;
+    m_mRhopr = 1.364;
+    m_gammaRhopr = 0.400;
+    m_mA1 = 1.23;
+    m_gammaA1 = 0.4;
 
-    FA0_N = 8.1;
-    FA0_c1 = 0.30;
-    FA0_c2 = 0.069;
-    FAm_N = 0.0;
-    FAm_c1 = 0.0;
-    FAm_c2 = 0.0;
-    FAp_N = 0.15;
-    FAp_c1 = 0.30;
-    FAp_c2 = 0.069;
-    FV_N = 1.08;
-    FV_c1 = 0.30;
-    FV_c2 = 0.069;
+    m_FA0_N = 8.1;
+    m_FA0_c1 = 0.30;
+    m_FA0_c2 = 0.069;
+    m_FAm_N = 0.0;
+    m_FAm_c1 = 0.0;
+    m_FAm_c2 = 0.0;
+    m_FAp_N = 0.15;
+    m_FAp_c1 = 0.30;
+    m_FAp_c2 = 0.069;
+    m_FV_N = 1.08;
+    m_FV_c1 = 0.30;
+    m_FV_c2 = 0.069;
 }
 
 std::string EvtBcBsStarNPi::getName()

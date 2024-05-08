@@ -27,15 +27,15 @@ class EvtOrthogVector final {
   public:
     EvtOrthogVector( int n, std::vector<double>* vectors );
 
-    std::vector<double> getOrthogVector() { return _orthogVector; }
+    std::vector<double> getOrthogVector() { return m_orthogVector; }
 
   private:
-    int _dimen;
-    std::vector<int> _holder;
+    int m_dimen;
+    std::vector<int> m_holder;
     void findOrthog( int dim, std::vector<int> invect,
                      std::vector<double>* vectors );
 
-    std::vector<double> _orthogVector;
+    std::vector<double> m_orthogVector;
 
     int findEvenOddSwaps();
 };

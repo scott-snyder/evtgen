@@ -38,13 +38,13 @@ class EvtPropGounarisSakurai : public EvtPropagator {
     EvtComplex amplitude( const EvtPoint1D& x ) const override;
 
   private:
-    EvtDalitzPlot* _dalitzSpace;
+    EvtDalitzPlot* m_dalitzSpace;
 
-    EvtCyclic3::Pair _pair;
-    double _gbase;
-    double _m1;
-    double _m2;
-    double _dfun;
+    EvtCyclic3::Pair m_pair;
+    double m_gbase;
+    double m_m1;
+    double m_m2;
+    double m_dfun;
     double dFun( double s ) const;
     double dh_dsFun( double s ) const;
     double hFun( double s ) const;

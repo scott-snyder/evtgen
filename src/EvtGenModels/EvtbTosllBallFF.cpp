@@ -27,14 +27,14 @@
 
 EvtbTosllBallFF::EvtbTosllBallFF( int ffmodel )
 {
-    _theFFModel = ffmodel;
+    m_theFFModel = ffmodel;
 }
 
 void EvtbTosllBallFF::getScalarFF( EvtId parent, EvtId daught, double t,
                                    double /*mass*/, double& fp, double& f0,
                                    double& ft )
 {
-    int model = _theFFModel;
+    int model = m_theFFModel;
 
     double m = EvtPDL::getMeanMass( parent );
     double md = EvtPDL::getMeanMass( daught );
@@ -190,7 +190,7 @@ void EvtbTosllBallFF::getVectorFF( EvtId parent, EvtId daught, double t,
                                    double& a0, double& v, double& t1,
                                    double& t2, double& t3 )
 {
-    int model = _theFFModel;
+    int model = m_theFFModel;
 
     double m = EvtPDL::getMeanMass( parent );
     double md = EvtPDL::getMeanMass( daught );

@@ -41,9 +41,9 @@ class EvtbTosllBall : public EvtDecayAmp {
     void initProbMax() override;
 
   private:
-    std::unique_ptr<EvtbTosllAmp> _calcamp;
-    std::unique_ptr<EvtbTosllFF> _ballffmodel;
-    double _poleSize;
+    std::unique_ptr<EvtbTosllAmp> m_calcamp;
+    std::unique_ptr<EvtbTosllFF> m_ballffmodel;
+    double m_poleSize;
 };
 
 #endif

@@ -62,9 +62,9 @@ void EvtBtoKD3P::init()
     // Check that the B dtr types are K D D:
 
     // get the parameters:
-    _r = getArg( 0 );
+    m_r = getArg( 0 );
     double phase = getArg( 1 );
-    _exp = EvtComplex( cos( phase ), sin( phase ) );
+    m_exp = EvtComplex( cos( phase ), sin( phase ) );
 }
 
 //------------------------------------------------------------------
@@ -77,7 +77,7 @@ void EvtBtoKD3P::initProbMax()
 void EvtBtoKD3P::decay( EvtParticle* p )
 {
     // tell the subclass that we decay the daughter:
-    _daugsDecayedByParentModel = true;
+    m_daugsDecayedByParentModel = true;
 
     // the K is the 1st daughter of the B EvtParticle.
     // The decay mode of the allowed D (the one produced in b->c decay) is 2nd
@@ -104,12 +104,12 @@ void EvtBtoKD3P::decay( EvtParticle* p )
         (EvtPto3P*)( EvtDecayTable::getInstance()->getDecayFunc( theD ) );
 
     // on the first call:
-    if ( false == _decayedOnce ) {
-        _decayedOnce = true;
+    if ( false == m_decayedOnce ) {
+        m_decayedOnce = true;
 
         // store the D decay model pointers:
-        _model1 = model1;
-        _model2 = model2;
+        m_model1 = model1;
+        m_model2 = model2;
 
         // check the decay models of the first 2 daughters and that they
         // have the same final states:
@@ -160,13 +160,13 @@ void EvtBtoKD3P::decay( EvtParticle* p )
         // estimate the probmax. Need to know the probmax's of the 2
         // models for this:
         setProbMax(
-            model1->getProbMax( 0 ) + _r * _r * model2->getProbMax( 0 ) +
-            2 * _r * sqrt( model1->getProbMax( 0 ) * model2->getProbMax( 0 ) ) );
+            model1->getProbMax( 0 ) + m_r * m_r * model2->getProbMax( 0 ) +
+            2 * m_r * sqrt( model1->getProbMax( 0 ) * model2->getProbMax( 0 ) ) );
 
     }    // end of things to do on the first call
 
     // make sure the models haven't changed since the first call:
-    if ( _model1 != model1 || _model2 != model2 ) {
+    if ( m_model1 != model1 || m_model2 != model2 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "D daughters of EvtBtoKD3P decay should have only 1 decay modes, "
             << endl
@@ -183,7 +183,7 @@ void EvtBtoKD3P::decay( EvtParticle* p )
     // They are summed with coefficients 1 because we are willing to
     // take a small inefficiency (~50%) in order to ensure that the
     // cover function is large enough without getting into complications
-    // associated with the smallness of _r:
+    // associated with the smallness of m_r:
     EvtPdfSum<EvtDalitzPoint>* pc1 = model1->getPC();
     EvtPdfSum<EvtDalitzPoint>* pc2 = model2->getPC();
     EvtPdfSum<EvtDalitzPoint> pc;
@@ -196,7 +196,7 @@ void EvtBtoKD3P::decay( EvtParticle* p )
     // get the aptitude for each of the models on this point and add them up:
     EvtComplex amp1 = model1->amplNonCP( x );
     EvtComplex amp2 = model2->amplNonCP( x );
-    EvtComplex amp = amp1 + amp2 * _r * _exp;
+    EvtComplex amp = amp1 + amp2 * m_r * m_exp;
 
     // get the value of the cover function for this point and set the
     // relative amplitude for this decay:

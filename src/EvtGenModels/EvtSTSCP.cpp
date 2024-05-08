@@ -82,8 +82,6 @@ void EvtSTSCP::decay( EvtParticle* p )
 
     EvtCPUtil::getInstance()->OtherB( p, t, other_b, 0.5 );
 
-    double m_parent = p->mass();
-
     EvtComplex amp;
 
     EvtComplex A, Abar;
@@ -110,7 +108,7 @@ void EvtSTSCP::decay( EvtParticle* p )
 
     p4_parent = momt + moms;
 
-    double norm = masst * masst / ( m_parent * momt.d3mag() * momt.d3mag() );
+    double norm = masst * masst / ( p->mass() * momt.d3mag() * momt.d3mag() );
 
     vertex( 0, amp * norm * t1->epsTensorParent( 0 ).cont1( p4_parent ) *
                    p4_parent );

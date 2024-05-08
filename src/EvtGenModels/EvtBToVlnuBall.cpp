@@ -48,7 +48,7 @@ EvtBToVlnuBall* EvtBToVlnuBall::clone()
 void EvtBToVlnuBall::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
-    _calcamp->CalcAmp( p, _amp2, _Ballmodel.get() );
+    m_calcamp->CalcAmp( p, m_amp2, m_Ballmodel.get() );
 }
 
 void EvtBToVlnuBall::initProbMax()
@@ -60,8 +60,8 @@ void EvtBToVlnuBall::initProbMax()
     lnum = getDaug( 1 );
     nunum = getDaug( 2 );
 
-    double mymaxprob = _calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
-                                              _Ballmodel.get() );
+    double mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
+                                               m_Ballmodel.get() );
 
     setProbMax( mymaxprob );
 }
@@ -80,10 +80,10 @@ void EvtBToVlnuBall::init()
     EvtSpinType::spintype d1type = EvtPDL::getSpinType( getDaug( 0 ) );
     if ( d1type == EvtSpinType::VECTOR ) {
         checkNArg( 8 );    // the number of arguments needed for the Ball model
-        _Ballmodel = std::make_unique<EvtBToVlnuBallFF>(
+        m_Ballmodel = std::make_unique<EvtBToVlnuBallFF>(
             getArg( 0 ), getArg( 1 ), getArg( 2 ), getArg( 3 ), getArg( 4 ),
             getArg( 5 ), getArg( 6 ), getArg( 7 ) );
-        _calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+        m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Ball model handles only vector meson daughters. Sorry." << endl;

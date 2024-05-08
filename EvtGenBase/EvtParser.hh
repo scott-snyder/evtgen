@@ -34,10 +34,10 @@ class EvtParser {
     int getLineofToken( int i );
 
   private:
-    int _ntoken;
-    std::string* _tokenlist;
-    int* _linelist;
-    int _lengthoftokenlist;
+    int m_ntoken;
+    std::string* m_tokenlist;
+    int* m_linelist;
+    int m_lengthoftokenlist;
 
     void addToken( int line, const std::string& string );
 };

@@ -41,8 +41,8 @@ class EvtSLBKPole : public EvtDecayAmp {
     void init() override;
 
   private:
-    std::unique_ptr<EvtSemiLeptonicFF> SLBKPoleffmodel;    //modified
-    std::unique_ptr<EvtSemiLeptonicAmp> calcamp;
+    std::unique_ptr<EvtSemiLeptonicFF> m_SLBKPoleffmodel;    //modified
+    std::unique_ptr<EvtSemiLeptonicAmp> m_calcamp;
 };
 
 #endif

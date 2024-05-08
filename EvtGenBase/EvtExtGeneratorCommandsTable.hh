@@ -35,11 +35,11 @@ class EvtExtGeneratorCommandsTable {
 
     void addCommand( std::string extGenerator, Command command )
     {
-        _commandMap[extGenerator].push_back( command );
+        m_commandMap[extGenerator].push_back( command );
     }
     const GeneratorCommands& getCommands( std::string extGenerator )
     {
-        return _commandMap[extGenerator];
+        return m_commandMap[extGenerator];
     }
 
   protected:
@@ -47,7 +47,7 @@ class EvtExtGeneratorCommandsTable {
     ~EvtExtGeneratorCommandsTable();
 
   private:
-    GlobalCommandMap _commandMap;
+    GlobalCommandMap m_commandMap;
 
     EvtExtGeneratorCommandsTable( const EvtExtGeneratorCommandsTable& ){};
 };

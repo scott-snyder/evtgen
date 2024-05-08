@@ -43,9 +43,9 @@ class Evtbs2llGammaISRFSR : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    Evtbs2llGammaFF* _mntffmodel;
-    Evtbs2llGammaISRFSRAmp* _calcamp;
-    EvtbTosllWilsCoeffNLO* _wilscoeff;
+    Evtbs2llGammaFF* m_mntffmodel;
+    Evtbs2llGammaISRFSRAmp* m_calcamp;
+    EvtbTosllWilsCoeffNLO* m_wilscoeff;
 };
 
 #endif

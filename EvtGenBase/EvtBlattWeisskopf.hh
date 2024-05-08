@@ -32,11 +32,11 @@ class EvtBlattWeisskopf {
     double operator()( double p ) const;
 
   private:
-    int _LL;           // angular momentum of daughters
-    double _radial;    // resonance radial parameter
-    double _p0;
+    int m_LL;           // angular momentum of daughters
+    double m_radial;    // resonance radial parameter
+    double m_p0;
 
-    double _F0;    // formula evaluated at _p0
+    double m_F0;    // formula evaluated at m_p0
     double compute( double p ) const;
 };
 

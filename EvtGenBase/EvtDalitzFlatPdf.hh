@@ -44,7 +44,7 @@ class EvtDalitzFlatPdf : public EvtPdf<EvtDalitzPoint> {
   protected:
     double pdf( const EvtDalitzPoint& ) const override;
 
-    EvtDalitzPlot _dp;
+    EvtDalitzPlot m_dp;
 };
 
 #endif

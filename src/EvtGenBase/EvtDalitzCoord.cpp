@@ -32,30 +32,30 @@ using std::ostream;
 // default ctor. Initialize to something invalid.
 
 EvtDalitzCoord::EvtDalitzCoord() :
-    _i1( EvtCyclic3::AB ), _i2( EvtCyclic3::BC ), _q1( -1. ), _q2( -1. )
+    m_i1( EvtCyclic3::AB ), m_i2( EvtCyclic3::BC ), m_q1( -1. ), m_q2( -1. )
 {
 }
 
 EvtDalitzCoord::EvtDalitzCoord( const EvtDalitzCoord& other ) :
-    _i1( other._i1 ), _i2( other._i2 ), _q1( other._q1 ), _q2( other._q2 )
+    m_i1( other.m_i1 ), m_i2( other.m_i2 ), m_q1( other.m_q1 ), m_q2( other.m_q2 )
 {
 }
 
 EvtDalitzCoord::EvtDalitzCoord( Pair i1, double q1, Pair i2, double q2 ) :
-    _i1( i1 ), _i2( i2 ), _q1( q1 ), _q2( q2 )
+    m_i1( i1 ), m_i2( i2 ), m_q1( q1 ), m_q2( q2 )
 {
 }
 
 bool EvtDalitzCoord::operator==( const EvtDalitzCoord& other ) const
 {
-    return ( _i1 == other._i1 && _i2 == other._i2 && _q1 == other._q1 &&
-             _q2 == other._q2 );
+    return ( m_i1 == other.m_i1 && m_i2 == other.m_i2 && m_q1 == other.m_q1 &&
+             m_q2 == other.m_q2 );
 }
 
 void EvtDalitzCoord::print( ostream& os ) const
 {
-    os << _i1 << " " << _q1 << endl;
-    os << _i2 << " " << _q2 << endl;
+    os << m_i1 << " " << m_q1 << endl;
+    os << m_i2 << " " << m_q2 << endl;
 }
 
 ostream& operator<<( ostream& os, const EvtDalitzCoord& p )

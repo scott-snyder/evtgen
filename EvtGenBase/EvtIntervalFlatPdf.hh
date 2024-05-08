@@ -43,8 +43,8 @@ class EvtIntervalFlatPdf : public EvtPdf<EvtPoint1D> {
   protected:
     double pdf( const EvtPoint1D& ) const override;
 
-    double _min;
-    double _max;
+    double m_min;
+    double m_max;
 };
 
 #endif

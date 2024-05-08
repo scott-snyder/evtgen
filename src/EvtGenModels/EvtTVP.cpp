@@ -63,7 +63,7 @@ void EvtTVP::init()
         checkSpinDaughter( 1, EvtSpinType::DIRAC );
         checkSpinDaughter( 2, EvtSpinType::DIRAC );
         checkNArg( 1 );
-        delta = getArg( 0 );
+        m_delta = getArg( 0 );
     }
 }
 
@@ -78,7 +78,7 @@ void EvtTVP::initProbMax()
         }
 
     } else if ( getNDaug() == 3 ) {
-        double dSq = delta * delta;
+        double dSq = m_delta * m_delta;
         double denom = dSq - 0.2;
         double ratio( 1.0 );
         if ( fabs( denom ) > 1e-10 ) {
@@ -166,7 +166,7 @@ void EvtTVP::decay_3body( EvtParticle* root )
         validAmp = false;
     }
 
-    double dSq = delta * delta;
+    double dSq = m_delta * m_delta;
     double dSqDenom = dSq - kSq;
     if ( fabs( dSqDenom ) < 1e-10 ) {
         validAmp = false;

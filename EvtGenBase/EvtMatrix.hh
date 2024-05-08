@@ -28,16 +28,16 @@
 template <class T>
 class EvtMatrix {
   private:
-    T** _mat;
-    int _range;
+    T** m_mat;
+    int m_range;
 
   public:
-    EvtMatrix() : _range( 0 ){};
+    EvtMatrix() : m_range( 0 ){};
     ~EvtMatrix();
     inline void setRange( int range );
 
-    T& operator()( int row, int col ) { return _mat[row][col]; }
-    T* operator[]( int row ) { return _mat[row]; }
+    T& operator()( int row, int col ) { return m_mat[row][col]; }
+    T* operator[]( int row ) { return m_mat[row]; }
     T det();
     EvtMatrix* min( int row, int col );
     EvtMatrix* inverse();
@@ -53,33 +53,33 @@ inline void EvtMatrix<T>::setRange( int range )
 {
     // If the range is changed, delete any previous matrix stored
     //    and allocate elements with the newly specified range.
-    if ( _range != range ) {
-        if ( _range ) {
-            for ( int row = 0; row < _range; row++ )
-                delete[] _mat[row];
-            delete[] _mat;
+    if ( m_range != range ) {
+        if ( m_range ) {
+            for ( int row = 0; row < m_range; row++ )
+                delete[] m_mat[row];
+            delete[] m_mat;
         }
 
-        _mat = new T*[range];
+        m_mat = new T*[range];
         for ( int row = 0; row < range; row++ )
-            _mat[row] = new T[range];
+            m_mat[row] = new T[range];
 
         // Set the new range.
-        _range = range;
+        m_range = range;
     }
 
     // Since user is willing to change the range, reset the matrix elements.
-    for ( int row = 0; row < _range; row++ )
-        for ( int col = 0; col < _range; col++ )
-            _mat[row][col] = 0.;
+    for ( int row = 0; row < m_range; row++ )
+        for ( int col = 0; col < m_range; col++ )
+            m_mat[row][col] = 0.;
 }
 
 template <class T>
 EvtMatrix<T>::~EvtMatrix()
 {
-    for ( int row = 0; row < _range; row++ )
-        delete[] _mat[row];
-    delete[] _mat;
+    for ( int row = 0; row < m_range; row++ )
+        delete[] m_mat[row];
+    delete[] m_mat;
 }
 
 template <class T>
@@ -87,10 +87,10 @@ std::string EvtMatrix<T>::dump()
 {
     std::ostringstream str;
 
-    for ( int row = 0; row < _range; row++ ) {
+    for ( int row = 0; row < m_range; row++ ) {
         str << "|";
-        for ( int col = 0; col < _range; col++ )
-            str << "\t" << _mat[row][col];
+        for ( int col = 0; col < m_range; col++ )
+            str << "\t" << m_mat[row][col];
         str << "\t|" << std::endl;
     }
 
@@ -100,19 +100,19 @@ std::string EvtMatrix<T>::dump()
 template <class T>
 T EvtMatrix<T>::det()
 {
-    if ( _range == 1 )
-        return _mat[0][0];
+    if ( m_range == 1 )
+        return m_mat[0][0];
 
     // There's no need to define the range 2 determinant manually, but it may
     //    speed up the calculation.
-    if ( _range == 2 )
-        return _mat[0][0] * _mat[1][1] - _mat[0][1] * _mat[1][0];
+    if ( m_range == 2 )
+        return m_mat[0][0] * m_mat[1][1] - m_mat[0][1] * m_mat[1][0];
 
     T sum = 0.;
 
-    for ( int col = 0; col < _range; col++ ) {
+    for ( int col = 0; col < m_range; col++ ) {
         EvtMatrix<T>* minor = min( 0, col );
-        sum += std::pow( -1., col ) * _mat[0][col] * minor->det();
+        sum += std::pow( -1., col ) * m_mat[0][col] * minor->det();
         delete minor;
     }
 
@@ -124,15 +124,15 @@ template <class T>
 EvtMatrix<T>* EvtMatrix<T>::min( int row, int col )
 {
     EvtMatrix<T>* minor = new EvtMatrix<T>();
-    minor->setRange( _range - 1 );
+    minor->setRange( m_range - 1 );
 
     int minIndex = 0;
 
-    for ( int r = 0; r < _range; r++ )
-        for ( int c = 0; c < _range; c++ )
+    for ( int r = 0; r < m_range; r++ )
+        for ( int c = 0; c < m_range; c++ )
             if ( ( r != row ) && ( c != col ) ) {
-                ( *minor )( minIndex / ( _range - 1 ),
-                            minIndex % ( _range - 1 ) ) = _mat[r][c];
+                ( *minor )( minIndex / ( m_range - 1 ),
+                            minIndex % ( m_range - 1 ) ) = m_mat[r][c];
                 minIndex++;
             }
 
@@ -143,24 +143,24 @@ template <class T>
 EvtMatrix<T>* EvtMatrix<T>::inverse()
 {
     EvtMatrix<T>* inv = new EvtMatrix<T>();
-    inv->setRange( _range );
+    inv->setRange( m_range );
 
     if ( det() == 0 ) {
         std::cerr << "This matrix has a null determinant and cannot be inverted. Returning zero matrix."
                   << std::endl;
-        for ( int row = 0; row < _range; row++ )
-            for ( int col = 0; col < _range; col++ )
+        for ( int row = 0; row < m_range; row++ )
+            for ( int col = 0; col < m_range; col++ )
                 ( *inv )( row, col ) = 0.;
         return inv;
     }
 
     T determinant = det();
 
-    for ( int row = 0; row < _range; row++ )
-        for ( int col = 0; col < _range; col++ ) {
+    for ( int row = 0; row < m_range; row++ )
+        for ( int col = 0; col < m_range; col++ ) {
             EvtMatrix<T>* minor = min( row, col );
-            inv->_mat[col][row] = std::pow( -1., row + col ) * minor->det() /
-                                  determinant;
+            inv->m_mat[col][row] = std::pow( -1., row + col ) * minor->det() /
+                                   determinant;
             delete minor;
         }
 
@@ -171,24 +171,24 @@ template <class T>
 EvtMatrix<T>* operator*( const EvtMatrix<T>& left, const EvtMatrix<T>& right )
 {
     // Chech that the matrices have the correct range.
-    if ( left._range != right._range ) {
+    if ( left.m_range != right.m_range ) {
         std::cerr << "These matrices cannot be multiplied." << std::endl;
         return new EvtMatrix<T>();
     }
 
     EvtMatrix<T>* mat = new EvtMatrix<T>();
-    mat->setRange( left._range );
+    mat->setRange( left.m_range );
 
     // Initialize the elements of the matrix.
-    for ( int row = 0; row < left._range; row++ )
-        for ( int col = 0; col < right._range; col++ )
+    for ( int row = 0; row < left.m_range; row++ )
+        for ( int col = 0; col < right.m_range; col++ )
             ( *mat )[row][col] = 0;
 
-    for ( int row = 0; row < left._range; row++ )
-        for ( int col = 0; col < right._range; col++ )
-            for ( int line = 0; line < right._range; line++ )
-                ( *mat )[row][col] += left._mat[row][line] *
-                                      right._mat[line][col];
+    for ( int row = 0; row < left.m_range; row++ )
+        for ( int col = 0; col < right.m_range; col++ )
+            for ( int line = 0; line < right.m_range; line++ )
+                ( *mat )[row][col] += left.m_mat[row][line] *
+                                      right.m_mat[line][col];
 
     return mat;
 }

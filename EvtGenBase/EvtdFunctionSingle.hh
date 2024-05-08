@@ -35,14 +35,14 @@ class EvtdFunctionSingle {
   private:
     int fact( int n );
 
-    int _j;
-    int _m1;
-    int _m2;
+    int m_j;
+    int m_m1;
+    int m_m2;
 
-    double* _coef;
+    double* m_coef;
 
-    int _kmin;
-    int _kmax;
+    int m_kmin;
+    int m_kmax;
 };
 
 #endif

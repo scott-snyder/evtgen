@@ -43,17 +43,17 @@ class EvtLASSAmp : public EvtAmplitude<EvtDalitzPoint> {
     }
 
   private:
-    EvtDalitzPlot* _dalitzSpace;
+    EvtDalitzPlot* m_dalitzSpace;
 
-    EvtCyclic3::Pair _pair;
+    EvtCyclic3::Pair m_pair;
 
-    double _m0;
-    double _g0;
-    double _q0;
-    double _r;
-    double _a;
-    double _cutoff;
-    std::string _subtype;
+    double m_m0;
+    double m_g0;
+    double m_q0;
+    double m_r;
+    double m_a;
+    double m_cutoff;
+    std::string m_subtype;
 };
 
 #endif

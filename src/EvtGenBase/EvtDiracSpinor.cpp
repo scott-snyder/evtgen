@@ -40,27 +40,27 @@ EvtDiracSpinor::EvtDiracSpinor( const EvtComplex& sp0, const EvtComplex& sp1,
 void EvtDiracSpinor::set( const EvtComplex& sp0, const EvtComplex& sp1,
                           const EvtComplex& sp2, const EvtComplex& sp3 )
 {
-    spinor[0] = sp0;
-    spinor[1] = sp1;
-    spinor[2] = sp2;
-    spinor[3] = sp3;
+    m_spinor[0] = sp0;
+    m_spinor[1] = sp1;
+    m_spinor[2] = sp2;
+    m_spinor[3] = sp3;
 }
 
 void EvtDiracSpinor::set_spinor( int i, const EvtComplex& sp )
 {
-    spinor[i] = sp;
+    m_spinor[i] = sp;
 }
 
 ostream& operator<<( ostream& s, const EvtDiracSpinor& sp )
 {
-    s << "[" << sp.spinor[0] << "," << sp.spinor[1] << "," << sp.spinor[2]
-      << "," << sp.spinor[3] << "]";
+    s << "[" << sp.m_spinor[0] << "," << sp.m_spinor[1] << "," << sp.m_spinor[2]
+      << "," << sp.m_spinor[3] << "]";
     return s;
 }
 
 const EvtComplex& EvtDiracSpinor::get_spinor( int i ) const
 {
-    return spinor[i];
+    return m_spinor[i];
 }
 
 EvtDiracSpinor rotateEuler( const EvtDiracSpinor& sp, double alpha, double beta,
@@ -120,19 +120,19 @@ void EvtDiracSpinor::applyBoostTo( const EvtVector3R& boost )
     f1 = sqrt( ( gamma + 1.0 ) / 2.0 );
     f2 = f1 * gamma / ( gamma + 1.0 );
 
-    spinorp[0] = f1 * spinor[0] + f2 * bz * spinor[2] +
-                 f2 * EvtComplex( bx, -by ) * spinor[3];
-    spinorp[1] = f1 * spinor[1] + f2 * EvtComplex( bx, by ) * spinor[2] -
-                 f2 * bz * spinor[3];
-    spinorp[2] = f2 * bz * spinor[0] + f2 * EvtComplex( bx, -by ) * spinor[1] +
-                 f1 * spinor[2];
-    spinorp[3] = f2 * EvtComplex( bx, by ) * spinor[0] - f2 * bz * spinor[1] +
-                 f1 * spinor[3];
+    spinorp[0] = f1 * m_spinor[0] + f2 * bz * m_spinor[2] +
+                 f2 * EvtComplex( bx, -by ) * m_spinor[3];
+    spinorp[1] = f1 * m_spinor[1] + f2 * EvtComplex( bx, by ) * m_spinor[2] -
+                 f2 * bz * m_spinor[3];
+    spinorp[2] = f2 * bz * m_spinor[0] +
+                 f2 * EvtComplex( bx, -by ) * m_spinor[1] + f1 * m_spinor[2];
+    spinorp[3] = f2 * EvtComplex( bx, by ) * m_spinor[0] -
+                 f2 * bz * m_spinor[1] + f1 * m_spinor[3];
 
-    spinor[0] = spinorp[0];
-    spinor[1] = spinorp[1];
-    spinor[2] = spinorp[2];
-    spinor[3] = spinorp[3];
+    m_spinor[0] = spinorp[0];
+    m_spinor[1] = spinorp[1];
+    m_spinor[2] = spinorp[2];
+    m_spinor[3] = spinorp[3];
 
     return;
 }
@@ -153,15 +153,15 @@ void EvtDiracSpinor::applyRotateEuler( double alpha, double beta, double gamma )
     EvtComplex m21( sb2 * camg2, sb2 * samg2 );
     EvtComplex m22( cb2 * capg2, cb2 * sapg2 );
 
-    retVal[0] = m11 * spinor[0] + m12 * spinor[1];
-    retVal[1] = m21 * spinor[0] + m22 * spinor[1];
-    retVal[2] = m11 * spinor[2] + m12 * spinor[3];
-    retVal[3] = m21 * spinor[2] + m22 * spinor[3];
+    retVal[0] = m11 * m_spinor[0] + m12 * m_spinor[1];
+    retVal[1] = m21 * m_spinor[0] + m22 * m_spinor[1];
+    retVal[2] = m11 * m_spinor[2] + m12 * m_spinor[3];
+    retVal[3] = m21 * m_spinor[2] + m22 * m_spinor[3];
 
-    spinor[0] = retVal[0];
-    spinor[1] = retVal[1];
-    spinor[2] = retVal[2];
-    spinor[3] = retVal[3];
+    m_spinor[0] = retVal[0];
+    m_spinor[1] = retVal[1];
+    m_spinor[2] = retVal[2];
+    m_spinor[3] = retVal[3];
 
     return;
 }
@@ -171,7 +171,7 @@ EvtDiracSpinor EvtDiracSpinor::conj() const
     EvtDiracSpinor sp;
 
     for ( int i = 0; i < 4; i++ )
-        sp.set_spinor( i, ::conj( spinor[i] ) );
+        sp.set_spinor( i, ::conj( m_spinor[i] ) );
 
     return sp;
 }
@@ -191,11 +191,11 @@ EvtVector4C EvtLeptonVACurrent( const EvtDiracSpinor& d, const EvtDiracSpinor& d
     //temp.set(3,d*(mat*dp));
     //return temp;
 
-    EvtComplex u02 = ::conj( d.spinor[0] - d.spinor[2] );
-    EvtComplex u13 = ::conj( d.spinor[1] - d.spinor[3] );
+    EvtComplex u02 = ::conj( d.m_spinor[0] - d.m_spinor[2] );
+    EvtComplex u13 = ::conj( d.m_spinor[1] - d.m_spinor[3] );
 
-    EvtComplex v02 = dp.spinor[0] - dp.spinor[2];
-    EvtComplex v13 = dp.spinor[1] - dp.spinor[3];
+    EvtComplex v02 = dp.m_spinor[0] - dp.m_spinor[2];
+    EvtComplex v13 = dp.m_spinor[1] - dp.m_spinor[3];
 
     EvtComplex a = u02 * v02;
     EvtComplex b = u13 * v13;
@@ -318,10 +318,10 @@ EvtTensor4C EvtLeptonTCurrent( const EvtDiracSpinor& d, const EvtDiracSpinor& dp
 EvtDiracSpinor operator*( const EvtComplex& c, const EvtDiracSpinor& d )
 {
     EvtDiracSpinor result;
-    result.spinor[0] = c * d.spinor[0];
-    result.spinor[1] = c * d.spinor[1];
-    result.spinor[2] = c * d.spinor[2];
-    result.spinor[3] = c * d.spinor[3];
+    result.m_spinor[0] = c * d.m_spinor[0];
+    result.m_spinor[1] = c * d.m_spinor[1];
+    result.m_spinor[2] = c * d.m_spinor[2];
+    result.m_spinor[3] = c * d.m_spinor[3];
     return result;
 }
 
@@ -333,7 +333,7 @@ EvtDiracSpinor EvtDiracSpinor::adjoint() const
 
     for ( int i = 0; i < 4; ++i )
         for ( int j = 0; j < 4; ++j )
-            result.spinor[i] += d.spinor[j] * g0._gamma[i][j];
+            result.m_spinor[i] += d.m_spinor[j] * g0.m_gamma[i][j];
 
     return result;
 }

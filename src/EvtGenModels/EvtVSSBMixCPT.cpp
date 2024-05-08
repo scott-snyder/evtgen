@@ -106,56 +106,56 @@ void EvtVSSBMixCPT::init()
     // and print out a summary of parameters for this decay
 
     // mixing frequency in hbar/mm
-    _freq = getArg( 0 ) / EvtConst::c;
+    m_freq = getArg( 0 ) / EvtConst::c;
 
     // deltaG
     double gamma = 1 / EvtPDL::getctau( getDaug( 0 ) );    // gamma/c (1/mm)
-    _dGamma = 0.0;
+    m_dGamma = 0.0;
     double dgog = 0.0;
     if ( getNArg() > 1 ) {
         dgog = getArg( 1 );
-        _dGamma = dgog * gamma;
+        m_dGamma = dgog * gamma;
     }
     // q/p
-    _qoverp = EvtComplex( 1.0, 0.0 );
+    m_qoverp = EvtComplex( 1.0, 0.0 );
     if ( getNArg() > 2 ) {
-        _qoverp = EvtComplex( getArg( 2 ), 0.0 );
+        m_qoverp = EvtComplex( getArg( 2 ), 0.0 );
     }
     if ( getNArg() > 3 ) {
-        _qoverp = getArg( 2 ) *
-                  EvtComplex( cos( getArg( 3 ) ), sin( getArg( 3 ) ) );
+        m_qoverp = getArg( 2 ) *
+                   EvtComplex( cos( getArg( 3 ) ), sin( getArg( 3 ) ) );
     }
-    _poverq = 1.0 / _qoverp;
+    m_poverq = 1.0 / m_qoverp;
 
     // decay amplitudes
-    _A_f = EvtComplex( 1.0, 0.0 );
-    _Abar_f = EvtComplex( 0.0, 0.0 );
-    _A_fbar = _Abar_f;    // CPT conservation
-    _Abar_fbar = _A_f;    // CPT conservation
+    m_A_f = EvtComplex( 1.0, 0.0 );
+    m_Abar_f = EvtComplex( 0.0, 0.0 );
+    m_A_fbar = m_Abar_f;    // CPT conservation
+    m_Abar_fbar = m_A_f;    // CPT conservation
     if ( getNArg() > 4 ) {
-        _A_f = getArg( 4 ) *
-               EvtComplex( cos( getArg( 5 ) ),
-                           sin( getArg( 5 ) ) );    // this allows for DCSD
-        _Abar_f = getArg( 6 ) *
-                  EvtComplex( cos( getArg( 7 ) ),
-                              sin( getArg( 7 ) ) );    // this allows for DCSD
+        m_A_f = getArg( 4 ) *
+                EvtComplex( cos( getArg( 5 ) ),
+                            sin( getArg( 5 ) ) );    // this allows for DCSD
+        m_Abar_f = getArg( 6 ) *
+                   EvtComplex( cos( getArg( 7 ) ),
+                               sin( getArg( 7 ) ) );    // this allows for DCSD
         if ( getNArg() > 8 ) {
             // CPT violation in decay
-            _A_fbar = getArg( 8 ) *
-                      EvtComplex( cos( getArg( 9 ) ), sin( getArg( 9 ) ) );
-            _Abar_fbar = getArg( 10 ) *
-                         EvtComplex( cos( getArg( 11 ) ), sin( getArg( 11 ) ) );
+            m_A_fbar = getArg( 8 ) *
+                       EvtComplex( cos( getArg( 9 ) ), sin( getArg( 9 ) ) );
+            m_Abar_fbar = getArg( 10 ) * EvtComplex( cos( getArg( 11 ) ),
+                                                     sin( getArg( 11 ) ) );
         } else {
             // CPT conservation in decay
-            _A_fbar = _Abar_f;
-            _Abar_fbar = _A_f;
+            m_A_fbar = m_Abar_f;
+            m_Abar_fbar = m_A_f;
         }
     }
 
     // CPT violation in mixing
-    _z = EvtComplex( 0.0, 0.0 );
+    m_z = EvtComplex( 0.0, 0.0 );
     if ( getNArg() > 12 ) {
-        _z = EvtComplex( getArg( 12 ), getArg( 13 ) );
+        m_z = EvtComplex( getArg( 12 ), getArg( 13 ) );
     }
 
     // some printout
@@ -163,13 +163,13 @@ void EvtVSSBMixCPT::init()
     double dm = 1e-12 * getArg( 0 );    // B0/anti-B0 mass difference in hbar/ps
     double x = dm * tau;
     double y = dgog * 0.5;    //y=dgamma/(2*gamma)
-    double qop2 = abs( _qoverp * _qoverp );
-    _chib0_b0bar = qop2 * ( x * x + y * y ) /
-                   ( qop2 * ( x * x + y * y ) + 2 + x * x -
-                     y * y );    // does not include CPT in mixing
-    _chib0bar_b0 = ( 1 / qop2 ) * ( x * x + y * y ) /
-                   ( ( 1 / qop2 ) * ( x * x + y * y ) + 2 + x * x -
-                     y * y );    // does not include CPT in mixing
+    double qop2 = abs( m_qoverp * m_qoverp );
+    m_chib0_b0bar = qop2 * ( x * x + y * y ) /
+                    ( qop2 * ( x * x + y * y ) + 2 + x * x -
+                      y * y );    // does not include CPT in mixing
+    m_chib0bar_b0 = ( 1 / qop2 ) * ( x * x + y * y ) /
+                    ( ( 1 / qop2 ) * ( x * x + y * y ) + 2 + x * x -
+                      y * y );    // does not include CPT in mixing
 
     if ( verbose() ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -183,19 +183,19 @@ void EvtVSSBMixCPT::init()
             << "using parameters:" << endl
             << endl
             << "  delta(m)  = " << dm << " hbar/ps" << endl
-            << "  _freq     = " << _freq << " hbar/mm" << endl
+            << "  freq      = " << m_freq << " hbar/mm" << endl
             << "  dgog      = " << dgog << endl
-            << "  dGamma    = " << _dGamma << " hbar/mm" << endl
-            << "  q/p       = " << _qoverp << endl
-            << "  z         = " << _z << endl
+            << "  dGamma    = " << m_dGamma << " hbar/mm" << endl
+            << "  q/p       = " << m_qoverp << endl
+            << "  z         = " << m_z << endl
             << "  tau       = " << tau << " ps" << endl
             << "  x         = " << x << endl
-            << " chi(B0->B0bar) = " << _chib0_b0bar << endl
-            << " chi(B0bar->B0) = " << _chib0bar_b0 << endl
-            << " Af         = " << _A_f << endl
-            << " Abarf      = " << _Abar_f << endl
-            << " Afbar      = " << _A_fbar << endl
-            << " Abarfbar   = " << _Abar_fbar << endl
+            << " chi(B0->B0bar) = " << m_chib0_b0bar << endl
+            << " chi(B0bar->B0) = " << m_chib0bar_b0 << endl
+            << " Af         = " << m_A_f << endl
+            << " Abarf      = " << m_Abar_f << endl
+            << " Afbar      = " << m_A_fbar << endl
+            << " Abarfbar   = " << m_Abar_fbar << endl
             << endl;
     }
 }
@@ -284,8 +284,8 @@ void EvtVSSBMixCPT::decay( EvtParticle* p )
     s2->setLifetime();
     double dct = s1->getLifetime() - s2->getLifetime();    // in mm
 
-    // Convention: _dGamma=GammaLight-GammaHeavy
-    EvtComplex exp1( -0.25 * _dGamma * dct, 0.5 * _freq * dct );
+    // Convention: m_dGamma=GammaLight-GammaHeavy
+    EvtComplex exp1( -0.25 * m_dGamma * dct, 0.5 * m_freq * dct );
 
     /*
   //Find the flavor of the B that decayed first.
@@ -302,27 +302,27 @@ void EvtVSSBMixCPT::decay( EvtParticle* p )
     //define some useful functions: (see BAD #188 eq. 39 for ref.)
     EvtComplex gp = 0.5 * ( exp( -1.0 * exp1 ) + exp( exp1 ) );
     EvtComplex gm = 0.5 * ( exp( -1.0 * exp1 ) - exp( exp1 ) );
-    EvtComplex sqz = sqrt( abs( 1 - _z * _z ) ) *
-                     exp( EvtComplex( 0, arg( 1 - _z * _z ) / 2 ) );
+    EvtComplex sqz = sqrt( abs( 1 - m_z * m_z ) ) *
+                     exp( EvtComplex( 0, arg( 1 - m_z * m_z ) / 2 ) );
 
-    EvtComplex BB = gp + _z * gm;              // <B0|B0(t)>
-    EvtComplex barBB = -sqz * _qoverp * gm;    // <B0bar|B0(t)>
-    EvtComplex BbarB = -sqz * _poverq * gm;    // <B0|B0bar(t)>
-    EvtComplex barBbarB = gp - _z * gm;        // <B0bar|B0bar(t)>
+    EvtComplex BB = gp + m_z * gm;              // <B0|B0(t)>
+    EvtComplex barBB = -sqz * m_qoverp * gm;    // <B0bar|B0(t)>
+    EvtComplex BbarB = -sqz * m_poverq * gm;    // <B0|B0bar(t)>
+    EvtComplex barBbarB = gp - m_z * gm;        // <B0bar|B0bar(t)>
 
     //
     if ( !mixed && stateAtDeltaTeq0 == B0 ) {
-        osc_amp = BB * _A_f + barBB * _Abar_f;
+        osc_amp = BB * m_A_f + barBB * m_Abar_f;
     }
     if ( !mixed && stateAtDeltaTeq0 == B0B ) {
-        osc_amp = barBbarB * _Abar_fbar + BbarB * _A_fbar;
+        osc_amp = barBbarB * m_Abar_fbar + BbarB * m_A_fbar;
     }
 
     if ( mixed && stateAtDeltaTeq0 == B0 ) {
-        osc_amp = barBB * _Abar_fbar + BB * _A_fbar;
+        osc_amp = barBB * m_Abar_fbar + BB * m_A_fbar;
     }
     if ( mixed && stateAtDeltaTeq0 == B0B ) {
-        osc_amp = BbarB * _A_f + barBbarB * _Abar_f;
+        osc_amp = BbarB * m_A_f + barBbarB * m_Abar_f;
     }
 
     // store the amplitudes for each parent spin basis state

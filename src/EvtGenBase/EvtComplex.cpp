@@ -28,30 +28,30 @@ using std::ostream;
 
 ostream& operator<<( ostream& s, const EvtComplex& c )
 {
-    s << "(" << c._rpart << "," << c._ipart << ")";
+    s << "(" << c.m_rpart << "," << c.m_ipart << ")";
     return s;
 }
 
 EvtComplex& EvtComplex::operator*=( EvtComplex c )
 {
-    double r = _rpart * c._rpart - _ipart * c._ipart;
-    double i = _rpart * c._ipart + _ipart * c._rpart;
+    double r = m_rpart * c.m_rpart - m_ipart * c.m_ipart;
+    double i = m_rpart * c.m_ipart + m_ipart * c.m_rpart;
 
-    _rpart = r;
-    _ipart = i;
+    m_rpart = r;
+    m_ipart = i;
 
     return *this;
 }
 
 EvtComplex& EvtComplex::operator/=( EvtComplex c )
 {
-    double inv = 1.0 / ( c._rpart * c._rpart + c._ipart * c._ipart );
+    double inv = 1.0 / ( c.m_rpart * c.m_rpart + c.m_ipart * c.m_ipart );
 
-    double r = inv * ( _rpart * c._rpart + _ipart * c._ipart );
-    double i = inv * ( _ipart * c._rpart - _rpart * c._ipart );
+    double r = inv * ( m_rpart * c.m_rpart + m_ipart * c.m_ipart );
+    double i = inv * ( m_ipart * c.m_rpart - m_rpart * c.m_ipart );
 
-    _rpart = r;
-    _ipart = i;
+    m_rpart = r;
+    m_ipart = i;
 
     return *this;
 }

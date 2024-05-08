@@ -31,48 +31,48 @@ using std::fstream;
 
 EvtOrthogVector::EvtOrthogVector( int n, std::vector<double>* vectors )
 {
-    _dimen = n;
-    _holder.resize( n );
+    m_dimen = n;
+    m_holder.resize( n );
 
     std::vector<int> temp;
 
     int i;
     for ( i = 0; i < n; i++ ) {
-        _orthogVector.push_back( 0. );
+        m_orthogVector.push_back( 0. );
         temp.push_back( i );
     }
 
-    findOrthog( _dimen, temp, vectors );
+    findOrthog( m_dimen, temp, vectors );
 }
 
 void EvtOrthogVector::findOrthog( int dim, std::vector<int> invect,
                                   std::vector<double>* vectors )
 {
     if ( dim == 2 ) {
-        _holder[0] = invect[0];
-        _holder[1] = invect[1];
+        m_holder[0] = invect[0];
+        m_holder[1] = invect[1];
         int sign = findEvenOddSwaps();
         {
             double addition = 1;
             int i;
-            for ( i = 1; i < _dimen; i++ ) {
-                addition *= vectors[i - 1][_holder[i]];
+            for ( i = 1; i < m_dimen; i++ ) {
+                addition *= vectors[i - 1][m_holder[i]];
             }
             addition *= sign;
-            _orthogVector[_holder[0]] += addition;
+            m_orthogVector[m_holder[0]] += addition;
         }
 
-        _holder[0] = invect[1];
-        _holder[1] = invect[0];
+        m_holder[0] = invect[1];
+        m_holder[1] = invect[0];
 
         {
             double addition = 1;
             int i;
-            for ( i = 1; i < _dimen; i++ ) {
-                addition *= vectors[i - 1][_holder[i]];
+            for ( i = 1; i < m_dimen; i++ ) {
+                addition *= vectors[i - 1][m_holder[i]];
             }
             addition *= sign;
-            _orthogVector[_holder[0]] -= addition;
+            m_orthogVector[m_holder[0]] -= addition;
         }
 
         return;
@@ -86,7 +86,7 @@ void EvtOrthogVector::findOrthog( int dim, std::vector<int> invect,
             temp[i + dim] = invect[i];
 
         for ( i = 0; i < dim; i++ ) {
-            _holder[dim - 1] = temp[dim - 1 + i];
+            m_holder[dim - 1] = temp[dim - 1 + i];
             std::vector<int> tempDim( ( dim - 1 ) );
 
             int j;
@@ -101,15 +101,15 @@ void EvtOrthogVector::findOrthog( int dim, std::vector<int> invect,
 
 int EvtOrthogVector::findEvenOddSwaps()
 {
-    std::vector<int> temp( _dimen );
+    std::vector<int> temp( m_dimen );
 
     int i, j, nSwap;
-    for ( i = 0; i < _dimen; i++ )
-        temp[i] = _holder[i];
+    for ( i = 0; i < m_dimen; i++ )
+        temp[i] = m_holder[i];
 
     nSwap = 0;
-    for ( i = 0; i < ( _dimen - 1 ); i++ ) {
-        for ( j = i + 1; j < _dimen; j++ ) {
+    for ( i = 0; i < ( m_dimen - 1 ); i++ ) {
+        for ( j = i + 1; j < m_dimen; j++ ) {
             if ( temp[i] > temp[j] ) {
                 int duh = temp[j];
                 temp[j] = temp[i];

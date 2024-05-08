@@ -44,9 +44,9 @@ void EvtDMix::init()
 {
     // check arguments
     checkNArg( 3 );
-    _rd = getArg( 0 );
-    _xpr = getArg( 1 );
-    _ypr = getArg( 2 );
+    m_rd = getArg( 0 );
+    m_xpr = getArg( 1 );
+    m_ypr = getArg( 2 );
 }
 
 void EvtDMix::initProbMax()
@@ -72,15 +72,15 @@ void EvtDMix::decay( EvtParticle* p )
 
     double pdf, random, gt, weight;
 
-    double maxPdf = _rd + sqrt( _rd ) * _ypr * 50. +
-                    2500.0 * ( _xpr * _xpr + _ypr * _ypr ) / 4.0;
+    double maxPdf = m_rd + sqrt( m_rd ) * m_ypr * 50. +
+                    2500.0 * ( m_xpr * m_xpr + m_ypr * m_ypr ) / 4.0;
     bool keepGoing = true;
     while ( keepGoing ) {
         random = EvtRandom::Flat();
         gt = -log( random );
         weight = random;
-        pdf = _rd + sqrt( _rd ) * _ypr * gt +
-              gt * gt * ( _xpr * _xpr + _ypr * _ypr ) / 4.0;
+        pdf = m_rd + sqrt( m_rd ) * m_ypr * gt +
+              gt * gt * ( m_xpr * m_xpr + m_ypr * m_ypr ) / 4.0;
         pdf *= exp( -1.0 * gt );
         pdf /= weight;
         if ( pdf > maxPdf )

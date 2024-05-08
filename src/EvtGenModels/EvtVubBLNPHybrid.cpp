@@ -69,7 +69,7 @@ void EvtVubBLNPHybrid::init()
         EvtGenReport( EVTGEN_WARNING, "EvtVubBLNPHybrid" )
             << "EvtVubBLNPHybrid: generate B -> Xu l nu events "
             << "without using the hybrid reweighting." << endl;
-        _noHybrid = true;
+        m_noHybrid = true;
     } else if ( getNArg() <
                 EvtVubBLNPHybrid::nParameters + EvtVubBLNPHybrid::nVariables ) {
         EvtGenReport( EVTGEN_ERROR, "EvtVubBLNPHybrid" )
@@ -82,141 +82,143 @@ void EvtVubBLNPHybrid::init()
     // get parameters (declared in the header file)
 
     // Input parameters
-    mBB = 5.2792;
-    lambda2 = 0.12;
+    m_mBB = 5.2792;
+    m_lambda2 = 0.12;
 
     // Shape function parameters
-    b = getArg( 0 );
-    Lambda = getArg( 1 );
-    Ecut = 1.8;
-    wzero = mBB - 2 * Ecut;
+    m_b = getArg( 0 );
+    m_Lambda = getArg( 1 );
+    m_Ecut = 1.8;
+    m_wzero = m_mBB - 2 * m_Ecut;
 
     // SF and SSF modes
-    itype = (int)getArg( 5 );
-    dtype = getArg( 5 );
-    isubl = (int)getArg( 6 );
+    m_itype = (int)getArg( 5 );
+    m_dtype = getArg( 5 );
+    m_isubl = (int)getArg( 6 );
 
     // flags
-    flag1 = (int)getArg( 7 );
-    flag2 = (int)getArg( 8 );
-    flag3 = (int)getArg( 9 );
+    m_flag1 = (int)getArg( 7 );
+    m_flag2 = (int)getArg( 8 );
+    m_flag3 = (int)getArg( 9 );
 
     // Quark mass
-    mb = 4.61;
+    m_mb = 4.61;
 
     // hidden parameter what and SF stuff
     const double xlow = 0;
-    const double xhigh = mBB;
+    const double xhigh = m_mBB;
     const int aSize = 10000;
-    EvtPFermi pFermi( Lambda, b );
+    EvtPFermi pFermi( m_Lambda, m_b );
     // pf is the cumulative distribution normalized to 1.
-    _pf.resize( aSize );
+    m_pf.resize( aSize );
     for ( int i = 0; i < aSize; i++ ) {
         double what = xlow + (double)( i + 0.5 ) / ( (double)aSize ) *
                                  ( xhigh - xlow );
         if ( i == 0 )
-            _pf[i] = pFermi.getSFBLNP( what );
+            m_pf[i] = pFermi.getSFBLNP( what );
         else
-            _pf[i] = _pf[i - 1] + pFermi.getSFBLNP( what );
+            m_pf[i] = m_pf[i - 1] + pFermi.getSFBLNP( what );
     }
-    for ( size_t i = 0; i < _pf.size(); i++ ) {
-        _pf[i] /= _pf[_pf.size() - 1];
+    for ( size_t i = 0; i < m_pf.size(); i++ ) {
+        m_pf[i] /= m_pf[m_pf.size() - 1];
     }
 
     // Matching scales
-    muh = mBB * getArg( 2 );    // 0.5
-    mui = getArg( 3 );          // 1.5
-    mubar = getArg( 4 );        // 1.5
+    m_muh = m_mBB * getArg( 2 );    // 0.5
+    m_mui = getArg( 3 );            // 1.5
+    m_mubar = getArg( 4 );          // 1.5
 
     // Perturbative quantities
-    CF = 4.0 / 3.0;
-    CA = 3.0;
+    m_CF = 4.0 / 3.0;
+    m_CA = 3.0;
     double nf = 4.0;
 
-    beta0 = 11.0 / 3.0 * CA - 2.0 / 3.0 * nf;
-    beta1 = 34.0 / 3.0 * CA * CA - 10.0 / 3.0 * CA * nf - 2.0 * CF * nf;
-    beta2 = 2857.0 / 54.0 * CA * CA * CA +
-            ( CF * CF - 205.0 / 18.0 * CF * CA - 1415.0 / 54.0 * CA * CA ) * nf +
-            ( 11.0 / 9.0 * CF + 79.0 / 54.0 * CA ) * nf * nf;
+    m_beta0 = 11.0 / 3.0 * m_CA - 2.0 / 3.0 * nf;
+    m_beta1 = 34.0 / 3.0 * m_CA * m_CA - 10.0 / 3.0 * m_CA * nf - 2.0 * m_CF * nf;
+    m_beta2 = 2857.0 / 54.0 * m_CA * m_CA * m_CA +
+              ( m_CF * m_CF - 205.0 / 18.0 * m_CF * m_CA -
+                1415.0 / 54.0 * m_CA * m_CA ) *
+                  nf +
+              ( 11.0 / 9.0 * m_CF + 79.0 / 54.0 * m_CA ) * nf * nf;
 
-    zeta3 = 1.0 + 1 / 8.0 + 1 / 27.0 + 1 / 64.0;
+    m_zeta3 = 1.0 + 1 / 8.0 + 1 / 27.0 + 1 / 64.0;
 
-    Gamma0 = 4 * CF;
-    Gamma1 = CF * ( ( 268.0 / 9.0 - 4.0 * M_PI * M_PI / 3.0 ) * CA -
-                    40.0 / 9.0 * nf );
-    Gamma2 = 16 * CF *
-             ( ( 245.0 / 24.0 - 67.0 / 54.0 * M_PI * M_PI +
-                 +11.0 / 180.0 * pow( M_PI, 4 ) + 11.0 / 6.0 * zeta3 ) *
-                   CA * CA *
-                   +( -209.0 / 108.0 + 5.0 / 27.0 * M_PI * M_PI -
-                      7.0 / 3.0 * zeta3 ) *
-                   CA * nf +
-               ( -55.0 / 24.0 + 2 * zeta3 ) * CF * nf - nf * nf / 27.0 );
+    m_Gamma0 = 4 * m_CF;
+    m_Gamma1 = m_CF * ( ( 268.0 / 9.0 - 4.0 * M_PI * M_PI / 3.0 ) * m_CA -
+                        40.0 / 9.0 * nf );
+    m_Gamma2 = 16 * m_CF *
+               ( ( 245.0 / 24.0 - 67.0 / 54.0 * M_PI * M_PI +
+                   +11.0 / 180.0 * pow( M_PI, 4 ) + 11.0 / 6.0 * m_zeta3 ) *
+                     m_CA * m_CA *
+                     +( -209.0 / 108.0 + 5.0 / 27.0 * M_PI * M_PI -
+                        7.0 / 3.0 * m_zeta3 ) *
+                     m_CA * nf +
+                 ( -55.0 / 24.0 + 2 * m_zeta3 ) * m_CF * nf - nf * nf / 27.0 );
 
-    gp0 = -5.0 * CF;
-    gp1 = -8.0 * CF *
-          ( ( 3.0 / 16.0 - M_PI * M_PI / 4.0 + 3 * zeta3 ) * CF +
-            ( 1549.0 / 432.0 + 7.0 / 48.0 * M_PI * M_PI - 11.0 / 4.0 * zeta3 ) *
-                CA -
-            ( 125.0 / 216.0 + M_PI * M_PI / 24.0 ) * nf );
+    m_gp0 = -5.0 * m_CF;
+    m_gp1 = -8.0 * m_CF *
+            ( ( 3.0 / 16.0 - M_PI * M_PI / 4.0 + 3 * m_zeta3 ) * m_CF +
+              ( 1549.0 / 432.0 + 7.0 / 48.0 * M_PI * M_PI - 11.0 / 4.0 * m_zeta3 ) *
+                  m_CA -
+              ( 125.0 / 216.0 + M_PI * M_PI / 24.0 ) * nf );
 
-    // Lbar and mupisq
+    // Lbar and m_mupisq
 
-    Lbar = Lambda;    // all models
-    mupisq = 3 * Lambda * Lambda / b;
-    if ( itype == 1 )
-        mupisq = 3 * Lambda * Lambda / b;
-    if ( itype == 2 )
-        mupisq = 3 * Lambda * Lambda *
-                 ( Gamma( 1 + 0.5 * b ) * Gamma( 0.5 * b ) /
-                       pow( Gamma( 0.5 + 0.5 * b ), 2 ) -
-                   1 );
+    m_Lbar = m_Lambda;    // all models
+    m_mupisq = 3 * m_Lambda * m_Lambda / m_b;
+    if ( m_itype == 1 )
+        m_mupisq = 3 * m_Lambda * m_Lambda / m_b;
+    if ( m_itype == 2 )
+        m_mupisq = 3 * m_Lambda * m_Lambda *
+                   ( Gamma( 1 + 0.5 * m_b ) * Gamma( 0.5 * m_b ) /
+                         pow( Gamma( 0.5 + 0.5 * m_b ), 2 ) -
+                     1 );
 
-    // moment2 for SSFs
-    moment2 = pow( 0.3, 3 );
+    // m_moment2 for SSFs
+    m_moment2 = pow( 0.3, 3 );
 
     // inputs for total rate (T for Total); use BLNP notebook defaults
-    flagpower = 1;
-    flag2loop = 1;
+    m_flagpower = 1;
+    m_flag2loop = 1;
 
     // stuff for the integrator
-    maxLoop = 20;
-    //precision = 1.0e-3;
-    precision = 2.0e-2;
+    m_maxLoop = 20;
+    //m_precision = 1.0e-3;
+    m_precision = 2.0e-2;
 
     // vector of global variables, to pass to static functions (which can't access globals);
-    gvars.push_back( 0.0 );       // 0
-    gvars.push_back( 0.0 );       // 1
-    gvars.push_back( mui );       // 2
-    gvars.push_back( b );         // 3
-    gvars.push_back( Lambda );    // 4
-    gvars.push_back( mBB );       // 5
-    gvars.push_back( mb );        // 6
-    gvars.push_back( wzero );     // 7
-    gvars.push_back( beta0 );     // 8
-    gvars.push_back( beta1 );     // 9
-    gvars.push_back( beta2 );     // 10
-    gvars.push_back( dtype );     // 11
+    m_gvars.push_back( 0.0 );         // 0
+    m_gvars.push_back( 0.0 );         // 1
+    m_gvars.push_back( m_mui );       // 2
+    m_gvars.push_back( m_b );         // 3
+    m_gvars.push_back( m_Lambda );    // 4
+    m_gvars.push_back( m_mBB );       // 5
+    m_gvars.push_back( m_mb );        // 6
+    m_gvars.push_back( m_wzero );     // 7
+    m_gvars.push_back( m_beta0 );     // 8
+    m_gvars.push_back( m_beta1 );     // 9
+    m_gvars.push_back( m_beta2 );     // 10
+    m_gvars.push_back( m_dtype );     // 11
 
     // check that there are 3 daughters and 10 arguments
     checkNDaug( 3 );
     // A. Volk: check for number of arguments is not necessary
     //checkNArg(10);
 
-    if ( _noHybrid )
+    if ( m_noHybrid )
         return;    // Without hybrid weighting, nothing else to do
 
-    _bins_mX = std::vector<double>( abs( (int)getArg( 10 ) ) );
-    _bins_q2 = std::vector<double>( abs( (int)getArg( 11 ) ) );
-    _bins_El = std::vector<double>( abs( (int)getArg( 12 ) ) );
+    m_bins_mX = std::vector<double>( abs( (int)getArg( 10 ) ) );
+    m_bins_q2 = std::vector<double>( abs( (int)getArg( 11 ) ) );
+    m_bins_El = std::vector<double>( abs( (int)getArg( 12 ) ) );
 
     int nextArg = EvtVubBLNPHybrid::nParameters + EvtVubBLNPHybrid::nVariables;
 
-    _nbins = _bins_mX.size() * _bins_q2.size() *
-             _bins_El.size();    // Binning of weight table
+    m_nbins = m_bins_mX.size() * m_bins_q2.size() *
+              m_bins_El.size();    // Binning of weight table
 
-    int expectArgs = nextArg + _bins_mX.size() + _bins_q2.size() +
-                     _bins_El.size() + _nbins;
+    int expectArgs = nextArg + m_bins_mX.size() + m_bins_q2.size() +
+                     m_bins_El.size() + m_nbins;
 
     if ( getNArg() < expectArgs ) {
         EvtGenReport( EVTGEN_ERROR, "EvtVubBLNPHybrid" )
@@ -227,12 +229,12 @@ void EvtVubBLNPHybrid::init()
     }
 
     // read bin boundaries from decay.dec
-    for ( auto& b : _bins_mX )
+    for ( auto& b : m_bins_mX )
         b = getArg( nextArg++ );
-    _masscut = _bins_mX[0];
-    for ( auto& b : _bins_q2 )
+    m_masscut = m_bins_mX[0];
+    for ( auto& b : m_bins_q2 )
         b = getArg( nextArg++ );
-    for ( auto& b : _bins_El )
+    for ( auto& b : m_bins_El )
         b = getArg( nextArg++ );
 
     // read in weights (and rescale to range 0..1)
@@ -264,12 +266,12 @@ void EvtVubBLNPHybrid::decay( EvtParticle* Bmeson )
         lepton = Bmeson->getDaug( 1 );
         neutrino = Bmeson->getDaug( 2 );
 
-        mBB = Bmeson->mass();
+        m_mBB = Bmeson->mass();
         ml = lepton->mass();
 
         //  get SF value
         xlow = 0;
-        xhigh = mBB;
+        xhigh = m_mBB;
         // the case for alphas = 0 is not considered
         what = 2 * xhigh;
         while ( what > xhigh || what < xlow ) {
@@ -283,14 +285,14 @@ void EvtVubBLNPHybrid::decay( EvtParticle* Bmeson )
             // generate pp between 0 and
             // Flat(min, max) gives R(max - min) + min, where R = random btwn 0 and 1
 
-            Pp = EvtRandom::Flat( 0, mBB );    // P+ = EX - |PX|
-            Pl = EvtRandom::Flat( 0, mBB );    // mBB - 2El
-            Pm = EvtRandom::Flat( 0, mBB );    // P- = EX + |PX|
+            Pp = EvtRandom::Flat( 0, m_mBB );    // P+ = EX - |PX|
+            Pl = EvtRandom::Flat( 0, m_mBB );    // mBB - 2El
+            Pm = EvtRandom::Flat( 0, m_mBB );    // P- = EX + |PX|
 
             sh = Pm * Pp;
             EX = 0.5 * ( Pm + Pp );
-            qsq = ( mBB - Pp ) * ( mBB - Pm );
-            El = 0.5 * ( mBB - Pl );
+            qsq = ( m_mBB - Pp ) * ( m_mBB - Pm );
+            El = 0.5 * ( m_mBB - Pl );
 
             // Need maximum rate.  Waiting for Mr. Paz to give it to me.
             // Meanwhile, use this.
@@ -298,7 +300,7 @@ void EvtVubBLNPHybrid::decay( EvtParticle* Bmeson )
 
             // kinematic bounds (Eq. 2)
             mpi = 0.14;
-            if ( ( Pp > 0 ) && ( Pp <= Pl ) && ( Pl <= Pm ) && ( Pm < mBB ) &&
+            if ( ( Pp > 0 ) && ( Pp <= Pl ) && ( Pl <= Pm ) && ( Pm < m_mBB ) &&
                  ( El > ml ) && ( sh > 4 * mpi * mpi ) ) {
                 // Probability of pass proportional to PDF
                 pdf = rate3( Pp, Pl, Pm );
@@ -312,10 +314,10 @@ void EvtVubBLNPHybrid::decay( EvtParticle* Bmeson )
         mX = sqrt( sh );
 
         // Reweighting in bins of mX, q2, El
-        if ( _nbins > 0 ) {
+        if ( m_nbins > 0 ) {
             double xran1 = EvtRandom::Flat();
             double w = 1.0;
-            if ( !_noHybrid )
+            if ( !m_noHybrid )
                 w = getWeight( mX, qsq, El );
             if ( w >= xran1 )
                 rew = false;
@@ -347,7 +349,7 @@ void EvtVubBLNPHybrid::decay( EvtParticle* Bmeson )
     p4.set( pHB[0], pHB[1], pHB[2], pHB[3] );
     xuhad->init( getDaug( 0 ), p4 );
 
-    if ( _storeWhat ) {
+    if ( m_storeWhat ) {
         // cludge to store the hidden parameter what with the decay;
         // the lifetime of the Xu is abused for this purpose.
         // tau = 1 ps corresponds to ctau = 0.3 mm -> in order to
@@ -363,12 +365,12 @@ void EvtVubBLNPHybrid::decay( EvtParticle* Bmeson )
     // calculate the W 4 vector in the B Meson restrframe
 
     double apWB = ptmp;
-    double pWB[4] = { mBB - EX, -pHB[1], -pHB[2], -pHB[3] };
+    double pWB[4] = { m_mBB - EX, -pHB[1], -pHB[2], -pHB[3] };
 
     // first go in the W restframe and calculate the lepton and
     // the neutrino in the W frame
 
-    double mW2 = mBB * mBB + sh - 2 * mBB * EX;
+    double mW2 = m_mBB * m_mBB + sh - 2 * m_mBB * EX;
     double beta = ptmp / pWB[0];
     double gamma = pWB[0] / sqrt( mW2 );
 
@@ -440,13 +442,13 @@ double EvtVubBLNPHybrid::rate3( double Pp, double Pl, double Pm )
 {
     // rate3 in units of GF^2*Vub^2/pi^3
 
-    double factor = 1.0 / 16 * ( mBB - Pp ) * U1lo( muh, mui ) *
-                    pow( ( Pm - Pp ) / ( mBB - Pp ), alo( muh, mui ) );
+    double factor = 1.0 / 16 * ( m_mBB - Pp ) * U1lo( m_muh, m_mui ) *
+                    pow( ( Pm - Pp ) / ( m_mBB - Pp ), alo( m_muh, m_mui ) );
 
-    double doneJS = DoneJS( Pp, Pm, mui );
-    double done1 = Done1( Pp, Pm, mui );
-    double done2 = Done2( Pp, Pm, mui );
-    double done3 = Done3( Pp, Pm, mui );
+    double doneJS = DoneJS( Pp, Pm, m_mui );
+    double done1 = Done1( Pp, Pm, m_mui );
+    double done2 = Done2( Pp, Pm, m_mui );
+    double done3 = Done3( Pp, Pm, m_mui );
 
     // The EvtSimpsonIntegrator returns zero for bad integrals.
     // So if any of the integrals are zero (ie bad), return zero.
@@ -460,12 +462,12 @@ double EvtVubBLNPHybrid::rate3( double Pp, double Pl, double Pm )
     //    cout << "Integral OK: (Pp, Pm, Pl) = (" << Pp << ", " << Pm << ", " << Pl << ")" << endl;
     //}
 
-    double f1 = F1( Pp, Pm, muh, mui, mubar, doneJS, done1 );
-    double f2 = F2( Pp, Pm, muh, mui, mubar, done3 );
-    double f3 = F3( Pp, Pm, muh, mui, mubar, done2 );
-    double answer = factor * ( ( mBB + Pl - Pp - Pm ) * ( Pm - Pl ) * f1 +
+    double f1 = F1( Pp, Pm, m_muh, m_mui, m_mubar, doneJS, done1 );
+    double f2 = F2( Pp, Pm, m_muh, m_mui, m_mubar, done3 );
+    double f3 = F3( Pp, Pm, m_muh, m_mui, m_mubar, done2 );
+    double answer = factor * ( ( m_mBB + Pl - Pp - Pm ) * ( Pm - Pl ) * f1 +
                                2 * ( Pl - Pp ) * ( Pm - Pl ) * f2 +
-                               ( mBB - Pm ) * ( Pm - Pp ) * f3 );
+                               ( m_mBB - Pm ) * ( Pm - Pp ) * f3 );
     return answer;
 }
 
@@ -476,35 +478,37 @@ double EvtVubBLNPHybrid::F1( double Pp, double Pm, double muh, double mui,
     vars[0] = Pp;
     vars[1] = Pm;
     for ( int j = 2; j < 12; j++ ) {
-        vars[j] = gvars[j];
+        vars[j] = m_gvars[j];
     }
 
-    double y = ( Pm - Pp ) / ( mBB - Pp );
-    double ah = CF * alphas( muh, vars ) / 4 / M_PI;
-    double ai = CF * alphas( mui, vars ) / 4 / M_PI;
-    double abar = CF * alphas( mubar, vars ) / 4 / M_PI;
-    double lambda1 = -mupisq;
+    double y = ( Pm - Pp ) / ( m_mBB - Pp );
+    double ah = m_CF * alphas( muh, vars ) / 4 / M_PI;
+    double ai = m_CF * alphas( mui, vars ) / 4 / M_PI;
+    double abar = m_CF * alphas( mubar, vars ) / 4 / M_PI;
+    double lambda1 = -m_mupisq;
 
-    double t1 = -4 * ai / ( Pp - Lbar ) * ( 2 * log( ( Pp - Lbar ) / mui ) + 1 );
+    double t1 = -4 * ai / ( Pp - m_Lbar ) *
+                ( 2 * log( ( Pp - m_Lbar ) / mui ) + 1 );
     double t2 = 1 + dU1nlo( muh, mui ) + anlo( muh, mui ) * log( y );
-    double t3 = -4.0 * pow( log( y * mb / muh ), 2 ) +
-                10.0 * log( y * mb / muh ) - 4.0 * log( y ) -
+    double t3 = -4.0 * pow( log( y * m_mb / muh ), 2 ) +
+                10.0 * log( y * m_mb / muh ) - 4.0 * log( y ) -
                 2.0 * log( y ) / ( 1 - y ) - 4.0 * PolyLog( 2, 1 - y ) -
                 M_PI * M_PI / 6.0 - 12.0;
-    double t4 = 2 * pow( log( y * mb * Pp / ( mui * mui ) ), 2 ) -
-                3 * log( y * mb * Pp / ( mui * mui ) ) + 7 - M_PI * M_PI;
+    double t4 = 2 * pow( log( y * m_mb * Pp / ( mui * mui ) ), 2 ) -
+                3 * log( y * m_mb * Pp / ( mui * mui ) ) + 7 - M_PI * M_PI;
 
     double t5 = -wS( Pp ) + 2 * t( Pp ) +
                 ( 1.0 / y - 1.0 ) * ( u( Pp ) - v( Pp ) );
-    double t6 = -( lambda1 + 3.0 * lambda2 ) / 3.0 +
-                1.0 / pow( y, 2 ) * ( 4.0 / 3.0 * lambda1 - 2.0 * lambda2 );
+    double t6 = -( lambda1 + 3.0 * m_lambda2 ) / 3.0 +
+                1.0 / pow( y, 2 ) * ( 4.0 / 3.0 * lambda1 - 2.0 * m_lambda2 );
 
     double shapePp = Shat( Pp, vars );
 
     double answer = ( t2 + ah * t3 + ai * t4 ) * shapePp + ai * doneJS +
-                    1 / ( mBB - Pp ) * ( flag2 * abar * done1 + flag1 * t5 ) +
-                    1 / pow( mBB - Pp, 2 ) * flag3 * shapePp * t6;
-    if ( Pp > Lbar + mui / exp( 0.5 ) )
+                    1 / ( m_mBB - Pp ) *
+                        ( m_flag2 * abar * done1 + m_flag1 * t5 ) +
+                    1 / pow( m_mBB - Pp, 2 ) * m_flag3 * shapePp * t6;
+    if ( Pp > m_Lbar + mui / exp( 0.5 ) )
         answer = answer + t1;
     return answer;
 }
@@ -516,24 +520,24 @@ double EvtVubBLNPHybrid::F2( double Pp, double Pm, double muh, double /* mui */,
     vars[0] = Pp;
     vars[1] = Pm;
     for ( int j = 2; j < 12; j++ ) {
-        vars[j] = gvars[j];
+        vars[j] = m_gvars[j];
     }
 
-    double y = ( Pm - Pp ) / ( mBB - Pp );
-    double lambda1 = -mupisq;
-    double ah = CF * alphas( muh, vars ) / 4 / M_PI;
-    double abar = CF * alphas( mubar, vars ) / 4 / M_PI;
+    double y = ( Pm - Pp ) / ( m_mBB - Pp );
+    double lambda1 = -m_mupisq;
+    double ah = m_CF * alphas( muh, vars ) / 4 / M_PI;
+    double abar = m_CF * alphas( mubar, vars ) / 4 / M_PI;
 
     double t6 = -wS( Pp ) - 2 * t( Pp ) + 1.0 / y * ( t( Pp ) + v( Pp ) );
-    double t7 = 1 / pow( y, 2 ) * ( 2.0 / 3.0 * lambda1 + 4.0 * lambda2 ) -
-                1 / y * ( 2.0 / 3.0 * lambda1 + 3.0 / 2.0 * lambda2 );
+    double t7 = 1 / pow( y, 2 ) * ( 2.0 / 3.0 * lambda1 + 4.0 * m_lambda2 ) -
+                1 / y * ( 2.0 / 3.0 * lambda1 + 3.0 / 2.0 * m_lambda2 );
 
     double shapePp = Shat( Pp, vars );
 
     double answer = ah * log( y ) / ( 1 - y ) * shapePp +
-                    1 / ( mBB - Pp ) *
-                        ( flag2 * abar * 0.5 * done3 + flag1 / y * t6 ) +
-                    1.0 / pow( mBB - Pp, 2 ) * flag3 * shapePp * t7;
+                    1 / ( m_mBB - Pp ) *
+                        ( m_flag2 * abar * 0.5 * done3 + m_flag1 / y * t6 ) +
+                    1.0 / pow( m_mBB - Pp, 2 ) * m_flag3 * shapePp * t7;
     return answer;
 }
 
@@ -544,19 +548,19 @@ double EvtVubBLNPHybrid::F3( double Pp, double Pm, double /*muh*/,
     vars[0] = Pp;
     vars[1] = Pm;
     for ( int j = 2; j < 12; j++ ) {
-        vars[j] = gvars[j];
+        vars[j] = m_gvars[j];
     }
 
-    double y = ( Pm - Pp ) / ( mBB - Pp );
-    double lambda1 = -mupisq;
-    double abar = CF * alphas( mubar, vars ) / 4 / M_PI;
+    double y = ( Pm - Pp ) / ( m_mBB - Pp );
+    double lambda1 = -m_mupisq;
+    double abar = m_CF * alphas( mubar, vars ) / 4 / M_PI;
 
-    double t7 = 1.0 / pow( y, 2 ) * ( -2.0 / 3.0 * lambda1 + lambda2 );
+    double t7 = 1.0 / pow( y, 2 ) * ( -2.0 / 3.0 * lambda1 + m_lambda2 );
 
     double shapePp = Shat( Pp, vars );
 
-    double answer = 1.0 / ( Pm - Pp ) * flag2 * 0.5 * y * abar * done2 +
-                    1.0 / pow( mBB - Pp, 2 ) * flag3 * shapePp * t7;
+    double answer = 1.0 / ( Pm - Pp ) * m_flag2 * 0.5 * y * abar * done2 +
+                    1.0 / pow( m_mBB - Pp, 2 ) * m_flag3 * shapePp * t7;
     return answer;
 }
 
@@ -566,14 +570,14 @@ double EvtVubBLNPHybrid::DoneJS( double Pp, double Pm, double /* mui */ )
     vars[0] = Pp;
     vars[1] = Pm;
     for ( int j = 2; j < 12; j++ ) {
-        vars[j] = gvars[j];
+        vars[j] = m_gvars[j];
     }
 
     double lowerlim = 0.001 * Pp;
     double upperlim = ( 1.0 - 0.001 ) * Pp;
 
     auto func = EvtItgPtrFunction{ &IntJS, lowerlim, upperlim, vars };
-    auto integ = EvtItgSimpsonIntegrator{ func, precision, maxLoop };
+    auto integ = EvtItgSimpsonIntegrator{ func, m_precision, m_maxLoop };
     return integ.evaluate( lowerlim, upperlim );
 }
 
@@ -583,14 +587,14 @@ double EvtVubBLNPHybrid::Done1( double Pp, double Pm, double /* mui */ )
     vars[0] = Pp;
     vars[1] = Pm;
     for ( int j = 2; j < 12; j++ ) {
-        vars[j] = gvars[j];
+        vars[j] = m_gvars[j];
     }
 
     double lowerlim = 0.001 * Pp;
     double upperlim = ( 1.0 - 0.001 ) * Pp;
 
     auto func = EvtItgPtrFunction{ &Int1, lowerlim, upperlim, vars };
-    auto integ = EvtItgSimpsonIntegrator{ func, precision, maxLoop };
+    auto integ = EvtItgSimpsonIntegrator{ func, m_precision, m_maxLoop };
     return integ.evaluate( lowerlim, upperlim );
 }
 
@@ -600,14 +604,14 @@ double EvtVubBLNPHybrid::Done2( double Pp, double Pm, double /* mui */ )
     vars[0] = Pp;
     vars[1] = Pm;
     for ( int j = 2; j < 12; j++ ) {
-        vars[j] = gvars[j];
+        vars[j] = m_gvars[j];
     }
 
     double lowerlim = 0.001 * Pp;
     double upperlim = ( 1.0 - 0.001 ) * Pp;
 
     auto func = EvtItgPtrFunction{ &Int2, lowerlim, upperlim, vars };
-    auto integ = EvtItgSimpsonIntegrator{ func, precision, maxLoop };
+    auto integ = EvtItgSimpsonIntegrator{ func, m_precision, m_maxLoop };
     return integ.evaluate( lowerlim, upperlim );
 }
 
@@ -617,14 +621,14 @@ double EvtVubBLNPHybrid::Done3( double Pp, double Pm, double /* mui */ )
     vars[0] = Pp;
     vars[1] = Pm;
     for ( int j = 2; j < 12; j++ ) {
-        vars[j] = gvars[j];
+        vars[j] = m_gvars[j];
     }
 
     double lowerlim = 0.001 * Pp;
     double upperlim = ( 1.0 - 0.001 ) * Pp;
 
     auto func = EvtItgPtrFunction{ &Int3, lowerlim, upperlim, vars };
-    auto integ = EvtItgSimpsonIntegrator{ func, precision, maxLoop };
+    auto integ = EvtItgSimpsonIntegrator{ func, m_precision, m_maxLoop };
     return integ.evaluate( lowerlim, upperlim );
 }
 
@@ -788,26 +792,26 @@ double EvtVubBLNPHybrid::Mzero( double muf, double mu, double mupisq,
 
 double EvtVubBLNPHybrid::wS( double w )
 {
-    double answer = ( Lbar - w ) * Shat( w, gvars );
+    double answer = ( m_Lbar - w ) * Shat( w, m_gvars );
     return answer;
 }
 
 double EvtVubBLNPHybrid::t( double w )
 {
-    double t1 = -3 * lambda2 / mupisq * ( Lbar - w ) * Shat( w, gvars );
-    double myf = myfunction( w, Lbar, moment2 );
-    double myBIK = myfunctionBIK( w, Lbar, moment2 );
+    double t1 = -3 * m_lambda2 / m_mupisq * ( m_Lbar - w ) * Shat( w, m_gvars );
+    double myf = myfunction( w, m_Lbar, m_moment2 );
+    double myBIK = myfunctionBIK( w, m_Lbar, m_moment2 );
     double answer = t1;
 
-    if ( isubl == 1 )
+    if ( m_isubl == 1 )
         answer = t1;
-    if ( isubl == 3 )
+    if ( m_isubl == 3 )
         answer = t1 - myf;
-    if ( isubl == 4 )
+    if ( m_isubl == 4 )
         answer = t1 + myf;
-    if ( isubl == 5 )
+    if ( m_isubl == 5 )
         answer = t1 - myBIK;
-    if ( isubl == 6 )
+    if ( m_isubl == 6 )
         answer = t1 + myBIK;
 
     return answer;
@@ -815,20 +819,20 @@ double EvtVubBLNPHybrid::t( double w )
 
 double EvtVubBLNPHybrid::u( double w )
 {
-    double u1 = -2 * ( Lbar - w ) * Shat( w, gvars );
-    double myf = myfunction( w, Lbar, moment2 );
-    double myBIK = myfunctionBIK( w, Lbar, moment2 );
+    double u1 = -2 * ( m_Lbar - w ) * Shat( w, m_gvars );
+    double myf = myfunction( w, m_Lbar, m_moment2 );
+    double myBIK = myfunctionBIK( w, m_Lbar, m_moment2 );
     double answer = u1;
 
-    if ( isubl == 1 )
+    if ( m_isubl == 1 )
         answer = u1;
-    if ( isubl == 3 )
+    if ( m_isubl == 3 )
         answer = u1 + myf;
-    if ( isubl == 4 )
+    if ( m_isubl == 4 )
         answer = u1 - myf;
-    if ( isubl == 5 )
+    if ( m_isubl == 5 )
         answer = u1 + myBIK;
-    if ( isubl == 6 )
+    if ( m_isubl == 6 )
         answer = u1 - myBIK;
 
     return answer;
@@ -836,20 +840,20 @@ double EvtVubBLNPHybrid::u( double w )
 
 double EvtVubBLNPHybrid::v( double w )
 {
-    double v1 = 3 * lambda2 / mupisq * ( Lbar - w ) * Shat( w, gvars );
-    double myf = myfunction( w, Lbar, moment2 );
-    double myBIK = myfunctionBIK( w, Lbar, moment2 );
+    double v1 = 3 * m_lambda2 / m_mupisq * ( m_Lbar - w ) * Shat( w, m_gvars );
+    double myf = myfunction( w, m_Lbar, m_moment2 );
+    double myBIK = myfunctionBIK( w, m_Lbar, m_moment2 );
     double answer = v1;
 
-    if ( isubl == 1 )
+    if ( m_isubl == 1 )
         answer = v1;
-    if ( isubl == 3 )
+    if ( m_isubl == 3 )
         answer = v1 - myf;
-    if ( isubl == 4 )
+    if ( m_isubl == 4 )
         answer = v1 + myf;
-    if ( isubl == 5 )
+    if ( m_isubl == 5 )
         answer = v1 - myBIK;
-    if ( isubl == 6 )
+    if ( m_isubl == 6 )
         answer = v1 + myBIK;
 
     return answer;
@@ -881,30 +885,30 @@ double EvtVubBLNPHybrid::myfunctionBIK( double w, double Lbar, double /* mom2 */
 
 double EvtVubBLNPHybrid::dU1nlo( double muh, double mui )
 {
-    double ai = alphas( mui, gvars );
-    double ah = alphas( muh, gvars );
+    double ai = alphas( mui, m_gvars );
+    double ah = alphas( muh, m_gvars );
 
-    double q1 = ( ah - ai ) / ( 4 * M_PI * beta0 );
-    double q2 = log( mb / muh ) * Gamma1 + gp1;
-    double q3 = 4 * beta1 * ( log( mb / muh ) * Gamma0 + gp0 ) +
-                Gamma2 * ( 1 - ai / ah );
-    double q4 = beta1 * beta1 * Gamma0 * ( -1.0 + ai / ah ) /
-                ( 4 * pow( beta0, 3 ) );
-    double q5 = -beta2 * Gamma0 * ( 1.0 + ai / ah ) +
-                beta1 * Gamma1 * ( 3 - ai / ah );
-    double q6 = beta1 * beta1 * Gamma0 * ( ah - ai ) / beta0 -
-                beta2 * Gamma0 * ah + beta1 * Gamma1 * ai;
+    double q1 = ( ah - ai ) / ( 4 * M_PI * m_beta0 );
+    double q2 = log( m_mb / muh ) * m_Gamma1 + m_gp1;
+    double q3 = 4 * m_beta1 * ( log( m_mb / muh ) * m_Gamma0 + m_gp0 ) +
+                m_Gamma2 * ( 1 - ai / ah );
+    double q4 = m_beta1 * m_beta1 * m_Gamma0 * ( -1.0 + ai / ah ) /
+                ( 4 * pow( m_beta0, 3 ) );
+    double q5 = -m_beta2 * m_Gamma0 * ( 1.0 + ai / ah ) +
+                m_beta1 * m_Gamma1 * ( 3 - ai / ah );
+    double q6 = m_beta1 * m_beta1 * m_Gamma0 * ( ah - ai ) / m_beta0 -
+                m_beta2 * m_Gamma0 * ah + m_beta1 * m_Gamma1 * ai;
 
     double answer =
-        q1 * ( q2 - q3 / 4 / beta0 + q4 + q5 / ( 4 * beta0 * beta0 ) ) +
-        1 / ( 8 * M_PI * beta0 * beta0 * beta0 ) * log( ai / ah ) * q6;
+        q1 * ( q2 - q3 / 4 / m_beta0 + q4 + q5 / ( 4 * m_beta0 * m_beta0 ) ) +
+        1 / ( 8 * M_PI * m_beta0 * m_beta0 * m_beta0 ) * log( ai / ah ) * q6;
     return answer;
 }
 
 double EvtVubBLNPHybrid::U1lo( double muh, double mui )
 {
     double epsilon = 0.0;
-    double answer = pow( mb / muh, -2 * aGamma( muh, mui, epsilon ) ) *
+    double answer = pow( m_mb / muh, -2 * aGamma( muh, mui, epsilon ) ) *
                     exp( 2 * Sfun( muh, mui, epsilon ) -
                          2 * agp( muh, mui, epsilon ) );
     return answer;
@@ -912,8 +916,8 @@ double EvtVubBLNPHybrid::U1lo( double muh, double mui )
 
 double EvtVubBLNPHybrid::Sfun( double mu1, double mu2, double epsilon )
 {
-    double a1 = alphas( mu1, gvars ) / 4 / M_PI;
-    double a2 = alphas( mu2, gvars ) / alphas( mu1, gvars );
+    double a1 = alphas( mu1, m_gvars ) / 4 / M_PI;
+    double a2 = alphas( mu2, m_gvars ) / alphas( mu1, m_gvars );
 
     double answer = S0( a1, a2 ) + S1( a1, a2 ) + epsilon * S2( a1, a2 );
     return answer;
@@ -921,26 +925,27 @@ double EvtVubBLNPHybrid::Sfun( double mu1, double mu2, double epsilon )
 
 double EvtVubBLNPHybrid::S0( double a1, double r )
 {
-    double answer = -Gamma0 / ( 4.0 * beta0 * beta0 * a1 ) *
+    double answer = -m_Gamma0 / ( 4.0 * m_beta0 * m_beta0 * a1 ) *
                     ( -1.0 + 1.0 / r + log( r ) );
     return answer;
 }
 
 double EvtVubBLNPHybrid::S1( double /* a1 */, double r )
 {
-    double answer = Gamma0 / ( 4 * beta0 * beta0 ) *
-                    ( 0.5 * log( r ) * log( r ) * beta1 / beta0 +
-                      ( Gamma1 / Gamma0 - beta1 / beta0 ) * ( 1 - r + log( r ) ) );
+    double answer = m_Gamma0 / ( 4 * m_beta0 * m_beta0 ) *
+                    ( 0.5 * log( r ) * log( r ) * m_beta1 / m_beta0 +
+                      ( m_Gamma1 / m_Gamma0 - m_beta1 / m_beta0 ) *
+                          ( 1 - r + log( r ) ) );
     return answer;
 }
 
 double EvtVubBLNPHybrid::S2( double a1, double r )
 {
-    double w1 = pow( beta1, 2 ) / pow( beta0, 2 ) - beta2 / beta0 -
-                beta1 * Gamma1 / ( beta0 * Gamma0 ) + Gamma2 / Gamma0;
-    double w2 = pow( beta1, 2 ) / pow( beta0, 2 ) - beta2 / beta0;
-    double w3 = beta1 * Gamma1 / ( beta0 * Gamma0 ) - beta2 / beta0;
-    double w4 = a1 * Gamma0 / ( 4 * beta0 * beta0 );
+    double w1 = pow( m_beta1, 2 ) / pow( m_beta0, 2 ) - m_beta2 / m_beta0 -
+                m_beta1 * m_Gamma1 / ( m_beta0 * m_Gamma0 ) + m_Gamma2 / m_Gamma0;
+    double w2 = pow( m_beta1, 2 ) / pow( m_beta0, 2 ) - m_beta2 / m_beta0;
+    double w3 = m_beta1 * m_Gamma1 / ( m_beta0 * m_Gamma0 ) - m_beta2 / m_beta0;
+    double w4 = a1 * m_Gamma0 / ( 4 * m_beta0 * m_beta0 );
 
     double answer = w4 *
                     ( -0.5 * pow( 1 - r, 2 ) * w1 + w2 * ( 1 - r ) * log( r ) +
@@ -950,21 +955,23 @@ double EvtVubBLNPHybrid::S2( double a1, double r )
 
 double EvtVubBLNPHybrid::aGamma( double mu1, double mu2, double epsilon )
 {
-    double a1 = alphas( mu1, gvars );
-    double a2 = alphas( mu2, gvars );
-    double answer = Gamma0 / ( 2 * beta0 ) * log( a2 / a1 ) +
+    double a1 = alphas( mu1, m_gvars );
+    double a2 = alphas( mu2, m_gvars );
+    double answer = m_Gamma0 / ( 2 * m_beta0 ) * log( a2 / a1 ) +
                     epsilon * ( a2 - a1 ) / ( 8.0 * M_PI ) *
-                        ( Gamma1 / beta0 - beta1 * Gamma0 / ( beta0 * beta0 ) );
+                        ( m_Gamma1 / m_beta0 -
+                          m_beta1 * m_Gamma0 / ( m_beta0 * m_beta0 ) );
     return answer;
 }
 
 double EvtVubBLNPHybrid::agp( double mu1, double mu2, double epsilon )
 {
-    double a1 = alphas( mu1, gvars );
-    double a2 = alphas( mu2, gvars );
-    double answer = gp0 / ( 2 * beta0 ) * log( a2 / a1 ) +
+    double a1 = alphas( mu1, m_gvars );
+    double a2 = alphas( mu2, m_gvars );
+    double answer = m_gp0 / ( 2 * m_beta0 ) * log( a2 / a1 ) +
                     epsilon * ( a2 - a1 ) / ( 8.0 * M_PI ) *
-                        ( gp1 / beta0 - beta1 * gp0 / ( beta0 * beta0 ) );
+                        ( m_gp1 / m_beta0 -
+                          m_beta1 * m_gp0 / ( m_beta0 * m_beta0 ) );
     return answer;
 }
 
@@ -976,10 +983,11 @@ double EvtVubBLNPHybrid::alo( double muh, double mui )
 double EvtVubBLNPHybrid::anlo( double muh, double mui )
 {    // d/depsilon of aGamma
 
-    double ah = alphas( muh, gvars );
-    double ai = alphas( mui, gvars );
+    double ah = alphas( muh, m_gvars );
+    double ai = alphas( mui, m_gvars );
     double answer = ( ah - ai ) / ( 8.0 * M_PI ) *
-                    ( Gamma1 / beta0 - beta1 * Gamma0 / ( beta0 * beta0 ) );
+                    ( m_Gamma1 / m_beta0 -
+                      m_beta1 * m_Gamma0 / ( m_beta0 * m_beta0 ) );
     return answer;
 }
 
@@ -1096,21 +1104,21 @@ double EvtVubBLNPHybrid::gammcf( double a, double x, double LogGamma )
 double EvtVubBLNPHybrid::findBLNPWhat()
 {
     double ranNum = EvtRandom::Flat();
-    double oOverBins = 1.0 / ( float( _pf.size() ) );
+    double oOverBins = 1.0 / ( float( m_pf.size() ) );
     int nBinsBelow = 0;    // largest k such that I[k] is known to be <= rand
-    int nBinsAbove = _pf.size();    // largest k such that I[k] is known to be >  rand
+    int nBinsAbove = m_pf.size();    // largest k such that I[k] is known to be >  rand
     int middle;
 
     while ( nBinsAbove > nBinsBelow + 1 ) {
         middle = ( nBinsAbove + nBinsBelow + 1 ) >> 1;
-        if ( ranNum >= _pf[middle] ) {
+        if ( ranNum >= m_pf[middle] ) {
             nBinsBelow = middle;
         } else {
             nBinsAbove = middle;
         }
     }
 
-    double bSize = _pf[nBinsAbove] - _pf[nBinsBelow];
+    double bSize = m_pf[nBinsAbove] - m_pf[nBinsBelow];
     // binMeasure is always aProbFunc[nBinsBelow],
 
     if ( bSize == 0 ) {
@@ -1120,7 +1128,7 @@ double EvtVubBLNPHybrid::findBLNPWhat()
         return ( nBinsBelow + .5 ) * oOverBins;
     }
 
-    double bFract = ( ranNum - _pf[nBinsBelow] ) / bSize;
+    double bFract = ( ranNum - m_pf[nBinsBelow] ) / bSize;
 
     return ( nBinsBelow + bFract ) * oOverBins;
 }
@@ -1131,20 +1139,20 @@ double EvtVubBLNPHybrid::getWeight( double mX, double q2, double El )
     int ibin_q2 = -1;
     int ibin_El = -1;
 
-    for ( unsigned i = 0; i < _bins_mX.size(); i++ ) {
-        if ( mX >= _bins_mX[i] )
+    for ( unsigned i = 0; i < m_bins_mX.size(); i++ ) {
+        if ( mX >= m_bins_mX[i] )
             ibin_mX = i;
     }
-    for ( unsigned i = 0; i < _bins_q2.size(); i++ ) {
-        if ( q2 >= _bins_q2[i] )
+    for ( unsigned i = 0; i < m_bins_q2.size(); i++ ) {
+        if ( q2 >= m_bins_q2[i] )
             ibin_q2 = i;
     }
-    for ( unsigned i = 0; i < _bins_El.size(); i++ ) {
-        if ( El >= _bins_El[i] )
+    for ( unsigned i = 0; i < m_bins_El.size(); i++ ) {
+        if ( El >= m_bins_El[i] )
             ibin_El = i;
     }
-    int ibin = ibin_mX + ibin_q2 * _bins_mX.size() +
-               ibin_El * _bins_mX.size() * _bins_q2.size();
+    int ibin = ibin_mX + ibin_q2 * m_bins_mX.size() +
+               ibin_El * m_bins_mX.size() * m_bins_q2.size();
 
     if ( ( ibin_mX < 0 ) || ( ibin_q2 < 0 ) || ( ibin_El < 0 ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtVubHybrid" )
@@ -1154,15 +1162,15 @@ double EvtVubBLNPHybrid::getWeight( double mX, double q2, double El )
         return 0.0;
     }
 
-    return _weights[ibin];
+    return m_weights[ibin];
 }
 
 void EvtVubBLNPHybrid::readWeights( int startArg )
 {
-    _weights.resize( _nbins );
+    m_weights.resize( m_nbins );
 
     double maxw = 0.0;
-    for ( auto& w : _weights ) {
+    for ( auto& w : m_weights ) {
         w = getArg( startArg++ );
         if ( w > maxw )
             maxw = w;
@@ -1177,6 +1185,6 @@ void EvtVubBLNPHybrid::readWeights( int startArg )
     }
 
     // rescale weights (to be in range 0..1)
-    for ( auto& w : _weights )
+    for ( auto& w : m_weights )
         w /= maxw;
 }

@@ -29,120 +29,115 @@ using namespace std;
 
 void EvtStdHep::init()
 {
-    _npart = 0;
+    m_npart = 0;
 }
 
 int EvtStdHep::getNPart()
 {
-    return _npart;
+    return m_npart;
 }
 
 void EvtStdHep::createParticle( EvtVector4R p4, EvtVector4R x, int prntfirst,
                                 int prntlast, int id )
 {
-    _p4[_npart] = p4;
-    _x[_npart] = x;
-    _prntfirst[_npart] = prntfirst;
-    _prntlast[_npart] = prntlast;
-    _daugfirst[_npart] = -1;
-    _dauglast[_npart] = -1;
-    _id[_npart] = id;
-    _istat[_npart] = 1;
+    m_p4[m_npart] = p4;
+    m_x[m_npart] = x;
+    m_prntfirst[m_npart] = prntfirst;
+    m_prntlast[m_npart] = prntlast;
+    m_daugfirst[m_npart] = -1;
+    m_dauglast[m_npart] = -1;
+    m_id[m_npart] = id;
+    m_istat[m_npart] = 1;
 
     //we also need to fix up the parents pointer to the daughter!
 
     if ( prntfirst >= 0 ) {
         int i;
         for ( i = prntfirst; i <= prntlast; i++ ) {
-            _istat[i] = 2;
-            if ( _daugfirst[i] == -1 )
-                _daugfirst[i] = _npart;
-            if ( _dauglast[i] < _npart )
-                _dauglast[i] = _npart;
+            m_istat[i] = 2;
+            if ( m_daugfirst[i] == -1 )
+                m_daugfirst[i] = m_npart;
+            if ( m_dauglast[i] < m_npart )
+                m_dauglast[i] = m_npart;
         }
     }
 
-    _npart++;
+    m_npart++;
 }
 
 void EvtStdHep::translate( EvtVector4R d )
 {
     int i;
-    for ( i = 0; i < _npart; i++ ) {
-        _x[i] += d;
+    for ( i = 0; i < m_npart; i++ ) {
+        m_x[i] += d;
     }
 }
 
-/*
-ostream& operator<<(ostream& s, const EvtStdHep& stdhep){
+ostream& operator<<( ostream& s, const EvtStdHep& stdhep )
+{
+    int w = s.width();
+    int p = s.precision();
+    std::ios::fmtflags f = s.flags();
 
-  int w=s.width();
-  int p=s.precision();
-  std::ios::fmtflags f=s.flags();
+    s << endl;
+    s << "  N      Id Ist   M1   M2   DF   DL      px      py      pz       E       t       x       y       z"
+      << endl;
+    int i;
+    for ( i = 0; i < stdhep.m_npart; i++ ) {
+        s.width( 3 );
+        s << i << " ";
+        s.width( 7 );
+        s << stdhep.m_id[i] << " ";
+        s.width( 3 );
+        s << stdhep.m_istat[i] << " ";
+        s.width( 4 );
+        s << stdhep.m_prntfirst[i] << " ";
+        s.width( 4 );
+        s << stdhep.m_prntlast[i] << " ";
+        s.width( 4 );
+        s << stdhep.m_daugfirst[i] << " ";
+        s.width( 4 );
+        s << stdhep.m_dauglast[i] << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_p4[i].get( 1 ) << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_p4[i].get( 2 ) << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_p4[i].get( 3 ) << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_p4[i].get( 0 ) << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_x[i].get( 0 ) << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_x[i].get( 1 ) << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_x[i].get( 2 ) << " ";
+        s.width( 7 );
+        s.precision( 4 );
+        s << setiosflags( ios::right | ios::fixed );
+        s << stdhep.m_x[i].get( 3 ) << endl;
+        s.width( 0 );
+    }
 
+    s << endl;
 
-  s <<endl;
-  s << "  N      Id Ist   M1   M2   DF   DL      px      py      pz       E       t       x       y       z"<<endl;
-  int i;
-  for(i=0;i<stdhep._npart;i++){
-    
-    s.width(3);
-    s<<i<<" ";
-    s.width(7);
-    s<<stdhep._id[i]<<" ";
-    s.width(3);
-    s<<stdhep._istat[i]<<" ";
-    s.width(4);
-    s<<stdhep._prntfirst[i]<<" ";
-    s.width(4);
-    s<<stdhep._prntlast[i]<<" ";
-    s.width(4);
-    s<<stdhep._daugfirst[i]<<" ";
-    s.width(4);
-    s<<stdhep._dauglast[i]<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._p4[i].get(1)<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._p4[i].get(2)<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._p4[i].get(3)<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._p4[i].get(0)<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._x[i].get(0)<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._x[i].get(1)<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._x[i].get(2)<<" ";
-    s.width(7);
-    s.precision(4);
-    s<<setiosflags( ios::right|ios::fixed );
-    s<<stdhep._x[i].get(3)<<endl;
-    s.width(0);
-  }
-  
-  s<<endl;
+    s.width( w );
+    s.precision( p );
+    s.flags( (std::ios::fmtflags)f );
 
-  s.width(w);
-  s.precision(p);
-  s.flags((std::ios::fmtflags)f);
-  
-  return s;
-
-}  
-
-*/
+    return s;
+}

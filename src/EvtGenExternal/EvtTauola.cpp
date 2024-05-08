@@ -57,12 +57,12 @@ void EvtTauola::decay( EvtParticle* p )
     // This should only create the full Tauola engine once, and all clones will
     // point to the same engine.
 
-    if ( !_tauolaEngine ) {
-        _tauolaEngine = EvtExternalGenFactory::getInstance()->getGenerator(
+    if ( !m_tauolaEngine ) {
+        m_tauolaEngine = EvtExternalGenFactory::getInstance()->getGenerator(
             EvtExternalGenFactory::TauolaGenId );
     }
 
-    if ( _tauolaEngine ) {
-        _tauolaEngine->doDecay( p );
+    if ( m_tauolaEngine ) {
+        m_tauolaEngine->doDecay( p );
     }
 }

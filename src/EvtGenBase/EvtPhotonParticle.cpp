@@ -38,7 +38,7 @@ void EvtPhotonParticle::init( EvtId part_n, const EvtVector4R& p4 )
 void EvtPhotonParticle::init( EvtId part_n, double e, double px, double py,
                               double pz )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( e, px, py, pz );
     setpart_num( part_n );
 

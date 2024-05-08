@@ -61,19 +61,19 @@ void EvtVectorIsr::init()
     if ( narg > 4 )
         checkNArg( 4 );
 
-    csfrmn = 1.;
-    csbkmn = 1.;
-    fmax = 1.2;
-    firstorder = false;
+    m_csfrmn = 1.;
+    m_csbkmn = 1.;
+    m_fmax = 1.2;
+    m_firstorder = false;
 
     if ( narg > 0 )
-        csfrmn = getArg( 0 );
+        m_csfrmn = getArg( 0 );
     if ( narg > 1 )
-        csbkmn = getArg( 1 );
+        m_csbkmn = getArg( 1 );
     if ( narg > 2 )
-        fmax = getArg( 2 );
+        m_fmax = getArg( 2 );
     if ( narg > 3 )
-        firstorder = true;
+        m_firstorder = true;
 }
 
 void EvtVectorIsr::initProbMax()
@@ -130,7 +130,7 @@ void EvtVectorIsr::decay( EvtParticle* p )
     double largest_f =
         0;    //only used when determining max weight for this vector particle mass
 
-    if ( !firstorder ) {
+    if ( !m_firstorder ) {
         while ( fran > f ) {
             m++;
 
@@ -178,8 +178,8 @@ void EvtVectorIsr::decay( EvtParticle* p )
 
             f = cs_Born * f_col;
 
-            //if fmax was set properly, f should NEVER be larger than fmax
-            if ( f > fmax && fmax > 0. ) {
+            //if m_fmax was set properly, f should NEVER be larger than m_fmax
+            if ( f > m_fmax && m_fmax > 0. ) {
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
                     << "EvtVectorIsr finds a problem with fmax, the maximum weight setting\n"
                     << "fmax is the third decay argument in the .dec file. VectorIsr attempts to set it reasonably if it wasn't provided\n"
@@ -190,13 +190,13 @@ void EvtVectorIsr::decay( EvtParticle* p )
                     << "phi->1.15   J/psi-psi(4415)->0.105\n"
                     << "The current value of f and fmax for "
                     << EvtPDL::name( phi->getId() ) << " are " << f << "  "
-                    << fmax << "\n"
+                    << m_fmax << "\n"
                     << "Will now assert\n";
                 assert( 0 );
             }
 
-            if ( fmax > 0. ) {
-                fran = fmax * EvtRandom::Flat( 0.0, 1.0 );
+            if ( m_fmax > 0. ) {
+                fran = m_fmax * EvtRandom::Flat( 0.0, 1.0 );
             }
 
             else {
@@ -227,7 +227,7 @@ void EvtVectorIsr::decay( EvtParticle* p )
             }
 
             if ( m > 100000 ) {
-                if ( fmax > 0. )
+                if ( m_fmax > 0. )
                     EvtGenReport( EVTGEN_INFO, "EvtGen" )
                         << "EvtVectorIsr is having problems. Check the fmax value - the 3rd argument in the .dec file\n"
                         << "Recommended values for various vector particles: "
@@ -237,7 +237,7 @@ void EvtVectorIsr::decay( EvtParticle* p )
             }
         }    //while (fran > f)
 
-    }    //if (firstorder)
+    }    //if (m_firstorder)
 
     //Compute parameters for boost to/from the system after colinear radiation
 
@@ -248,12 +248,12 @@ void EvtVectorIsr::decay( EvtParticle* p )
     double csfrmn_new;
     double csbkmn_new;
 
-    if ( firstorder ) {
+    if ( m_firstorder ) {
         bet_l = 0.;
         gam_l = 1.;
         betgam_l = 0.;
-        csfrmn_new = csfrmn;
-        csbkmn_new = csbkmn;
+        csfrmn_new = m_csfrmn;
+        csbkmn_new = m_csbkmn;
     } else {
         double xx = e02 / e01;
         double sq_xx = sqrt( xx );
@@ -262,8 +262,8 @@ void EvtVectorIsr::decay( EvtParticle* p )
         betgam_l = ( 1. - xx ) / ( 2. * sq_xx );
 
         //Boost photon cos_theta limits in lab to limits in the system after colinear rad
-        csfrmn_new = ( csfrmn - bet_l ) / ( 1. - bet_l * csfrmn );
-        csbkmn_new = ( csbkmn - bet_l ) / ( 1. - bet_l * csbkmn );
+        csfrmn_new = ( m_csfrmn - bet_l ) / ( 1. - bet_l * m_csfrmn );
+        csbkmn_new = ( m_csbkmn - bet_l ) / ( 1. - bet_l * m_csbkmn );
     }
 
     //    //generate kinematics according to Bonneau-Martin article
@@ -305,7 +305,7 @@ void EvtVectorIsr::decay( EvtParticle* p )
                          -p4phi.get( 2 ), betgam_l * isr_p0 + gam_l * isr_p3 );
 
     //four-vectors of the collinear photons
-    if ( !firstorder ) {
+    if ( !m_firstorder ) {
         p4softg1.set( 0, eb - e02 );
         p4softg1.set( 3, e02 - eb );
         p4softg2.set( 0, eb - e01 );

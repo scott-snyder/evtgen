@@ -81,10 +81,10 @@ class EvtVubdGamma final {
 
     // Data members
 
-    double _alphas;
-    double _epsilon1;
-    double _epsilon2;
-    double _epsilon3;
+    double m_alphas;
+    double m_epsilon1;
+    double m_epsilon2;
+    double m_epsilon3;
 };
 
 #endif    // EVTVUBDGAMMA_HH

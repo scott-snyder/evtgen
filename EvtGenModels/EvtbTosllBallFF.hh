@@ -39,7 +39,7 @@ class EvtbTosllBallFF : public EvtbTosllFF {
                       double& t2, double& t3 ) override;
 
   private:
-    int _theFFModel;
+    int m_theFFModel;
 };
 
 #endif

@@ -84,7 +84,7 @@ class EvtTensor3C final {
     EvtVector3C cont2( const EvtVector3R& v ) const;
 
   private:
-    EvtComplex t[3][3];
+    EvtComplex m_t[3][3];
 };
 
 inline EvtTensor3C operator*( const EvtComplex& c, const EvtTensor3C& t2 )
@@ -119,17 +119,17 @@ inline EvtTensor3C operator-( const EvtTensor3C& t1, const EvtTensor3C& t2 )
 
 inline void EvtTensor3C::set( int i, int j, const EvtComplex& c )
 {
-    t[i][j] = c;
+    m_t[i][j] = c;
 }
 
 inline const EvtComplex& EvtTensor3C::get( int i, int j ) const
 {
-    return t[i][j];
+    return m_t[i][j];
 }
 
 inline EvtComplex EvtTensor3C::trace() const
 {
-    return t[0][0] + t[1][1] + t[2][2];
+    return m_t[0][0] + m_t[1][1] + m_t[2][2];
 }
 
 #endif

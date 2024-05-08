@@ -32,20 +32,20 @@ using std::cout;
 using std::endl;
 
 EvtLambdaP_BarGamma::EvtLambdaP_BarGamma() :
-    _mLambdab( 5.624 ),       // Lambda_b mass
-    _mLambda0( 1.115684 ),    // Lambda0 mass
-    _c7Eff( -0.31 ),          // Wilson coefficient
-    _mb( 4.4 ),               // running b mass
-    _mV( 5.42 ),              // pole mass vector current
-    _mA( 5.86 ),              // pole mass axial current
-    _GF( 1.166E-5 ),          // Fermi constant
-    _gLambdab( 16 ),          // coupling constant Lambda_b -> B- p
-    _e0( 1 ),                 // electromagnetic coupling (+1)
-    _g1( 0.64 ),              // heavy-light form factors at q_mSqare
-    _g2( -0.10 ),
-    _f1( 0.64 ),
-    _f2( -0.31 ),
-    _VtbVtsStar( 0.038 )    // |V_tb V_ts^*|
+    m_mLambdab( 5.624 ),       // Lambda_b mass
+    m_mLambda0( 1.115684 ),    // Lambda0 mass
+    m_c7Eff( -0.31 ),          // Wilson coefficient
+    m_mb( 4.4 ),               // running b mass
+    m_mV( 5.42 ),              // pole mass vector current
+    m_mA( 5.86 ),              // pole mass axial current
+    m_GF( 1.166E-5 ),          // Fermi constant
+    m_gLambdab( 16 ),          // coupling constant Lambda_b -> B- p
+    m_e0( 1 ),                 // electromagnetic coupling (+1)
+    m_g1( 0.64 ),              // heavy-light form factors at q_mSqare
+    m_g2( -0.10 ),
+    m_f1( 0.64 ),
+    m_f2( -0.31 ),
+    m_VtbVtsStar( 0.038 )    // |V_tb V_ts^*|
 {
 }
 
@@ -104,16 +104,16 @@ void EvtLambdaP_BarGamma::decay( EvtParticle* p )
                                        photonPol.get( mu ) *
                                        photonMomentum.get( nu );
 
-                EvtComplex amp = -I * _gLambdab * lambdaPol.adjoint() *
+                EvtComplex amp = -I * m_gLambdab * lambdaPol.adjoint() *
                                  ( ( constA() * EvtGammaMatrix::id() +
                                      constB() * EvtGammaMatrix::g5() ) *
                                    photonGamma *
                                    ( EvtGenFunctions::slash( lambdaMomentum ) +
                                      EvtGenFunctions::slash( photonMomentum ) +
-                                     _mLambdab * EvtGammaMatrix::id() ) /
+                                     m_mLambdab * EvtGammaMatrix::id() ) /
                                    ( ( lambdaMomentum + photonMomentum ) *
                                          ( lambdaMomentum + photonMomentum ) -
-                                     _mLambdab * _mLambdab ) *
+                                     m_mLambdab * m_mLambdab ) *
                                    EvtGammaMatrix::g5() * antiP_Pol );
                 // use of parentheses so I do not have to define EvtDiracSpinor*EvtGammaMatrix, which shouldn't be defined to prevent errors in indexing
 
@@ -132,24 +132,26 @@ void EvtLambdaP_BarGamma::initProbMax()
 // form factors at 0
 double EvtLambdaP_BarGamma::f0( double fqm, int n ) const
 {
-    return fqm * pow( 1 - pow( _mLambdab - _mLambda0, 2 ) / ( _mV * _mV ), n );
+    return fqm *
+           pow( 1 - pow( m_mLambdab - m_mLambda0, 2 ) / ( m_mV * m_mV ), n );
 }
 
 double EvtLambdaP_BarGamma::g0( double gqm, int n ) const
 {
-    return gqm * pow( 1 - pow( _mLambdab - _mLambda0, 2 ) / ( _mA * _mA ), n );
+    return gqm *
+           pow( 1 - pow( m_mLambdab - m_mLambda0, 2 ) / ( m_mA * m_mA ), n );
 }
 
 double EvtLambdaP_BarGamma::constA() const
 {
-    return _GF / sqrt( 2. ) * _e0 / ( 8 * EvtConst::pi * EvtConst::pi ) * 2 *
-           _c7Eff * _mb * _VtbVtsStar * ( f0( _f1 ) - f0( _f2 ) );
+    return m_GF / sqrt( 2. ) * m_e0 / ( 8 * EvtConst::pi * EvtConst::pi ) * 2 *
+           m_c7Eff * m_mb * m_VtbVtsStar * ( f0( m_f1 ) - f0( m_f2 ) );
 }
 
 double EvtLambdaP_BarGamma::constB() const
 {
-    return _GF / sqrt( 2. ) * _e0 / ( 8 * EvtConst::pi * EvtConst::pi ) * 2 *
-           _c7Eff * _mb * _VtbVtsStar *
-           ( g0( _g1 ) - ( _mLambdab - _mLambda0 ) / ( _mLambdab + _mLambda0 ) *
-                             g0( _g2 ) );
+    return m_GF / sqrt( 2. ) * m_e0 / ( 8 * EvtConst::pi * EvtConst::pi ) * 2 *
+           m_c7Eff * m_mb * m_VtbVtsStar *
+           ( g0( m_g1 ) - ( m_mLambdab - m_mLambda0 ) /
+                              ( m_mLambdab + m_mLambda0 ) * g0( m_g2 ) );
 }

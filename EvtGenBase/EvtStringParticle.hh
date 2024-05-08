@@ -40,8 +40,8 @@ class EvtStringParticle : public EvtParticle {
                                           double gamma ) const override;
 
   private:
-    std::vector<EvtVector4R> _p4partons;
-    std::vector<EvtId> _idpartons;
+    std::vector<EvtVector4R> m_p4partons;
+    std::vector<EvtId> m_idpartons;
 
     EvtStringParticle& operator=( const EvtStringParticle& d );
 };

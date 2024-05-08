@@ -39,9 +39,9 @@ class EvtSingleParticle : public EvtDecayIncoherent {
     void initProbMax() override;
 
   private:
-    double pmin, pmax;
-    double cthetamin, cthetamax;
-    double phimin, phimax;
+    double m_pmin, m_pmax;
+    double m_cthetamin, m_cthetamax;
+    double m_phimin, m_phimax;
 };
 
 #endif

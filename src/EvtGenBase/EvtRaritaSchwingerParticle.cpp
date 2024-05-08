@@ -34,7 +34,7 @@ using std::endl;
 
 void EvtRaritaSchwingerParticle::init( EvtId id, const EvtVector4R& p4 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( id );
 
@@ -64,17 +64,17 @@ void EvtRaritaSchwingerParticle::init( EvtId id, const EvtVector4R& p4 )
     static EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
                                EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
 
-    _spinorRest[0] = dirProd( eplus, spplus );
-    _spinorRest[1] = dirProd( sqrt( 2.0 / 3.0 ) * ezero, spplus ) +
-                     dirProd( sqrt( 1.0 / 3.0 ) * eplus, spminus );
-    _spinorRest[2] = dirProd( sqrt( 2.0 / 3.0 ) * ezero, spminus ) +
-                     dirProd( sqrt( 1.0 / 3.0 ) * eminus, spplus );
-    _spinorRest[3] = dirProd( eminus, spminus );
+    m_spinorRest[0] = dirProd( eplus, spplus );
+    m_spinorRest[1] = dirProd( sqrt( 2.0 / 3.0 ) * ezero, spplus ) +
+                      dirProd( sqrt( 1.0 / 3.0 ) * eplus, spminus );
+    m_spinorRest[2] = dirProd( sqrt( 2.0 / 3.0 ) * ezero, spminus ) +
+                      dirProd( sqrt( 1.0 / 3.0 ) * eminus, spplus );
+    m_spinorRest[3] = dirProd( eminus, spminus );
 
-    _spinor[0] = boostTo( _spinorRest[0], p4 );
-    _spinor[1] = boostTo( _spinorRest[1], p4 );
-    _spinor[2] = boostTo( _spinorRest[2], p4 );
-    _spinor[3] = boostTo( _spinorRest[3], p4 );
+    m_spinor[0] = boostTo( m_spinorRest[0], p4 );
+    m_spinor[1] = boostTo( m_spinorRest[1], p4 );
+    m_spinor[2] = boostTo( m_spinorRest[2], p4 );
+    m_spinor[3] = boostTo( m_spinorRest[3], p4 );
 
     setLifetime();
 }
@@ -86,7 +86,7 @@ void EvtRaritaSchwingerParticle::init(
     const EvtRaritaSchwinger& rest2, const EvtRaritaSchwinger& rest3,
     const EvtRaritaSchwinger& rest4 )
 {
-    _validP4 = true;
+    m_validP4 = true;
     setp( p4 );
     setpart_num( id );
 
@@ -96,27 +96,27 @@ void EvtRaritaSchwingerParticle::init(
             << std::endl;
         ::abort();
     }
-    _spinorRest[0] = rest1;
-    _spinorRest[1] = rest2;
-    _spinorRest[2] = rest3;
-    _spinorRest[3] = rest4;
+    m_spinorRest[0] = rest1;
+    m_spinorRest[1] = rest2;
+    m_spinorRest[2] = rest3;
+    m_spinorRest[3] = rest4;
 
-    _spinor[0] = prod1;
-    _spinor[1] = prod2;
-    _spinor[2] = prod3;
-    _spinor[3] = prod4;
+    m_spinor[0] = prod1;
+    m_spinor[1] = prod2;
+    m_spinor[2] = prod3;
+    m_spinor[3] = prod4;
 
     setLifetime();
 }
 
 EvtRaritaSchwinger EvtRaritaSchwingerParticle::spRSParent( int i ) const
 {
-    return _spinor[i];
+    return m_spinor[i];
 }
 
 EvtRaritaSchwinger EvtRaritaSchwingerParticle::spRS( int i ) const
 {
-    return _spinorRest[i];
+    return m_spinorRest[i];
 }
 
 EvtSpinDensity EvtRaritaSchwingerParticle::rotateToHelicityBasis() const
@@ -151,10 +151,10 @@ EvtSpinDensity EvtRaritaSchwingerParticle::rotateToHelicityBasis() const
     R.setDim( 4 );
 
     for ( int i = 0; i < 4; i++ ) {
-        R.set( 0, i, ( sppp * _spinorRest[i] ) / sqmt2 );
-        R.set( 1, i, ( spp * _spinorRest[i] ) / sqmt2 );
-        R.set( 2, i, ( spm * _spinorRest[i] ) / sqmt2 );
-        R.set( 3, i, ( spmm * _spinorRest[i] ) / sqmt2 );
+        R.set( 0, i, ( sppp * m_spinorRest[i] ) / sqmt2 );
+        R.set( 1, i, ( spp * m_spinorRest[i] ) / sqmt2 );
+        R.set( 2, i, ( spm * m_spinorRest[i] ) / sqmt2 );
+        R.set( 3, i, ( spmm * m_spinorRest[i] ) / sqmt2 );
     }
 
     return R;
@@ -198,10 +198,10 @@ EvtSpinDensity EvtRaritaSchwingerParticle::rotateToHelicityBasis(
     double sqmt2 = sqrt( 2.0 * ( this->getP4().mass() ) );
 
     for ( int i = 0; i < 4; i++ ) {
-        R.set( 0, i, ( sppp * _spinorRest[i] ) / sqmt2 );
-        R.set( 1, i, ( spp * _spinorRest[i] ) / sqmt2 );
-        R.set( 2, i, ( spm * _spinorRest[i] ) / sqmt2 );
-        R.set( 3, i, ( spmm * _spinorRest[i] ) / sqmt2 );
+        R.set( 0, i, ( sppp * m_spinorRest[i] ) / sqmt2 );
+        R.set( 1, i, ( spp * m_spinorRest[i] ) / sqmt2 );
+        R.set( 2, i, ( spm * m_spinorRest[i] ) / sqmt2 );
+        R.set( 3, i, ( spmm * m_spinorRest[i] ) / sqmt2 );
     }
 
     return R;

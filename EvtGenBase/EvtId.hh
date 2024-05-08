@@ -27,34 +27,34 @@
 class EvtId {
   public:
     //need a default constructor
-    EvtId() : _id( -1 ), _alias( -1 ) {}
+    EvtId() : m_id( -1 ), m_alias( -1 ) {}
 
-    EvtId( int id, int alias ) : _id( id ), _alias( alias ) {}
+    EvtId( int id, int alias ) : m_id( id ), m_alias( alias ) {}
 
     friend std::ostream& operator<<( std::ostream& s, const EvtId& v );
 
-    int operator==( const EvtId& id ) const { return _id == id._id; }
-    int operator!=( const EvtId& id ) const { return _id != id._id; }
-    int operator<( const EvtId& id ) const { return _id < id._id; }
+    int operator==( const EvtId& id ) const { return m_id == id.m_id; }
+    int operator!=( const EvtId& id ) const { return m_id != id.m_id; }
+    int operator<( const EvtId& id ) const { return m_id < id.m_id; }
 
     int isConjugate( const EvtId& id ) const;
 
-    int getId() const { return _id; }
+    int getId() const { return m_id; }
 
-    int getAlias() const { return _alias; }
+    int getAlias() const { return m_alias; }
 
-    int isAlias() const { return _id != _alias; }
+    int isAlias() const { return m_id != m_alias; }
 
     std::string getName() const;
 
   private:
     //particle number 0..n. The order of particles are determined
     //by the order in pdt.table
-    int _id;
+    int m_id;
     //if the particle is an alias to another particle alias!=id
     //The only place where the alias should be used is for looking
     //up decays in the decay table.
-    int _alias;
+    int m_alias;
 };
 
 #endif

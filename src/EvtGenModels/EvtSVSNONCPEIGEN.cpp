@@ -52,31 +52,31 @@ void EvtSVSNONCPEIGEN::init()
     checkSpinDaughter( 0, EvtSpinType::VECTOR );
     checkSpinDaughter( 1, EvtSpinType::SCALAR );
 
-    _dm = getArg( 1 );
-    _phickm = 2 * getArg( 0 ) + getArg( 2 );
+    m_dm = getArg( 1 );
+    m_phickm = 2 * getArg( 0 ) + getArg( 2 );
 
-    _A_f = EvtComplex( getArg( 3 ) * cos( getArg( 4 ) ),
-                       getArg( 3 ) * sin( getArg( 4 ) ) );
-    _Abar_f = EvtComplex( getArg( 5 ) * cos( getArg( 6 ) ),
-                          getArg( 5 ) * sin( getArg( 6 ) ) );
+    m_A_f = EvtComplex( getArg( 3 ) * cos( getArg( 4 ) ),
+                        getArg( 3 ) * sin( getArg( 4 ) ) );
+    m_Abar_f = EvtComplex( getArg( 5 ) * cos( getArg( 6 ) ),
+                           getArg( 5 ) * sin( getArg( 6 ) ) );
 
-    _A_fbar = _Abar_f;
-    _Abar_fbar = _A_f;
+    m_A_fbar = m_Abar_f;
+    m_Abar_fbar = m_A_f;
 
     if ( getNArg() == 11 ) {
-        _A_fbar = EvtComplex( getArg( 7 ) * cos( getArg( 8 ) ),
-                              getArg( 7 ) * sin( getArg( 8 ) ) );
-        _Abar_fbar = EvtComplex( getArg( 9 ) * cos( getArg( 10 ) ),
-                                 getArg( 9 ) * sin( getArg( 10 ) ) );
+        m_A_fbar = EvtComplex( getArg( 7 ) * cos( getArg( 8 ) ),
+                               getArg( 7 ) * sin( getArg( 8 ) ) );
+        m_Abar_fbar = EvtComplex( getArg( 9 ) * cos( getArg( 10 ) ),
+                                  getArg( 9 ) * sin( getArg( 10 ) ) );
     }
 }
 
 void EvtSVSNONCPEIGEN::initProbMax()
 {
-    double theProbMax = abs( _A_f ) * abs( _A_f ) +
-                        abs( _Abar_f ) * abs( _Abar_f ) +
-                        abs( _A_fbar ) * abs( _A_fbar ) +
-                        abs( _Abar_fbar ) * abs( _Abar_fbar );
+    double theProbMax = abs( m_A_f ) * abs( m_A_f ) +
+                        abs( m_Abar_f ) * abs( m_Abar_f ) +
+                        abs( m_A_fbar ) * abs( m_A_fbar ) +
+                        abs( m_Abar_fbar ) * abs( m_Abar_fbar );
 
     setProbMax( theProbMax );
 }
@@ -100,9 +100,9 @@ void EvtSVSNONCPEIGEN::decay( EvtParticle* p )
     EvtCPUtil::getInstance()->OtherB( p, t, other_b, 0.5 );
 
     EvtComplex amp;
-    double dmt2 = ( _dm * t ) / ( 2 * EvtConst::c );
-    EvtComplex ePlusIPhi( cos( _phickm ), sin( _phickm ) );
-    EvtComplex eMinusIPhi( cos( -_phickm ), -sin( _phickm ) );
+    double dmt2 = ( m_dm * t ) / ( 2 * EvtConst::c );
+    EvtComplex ePlusIPhi( cos( m_phickm ), sin( m_phickm ) );
+    EvtComplex eMinusIPhi( cos( -m_phickm ), -sin( m_phickm ) );
 
     // flip == 0 : D-rho+
     // flip == 1 : D+rho-
@@ -110,24 +110,24 @@ void EvtSVSNONCPEIGEN::decay( EvtParticle* p )
     if ( !flip ) {
         if ( other_b == B0B ) {
             // At t=0 we have a B0
-            amp = cos( dmt2 ) * _A_f +
-                  eMinusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * _Abar_f;
+            amp = cos( dmt2 ) * m_A_f +
+                  eMinusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * m_Abar_f;
         }
         if ( other_b == B0 ) {
             // At t=0 we have a B0bar
-            amp = ePlusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * _A_f +
-                  cos( dmt2 ) * _Abar_f;
+            amp = ePlusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * m_A_f +
+                  cos( dmt2 ) * m_Abar_f;
         }
     } else {
         if ( other_b == B0B ) {
             // At t=0 we have a B0
-            amp = cos( dmt2 ) * _A_fbar +
-                  eMinusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * _Abar_fbar;
+            amp = cos( dmt2 ) * m_A_fbar +
+                  eMinusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * m_Abar_fbar;
         }
         if ( other_b == B0 ) {
             // At t=0 we have a B0bar
-            amp = ePlusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * _A_fbar +
-                  cos( dmt2 ) * _Abar_fbar;
+            amp = ePlusIPhi * EvtComplex( 0.0, sin( dmt2 ) ) * m_A_fbar +
+                  cos( dmt2 ) * m_Abar_fbar;
         }
     }
 

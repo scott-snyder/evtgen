@@ -51,23 +51,23 @@ class EvtVubNLO : public EvtDecayIncoherent {
 
   private:
     // cache
-    double _lbar;
-    double _mupi2;
+    double m_lbar;
+    double m_mupi2;
 
-    double _mb;    // the b-quark pole mass in GeV
-    double _mB;
-    double _lambdaSF;
-    double _b;    // Parameter for the Fermi Motion
-    double _kpar;
-    double _mui;       // renormalization scale (preferred value=1.5 GeV)
-    double _SFNorm;    // SF normalization
-    double _dGMax;     // max dGamma*p2 value;
-    int _idSF;         // which shape function?
-    std::vector<double> _masses;
-    std::vector<double> _weights;
+    double m_mb;    // the b-quark pole mass in GeV
+    double m_mB;
+    double m_lambdaSF;
+    double m_b;    // Parameter for the Fermi Motion
+    double m_kpar;
+    double m_mui;       // renormalization scale (preferred value=1.5 GeV)
+    double m_SFNorm;    // SF normalization
+    double m_dGMax;     // max dGamma*p2 value;
+    int m_idSF;         // which shape function?
+    std::vector<double> m_masses;
+    std::vector<double> m_weights;
 
-    double _gmax;
-    int _ngood, _ntot;
+    double m_gmax;
+    int m_ngood, m_ntot;
 
     double tripleDiff( double pp, double pl, double pm );
     double SFNorm( const std::vector<double>& coeffs );
@@ -90,10 +90,10 @@ class EvtVubNLO : public EvtDecayIncoherent {
     static double Gamma( double z, double tmax );
 
     // theory parameters
-    inline double mu_i() { return _mui; }    // intermediate scale
-    inline double mu_bar() { return _mui; }
-    inline double mu_h() { return _mb / sqrt( 2.0 ); }    // high scale
-    inline double lambda1() { return -_mupi2; }
+    inline double mu_i() { return m_mui; }    // intermediate scale
+    inline double mu_bar() { return m_mui; }
+    inline double mu_h() { return m_mb / sqrt( 2.0 ); }    // high scale
+    inline double lambda1() { return -m_mupi2; }
 
     // expansion coefficients for RGE
     static double beta0( int nf = 4 ) { return 11. - 2. / 3. * nf; }
@@ -127,11 +127,11 @@ class EvtVubNLO : public EvtDecayIncoherent {
 
     // Shape Functions
 
-    inline double lambda_SF() { return _lambdaSF; }
+    inline double lambda_SF() { return m_lambdaSF; }
     double lambda_bar( double omega0 );
     inline double lambda2() { return 0.12; }
     double mu_pi2( double omega0 );
-    inline double lambda( double ) { return _mB - _mb; }
+    inline double lambda( double ) { return m_mB - m_mb; }
 
     // specail for gaussian SF
     static double cGaus( double b )
@@ -213,14 +213,14 @@ class EvtVubNLO : public EvtDecayIncoherent {
     inline double U1( double mu1, double mu2, double epsi = 0 )
     {
         return exp( 2 * ( Sudakov( mu1, mu2, epsi ) - agammap( mu1, mu2, epsi ) -
-                          aGamma( mu1, mu2, epsi ) * log( _mb / mu1 ) ) );
+                          aGamma( mu1, mu2, epsi ) * log( m_mb / mu1 ) ) );
     }
     inline double U1lo( double mu1, double mu2 ) { return U1( mu1, mu2 ); }
     inline double U1nlo( double mu1, double mu2 )
     {
         return U1( mu1, mu2 ) *
                ( 1 + 2 * ( dSudakovdepsi( mu1, mu2 ) - dgpdepsi( mu1, mu2 ) -
-                           log( _mb / mu1 ) * dGdepsi( mu1, mu2 ) ) );
+                           log( m_mb / mu1 ) * dGdepsi( mu1, mu2 ) ) );
     }
     inline double alo( double mu1, double mu2 )
     {

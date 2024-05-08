@@ -36,14 +36,14 @@ class EvtSVSNONCPEIGEN : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    EvtComplex _A_f;
-    EvtComplex _Abar_f;
+    EvtComplex m_A_f;
+    EvtComplex m_Abar_f;
 
-    EvtComplex _A_fbar;
-    EvtComplex _Abar_fbar;
+    EvtComplex m_A_fbar;
+    EvtComplex m_Abar_fbar;
 
-    double _dm;
-    double _phickm;
+    double m_dm;
+    double m_phickm;
 };
 
 #endif

@@ -40,25 +40,6 @@
 // hep-ph/0204185, hep-ph/0211240
 // This model is intended to be applicable to all decays of the type B-> baryon baryon scalar
 
-struct FormFactor {
-    double value;
-    double sigma1;
-    double sigma2;
-    double mV;
-};
-
-enum Baryons
-{
-    Lambda,
-    Proton,
-    Neutron,
-    Sigma0,
-    Sigma_minus,
-    Xi0,
-    Xi_minus,
-    nBaryons
-};
-
 class EvtBBScalar : public EvtDecayAmp {
   public:
     EvtBBScalar();
@@ -69,31 +50,50 @@ class EvtBBScalar : public EvtDecayAmp {
     void initProbMax() override;
 
   private:
+    struct FormFactor {
+        double m_value;
+        double m_sigma1;
+        double m_sigma2;
+        double m_mV;
+    };
+
+    enum Baryons
+    {
+        Lambda,
+        Proton,
+        Neutron,
+        Sigma0,
+        Sigma_minus,
+        Xi0,
+        Xi_minus,
+        nBaryons
+    };
+
     // used values of constants
-    static const EvtComplex I;
-    static const EvtComplex V_ub;
-    static const EvtComplex V_us_star;
-    static const EvtComplex a1;
-    static const EvtComplex V_tb;
-    static const EvtComplex V_ts_star;
-    static const EvtComplex a4;
-    static const EvtComplex a6;
+    static const EvtComplex m_I;
+    static const EvtComplex m_V_ub;
+    static const EvtComplex m_V_us_star;
+    static const EvtComplex m_a1;
+    static const EvtComplex m_V_tb;
+    static const EvtComplex m_V_ts_star;
+    static const EvtComplex m_a4;
+    static const EvtComplex m_a6;
 
     // used parameters in the calculation of the magnetic form factors
-    static const double x[];
-    static const double y[];
+    static const double m_x[];
+    static const double m_y[];
     // quark masses as used in the model
-    static const double m_s;
-    static const double m_u;
-    static const double m_b;
+    static const double m_ms;
+    static const double m_mu;
+    static const double m_mb;
 
-    // used to choose the right value for the form factor depending on the type of scalar
-    std::string _scalarType;
-    mutable std::map<std::string, FormFactor> _f0Map;
-    mutable std::map<std::string, FormFactor> _f1Map;
+    // used to choose the right m_value for the form factor depending on the type of scalar
+    std::string m_scalarType;
+    mutable std::map<std::string, FormFactor> m_f0Map;
+    mutable std::map<std::string, FormFactor> m_f1Map;
 
     // only consider F1+F2 here
-    std::bitset<nBaryons> _baryonCombination;
+    std::bitset<nBaryons> m_baryonCombination;
     void setKnownBaryonTypes( const EvtId& baryon );
 
     double B_pi_f1( double t ) const;
@@ -115,12 +115,12 @@ class EvtBBScalar : public EvtDecayAmp {
     double F_S( double t ) const;
 
     // (mB1 - mB2)/(mq1 - mq1)
-    double _massRatio;
-    double _baryonMassSum;
+    double m_massRatio;
+    double m_baryonMassSum;
     double formFactorFit( double t, const std::vector<double>& params ) const;
 
-    static const EvtComplex const_B;
-    static const EvtComplex const_C;
+    static const EvtComplex m_const_B;
+    static const EvtComplex m_const_C;
     const EvtVector4C amp_A( const EvtVector4R& p4B, const EvtVector4R& p4Scalar );
     const EvtComplex amp_B( const EvtDiracParticle* baryon1,
                             const EvtDiracSpinor& b1Pol,

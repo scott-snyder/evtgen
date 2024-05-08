@@ -29,9 +29,9 @@ class EvtParticleDecayList {
   public:
     EvtParticleDecayList()
     {
-        _decaylist = nullptr;
-        _nmode = 0;
-        _rawbrfrsum = 0;
+        m_decaylist = nullptr;
+        m_nmode = 0;
+        m_rawbrfrsum = 0;
     }
 
     EvtParticleDecayList( const EvtParticleDecayList& o );
@@ -40,7 +40,7 @@ class EvtParticleDecayList {
 
     EvtParticleDecayList& operator=( const EvtParticleDecayList& o );
 
-    int getNMode() const { return _nmode; }
+    int getNMode() const { return m_nmode; }
 
     void setNMode( int nmode );
 
@@ -49,8 +49,8 @@ class EvtParticleDecayList {
 
     EvtParticleDecay& getDecay( int nchannel ) const;
 
-    double getRawBrfrSum() { return _rawbrfrsum; }
-    void setRawBrfrSum( double rawbrfrsum ) { _rawbrfrsum = rawbrfrsum; }
+    double getRawBrfrSum() { return m_rawbrfrsum; }
+    void setRawBrfrSum( double rawbrfrsum ) { m_rawbrfrsum = rawbrfrsum; }
 
     void makeChargeConj( EvtParticleDecayList* conjDecayList );
 
@@ -58,7 +58,7 @@ class EvtParticleDecayList {
 
     void alocateDecay( int nmode )
     {
-        _decaylist = new EvtParticleDecayPtr[nmode];
+        m_decaylist = new EvtParticleDecayPtr[nmode];
     }
 
     void removeMode( EvtDecayBase* decay );
@@ -71,10 +71,10 @@ class EvtParticleDecayList {
     bool isJetSet() const;
 
   private:
-    EvtParticleDecayPtr* _decaylist;
+    EvtParticleDecayPtr* m_decaylist;
 
-    double _rawbrfrsum;
-    int _nmode;
+    double m_rawbrfrsum;
+    int m_nmode;
 };
 
 #endif

@@ -33,11 +33,11 @@ extern "C" {
 //----------------
 EvtItgFunction::EvtItgFunction( double ( *theFunction )( double ),
                                 double lowerRange, double upperRange ) :
-    EvtItgAbsFunction( lowerRange, upperRange ), _myFunction( theFunction )
+    EvtItgAbsFunction( lowerRange, upperRange ), m_myFunction( theFunction )
 {
 }
 
 double EvtItgFunction::myFunction( double x ) const
 {
-    return _myFunction( x );
+    return m_myFunction( x );
 }

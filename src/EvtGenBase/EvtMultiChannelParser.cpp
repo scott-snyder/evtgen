@@ -127,13 +127,13 @@ void EvtMultiChannelParser::parse( const std::vector<std::string>& v )
     // use in the scan.
 
     if ( v[0] == std::string( "MAXPDF" ) ) {
-        _pdfMax = strtod( v[1].c_str(), tc );
-        if ( _pdfMax <= 0 ) {
-            printf( "Bad pdfMax=%f\n", _pdfMax );
+        m_pdfMax = strtod( v[1].c_str(), tc );
+        if ( m_pdfMax <= 0 ) {
+            printf( "Bad pdfMax=%f\n", m_pdfMax );
             assert( 0 );
         }
     } else if ( v[0] == std::string( "SCANPDF" ) ) {
-        _nScan = atoi( v[1].c_str() );
+        m_nScan = atoi( v[1].c_str() );
     } else {
         printf( "Error parsing decay file\n" );
         assert( 0 );
@@ -153,9 +153,9 @@ void EvtMultiChannelParser::parse( const std::vector<std::string>& v )
             assert( conjugate == false );
             conjugate = true;
             i++;
-            _dm = strtod( v[i++].c_str(), tc );
-            _mixAmpli = strtod( v[i++].c_str(), tc );
-            _mixPhase = strtod( v[i++].c_str(), tc );
+            m_dm = strtod( v[i++].c_str(), tc );
+            m_mixAmpli = strtod( v[i++].c_str(), tc );
+            m_mixPhase = strtod( v[i++].c_str(), tc );
         }
 
         if ( i >= v.size() )
@@ -167,19 +167,19 @@ void EvtMultiChannelParser::parse( const std::vector<std::string>& v )
         if ( !conjugate && v[i] == std::string( "AMPLITUDE" ) ) {
             while ( !isKeyword( v[++i] ) )
                 params.push_back( v[i] );
-            _amp.push_back( params );
+            m_amp.push_back( params );
 
             parseComplexCoef( i, v, c, format );
-            _ampCoef.push_back( c );
-            _coefFormat.push_back( format );
+            m_ampCoef.push_back( c );
+            m_coefFormat.push_back( format );
             continue;
         } else if ( conjugate && v[i] == std::string( "AMPLITUDE" ) ) {
             while ( !isKeyword( v[++i] ) )
                 params.push_back( v[i] );
-            _ampConj.push_back( params );
+            m_ampConj.push_back( params );
             parseComplexCoef( i, v, c, format );
-            _ampConjCoef.push_back( c );
-            _coefConjFormat.push_back( format );
+            m_ampConjCoef.push_back( c );
+            m_coefConjFormat.push_back( format );
             continue;
         } else {
             printf( "Expect keyword, found parameter %s\n", v[i].c_str() );
@@ -187,12 +187,12 @@ void EvtMultiChannelParser::parse( const std::vector<std::string>& v )
         }
 
         assert( i > i0 );
-        _unused( i0 );
+        UNUSED( i0 );
     }
 
     printf( "PARSING SUCCESSFUL\n" );
-    printf( "%d amplitude terms\n", (int)_amp.size() );
-    printf( "%d conj amplitude terms\n", (int)_ampConj.size() );
+    printf( "%d amplitude terms\n", (int)m_amp.size() );
+    printf( "%d conj amplitude terms\n", (int)m_ampConj.size() );
 }
 
 void EvtMultiChannelParser::parseComplexCoef( size_t& i,

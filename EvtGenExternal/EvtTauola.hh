@@ -41,7 +41,7 @@ class EvtTauola : public EvtDecayIncoherent {
     void decay( EvtParticle* p ) override;
 
   protected:
-    EvtAbsExternalGen* _tauolaEngine = nullptr;
+    EvtAbsExternalGen* m_tauolaEngine = nullptr;
 
   private:
 };

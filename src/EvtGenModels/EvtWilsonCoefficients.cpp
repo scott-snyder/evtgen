@@ -24,7 +24,7 @@
 #include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 double li2spence( double );
 
@@ -53,16 +53,16 @@ EvtWilsonCoefficients::EvtWilsonCoefficients()
         { 0, 0, +0.8966, -0.1960, -0.2011, 0.1328, -0.0292, -0.1858 },
         { 0, 0, -0.1193, +0.1003, -0.0473, 0.2323, -0.0133, -0.1799 } };
     for ( i = 0; i < 8; i++ ) {
-        a[i] = tmpa[i];
-        h[i] = tmph[i];
-        p[i] = tmpp[i];
-        s[i] = tmps[i];
-        q[i] = tmpq[i];
-        g[i] = tmpg[i];
+        m_a[i] = tmpa[i];
+        m_h[i] = tmph[i];
+        m_p[i] = tmpp[i];
+        m_s[i] = tmps[i];
+        m_q[i] = tmpq[i];
+        m_g[i] = tmpg[i];
         for ( j = 0; j < 6; j++ )
-            k[j][i] = tmpk[j][i];
+            m_k[j][i] = tmpk[j][i];
         for ( j = 0; j < 2; j++ )
-            r[j][i] = tmpr[j][i];
+            m_r[j][i] = tmpr[j][i];
     }
     m_n_f = 5;
     m_Lambda = 0.2167;
@@ -176,7 +176,7 @@ EvtComplex EvtWilsonCoefficients::C1( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC1( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC1 += k[0][i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC1 += m_k[0][i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     return myC1;
 }
 
@@ -186,7 +186,7 @@ EvtComplex EvtWilsonCoefficients::C2( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC2( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC2 += k[1][i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC2 += m_k[1][i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     return myC2;
 }
 
@@ -196,7 +196,7 @@ EvtComplex EvtWilsonCoefficients::C3( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC3( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC3 += k[2][i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC3 += m_k[2][i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     return myC3;
 }
 
@@ -206,7 +206,7 @@ EvtComplex EvtWilsonCoefficients::C4( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC4( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC4 += k[3][i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC4 += m_k[3][i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     return myC4;
 }
 
@@ -216,7 +216,7 @@ EvtComplex EvtWilsonCoefficients::C5( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC5( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC5 += k[4][i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC5 += m_k[4][i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     return myC5;
 }
 
@@ -226,7 +226,7 @@ EvtComplex EvtWilsonCoefficients::C6( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC6( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC6 += k[5][i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC6 += m_k[5][i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     return myC6;
 }
 
@@ -247,7 +247,7 @@ EvtComplex EvtWilsonCoefficients::C7eff0( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC7eff( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC7eff += h[i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC7eff += m_h[i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     myC7eff *= C2( mu, n_f, Lambda, M_W );
     myC7eff += pow( eta( mu, n_f, Lambda, M_W ), 16. / 23. ) * C7( M_t, M_W );
     myC7eff += 8. / 3. *
@@ -264,7 +264,7 @@ EvtComplex EvtWilsonCoefficients::C8eff0( double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myC8eff( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myC8eff += g[i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] );
+        myC8eff += m_g[i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] );
     myC8eff += pow( eta( mu, n_f, Lambda, M_W ), 14. / 23. ) * C8( M_t, M_W );
     return myC8eff;
 }
@@ -357,15 +357,15 @@ EvtComplex EvtWilsonCoefficients::P0( int ksi = 0, double mu = 4.8, int n_f = 5,
     int i;
     EvtComplex myP0( 0, 0 );
     for ( i = 0; i < 8; i++ )
-        myP0 += p[i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] + 1 );
+        myP0 += m_p[i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] + 1 );
     myP0 = EvtConst::pi / alphaS( M_W, n_f, Lambda ) * ( -0.1875 + myP0 );
     myP0 += 1.2468 -
             ksi * 4. / 9. *
                 ( 3 * C1( mu, n_f, Lambda, M_W ) + C2( mu, n_f, Lambda, M_W ) -
                   C3( mu, n_f, Lambda, M_W ) - 3 * C4( mu, n_f, Lambda, M_W ) );
     for ( i = 0; i < 8; i++ )
-        myP0 += pow( eta( mu, n_f, Lambda, M_W ), a[i] ) *
-                ( r[ksi][i] + s[i] * eta( mu, n_f, Lambda, M_W ) );
+        myP0 += pow( eta( mu, n_f, Lambda, M_W ), m_a[i] ) *
+                ( m_r[ksi][i] + m_s[i] * eta( mu, n_f, Lambda, M_W ) );
     return myP0;
 }
 
@@ -375,7 +375,7 @@ double EvtWilsonCoefficients::PE( double mu = 4.8, int n_f = 5,
     int i;
     double myPE = 0.1405;
     for ( i = 0; i < 8; i++ )
-        myPE += q[i] * pow( eta( mu, n_f, Lambda, M_W ), a[i] + 1 );
+        myPE += m_q[i] * pow( eta( mu, n_f, Lambda, M_W ), m_a[i] + 1 );
     return myPE;
 }
 

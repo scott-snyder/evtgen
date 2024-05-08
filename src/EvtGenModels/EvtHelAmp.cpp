@@ -136,8 +136,8 @@ void EvtHelAmp::init()
         }
     }
 
-    _evalHelAmp = std::make_unique<EvtEvalHelAmp>( getParentId(), getDaug( 0 ),
-                                                   getDaug( 1 ), _HBC );
+    m_evalHelAmp = std::make_unique<EvtEvalHelAmp>( getParentId(), getDaug( 0 ),
+                                                    getDaug( 1 ), _HBC );
 
     // Note: these are not class data members but local variables.
     for ( int ib = 0; ib < _nB; ib++ ) {
@@ -148,7 +148,7 @@ void EvtHelAmp::init()
 
 void EvtHelAmp::initProbMax()
 {
-    double maxprob = _evalHelAmp->probMax();
+    double maxprob = m_evalHelAmp->probMax();
 
     if ( verbose() ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -163,7 +163,7 @@ void EvtHelAmp::decay( EvtParticle* p )
     //first generate simple phase space
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    _evalHelAmp->evalAmp( p, _amp2 );
+    m_evalHelAmp->evalAmp( p, m_amp2 );
 }
 
 void EvtHelAmp::fillHelicity( int* lambda2, int n, int J2, EvtId id )

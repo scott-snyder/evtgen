@@ -47,18 +47,18 @@ class EvtVub : public EvtDecayIncoherent {
     void decay( EvtParticle* p ) override;
 
   private:
-    double _mb;        // the b-quark pole mass in GeV (try 4.65 to 4.9)
-    double _a;         // Parameter for the Fermi Motion (1.29 is good)
-    double _alphas;    // Strong Coupling at m_b (around 0.24)
-    double _dGMax;     // max dGamma*p2 value;
-    int _nbins;
-    int _storeQplus;
-    std::vector<double> _masses;
-    std::vector<double> _weights;
+    double m_mb;        // the b-quark pole mass in GeV (try 4.65 to 4.9)
+    double m_a;         // Parameter for the Fermi Motion (1.29 is good)
+    double m_alphas;    // Strong Coupling at m_b (around 0.24)
+    double m_dGMax;     // max dGamma*p2 value;
+    int m_nbins;
+    int m_storeQplus;
+    std::vector<double> m_masses;
+    std::vector<double> m_weights;
 
-    std::unique_ptr<EvtVubdGamma> _dGamma;    // calculates the decay rate
+    std::unique_ptr<EvtVubdGamma> m_dGamma;    // calculates the decay rate
     double findPFermi();
-    std::vector<double> _pf;
+    std::vector<double> m_pf;
 };
 
 #endif

@@ -11,9 +11,16 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+8 May 2024 Michal Kreps, Thomas Latham, Andrii Verbytskyi
+* D58: Rename member variables to follow convention of m_ prefix
+  - In addition:
+    * Introduce pre-build check in the CI that convention is being followed in all classes
+    * Fix shadowing of variables in some classes
+    * Fixes to Doxygen configuration
+    * Enable shadowing and overloaded-virtual compiler warnings
 
 23 Apr 2024 Thomas Latham
-* Drop redundant EVTGEN\_CPP11 preprocessor switch
+* D117: Drop redundant EVTGEN\_CPP11 preprocessor switch
 
 22 Apr 2024 Fernando Abudinen
 * D116: Replaced PHOTOS with FSR flags in examples and tests.

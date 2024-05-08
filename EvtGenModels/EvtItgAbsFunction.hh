@@ -47,12 +47,12 @@ class EvtItgAbsFunction {
 
     // Selectors (const)
 
-    inline double upperRange() const { return _upperRange; }
-    inline double lowerRange() const { return _lowerRange; }
+    inline double upperRange() const { return m_upperRange; }
+    inline double lowerRange() const { return m_lowerRange; }
     inline void getRange( double& lower, double& upper ) const
     {
-        lower = _lowerRange;
-        upper = _upperRange;
+        lower = m_lowerRange;
+        upper = m_upperRange;
     }
     virtual void setCoeff( int, int, double ) = 0;
     virtual double getCoeff( int, int ) = 0;
@@ -61,13 +61,13 @@ class EvtItgAbsFunction {
     virtual double myFunction( double x ) const = 0;
     void setRange( double x1, double x2 )
     {
-        _lowerRange = x1;
-        _upperRange = x2;
+        m_lowerRange = x1;
+        m_upperRange = x2;
     };
 
   private:
-    double _upperRange;
-    double _lowerRange;
+    double m_upperRange;
+    double m_lowerRange;
 };
 
 #endif    // EVTITGABSFUNCTION_HH

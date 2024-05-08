@@ -54,133 +54,134 @@ void EvtBsMuMuKK::init()
     checkNArg( 37 );
 
     // Non-resonant S wave
-    f_S_NR = getArg( 0 );
-    delta_S_NR = getArg( 1 );
-    phis_S_NR = getArg( 2 );
-    lambda_S_NR_abs = getArg( 3 );
+    m_f_S_NR = getArg( 0 );
+    m_delta_S_NR = getArg( 1 );
+    m_phis_S_NR = getArg( 2 );
+    m_lambda_S_NR_abs = getArg( 3 );
 
     // f0 (S wave)
-    f_f0 = getArg( 4 );
-    delta_f0 = getArg( 5 );
-    phis_f0 = getArg( 6 );
-    lambda_f0_abs = getArg( 7 );
+    m_f_f0 = getArg( 4 );
+    m_delta_f0 = getArg( 5 );
+    m_phis_f0 = getArg( 6 );
+    m_lambda_f0_abs = getArg( 7 );
 
     // phi (P wave)
-    f_phi = getArg( 8 );
-    f_phi_0 = getArg( 9 );
-    delta_phi_0 = getArg( 10 );
-    phis_phi_0 = getArg( 11 );
-    lambda_phi_0_abs = getArg( 12 );
-    f_phi_perp = getArg( 13 );
-    delta_phi_perp = pi - getArg( 14 );
-    phis_phi_perp = getArg( 15 );
-    lambda_phi_perp_abs = getArg( 16 );
-    delta_phi_par = pi - getArg( 17 );
-    phis_phi_par = getArg( 18 );
-    lambda_phi_par_abs = getArg( 19 );
+    m_f_phi = getArg( 8 );
+    m_f_phi_0 = getArg( 9 );
+    m_delta_phi_0 = getArg( 10 );
+    m_phis_phi_0 = getArg( 11 );
+    m_lambda_phi_0_abs = getArg( 12 );
+    m_f_phi_perp = getArg( 13 );
+    m_delta_phi_perp = pi - getArg( 14 );
+    m_phis_phi_perp = getArg( 15 );
+    m_lambda_phi_perp_abs = getArg( 16 );
+    m_delta_phi_par = pi - getArg( 17 );
+    m_phis_phi_par = getArg( 18 );
+    m_lambda_phi_par_abs = getArg( 19 );
 
     // f2' (D wave)
-    f_f2p_0 = getArg( 20 );
-    delta_f2p_0 = getArg( 21 );
-    phis_f2p_0 = getArg( 22 );
-    lambda_f2p_0_abs = getArg( 23 );
-    f_f2p_perp = getArg( 24 );
-    delta_f2p_perp = pi - getArg( 25 );
-    phis_f2p_perp = getArg( 26 );
-    lambda_f2p_perp_abs = getArg( 27 );
-    delta_f2p_par = pi - getArg( 28 );
-    phis_f2p_par = getArg( 29 );
-    lambda_f2p_par_abs = getArg( 30 );
+    m_f_f2p_0 = getArg( 20 );
+    m_delta_f2p_0 = getArg( 21 );
+    m_phis_f2p_0 = getArg( 22 );
+    m_lambda_f2p_0_abs = getArg( 23 );
+    m_f_f2p_perp = getArg( 24 );
+    m_delta_f2p_perp = pi - getArg( 25 );
+    m_phis_f2p_perp = getArg( 26 );
+    m_lambda_f2p_perp_abs = getArg( 27 );
+    m_delta_f2p_par = pi - getArg( 28 );
+    m_phis_f2p_par = getArg( 29 );
+    m_lambda_f2p_par_abs = getArg( 30 );
 
     // Time dependence
-    Gamma = getArg( 31 );
-    deltaGamma = getArg( 32 );
-    deltaMs = getArg( 33 );
+    m_Gamma = getArg( 31 );
+    m_deltaGamma = getArg( 32 );
+    m_deltaMs = getArg( 33 );
 
     // mKK window
-    Mf0 = getArg( 34 );
-    kin_lower_limit = getArg( 35 );    // the minimum is approx 2.03*MKp
-    kin_upper_limit = getArg( 36 );
+    m_Mf0 = getArg( 34 );
+    m_kin_lower_limit = getArg( 35 );    // the minimum is approx 2.03*MKp
+    m_kin_upper_limit = getArg( 36 );
 
     // PDG masses
-    MBs = EvtPDL::getMass( EvtPDL::getId( "B_s0" ) );
-    MJpsi = EvtPDL::getMeanMass( EvtPDL::getId( "J/psi" ) );
-    Mphi = EvtPDL::getMeanMass( EvtPDL::getId( "phi" ) );
-    Mf2p = EvtPDL::getMeanMass( EvtPDL::getId( "f'_2" ) );
-    MKp = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
-    MKm = EvtPDL::getMass( EvtPDL::getId( "K-" ) );
-    MK0 = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
-    Mpip = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
-    Mpi0 = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
-    Mmu = EvtPDL::getMass( EvtPDL::getId( "mu+" ) );
+    m_MBs = EvtPDL::getMass( EvtPDL::getId( "B_s0" ) );
+    m_MJpsi = EvtPDL::getMeanMass( EvtPDL::getId( "J/psi" ) );
+    m_Mphi = EvtPDL::getMeanMass( EvtPDL::getId( "phi" ) );
+    m_Mf2p = EvtPDL::getMeanMass( EvtPDL::getId( "f'_2" ) );
+    m_MKp = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
+    m_MKm = EvtPDL::getMass( EvtPDL::getId( "K-" ) );
+    m_MK0 = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
+    m_Mpip = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
+    m_Mpi0 = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
+    m_Mmu = EvtPDL::getMass( EvtPDL::getId( "mu+" ) );
 
-    double MBsSq = MBs * MBs;
+    double MBsSq = m_MBs * m_MBs;
 
     // Amplitudes and other time parameters
-    A_S_NR = sqrt( f_S_NR );
-    A_f0 = sqrt( f_f0 );
+    m_A_S_NR = sqrt( m_f_S_NR );
+    m_A_f0 = sqrt( m_f_f0 );
 
-    A_phi_0 = sqrt( f_phi_0 * f_phi );
-    A_phi_perp = sqrt( f_phi_perp * f_phi );
+    m_A_phi_0 = sqrt( m_f_phi_0 * m_f_phi );
+    m_A_phi_perp = sqrt( m_f_phi_perp * m_f_phi );
     // Use fabs to make sure subtractions are >= 0, since subtracting 0 from 0 can give -0
-    A_phi_par = sqrt(
-        fabs( f_phi - A_phi_perp * A_phi_perp - A_phi_0 * A_phi_0 ) );
+    m_A_phi_par = sqrt(
+        fabs( m_f_phi - m_A_phi_perp * m_A_phi_perp - m_A_phi_0 * m_A_phi_0 ) );
 
-    f_f2p = fabs( 1.0 - f_S_NR - f_f0 - f_phi );
-    A_f2p_0 = sqrt( f_f2p_0 * f_f2p );
-    A_f2p_perp = sqrt( f_f2p_perp * f_f2p );
-    A_f2p_par = sqrt(
-        fabs( f_f2p - A_f2p_perp * A_f2p_perp - A_f2p_0 * A_f2p_0 ) );
+    m_f_f2p = fabs( 1.0 - m_f_S_NR - m_f_f0 - m_f_phi );
+    m_A_f2p_0 = sqrt( m_f_f2p_0 * m_f_f2p );
+    m_A_f2p_perp = sqrt( m_f_f2p_perp * m_f_f2p );
+    m_A_f2p_par = sqrt(
+        fabs( m_f_f2p - m_A_f2p_perp * m_A_f2p_perp - m_A_f2p_0 * m_A_f2p_0 ) );
 
-    ctau = 1.0 / Gamma;
-    Gamma0phi = EvtPDL::getWidth( EvtPDL::getId( "phi" ) );
-    Gamma0f2p = EvtPDL::getWidth( EvtPDL::getId( "f'_2" ) );
+    m_ctau = 1.0 / m_Gamma;
+    m_Gamma0phi = EvtPDL::getWidth( EvtPDL::getId( "phi" ) );
+    m_Gamma0f2p = EvtPDL::getWidth( EvtPDL::getId( "f'_2" ) );
 
-    kin_middle = 0.5 * ( kin_upper_limit + kin_lower_limit );
+    m_kin_middle = 0.5 * ( m_kin_upper_limit + m_kin_lower_limit );
 
-    int_const_NR = sqrt(
-        Integral( 1.0, 1.0, 0, 1, 1.0, kin_lower_limit, kin_upper_limit, 0 ) );
+    m_int_const_NR = sqrt( Integral( 1.0, 1.0, 0, 1, 1.0, m_kin_lower_limit,
+                                     m_kin_upper_limit, 0 ) );
 
-    int_Flatte_f0 = sqrt(
-        Integral( 1.0, Mf0, 0, 1, 1.0, kin_lower_limit, kin_upper_limit, 1 ) );
+    m_int_Flatte_f0 = sqrt( Integral( 1.0, m_Mf0, 0, 1, 1.0, m_kin_lower_limit,
+                                      m_kin_upper_limit, 1 ) );
 
-    p30Kp_mid_CMS = sqrt( ( pow( kin_middle, 2 ) - pow( MKp + MKm, 2 ) ) *
-                          ( pow( kin_middle, 2 ) - pow( MKp - MKm, 2 ) ) ) /
-                    ( 2.0 * kin_middle );
+    m_p30Kp_mid_CMS = sqrt( ( pow( m_kin_middle, 2 ) - pow( m_MKp + m_MKm, 2 ) ) *
+                            ( pow( m_kin_middle, 2 ) - pow( m_MKp - m_MKm, 2 ) ) ) /
+                      ( 2.0 * m_kin_middle );
 
-    p30Kp_ll_CMS = sqrt( ( pow( kin_lower_limit, 2 ) - pow( MKp + MKm, 2 ) ) *
-                         ( pow( kin_lower_limit, 2 ) - pow( MKp - MKm, 2 ) ) ) /
-                   ( 2.0 * kin_lower_limit );
+    m_p30Kp_ll_CMS =
+        sqrt( ( pow( m_kin_lower_limit, 2 ) - pow( m_MKp + m_MKm, 2 ) ) *
+              ( pow( m_kin_lower_limit, 2 ) - pow( m_MKp - m_MKm, 2 ) ) ) /
+        ( 2.0 * m_kin_lower_limit );
 
-    p30Kp_phi_CMS = sqrt( ( Mphi * Mphi - pow( MKp + MKm, 2 ) ) *
-                          ( Mphi * Mphi - pow( MKp - MKm, 2 ) ) ) /
-                    ( 2.0 * Mphi );
+    m_p30Kp_phi_CMS = sqrt( ( m_Mphi * m_Mphi - pow( m_MKp + m_MKm, 2 ) ) *
+                            ( m_Mphi * m_Mphi - pow( m_MKp - m_MKm, 2 ) ) ) /
+                      ( 2.0 * m_Mphi );
 
-    p30Kp_f2p_CMS = sqrt( ( Mf2p * Mf2p - pow( MKp + MKm, 2 ) ) *
-                          ( Mf2p * Mf2p - pow( MKp - MKm, 2 ) ) ) /
-                    ( 2.0 * Mf2p );
+    m_p30Kp_f2p_CMS = sqrt( ( m_Mf2p * m_Mf2p - pow( m_MKp + m_MKm, 2 ) ) *
+                            ( m_Mf2p * m_Mf2p - pow( m_MKp - m_MKm, 2 ) ) ) /
+                      ( 2.0 * m_Mf2p );
 
-    p30Jpsi_mid_CMS = sqrt( ( MBsSq - pow( kin_middle + MJpsi, 2 ) ) *
-                            ( MBsSq - pow( kin_middle - MJpsi, 2 ) ) ) /
-                      ( 2.0 * MBs );
+    m_p30Jpsi_mid_CMS = sqrt( ( MBsSq - pow( m_kin_middle + m_MJpsi, 2 ) ) *
+                              ( MBsSq - pow( m_kin_middle - m_MJpsi, 2 ) ) ) /
+                        ( 2.0 * m_MBs );
 
-    p30Jpsi_ll_CMS = sqrt( ( MBsSq - pow( kin_lower_limit + MJpsi, 2 ) ) *
-                           ( MBsSq - pow( kin_lower_limit - MJpsi, 2 ) ) ) /
-                     ( 2.0 * MBs );
+    m_p30Jpsi_ll_CMS = sqrt( ( MBsSq - pow( m_kin_lower_limit + m_MJpsi, 2 ) ) *
+                             ( MBsSq - pow( m_kin_lower_limit - m_MJpsi, 2 ) ) ) /
+                       ( 2.0 * m_MBs );
 
-    p30Jpsi_phi_CMS = sqrt( ( MBsSq - pow( Mphi + MJpsi, 2 ) ) *
-                            ( MBsSq - pow( Mphi - MJpsi, 2 ) ) ) /
-                      ( 2.0 * MBs );
+    m_p30Jpsi_phi_CMS = sqrt( ( MBsSq - pow( m_Mphi + m_MJpsi, 2 ) ) *
+                              ( MBsSq - pow( m_Mphi - m_MJpsi, 2 ) ) ) /
+                        ( 2.0 * m_MBs );
 
-    p30Jpsi_f2p_CMS = sqrt( ( MBsSq - pow( Mf2p + MJpsi, 2 ) ) *
-                            ( MBsSq - pow( Mf2p - MJpsi, 2 ) ) ) /
-                      ( 2.0 * MBs );
+    m_p30Jpsi_f2p_CMS = sqrt( ( MBsSq - pow( m_Mf2p + m_MJpsi, 2 ) ) *
+                              ( MBsSq - pow( m_Mf2p - m_MJpsi, 2 ) ) ) /
+                        ( 2.0 * m_MBs );
 
-    int_BW_phi = sqrt( Integral( Gamma0phi, Mphi, 1, 0, p30Kp_phi_CMS,
-                                 kin_lower_limit, kin_upper_limit, 2 ) );
+    m_int_BW_phi = sqrt( Integral( m_Gamma0phi, m_Mphi, 1, 0, m_p30Kp_phi_CMS,
+                                   m_kin_lower_limit, m_kin_upper_limit, 2 ) );
 
-    int_BW_f2p = sqrt( Integral( Gamma0f2p, Mf2p, 2, 1, p30Kp_f2p_CMS,
-                                 kin_lower_limit, kin_upper_limit, 2 ) );
+    m_int_BW_f2p = sqrt( Integral( m_Gamma0f2p, m_Mf2p, 2, 1, m_p30Kp_f2p_CMS,
+                                   m_kin_lower_limit, m_kin_upper_limit, 2 ) );
 
     // 4 daughters
     checkNDaug( 4 );
@@ -216,41 +217,41 @@ void EvtBsMuMuKK::init()
 // Get ProbMax
 void EvtBsMuMuKK::initProbMax()
 {
-    const EvtComplex term11 = sqrt( p30Jpsi_f2p_CMS * p30Kp_f2p_CMS );
+    const EvtComplex term11 = sqrt( m_p30Jpsi_f2p_CMS * m_p30Kp_f2p_CMS );
 
-    const EvtComplex term12 = X_J( 2, p30Kp_f2p_CMS, 0 ) *
-                              X_J( 1, p30Jpsi_f2p_CMS, 1 ) * p30Kp_f2p_CMS *
-                              p30Kp_f2p_CMS * p30Jpsi_f2p_CMS *
-                              ( A_f2p_0 + 0.3 * A_f2p_perp + 0.3 * A_f2p_par );
+    const EvtComplex term12 =
+        X_J( 2, m_p30Kp_f2p_CMS, 0 ) * X_J( 1, m_p30Jpsi_f2p_CMS, 1 ) *
+        m_p30Kp_f2p_CMS * m_p30Kp_f2p_CMS * m_p30Jpsi_f2p_CMS *
+        ( m_A_f2p_0 + 0.3 * m_A_f2p_perp + 0.3 * m_A_f2p_par );
 
-    const EvtComplex term13 = f_f2p *
-                              Breit_Wigner( Gamma0f2p, Mf2p, Mf2p, 2,
-                                            p30Kp_f2p_CMS, p30Kp_f2p_CMS ) /
-                              int_BW_f2p;
+    const EvtComplex term13 = m_f_f2p *
+                              Breit_Wigner( m_Gamma0f2p, m_Mf2p, m_Mf2p, 2,
+                                            m_p30Kp_f2p_CMS, m_p30Kp_f2p_CMS ) /
+                              m_int_BW_f2p;
 
-    const EvtComplex term21 = sqrt( p30Jpsi_phi_CMS * p30Kp_phi_CMS );
+    const EvtComplex term21 = sqrt( m_p30Jpsi_phi_CMS * m_p30Kp_phi_CMS );
 
-    const EvtComplex term22 = X_J( 1, p30Kp_phi_CMS, 0 ) * p30Kp_phi_CMS *
-                              ( 0.65 * A_phi_0 + 0.6 * A_phi_perp +
-                                0.6 * A_phi_par );
+    const EvtComplex term22 = X_J( 1, m_p30Kp_phi_CMS, 0 ) * m_p30Kp_phi_CMS *
+                              ( 0.65 * m_A_phi_0 + 0.6 * m_A_phi_perp +
+                                0.6 * m_A_phi_par );
 
-    const EvtComplex term23 = f_phi *
-                              Breit_Wigner( Gamma0phi, Mphi, Mphi, 1,
-                                            p30Kp_phi_CMS, p30Kp_phi_CMS ) /
-                              int_BW_phi;
+    const EvtComplex term23 = m_f_phi *
+                              Breit_Wigner( m_Gamma0phi, m_Mphi, m_Mphi, 1,
+                                            m_p30Kp_phi_CMS, m_p30Kp_phi_CMS ) /
+                              m_int_BW_phi;
 
-    const EvtComplex term31 = sqrt( p30Jpsi_ll_CMS * p30Kp_ll_CMS );
+    const EvtComplex term31 = sqrt( m_p30Jpsi_ll_CMS * m_p30Kp_ll_CMS );
 
-    const EvtComplex term32 = X_J( 1, p30Jpsi_ll_CMS, 1 ) * p30Jpsi_ll_CMS;
+    const EvtComplex term32 = X_J( 1, m_p30Jpsi_ll_CMS, 1 ) * m_p30Jpsi_ll_CMS;
 
-    const EvtComplex term33 = f_f0 * Flatte( Mf0, kin_lower_limit ) /
-                              int_Flatte_f0;
+    const EvtComplex term33 = m_f_f0 * Flatte( m_Mf0, m_kin_lower_limit ) /
+                              m_int_Flatte_f0;
 
-    const EvtComplex term41 = sqrt( p30Jpsi_mid_CMS * p30Kp_mid_CMS );
+    const EvtComplex term41 = sqrt( m_p30Jpsi_mid_CMS * m_p30Kp_mid_CMS );
 
-    const EvtComplex term42 = X_J( 1, p30Jpsi_mid_CMS, 1 ) * p30Jpsi_mid_CMS;
+    const EvtComplex term42 = X_J( 1, m_p30Jpsi_mid_CMS, 1 ) * m_p30Jpsi_mid_CMS;
 
-    const EvtComplex term43 = 1.2 * f_S_NR / int_const_NR;
+    const EvtComplex term43 = 1.2 * m_f_S_NR / m_int_const_NR;
 
     const EvtComplex hm = term11 * term12 * term13 + term21 * term22 * term23 +
                           term31 * term32 * term33 + term41 * term42 * term43;
@@ -266,7 +267,7 @@ void EvtBsMuMuKK::decay( EvtParticle* p )
     double time( 0.0 );
     EvtCPUtil::getInstance()->OtherB( p, time, other_b );
     time = -log( EvtRandom::Flat() ) *
-           ctau;    // This overrules the ctau made in OtherB
+           m_ctau;    // This overrules the ctau made in OtherB
 
     if ( EvtCPUtil::getInstance()->isBsMixed( p ) ) {
         p->getParent()->setLifetime( time * EvtConst::c / 1e12 );    // units: mm
@@ -274,8 +275,8 @@ void EvtBsMuMuKK::decay( EvtParticle* p )
         p->setLifetime( time * EvtConst::c / 1e12 );    // units: mm
     }
 
-    double DGtime = 0.25 * deltaGamma * time;
-    double DMtime = 0.5 * deltaMs * time;
+    double DGtime = 0.25 * m_deltaGamma * time;
+    double DMtime = 0.5 * m_deltaMs * time;
     double mt = exp( -DGtime );
     double pt = exp( +DGtime );
     double cDMt = cos( DMtime );
@@ -296,44 +297,46 @@ void EvtBsMuMuKK::decay( EvtParticle* p )
     p->setAttribute( "q", q );
 
     // Amplitudes
-    EvtComplex a_S_NR = AmpTime( q, gplus, gminus, delta_S_NR, lambda_S_NR_abs,
-                                 A_S_NR, phis_S_NR, -1 );
+    EvtComplex a_S_NR = AmpTime( q, gplus, gminus, m_delta_S_NR,
+                                 m_lambda_S_NR_abs, m_A_S_NR, m_phis_S_NR, -1 );
 
-    EvtComplex a_f0 = AmpTime( q, gplus, gminus, delta_f0, lambda_f0_abs, A_f0,
-                               phis_f0, -1 );
+    EvtComplex a_f0 = AmpTime( q, gplus, gminus, m_delta_f0, m_lambda_f0_abs,
+                               m_A_f0, m_phis_f0, -1 );
 
-    EvtComplex a0_phi = AmpTime( q, gplus, gminus, delta_phi_0,
-                                 lambda_phi_0_abs, A_phi_0, phis_phi_0, 1 );
+    EvtComplex a0_phi = AmpTime( q, gplus, gminus, m_delta_phi_0,
+                                 m_lambda_phi_0_abs, m_A_phi_0, m_phis_phi_0, 1 );
 
-    EvtComplex aperp_phi = AmpTime( q, gplus, gminus, delta_phi_perp,
-                                    lambda_phi_perp_abs, A_phi_perp,
-                                    phis_phi_perp, -1 );
+    EvtComplex aperp_phi = AmpTime( q, gplus, gminus, m_delta_phi_perp,
+                                    m_lambda_phi_perp_abs, m_A_phi_perp,
+                                    m_phis_phi_perp, -1 );
 
-    EvtComplex apar_phi = AmpTime( q, gplus, gminus, delta_phi_par,
-                                   lambda_phi_par_abs, A_phi_par, phis_phi_par,
-                                   1 );
+    EvtComplex apar_phi = AmpTime( q, gplus, gminus, m_delta_phi_par,
+                                   m_lambda_phi_par_abs, m_A_phi_par,
+                                   m_phis_phi_par, 1 );
 
-    EvtComplex a0_f2p = AmpTime( q, gplus, gminus, delta_f2p_0,
-                                 lambda_f2p_0_abs, A_f2p_0, phis_f2p_0, -1 );
+    EvtComplex a0_f2p = AmpTime( q, gplus, gminus, m_delta_f2p_0,
+                                 m_lambda_f2p_0_abs, m_A_f2p_0, m_phis_f2p_0,
+                                 -1 );
 
-    EvtComplex aperp_f2p = AmpTime( q, gplus, gminus, delta_f2p_perp,
-                                    lambda_f2p_perp_abs, A_f2p_perp,
-                                    phis_f2p_perp, 1 );
+    EvtComplex aperp_f2p = AmpTime( q, gplus, gminus, m_delta_f2p_perp,
+                                    m_lambda_f2p_perp_abs, m_A_f2p_perp,
+                                    m_phis_f2p_perp, 1 );
 
-    EvtComplex apar_f2p = AmpTime( q, gplus, gminus, delta_f2p_par,
-                                   lambda_f2p_par_abs, A_f2p_par, phis_f2p_par,
-                                   -1 );
+    EvtComplex apar_f2p = AmpTime( q, gplus, gminus, m_delta_f2p_par,
+                                   m_lambda_f2p_par_abs, m_A_f2p_par,
+                                   m_phis_f2p_par, -1 );
 
     // Generate 4-momenta
-    double mKK = EvtRandom::Flat( kin_lower_limit, kin_upper_limit );
-    double mass[10] = { MJpsi, mKK, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-    double Kmass[10] = { MKp, MKm, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-    double muMass[10] = { Mmu, Mmu, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    double mKK = EvtRandom::Flat( m_kin_lower_limit, m_kin_upper_limit );
+    double mass[10] = { m_MJpsi, mKK, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    double Kmass[10] = { m_MKp, m_MKm, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    double muMass[10] = { m_Mmu, m_Mmu, 0.0, 0.0, 0.0,
+                          0.0,   0.0,   0.0, 0.0, 0.0 };
 
     EvtVector4R mypV[2], mypK[2], mypmu[2];
-    EvtGenKine::PhaseSpace( 2, mass, mypV, MBs );
+    EvtGenKine::PhaseSpace( 2, mass, mypV, m_MBs );
     EvtGenKine::PhaseSpace( 2, Kmass, mypK, mKK );
-    EvtGenKine::PhaseSpace( 2, muMass, mypmu, MJpsi );
+    EvtGenKine::PhaseSpace( 2, muMass, mypmu, m_MJpsi );
 
     EvtVector4R p4mup = boostTo( mypmu[0], mypV[0] );
     EvtVector4R p4mum = boostTo( mypmu[1], mypV[0] );
@@ -378,32 +381,32 @@ void EvtBsMuMuKK::decay( EvtParticle* p )
     double p4Bs_mass = p4Bs.mass();
 
     // Kp momentum in the KK CMS
-    double p3Kp_KK_CMS = sqrt( ( p4KK_mass2 - pow( MKp + MKm, 2 ) ) *
-                               ( p4KK_mass2 - pow( MKp - MKm, 2 ) ) ) /
+    double p3Kp_KK_CMS = sqrt( ( p4KK_mass2 - pow( m_MKp + m_MKm, 2 ) ) *
+                               ( p4KK_mass2 - pow( m_MKp - m_MKm, 2 ) ) ) /
                          ( 2.0 * p4KK_mass );
 
     // J/psi momentum in the KK CMS
-    double p3Jpsi_KK_CMS = sqrt( ( p4Bs_mass2 - pow( p4KK_mass + MJpsi, 2 ) ) *
-                                 ( p4Bs_mass2 - pow( p4KK_mass - MJpsi, 2 ) ) ) /
+    double p3Jpsi_KK_CMS = sqrt( ( p4Bs_mass2 - pow( p4KK_mass + m_MJpsi, 2 ) ) *
+                                 ( p4Bs_mass2 - pow( p4KK_mass - m_MJpsi, 2 ) ) ) /
                            ( 2.0 * p4Bs_mass );
 
     // Mass lineshapes
 
     // Non-resonant S wave
-    EvtComplex P_NR = 1.0 / int_const_NR;
+    EvtComplex P_NR = 1.0 / m_int_const_NR;
 
     // f0 Flatte
-    EvtComplex F_f0 = Flatte( Mf0, p4KK_mass ) / int_Flatte_f0;
+    EvtComplex F_f0 = Flatte( m_Mf0, p4KK_mass ) / m_int_Flatte_f0;
 
     // phi Breit Wigner
-    EvtComplex BW_phi = Breit_Wigner( Gamma0phi, Mphi, p4KK_mass, 1,
-                                      p30Kp_phi_CMS, p3Kp_KK_CMS ) /
-                        int_BW_phi;
+    EvtComplex BW_phi = Breit_Wigner( m_Gamma0phi, m_Mphi, p4KK_mass, 1,
+                                      m_p30Kp_phi_CMS, p3Kp_KK_CMS ) /
+                        m_int_BW_phi;
 
     // f2' Breit Wigner
-    EvtComplex BW_f2p = Breit_Wigner( Gamma0f2p, Mf2p, p4KK_mass, 1,
-                                      p30Kp_f2p_CMS, p3Kp_KK_CMS ) /
-                        int_BW_f2p;
+    EvtComplex BW_f2p = Breit_Wigner( m_Gamma0f2p, m_Mf2p, p4KK_mass, 1,
+                                      m_p30Kp_f2p_CMS, p3Kp_KK_CMS ) /
+                        m_int_BW_f2p;
 
     // Barrier factors: Always taking the lowest Bs L
     double X_KK_0 = 1.0;
@@ -521,8 +524,8 @@ EvtComplex EvtBsMuMuKK::Flatte( const double m0, const double m ) const
     double gpipi = 0.167;
     double gKK = 3.05 * gpipi;
 
-    EvtComplex term1 = ( 2.0 * GetRho( Mpip, m ) + GetRho( Mpi0, m ) ) / 3.0;
-    EvtComplex term2 = ( GetRho( MKp, m ) + GetRho( MK0, m ) ) / 2.0;
+    EvtComplex term1 = ( 2.0 * GetRho( m_Mpip, m ) + GetRho( m_Mpi0, m ) ) / 3.0;
+    EvtComplex term2 = ( GetRho( m_MKp, m ) + GetRho( m_MK0, m ) ) / 2.0;
 
     EvtComplex w = gpipi * term1 + gKK * term2;
 
@@ -553,9 +556,9 @@ double EvtBsMuMuKK::Integral( const double Gamma0, const double m0, const int JR
     int bins = 1000;
     double bin_width = ( M_KK_ul - M_KK_ll ) / static_cast<double>( bins );
     EvtComplex integral( 0.0, 0.0 );
-    double sumMKpKm2 = pow( MKp + MKm, 2 );
-    double diffMKpKm2 = pow( MKp - MKm, 2 );
-    double MBs2 = pow( MBs, 2 );
+    double sumMKpKm2 = pow( m_MKp + m_MKm, 2 );
+    double diffMKpKm2 = pow( m_MKp - m_MKm, 2 );
+    double MBs2 = pow( m_MBs, 2 );
 
     for ( int i = 0; i < bins; i++ ) {
         double M_KK_i = M_KK_ll + static_cast<double>( i ) * bin_width;
@@ -570,12 +573,12 @@ double EvtBsMuMuKK::Integral( const double Gamma0, const double m0, const int JR
                                      ( M_KK_f_sq - diffMKpKm2 ) ) /
                                ( 2.0 * M_KK_f );
 
-        double p3Jpsi_Bs_CMS_i = sqrt( ( MBs2 - pow( M_KK_i + MJpsi, 2 ) ) *
-                                       ( MBs2 - pow( M_KK_i - MJpsi, 2 ) ) ) /
-                                 ( 2.0 * MBs );
-        double p3Jpsi_Bs_CMS_f = sqrt( ( MBs2 - pow( M_KK_f + MJpsi, 2 ) ) *
-                                       ( MBs2 - pow( M_KK_f - MJpsi, 2 ) ) ) /
-                                 ( 2.0 * MBs );
+        double p3Jpsi_Bs_CMS_i = sqrt( ( MBs2 - pow( M_KK_i + m_MJpsi, 2 ) ) *
+                                       ( MBs2 - pow( M_KK_i - m_MJpsi, 2 ) ) ) /
+                                 ( 2.0 * m_MBs );
+        double p3Jpsi_Bs_CMS_f = sqrt( ( MBs2 - pow( M_KK_f + m_MJpsi, 2 ) ) *
+                                       ( MBs2 - pow( M_KK_f - m_MJpsi, 2 ) ) ) /
+                                 ( 2.0 * m_MBs );
 
         double f_PHSP_i = sqrt( p3Kp_KK_CMS_i * p3Jpsi_Bs_CMS_i );
         double f_PHSP_f = sqrt( p3Kp_KK_CMS_f * p3Jpsi_Bs_CMS_f );

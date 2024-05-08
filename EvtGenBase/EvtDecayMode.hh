@@ -47,8 +47,8 @@ class EvtDecayMode final {
     std::string mode() const;
 
   private:
-    std::string _mother;
-    std::vector<std::string> _dau;
+    std::string m_mother;
+    std::vector<std::string> m_dau;
 };
 
 std::ostream& operator<<( std::ostream&, const EvtDecayMode& );

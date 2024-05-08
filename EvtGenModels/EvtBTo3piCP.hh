@@ -41,7 +41,7 @@ class EvtBTo3piCP : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
   private:
-    EvtBTo3hCP generator;
+    EvtBTo3hCP m_generator;
 };
 
 #endif

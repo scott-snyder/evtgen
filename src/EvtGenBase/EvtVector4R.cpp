@@ -32,23 +32,24 @@ using std::ostream;
 
 EvtVector4R::EvtVector4R()
 {
-    v[0] = 0.0;
-    v[1] = 0.0;
-    v[2] = 0.0;
-    v[3] = 0.0;
+    m_v[0] = 0.0;
+    m_v[1] = 0.0;
+    m_v[2] = 0.0;
+    m_v[3] = 0.0;
 }
 
 EvtVector4R::EvtVector4R( double e, double p1, double p2, double p3 )
 {
-    v[0] = e;
-    v[1] = p1;
-    v[2] = p2;
-    v[3] = p3;
+    m_v[0] = e;
+    m_v[1] = p1;
+    m_v[2] = p2;
+    m_v[3] = p3;
 }
 
 double EvtVector4R::mass() const
 {
-    double m2 = v[0] * v[0] - v[1] * v[1] - v[2] * v[2] - v[3] * v[3];
+    double m2 = m_v[0] * m_v[0] - m_v[1] * m_v[1] - m_v[2] * m_v[2] -
+                m_v[3] * m_v[3];
 
     if ( m2 > 0.0 ) {
         return sqrt( m2 );
@@ -89,20 +90,21 @@ void EvtVector4R::applyRotateEuler( double phi, double theta, double ksi )
     double ct = cos( theta );
     double ck = cos( ksi );
 
-    double x = ( ck * ct * cp - sk * sp ) * v[1] +
-               ( -sk * ct * cp - ck * sp ) * v[2] + st * cp * v[3];
-    double y = ( ck * ct * sp + sk * cp ) * v[1] +
-               ( -sk * ct * sp + ck * cp ) * v[2] + st * sp * v[3];
-    double z = -ck * st * v[1] + sk * st * v[2] + ct * v[3];
+    double x = ( ck * ct * cp - sk * sp ) * m_v[1] +
+               ( -sk * ct * cp - ck * sp ) * m_v[2] + st * cp * m_v[3];
+    double y = ( ck * ct * sp + sk * cp ) * m_v[1] +
+               ( -sk * ct * sp + ck * cp ) * m_v[2] + st * sp * m_v[3];
+    double z = -ck * st * m_v[1] + sk * st * m_v[2] + ct * m_v[3];
 
-    v[1] = x;
-    v[2] = y;
-    v[3] = z;
+    m_v[1] = x;
+    m_v[2] = y;
+    m_v[3] = z;
 }
 
 ostream& operator<<( ostream& s, const EvtVector4R& v )
 {
-    s << "(" << v.v[0] << "," << v.v[1] << "," << v.v[2] << "," << v.v[3] << ")";
+    s << "(" << v.m_v[0] << "," << v.m_v[1] << "," << v.m_v[2] << ","
+      << v.m_v[3] << ")";
 
     return s;
 }
@@ -145,27 +147,30 @@ void EvtVector4R::applyBoostTo( const EvtVector3R& boost, bool inverse )
         double gby = gamma * by;
         double gbz = gamma * bz;
 
-        double e2 = v[0];
-        double px2 = v[1];
-        double py2 = v[2];
-        double pz2 = v[3];
+        double e2 = m_v[0];
+        double px2 = m_v[1];
+        double py2 = m_v[2];
+        double pz2 = m_v[3];
 
         if ( inverse ) {
-            v[0] = gamma * e2 - gbx * px2 - gby * py2 - gbz * pz2;
+            m_v[0] = gamma * e2 - gbx * px2 - gby * py2 - gbz * pz2;
 
-            v[1] = -gbx * e2 + gb2 * bxx * px2 + px2 + gb2xy * py2 + gb2xz * pz2;
+            m_v[1] = -gbx * e2 + gb2 * bxx * px2 + px2 + gb2xy * py2 +
+                     gb2xz * pz2;
 
-            v[2] = -gby * e2 + gb2 * byy * py2 + py2 + gb2xy * px2 + gb2yz * pz2;
+            m_v[2] = -gby * e2 + gb2 * byy * py2 + py2 + gb2xy * px2 +
+                     gb2yz * pz2;
 
-            v[3] = -gbz * e2 + gb2 * bzz * pz2 + pz2 + gb2yz * py2 + gb2xz * px2;
+            m_v[3] = -gbz * e2 + gb2 * bzz * pz2 + pz2 + gb2yz * py2 +
+                     gb2xz * px2;
         } else {
-            v[0] = gamma * e2 + gbx * px2 + gby * py2 + gbz * pz2;
+            m_v[0] = gamma * e2 + gbx * px2 + gby * py2 + gbz * pz2;
 
-            v[1] = gbx * e2 + gb2 * bxx * px2 + px2 + gb2xy * py2 + gb2xz * pz2;
+            m_v[1] = gbx * e2 + gb2 * bxx * px2 + px2 + gb2xy * py2 + gb2xz * pz2;
 
-            v[2] = gby * e2 + gb2 * byy * py2 + py2 + gb2xy * px2 + gb2yz * pz2;
+            m_v[2] = gby * e2 + gb2 * byy * py2 + py2 + gb2xy * px2 + gb2yz * pz2;
 
-            v[3] = gbz * e2 + gb2 * bzz * pz2 + pz2 + gb2yz * py2 + gb2xz * px2;
+            m_v[3] = gbz * e2 + gb2 * bzz * pz2 + pz2 + gb2yz * py2 + gb2xz * px2;
         }
     }
 }
@@ -177,10 +182,10 @@ EvtVector4R EvtVector4R::cross( const EvtVector4R& p2 ) const
 
     EvtVector4R temp;
 
-    temp.v[0] = 0.0;
-    temp.v[1] = v[2] * p2.v[3] - v[3] * p2.v[2];
-    temp.v[2] = v[3] * p2.v[1] - v[1] * p2.v[3];
-    temp.v[3] = v[1] * p2.v[2] - v[2] * p2.v[1];
+    temp.m_v[0] = 0.0;
+    temp.m_v[1] = m_v[2] * p2.m_v[3] - m_v[3] * p2.m_v[2];
+    temp.m_v[2] = m_v[3] * p2.m_v[1] - m_v[1] * p2.m_v[3];
+    temp.m_v[3] = m_v[1] * p2.m_v[2] - m_v[2] * p2.m_v[1];
 
     return temp;
 }
@@ -191,7 +196,7 @@ double EvtVector4R::d3mag() const
 {
     double temp;
 
-    temp = v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+    temp = m_v[1] * m_v[1] + m_v[2] * m_v[2] + m_v[3] * m_v[3];
 
     temp = sqrt( temp );
 
@@ -205,9 +210,9 @@ double EvtVector4R::dot( const EvtVector4R& p2 ) const
 
     double temp;
 
-    temp = v[1] * p2.v[1];
-    temp += v[2] * p2.v[2];
-    temp += v[3] * p2.v[3];
+    temp = m_v[1] * p2.m_v[1];
+    temp += m_v[2] * p2.m_v[2];
+    temp += m_v[3] * p2.m_v[3];
 
     return temp;
 

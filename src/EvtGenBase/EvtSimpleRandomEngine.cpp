@@ -28,8 +28,8 @@
 
 double EvtSimpleRandomEngine::random()
 {
-    _next = _next * 1103515245 + 123345;
-    unsigned temp = (unsigned)( _next / 65536 ) % 32768;
+    m_next = m_next * 1103515245 + 123345;
+    unsigned temp = (unsigned)( m_next / 65536 ) % 32768;
 
     return ( temp + 1.0 ) / 32769.0;
 }

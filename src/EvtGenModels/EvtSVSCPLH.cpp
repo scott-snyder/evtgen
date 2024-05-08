@@ -58,25 +58,27 @@ void EvtSVSCPLH::init()
     static double ctau = EvtPDL::getctau( EvtPDL::getId( "B0" ) );
 
     // hbar/s
-    _dm = getArg( 0 );
-    _dgamma = EvtConst::c * getArg( 1 ) / ctau;
+    m_dm = getArg( 0 );
+    m_dgamma = EvtConst::c * getArg( 1 ) / ctau;
 
-    _qop = getArg( 2 ) * exp( EvtComplex( 0.0, getArg( 3 ) ) );
+    m_qop = getArg( 2 ) * exp( EvtComplex( 0.0, getArg( 3 ) ) );
 
-    _poq = 1.0 / _qop;
+    m_poq = 1.0 / m_qop;
 
-    _Af = getArg( 4 ) * exp( EvtComplex( 0.0, getArg( 5 ) ) );
-    _Abarf = getArg( 6 ) * exp( EvtComplex( 0.0, getArg( 7 ) ) );
+    m_Af = getArg( 4 ) * exp( EvtComplex( 0.0, getArg( 5 ) ) );
+    m_Abarf = getArg( 6 ) * exp( EvtComplex( 0.0, getArg( 7 ) ) );
 
     if ( verbose() ) {
-        EvtGenReport( EVTGEN_INFO, "EvtGen" ) << ":EvtSVSCPLH:dm=" << _dm << endl;
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << ":EvtSVSCPLH:dGamma=" << _dgamma << endl;
+            << ":EvtSVSCPLH:dm=" << m_dm << endl;
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << ":EvtSVSCPLH:q/p=" << _qop << endl;
-        EvtGenReport( EVTGEN_INFO, "EvtGen" ) << ":EvtSVSCPLH:Af=" << _Af << endl;
+            << ":EvtSVSCPLH:dGamma=" << m_dgamma << endl;
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << ":EvtSVSCPLH:Abarf=" << _Abarf << endl;
+            << ":EvtSVSCPLH:q/p=" << m_qop << endl;
+        EvtGenReport( EVTGEN_INFO, "EvtGen" )
+            << ":EvtSVSCPLH:Af=" << m_Af << endl;
+        EvtGenReport( EVTGEN_INFO, "EvtGen" )
+            << ":EvtSVSCPLH:Abarf=" << m_Abarf << endl;
     }
 }
 
@@ -106,19 +108,19 @@ void EvtSVSCPLH::decay( EvtParticle* p )
     //sign convention is dm=Mheavy-Mlight
     //                   dGamma=Gammalight-Gammaheavy
     //such that in the standard model both of these are positive.
-    EvtComplex gp = 0.5 *
-                    ( exp( EvtComplex( 0.25 * t * _dgamma, -0.5 * t * _dm ) ) +
-                      exp( EvtComplex( -0.25 * t * _dgamma, 0.5 * t * _dm ) ) );
-    EvtComplex gm = 0.5 *
-                    ( exp( EvtComplex( 0.25 * t * _dgamma, -0.5 * t * _dm ) ) -
-                      exp( EvtComplex( -0.25 * t * _dgamma, 0.5 * t * _dm ) ) );
+    EvtComplex gp =
+        0.5 * ( exp( EvtComplex( 0.25 * t * m_dgamma, -0.5 * t * m_dm ) ) +
+                exp( EvtComplex( -0.25 * t * m_dgamma, 0.5 * t * m_dm ) ) );
+    EvtComplex gm =
+        0.5 * ( exp( EvtComplex( 0.25 * t * m_dgamma, -0.5 * t * m_dm ) ) -
+                exp( EvtComplex( -0.25 * t * m_dgamma, 0.5 * t * m_dm ) ) );
 
     EvtComplex amp;
 
     if ( other_b == B0B ) {
-        amp = gp * _Af + _qop * gm * _Abarf;
+        amp = gp * m_Af + m_qop * gm * m_Abarf;
     } else if ( other_b == B0 ) {
-        amp = gp * _Abarf + _poq * gm * _Af;
+        amp = gp * m_Abarf + m_poq * gm * m_Af;
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "other_b was not B0 or B0B!" << endl;

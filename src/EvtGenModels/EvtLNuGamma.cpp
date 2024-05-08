@@ -55,12 +55,12 @@ void EvtLNuGamma::init()
         //      Argv[3] is a flag set to 0 if abs(f_a/f_v) is 1
         //       and not set to 0 if f_a/f_v is set to 0.
         if ( getArg( 3 ) > 0 ) {
-            _fafvzero = true;
+            m_fafvzero = true;
         } else {
-            _fafvzero = false;
+            m_fafvzero = false;
         }
     } else {
-        _fafvzero = false;
+        m_fafvzero = false;
     }
 
     checkSpinParent( EvtSpinType::SCALAR );
@@ -113,7 +113,7 @@ void EvtLNuGamma::decay( EvtParticle* p )
     double fv, fa;
 
     fv = getFormFactor( photE );
-    if ( _fafvzero ) {
+    if ( m_fafvzero ) {
         fa = 0.0;
     } else if ( p->getId() == BM || p->getId() == DM ) {
         fa = -fv;

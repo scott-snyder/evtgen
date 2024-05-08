@@ -33,53 +33,53 @@ class EvtParticle;
 
 class EvtD0gammaDalitz : public EvtDecayAmp {
   private:
-    int _d1;
-    int _d2;
-    int _d3;
+    int m_d1;
+    int m_d2;
+    int m_d3;
 
-    bool _isKsPiPi;
+    bool m_isKsPiPi;
 
     // Useful constants.
-    static const EvtSpinType::spintype& _SCALAR;
-    static const EvtSpinType::spintype& _VECTOR;
-    static const EvtSpinType::spintype& _TENSOR;
+    static const EvtSpinType::spintype& m_SCALAR;
+    static const EvtSpinType::spintype& m_VECTOR;
+    static const EvtSpinType::spintype& m_TENSOR;
 
-    static const EvtDalitzReso::CouplingType& _EtaPic;
-    static const EvtDalitzReso::CouplingType& _PicPicKK;
+    static const EvtDalitzReso::CouplingType& m_EtaPic;
+    static const EvtDalitzReso::CouplingType& m_PicPicKK;
 
-    static const EvtDalitzReso::NumType& _RBW;
-    static const EvtDalitzReso::NumType& _GS;
-    static const EvtDalitzReso::NumType& _KMAT;
+    static const EvtDalitzReso::NumType& m_RBW;
+    static const EvtDalitzReso::NumType& m_GS;
+    static const EvtDalitzReso::NumType& m_KMAT;
 
-    static const EvtCyclic3::Pair& _AB;
-    static const EvtCyclic3::Pair& _AC;
-    static const EvtCyclic3::Pair& _BC;
+    static const EvtCyclic3::Pair& m_AB;
+    static const EvtCyclic3::Pair& m_AC;
+    static const EvtCyclic3::Pair& m_BC;
 
     // Values to be read or computed based on values in the evt.pdl file.
     // IDs of the relevant particles.
-    EvtId _BP;
-    EvtId _BM;
-    EvtId _B0;
-    EvtId _B0B;
-    EvtId _D0;
-    EvtId _D0B;
-    EvtId _KM;
-    EvtId _KP;
-    EvtId _K0;
-    EvtId _K0B;
-    EvtId _KL;
-    EvtId _KS;
-    EvtId _PIM;
-    EvtId _PIP;
+    EvtId m_BP;
+    EvtId m_BM;
+    EvtId m_B0;
+    EvtId m_B0B;
+    EvtId m_D0;
+    EvtId m_D0B;
+    EvtId m_KM;
+    EvtId m_KP;
+    EvtId m_K0;
+    EvtId m_K0B;
+    EvtId m_KL;
+    EvtId m_KS;
+    EvtId m_PIM;
+    EvtId m_PIP;
 
     // Flavor of the B mother.
-    EvtId _bFlavor;
+    EvtId m_bFlavor;
 
     // Masses of the relevant particles.
-    double _mD0;
-    double _mKs;
-    double _mPi;
-    double _mK;
+    double m_mD0;
+    double m_mKs;
+    double m_mPi;
+    double m_mK;
 
     void readPDGValues();
     void reportInvalidAndExit() const;

@@ -60,11 +60,11 @@ class EvtRareLbToLllFF : public EvtRareLbToLllFFBase {
         void param( const double a0, const double a2, const double a4,
                     const double al, const double ap );
 
-        double a0_;
-        double a2_;
-        double a4_;
-        double al_;
-        double ap_;
+        double m_a0;
+        double m_a2;
+        double m_a4;
+        double m_al;
+        double m_ap;
     };
 
     class FormFactorSet final {
@@ -73,22 +73,22 @@ class EvtRareLbToLllFF : public EvtRareLbToLllFFBase {
 
         FormFactorSet( const FormFactorSet& other );
 
-        EvtRareLbToLllFF::FormFactorDependence F1;
-        EvtRareLbToLllFF::FormFactorDependence F2;
-        EvtRareLbToLllFF::FormFactorDependence F3;
-        EvtRareLbToLllFF::FormFactorDependence F4;
+        EvtRareLbToLllFF::FormFactorDependence m_F1;
+        EvtRareLbToLllFF::FormFactorDependence m_F2;
+        EvtRareLbToLllFF::FormFactorDependence m_F3;
+        EvtRareLbToLllFF::FormFactorDependence m_F4;
 
-        EvtRareLbToLllFF::FormFactorDependence G1;
-        EvtRareLbToLllFF::FormFactorDependence G2;
-        EvtRareLbToLllFF::FormFactorDependence G3;
-        EvtRareLbToLllFF::FormFactorDependence G4;
+        EvtRareLbToLllFF::FormFactorDependence m_G1;
+        EvtRareLbToLllFF::FormFactorDependence m_G2;
+        EvtRareLbToLllFF::FormFactorDependence m_G3;
+        EvtRareLbToLllFF::FormFactorDependence m_G4;
 
-        EvtRareLbToLllFF::FormFactorDependence H1;
-        EvtRareLbToLllFF::FormFactorDependence H2;
-        EvtRareLbToLllFF::FormFactorDependence H3;
-        EvtRareLbToLllFF::FormFactorDependence H4;
-        EvtRareLbToLllFF::FormFactorDependence H5;
-        EvtRareLbToLllFF::FormFactorDependence H6;
+        EvtRareLbToLllFF::FormFactorDependence m_H1;
+        EvtRareLbToLllFF::FormFactorDependence m_H2;
+        EvtRareLbToLllFF::FormFactorDependence m_H3;
+        EvtRareLbToLllFF::FormFactorDependence m_H4;
+        EvtRareLbToLllFF::FormFactorDependence m_H5;
+        EvtRareLbToLllFF::FormFactorDependence m_H6;
     };
 
     void init() override;
@@ -100,8 +100,8 @@ class EvtRareLbToLllFF : public EvtRareLbToLllFFBase {
     double func( const double p,
                  const EvtRareLbToLllFF::FormFactorDependence& dep ) const;
 
-    std::array<std::unique_ptr<EvtRareLbToLllFF::FormFactorSet>, 2> FF_;
-    std::map<int, EvtRareLbToLllFF::FormFactorSet*> FFMap_;
+    std::array<std::unique_ptr<EvtRareLbToLllFF::FormFactorSet>, 2> m_FF;
+    std::map<int, EvtRareLbToLllFF::FormFactorSet*> m_FFMap;
 
     void DiracFF( const EvtParticle& parent, const EvtParticle& lambda,
                   const EvtRareLbToLllFF::FormFactorSet& FFset,

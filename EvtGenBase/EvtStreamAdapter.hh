@@ -43,7 +43,7 @@ template <class Point, class Generator>
 class EvtGenStreamAdapter : public EvtStreamAdapter<Point> {
   public:
     EvtGenStreamAdapter( Generator gen, int count ) :
-        _gen( gen ), _count( count )
+        m_gen( gen ), m_count( count )
     {
     }
 
@@ -53,13 +53,13 @@ class EvtGenStreamAdapter : public EvtStreamAdapter<Point> {
     {
         return new EvtGenStreamAdapter( *this );
     }
-    Point currentValue() override { return _gen(); }
-    bool pastEnd() override { return ( _count <= 0 ); }
-    void advance() override { _count--; }
+    Point currentValue() override { return m_gen(); }
+    bool pastEnd() override { return ( m_count <= 0 ); }
+    void advance() override { m_count--; }
 
   private:
-    Generator _gen;
-    int _count;    // also serves as past the end indicator
+    Generator m_gen;
+    int m_count;    // also serves as past the end indicator
 };
 
 // Only points satisfying a predicate are read from the stream.
@@ -68,7 +68,7 @@ template <class Point, class Iterator, class Predicate>
 class EvtPredStreamAdapter : public EvtStreamAdapter<Point> {
   public:
     EvtPredStreamAdapter( Predicate pred, Iterator it, Iterator end ) :
-        _pred( pred ), _it( it ), _end( end )
+        m_pred( pred ), m_it( it ), m_end( end )
     {
     }
     virtual ~EvtPredStreamAdapter() {}
@@ -81,21 +81,21 @@ class EvtPredStreamAdapter : public EvtStreamAdapter<Point> {
     {
         Point value;
         while ( !pastEnd() ) {
-            value = *_it;
-            if ( _pred( value ) )
+            value = *m_it;
+            if ( m_pred( value ) )
                 break;
-            _it++;
+            m_it++;
         }
         return value;
     }
 
-    virtual bool pastEnd() { return _it == _end; }
-    virtual void advance() { _it++; }
+    virtual bool pastEnd() { return m_it == m_end; }
+    virtual void advance() { m_it++; }
 
   private:
-    Predicate _pred;
-    Iterator _it;
-    Iterator _end;
+    Predicate m_pred;
+    Iterator m_it;
+    Iterator m_end;
 };
 
 #endif

@@ -37,8 +37,8 @@ class EvtNeutrinoParticle : public EvtParticle {
                                           double gamma ) const override;
 
   private:
-    EvtDiracSpinor spinor_rest;
-    EvtDiracSpinor spinor_parent;
+    EvtDiracSpinor m_spinor_rest;
+    EvtDiracSpinor m_spinor_parent;
 
     EvtNeutrinoParticle( const EvtNeutrinoParticle& n );
     EvtNeutrinoParticle& operator=( const EvtNeutrinoParticle& n );

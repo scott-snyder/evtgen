@@ -52,93 +52,87 @@ void EvtPartWave::init()
     checkNDaug( 2 );
 
     //find out how many states each particle have
-    int _nA = EvtSpinType::getSpinStates( EvtPDL::getSpinType( getParentId() ) );
-    int _nB = EvtSpinType::getSpinStates( EvtPDL::getSpinType( getDaug( 0 ) ) );
-    int _nC = EvtSpinType::getSpinStates( EvtPDL::getSpinType( getDaug( 1 ) ) );
+    int nA = EvtSpinType::getSpinStates( EvtPDL::getSpinType( getParentId() ) );
+    int nB = EvtSpinType::getSpinStates( EvtPDL::getSpinType( getDaug( 0 ) ) );
+    int nC = EvtSpinType::getSpinStates( EvtPDL::getSpinType( getDaug( 1 ) ) );
 
     if ( verbose() ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << "_nA,_nB,_nC:" << _nA << "," << _nB << "," << _nC << endl;
+            << "nA,nB,nC:" << nA << "," << nB << "," << nC << endl;
     }
 
     //find out what 2 times the spin is
-    int _JA2 = EvtSpinType::getSpin2( EvtPDL::getSpinType( getParentId() ) );
-    int _JB2 = EvtSpinType::getSpin2( EvtPDL::getSpinType( getDaug( 0 ) ) );
-    int _JC2 = EvtSpinType::getSpin2( EvtPDL::getSpinType( getDaug( 1 ) ) );
+    int JA2 = EvtSpinType::getSpin2( EvtPDL::getSpinType( getParentId() ) );
+    int JB2 = EvtSpinType::getSpin2( EvtPDL::getSpinType( getDaug( 0 ) ) );
+    int JC2 = EvtSpinType::getSpin2( EvtPDL::getSpinType( getDaug( 1 ) ) );
 
     if ( verbose() ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << "_JA2,_JB2,_JC2:" << _JA2 << "," << _JB2 << "," << _JC2 << endl;
+            << "JA2,JB2,JC2:" << JA2 << "," << JB2 << "," << JC2 << endl;
     }
 
     //allocate memory
-    int* _lambdaA2 = new int[_nA];
-    int* _lambdaB2 = new int[_nB];
-    int* _lambdaC2 = new int[_nC];
+    int* lambdaA2 = new int[nA];
+    int* lambdaB2 = new int[nB];
+    int* lambdaC2 = new int[nC];
 
-    EvtComplexPtr* _HBC = new EvtComplexPtr[_nB];
-    int ib, ic;
-    for ( ib = 0; ib < _nB; ib++ ) {
-        _HBC[ib] = new EvtComplex[_nC];
+    EvtComplexPtr* HBC = new EvtComplexPtr[nB];
+    for ( int ib = 0; ib < nB; ib++ ) {
+        HBC[ib] = new EvtComplex[nC];
     }
 
-    int i;
     //find the allowed helicities (actually 2*times the helicity!)
 
-    fillHelicity( _lambdaA2, _nA, _JA2 );
-    fillHelicity( _lambdaB2, _nB, _JB2 );
-    fillHelicity( _lambdaC2, _nC, _JC2 );
+    fillHelicity( lambdaA2, nA, JA2 );
+    fillHelicity( lambdaB2, nB, JB2 );
+    fillHelicity( lambdaC2, nC, JC2 );
 
     if ( verbose() ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Helicity states of particle A:" << endl;
-        for ( i = 0; i < _nA; i++ ) {
-            EvtGenReport( EVTGEN_INFO, "EvtGen" ) << _lambdaA2[i] << endl;
+        for ( int i = 0; i < nA; i++ ) {
+            EvtGenReport( EVTGEN_INFO, "EvtGen" ) << lambdaA2[i] << endl;
         }
 
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Helicity states of particle B:" << endl;
-        for ( i = 0; i < _nB; i++ ) {
-            EvtGenReport( EVTGEN_INFO, "EvtGen" ) << _lambdaB2[i] << endl;
+        for ( int i = 0; i < nB; i++ ) {
+            EvtGenReport( EVTGEN_INFO, "EvtGen" ) << lambdaB2[i] << endl;
         }
 
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Helicity states of particle C:" << endl;
-        for ( i = 0; i < _nC; i++ ) {
-            EvtGenReport( EVTGEN_INFO, "EvtGen" ) << _lambdaC2[i] << endl;
+        for ( int i = 0; i < nC; i++ ) {
+            EvtGenReport( EVTGEN_INFO, "EvtGen" ) << lambdaC2[i] << endl;
         }
 
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Will now figure out the valid (M_LS) states:" << endl;
     }
 
-    int Lmin = std::max( _JA2 - _JB2 - _JC2,
-                         std::max( _JB2 - _JA2 - _JC2, _JC2 - _JA2 - _JB2 ) );
+    int Lmin = std::max( JA2 - JB2 - JC2,
+                         std::max( JB2 - JA2 - JC2, JC2 - JA2 - JB2 ) );
     if ( Lmin < 0 )
         Lmin = 0;
-    //int Lmin=_JA2-_JB2-_JC2;
-    int Lmax = _JA2 + _JB2 + _JC2;
+    int Lmax = JA2 + JB2 + JC2;
 
-    int L;
+    int nPartialWaveAmp = 0;
 
-    int _nPartialWaveAmp = 0;
+    int nL[50];
+    int nS[50];
 
-    int _nL[50];
-    int _nS[50];
+    for ( int L = Lmin; L <= Lmax; L += 2 ) {
+        int Smin = abs( L - JA2 );
+        if ( Smin < abs( JB2 - JC2 ) )
+            Smin = abs( JB2 - JC2 );
+        int Smax = L + JA2;
+        if ( Smax > abs( JB2 + JC2 ) )
+            Smax = abs( JB2 + JC2 );
+        for ( int S = Smin; S <= Smax; S += 2 ) {
+            nL[nPartialWaveAmp] = L;
+            nS[nPartialWaveAmp] = S;
 
-    for ( L = Lmin; L <= Lmax; L += 2 ) {
-        int Smin = abs( L - _JA2 );
-        if ( Smin < abs( _JB2 - _JC2 ) )
-            Smin = abs( _JB2 - _JC2 );
-        int Smax = L + _JA2;
-        if ( Smax > abs( _JB2 + _JC2 ) )
-            Smax = abs( _JB2 + _JC2 );
-        int S;
-        for ( S = Smin; S <= Smax; S += 2 ) {
-            _nL[_nPartialWaveAmp] = L;
-            _nS[_nPartialWaveAmp] = S;
-
-            _nPartialWaveAmp++;
+            nPartialWaveAmp++;
             if ( verbose() ) {
                 EvtGenReport( EVTGEN_INFO, "EvtGen" )
                     << "M[" << L << "][" << S << "]" << endl;
@@ -146,23 +140,22 @@ void EvtPartWave::init()
         }
     }
 
-    checkNArg( _nPartialWaveAmp * 2 );
+    checkNArg( nPartialWaveAmp * 2 );
 
     int argcounter = 0;
 
-    EvtComplex _M[50];
+    EvtComplex M[50];
 
     double partampsqtot = 0.0;
 
-    for ( i = 0; i < _nPartialWaveAmp; i++ ) {
-        _M[i] = getArg( argcounter ) *
-                exp( EvtComplex( 0.0, getArg( argcounter + 1 ) ) );
-        ;
+    for ( int i = 0; i < nPartialWaveAmp; i++ ) {
+        M[i] = getArg( argcounter ) *
+               exp( EvtComplex( 0.0, getArg( argcounter + 1 ) ) );
         argcounter += 2;
-        partampsqtot += abs2( _M[i] );
+        partampsqtot += abs2( M[i] );
         if ( verbose() ) {
             EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                << "M[" << _nL[i] << "][" << _nS[i] << "]=" << _M[i] << endl;
+                << "M[" << nL[i] << "][" << nS[i] << "]=" << M[i] << endl;
         }
     }
 
@@ -170,18 +163,18 @@ void EvtPartWave::init()
 
     double helampsqtot = 0.0;
 
-    for ( ib = 0; ib < _nB; ib++ ) {
-        for ( ic = 0; ic < _nC; ic++ ) {
-            _HBC[ib][ic] = 0.0;
-            if ( abs( _lambdaB2[ib] - _lambdaC2[ic] ) <= _JA2 ) {
-                for ( i = 0; i < _nPartialWaveAmp; i++ ) {
-                    int L = _nL[i];
-                    int S = _nS[i];
-                    int lambda2 = _lambdaB2[ib];
-                    int lambda3 = _lambdaC2[ic];
-                    int s1 = _JA2;
-                    int s2 = _JB2;
-                    int s3 = _JC2;
+    for ( int ib = 0; ib < nB; ib++ ) {
+        for ( int ic = 0; ic < nC; ic++ ) {
+            HBC[ib][ic] = 0.0;
+            if ( abs( lambdaB2[ib] - lambdaC2[ic] ) <= JA2 ) {
+                for ( int i = 0; i < nPartialWaveAmp; i++ ) {
+                    int L = nL[i];
+                    int S = nS[i];
+                    int lambda2 = lambdaB2[ib];
+                    int lambda3 = lambdaC2[ic];
+                    int s1 = JA2;
+                    int s2 = JB2;
+                    int s3 = JC2;
                     int m1 = lambda2 - lambda3;
                     EvtCGCoefSingle c1( s2, s3 );
                     EvtCGCoefSingle c2( L, S );
@@ -197,17 +190,17 @@ void EvtPartWave::init()
                         EvtComplex tmp = sqrt( fkwTmp ) *
                                          c1.coef( S, m1, s2, s3, lambda2,
                                                   -lambda3 ) *
-                                         c2.coef( s1, m1, L, S, 0, m1 ) * _M[i];
-                        _HBC[ib][ic] += tmp;
+                                         c2.coef( s1, m1, L, S, 0, m1 ) * M[i];
+                        HBC[ib][ic] += tmp;
                     }
                 }
                 if ( verbose() ) {
                     EvtGenReport( EVTGEN_INFO, "EvtGen" )
-                        << "_HBC[" << ib << "][" << ic << "]=" << _HBC[ib][ic]
+                        << "HBC[" << ib << "][" << ic << "]=" << HBC[ib][ic]
                         << endl;
                 }
             }
-            helampsqtot += abs2( _HBC[ib][ic] );
+            helampsqtot += abs2( HBC[ib][ic] );
         }
     }
 
@@ -218,12 +211,12 @@ void EvtPartWave::init()
             << " -> " << EvtPDL::name( getDaug( 0 ) ) << " "
             << EvtPDL::name( getDaug( 1 ) ) << std::endl;
         EvtGenReport( EVTGEN_ERROR, "EvtGen" ) << "With arguments: " << std::endl;
-        for ( i = 0; i * 2 < getNArg(); i++ ) {
+        for ( int i = 0; i * 2 < getNArg(); i++ ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-                << "M(" << _nL[i] << "," << _nS[i]
+                << "M(" << nL[i] << "," << nS[i]
                 << ")="
                 //				 <<getArg(2*i)<<" "<<getArg(2*i+1)<<std::endl;
-                << _M[i] << std::endl;
+                << M[i] << std::endl;
         }
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "The total probability in the partwave basis is: " << partampsqtot
@@ -242,13 +235,13 @@ void EvtPartWave::init()
             << std::endl;
     }
 
-    _evalHelAmp = std::make_unique<EvtEvalHelAmp>( getParentId(), getDaug( 0 ),
-                                                   getDaug( 1 ), _HBC );
+    m_evalHelAmp = std::make_unique<EvtEvalHelAmp>( getParentId(), getDaug( 0 ),
+                                                    getDaug( 1 ), HBC );
 }
 
 void EvtPartWave::initProbMax()
 {
-    double maxprob = _evalHelAmp->probMax();
+    double maxprob = m_evalHelAmp->probMax();
 
     if ( verbose() ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -263,15 +256,13 @@ void EvtPartWave::decay( EvtParticle* p )
     //first generate simple phase space
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    _evalHelAmp->evalAmp( p, _amp2 );
+    m_evalHelAmp->evalAmp( p, m_amp2 );
 
     return;
 }
 
 void EvtPartWave::fillHelicity( int* lambda2, int n, int J2 )
 {
-    int i;
-
     //photon is special case!
     if ( n == 2 && J2 == 2 ) {
         lambda2[0] = 2;
@@ -281,7 +272,7 @@ void EvtPartWave::fillHelicity( int* lambda2, int n, int J2 )
 
     assert( n == J2 + 1 );
 
-    for ( i = 0; i < n; i++ ) {
+    for ( int i = 0; i < n; i++ ) {
         lambda2[i] = n - i * 2 - 1;
     }
 

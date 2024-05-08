@@ -49,7 +49,7 @@ void EvtSLBKPole::decay( EvtParticle* p )
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    calcamp->CalcAmp( p, _amp2, SLBKPoleffmodel.get() );    //modified
+    m_calcamp->CalcAmp( p, m_amp2, m_SLBKPoleffmodel.get() );    //modified
     return;
 }
 
@@ -62,8 +62,8 @@ void EvtSLBKPole::initProbMax()
     lnum = getDaug( 1 );
     nunum = getDaug( 2 );
 
-    double mymaxprob = calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
-                                             SLBKPoleffmodel.get() );    //modified
+    double mymaxprob = m_calcamp->CalcMaxProb( parnum, mesnum, lnum, nunum,
+                                               m_SLBKPoleffmodel.get() );    //modified
 
     setProbMax( mymaxprob );
 }
@@ -82,18 +82,18 @@ void EvtSLBKPole::init()
 
     EvtSpinType::spintype mesontype = EvtPDL::getSpinType( getDaug( 0 ) );
 
-    SLBKPoleffmodel = std::make_unique<EvtSLBKPoleFF>( getNArg(),
-                                                       getArgs() );    //modified
+    m_SLBKPoleffmodel = std::make_unique<EvtSLBKPoleFF>( getNArg(),
+                                                         getArgs() );    //modified
 
     switch ( mesontype ) {
         case EvtSpinType::SCALAR:
-            calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicScalarAmp>();
             break;
         case EvtSpinType::VECTOR:
-            calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicVectorAmp>();
             break;
         case EvtSpinType::TENSOR:
-            calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
+            m_calcamp = std::make_unique<EvtSemiLeptonicTensorAmp>();
             break;
         default:;
     }

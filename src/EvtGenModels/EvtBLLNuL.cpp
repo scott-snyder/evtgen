@@ -26,7 +26,7 @@
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 
-EvtBLLNuL::EvtBLLNuL() : calcAmp_()
+EvtBLLNuL::EvtBLLNuL() : m_calcAmp()
 {
 }
 
@@ -122,7 +122,7 @@ void EvtBLLNuL::init()
 
     // Define the amplitude qSq and kSq cut-offs, also
     // specifying if the decay mode has flavour symmetry
-    calcAmp_.setParameters( qSqMin, kSqMin, symmetry );
+    m_calcAmp.setParameters( qSqMin, kSqMin, symmetry );
 }
 
 void EvtBLLNuL::initProbMax()
@@ -144,5 +144,5 @@ void EvtBLLNuL::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    calcAmp_.CalcAmp( p, _amp2 );
+    m_calcAmp.CalcAmp( p, m_amp2 );
 }

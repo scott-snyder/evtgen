@@ -35,14 +35,14 @@
 using std::endl;
 
 // Mutex PHOTOS as it is not thread safe.
-std::mutex EvtPHOTOS::photos_mutex;
+std::mutex EvtPHOTOS::m_photos_mutex;
 
 EvtPHOTOS::EvtPHOTOS( const std::string& photonType, const bool useEvtGenRandom,
                       const double infraredCutOff,
                       const double maxWtInterference ) :
     m_photonType{ photonType }
 {
-    photos_mutex.lock();
+    m_photos_mutex.lock();
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Setting up PHOTOS." << endl;
 
@@ -77,7 +77,7 @@ EvtPHOTOS::EvtPHOTOS( const std::string& photonType, const bool useEvtGenRandom,
     Photospp::Photos::setPairEmission( false );
 #endif
 
-    photos_mutex.unlock();
+    m_photos_mutex.unlock();
 }
 
 void EvtPHOTOS::initialise()
@@ -149,7 +149,7 @@ void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )
         }
     }
 
-    photos_mutex.lock();
+    m_photos_mutex.lock();
 
     /* Now pass the event to Photos for processing
      * Create a Photos event object */
@@ -162,7 +162,7 @@ void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )
     // Run the Photos algorithm
     photosEvent.process();
 
-    photos_mutex.unlock();
+    m_photos_mutex.unlock();
 
     // Find the number of (outgoing) photons in the event
     const int nPhotons = this->getNumberOfPhotons( theVertex );

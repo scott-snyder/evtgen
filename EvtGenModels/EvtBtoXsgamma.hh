@@ -44,7 +44,7 @@ class EvtBtoXsgamma : public EvtDecayIncoherent {
     void decay( EvtParticle* p ) override;
 
   private:
-    std::unique_ptr<EvtBtoXsgammaAbsModel> _model;
+    std::unique_ptr<EvtBtoXsgammaAbsModel> m_model;
 };
 
 #endif

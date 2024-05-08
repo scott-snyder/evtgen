@@ -47,8 +47,8 @@ class EvtSLPoleFF : public EvtSemiLeptonicFF {
                       double*, double*, double*, double*, double* ) override;
 
   private:
-    int numSLPoleargs;
-    double SLPoleargs[16];
+    int m_numSLPoleargs;
+    double m_SLPoleargs[16];
 };
 
 #endif

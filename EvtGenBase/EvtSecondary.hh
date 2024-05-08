@@ -33,10 +33,10 @@ class EvtSecondary {
 
     void init();
 
-    int getStdHepIndex( int i ) { return _stdhepindex[i]; }
-    int getD1( int i ) { return _id1[i]; }
-    int getD2( int i ) { return _id2[i]; }
-    int getD3( int i ) { return _id3[i]; }
+    int getStdHepIndex( int i ) { return m_stdhepindex[i]; }
+    int getD1( int i ) { return m_id1[i]; }
+    int getD2( int i ) { return m_id2[i]; }
+    int getD3( int i ) { return m_id3[i]; }
 
     int getNPart();
     void createSecondary( int stdhepindex, EvtParticle* prnt );
@@ -45,11 +45,11 @@ class EvtSecondary {
                                      const EvtSecondary& secondary );
 
   private:
-    int _npart;
-    int _stdhepindex[EVTSECONDARYLENGTH];
-    int _id1[EVTSECONDARYLENGTH];
-    int _id2[EVTSECONDARYLENGTH];
-    int _id3[EVTSECONDARYLENGTH];
+    int m_npart;
+    int m_stdhepindex[EVTSECONDARYLENGTH];
+    int m_id1[EVTSECONDARYLENGTH];
+    int m_id2[EVTSECONDARYLENGTH];
+    int m_id3[EVTSECONDARYLENGTH];
 };
 
 #endif

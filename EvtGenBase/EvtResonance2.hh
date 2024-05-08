@@ -39,33 +39,33 @@ class EvtResonance2 {
 
     //accessors
     //return 4-momenta of the particles involved
-    inline const EvtVector4R& p4_p() const { return _p4_p; }
-    inline const EvtVector4R& p4_d1() const { return _p4_d1; }
-    inline const EvtVector4R& p4_d2() const { return _p4_d2; }
+    inline const EvtVector4R& p4_p() const { return m_p4_p; }
+    inline const EvtVector4R& p4_d1() const { return m_p4_d1; }
+    inline const EvtVector4R& p4_d2() const { return m_p4_d2; }
 
     //return amplitude
-    inline double amplitude() const { return _ampl; }
+    inline double amplitude() const { return m_ampl; }
 
     //return theta
-    inline double theta() const { return _theta; }
+    inline double theta() const { return m_theta; }
 
     //return gamma
-    inline double gamma() const { return _gamma; }
+    inline double gamma() const { return m_gamma; }
 
     //return bwm
-    inline double bwm() const { return _bwm; }
+    inline double bwm() const { return m_bwm; }
 
     //return spin
-    inline int spin() const { return _spin; }
+    inline int spin() const { return m_spin; }
 
     //calculate amplitude for this resonance
     EvtComplex resAmpl() const;
 
   private:
-    EvtVector4R _p4_p, _p4_d1, _p4_d2;
-    double _ampl, _theta, _gamma, _bwm, _barrier1, _barrier2;
-    int _spin;
-    bool _invmass_angdenom;
+    EvtVector4R m_p4_p, m_p4_d1, m_p4_d2;
+    double m_ampl, m_theta, m_gamma, m_bwm, m_barrier1, m_barrier2;
+    int m_spin;
+    bool m_invmass_angdenom;
 };
 
 #endif

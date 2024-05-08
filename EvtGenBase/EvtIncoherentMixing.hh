@@ -83,12 +83,12 @@ class EvtIncoherentMixing {
 
   protected:
   private:
-    static bool _doB0Mixing;
-    static bool _doBsMixing;
-    static double _dGammad;
-    static double _deltamd;
-    static double _dGammas;
-    static double _deltams;
-    static bool _enableFlip;
+    static bool m_doB0Mixing;
+    static bool m_doBsMixing;
+    static double m_dGammad;
+    static double m_deltamd;
+    static double m_dGammas;
+    static double m_deltams;
+    static bool m_enableFlip;
 };
 #endif    // EVTGENBASE_EVTINCOHERENTMIXING_HH

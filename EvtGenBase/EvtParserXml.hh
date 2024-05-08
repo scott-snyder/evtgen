@@ -32,10 +32,10 @@ class EvtParserXml final {
 
     bool readNextTag();
 
-    std::string getTagTitle() { return _tagTitle; }
+    std::string getTagTitle() { return m_tagTitle; }
     std::string getParentTagTitle();
-    int getLineNumber() { return _lineNo; }
-    bool isTagInline() { return _inLineTag; }
+    int getLineNumber() { return m_lineNo; }
+    bool isTagInline() { return m_inLineTag; }
 
     std::string readAttribute( std::string attribute,
                                std::string defaultValue = "" );
@@ -44,14 +44,14 @@ class EvtParserXml final {
     double readAttributeDouble( std::string attribute, double defaultValue = -1. );
 
   private:
-    std::ifstream _fin;
-    std::string _line;
-    int _lineNo = 0;
+    std::ifstream m_fin;
+    std::string m_line;
+    int m_lineNo = 0;
 
-    std::string _tag;
-    std::string _tagTitle;
-    bool _inLineTag;
-    std::vector<std::string> _tagTree;
+    std::string m_tag;
+    std::string m_tagTitle;
+    bool m_inLineTag;
+    std::vector<std::string> m_tagTree;
 
     bool processTagTree();
 

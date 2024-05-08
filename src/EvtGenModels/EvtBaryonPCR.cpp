@@ -66,7 +66,7 @@ void EvtBaryonPCR::decay( EvtParticle* p )
     EvtComplex r10( getArg( 2 ), 0.0 );
     EvtComplex r11( getArg( 3 ), 0.0 );
 
-    calcamp->CalcAmp( p, _amp2, baryonpcrffmodel.get(), r00, r01, r10, r11 );
+    m_calcamp->CalcAmp( p, m_amp2, m_baryonpcrffmodel.get(), r00, r01, r10, r11 );
 }
 
 void EvtBaryonPCR::initProbMax()
@@ -166,11 +166,11 @@ void EvtBaryonPCR::init()
         ::abort();
     }
 
-    baryonpcrffmodel = std::make_unique<EvtBaryonPCRFF>();
+    m_baryonpcrffmodel = std::make_unique<EvtBaryonPCRFF>();
 
     if ( baryontype == EvtSpinType::DIRAC ||
          baryontype == EvtSpinType::RARITASCHWINGER ) {
-        calcamp = std::make_unique<EvtSemiLeptonicBaryonAmp>();
+        m_calcamp = std::make_unique<EvtSemiLeptonicBaryonAmp>();
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Wrong baryon spin type in EvtBaryonPCR.cc "

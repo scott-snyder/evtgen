@@ -71,9 +71,8 @@ void EvtSTS::decay( EvtParticle* p )
 
     EvtVector4R p4_parent = momt + moms;
 
-    double m_parent = p4_parent.mass();
-
-    double norm = masst * masst / ( m_parent * momt.d3mag() * momt.d3mag() );
+    double norm = masst * masst /
+                  ( p4_parent.mass() * momt.d3mag() * momt.d3mag() );
 
     vertex( 0, norm * t1->epsTensorParent( 0 ).cont1( p4_parent ) * p4_parent );
     vertex( 1, norm * t1->epsTensorParent( 1 ).cont1( p4_parent ) * p4_parent );

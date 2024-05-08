@@ -124,8 +124,8 @@ class EvtWHad {
                                       const EvtVector4R& p5 ) const;
 
   private:
-    std::vector<double> mRho_, gamma0_, cK_, mK_, gammaK_, gKRho_, gKPi_;
-    double mPi_, mPiSq_;
+    std::vector<double> m_mRho, m_gamma0, m_cK, m_mK, m_gammaK, m_gKRho, m_gKPi;
+    double m_mPi, m_mPiSq;
 };
 
 #endif

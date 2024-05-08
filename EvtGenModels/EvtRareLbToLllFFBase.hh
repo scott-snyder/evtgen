@@ -46,10 +46,10 @@ class EvtRareLbToLllFFBase {
 
         void areZero();
 
-        double F_[4];
-        double G_[4];
-        double FT_[4];
-        double GT_[4];
+        double m_F[4];
+        double m_G[4];
+        double m_FT[4];
+        double m_GT[4];
     };
 
     virtual void init() = 0;
@@ -68,7 +68,7 @@ class EvtRareLbToLllFFBase {
     double calculateVdotV( const EvtParticle&, const EvtParticle&,
                            double qsq ) const;
 
-    EvtIdSet natural_;
+    EvtIdSet m_natural;
 };
 
 #endif

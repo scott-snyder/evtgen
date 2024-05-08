@@ -74,51 +74,51 @@ void EvtBcVNpi::init()
     //     for(int i=0; i<getNDaug(); i++)
     //       cout<<"BcVNpi::init \t\t daughter "<<i<<" : "<<getDaug(i).getId()<<"   "<<EvtPDL::name(getDaug(i)).c_str()<<endl;
 
-    idVector = getDaug( 0 ).getId();
-    whichfit = int( getArg( 0 ) + 0.1 );
-    //     cout<<"BcVNpi: whichfit ="<<whichfit<<"  idVector="<<idVector<<endl;
-    ffmodel = std::make_unique<EvtBCVFF>( idVector, whichfit );
+    m_idVector = getDaug( 0 ).getId();
+    m_whichfit = int( getArg( 0 ) + 0.1 );
+    //     cout<<"BcVNpi: m_whichfit ="<<m_whichfit<<"  m_idVector="<<m_idVector<<endl;
+    m_ffmodel = std::make_unique<EvtBCVFF>( m_idVector, m_whichfit );
 
-    wcurr = std::make_unique<EvtWnPi>();
+    m_wcurr = std::make_unique<EvtWnPi>();
 
-    nCall = 0;
+    m_nCall = 0;
 }
 
 //======================================================
 void EvtBcVNpi::initProbMax()
 {
     //     cout<<"BcVNpi::initProbMax()"<<endl;
-    if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 1 &&
+    if ( m_idVector == EvtPDL::getId( "J/psi" ).getId() && m_whichfit == 1 &&
          getNDaug() == 6 )
         setProbMax( 720000. );
-    else if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 2 &&
-              getNDaug() == 6 )
+    else if ( m_idVector == EvtPDL::getId( "J/psi" ).getId() &&
+              m_whichfit == 2 && getNDaug() == 6 )
         setProbMax( 471817. );
-    else if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 1 &&
-              getNDaug() == 4 )
+    else if ( m_idVector == EvtPDL::getId( "J/psi" ).getId() &&
+              m_whichfit == 1 && getNDaug() == 4 )
         setProbMax( 42000. );
-    else if ( idVector == EvtPDL::getId( "J/psi" ).getId() && whichfit == 2 &&
-              getNDaug() == 4 )
+    else if ( m_idVector == EvtPDL::getId( "J/psi" ).getId() &&
+              m_whichfit == 2 && getNDaug() == 4 )
         setProbMax( 16000. );
 
-    else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() && whichfit == 1 &&
-              getNDaug() == 4 )
+    else if ( m_idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+              m_whichfit == 1 && getNDaug() == 4 )
         setProbMax( 1200. );
-    else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() && whichfit == 2 &&
-              getNDaug() == 4 )
+    else if ( m_idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+              m_whichfit == 2 && getNDaug() == 4 )
         setProbMax( 2600. );
-    else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() && whichfit == 1 &&
-              getNDaug() == 6 )
+    else if ( m_idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+              m_whichfit == 1 && getNDaug() == 6 )
         setProbMax( 40000. );
-    else if ( idVector == EvtPDL::getId( "psi(2S)" ).getId() && whichfit == 2 &&
-              getNDaug() == 6 )
+    else if ( m_idVector == EvtPDL::getId( "psi(2S)" ).getId() &&
+              m_whichfit == 2 && getNDaug() == 6 )
         setProbMax( 30000. );
 }
 
 //======================================================
 void EvtBcVNpi::decay( EvtParticle* root_particle )
 {
-    ++nCall;
+    ++m_nCall;
     //     cout<<"BcVNpi::decay()"<<endl;
     root_particle->initializePhaseSpace( getNDaug(), getDaugs() );
 
@@ -131,25 +131,25 @@ void EvtBcVNpi::decay( EvtParticle* root_particle )
     EvtVector4C hardCur;
     //     bool foundHadCurr=false;
     if ( getNDaug() == 2 ) {
-        hardCur = wcurr->WCurrent( root_particle->getDaug( 1 )->getP4() );
+        hardCur = m_wcurr->WCurrent( root_particle->getDaug( 1 )->getP4() );
         //       foundHadCurr=true;
     } else if ( getNDaug() == 3 ) {
-        hardCur = wcurr->WCurrent( root_particle->getDaug( 1 )->getP4(),
-                                   root_particle->getDaug( 2 )->getP4() );
+        hardCur = m_wcurr->WCurrent( root_particle->getDaug( 1 )->getP4(),
+                                     root_particle->getDaug( 2 )->getP4() );
         //       foundHadCurr=true;
     } else if ( getNDaug() == 4 ) {
-        hardCur = wcurr->WCurrent( root_particle->getDaug( 1 )->getP4(),
-                                   root_particle->getDaug( 2 )->getP4(),
-                                   root_particle->getDaug( 3 )->getP4() );
+        hardCur = m_wcurr->WCurrent( root_particle->getDaug( 1 )->getP4(),
+                                     root_particle->getDaug( 2 )->getP4(),
+                                     root_particle->getDaug( 3 )->getP4() );
         //       foundHadCurr=true;
     } else if ( getNDaug() ==
                 6 )    // Bc -> psi pi+ pi+ pi- pi- pi+ from [Kuhn, Was, hep-ph/0602162
     {
-        hardCur = wcurr->WCurrent( root_particle->getDaug( 1 )->getP4(),
-                                   root_particle->getDaug( 2 )->getP4(),
-                                   root_particle->getDaug( 3 )->getP4(),
-                                   root_particle->getDaug( 4 )->getP4(),
-                                   root_particle->getDaug( 5 )->getP4() );
+        hardCur = m_wcurr->WCurrent( root_particle->getDaug( 1 )->getP4(),
+                                     root_particle->getDaug( 2 )->getP4(),
+                                     root_particle->getDaug( 3 )->getP4(),
+                                     root_particle->getDaug( 4 )->getP4(),
+                                     root_particle->getDaug( 5 )->getP4() );
         // 		foundHadCurr=true;
     } else {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -168,9 +168,9 @@ void EvtBcVNpi::decay( EvtParticle* root_particle )
     double a1f, a2f, vf, a0f;
     double m_meson = root_particle->getDaug( 0 )->mass();
     double m_b = root_particle->mass();
-    ffmodel->getvectorff( root_particle->getId(),
-                          root_particle->getDaug( 0 )->getId(), Q2, m_meson,
-                          &a1f, &a2f, &vf, &a0f );
+    m_ffmodel->getvectorff( root_particle->getId(),
+                            root_particle->getDaug( 0 )->getId(), Q2, m_meson,
+                            &a1f, &a2f, &vf, &a0f );
     double a3f = ( ( m_b + m_meson ) / ( 2.0 * m_meson ) ) * a1f -
                  ( ( m_b - m_meson ) / ( 2.0 * m_meson ) ) * a2f;
 

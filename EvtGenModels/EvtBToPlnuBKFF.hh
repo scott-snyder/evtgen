@@ -51,8 +51,8 @@ class EvtBToPlnuBKFF : public EvtSemiLeptonicFF {
                       double*, double*, double*, double*, double* ) override;
 
   private:
-    double _alpha;
-    double _beta;
+    double m_alpha;
+    double m_beta;
 };
 
 #endif

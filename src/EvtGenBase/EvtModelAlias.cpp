@@ -25,30 +25,30 @@
 EvtModelAlias::EvtModelAlias( std::string alias, std::string model,
                               std::vector<std::string> args ) :
 
-    _aliasName( alias ), _model( model ), _modelArgs( args )
+    m_aliasName( alias ), m_model( model ), m_modelArgs( args )
 
 {
 }
 
 EvtModelAlias::EvtModelAlias( const EvtModelAlias& copyMe ) :
 
-    _aliasName( copyMe._aliasName ),
-    _model( copyMe._model ),
-    _modelArgs( copyMe._modelArgs )
+    m_aliasName( copyMe.m_aliasName ),
+    m_model( copyMe.m_model ),
+    m_modelArgs( copyMe.m_modelArgs )
 
 {
 }
 
 EvtModelAlias EvtModelAlias::operator=( const EvtModelAlias& copyMe )
 {
-    _aliasName = copyMe._aliasName;
-    _model = copyMe._model;
-    _modelArgs = copyMe._modelArgs;
+    m_aliasName = copyMe.m_aliasName;
+    m_model = copyMe.m_model;
+    m_modelArgs = copyMe.m_modelArgs;
 
     return *this;
 }
 
 std::vector<std::string> EvtModelAlias::getArgList()
 {
-    return _modelArgs;
+    return m_modelArgs;
 }

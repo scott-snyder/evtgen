@@ -29,9 +29,9 @@
 #include <stdio.h>
 using namespace EvtCyclic3;
 
-EvtDalitzResPdf::EvtDalitzResPdf( const EvtDalitzPlot& dp, double _m0,
-                                  double _g0, EvtCyclic3::Pair pair ) :
-    EvtPdf<EvtDalitzPoint>(), _dp( dp ), _m0( _m0 ), _g0( _g0 ), _pair( pair )
+EvtDalitzResPdf::EvtDalitzResPdf( const EvtDalitzPlot& dp, double m0, double g0,
+                                  EvtCyclic3::Pair pair ) :
+    EvtPdf<EvtDalitzPoint>(), m_dp( dp ), m_m0( m0 ), m_g0( g0 ), m_pair( pair )
 {
 }
 
@@ -39,19 +39,19 @@ EvtValError EvtDalitzResPdf::compute_integral( int N ) const
 {
     assert( N != 0 );
 
-    EvtCyclic3::Pair i = _pair;
+    EvtCyclic3::Pair i = m_pair;
     EvtCyclic3::Pair j = EvtCyclic3::next( i );
 
     // Trapezoidal integral
 
-    double dh = ( _dp.qAbsMax( j ) - _dp.qAbsMin( j ) ) / ( (double)N );
+    double dh = ( m_dp.qAbsMax( j ) - m_dp.qAbsMin( j ) ) / ( (double)N );
     double sum = 0;
 
     int ii;
     for ( ii = 1; ii < N; ii++ ) {
-        double x = _dp.qAbsMin( j ) + ii * dh;
-        double min = ( _dp.qMin( i, j, x ) - _m0 * _m0 ) / _m0 / _g0;
-        double max = ( _dp.qMax( i, j, x ) - _m0 * _m0 ) / _m0 / _g0;
+        double x = m_dp.qAbsMin( j ) + ii * dh;
+        double min = ( m_dp.qMin( i, j, x ) - m_m0 * m_m0 ) / m_m0 / m_g0;
+        double max = ( m_dp.qMax( i, j, x ) - m_m0 * m_m0 ) / m_m0 / m_g0;
         double itg = 1 / EvtConst::pi * ( atan( max ) - atan( min ) );
         sum += itg;
     }
@@ -65,20 +65,20 @@ EvtDalitzPoint EvtDalitzResPdf::randomPoint()
     // Random point generation must be done in a box encompassing the
     // Dalitz plot
 
-    EvtCyclic3::Pair i = _pair;
+    EvtCyclic3::Pair i = m_pair;
     EvtCyclic3::Pair j = EvtCyclic3::next( i );
     double min = 1 / EvtConst::pi *
-                 atan( ( _dp.qAbsMin( i ) - _m0 * _m0 ) / _m0 / _g0 );
+                 atan( ( m_dp.qAbsMin( i ) - m_m0 * m_m0 ) / m_m0 / m_g0 );
     double max = 1 / EvtConst::pi *
-                 atan( ( _dp.qAbsMax( i ) - _m0 * _m0 ) / _m0 / _g0 );
+                 atan( ( m_dp.qAbsMax( i ) - m_m0 * m_m0 ) / m_m0 / m_g0 );
 
     int n = 0;
     while ( n++ < 1000 ) {
-        double qj = EvtRandom::Flat( _dp.qAbsMin( j ), _dp.qAbsMax( j ) );
+        double qj = EvtRandom::Flat( m_dp.qAbsMin( j ), m_dp.qAbsMax( j ) );
         double r = EvtRandom::Flat( min, max );
-        double qi = tan( EvtConst::pi * r ) * _g0 * _m0 + _m0 * _m0;
+        double qi = tan( EvtConst::pi * r ) * m_g0 * m_m0 + m_m0 * m_m0;
         EvtDalitzCoord x( i, qi, j, qj );
-        EvtDalitzPoint ret( _dp, x );
+        EvtDalitzPoint ret( m_dp, x );
         if ( ret.isValid() )
             return ret;
     }
@@ -92,12 +92,13 @@ EvtDalitzPoint EvtDalitzResPdf::randomPoint()
 
 double EvtDalitzResPdf::pdf( const EvtDalitzPoint& x ) const
 {
-    EvtCyclic3::Pair i = _pair;
-    double dq = x.q( i ) - _m0 * _m0;
-    return 1 / EvtConst::pi * _g0 * _m0 / ( dq * dq + _g0 * _g0 * _m0 * _m0 );
+    EvtCyclic3::Pair i = m_pair;
+    double dq = x.q( i ) - m_m0 * m_m0;
+    return 1 / EvtConst::pi * m_g0 * m_m0 /
+           ( dq * dq + m_g0 * m_g0 * m_m0 * m_m0 );
 }
 
 double EvtDalitzResPdf::pdfMaxValue() const
 {
-    return 1 / ( EvtConst::pi * _g0 * _m0 );
+    return 1 / ( EvtConst::pi * m_g0 * m_m0 );
 }

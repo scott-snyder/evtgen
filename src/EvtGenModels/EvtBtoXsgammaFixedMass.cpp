@@ -44,13 +44,13 @@ void EvtBtoXsgammaFixedMass::init( int nArg, double* args )
     }
 
     if ( nArg == 1 ) {
-        _mH = 2.0;
+        m_mH = 2.0;
     } else {
-        _mH = args[1];
+        m_mH = args[1];
     }
 }
 
 double EvtBtoXsgammaFixedMass::GetMass( int /*Xscode*/ )
 {
-    return _mH;
+    return m_mH;
 }

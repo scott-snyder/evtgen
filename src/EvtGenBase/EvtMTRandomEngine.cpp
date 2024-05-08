@@ -26,7 +26,7 @@
 #include <iostream>
 
 EvtMTRandomEngine::EvtMTRandomEngine( unsigned int seed ) :
-    engine_( seed ), distribution_( URDist( 0.0, 1.0 ) )
+    m_engine( seed ), m_distribution( URDist( 0.0, 1.0 ) )
 {
     EvtGenReport( EVTGEN_INFO, "EvtMTRandomEngine" )
         << "Mersenne-Twister random number generator with seed = " << seed
@@ -35,5 +35,5 @@ EvtMTRandomEngine::EvtMTRandomEngine( unsigned int seed ) :
 
 double EvtMTRandomEngine::random()
 {
-    return distribution_( engine_ );
+    return m_distribution( m_engine );
 }

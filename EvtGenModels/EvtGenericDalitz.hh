@@ -45,8 +45,8 @@ class EvtGenericDalitz : public EvtDecayAmp {
     std::string getParamName( int i ) override;
 
   private:
-    int _d1, _d2, _d3;
-    std::vector<std::pair<EvtComplex, EvtDalitzReso>> _resonances;
+    int m_d1, m_d2, m_d3;
+    std::vector<std::pair<EvtComplex, EvtDalitzReso>> m_resonances;
 };
 
 #endif

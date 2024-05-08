@@ -36,19 +36,19 @@ void EvtDecayProb::makeDecay( EvtParticle* p, bool recursive )
     double dummy;
 
     do {
-        _weight = 1.0;
-        _daugsDecayedByParentModel = false;
+        m_weight = 1.0;
+        m_daugsDecayedByParentModel = false;
 
         decay( p );
 
         ntimes--;
 
-        _prob = _prob / _weight;
+        m_prob = m_prob / m_weight;
 
-        dummy = getProbMax( _prob ) * EvtRandom::Flat();
-        p->setDecayProb( _prob / getProbMax( _prob ) );
+        dummy = getProbMax( m_prob ) * EvtRandom::Flat();
+        p->setDecayProb( m_prob / getProbMax( m_prob ) );
 
-    } while ( ntimes && ( _prob < dummy ) );
+    } while ( ntimes && ( m_prob < dummy ) );
 
     if ( ntimes == 0 ) {
         EvtGenReport( EVTGEN_DEBUG, "EvtGen" )

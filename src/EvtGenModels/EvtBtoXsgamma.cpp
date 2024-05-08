@@ -75,15 +75,15 @@ void EvtBtoXsgamma::decay( EvtParticle* p )
 {
     //initialize here. -- its too damn slow otherwise.
 
-    if ( _model == nullptr ) {
+    if ( m_model == nullptr ) {
         if ( getArg( 0 ) == 1 )
-            _model = std::make_unique<EvtBtoXsgammaAliGreub>();
+            m_model = std::make_unique<EvtBtoXsgammaAliGreub>();
         else if ( getArg( 0 ) == 2 )
-            _model = std::make_unique<EvtBtoXsgammaKagan>();
+            m_model = std::make_unique<EvtBtoXsgammaKagan>();
         else if ( getArg( 0 ) == 3 )
-            _model = std::make_unique<EvtBtoXsgammaFixedMass>();
+            m_model = std::make_unique<EvtBtoXsgammaFixedMass>();
         else if ( getArg( 0 ) == 4 )
-            _model = std::make_unique<EvtBtoXsgammaFlatEnergy>();
+            m_model = std::make_unique<EvtBtoXsgammaFlatEnergy>();
         else {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "No valid EvtBtoXsgamma generator model selected "
@@ -93,7 +93,7 @@ void EvtBtoXsgamma::decay( EvtParticle* p )
                 << "Will terminate execution!" << endl;
             ::abort();
         }
-        _model->init( getNArg(), getArgs() );
+        m_model->init( getNArg(), getArgs() );
     }
 
     //  if ( p->getNDaug() != 0 ) {
@@ -120,7 +120,7 @@ void EvtBtoXsgamma::decay( EvtParticle* p )
 
     int Xscode = EvtPDL::getStdHep( getDaug( 0 ) );
 
-    mass[0] = _model->GetMass( Xscode );
+    mass[0] = m_model->GetMass( Xscode );
 
     EvtGenKine::PhaseSpace( getNDaug(), mass, p4, m_b );
 

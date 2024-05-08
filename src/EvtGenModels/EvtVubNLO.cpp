@@ -43,8 +43,8 @@ using std::endl;
 
 EvtVubNLO::~EvtVubNLO()
 {
-    cout << " max pdf : " << _gmax << endl;
-    cout << " efficiency : " << (float)_ngood / (float)_ntot << endl;
+    cout << " max pdf : " << m_gmax << endl;
+    cout << " efficiency : " << (float)m_ngood / (float)m_ntot << endl;
 }
 
 std::string EvtVubNLO::getName()
@@ -60,11 +60,11 @@ EvtDecayBase* EvtVubNLO::clone()
 void EvtVubNLO::init()
 {
     // max pdf
-    _gmax = 0;
-    _ntot = 0;
-    _ngood = 0;
-    _lbar = -1000;
-    _mupi2 = -1000;
+    m_gmax = 0;
+    m_ntot = 0;
+    m_ngood = 0;
+    m_lbar = -1000;
+    m_mupi2 = -1000;
 
     // check number of arguments
     int npar = 8;
@@ -77,30 +77,30 @@ void EvtVubNLO::init()
         ::abort();
     }
     // this is the shape function parameter
-    _mb = getArg( 0 );
-    _b = getArg( 1 );
-    _lambdaSF = getArg( 2 );    // shape function lambda is different from lambda
-    _mui = 1.5;                 // GeV (scale)
-    _kpar = getArg( 3 );        // 0
-    _idSF = abs( (int)getArg(
+    m_mb = getArg( 0 );
+    m_b = getArg( 1 );
+    m_lambdaSF = getArg( 2 );    // shape function lambda is different from lambda
+    m_mui = 1.5;                 // GeV (scale)
+    m_kpar = getArg( 3 );        // 0
+    m_idSF = abs( (int)getArg(
         4 ) );    // type of shape function 1: exponential (from Neubert)
     int nbins = abs( (int)getArg( 5 ) );
-    _masses.resize( nbins );
-    _weights.resize( nbins );
+    m_masses.resize( nbins );
+    m_weights.resize( nbins );
 
     // Shape function normalization
-    _mB = 5.28;    // temporary B meson mass for normalization
+    m_mB = 5.28;    // temporary B meson mass for normalization
 
     std::vector<double> sCoeffs( 11 );
-    sCoeffs[3] = _b;
-    sCoeffs[4] = _mb;
-    sCoeffs[5] = _mB;
-    sCoeffs[6] = _idSF;
+    sCoeffs[3] = m_b;
+    sCoeffs[4] = m_mb;
+    sCoeffs[5] = m_mB;
+    sCoeffs[6] = m_idSF;
     sCoeffs[7] = lambda_SF();
     sCoeffs[8] = mu_h();
     sCoeffs[9] = mu_i();
     sCoeffs[10] = 1.;
-    _SFNorm = SFNorm( sCoeffs );    // SF normalization;
+    m_SFNorm = SFNorm( sCoeffs );    // SF normalization;
 
     cout << " pdf 0.66, 1.32 , 4.32 " << tripleDiff( 0.66, 1.32, 4.32 ) << endl;
     cout << " pdf 0.23,0.37,3.76 " << tripleDiff( 0.23, 0.37, 3.76 ) << endl;
@@ -108,9 +108,9 @@ void EvtVubNLO::init()
     cout << " pdf 0.52,1.02,2.01 " << tripleDiff( 0.52, 1.02, 2.01 ) << endl;
     cout << " pdf 1.35,1.39,2.73 " << tripleDiff( 1.35, 1.39, 2.73 ) << endl;
 
-    if ( getNArg() - npar + 2 != int( 2 * _weights.size() ) ) {
+    if ( getNArg() - npar + 2 != int( 2 * m_weights.size() ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "EvtVubNLO generator expected " << _weights.size()
+            << "EvtVubNLO generator expected " << m_weights.size()
             << " masses and weights but found: " << ( getNArg() - npar ) / 2
             << endl;
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -119,26 +119,26 @@ void EvtVubNLO::init()
     }
     int j = npar - 2;
     double maxw = 0.;
-    for ( unsigned i = 0; i < _masses.size(); i++ ) {
-        _masses[i] = getArg( j++ );
-        if ( i > 0 && _masses[i] <= _masses[i - 1] ) {
+    for ( unsigned i = 0; i < m_masses.size(); i++ ) {
+        m_masses[i] = getArg( j++ );
+        if ( i > 0 && m_masses[i] <= m_masses[i - 1] ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "EvtVubNLO generator expected "
                 << " mass bins in ascending order!"
                 << "Will terminate execution!" << endl;
             ::abort();
         }
-        _weights[i] = getArg( j++ );
-        if ( _weights[i] < 0 ) {
+        m_weights[i] = getArg( j++ );
+        if ( m_weights[i] < 0 ) {
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "EvtVubNLO generator expected "
-                << " weights >= 0, but found: " << _weights[i] << endl;
+                << " weights >= 0, but found: " << m_weights[i] << endl;
             EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                 << "Will terminate execution!" << endl;
             ::abort();
         }
-        if ( _weights[i] > maxw )
-            maxw = _weights[i];
+        if ( m_weights[i] > maxw )
+            maxw = m_weights[i];
     }
     if ( maxw == 0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -147,13 +147,13 @@ void EvtVubNLO::init()
             << "Will terminate execution!" << endl;
         ::abort();
     }
-    for ( auto& w : _weights )
+    for ( auto& w : m_weights )
         w /= maxw;
 
     // the maximum dGamma*p2 value depends on alpha_s only:
 
-    //  _dGMax = 0.05;
-    _dGMax = 150.;
+    //  m_dGMax = 0.05;
+    m_dGMax = 150.;
 
     // for the Fermi Motion we need a B-Meso\n mass - but it's not critical
     // to get an exact value; in order to stay in the phase space for
@@ -183,7 +183,7 @@ void EvtVubNLO::decay( EvtParticle* p )
     lepton = p->getDaug( 1 );
     neutrino = p->getDaug( 2 );
 
-    _mB = p->mass();
+    m_mB = p->mass();
     ml = lepton->mass();
 
     bool tryit = true;
@@ -191,26 +191,26 @@ void EvtVubNLO::decay( EvtParticle* p )
     while ( tryit ) {
         // pm=(E_H+P_H)
         pm = EvtRandom::Flat( 0., 1 );
-        pm = pow( pm, 1. / 3. ) * _mB;
+        pm = pow( pm, 1. / 3. ) * m_mB;
         // pl=mB-2*El
         pl = EvtRandom::Flat( 0., 1 );
         pl = sqrt( pl ) * pm;
         // pp=(E_H-P_H)
         pp = EvtRandom::Flat( 0., pl );
 
-        _ntot++;
+        m_ntot++;
 
-        El = ( _mB - pl ) / 2.;
+        El = ( m_mB - pl ) / 2.;
         Eh = ( pp + pm ) / 2;
         sh = pp * pm;
 
         double pdf( 0. );
-        if ( pp < pl && El > ml && sh > _masses[0] * _masses[0] &&
-             _mB * _mB + sh - 2 * _mB * Eh > ml * ml ) {
-            double xran = EvtRandom::Flat( 0, _dGMax );
+        if ( pp < pl && El > ml && sh > m_masses[0] * m_masses[0] &&
+             m_mB * m_mB + sh - 2 * m_mB * Eh > ml * ml ) {
+            double xran = EvtRandom::Flat( 0, m_dGMax );
             pdf = tripleDiff( pp, pl, pm );    // triple differential distribution
             //      cout <<" P+,P-,Pl,Pdf= "<<pp <<" "<<pm<<" "<<pl<<" "<<pdf<<endl;
-            if ( pdf > _dGMax ) {
+            if ( pdf > m_dGMax ) {
                 EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                     << "EvtVubNLO pdf above maximum: " << pdf
                     << " P+,P-,Pl,Pdf= " << pp << " " << pm << " " << pl << " "
@@ -220,21 +220,21 @@ void EvtVubNLO::decay( EvtParticle* p )
             if ( pdf >= xran )
                 tryit = false;
 
-            if ( pdf > _gmax )
-                _gmax = pdf;
+            if ( pdf > m_gmax )
+                m_gmax = pdf;
         } else {
             //      cout <<" EvtVubNLO incorrect kinematics  sh= "<<sh<<"EH "<<Eh<<endl;
         }
 
         // reweight the Mx distribution
-        if ( !tryit && !_weights.empty() ) {
-            _ngood++;
+        if ( !tryit && !m_weights.empty() ) {
+            m_ngood++;
             double xran1 = EvtRandom::Flat();
             double m = sqrt( sh );
             unsigned j = 0;
-            while ( j < _masses.size() && m > _masses[j] )
+            while ( j < m_masses.size() && m > m_masses[j] )
                 j++;
-            double w = _weights[j - 1];
+            double w = m_weights[j - 1];
             if ( w < xran1 )
                 tryit = true;    // through away this candidate
         }
@@ -269,12 +269,12 @@ void EvtVubNLO::decay( EvtParticle* p )
     // calculate the W 4 vector in the B Meson restrframe
 
     double apWB = ptmp;
-    double pWB[4] = { _mB - Eh, -pHB[1], -pHB[2], -pHB[3] };
+    double pWB[4] = { m_mB - Eh, -pHB[1], -pHB[2], -pHB[3] };
 
     // first go in the W restframe and calculate the lepton and
     // the neutrino in the W frame
 
-    double mW2 = _mB * _mB + sh - 2 * _mB * Eh;
+    double mW2 = m_mB * m_mB + sh - 2 * m_mB * Eh;
     //  if(mW2<0.1){
     //  cout <<" low Q2! "<<pp<<" "<<epp<<" "<<x<<" "<<y<<endl;
     //}
@@ -353,32 +353,32 @@ double EvtVubNLO::tripleDiff( double pp, double pl, double pm )
     sCoeffs[0] = pp;
     sCoeffs[1] = pl;
     sCoeffs[2] = pm;
-    sCoeffs[3] = _b;
-    sCoeffs[4] = _mb;
-    sCoeffs[5] = _mB;
-    sCoeffs[6] = _idSF;
+    sCoeffs[3] = m_b;
+    sCoeffs[4] = m_mb;
+    sCoeffs[5] = m_mB;
+    sCoeffs[6] = m_idSF;
     sCoeffs[7] = lambda_SF();
     sCoeffs[8] = mu_h();
     sCoeffs[9] = mu_i();
-    sCoeffs[10] = _SFNorm;    // SF normalization;
+    sCoeffs[10] = m_SFNorm;    // SF normalization;
 
-    double c1 = ( _mB + pl - pp - pm ) * ( pm - pl );
+    double c1 = ( m_mB + pl - pp - pm ) * ( pm - pl );
     double c2 = 2 * ( pl - pp ) * ( pm - pl );
-    double c3 = ( _mB - pm ) * ( pm - pp );
+    double c3 = ( m_mB - pm ) * ( pm - pp );
     double aF1 = F10( sCoeffs );
     double aF2 = F20( sCoeffs );
     double aF3 = F30( sCoeffs );
     double td0 = c1 * aF1 + c2 * aF2 + c3 * aF3;
 
-    auto func = EvtItgPtrFunction{ &integrand, 0., _mB, sCoeffs };
+    auto func = EvtItgPtrFunction{ &integrand, 0., m_mB, sCoeffs };
     auto jetSF = EvtItgSimpsonIntegrator{ func, 0.01, 25 };
     double smallfrac =
         0.000001;    // stop a bit before the end to avoid problems with numerical integration
     double tdInt = jetSF.evaluate( 0, pp * ( 1 - smallfrac ) );
 
     double SU = U1lo( mu_h(), mu_i() ) *
-                pow( ( pm - pp ) / ( _mB - pp ), alo( mu_h(), mu_i() ) );
-    double TD = ( _mB - pp ) * SU * ( td0 + tdInt );
+                pow( ( pm - pp ) / ( m_mB - pp ), alo( mu_h(), mu_i() ) );
+    double TD = ( m_mB - pp ) * SU * ( td0 + tdInt );
 
     return TD;
 }
@@ -563,19 +563,18 @@ EvtVubNLO::F3(const std::vector<double> &coeffs){
 
 double EvtVubNLO::SFNorm( const std::vector<double>& /*coeffs*/ )
 {
-    double omega0 = 1.68;        //normalization scale (mB-2*1.8)
-    if ( _idSF == 1 ) {          // exponential SF
-        double omega0 = 1.68;    //normalization scale (mB-2*1.8)
-        return M0( mu_i(), omega0 ) * pow( _b, _b ) / lambda_SF() /
-               ( Gamma( _b ) - Gamma( _b, _b * omega0 / lambda_SF() ) );
-    } else if ( _idSF == 2 ) {    // Gaussian SF
-        double c = cGaus( _b );
+    double omega0 = 1.68;    //normalization scale (mB-2*1.8)
+    if ( m_idSF == 1 ) {     // exponential SF
+        return M0( mu_i(), omega0 ) * pow( m_b, m_b ) / lambda_SF() /
+               ( Gamma( m_b ) - Gamma( m_b, m_b * omega0 / lambda_SF() ) );
+    } else if ( m_idSF == 2 ) {    // Gaussian SF
+        double c = cGaus( m_b );
         return M0( mu_i(), omega0 ) * 2 / lambda_SF() /
-               pow( c, -( 1 + _b ) / 2. ) /
-               ( Gamma( ( 1 + _b ) / 2 ) -
-                 Gamma( ( 1 + _b ) / 2, pow( omega0 / lambda_SF(), 2 ) * c ) );
+               pow( c, -( 1 + m_b ) / 2. ) /
+               ( Gamma( ( 1 + m_b ) / 2 ) -
+                 Gamma( ( 1 + m_b ) / 2, pow( omega0 / lambda_SF(), 2 ) * c ) );
     } else {
-        EvtGenReport( EVTGEN_ERROR, "EvtGen" ) << "unknown SF " << _idSF << endl;
+        EvtGenReport( EVTGEN_ERROR, "EvtGen" ) << "unknown SF " << m_idSF << endl;
         return -1;
     }
 }
@@ -613,50 +612,50 @@ double EvtVubNLO::subV( const std::vector<double>& c )
 
 double EvtVubNLO::lambda_bar( double omega0 )
 {
-    if ( _lbar < 0 ) {
-        if ( _idSF == 1 ) {    // exponential SF
-            double rat = omega0 * _b / lambda_SF();
-            _lbar = lambda_SF() / _b *
-                    ( Gamma( 1 + _b ) - Gamma( 1 + _b, rat ) ) /
-                    ( Gamma( _b ) - Gamma( _b, rat ) );
-        } else if ( _idSF == 2 ) {    // Gaussian SF
-            double c = cGaus( _b );
-            _lbar = lambda_SF() *
-                    ( Gamma( 1 + _b / 2 ) -
-                      Gamma( 1 + _b / 2, pow( omega0 / lambda_SF(), 2 ) * c ) ) /
-                    ( Gamma( ( 1 + _b ) / 2 ) -
-                      Gamma( ( 1 + _b ) / 2,
-                             pow( omega0 / lambda_SF(), 2 ) * c ) ) /
-                    sqrt( c );
+    if ( m_lbar < 0 ) {
+        if ( m_idSF == 1 ) {    // exponential SF
+            double rat = omega0 * m_b / lambda_SF();
+            m_lbar = lambda_SF() / m_b *
+                     ( Gamma( 1 + m_b ) - Gamma( 1 + m_b, rat ) ) /
+                     ( Gamma( m_b ) - Gamma( m_b, rat ) );
+        } else if ( m_idSF == 2 ) {    // Gaussian SF
+            double c = cGaus( m_b );
+            m_lbar =
+                lambda_SF() *
+                ( Gamma( 1 + m_b / 2 ) -
+                  Gamma( 1 + m_b / 2, pow( omega0 / lambda_SF(), 2 ) * c ) ) /
+                ( Gamma( ( 1 + m_b ) / 2 ) -
+                  Gamma( ( 1 + m_b ) / 2, pow( omega0 / lambda_SF(), 2 ) * c ) ) /
+                sqrt( c );
         }
     }
-    return _lbar;
+    return m_lbar;
 }
 
 double EvtVubNLO::mu_pi2( double omega0 )
 {
-    if ( _mupi2 < 0 ) {
-        if ( _idSF == 1 ) {    // exponential SF
-            double rat = omega0 * _b / lambda_SF();
-            _mupi2 = 3 * ( pow( lambda_SF() / _b, 2 ) *
-                               ( Gamma( 2 + _b ) - Gamma( 2 + _b, rat ) ) /
-                               ( Gamma( _b ) - Gamma( _b, rat ) ) -
-                           pow( lambda_bar( omega0 ), 2 ) );
-        } else if ( _idSF == 2 ) {    // Gaussian SF
-            double c = cGaus( _b );
-            double m1 = Gamma( ( 3 + _b ) / 2 ) -
-                        Gamma( ( 3 + _b ) / 2,
+    if ( m_mupi2 < 0 ) {
+        if ( m_idSF == 1 ) {    // exponential SF
+            double rat = omega0 * m_b / lambda_SF();
+            m_mupi2 = 3 * ( pow( lambda_SF() / m_b, 2 ) *
+                                ( Gamma( 2 + m_b ) - Gamma( 2 + m_b, rat ) ) /
+                                ( Gamma( m_b ) - Gamma( m_b, rat ) ) -
+                            pow( lambda_bar( omega0 ), 2 ) );
+        } else if ( m_idSF == 2 ) {    // Gaussian SF
+            double c = cGaus( m_b );
+            double m1 = Gamma( ( 3 + m_b ) / 2 ) -
+                        Gamma( ( 3 + m_b ) / 2,
                                pow( omega0 / lambda_SF(), 2 ) * c );
-            double m2 = Gamma( 1 + _b / 2 ) -
-                        Gamma( 1 + _b / 2, pow( omega0 / lambda_SF(), 2 ) * c );
-            double m3 = Gamma( ( 1 + _b ) / 2 ) -
-                        Gamma( ( 1 + _b ) / 2,
+            double m2 = Gamma( 1 + m_b / 2 ) -
+                        Gamma( 1 + m_b / 2, pow( omega0 / lambda_SF(), 2 ) * c );
+            double m3 = Gamma( ( 1 + m_b ) / 2 ) -
+                        Gamma( ( 1 + m_b ) / 2,
                                pow( omega0 / lambda_SF(), 2 ) * c );
-            _mupi2 = 3 * pow( lambda_SF(), 2 ) *
-                     ( m1 / m3 - pow( m2 / m3, 2 ) ) / c;
+            m_mupi2 = 3 * pow( lambda_SF(), 2 ) *
+                      ( m1 / m3 - pow( m2 / m3, 2 ) ) / c;
         }
     }
-    return _mupi2;
+    return m_mupi2;
 }
 
 double EvtVubNLO::M0( double mui, double omega0 )

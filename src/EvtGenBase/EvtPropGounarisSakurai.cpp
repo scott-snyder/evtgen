@@ -27,11 +27,11 @@
 EvtPropGounarisSakurai::EvtPropGounarisSakurai( EvtDalitzPlot* dp,
                                                 EvtCyclic3::Pair pair,
                                                 double m0, double g0 ) :
-    EvtPropagator( m0, g0 ), _pair( pair ), _gbase( g0 )
+    EvtPropagator( m0, g0 ), m_pair( pair ), m_gbase( g0 )
 {
-    _dalitzSpace = dp;
-    _m1 = dp->m( EvtCyclic3::first( _pair ) );
-    _m2 = dp->m( EvtCyclic3::second( _pair ) );
+    m_dalitzSpace = dp;
+    m_m1 = dp->m( EvtCyclic3::first( m_pair ) );
+    m_m2 = dp->m( EvtCyclic3::second( m_pair ) );
 }
 
 EvtAmplitude<EvtPoint1D>* EvtPropGounarisSakurai::clone() const
@@ -43,14 +43,14 @@ EvtComplex EvtPropGounarisSakurai::amplitude( const EvtPoint1D& x ) const
 {
     double m = x.value();
     double s = m * m;
-    double m2 = _m0 * _m0;
-    double _width = _gbase;
-    double _mass = _m0;
+    double m2 = m_m0 * m_m0;
+    double f_width = m_gbase;
+    double f_mass = m_m0;
 
-    double A = ( 1 + dFun( m2 ) * _width / _mass );
+    double A = ( 1 + dFun( m2 ) * f_width / f_mass );
     double B = s - m2 - fsFun( s );
     //  double C = sqrt(s)*_g0;//wrong!
-    double C = sqrt( m2 ) * _g0;    //correct!
+    double C = sqrt( m2 ) * m_g0;    //correct!
     double D = B * B + C * C;
 
     EvtComplex rpt( A * B / D, -A * C / D );
@@ -60,14 +60,14 @@ EvtComplex EvtPropGounarisSakurai::amplitude( const EvtPoint1D& x ) const
 //  adapted from RhoPiTools
 double EvtPropGounarisSakurai::fsFun( double s ) const
 {
-    double m2 = _m0 * _m0;
+    double m2 = m_m0 * m_m0;
 
-    EvtTwoBodyKine vd( _m1, _m2, sqrt( s ) );
-    EvtTwoBodyKine vR( _m1, _m2, _m0 );
+    EvtTwoBodyKine vd( m_m1, m_m2, sqrt( s ) );
+    EvtTwoBodyKine vR( m_m1, m_m2, m_m0 );
     double k_s = vd.p();
     double k_Am2 = vR.p();
     //
-    double f = _gbase * m2 / pow( k_Am2, 3 ) *
+    double f = m_gbase * m2 / pow( k_Am2, 3 ) *
                ( pow( k_s, 2 ) * ( hFun( s ) - hFun( m2 ) ) +
                  ( m2 - s ) * pow( k_Am2, 2 ) * dh_dsFun( m2 ) );
 
@@ -76,9 +76,9 @@ double EvtPropGounarisSakurai::fsFun( double s ) const
 
 double EvtPropGounarisSakurai::hFun( double s ) const
 {
-    double sm = _m1 + _m2;
+    double sm = m_m1 + m_m2;
     double SQRTs = sqrt( s );
-    EvtTwoBodyKine vd( _m1, _m2, sqrt( s ) );
+    EvtTwoBodyKine vd( m_m1, m_m2, sqrt( s ) );
     double k_s = vd.p();
 
     return 2 / EvtConst::pi * ( k_s / SQRTs ) *
@@ -87,7 +87,7 @@ double EvtPropGounarisSakurai::hFun( double s ) const
 
 double EvtPropGounarisSakurai::dh_dsFun( double s ) const
 {
-    EvtTwoBodyKine vd( _m1, _m2, sqrt( s ) );
+    EvtTwoBodyKine vd( m_m1, m_m2, sqrt( s ) );
     double k_s = vd.p();
 
     return hFun( s ) * ( 1 / ( 8 * pow( k_s, 2 ) ) - 1 / ( 2 * s ) ) +
@@ -96,13 +96,13 @@ double EvtPropGounarisSakurai::dh_dsFun( double s ) const
 
 double EvtPropGounarisSakurai::dFun( double s ) const
 {
-    double sm = _m1 + _m2;
+    double sm = m_m1 + m_m2;
     double sm24 = sm * sm / 4;
     double m = sqrt( s );
-    EvtTwoBodyKine vd( _m1, _m2, sqrt( s ) );
+    EvtTwoBodyKine vd( m_m1, m_m2, sqrt( s ) );
     double k_m2 = vd.p();
-    double _pi = EvtConst::pi;
+    double pi = EvtConst::pi;
 
-    return 3.0 / _pi * sm24 / pow( k_m2, 2 ) * log( ( m + 2 * k_m2 ) / sm ) +
-           m / ( 2 * _pi * k_m2 ) - sm24 * m / ( _pi * pow( k_m2, 3 ) );
+    return 3.0 / pi * sm24 / pow( k_m2, 2 ) * log( ( m + 2 * k_m2 ) / sm ) +
+           m / ( 2 * pi * k_m2 ) - sm24 * m / ( pi * pow( k_m2, 3 ) );
 }

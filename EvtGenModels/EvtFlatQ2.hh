@@ -38,7 +38,7 @@ class EvtFlatQ2 : public EvtDecayProb {
     void decay( EvtParticle* p ) override;
 
   private:
-    bool _usePhsp;
+    bool m_usePhsp;
 };
 
 #endif

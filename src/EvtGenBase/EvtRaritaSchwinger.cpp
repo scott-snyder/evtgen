@@ -48,12 +48,12 @@ EvtRaritaSchwinger boostTo( const EvtRaritaSchwinger& rs, const EvtVector3R boos
 
 void EvtRaritaSchwinger::set( int i, int j, const EvtComplex& sp )
 {
-    _rs[i][j] = sp;
+    m_rs[i][j] = sp;
 }
 
 EvtComplex EvtRaritaSchwinger::get( int i, int j ) const
 {
-    return _rs[i][j];
+    return m_rs[i][j];
 }
 
 void EvtRaritaSchwinger::applyRotateEuler( double alpha, double beta,
@@ -132,7 +132,7 @@ ostream& operator<<( ostream& s, const EvtRaritaSchwinger& rs )
     s << endl;
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            s << rs._rs[i][j];
+            s << rs.m_rs[i][j];
         }
         s << endl;
     }
@@ -141,31 +141,31 @@ ostream& operator<<( ostream& s, const EvtRaritaSchwinger& rs )
 
 EvtVector4C EvtRaritaSchwinger::getVector( int i ) const
 {
-    EvtVector4C tmp( _rs[i][0], _rs[i][1], _rs[i][2], _rs[i][3] );
+    EvtVector4C tmp( m_rs[i][0], m_rs[i][1], m_rs[i][2], m_rs[i][3] );
     return tmp;
 }
 
 EvtDiracSpinor EvtRaritaSchwinger::getSpinor( int i ) const
 {
     EvtDiracSpinor tmp;
-    tmp.set( _rs[0][i], _rs[1][i], _rs[2][i], _rs[3][i] );
+    tmp.set( m_rs[0][i], m_rs[1][i], m_rs[2][i], m_rs[3][i] );
     return tmp;
 }
 
 void EvtRaritaSchwinger::setVector( int i, const EvtVector4C& v )
 {
-    _rs[i][0] = v.get( 0 );
-    _rs[i][1] = v.get( 1 );
-    _rs[i][2] = v.get( 2 );
-    _rs[i][3] = v.get( 3 );
+    m_rs[i][0] = v.get( 0 );
+    m_rs[i][1] = v.get( 1 );
+    m_rs[i][2] = v.get( 2 );
+    m_rs[i][3] = v.get( 3 );
 }
 
 void EvtRaritaSchwinger::setSpinor( int i, const EvtDiracSpinor& sp )
 {
-    _rs[0][i] = sp.get_spinor( 0 );
-    _rs[1][i] = sp.get_spinor( 1 );
-    _rs[2][i] = sp.get_spinor( 2 );
-    _rs[3][i] = sp.get_spinor( 3 );
+    m_rs[0][i] = sp.get_spinor( 0 );
+    m_rs[1][i] = sp.get_spinor( 1 );
+    m_rs[2][i] = sp.get_spinor( 2 );
+    m_rs[3][i] = sp.get_spinor( 3 );
 }
 
 EvtRaritaSchwinger dirProd( EvtVector4R v, EvtDiracSpinor u )
@@ -176,7 +176,7 @@ EvtRaritaSchwinger dirProd( EvtVector4R v, EvtDiracSpinor u )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            tmp._rs[i][j] = u.get_spinor( i ) * v.get( j );
+            tmp.m_rs[i][j] = u.get_spinor( i ) * v.get( j );
         }
     }
 
@@ -191,7 +191,7 @@ EvtRaritaSchwinger dirProd( EvtVector4C v, EvtDiracSpinor u )
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            tmp._rs[i][j] = u.get_spinor( i ) * v.get( j );
+            tmp.m_rs[i][j] = u.get_spinor( i ) * v.get( j );
         }
     }
 
@@ -205,7 +205,7 @@ EvtComplex operator*( const EvtRaritaSchwinger& u1, const EvtRaritaSchwinger& u2
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            tmp += conj( u1._rs[i][j] ) * u2._rs[i][j];
+            tmp += conj( u1.m_rs[i][j] ) * u2.m_rs[i][j];
         }
     }
 
@@ -218,7 +218,7 @@ EvtRaritaSchwinger& EvtRaritaSchwinger::operator+=( const EvtRaritaSchwinger& u2
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            _rs[i][j] += u2._rs[i][j];
+            m_rs[i][j] += u2.m_rs[i][j];
         }
     }
 
@@ -237,7 +237,7 @@ EvtRaritaSchwinger& EvtRaritaSchwinger::operator-=( const EvtRaritaSchwinger& u2
 
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            _rs[i][j] += u2._rs[i][j];
+            m_rs[i][j] += u2.m_rs[i][j];
         }
     }
 

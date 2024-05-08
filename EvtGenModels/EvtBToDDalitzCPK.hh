@@ -43,6 +43,6 @@ class EvtBToDDalitzCPK : public EvtDecayAmp {
     void initProbMax() override;
 
   private:
-    int _flag;
+    int m_flag;
 };
 #endif    // EVTGENMODELS_EVTBTODDALITZCPK_HH

@@ -28,68 +28,68 @@
 #include <stdlib.h>
 using std::endl;
 
-EvtAbsRadCorr* EvtRadCorr::_fsrEngine = nullptr;
-bool EvtRadCorr::_alwaysRadCorr = false;
-bool EvtRadCorr::_neverRadCorr = false;
+EvtAbsRadCorr* EvtRadCorr::m_fsrEngine = nullptr;
+bool EvtRadCorr::m_alwaysRadCorr = false;
+bool EvtRadCorr::m_neverRadCorr = false;
 
 EvtRadCorr::EvtRadCorr()
 {
-    _fsrEngine = nullptr;
-    _alwaysRadCorr = false;
-    _neverRadCorr = false;
+    m_fsrEngine = nullptr;
+    m_alwaysRadCorr = false;
+    m_neverRadCorr = false;
 }
 
 EvtRadCorr::~EvtRadCorr()
 {
-    if ( _fsrEngine )
-        delete _fsrEngine;
-    _fsrEngine = nullptr;
+    if ( m_fsrEngine )
+        delete m_fsrEngine;
+    m_fsrEngine = nullptr;
 }
 
 void EvtRadCorr::setRadCorrEngine( EvtAbsRadCorr* fsrEngine )
 {
-    _fsrEngine = fsrEngine;
+    m_fsrEngine = fsrEngine;
 
-    if ( _fsrEngine ) {
-        _fsrEngine->initialise();
+    if ( m_fsrEngine ) {
+        m_fsrEngine->initialise();
     }
 }
 
 void EvtRadCorr::doRadCorr( EvtParticle* p )
 {
-    if ( _fsrEngine == nullptr ) {
+    if ( m_fsrEngine == nullptr ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "No RadCorr model available in "
             << "EvtRadCorr::doRadCorr()." << endl;
         ::abort();
     }
 
-    if ( !_neverRadCorr )
-        _fsrEngine->doRadCorr( p );
+    if ( !m_neverRadCorr )
+        m_fsrEngine->doRadCorr( p );
     return;
 }
 
 bool EvtRadCorr::alwaysRadCorr()
 {
-    return _alwaysRadCorr;
+    return m_alwaysRadCorr;
 }
 bool EvtRadCorr::neverRadCorr()
 {
-    return _neverRadCorr;
+    return m_neverRadCorr;
 }
 
 void EvtRadCorr::setAlwaysRadCorr()
 {
-    _alwaysRadCorr = true;
-    _neverRadCorr = false;
+    m_alwaysRadCorr = true;
+    m_neverRadCorr = false;
 }
 void EvtRadCorr::setNeverRadCorr()
 {
-    _alwaysRadCorr = false;
-    _neverRadCorr = true;
+    m_alwaysRadCorr = false;
+    m_neverRadCorr = true;
 }
 void EvtRadCorr::setNormalRadCorr()
 {
-    _alwaysRadCorr = false;
-    _neverRadCorr = false;
+    m_alwaysRadCorr = false;
+    m_neverRadCorr = false;
 }

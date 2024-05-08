@@ -31,8 +31,8 @@
 
 EvtBToPlnuBKFF::EvtBToPlnuBKFF( double alpha, double beta )
 {
-    _alpha = alpha;
-    _beta = beta;
+    m_alpha = alpha;
+    m_beta = beta;
 
     return;
 }
@@ -50,8 +50,8 @@ void EvtBToPlnuBKFF::getscalarff( EvtId parent, EvtId /*daught*/, double t,
 
     //Compute BK parametrization (t==q2)
     double fplus = 1.0 /
-                   ( ( 1.0 - t / mBstar2 ) * ( 1.0 - _alpha * t / mBstar2 ) );
-    double fzero = 1.0 / ( 1.0 - t / ( mBstar2 * _beta ) );
+                   ( ( 1.0 - t / mBstar2 ) * ( 1.0 - m_alpha * t / mBstar2 ) );
+    double fzero = 1.0 / ( 1.0 - t / ( mBstar2 * m_beta ) );
 
     *fp = fplus;
     *f0 = fzero;

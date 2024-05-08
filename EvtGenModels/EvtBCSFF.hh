@@ -49,8 +49,8 @@ class EvtBCSFF : public EvtSemiLeptonicFF {
                       double*, double*, double*, double*, double* ) override;
 
   private:
-    int idScalar, whichfit;
-    double MBc, MD0;
+    int m_idScalar, m_whichfit;
+    double m_MBc, m_MD0;
 };
 
 #endif

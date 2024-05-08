@@ -62,7 +62,7 @@ class EvtRareLbToLll : public EvtDecayAmp {
     double m_poleSize{ 0.00005 };
     bool m_electronMode{ false };
 
-    std::unique_ptr<EvtRareLbToLllFFBase> ffmodel_;
-    std::unique_ptr<EvtRareLbToLllWC> wcmodel_;
+    std::unique_ptr<EvtRareLbToLllFFBase> m_ffmodel;
+    std::unique_ptr<EvtRareLbToLllWC> m_wcmodel;
 };
 #endif    //

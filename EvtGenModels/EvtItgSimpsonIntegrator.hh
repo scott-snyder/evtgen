@@ -42,8 +42,8 @@ class EvtItgSimpsonIntegrator : public EvtItgAbsIntegrator {
     double evaluateIt( double, double ) const override;
 
   private:
-    double _precision;
-    double _maxLoop;
+    double m_precision;
+    double m_maxLoop;
 
     //EvtItgSimpsonIntegrator( const EvtItgSimpsonIntegrator& );                //// Copy Constructor
     //EvtItgSimpsonIntegrator& operator= ( const EvtItgSimpsonIntegrator& );    // Assignment op

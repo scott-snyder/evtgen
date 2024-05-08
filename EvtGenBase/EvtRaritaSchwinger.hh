@@ -86,7 +86,7 @@ class EvtRaritaSchwinger final {
 
   private:
     //First index in spinor index, second is Lorentz index.
-    EvtComplex _rs[4][4];
+    EvtComplex m_rs[4][4];
 };
 
 EvtRaritaSchwinger::EvtRaritaSchwinger()
@@ -94,7 +94,7 @@ EvtRaritaSchwinger::EvtRaritaSchwinger()
     int i, j;
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            _rs[i][j] = 0.0;
+            m_rs[i][j] = 0.0;
         }
     }
 }
@@ -104,7 +104,7 @@ EvtRaritaSchwinger::EvtRaritaSchwinger( const EvtRaritaSchwinger& rs )
     int i, j;
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            _rs[i][j] = rs._rs[i][j];
+            m_rs[i][j] = rs.m_rs[i][j];
         }
     }
 }
@@ -114,7 +114,7 @@ EvtRaritaSchwinger& EvtRaritaSchwinger::operator=( const EvtRaritaSchwinger& rs 
     int i, j;
     for ( i = 0; i < 4; i++ ) {
         for ( j = 0; j < 4; j++ ) {
-            _rs[i][j] = rs._rs[i][j];
+            m_rs[i][j] = rs.m_rs[i][j];
         }
     }
 
