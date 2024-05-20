@@ -23,14 +23,16 @@ HepMC is used to store particle information.
 We now recommend using HepMC3 but support for HepMC2 continues to be available.
 
 Optionally, it is possible to use other external generators, such as Pythia8
-(for Pythia decays in the DECAY.DEC file, for example), Photos (for
-radiative corrections) and Tauola (for tau decays):
+(for Pythia decays in the DECAY.DEC file, for example), Photos or Sherpa's Photons++
+(for radiative corrections) and Tauola (for tau decays):
 
 Pythia8  https://pythia.org/
 
-Photos   http://photospp.web.cern.ch/photospp/
+Photos   https://photospp.web.cern.ch/
 
-Tauola   http://tauolapp.web.cern.ch/tauolapp/
+Tauola   https://tauolapp.web.cern.ch/
+
+Sherpa   https://sherpa-team.gitlab.io/
 
 All of these packages have instructions for building them.
 
@@ -38,6 +40,7 @@ For HepMC3 support the following versions are required:
 Pythia8: 8.201 or newer
 Photos: 3.64 or newer
 Tauola: 1.1.8 or newer
+Sherpa: 2.0.0 or newer
 
 Once these packages are available, build the EvtGen release by creating a build directory
 alongside the EvtGen source directory (assumed here to be called evtgen.git) and running:
@@ -84,6 +87,13 @@ within the EvtGen build directory, using the following options:
   `-DTauola++_ROOT_DIR=<location>`
   or
   `-DTAUOLAPP_ROOT_DIR=<location>`    : Location of Tauola++ install directory
+                                        As with HepMC this may be automatically detected
+                                        depending on your build environment, otherwise the
+                                        location can be specified via this option.
+
+  `-DEVTGEN_SHERPA=ON`                : Enable linking with Sherpa (OFF by default)
+
+  `-DSHERPA_ROOT_DIR=<location>`      : Location of Sherpa install directory
                                         As with HepMC this may be automatically detected
                                         depending on your build environment, otherwise the
                                         location can be specified via this option.
@@ -168,9 +178,10 @@ The major points comparing this version with the 2009 release are the following:
 
    To use the external generators, use the following code:
    ```c++
-   #include "EvtGenExternal/EvtExternalGenList.hh"
    #include "EvtGenBase/EvtAbsRadCorr.hh"
    #include "EvtGenBase/EvtDecayBase.hh"
+
+   #include "EvtGenExternal/EvtExternalGenList.hh"
 
    // Set up the default external generator list: Photos, Pythia and/or Tauola
    EvtExternalGenList genList;
@@ -178,12 +189,14 @@ The major points comparing this version with the 2009 release are the following:
    std::list<EvtDecayBase*> extraModels = genList.getListOfModels();
 
    // Create the EvtGen generator object
-   EvtGen myGenerator("decayFile.dec", "evt.pdl", randomEnginePointer,
-                      radCorrEngine, &extraModels);
+   EvtGen myGenerator( "decayFile.dec", "evt.pdl", randomEnginePointer,
+                       radCorrEngine, &extraModels );
 
    //If you don't want to use external generators, use the following:
    //EvtGen myGenerator("decayFile.dec", "evt.pdl", randomEnginePointer);
    ```
+
+   To use Sherpa's PHOTONS++ generator instead of Photos, replace above `getPhotosModel()` with `getSherpaPhotonsModel()`.
 
    The files [Pythia8_README.md](Pythia8_README.md) and [Tauola_README.md](Tauola_README.md) have more details about
    using the new Pythia 8 and Tauola generators (called via the PYTHIA and TAUOLA
@@ -193,7 +206,7 @@ The major points comparing this version with the 2009 release are the following:
    It is now possible to use alias particle decays for the Pythia 8 model.
    Two Pythia 8 instances are used in EvtPythiaEngine for normal and aliased decays.
    Since the underlying code for Photos and Tauola is still Fortran, it is only
-   possible to have one (unique) instance of each of these external generators.
+   possible to have one unique instance of each of these external generators.
    This can only be fixed if these packages are converted to pure C++ code.
 
 
@@ -206,7 +219,6 @@ The major points comparing this version with the 2009 release are the following:
    (EvtGenModels/EvtGenericDalitz.cpp), that should be used instead of EvtDDalitz.
    The generic Dalitz model uses xml files to configure the resonance amplitude
    parameters (instead of being hardcoded in EvtDDalitz):
-
    ```
    Decay D+
    1.0  K-  pi+  pi+  GENERIC_DALITZ MyDalitzParameters.xml;
@@ -229,5 +241,3 @@ The major points comparing this version with the 2009 release are the following:
    One or the other can be chosen as the mixing method for the B system by
    choosing 0 (coherent) or 1 (incoherent) for the last integer argument
    in the EvtGen() constructor.
-
-

@@ -41,7 +41,7 @@ mark_as_advanced(PYTHIA8_INCLUDE_DIR PYTHIA8_XML)
 if(PYTHIA8_XML AND NOT PYTHIA8_VERSION)
   file(READ ${PYTHIA8_XML}/Version.xml versionstr)
   string(REGEX REPLACE ".*Pythia:versionNumber.*default.*[0-9][.]([0-9]+).*" "\\1" PYTHIA8_VERSION "${versionstr}")
-  set(PYTHIA8_VERSION ${PYTHIA8_VERSION} CACHE STRING "Detected version of Pythia8.")
+  set(PYTHIA8_VERSION ${PYTHIA8_VERSION} CACHE STRING "Detected version of Pythia8")
   mark_as_advanced(PYTHIA8_VERSION)
 endif()
 
@@ -76,7 +76,7 @@ endif()
 # handle the QUIETLY and REQUIRED arguments and set PYTHIA8_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(Pythia8 DEFAULT_MSG PYTHIA8_INCLUDE_DIR PYTHIA8_LIBRARIES PYTHIA8_XML)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(Pythia8 DEFAULT_MSG PYTHIA8_VERSION PYTHIA8_INCLUDE_DIR PYTHIA8_LIBRARIES PYTHIA8_XML)
 
 set(PYTHIA8_INCLUDE_DIRS ${PYTHIA8_INCLUDE_DIR})
 

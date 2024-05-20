@@ -83,7 +83,7 @@ endif()
 
 
 # Add the EvtGenExternal library (if required)...
-if( EVTGEN_PYTHIA OR EVTGEN_PHOTOS OR EVTGEN_TAUOLA )
+if( EVTGEN_PYTHIA OR EVTGEN_PHOTOS OR EVTGEN_TAUOLA OR EVTGEN_SHERPA)
     # Again, first build all the object files (with PIC enabled) so they can be
     # used to build both the shared and static libs
     add_library(objlib_ext OBJECT ${EVTGEN_EXTERNAL_SOURCES})
@@ -130,6 +130,17 @@ if( EVTGEN_PYTHIA OR EVTGEN_PHOTOS OR EVTGEN_TAUOLA )
             target_include_directories(objlib_ext PRIVATE ${Tauola++_INCLUDE_DIRS})
         endif()
     endif()
+    if(EVTGEN_SHERPA)
+        target_compile_definitions(objlib_ext PRIVATE EVTGEN_SHERPA)
+        if( ${SHERPA_VERSION} VERSION_GREATER 2.2.15 )
+            target_compile_definitions(objlib_ext PRIVATE EVTGEN_SHERPA_USEMACRO)
+        endif()
+        if (EVTGEN_SUPPRESS_EXTERNAL_WARNINGS)
+            target_include_directories(objlib_ext SYSTEM PRIVATE ${SHERPA_INCLUDE_DIRS})
+        else()
+            target_include_directories(objlib_ext PRIVATE ${SHERPA_INCLUDE_DIRS})
+        endif()
+    endif()
 
     # Now make the shared library from the object files
     add_library(EvtGenExternal SHARED $<TARGET_OBJECTS:objlib_ext>)
@@ -141,6 +152,14 @@ if( EVTGEN_PYTHIA OR EVTGEN_PHOTOS OR EVTGEN_TAUOLA )
         target_compile_definitions(EvtGenExternal PUBLIC EVTGEN_PYTHIA)
         target_include_directories(EvtGenExternal PUBLIC ${PYTHIA8_INCLUDE_DIRS})
         target_link_libraries(EvtGenExternal PUBLIC ${PYTHIA8_LIBRARIES})
+    endif()
+    if(EVTGEN_SHERPA)
+        target_compile_definitions(EvtGenExternal PUBLIC EVTGEN_SHERPA)
+        if( ${SHERPA_VERSION} VERSION_GREATER 2.2.15 )
+            target_compile_definitions(EvtGenExternal PRIVATE EVTGEN_SHERPA_USEMACRO)
+        endif()
+        target_include_directories(EvtGenExternal PUBLIC ${SHERPA_INCLUDE_DIRS})
+        target_link_libraries(EvtGenExternal PUBLIC ${SHERPA_LIBRARIES})
     endif()
     if(EVTGEN_HEPMC3)
         target_compile_definitions(EvtGenExternal PUBLIC EVTGEN_HEPMC3)
@@ -199,6 +218,14 @@ if( EVTGEN_PYTHIA OR EVTGEN_PHOTOS OR EVTGEN_TAUOLA )
         target_include_directories(EvtGenExternalStatic PUBLIC ${PYTHIA8_INCLUDE_DIRS})
         target_link_libraries(EvtGenExternalStatic PUBLIC ${PYTHIA8_LIBRARIES})
     endif()
+    if(EVTGEN_SHERPA)
+        target_compile_definitions(EvtGenExternalStatic PUBLIC EVTGEN_SHERPA)
+        if( ${SHERPA_VERSION} VERSION_GREATER 2.2.15 )
+            target_compile_definitions(EvtGenExternalStatic PRIVATE EVTGEN_SHERPA_USEMACRO)
+        endif()
+        target_include_directories(EvtGenExternalStatic PUBLIC ${SHERPA_INCLUDE_DIRS})
+        target_link_libraries(EvtGenExternalStatic PUBLIC ${SHERPA_LIBRARIES})
+    endif()
     if(EVTGEN_HEPMC3)
         target_compile_definitions(EvtGenExternalStatic PUBLIC EVTGEN_HEPMC3)
         target_include_directories(EvtGenExternalStatic PUBLIC ${HEPMC3_INCLUDE_DIR})
@@ -255,7 +282,7 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
 
-if( EVTGEN_PYTHIA OR EVTGEN_PHOTOS OR EVTGEN_TAUOLA )
+if( EVTGEN_PYTHIA OR EVTGEN_PHOTOS OR EVTGEN_TAUOLA OR EVTGEN_SHERPA)
     install(
         TARGETS EvtGenExternal EvtGenExternalStatic
         EXPORT "EvtGenTargets"

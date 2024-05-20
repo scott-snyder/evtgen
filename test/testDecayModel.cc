@@ -113,9 +113,7 @@ bool TestDecayModel::run()
         m_config.at( "models" ).get<std::vector<std::string>>() };
     const auto modelParameters{
         m_config.at( "parameters" ).get<std::vector<std::vector<std::string>>>() };
-    const auto outFileName{ m_config.at( "outfile" ).get<std::string>() };
     const auto nEvents{ m_config.at( "events" ).get<int>() };
-    const auto refFileName{ m_config.at( "reference" ).get<std::string>() };
 
     // Then check for optional fields, setting default values if not present
 
@@ -130,6 +128,31 @@ bool TestDecayModel::run()
         ( m_config.contains( "extras" ) && m_config.at( "extras" ).is_array() )
             ? m_config.at( "extras" ).get<std::vector<std::string>>()
             : std::vector<std::string>{} };
+
+    // Set the FSR generator. Use PHOTOS by default.
+    const auto fsrGenerator{
+        ( m_config.contains( "fsr_generator" ) )
+            ? m_config.at( "fsr_generator" ).get<std::string>()
+            : "PHOTOS" };
+
+    // Set reference and output file names, insert fsrGenerator name if FSR simulation is not deactivated
+    const bool noFSR = std::find( extraCommands.begin(), extraCommands.end(),
+                                  "noFSR" ) != extraCommands.end();
+
+    const std::string fileNameEnd = noFSR ? ".root"
+                                          : "_" + fsrGenerator + ".root";
+
+    const auto outFileStrSize =
+        m_config.at( "outfile" ).get<std::string>().size() - 5;
+    const auto refFileStrSize =
+        m_config.at( "reference" ).get<std::string>().size() - 5;
+
+    const auto outFileName =
+        m_config.at( "outfile" ).get<std::string>().substr( 0, outFileStrSize ) +
+        fileNameEnd;
+    const auto refFileName =
+        m_config.at( "reference" ).get<std::string>().substr( 0, refFileStrSize ) +
+        fileNameEnd;
 
     const auto debugFlag{ ( m_config.contains( "debug_flag" ) &&
                             m_config.at( "debug_flag" ).is_boolean() )
@@ -159,7 +182,19 @@ bool TestDecayModel::run()
     bool convertPythiaCodes( false );
     bool useEvtGenRandom( true );
     EvtExternalGenList genList( convertPythiaCodes, "", "gamma", useEvtGenRandom );
-    radCorrEngine = genList.getPhotosModel();
+    if ( fsrGenerator == "PHOTOS" ) {
+        radCorrEngine = genList.getPhotosModel();
+    } else if ( fsrGenerator == "SherpaPhotons1" ) {
+        radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 1, 0 );
+    } else if ( fsrGenerator == "SherpaPhotons20" ) {
+        radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 2, 0 );
+    } else if ( fsrGenerator == "SherpaPhotons21" ) {
+        radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 2, 1 );
+    } else {
+        std::cerr << "ERROR: The option fsr_generator = '" << fsrGenerator
+                  << "' is not supported. " << std::endl;
+        return false;
+    }
     extraModels = genList.getListOfModels();
 #endif
 
@@ -811,12 +846,19 @@ double TestDecayModel::getValue( const EvtParticle* parent,
         value = p1.get( 3 );
 
     } else if ( !selectedVarName.compare( "cosHel" ) ||
-                !selectedVarName.compare( "absCosHel" ) ) {
+                !selectedVarName.compare( "absCosHel" ) ||
+                !selectedVarName.compare( "cosHelParent" ) ) {
         // Cosine of helicity angle
         EvtVector4R p12;
         EvtVector4R p1Res;
 
-        if ( d2 != 0 ) {
+        if ( !selectedVarName.compare( "cosHelParent" ) ) {
+            p12 = selectedParent->getP4Lab();
+            const EvtVector4R boost{ p12.get( 0 ), -p12.get( 1 ), -p12.get( 2 ),
+                                     -p12.get( 3 ) };
+            // Momentum of particle d1 in resonance frame, p1Res
+            p1Res = boostTo( p1_lab, boost );
+        } else if ( d2 != 0 ) {
             // Resonance center-of-mass system (d1 and d2)
             p12 = p1_lab + p2_lab;
             // Boost vector
@@ -1387,8 +1429,10 @@ double TestDecayModel::getCosAcoplanarityAngle( const EvtParticle* selectedParen
 
 int main( int argc, char* argv[] )
 {
-    if ( argc != 2 ) {
-        std::cerr << "Expecting one argument: json input file" << std::endl;
+    if ( argc != 2 && argc != 3 ) {
+        std::cerr << "Expecting at least one argument: json input file."
+                  << "\nOne additional argument supported for fsrGenerator"
+                  << std::endl;
         return 1;
     }
 
@@ -1397,6 +1441,10 @@ int main( int argc, char* argv[] )
     std::ifstream inputStr{ argv[1] };
     inputStr >> config;
     inputStr.close();
+
+    if ( argc == 3 ) {
+        config["fsr_generator"] = argv[2];
+    }
 
     bool allOK{ true };
     if ( config.is_array() ) {

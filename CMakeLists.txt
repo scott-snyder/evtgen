@@ -64,6 +64,7 @@ option(EVTGEN_HEPMC3 "Enable/disable linking with HepMC3"   ON)
 option(EVTGEN_PYTHIA "Enable/disable linking with Pythia8"  OFF)
 option(EVTGEN_PHOTOS "Enable/disable linking with Photos++" OFF)
 option(EVTGEN_TAUOLA "Enable/disable linking with Tauola++" OFF)
+option(EVTGEN_SHERPA "Enable/disable linking with Sherpa" OFF)
 option(EVTGEN_SUPPRESS_EXTERNAL_WARNINGS "Enable/disable suppression of warnings from external dependencies" OFF)
 if (EVTGEN_HEPMC3)
     message(STATUS "EvtGen: Linking with HepMC3")
@@ -74,6 +75,7 @@ message(STATUS "EvtGen: Optional linking with HepMC3   EVTGEN_HEPMC3 ${EVTGEN_HE
 message(STATUS "EvtGen: Optional linking with Pythia8  EVTGEN_PYTHIA ${EVTGEN_PYTHIA}")
 message(STATUS "EvtGen: Optional linking with Photos++ EVTGEN_PHOTOS ${EVTGEN_PHOTOS}")
 message(STATUS "EvtGen: Optional linking with Tauola++ EVTGEN_TAUOLA ${EVTGEN_TAUOLA}")
+message(STATUS "EvtGen: Optional linking with Sherpa   EVTGEN_SHERPA ${EVTGEN_SHERPA}")
 include(EvtGenExternalDependencies)
 
 # Setup clang-tidy checks

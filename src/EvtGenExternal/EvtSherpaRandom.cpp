@@ -18,40 +18,8 @@
 * along with EvtGen.  If not, see <https://www.gnu.org/licenses/>.     *
 ***********************************************************************/
 
-#ifndef EVTEXTERNALGENLIST_HH
-#define EVTEXTERNALGENLIST_HH
+#ifdef EVTGEN_SHERPA
 
-#include "EvtGenBase/EvtAbsRadCorr.hh"
-#include "EvtGenBase/EvtDecayBase.hh"
-
-#include <list>
-
-// Description: A factory type method to create engines for external physics
-// generators like Pythia.
-
-class EvtExternalGenList {
-  public:
-    EvtExternalGenList( bool convertPythiaCodes = false,
-                        std::string pythiaXmlDir = "",
-                        std::string photonType = "gamma",
-                        bool useEvtGenRandom = true );
-
-    virtual ~EvtExternalGenList();
-
-    std::list<EvtDecayBase*> getListOfModels();
-
-    EvtAbsRadCorr* getPhotosModel( const double infraredCutOff = 1.0e-7,
-                                   const double maxWtInterference = 64.0 );
-
-    EvtAbsRadCorr* getSherpaPhotonsModel( const double infraredCutOff = 1.0e-7,
-                                          const int mode = 2,
-                                          const int useME = 0 );
-
-  protected:
-  private:
-    std::string m_photonType;
-
-    bool m_useEvtGenRandom;
-};
+#include "EvtGenExternal/EvtSherpaRandom.hh"
 
 #endif

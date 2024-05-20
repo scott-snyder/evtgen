@@ -41,35 +41,64 @@
 # Location in which to install
 INSTALL_PREFIX="/usr/local"
 
-# EvtGen version or tag number (or branch name). No extra spaces on this line!
-VERSION=R02-02-00
+# EvtGen version or tag number (or branch name)
+VERSION="R02-02-00"
+
+# EvtGen git URL
+# HepForge main repo
+EVTGEN_URL="https://phab.hepforge.org/source/evtgen.git"
+# CERN GitLab mirror
+#EVTGEN_URL="https://gitlab.cern.ch/evtgen/evtgen.git"
+
+# Options to pass to 'make', e.g. "-j 6"
+BUILDARGS=""
 
 # HepMC version numbers - change HEPMCMAJORVERSION to 2 in order to use HepMC2
 HEPMCMAJORVERSION="3"
 HEPMC2VER="2.06.10"
 HEPMC3VER="3.2.6"
-HEPMC2PKG="HepMC-"$HEPMC2VER
-HEPMC3PKG="HepMC3-"$HEPMC3VER
-HEPMC2TAR="hepmc"$HEPMC2VER".tgz"
-HEPMC3TAR=$HEPMC3PKG".tar.gz"
+HEPMC2PKG="HepMC-$HEPMC2VER"
+HEPMC3PKG="HepMC3-$HEPMC3VER"
+HEPMC2TAR="hepmc$HEPMC2VER.tgz"
+HEPMC3TAR="$HEPMC3PKG.tar.gz"
+HEPMCBASEURL="http://hepmc.web.cern.ch/hepmc/releases"
+if [ "$HEPMCMAJORVERSION" -lt "3" ]
+then
+    HEPMCURL=$HEPMCBASEURL/$HEPMC2TAR
+else
+    HEPMCURL=$HEPMCBASEURL/$HEPMC3TAR
+fi
 
-# Pythia version number with no decimal points, e.g. 8230 corresponds to version 8.230. This
-# follows the naming convention of Pythia install tar files. Again, no extra spaces allowed.
-PYTHIAVER=8310
-PYTHIAPKG="pythia"$PYTHIAVER
-PYTHIATAR=$PYTHIAPKG".tgz"
+# Pythia version number with no decimal points, e.g. 8310 corresponds to version 8.310
+# This follows the naming convention of Pythia install tar files
+PYTHIAVER="8310"
+PYTHIAPKG="pythia$PYTHIAVER"
+PYTHIATAR="$PYTHIAPKG.tgz"
+PYTHIABASEURL="https://pythia.org/download"
+PYTHIAURL="$PYTHIABASEURL/pythia${PYTHIAVER:0:2}/$PYTHIATAR"
 
 # Photos++ version number
 PHOTOSVER="3.64"
 PHOTOSPKG="PHOTOS"
-PHOTOSDIR="PHOTOS."$PHOTOSVER
-PHOTOSTAR=$PHOTOSDIR".tar.gz"
+PHOTOSDIR="PHOTOS.$PHOTOSVER"
+PHOTOSTAR="$PHOTOSDIR.tar.gz"
+PHOTOSBASEURL="https://photospp.web.cern.ch/resources"
+PHOTOSURL="$PHOTOSBASEURL/$PHOTOSDIR/$PHOTOSTAR"
 
 # Tauola++ version number
 TAUOLAVER="1.1.8"
 TAUOLAPKG="TAUOLA"
-TAUOLADIR="TAUOLA."$TAUOLAVER
-TAUOLATAR=$TAUOLADIR".tar.gz"
+TAUOLADIR="TAUOLA.$TAUOLAVER"
+TAUOLATAR="$TAUOLADIR.tar.gz"
+TAUOLABASEURL="https://tauolapp.web.cern.ch/resources"
+TAUOLAURL="$TAUOLABASEURL/$TAUOLADIR/$TAUOLATAR"
+
+# Sherpa version number
+SHERPAVER="2.2.15"
+SHERPAPKG="sherpa-v$SHERPAVER"
+SHERPATAR="$SHERPAPKG.tar.gz"
+SHERPABASEURL="https://gitlab.com/sherpa-team/sherpa/-/archive"
+SHERPAURL="$SHERPABASEURL/v$SHERPAVER/$SHERPATAR"
 
 # Determine OS
 osArch=`uname`
@@ -106,10 +135,10 @@ mkdir -p tarfiles
 mkdir -p sources
 mkdir -p builds
 
-echo Downloading EvtGen source from GIT
+echo Downloading EvtGen source from GIT, using URL: $EVTGEN_URL
 
 cd sources
-git clone https://phab.hepforge.org/source/evtgen.git evtgen
+git clone $EVTGEN_URL evtgen
 cd evtgen
 git checkout $VERSION
 
@@ -123,15 +152,16 @@ then
     export LC_ALL=en_US.UTF-8
 fi
 
-if [ "$HEPMCMAJORVERSION" -lt "3" ]
-then
-    curl -O http://hepmc.web.cern.ch/hepmc/releases/$HEPMC2TAR
-else
-    curl -O http://hepmc.web.cern.ch/hepmc/releases/$HEPMC3TAR
-fi
-curl -O https://pythia.org/download/pythia${PYTHIAVER:0:2}/$PYTHIATAR
-curl -O http://photospp.web.cern.ch/photospp/resources/$PHOTOSDIR/$PHOTOSTAR
-curl -O http://tauolapp.web.cern.ch/tauolapp/resources/$TAUOLADIR/$TAUOLATAR
+echo Downloading HepMC source from: $HEPMCURL
+curl -O $HEPMCURL
+echo Downloading Pythia8 source from: $PYTHIAURL
+curl -O $PYTHIAURL
+echo Downloading Photos source from: $PHOTOSURL
+curl -O $PHOTOSURL
+echo Downloading Tauola source from: $TAUOLAURL
+curl -O $TAUOLAURL
+echo Downloading Sherpa source from: $SHERPAURL
+curl -O $SHERPAURL
 
 cd $BUILD_BASE/sources
 
@@ -145,6 +175,7 @@ fi
 tar -xzf $BUILD_BASE/tarfiles/$PYTHIATAR
 tar -xzf $BUILD_BASE/tarfiles/$PHOTOSTAR
 tar -xzf $BUILD_BASE/tarfiles/$TAUOLATAR
+tar -xzf $BUILD_BASE/tarfiles/$SHERPATAR
 
 # Patch TAUOLA and PHOTOS on Darwin (Mac)
 if [ "$osArch" == "Darwin" ]
@@ -168,19 +199,19 @@ then
     mkdir -p $BUILD_BASE/builds/HepMC2
     cd $BUILD_BASE/builds/HepMC2
     $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX $BUILD_BASE/sources/$HEPMC2PKG -Dmomentum:STRING=GEV -Dlength:STRING=MM
-    make
+    make $BUILDARGS
     make install
 
     echo Installing pythia8 from $BUILD_BASE/sources/$PYTHIAPKG
     cd $BUILD_BASE/sources/$PYTHIAPKG
     ./configure --enable-shared --prefix=$INSTALL_PREFIX
-    make
+    make $BUILDARGS
     make install
 
     echo Installing PHOTOS from $BUILD_BASE/sources/$PHOTOSPKG
     cd $BUILD_BASE/sources/$PHOTOSPKG
     ./configure --with-hepmc3= --with-hepmc=$INSTALL_PREFIX --prefix=$INSTALL_PREFIX
-    make
+    make $BUILDARGS
     make install
 
     if [ "$osArch" != "Darwin" ]
@@ -188,29 +219,28 @@ then
         echo Installing TAUOLA from $BUILD_BASE/sources/$TAUOLAPKG
         cd $BUILD_BASE/sources/$TAUOLAPKG
         ./configure --without-hepmc3 --with-hepmc=$INSTALL_PREFIX --prefix=$INSTALL_PREFIX
-        make
+        make $BUILDARGS
         make install
     fi
-
 else
 
     echo Installing HepMC3 from $BUILD_BASE/sources/$HEPMC3PKG
     mkdir -p $BUILD_BASE/builds/HepMC3
     cd $BUILD_BASE/builds/HepMC3
     $CMAKE -DHEPMC3_ENABLE_ROOTIO:BOOL=OFF -DHEPMC3_ENABLE_PYTHON:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX $BUILD_BASE/sources/$HEPMC3PKG
-    make
+    make $BUILDARGS
     make install
 
     echo Installing pythia8 from $BUILD_BASE/souces/$PYTHIAPKG
     cd $BUILD_BASE/sources/$PYTHIAPKG
     ./configure --enable-shared --prefix=$INSTALL_PREFIX
-    make
+    make $BUILDARGS
     make install
 
     echo Installing PHOTOS from $BUILD_BASE/sources/$PHOTOSPKG
     cd $BUILD_BASE/sources/$PHOTOSPKG
     ./configure --without-hepmc --with-hepmc3=$INSTALL_PREFIX --prefix=$INSTALL_PREFIX
-    make
+    make $BUILDARGS
     make install
 
     if [ "$osArch" != "Darwin" ]
@@ -218,10 +248,17 @@ else
         echo Installing TAUOLA from $BUILD_BASE/sources/$TAUOLAPKG
         cd $BUILD_BASE/sources/$TAUOLAPKG
         ./configure --without-hepmc --with-hepmc3=$INSTALL_PREFIX --prefix=$INSTALL_PREFIX
-        make
+        make $BUILDARGS
         make install
     fi
 fi
+
+echo Installing Sherpa from $BUILD_BASE/sources/$SHERPAPKG
+cd $BUILD_BASE/sources/$SHERPAPKG
+autoreconf -i
+./configure --with-sqlite3=install --prefix=$INSTALL_PREFIX 
+make $BUILDARGS
+make install
 
 echo Installing EvtGen from $BUILD_BASE/sources/evtgen
 mkdir -p $BUILD_BASE/builds/evtgen
@@ -234,13 +271,15 @@ then
 		-DEVTGEN_HEPMC3:BOOL=OFF -DHEPMC2_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PYTHIA:BOOL=ON  -DPYTHIA8_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PHOTOS:BOOL=ON  -DPHOTOSPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-		-DEVTGEN_TAUOLA:BOOL=OFF
+		-DEVTGEN_TAUOLA:BOOL=OFF \
+		-DEVTGEN_SHERPA:BOOL=ON  -DSHERPA_ROOT_DIR:PATH=$INSTALL_PREFIX 
     else
         $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX $BUILD_BASE/sources/evtgen \
 		-DEVTGEN_HEPMC3:BOOL=ON  -DHEPMC3_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PYTHIA:BOOL=ON  -DPYTHIA8_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PHOTOS:BOOL=ON  -DPHOTOSPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-		-DEVTGEN_TAUOLA:BOOL=OFF
+		-DEVTGEN_TAUOLA:BOOL=OFF \
+		-DEVTGEN_SHERPA:BOOL=ON  -DSHERPA_ROOT_DIR:PATH=$INSTALL_PREFIX 
     fi
 else
     if [ "$HEPMCMAJORVERSION" -lt "3" ]
@@ -249,16 +288,18 @@ else
 		-DEVTGEN_HEPMC3:BOOL=OFF -DHEPMC2_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PYTHIA:BOOL=ON  -DPYTHIA8_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PHOTOS:BOOL=ON  -DPHOTOSPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-		-DEVTGEN_TAUOLA:BOOL=ON  -DTAUOLAPP_ROOT_DIR:PATH=$INSTALL_PREFIX
+		-DEVTGEN_TAUOLA:BOOL=ON  -DTAUOLAPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
+		-DEVTGEN_SHERPA:BOOL=ON  -DSHERPA_ROOT_DIR:PATH=$INSTALL_PREFIX 
     else
         $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX $BUILD_BASE/sources/evtgen \
 		-DEVTGEN_HEPMC3:BOOL=ON  -DHEPMC3_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PYTHIA:BOOL=ON  -DPYTHIA8_ROOT_DIR:PATH=$INSTALL_PREFIX \
 		-DEVTGEN_PHOTOS:BOOL=ON  -DPHOTOSPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-		-DEVTGEN_TAUOLA:BOOL=ON  -DTAUOLAPP_ROOT_DIR:PATH=$INSTALL_PREFIX
+		-DEVTGEN_TAUOLA:BOOL=ON  -DTAUOLAPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
+		-DEVTGEN_SHERPA:BOOL=ON  -DSHERPA_ROOT_DIR:PATH=$INSTALL_PREFIX 
     fi
 fi
-make
+make $BUILDARGS
 make install
 
 echo Setup done.

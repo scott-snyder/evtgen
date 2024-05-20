@@ -35,6 +35,8 @@ if( ${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} MATCHES 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -Wall -Wextra -Wshadow -Woverloaded-virtual")
 
     if( ${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" )
+        # Save temporary intermediate compilation products, e.g. result of pre-processor, etc.
+        #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -save-temps=obj")
         set(CMAKE_CXX_FLAGS_DEBUG          "-Og -g3")
         set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
         set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -DNDEBUG")

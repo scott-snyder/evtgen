@@ -11,8 +11,16 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+21 May 2024 Fernando Abudinen
+* D115: Introduced Sherpa's PHOTONS++ generator
+  as alternative for final-state radiation simulation.
+  - Added Sherpa dependencies and linking in compilation files
+  - Introduced new `EvtSherpaPhotons` interface
+  - Introduced new `EvtSherpaRandom` interface to propagate EvtGen's random number into Sherpa
+  - Implemented `fsrGenerator` as input argument in `testDecayModel` module
+
 8 May 2024 Michal Kreps, Thomas Latham, Andrii Verbytskyi
-* D58: Rename member variables to follow convention of m_ prefix
+* D58: Rename member variables to follow convention of `m_` prefix
   - In addition:
     * Introduce pre-build check in the CI that convention is being followed in all classes
     * Fix shadowing of variables in some classes

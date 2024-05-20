@@ -25,6 +25,7 @@
 #include "EvtGenExternal/EvtExternalGenFactory.hh"
 #include "EvtGenExternal/EvtPHOTOS.hh"
 #include "EvtGenExternal/EvtPythia.hh"
+#include "EvtGenExternal/EvtSherpaPhotons.hh"
 #include "EvtGenExternal/EvtTauola.hh"
 
 EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
@@ -71,6 +72,30 @@ EvtAbsRadCorr* EvtExternalGenList::getPhotosModel(
 {
     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
         << " PHOTOS generator has been called for FSR simulation, but it was not switched on during compilation."
+        << std::endl;
+
+    EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+        << " The simulation will be generated without FSR." << std::endl;
+
+    return new EvtNoRadCorr{};
+}
+#endif
+
+#ifdef EVTGEN_SHERPA
+EvtAbsRadCorr* EvtExternalGenList::getSherpaPhotonsModel(
+    const double infraredCutOff, const int mode, const int useME )
+{
+    // Define the Photos model, which uses the EvtSherpaPhotonsEngine class.
+    EvtSherpaPhotons* sherpaPhotonsModel =
+        new EvtSherpaPhotons( m_useEvtGenRandom, infraredCutOff, mode, useME );
+    return sherpaPhotonsModel;
+}
+#else
+EvtAbsRadCorr* EvtExternalGenList::getSherpaPhotonsModel(
+    const double /*infraredCutOff*/, const int /*mode*/, const int /*useME*/ )
+{
+    EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+        << " Sherpa's PHOTONS++ generator has been called for FSR simulation, but Sherpa was not switched on during compilation."
         << std::endl;
 
     EvtGenReport( EVTGEN_ERROR, "EvtGen" )

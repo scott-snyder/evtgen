@@ -27,6 +27,7 @@ set(Photos++_ROOT_DIR "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Location of Photos++
 set(Tauola++_ROOT_DIR "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Location of Tauola++ installation")
 set(PHOTOSPP_ROOT_DIR "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Location of Photos++ installation - alternative spelling")
 set(TAUOLAPP_ROOT_DIR "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Location of Tauola++ installation - alternative spelling")
+set(SHERPA_ROOT_DIR "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Location of Sherpa installation")
 
 # The components we search for in the external generators depend on the version
 # of HepMC we're working with
@@ -43,6 +44,9 @@ if(EVTGEN_HEPMC3)
         # From version 1.1.8 Tauola has HepMC3 support
         find_package(Tauola++ REQUIRED COMPONENTS Fortran CxxInterface HepMC3)
     endif()
+    if(EVTGEN_SHERPA)
+        find_package(Sherpa 2.0.0 REQUIRED)
+    endif()
 else()
     find_package(HepMC2 REQUIRED)
     if(EVTGEN_PYTHIA)
@@ -56,5 +60,8 @@ else()
     if(EVTGEN_TAUOLA)
         # Older versions of Tauola don't have the HepMC component, the HepMC2 interface is in CxxInterface
         find_package(Tauola++ REQUIRED COMPONENTS Fortran CxxInterface OPTIONAL_COMPONENTS HepMC)
+    endif()
+    if(EVTGEN_SHERPA)
+        find_package(Sherpa 2.0.0 REQUIRED)
     endif()
 endif()
