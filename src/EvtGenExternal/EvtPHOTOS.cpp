@@ -213,7 +213,6 @@ void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )
                     gamma->setFSRP4toZero();
                     // Set its particle attribute to specify it is a FSR photon
                     gamma->setAttribute( "FSR", 1 );    // it is a FSR photon
-                    gamma->setAttribute( "ISR", 0 );    // it is not an ISR photon
                     // Let the mother know about this new photon
                     gamma->addDaug( theParticle );
                 }

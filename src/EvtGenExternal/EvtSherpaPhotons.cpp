@@ -287,7 +287,6 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
                 gamma->init( m_gammaId, newP4 );
                 gamma->setFSRP4toZero();
                 gamma->setAttribute( "FSR", 1 );
-                gamma->setAttribute( "ISR", 0 );
                 gamma->addDaug( theParticle );
             }
         }

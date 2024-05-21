@@ -43,6 +43,7 @@ void EvtPhotonParticle::init( EvtId part_n, double e, double px, double py,
     setpart_num( part_n );
 
     setLifetime();
+    setAttribute( "FSR", 0 );
 }
 
 EvtVector4C EvtPhotonParticle::epsParentPhoton( int i ) const

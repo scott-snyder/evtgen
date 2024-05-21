@@ -11,6 +11,11 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+22 May 2024 Fernando Abudinen
+* D118: Removed obsolete `ISR` attribute for photons. It was redundant as it was supposed to be
+  the contrary of the `FSR` attribute. It was never used and could lead to confusion.
+  - The `FSR` attribute is now set to 0 by default at initialisation for `EvtPhotonParticle`.
+
 21 May 2024 Fernando Abudinen
 * D115: Introduced Sherpa's PHOTONS++ generator
   as alternative for final-state radiation simulation.
