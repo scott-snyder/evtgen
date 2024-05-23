@@ -37,8 +37,8 @@ using std::string;
 
 class EvtBcVNpi : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
     void initProbMax() override;
     void init() override;
     void decay( EvtParticle* p ) override;

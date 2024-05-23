@@ -31,9 +31,9 @@ class EvtParticle;
 
 class EvtKStopizmumu : public EvtDecayAmp {
   public:
-    std::string getName() override { return "KS_PI0MUMU"; }
+    std::string getName() const override { return "KS_PI0MUMU"; }
 
-    EvtDecayBase* clone() override { return new EvtKStopizmumu; }
+    EvtDecayBase* clone() const override { return new EvtKStopizmumu; }
 
     void init() override;
 

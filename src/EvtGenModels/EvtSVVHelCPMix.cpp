@@ -37,12 +37,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSVVHelCPMix::getName()
+std::string EvtSVVHelCPMix::getName() const
 {
     return "SVVHELCPMIX";
 }
 
-EvtDecayBase* EvtSVVHelCPMix::clone()
+EvtDecayBase* EvtSVVHelCPMix::clone() const
 {
     return new EvtSVVHelCPMix;
 }

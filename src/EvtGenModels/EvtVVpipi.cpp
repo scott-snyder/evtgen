@@ -31,21 +31,21 @@
 #include <string>
 using std::endl;
 
-std::string EvtVVpipi::getName()
+std::string EvtVVpipi::getName() const
 {
     return "VVPIPI";
 }
 
-EvtDecayBase* EvtVVpipi::clone()
+EvtDecayBase* EvtVVpipi::clone() const
 {
     return new EvtVVpipi;
 }
 
 void EvtVVpipi::init()
 {
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi-" );
-    static EvtId PI0 = EvtPDL::getId( "pi0" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId PIM = EvtPDL::getId( "pi-" );
+    static const EvtId PI0 = EvtPDL::getId( "pi0" );
 
     // check that there are 0 arguments
     checkNArg( 0 );

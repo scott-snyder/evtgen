@@ -35,12 +35,12 @@ using std::cout;
 using std::endl;
 using std::fstream;
 
-std::string EvtBToPlnuBK::getName()
+std::string EvtBToPlnuBK::getName() const
 {
     return "BTOPLNUBK";
 }
 
-EvtBToPlnuBK* EvtBToPlnuBK::clone()
+EvtBToPlnuBK* EvtBToPlnuBK::clone() const
 {
     return new EvtBToPlnuBK;
 }

@@ -31,8 +31,8 @@ class EvtOmegaDalitz : public EvtDecayAmp {
   public:
     EvtOmegaDalitz() {}
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void init() override;
     void decay( EvtParticle* p ) override;

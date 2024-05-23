@@ -38,8 +38,8 @@ class EvtEtaLLPiPi : public EvtDecayProb {
     void init() override;
     void initProbMax() override;
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void decay( EvtParticle* p ) override;
 

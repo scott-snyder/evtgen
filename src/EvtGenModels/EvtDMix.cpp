@@ -29,12 +29,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtDMix::getName()
+std::string EvtDMix::getName() const
 {
     return "DMIX";
 }
 
-EvtDecayBase* EvtDMix::clone()
+EvtDecayBase* EvtDMix::clone() const
 {
     return new EvtDMix;
 }

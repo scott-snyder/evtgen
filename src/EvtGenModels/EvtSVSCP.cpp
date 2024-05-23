@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSVSCP::getName()
+std::string EvtSVSCP::getName() const
 {
     return "SVS_CP";
 }
 
-EvtDecayBase* EvtSVSCP::clone()
+EvtDecayBase* EvtSVSCP::clone() const
 {
     return new EvtSVSCP;
 }
@@ -64,8 +64,8 @@ void EvtSVSCP::initProbMax()
 void EvtSVSCP::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     EvtParticle* v;
     p->initializePhaseSpace( getNDaug(), getDaugs() );

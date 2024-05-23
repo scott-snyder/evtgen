@@ -32,8 +32,8 @@ class EvtPto3P : public EvtIntervalDecayAmp<EvtDalitzPoint> {
   public:
     EvtPto3P() {}
     ~EvtPto3P() {}
-    std::string getName() override { return "PTO3P"; }
-    EvtDecayBase* clone() override { return new EvtPto3P(); }
+    std::string getName() const override { return "PTO3P"; }
+    EvtDecayBase* clone() const override { return new EvtPto3P(); }
 
     EvtAmpFactory<EvtDalitzPoint>* createFactory(
         const EvtMultiChannelParser& parser ) override;

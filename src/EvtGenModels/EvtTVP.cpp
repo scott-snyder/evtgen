@@ -29,12 +29,12 @@
 
 #include <cmath>
 
-std::string EvtTVP::getName()
+std::string EvtTVP::getName() const
 {
     return "TVP";
 }
 
-EvtDecayBase* EvtTVP::clone()
+EvtDecayBase* EvtTVP::clone() const
 {
     return new EvtTVP;
 }

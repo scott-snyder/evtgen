@@ -34,12 +34,12 @@
 
 using namespace std;
 
-std::string EvtXPsiGamma::getName()
+std::string EvtXPsiGamma::getName() const
 {
     return "X38722-+_PSI_GAMMA";
 }
 
-EvtDecayBase* EvtXPsiGamma::clone()
+EvtDecayBase* EvtXPsiGamma::clone() const
 {
     return new EvtXPsiGamma;
 }

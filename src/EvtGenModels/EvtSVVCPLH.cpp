@@ -34,12 +34,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtSVVCPLH::getName()
+std::string EvtSVVCPLH::getName() const
 {
     return "SVV_CPLH";
 }
 
-EvtDecayBase* EvtSVVCPLH::clone()
+EvtDecayBase* EvtSVVCPLH::clone() const
 {
     return new EvtSVVCPLH;
 }
@@ -68,8 +68,8 @@ void EvtSVVCPLH::initProbMax()
 void EvtSVVCPLH::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
 
     double t;
     EvtId other_b;
@@ -93,8 +93,8 @@ void EvtSVVCPLH::decay( EvtParticle* p )
 
     EvtComplex cG0P, cG1P, cG1M;
 
-    static double ctauL = EvtPDL::getctau( EvtPDL::getId( "B_s0L" ) );
-    static double ctauH = EvtPDL::getctau( EvtPDL::getId( "B_s0H" ) );
+    static const double ctauL = EvtPDL::getctau( EvtPDL::getId( "B_s0L" ) );
+    static const double ctauH = EvtPDL::getctau( EvtPDL::getId( "B_s0H" ) );
 
     //I'm not sure if the fabs() is right when t can be
     //negative as in the case of Bs produced coherently.

@@ -419,8 +419,8 @@ void EvtDecayBase::findMass( EvtParticle* p )
     p->setMass( mass );
 }
 
-void EvtDecayBase::findMasses( EvtParticle* p, int ndaugs, EvtId daugs[10],
-                               double masses[10] )
+void EvtDecayBase::findMasses( EvtParticle* p, int ndaugs,
+                               const EvtId daugs[10], double masses[10] )
 {
     int i;
     double mass_sum;

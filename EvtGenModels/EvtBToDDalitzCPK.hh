@@ -34,8 +34,8 @@
 
 class EvtBToDDalitzCPK : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtBToDDalitzCPK* clone() override;
+    std::string getName() const override;
+    EvtBToDDalitzCPK* clone() const override;
 
     void decay( EvtParticle* p ) override;
     void init() override;

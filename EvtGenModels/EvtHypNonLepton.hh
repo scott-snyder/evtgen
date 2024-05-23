@@ -29,8 +29,8 @@
 
 class EvtHypNonLepton : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void decay( EvtParticle* p ) override;
     void init() override;
@@ -42,7 +42,7 @@ class EvtHypNonLepton : public EvtDecayAmp {
     double m_alpha;
     double m_phi;
     EvtComplex m_B_to_A;
-    long m_noTries;
+    std::size_t m_noTries;
 };
 
 #endif

@@ -26,12 +26,12 @@
 
 #include "EvtGenModels/EvtDalitzTable.hh"
 
-std::string EvtGenericDalitz::getName()
+std::string EvtGenericDalitz::getName() const
 {
     return "GENERIC_DALITZ";
 }
 
-EvtDecayBase* EvtGenericDalitz::clone()
+EvtDecayBase* EvtGenericDalitz::clone() const
 {
     return new EvtGenericDalitz();
 }

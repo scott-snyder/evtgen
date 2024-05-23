@@ -30,12 +30,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtBTo3piCP::getName()
+std::string EvtBTo3piCP::getName() const
 {
     return "BTO3PI_CP";
 }
 
-EvtBTo3piCP* EvtBTo3piCP::clone()
+EvtBTo3piCP* EvtBTo3piCP::clone() const
 {
     return new EvtBTo3piCP;
 }
@@ -75,8 +75,8 @@ void EvtBTo3piCP::initProbMax()
 void EvtBTo3piCP::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

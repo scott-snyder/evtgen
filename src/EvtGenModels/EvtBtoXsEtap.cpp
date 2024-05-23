@@ -31,12 +31,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtBtoXsEtap::getName()
+std::string EvtBtoXsEtap::getName() const
 {
     return "BTOXSETAP";
 }
 
-EvtDecayBase* EvtBtoXsEtap::clone()
+EvtDecayBase* EvtBtoXsEtap::clone() const
 {
     return new EvtBtoXsEtap;
 }
@@ -71,8 +71,8 @@ void EvtBtoXsEtap::decay( EvtParticle* p )
         pdaug[i] = p->getDaug( i );
     }
 
-    static EvtVector4R p4[MAX_DAUG];
-    static double mass[MAX_DAUG];
+    EvtVector4R p4[MAX_DAUG];
+    double mass[MAX_DAUG];
 
     m_b = p->mass();
 

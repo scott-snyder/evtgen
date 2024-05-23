@@ -31,8 +31,8 @@ class EvtParticle;
 
 class EvtDToKpienu : public EvtDecayProb {
   public:
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void init() override;
     void initProbMax() override;

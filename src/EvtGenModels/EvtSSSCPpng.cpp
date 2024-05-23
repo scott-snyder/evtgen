@@ -32,12 +32,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSSSCPpng::getName()
+std::string EvtSSSCPpng::getName() const
 {
     return "SSS_CP_PNG";
 }
 
-EvtDecayBase* EvtSSSCPpng::clone()
+EvtDecayBase* EvtSSSCPpng::clone() const
 {
     return new EvtSSSCPpng;
 }
@@ -64,8 +64,8 @@ void EvtSSSCPpng::initProbMax()
 void EvtSSSCPpng::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

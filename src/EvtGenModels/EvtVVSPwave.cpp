@@ -31,12 +31,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtVVSPwave::getName()
+std::string EvtVVSPwave::getName() const
 {
     return "VVS_PWAVE";
 }
 
-EvtDecayBase* EvtVVSPwave::clone()
+EvtDecayBase* EvtVVSPwave::clone() const
 {
     return new EvtVVSPwave;
 }

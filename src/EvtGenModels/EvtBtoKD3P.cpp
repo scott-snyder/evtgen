@@ -34,13 +34,13 @@
 using std::endl;
 
 //------------------------------------------------------------------
-EvtDecayBase* EvtBtoKD3P::clone()
+EvtDecayBase* EvtBtoKD3P::clone() const
 {
     return new EvtBtoKD3P();
 }
 
 //------------------------------------------------------------------
-std::string EvtBtoKD3P::getName()
+std::string EvtBtoKD3P::getName() const
 {
     return "BTOKD3P";
 }
@@ -124,8 +124,8 @@ void EvtBtoKD3P::decay( EvtParticle* p )
             assert( 0 );
         }
 
-        EvtId* daugs1 = model1->getDaugs();
-        EvtId* daugs2 = model2->getDaugs();
+        const EvtId* daugs1 = model1->getDaugs();
+        const EvtId* daugs2 = model2->getDaugs();
 
         bool idMatch = true;
         int d;

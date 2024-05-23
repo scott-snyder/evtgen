@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtOmegaDalitz::getName()
+std::string EvtOmegaDalitz::getName() const
 {
     return "OMEGA_DALITZ";
 }
 
-EvtDecayBase* EvtOmegaDalitz::clone()
+EvtDecayBase* EvtOmegaDalitz::clone() const
 {
     return new EvtOmegaDalitz;
 }

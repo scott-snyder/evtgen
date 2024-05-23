@@ -34,8 +34,8 @@ class EvtParticle;
 
 class EvtGenericDalitz : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void init() override;
     void initProbMax() override{};    //prob max will be set in init

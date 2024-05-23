@@ -33,12 +33,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSLBKPole::getName()
+std::string EvtSLBKPole::getName() const
 {
     return "SLBKPOLE";    //modified
 }
 
-EvtDecayBase* EvtSLBKPole::clone()
+EvtDecayBase* EvtSLBKPole::clone() const
 {    //modified
 
     return new EvtSLBKPole;

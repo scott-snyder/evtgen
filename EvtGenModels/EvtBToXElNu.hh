@@ -37,10 +37,10 @@ class EvtBToXElNu : public EvtDecayAmp {
     EvtBToXElNu() = default;
 
     /** Returns name of module */
-    std::string getName() override;
+    std::string getName() const override;
 
     /** Clones module */
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     /** Creates a decay */
     void decay( EvtParticle* p ) override;

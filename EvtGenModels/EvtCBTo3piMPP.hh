@@ -30,8 +30,8 @@ class EvtParticle;
 
 class EvtCBTo3piMPP : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtCBTo3piMPP* clone() override;
+    std::string getName() const override;
+    EvtCBTo3piMPP* clone() const override;
 
     void init() override;
     void initProbMax() override;

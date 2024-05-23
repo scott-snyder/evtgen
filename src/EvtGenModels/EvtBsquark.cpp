@@ -32,12 +32,12 @@
 #include <iostream>
 #include <string>
 
-std::string EvtBsquark::getName()
+std::string EvtBsquark::getName() const
 {
     return "BSQUARK";
 }
 
-EvtDecayBase* EvtBsquark::clone()
+EvtDecayBase* EvtBsquark::clone() const
 {
     return new EvtBsquark;
 }
@@ -55,10 +55,10 @@ void EvtBsquark::initProbMax()
 
 void EvtBsquark::decay( EvtParticle* p )
 {
-    static EvtId cquark = EvtPDL::getId( "c" );
-    static EvtId anticquark = EvtPDL::getId( "anti-c" );
+    static const EvtId cquark = EvtPDL::getId( "c" );
+    static const EvtId anticquark = EvtPDL::getId( "anti-c" );
 
-    static EvtIdSet leptons{ "e-", "mu-", "tau-" };
+    static const EvtIdSet leptons{ "e-", "mu-", "tau-" };
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 

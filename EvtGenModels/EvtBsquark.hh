@@ -27,8 +27,8 @@ class EvtParticle;
 
 class EvtBsquark : public EvtDecayProb {
   public:
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void initProbMax() override;
     void init() override;

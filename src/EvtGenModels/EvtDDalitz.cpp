@@ -38,12 +38,12 @@
 
 using std::endl;
 
-std::string EvtDDalitz::getName()
+std::string EvtDDalitz::getName() const
 {
     return "D_DALITZ";
 }
 
-EvtDecayBase* EvtDDalitz::clone()
+EvtDecayBase* EvtDDalitz::clone() const
 {
     return new EvtDDalitz;
 }
@@ -53,10 +53,10 @@ bool isNeutralKaon( const EvtId& theId )
     // See if the particle id matches that for a neutral kaon
     bool result( false );
 
-    static EvtId K0 = EvtPDL::getId( "K0" );
-    static EvtId KB = EvtPDL::getId( "anti-K0" );
-    static EvtId KL = EvtPDL::getId( "K_L0" );
-    static EvtId KS = EvtPDL::getId( "K_S0" );
+    static const EvtId K0 = EvtPDL::getId( "K0" );
+    static const EvtId KB = EvtPDL::getId( "anti-K0" );
+    static const EvtId KL = EvtPDL::getId( "K_L0" );
+    static const EvtId KS = EvtPDL::getId( "K_S0" );
 
     // Compare EvtId integers, which are unique for each particle type,
     // corresponding to the order particles appear in the "evt.pdl" table.
@@ -104,26 +104,21 @@ bool compareIds( const std::pair<EvtId, int>& left,
 
 void EvtDDalitz::init()
 {
-    static EvtId DM = EvtPDL::getId( "D-" );
-    static EvtId DP = EvtPDL::getId( "D+" );
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
-    static EvtId DSP = EvtPDL::getId( "D_s+" );
-    static EvtId DSM = EvtPDL::getId( "D_s-" );
-    static EvtId KM = EvtPDL::getId( "K-" );
-    static EvtId KP = EvtPDL::getId( "K+" );
+    static const EvtId DM = EvtPDL::getId( "D-" );
+    static const EvtId DP = EvtPDL::getId( "D+" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId DSP = EvtPDL::getId( "D_s+" );
+    static const EvtId DSM = EvtPDL::getId( "D_s-" );
+    static const EvtId KM = EvtPDL::getId( "K-" );
+    static const EvtId KP = EvtPDL::getId( "K+" );
 
-    //static EvtId K0=EvtPDL::getId("K0");
-    //static EvtId KB=EvtPDL::getId("anti-K0");
-    //static EvtId KL=EvtPDL::getId("K_L0");
-    //static EvtId KS=EvtPDL::getId("K_S0");
+    static const EvtId PIM = EvtPDL::getId( "pi-" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId PI0 = EvtPDL::getId( "pi0" );
 
-    static EvtId PIM = EvtPDL::getId( "pi-" );
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PI0 = EvtPDL::getId( "pi0" );
-
-    static double MPI = EvtPDL::getMeanMass( PI0 );
-    static double MKP = EvtPDL::getMeanMass( KP );
+    static const double MPI = EvtPDL::getMeanMass( PI0 );
+    static const double MKP = EvtPDL::getMeanMass( KP );
 
     // check that there are 0 arguments and 3 daughters
     checkNArg( 0 );
@@ -356,12 +351,12 @@ void EvtDDalitz::initProbMax()
 
 void EvtDDalitz::decay( EvtParticle* p )
 {
-    static EvtId BP = EvtPDL::getId( "B+" );
-    static EvtId BM = EvtPDL::getId( "B-" );
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId BP = EvtPDL::getId( "B+" );
+    static const EvtId BM = EvtPDL::getId( "B-" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
-    static EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
 
     double oneby2 = 0.707106782;
 

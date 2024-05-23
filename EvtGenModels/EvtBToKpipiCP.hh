@@ -43,8 +43,8 @@ class EvtBToKpipiCP : public EvtDecayAmp {
   public:
     EvtBToKpipiCP() {}
 
-    std::string getName() override;
-    EvtBToKpipiCP* clone() override;
+    std::string getName() const override;
+    EvtBToKpipiCP* clone() const override;
 
     void init() override;
     void initProbMax() override;

@@ -28,7 +28,7 @@
 
 EvtComplex EvtRareLbToLllWC::GetC7Eff( const double q2 ) const
 {
-    static double mbeff = 4.8;
+    static const double mbeff = 4.8;
     double shat = q2 / mbeff / mbeff;
     double logshat;
     logshat = log( shat );
@@ -114,7 +114,7 @@ EvtComplex EvtRareLbToLllWC::GetC7Eff( const double q2 ) const
 
 EvtComplex EvtRareLbToLllWC::GetC9Eff( const double q2, const bool btod ) const
 {
-    static double mbeff = 4.8;
+    static const double mbeff = 4.8;
     double shat = q2 / mbeff / mbeff;
     double logshat;
     logshat = log( shat );

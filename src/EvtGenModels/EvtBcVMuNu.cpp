@@ -34,12 +34,12 @@
 
 using namespace std;
 
-std::string EvtBcVMuNu::getName()
+std::string EvtBcVMuNu::getName() const
 {
     return "BC_VMN";
 }
 
-EvtDecayBase* EvtBcVMuNu::clone()
+EvtDecayBase* EvtBcVMuNu::clone() const
 {
     return new EvtBcVMuNu;
 }

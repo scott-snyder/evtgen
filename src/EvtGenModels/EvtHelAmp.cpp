@@ -32,12 +32,12 @@
 #include <vector>
 using std::endl;
 
-std::string EvtHelAmp::getName()
+std::string EvtHelAmp::getName() const
 {
     return "HELAMP";
 }
 
-EvtDecayBase* EvtHelAmp::clone()
+EvtDecayBase* EvtHelAmp::clone() const
 {
     return new EvtHelAmp;
 }

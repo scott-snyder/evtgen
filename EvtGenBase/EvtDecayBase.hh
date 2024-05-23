@@ -87,7 +87,7 @@ class EvtDecayBase {
     void printInfo() const;
 
     //Does not really belong here but I don't have a better place.
-    static void findMasses( EvtParticle* p, int ndaugs, EvtId daugs[10],
+    static void findMasses( EvtParticle* p, int ndaugs, const EvtId daugs[10],
                             double masses[10] );
     static void findMass( EvtParticle* p );
     static double findMaxMass( EvtParticle* p );

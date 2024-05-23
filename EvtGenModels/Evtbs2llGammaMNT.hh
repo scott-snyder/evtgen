@@ -40,8 +40,8 @@ class Evtbs2llGammaMNT : public EvtDecayAmp {
     Evtbs2llGammaMNT() {}
     virtual ~Evtbs2llGammaMNT();
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void init() override;
     void initProbMax() override;

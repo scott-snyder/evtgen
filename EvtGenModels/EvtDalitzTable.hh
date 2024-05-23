@@ -40,9 +40,9 @@ class EvtDalitzTable {
     static EvtDalitzTable* getInstance( const std::string dec_name = "",
                                         bool verbose = true );
 
-    bool fileHasBeenRead( const std::string dec_name );
+    bool fileHasBeenRead( const std::string dec_name ) const;
     void readXMLDecayFile( const std::string dec_name, bool verbose = true );
-    void checkParticle( std::string particle );
+    void checkParticle( std::string particle ) const;
 
     void addDecay( EvtId parent, const EvtDalitzDecayInfo& dec );
     void copyDecay( EvtId parent, EvtId* daughters, EvtId copy, EvtId* copyd );

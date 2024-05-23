@@ -35,8 +35,8 @@ class Evtbs2llGammaISRFSR : public EvtDecayAmp {
     Evtbs2llGammaISRFSR() {}
     virtual ~Evtbs2llGammaISRFSR();
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void init() override;
     void initProbMax() override;

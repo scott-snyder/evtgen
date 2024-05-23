@@ -33,12 +33,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtVSSBMixCPT::getName()
+std::string EvtVSSBMixCPT::getName() const
 {
     return "VSS_BMIX";
 }
 
-EvtDecayBase* EvtVSSBMixCPT::clone()
+EvtDecayBase* EvtVSSBMixCPT::clone() const
 {
     return new EvtVSSBMixCPT;
 }
@@ -207,8 +207,8 @@ void EvtVSSBMixCPT::initProbMax()
 
 void EvtVSSBMixCPT::decay( EvtParticle* p )
 {
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     // generate a final state according to phase space
 

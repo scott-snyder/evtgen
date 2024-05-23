@@ -38,10 +38,10 @@ class EvtPhspFlatLifetime : public EvtDecayIncoherent {
     virtual ~EvtPhspFlatLifetime(){};
 
     /// return name of the model
-    std::string getName() override;
+    std::string getName() const override;
 
     /// Clone
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     /// Compute maximum weight
     void initProbMax() override;

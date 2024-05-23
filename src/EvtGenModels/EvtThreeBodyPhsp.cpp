@@ -30,12 +30,12 @@
 #include <cmath>
 #include <iostream>
 
-std::string EvtThreeBodyPhsp::getName()
+std::string EvtThreeBodyPhsp::getName() const
 {
     return "THREEBODYPHSP";
 }
 
-EvtDecayBase* EvtThreeBodyPhsp::clone()
+EvtDecayBase* EvtThreeBodyPhsp::clone() const
 {
     return new EvtThreeBodyPhsp;
 }

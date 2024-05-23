@@ -31,21 +31,21 @@
 #include <string>
 using std::endl;
 
-std::string EvtY3SToY1SpipiMoxhay::getName()
+std::string EvtY3SToY1SpipiMoxhay::getName() const
 {
     return "Y3STOY1SPIPIMOXHAY";
 }
 
-EvtDecayBase* EvtY3SToY1SpipiMoxhay::clone()
+EvtDecayBase* EvtY3SToY1SpipiMoxhay::clone() const
 {
     return new EvtY3SToY1SpipiMoxhay;
 }
 
 void EvtY3SToY1SpipiMoxhay::init()
 {
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi-" );
-    static EvtId PI0 = EvtPDL::getId( "pi0" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId PIM = EvtPDL::getId( "pi-" );
+    static const EvtId PI0 = EvtPDL::getId( "pi0" );
 
     // check that there are 2 arguments
     checkNArg( 2 );

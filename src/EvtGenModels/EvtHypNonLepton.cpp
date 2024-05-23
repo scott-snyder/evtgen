@@ -29,12 +29,12 @@
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-EvtDecayBase* EvtHypNonLepton::clone()
+EvtDecayBase* EvtHypNonLepton::clone() const
 {
     return new EvtHypNonLepton;
 }
 
-std::string EvtHypNonLepton::getName()
+std::string EvtHypNonLepton::getName() const
 {
     return "HypNonLepton";
 }
@@ -88,7 +88,7 @@ void EvtHypNonLepton::init()
     m_alpha = getArg( 0 );
     m_phi = getArg( 1 ) * EvtConst::pi / 180;
     if ( getNArg() == 3 )
-        m_noTries = static_cast<long>( getArg( 2 ) );
+        m_noTries = static_cast<decltype( m_noTries )>( getArg( 2 ) );
     else
         m_noTries = 0;
 
@@ -158,7 +158,7 @@ void EvtHypNonLepton::decay( EvtParticle* parent )
 
 void EvtHypNonLepton::calcAmp( EvtAmp* amp, EvtParticle* parent )
 {
-    static long noTries = 0;
+    static thread_local decltype( m_noTries ) noTries = 0;
     int i;
     EvtComplex Matrix[2][2];
 

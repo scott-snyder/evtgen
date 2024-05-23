@@ -28,12 +28,12 @@
 
 #include <cmath>
 
-std::string EvtFourBodyPhsp::getName()
+std::string EvtFourBodyPhsp::getName() const
 {
     return "FOURBODYPHSP";
 }
 
-EvtDecayBase* EvtFourBodyPhsp::clone()
+EvtDecayBase* EvtFourBodyPhsp::clone() const
 {
     return new EvtFourBodyPhsp;
 }

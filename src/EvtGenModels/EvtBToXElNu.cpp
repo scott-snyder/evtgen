@@ -35,12 +35,12 @@
 
 using std::endl;
 
-std::string EvtBToXElNu::getName()
+std::string EvtBToXElNu::getName() const
 {
     return "BTOXELNU";
 }
 
-EvtDecayBase* EvtBToXElNu::clone()
+EvtDecayBase* EvtBToXElNu::clone() const
 {
     return new EvtBToXElNu;
 }

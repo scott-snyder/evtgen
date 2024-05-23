@@ -14,8 +14,8 @@ class EvtParticle;
 
 class EvtD0ToKspipi : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void init() override;
     void initProbMax() override;

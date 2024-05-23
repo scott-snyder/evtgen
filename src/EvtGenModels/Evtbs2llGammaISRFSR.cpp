@@ -40,13 +40,13 @@ Evtbs2llGammaISRFSR::~Evtbs2llGammaISRFSR()
 }
 
 // The module name specification
-std::string Evtbs2llGammaISRFSR::getName()
+std::string Evtbs2llGammaISRFSR::getName() const
 {
     return "BSTOGLLISRFSR";
 }
 
 // The implementation of the clone() method
-EvtDecayBase* Evtbs2llGammaISRFSR::clone()
+EvtDecayBase* Evtbs2llGammaISRFSR::clone() const
 {
     return new Evtbs2llGammaISRFSR;
 }

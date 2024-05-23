@@ -30,13 +30,13 @@ EvtBLLNuL::EvtBLLNuL() : m_calcAmp()
 {
 }
 
-std::string EvtBLLNuL::getName()
+std::string EvtBLLNuL::getName() const
 {
     // The model name
     return "BLLNUL";
 }
 
-EvtDecayBase* EvtBLLNuL::clone()
+EvtDecayBase* EvtBLLNuL::clone() const
 {
     return new EvtBLLNuL();
 }
@@ -59,7 +59,7 @@ void EvtBLLNuL::init()
     checkSpinDaughter( 3, EvtSpinType::DIRAC );       // ell-(k_4)
 
     // Check that we have a charged B parent
-    static EvtIdSet BMesons{ "B-", "B+" };
+    static const EvtIdSet BMesons{ "B-", "B+" };
     if ( !BMesons.contains( getParentId() ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtBLLNuL" )
             << "Expecting the parent to be a charged B. Found PDG = "

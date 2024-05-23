@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtKKLambdaC::getName()
+std::string EvtKKLambdaC::getName() const
 {
     return "KK_LAMBDAC_SL";
 }
 
-EvtDecayBase* EvtKKLambdaC::clone()
+EvtDecayBase* EvtKKLambdaC::clone() const
 {
     return new EvtKKLambdaC;
 }

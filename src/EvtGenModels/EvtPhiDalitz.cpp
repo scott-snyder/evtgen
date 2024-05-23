@@ -37,12 +37,12 @@
 // PL B561: 55-60 (2003) + Erratum B609:449-450 (2005)
 // or hep-ex/0303016v2
 
-std::string EvtPhiDalitz::getName()
+std::string EvtPhiDalitz::getName() const
 {
     return "PHI_DALITZ";
 }
 
-EvtDecayBase* EvtPhiDalitz::clone()
+EvtDecayBase* EvtPhiDalitz::clone() const
 {
     return new EvtPhiDalitz;
 }

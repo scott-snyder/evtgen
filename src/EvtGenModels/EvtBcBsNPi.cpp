@@ -40,12 +40,12 @@ EvtBcBsNPi::EvtBcBsNPi()
     m_Fm_c2 = 0.0;
 }
 
-std::string EvtBcBsNPi::getName()
+std::string EvtBcBsNPi::getName() const
 {
     return "BC_BS_NPI";
 }
 
-EvtBcBsNPi* EvtBcBsNPi::clone()
+EvtBcBsNPi* EvtBcBsNPi::clone() const
 {
     return new EvtBcBsNPi;
 }

@@ -35,8 +35,8 @@ class EvtLambdaP_BarGamma : public EvtDecayAmp {
     EvtLambdaP_BarGamma();
     ~EvtLambdaP_BarGamma() { ; }
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
     void decay( EvtParticle* p ) override;
     void init() override;
     void initProbMax() override;

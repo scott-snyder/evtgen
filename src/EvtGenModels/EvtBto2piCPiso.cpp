@@ -32,12 +32,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtBto2piCPiso::getName()
+std::string EvtBto2piCPiso::getName() const
 {
     return "BTO2PI_CP_ISO";
 }
 
-EvtDecayBase* EvtBto2piCPiso::clone()
+EvtDecayBase* EvtBto2piCPiso::clone() const
 {
     return new EvtBto2piCPiso;
 }
@@ -58,9 +58,9 @@ void EvtBto2piCPiso::init()
 void EvtBto2piCPiso::initProbMax()
 {
     //added by Lange Jan4,2000
-    static EvtId PI0 = EvtPDL::getId( "pi0" );
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi-" );
+    static const EvtId PI0 = EvtPDL::getId( "pi0" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId PIM = EvtPDL::getId( "pi-" );
 
     //this may need to be revised
 
@@ -91,11 +91,11 @@ void EvtBto2piCPiso::decay( EvtParticle* p )
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
-    static EvtId PI0 = EvtPDL::getId( "pi0" );
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi-" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId PI0 = EvtPDL::getId( "pi0" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId PIM = EvtPDL::getId( "pi-" );
 
     double t;
     EvtId other_b;

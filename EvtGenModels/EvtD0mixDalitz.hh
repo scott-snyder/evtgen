@@ -123,8 +123,8 @@ class EvtD0mixDalitz : public EvtDecayAmp {
     }
 
     // One-line inline functions.
-    std::string getName() override { return "D0MIXDALITZ"; }
-    EvtDecayBase* clone() override { return new EvtD0mixDalitz; }
+    std::string getName() const override { return "D0MIXDALITZ"; }
+    EvtDecayBase* clone() const override { return new EvtD0mixDalitz; }
     void initProbMax() override { setProbMax( 5200. ); }
 
     void init() override;

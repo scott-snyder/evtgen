@@ -35,12 +35,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtBtoXsgamma::getName()
+std::string EvtBtoXsgamma::getName() const
 {
     return "BTOXSGAMMA";
 }
 
-EvtDecayBase* EvtBtoXsgamma::clone()
+EvtDecayBase* EvtBtoXsgamma::clone() const
 {
     return new EvtBtoXsgamma;
 }
@@ -110,8 +110,8 @@ void EvtBtoXsgamma::decay( EvtParticle* p )
         pdaug[i] = p->getDaug( i );
     }
 
-    static EvtVector4R p4[MAX_DAUG];
-    static double mass[MAX_DAUG];
+    EvtVector4R p4[MAX_DAUG];
+    double mass[MAX_DAUG];
 
     m_b = p->mass();
 

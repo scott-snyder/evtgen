@@ -75,12 +75,12 @@ void EvtEtaLLPiPi::initProbMax()
     }
 }
 
-std::string EvtEtaLLPiPi::getName()
+std::string EvtEtaLLPiPi::getName() const
 {
     return "ETA_LLPIPI";
 }
 
-EvtDecayBase* EvtEtaLLPiPi::clone()
+EvtDecayBase* EvtEtaLLPiPi::clone() const
 {
     return new EvtEtaLLPiPi();
 }

@@ -38,12 +38,12 @@ using std::cout;
 using std::endl;
 using std::ifstream;
 
-std::string EvtVubHybrid::getName()
+std::string EvtVubHybrid::getName() const
 {
     return "VUBHYBRID";
 }
 
-EvtDecayBase* EvtVubHybrid::clone()
+EvtDecayBase* EvtVubHybrid::clone() const
 {
     return new EvtVubHybrid;
 }
@@ -89,9 +89,9 @@ void EvtVubHybrid::init()
     // to get an exact value; in order to stay in the phase space for
     // B+- and B0 use the smaller mass
 
-    static double mB0 = EvtPDL::getMaxMass( EvtPDL::getId( "B0" ) );
-    static double mBP = EvtPDL::getMaxMass( EvtPDL::getId( "B+" ) );
-    static double mB = ( mB0 < mBP ? mB0 : mBP );
+    static const double mB0 = EvtPDL::getMaxMass( EvtPDL::getId( "B0" ) );
+    static const double mBP = EvtPDL::getMaxMass( EvtPDL::getId( "B+" ) );
+    static const double mB = ( mB0 < mBP ? mB0 : mBP );
 
     const double xlow = -m_mb;
     const double xhigh = mB - m_mb;

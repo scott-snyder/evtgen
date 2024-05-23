@@ -34,12 +34,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtVtoSll::getName()
+std::string EvtVtoSll::getName() const
 {
     return "VTOSLL";
 }
 
-EvtDecayBase* EvtVtoSll::clone()
+EvtDecayBase* EvtVtoSll::clone() const
 {
     return new EvtVtoSll;
 }

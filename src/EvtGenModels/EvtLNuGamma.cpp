@@ -34,12 +34,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtLNuGamma::getName()
+std::string EvtLNuGamma::getName() const
 {
     return "LNUGAMMA";
 }
 
-EvtDecayBase* EvtLNuGamma::clone()
+EvtDecayBase* EvtLNuGamma::clone() const
 {
     return new EvtLNuGamma;
 }
@@ -76,8 +76,8 @@ void EvtLNuGamma::initProbMax()
 
 void EvtLNuGamma::decay( EvtParticle* p )
 {
-    static EvtId BM = EvtPDL::getId( "B-" );
-    static EvtId DM = EvtPDL::getId( "D-" );
+    static const EvtId BM = EvtPDL::getId( "B-" );
+    static const EvtId DM = EvtPDL::getId( "D-" );
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
     EvtComplex myI( 0, 1 );

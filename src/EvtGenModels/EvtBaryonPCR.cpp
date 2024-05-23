@@ -37,12 +37,12 @@ using namespace std;
 #undef D0
 #endif
 
-std::string EvtBaryonPCR::getName()
+std::string EvtBaryonPCR::getName() const
 {
     return "BaryonPCR";
 }
 
-EvtBaryonPCR* EvtBaryonPCR::clone()
+EvtBaryonPCR* EvtBaryonPCR::clone() const
 {
     return new EvtBaryonPCR;
 }
@@ -50,9 +50,9 @@ EvtBaryonPCR* EvtBaryonPCR::clone()
 void EvtBaryonPCR::decay( EvtParticle* p )
 {
     //This is a kludge to avoid warnings because the K_2* mass becomes to large.
-    static EvtIdSet regenerateMasses{ "K_2*+", "K_2*-", "K_2*0", "anti-K_2*0",
-                                      "K_1+",  "K_1-",  "K_10",  "anti-K_10",
-                                      "D'_1+", "D'_1-", "D'_10", "anti-D'_10" };
+    static const EvtIdSet regenerateMasses{
+        "K_2*+", "K_2*-",     "K_2*0", "anti-K_2*0", "K_1+",  "K_1-",
+        "K_10",  "anti-K_10", "D'_1+", "D'_1-",      "D'_10", "anti-D'_10" };
 
     if ( regenerateMasses.contains( getDaug( 0 ) ) ) {
         p->resetFirstOrNot();
@@ -72,20 +72,20 @@ void EvtBaryonPCR::initProbMax()
 {
     // Baryons (partial list 5/28/04)
 
-    static EvtId SIGC0 = EvtPDL::getId( "Sigma_c0" );
-    static EvtId SIGC0B = EvtPDL::getId( "anti-Sigma_c0" );
-    static EvtId SIGCP = EvtPDL::getId( "Sigma_c+" );
-    static EvtId SIGCM = EvtPDL::getId( "anti-Sigma_c-" );
-    static EvtId SIGCPP = EvtPDL::getId( "Sigma_c++" );
-    static EvtId SIGCMM = EvtPDL::getId( "anti-Sigma_c--" );
-    static EvtId LAMCP = EvtPDL::getId( "Lambda_c+" );
-    static EvtId LAMCM = EvtPDL::getId( "anti-Lambda_c-" );
-    static EvtId LAMC1P = EvtPDL::getId( "Lambda_c(2593)+" );
-    static EvtId LAMC1M = EvtPDL::getId( "anti-Lambda_c(2593)-" );
-    static EvtId LAMC2P = EvtPDL::getId( "Lambda_c(2625)+" );
-    static EvtId LAMC2M = EvtPDL::getId( "anti-Lambda_c(2625)-" );
-    static EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
-    static EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
+    static const EvtId SIGC0 = EvtPDL::getId( "Sigma_c0" );
+    static const EvtId SIGC0B = EvtPDL::getId( "anti-Sigma_c0" );
+    static const EvtId SIGCP = EvtPDL::getId( "Sigma_c+" );
+    static const EvtId SIGCM = EvtPDL::getId( "anti-Sigma_c-" );
+    static const EvtId SIGCPP = EvtPDL::getId( "Sigma_c++" );
+    static const EvtId SIGCMM = EvtPDL::getId( "anti-Sigma_c--" );
+    static const EvtId LAMCP = EvtPDL::getId( "Lambda_c+" );
+    static const EvtId LAMCM = EvtPDL::getId( "anti-Lambda_c-" );
+    static const EvtId LAMC1P = EvtPDL::getId( "Lambda_c(2593)+" );
+    static const EvtId LAMC1M = EvtPDL::getId( "anti-Lambda_c(2593)-" );
+    static const EvtId LAMC2P = EvtPDL::getId( "Lambda_c(2625)+" );
+    static const EvtId LAMC2M = EvtPDL::getId( "anti-Lambda_c(2625)-" );
+    static const EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
+    static const EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
 
     EvtId parnum, barnum, lnum;
 

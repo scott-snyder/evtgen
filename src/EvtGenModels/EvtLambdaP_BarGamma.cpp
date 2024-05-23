@@ -48,12 +48,12 @@ EvtLambdaP_BarGamma::EvtLambdaP_BarGamma() :
 {
 }
 
-std::string EvtLambdaP_BarGamma::getName()
+std::string EvtLambdaP_BarGamma::getName() const
 {
     return "B_TO_LAMBDA_PBAR_GAMMA";
 }
 
-EvtDecayBase* EvtLambdaP_BarGamma::clone()
+EvtDecayBase* EvtLambdaP_BarGamma::clone() const
 {
     return new EvtLambdaP_BarGamma;
 }

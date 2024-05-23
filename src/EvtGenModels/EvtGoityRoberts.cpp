@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtGoityRoberts::getName()
+std::string EvtGoityRoberts::getName() const
 {
     return "GOITY_ROBERTS";
 }
 
-EvtDecayBase* EvtGoityRoberts::clone()
+EvtDecayBase* EvtGoityRoberts::clone() const
 {
     return new EvtGoityRoberts;
 }
@@ -61,14 +61,14 @@ void EvtGoityRoberts::initProbMax()
 void EvtGoityRoberts::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId DST0 = EvtPDL::getId( "D*0" );
-    static EvtId DSTB = EvtPDL::getId( "anti-D*0" );
-    static EvtId DSTP = EvtPDL::getId( "D*+" );
-    static EvtId DSTM = EvtPDL::getId( "D*-" );
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
-    static EvtId DP = EvtPDL::getId( "D+" );
-    static EvtId DM = EvtPDL::getId( "D-" );
+    static const EvtId DST0 = EvtPDL::getId( "D*0" );
+    static const EvtId DSTB = EvtPDL::getId( "anti-D*0" );
+    static const EvtId DSTP = EvtPDL::getId( "D*+" );
+    static const EvtId DSTM = EvtPDL::getId( "D*-" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId DP = EvtPDL::getId( "D+" );
+    static const EvtId DM = EvtPDL::getId( "D-" );
 
     EvtId meson = getDaug( 0 );
 
@@ -91,10 +91,10 @@ void EvtGoityRoberts::DecayBDstarpilnuGR( EvtParticle* pb, EvtId ndstar,
     pb->initializePhaseSpace( getNDaug(), getDaugs() );
 
     //added by Lange Jan4,2000
-    static EvtId EM = EvtPDL::getId( "e-" );
-    static EvtId EP = EvtPDL::getId( "e+" );
-    static EvtId MUM = EvtPDL::getId( "mu-" );
-    static EvtId MUP = EvtPDL::getId( "mu+" );
+    static const EvtId EM = EvtPDL::getId( "e-" );
+    static const EvtId EP = EvtPDL::getId( "e+" );
+    static const EvtId MUM = EvtPDL::getId( "mu-" );
+    static const EvtId MUP = EvtPDL::getId( "mu+" );
 
     EvtParticle *dstar, *pion, *lepton, *neutrino;
 
@@ -344,10 +344,10 @@ void EvtGoityRoberts::DecayBDpilnuGR( EvtParticle* pb, EvtId nd, EvtId nlep,
 
 {
     //added by Lange Jan4,2000
-    static EvtId EM = EvtPDL::getId( "e-" );
-    static EvtId EP = EvtPDL::getId( "e+" );
-    static EvtId MUM = EvtPDL::getId( "mu-" );
-    static EvtId MUP = EvtPDL::getId( "mu+" );
+    static const EvtId EM = EvtPDL::getId( "e-" );
+    static const EvtId EP = EvtPDL::getId( "e+" );
+    static const EvtId MUM = EvtPDL::getId( "mu-" );
+    static const EvtId MUP = EvtPDL::getId( "mu+" );
 
     EvtParticle *d, *pion, *lepton, *neutrino;
 

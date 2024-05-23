@@ -49,7 +49,7 @@ EvtDalitzTable::~EvtDalitzTable()
 EvtDalitzTable* EvtDalitzTable::getInstance( const std::string dec_name,
                                              bool verbose )
 {
-    static EvtDalitzTable* theDalitzTable = nullptr;
+    static thread_local EvtDalitzTable* theDalitzTable = nullptr;
 
     if ( theDalitzTable == nullptr ) {
         theDalitzTable = new EvtDalitzTable();
@@ -62,9 +62,9 @@ EvtDalitzTable* EvtDalitzTable::getInstance( const std::string dec_name,
     return theDalitzTable;
 }
 
-bool EvtDalitzTable::fileHasBeenRead( const std::string dec_name )
+bool EvtDalitzTable::fileHasBeenRead( const std::string dec_name ) const
 {
-    std::vector<std::string>::iterator i = m_readFiles.begin();
+    std::vector<std::string>::const_iterator i = m_readFiles.begin();
     for ( ; i != m_readFiles.end(); i++ ) {
         if ( ( *i ).compare( dec_name ) == 0 ) {
             return true;
@@ -429,7 +429,7 @@ void EvtDalitzTable::readXMLDecayFile( const std::string dec_name, bool verbose 
     }
 }
 
-void EvtDalitzTable::checkParticle( std::string particle )
+void EvtDalitzTable::checkParticle( std::string particle ) const
 {
     if ( EvtPDL::getId( particle ) == EvtId( -1, -1 ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )

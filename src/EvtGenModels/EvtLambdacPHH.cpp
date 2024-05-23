@@ -83,12 +83,12 @@ EvtLambdacPHH::EvtLambdacPHH() :
     // Fermilab E791 values from MINUIT fit arXiv:hep-ex/9912003v1
 }
 
-std::string EvtLambdacPHH::getName()
+std::string EvtLambdacPHH::getName() const
 {
     return "LAMBDAC_PHH";
 }
 
-EvtDecayBase* EvtLambdacPHH::clone()
+EvtDecayBase* EvtLambdacPHH::clone() const
 {
     return new EvtLambdacPHH;
 }
@@ -111,11 +111,11 @@ bool compareId( const std::pair<EvtId, int>& left,
 
 void EvtLambdacPHH::init()
 {
-    static EvtId KM = EvtPDL::getId( "K-" );
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId LAMBDAC = EvtPDL::getId( "Lambda_c+" );
-    static EvtId LAMBDACB = EvtPDL::getId( "anti-Lambda_c-" );
-    static EvtId PROTON = EvtPDL::getId( "p+" );
+    static const EvtId KM = EvtPDL::getId( "K-" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId LAMBDAC = EvtPDL::getId( "Lambda_c+" );
+    static const EvtId LAMBDACB = EvtPDL::getId( "anti-Lambda_c-" );
+    static const EvtId PROTON = EvtPDL::getId( "p+" );
 
     // check that there are 0 or 1 arguments and 3 daughters
     checkNArg( 0, 1 );

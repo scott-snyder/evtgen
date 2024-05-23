@@ -34,12 +34,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtbTosllAli::getName()
+std::string EvtbTosllAli::getName() const
 {
     return "BTOSLLALI";
 }
 
-EvtDecayBase* EvtbTosllAli::clone()
+EvtDecayBase* EvtbTosllAli::clone() const
 {
     return new EvtbTosllAli;
 }

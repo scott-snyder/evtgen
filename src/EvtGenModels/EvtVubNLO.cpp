@@ -46,12 +46,12 @@ EvtVubNLO::~EvtVubNLO()
     cout << " efficiency : " << (float)m_ngood / (float)m_ntot << endl;
 }
 
-std::string EvtVubNLO::getName()
+std::string EvtVubNLO::getName() const
 {
     return "VUB_NLO";
 }
 
-EvtDecayBase* EvtVubNLO::clone()
+EvtDecayBase* EvtVubNLO::clone() const
 {
     return new EvtVubNLO;
 }

@@ -34,12 +34,12 @@
 #include <string>
 using std::fstream;
 
-std::string EvtPi0Dalitz::getName()
+std::string EvtPi0Dalitz::getName() const
 {
     return "PI0_DALITZ";
 }
 
-EvtDecayBase* EvtPi0Dalitz::clone()
+EvtDecayBase* EvtPi0Dalitz::clone() const
 {
     return new EvtPi0Dalitz;
 }

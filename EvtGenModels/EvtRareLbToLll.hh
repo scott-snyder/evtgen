@@ -36,9 +36,9 @@
 
 class EvtRareLbToLll : public EvtDecayAmp {
   public:
-    std::string getName() override;
+    std::string getName() const override;
 
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     void init() override;
 

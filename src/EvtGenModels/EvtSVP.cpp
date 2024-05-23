@@ -29,12 +29,12 @@
 
 #include <cmath>
 
-std::string EvtSVP::getName()
+std::string EvtSVP::getName() const
 {
     return "SVP";
 }
 
-EvtDecayBase* EvtSVP::clone()
+EvtDecayBase* EvtSVP::clone() const
 {
     return new EvtSVP;
 }

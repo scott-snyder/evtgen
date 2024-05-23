@@ -34,12 +34,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSVVHelAmp::getName()
+std::string EvtSVVHelAmp::getName() const
 {
     return "SVV_HELAMP";
 }
 
-EvtDecayBase* EvtSVVHelAmp::clone()
+EvtDecayBase* EvtSVVHelAmp::clone() const
 {
     return new EvtSVVHelAmp;
 }

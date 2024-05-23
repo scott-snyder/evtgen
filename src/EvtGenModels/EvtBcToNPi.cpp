@@ -40,12 +40,12 @@ EvtBcToNPi::EvtBcToNPi( bool printAuthorInfo )
     }
 }
 
-std::string EvtBcToNPi::getName()
+std::string EvtBcToNPi::getName() const
 {
     return "EvtBcToNPi";
 }
 
-EvtDecayBase* EvtBcToNPi::clone()
+EvtDecayBase* EvtBcToNPi::clone() const
 {
     return new EvtBcToNPi;
 }

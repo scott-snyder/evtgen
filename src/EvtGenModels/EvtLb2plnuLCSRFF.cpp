@@ -36,10 +36,10 @@ void EvtLb2plnuLCSRFF::getdiracff( EvtId parent, EvtId daught, double q2,
                                    double* f3, double* g1, double* g2, double* g3 )
 {
     // Define Event IDs for Lb and p
-    static EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
-    static EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
-    static EvtId PRO = EvtPDL::getId( "p+" );
-    static EvtId PROB = EvtPDL::getId( "anti-p-" );
+    static const EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
+    static const EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
+    static const EvtId PRO = EvtPDL::getId( "p+" );
+    static const EvtId PROB = EvtPDL::getId( "anti-p-" );
 
     if ( ( parent == LAMB && daught == PRO ) ||
          ( parent == LAMBB && daught == PROB ) ) {

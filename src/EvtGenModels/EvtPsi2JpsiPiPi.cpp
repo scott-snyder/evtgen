@@ -79,12 +79,12 @@ void EvtPsi2JpsiPiPi::setNLOArrays()
     m_s2[5] = -10.0446;
 }
 
-std::string EvtPsi2JpsiPiPi::getName()
+std::string EvtPsi2JpsiPiPi::getName() const
 {
     return "PSI2JPSIPIPI";
 }
 
-EvtDecayBase* EvtPsi2JpsiPiPi::clone()
+EvtDecayBase* EvtPsi2JpsiPiPi::clone() const
 {
     return new EvtPsi2JpsiPiPi;
 }

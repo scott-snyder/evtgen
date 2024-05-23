@@ -43,8 +43,8 @@
 class EvtBBScalar : public EvtDecayAmp {
   public:
     EvtBBScalar();
-    std::string getName() override;
-    EvtBBScalar* clone() override;
+    std::string getName() const override;
+    EvtBBScalar* clone() const override;
     void decay( EvtParticle* p ) override;
     void init() override;
     void initProbMax() override;

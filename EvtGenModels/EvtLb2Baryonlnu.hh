@@ -37,8 +37,8 @@ class EvtLb2Baryonlnu : public EvtDecayAmp {
     EvtLb2Baryonlnu();
     ~EvtLb2Baryonlnu();
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void decay( EvtParticle* p ) override;
     void initProbMax() override;

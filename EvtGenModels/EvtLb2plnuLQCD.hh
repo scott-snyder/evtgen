@@ -39,8 +39,8 @@ class EvtLb2plnuLQCD : public EvtDecayAmp {
     EvtLb2plnuLQCD();
     ~EvtLb2plnuLQCD();
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void decay( EvtParticle* p ) override;
     void initProbMax() override;
