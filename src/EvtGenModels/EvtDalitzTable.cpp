@@ -46,17 +46,13 @@ EvtDalitzTable::~EvtDalitzTable()
     m_readFiles.clear();
 }
 
-EvtDalitzTable* EvtDalitzTable::getInstance( const std::string dec_name,
-                                             bool verbose )
+const EvtDalitzTable& EvtDalitzTable::getInstance( const std::string dec_name,
+                                                   bool verbose )
 {
-    static thread_local EvtDalitzTable* theDalitzTable = nullptr;
+    static thread_local EvtDalitzTable theDalitzTable;
 
-    if ( theDalitzTable == nullptr ) {
-        theDalitzTable = new EvtDalitzTable();
-    }
-
-    if ( !theDalitzTable->fileHasBeenRead( dec_name ) ) {
-        theDalitzTable->readXMLDecayFile( dec_name, verbose );
+    if ( !theDalitzTable.fileHasBeenRead( dec_name ) ) {
+        theDalitzTable.readXMLDecayFile( dec_name, verbose );
     }
 
     return theDalitzTable;
@@ -487,11 +483,14 @@ void EvtDalitzTable::copyDecay( EvtId parent, EvtId* daughters, EvtId copy,
         << "Did not find dalitz decays for particle:" << copy << "\n";
 }
 
-std::vector<EvtDalitzDecayInfo> EvtDalitzTable::getDalitzTable( const EvtId& parent )
+std::vector<EvtDalitzDecayInfo> EvtDalitzTable::getDalitzTable(
+    const EvtId& parent ) const
 {
     std::vector<EvtDalitzDecayInfo> table;
-    if ( m_dalitztable.find( parent ) != m_dalitztable.end() ) {
-        table = m_dalitztable[parent];
+
+    auto iter = m_dalitztable.find( parent );
+    if ( iter != m_dalitztable.end() ) {
+        table = iter->second;
     }
 
     if ( table.empty() ) {

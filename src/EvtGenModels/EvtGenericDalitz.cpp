@@ -46,7 +46,7 @@ void EvtGenericDalitz::init()
     EvtId d3 = getDaug( 2 );
 
     std::vector<EvtDalitzDecayInfo> decays =
-        EvtDalitzTable::getInstance( getArgStr( 0 ) )->getDalitzTable( parnum );
+        EvtDalitzTable::getInstance( getArgStr( 0 ) ).getDalitzTable( parnum );
 
     std::vector<EvtDalitzDecayInfo>::iterator i = decays.begin();
     for ( ; i != decays.end(); i++ ) {
