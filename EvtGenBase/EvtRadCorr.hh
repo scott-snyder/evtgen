@@ -26,8 +26,7 @@ class EvtParticle;
 
 class EvtRadCorr {
   public:
-    EvtRadCorr();
-    ~EvtRadCorr();
+    EvtRadCorr() = delete;
 
     static void doRadCorr( EvtParticle* p );
 

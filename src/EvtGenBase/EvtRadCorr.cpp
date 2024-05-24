@@ -31,20 +31,6 @@ thread_local EvtAbsRadCorr* EvtRadCorr::m_fsrEngine = nullptr;
 bool EvtRadCorr::m_alwaysRadCorr = false;
 bool EvtRadCorr::m_neverRadCorr = false;
 
-EvtRadCorr::EvtRadCorr()
-{
-    m_fsrEngine = nullptr;
-    m_alwaysRadCorr = false;
-    m_neverRadCorr = false;
-}
-
-EvtRadCorr::~EvtRadCorr()
-{
-    if ( m_fsrEngine )
-        delete m_fsrEngine;
-    m_fsrEngine = nullptr;
-}
-
 void EvtRadCorr::setRadCorrEngine( EvtAbsRadCorr* fsrEngine )
 {
     m_fsrEngine = fsrEngine;
