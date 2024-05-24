@@ -44,8 +44,21 @@ EvtDecayBase* EvtBtoXsEtap::clone() const
 void EvtBtoXsEtap::init()
 {
     // check that there are no arguments
-
     checkNArg( 0 );
+
+    // check that there are only two daughters
+    checkNDaug( 2 );
+
+    // check that second daughter is eta', which is self conjugate.
+    const EvtId etap = EvtPDL::getId( "eta'" );
+    if ( getDaug( 1 ) != etap ) {
+        EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+            << EvtBtoXsEtap::getName().c_str()
+            << " generator did not get eta' as second daughter." << endl;
+        EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+            << "Will terminate execution!" << endl;
+        ::abort();
+    }
 }
 
 void EvtBtoXsEtap::initProbMax()
@@ -65,14 +78,14 @@ void EvtBtoXsEtap::decay( EvtParticle* p )
     double m_b;
     int i;
     p->makeDaughters( getNDaug(), getDaugs() );
-    EvtParticle* pdaug[MAX_DAUG];
+    EvtParticle* pdaug[2];
 
     for ( i = 0; i < getNDaug(); i++ ) {
         pdaug[i] = p->getDaug( i );
     }
 
-    EvtVector4R p4[MAX_DAUG];
-    double mass[MAX_DAUG];
+    EvtVector4R p4[2];
+    double mass[2];
 
     m_b = p->mass();
 
