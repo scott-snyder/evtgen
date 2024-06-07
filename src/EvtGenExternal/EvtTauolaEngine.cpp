@@ -42,11 +42,6 @@ using std::endl;
 
 EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom )
 {
-    // PDG standard code integer ID for tau particle
-    m_tauPDG = 15;
-    // Number of possible decay modes in Tauola
-    m_nTauolaModes = 22;
-
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Setting up TAUOLA." << endl;
 
     // These three lines are not really necessary since they are the default.
@@ -74,14 +69,7 @@ EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom )
 
     Tauolapp::Tauola::initialize();
 
-    // Initialise various default parameters
-    // Neutral and charged spin propagator choices
-    m_neutPropType = 0;
-    m_posPropType = 0;
-    m_negPropType = 0;
-
     // Set-up possible decay modes _after_ we have read the (user) decay file
-    m_initialised = false;
 }
 
 void EvtTauolaEngine::initialise()
@@ -92,12 +80,14 @@ void EvtTauolaEngine::initialise()
     // first to get lists of particle modes and their alias definitions
     // (for creating EvtParticles with the right history information).
 
-    if ( m_initialised == false ) {
-        this->setUpPossibleTauModes();
-        this->setOtherParameters();
-
-        m_initialised = true;
+    if ( m_initialised ) {
+        return;
     }
+
+    this->setUpPossibleTauModes();
+    this->setOtherParameters();
+
+    m_initialised = true;
 }
 
 void EvtTauolaEngine::setUpPossibleTauModes()
@@ -322,11 +312,11 @@ void EvtTauolaEngine::setOtherParameters()
 
 bool EvtTauolaEngine::doDecay( EvtParticle* tauParticle )
 {
-    if ( m_initialised == false ) {
+    if ( !m_initialised ) {
         this->initialise();
     }
 
-    if ( tauParticle == nullptr ) {
+    if ( !tauParticle ) {
         return false;
     }
 

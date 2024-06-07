@@ -33,21 +33,6 @@
 #include <cmath>
 #include <iostream>
 
-std::mutex EvtPythia::m_engine_mutex;
-
-EvtPythia::EvtPythia()
-{
-    // Set the Pythia engine to a null pointer at first.
-    // When we do the decay, we retrieve the pointer to the Pythia engine
-    // and use that for all decays. All clones will use the same Pythia engine.
-    m_pythiaEngine = nullptr;
-}
-
-EvtPythia::~EvtPythia()
-{
-    m_commandList.clear();
-}
-
 std::string EvtPythia::getName() const
 {
     return "PYTHIA";
@@ -78,10 +63,9 @@ void EvtPythia::decay( EvtParticle* p )
     // We check to see if the engine has been created before doing the decay.
     // This should only create the full Pythia engine once, and all clones will point to the same engine.
 
-    m_engine_mutex.lock();
     if ( !m_pythiaEngine ) {
-        m_pythiaEngine = EvtExternalGenFactory::getInstance()->getGenerator(
-            EvtExternalGenFactory::PythiaGenId );
+        m_pythiaEngine = EvtExternalGenFactory::getInstance().getGenerator(
+            EvtExternalGenFactory::GenId::PythiaGenId );
     }
 
     if ( m_pythiaEngine ) {
@@ -89,7 +73,6 @@ void EvtPythia::decay( EvtParticle* p )
     }
 
     this->fixPolarisations( p );
-    m_engine_mutex.unlock();
 }
 
 void EvtPythia::fixPolarisations( EvtParticle* p )
@@ -103,7 +86,7 @@ void EvtPythia::fixPolarisations( EvtParticle* p )
     int nDaug = p->getNDaug();
     int i( 0 );
 
-    static EvtId Jpsi = EvtPDL::getId( "J/psi" );
+    static const EvtId Jpsi = EvtPDL::getId( "J/psi" );
 
     for ( i = 0; i < nDaug; i++ ) {
         EvtParticle* theDaug = p->getDaug( i );

@@ -58,10 +58,6 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
 
   protected:
   private:
-    bool m_initialised;
-    int m_tauPDG, m_nTauolaModes;
-    int m_neutPropType, m_posPropType, m_negPropType;
-
     GenParticlePtr createGenParticle( EvtParticle* theParticle );
 
     void setUpPossibleTauModes();
@@ -70,6 +66,16 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
     int getModeInt( EvtDecayBase* decayModel );
 
     void decayTauEvent( EvtParticle* tauParticle );
+
+    bool m_initialised{ false };
+    // PDG standard code integer ID for tau particle
+    int m_tauPDG{ 15 };
+    // Number of possible decay modes in Tauola
+    int m_nTauolaModes{ 22 };
+    // Neutral and charged spin propagator choices
+    int m_neutPropType{ 0 };
+    int m_posPropType{ 0 };
+    int m_negPropType{ 0 };
 };
 
 #endif

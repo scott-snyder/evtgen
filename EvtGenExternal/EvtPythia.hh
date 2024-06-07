@@ -23,7 +23,6 @@
 
 #include "EvtGenBase/EvtDecayIncoherent.hh"
 
-#include <mutex>
 #include <string>
 #include <vector>
 
@@ -35,10 +34,9 @@ class EvtDecayBase;
 // Class to handle generic phase space decays not done
 // in other decay models.
 
-class EvtPythia : public EvtDecayIncoherent {
+class EvtPythia final : public EvtDecayIncoherent {
   public:
-    EvtPythia();
-    ~EvtPythia();
+    EvtPythia() = default;
 
     std::string getName() const override;
 
@@ -53,15 +51,12 @@ class EvtPythia : public EvtDecayIncoherent {
     std::string commandName() override;
     void command( std::string ) override;
 
-  protected:
-    EvtAbsExternalGen* m_pythiaEngine;
-
   private:
     void fixPolarisations( EvtParticle* p );
 
-    std::vector<std::string> m_commandList;
+    EvtAbsExternalGen* m_pythiaEngine{ nullptr };
 
-    static std::mutex m_engine_mutex;
+    std::vector<std::string> m_commandList;
 };
 
 #endif

@@ -61,8 +61,8 @@ void EvtTauola::decay( EvtParticle* p )
     m_engine_mutex.lock();
 
     if ( !m_tauolaEngine ) {
-        m_tauolaEngine = EvtExternalGenFactory::getInstance()->getGenerator(
-            EvtExternalGenFactory::TauolaGenId );
+        m_tauolaEngine = EvtExternalGenFactory::getInstance().getGenerator(
+            EvtExternalGenFactory::GenId::TauolaGenId );
     }
 
     if ( m_tauolaEngine ) {

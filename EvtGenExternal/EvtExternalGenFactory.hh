@@ -24,22 +24,22 @@
 #include "EvtGenModels/EvtAbsExternalGen.hh"
 
 #include <map>
-#include <mutex>
+#include <memory>
 
 // Description: A factory type method to create engines for external physics
 // generators like Pythia.
 
-class EvtExternalGenFactory {
+class EvtExternalGenFactory final {
   public:
-    enum GenId
+    enum class GenId
     {
         PythiaGenId = 0,
         TauolaGenId
     };
 
-    static EvtExternalGenFactory* getInstance();
+    static EvtExternalGenFactory& getInstance();
 
-    EvtAbsExternalGen* getGenerator( GenId genId = GenId::PythiaGenId );
+    EvtAbsExternalGen* getGenerator( const GenId genId );
 
     void initialiseAllGenerators();
 
@@ -51,17 +51,16 @@ class EvtExternalGenFactory {
     //void addPythiaCommand( std::string generator, std::string module, std::string param, std::string value);
     //void addPythia6Command(std::string generator, std::string module, std::string param, std::string value);
 
-  protected:
-    EvtExternalGenFactory();
-    ~EvtExternalGenFactory();
-
-    typedef std::map<GenId, EvtAbsExternalGen*> ExtGenMap;
-    //typedef std::map<GenId, std::map<std::string, std::vector<std::string>>> ExtGenCommandMap;
-
   private:
-    EvtExternalGenFactory( const EvtExternalGenFactory& ){};
+    EvtExternalGenFactory() = default;
+    ~EvtExternalGenFactory() = default;
+    EvtExternalGenFactory( const EvtExternalGenFactory& ) = delete;
+    EvtExternalGenFactory( EvtExternalGenFactory&& ) = delete;
+    EvtExternalGenFactory& operator=( const EvtExternalGenFactory& ) = delete;
+    EvtExternalGenFactory& operator=( EvtExternalGenFactory&& ) = delete;
 
-    std::mutex m_factory_modification_mutex;
+    typedef std::map<GenId, std::unique_ptr<EvtAbsExternalGen>> ExtGenMap;
+    //typedef std::map<GenId, std::map<std::string, std::vector<std::string>>> ExtGenCommandMap;
 
     ExtGenMap m_extGenMap;
     //ExtGenCommandMap m_extGenCommandMap;
