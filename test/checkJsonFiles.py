@@ -289,6 +289,11 @@ if __name__ == '__main__' :
 
     for jsonFileName in jsonFiles :
 
+        if not jsonFileName.endswith('.json') :
+            if jsonFileName == 'config' :
+                continue
+            print(f'Skipping {jsonFileName}')
+
         print(f'Checking file: {jsonFileName}')
 
         checker = JsonFileChecker( jsonFileName )

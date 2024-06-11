@@ -20,13 +20,11 @@
 
 
 # the test executables require ROOT for histogramming etc.
-find_package(ROOT QUIET COMPONENTS Hist)
+find_package(ROOT 6.18 QUIET COMPONENTS Hist)
 find_package(nlohmann_json 3.6.1 QUIET)
-if (ROOT_FOUND AND nlohmann_json_FOUND)
-    add_library(root_interface INTERFACE IMPORTED)
-    target_include_directories(root_interface INTERFACE ${ROOT_INCLUDE_DIRS})
-    target_link_libraries(root_interface INTERFACE ${ROOT_LIBRARIES})
-
+find_package(Threads QUIET)
+find_package(TBB QUIET)
+if (ROOT_FOUND AND nlohmann_json_FOUND AND Threads_FOUND AND TBB_FOUND)
     # build each of the executables
     foreach( test_exe evt_dalitz evtgenlhc_test1 example1 exampleWriteHepMC testDecayModel )
         add_executable(${test_exe} ${test_exe}.cc)
@@ -38,11 +36,13 @@ if (ROOT_FOUND AND nlohmann_json_FOUND)
             target_compile_definitions(${test_exe} PRIVATE EVTGEN_EXTERNAL)
             target_link_libraries(${test_exe} PRIVATE EvtGenExternal)
         endif()
-        target_link_libraries(${test_exe} PRIVATE root_interface)
+        target_link_libraries(${test_exe} PRIVATE ROOT::Core ROOT::RIO ROOT::Hist ROOT::Tree)
     endforeach()
 
-    # testDecayModel needs nlohmann_json as well
+    # testDecayModel needs nlohmann_json and Threads as well
     target_link_libraries(testDecayModel PRIVATE nlohmann_json::nlohmann_json)
+    target_link_libraries(testDecayModel PRIVATE Threads::Threads)
+    target_link_libraries(testDecayModel PRIVATE TBB::tbb)
 
     # install the executables
     install(TARGETS evt_dalitz evtgenlhc_test1 example1 exampleWriteHepMC testDecayModel
