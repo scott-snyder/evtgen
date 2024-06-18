@@ -18,6 +18,5 @@
         {"variable" : "decayangle3_daug1", "title" : "theta(rho+=pi1+pi2,pi3) B0 as parent", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 200.0},
         {"variable" : "decayangle_BTO4PI_daug1", "title" : "theta(pi1,pi2) a2=pi1+pi2+pi3 as parent", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 200.0}
     ],
-    "outfile" :"VSS=BTO4PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipipi,D+enu.root",
-    "reference" : "RefVSS=BTO4PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipipi,D+enu.root"
+    "outfile" :"VSS=BTO4PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipipi,D+enu.root"
 }

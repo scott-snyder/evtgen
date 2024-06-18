@@ -25,6 +25,5 @@
 	{"variable" : "pLab_daug2", "title" : "p(K^{-})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.4, "xmax" : 1.5},
 	{"variable" : "pLab_daug2", "title" : "p(#pi^{+})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.4, "xmax" : 1.5}
     ],
-    "outfile" : "VSS=DMIX=DMIX__psi3770_D0D0bar_Kpi,Kpi.root",
-    "reference" : "RefVSS=DMIX=DMIX__psi3770_D0D0bar_Kpi,Kpi.root"
+    "outfile" : "VSS=DMIX=DMIX__psi3770_D0D0bar_Kpi,Kpi.root"
 }

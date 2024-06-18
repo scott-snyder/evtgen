@@ -22,6 +22,5 @@
         {"variable" : "phi", "title" : "phi(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
         {"variable" : "phi", "title" : "phi(pi-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "YMSTOYNSPIPICLEO__Upsilon3S_Upsilonpipi.root",
-    "reference" : "RefYMSTOYNSPIPICLEO__Upsilon3S_Upsilonpipi.root"
+    "outfile" : "YMSTOYNSPIPICLEO__Upsilon3S_Upsilonpipi.root"
 }

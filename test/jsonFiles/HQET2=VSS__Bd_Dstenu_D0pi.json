@@ -32,6 +32,5 @@
         {"variable" : "cosTheta_daug1", "title" : "cosTheta(#it{#pi})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "phi_daug1", "title" : "phi(#it{#pi})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "HQET2=VSS__Bd_Dstenu_D0pi.root",
-    "reference" : "RefHQET2=VSS__Bd_Dstenu_D0pi.root"
+    "outfile" : "HQET2=VSS__Bd_Dstenu_D0pi.root"
 }

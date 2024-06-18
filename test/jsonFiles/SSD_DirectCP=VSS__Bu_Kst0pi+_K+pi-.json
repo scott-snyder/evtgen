@@ -15,6 +15,5 @@
 	{"variable" : "cosHel", "title" : "Kst Helicity Angle",  "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0}
     ],
-    "outfile" : "SSD_DirectCP=VSS__Bu_Kst0pi+_K+pi-.root",
-    "reference" : "RefSSD_DirectCP=VSS__Bu_Kst0pi+_K+pi-.root"
+    "outfile" : "SSD_DirectCP=VSS__Bu_Kst0pi+_K+pi-.root"
 }

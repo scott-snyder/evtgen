@@ -14,6 +14,5 @@
 	{"variable" : "cosHel", "title" : "cosL", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "cosHel", "title" : "cosPi", "d1" : 3, "d2" : 4, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "ETA_LLPIPI__etap_mumupipi.root",
-    "reference" : "RefETA_LLPIPI__etap_mumupipi.root"
+    "outfile" : "ETA_LLPIPI__etap_mumupipi.root"
 }

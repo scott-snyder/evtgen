@@ -22,6 +22,5 @@
 	{"variable" : "cosTheta_daug1", "title" : "cosTheta(D^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "cosTheta_daug1", "title" : "cosTheta(D^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "VPHOTOVISRHI=VSS__psi4415_psi4160gamma_DD.root",
-    "reference" : "RefVPHOTOVISRHI=VSS__psi4415_psi4160gamma_DD.root"
+    "outfile" : "VPHOTOVISRHI=VSS__psi4415_psi4160gamma_DD.root"
 }

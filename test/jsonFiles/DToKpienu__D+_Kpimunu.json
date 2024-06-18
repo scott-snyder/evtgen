@@ -34,6 +34,5 @@
         {"variable" : "phi", "title" : "phi(mu)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180},
         {"variable" : "phi", "title" : "phi(nu)", "d1" : 4, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180}
     ],
-    "outfile" : "DToKpienu__D+_Kpimunu.root",
-    "reference" : "RefDToKpienu__D+_Kpimunu.root"
+    "outfile" : "DToKpienu__D+_Kpimunu.root"
 }

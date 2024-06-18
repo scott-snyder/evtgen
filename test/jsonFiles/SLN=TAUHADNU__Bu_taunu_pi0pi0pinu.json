@@ -37,6 +37,5 @@
 	{"variable" : "mass3_daug1", "title" : "m(pi0_{1} pi0_{2} pi+)", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.2, "xmax" : 1.8},
 	{"variable" : "cosTheta3_daug1", "title" : "cosTheta3", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "SLN=TAUHADNU__Bu_taunu_pi0pi0pinu.root",
-    "reference" : "RefSLN=TAUHADNU__Bu_taunu_pi0pi0pinu.root"
+    "outfile" : "SLN=TAUHADNU__Bu_taunu_pi0pi0pinu.root"
 }

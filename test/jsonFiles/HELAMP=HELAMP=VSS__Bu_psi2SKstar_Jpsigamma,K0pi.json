@@ -41,6 +41,5 @@
 	{"variable" : "p_daug2", "title" : "p(K0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.8},
 	{"variable" : "p_daug2", "title" : "p(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.8}
     ],
-    "outfile" : "HELAMP=HELAMP=VSS__Bu_psi2SKstar_Jpsigamma,K0pi.root",
-    "reference" : "RefHELAMP=HELAMP=VSS__Bu_psi2SKstar_Jpsigamma,K0pi.root"
+    "outfile" : "HELAMP=HELAMP=VSS__Bu_psi2SKstar_Jpsigamma,K0pi.root"
 }

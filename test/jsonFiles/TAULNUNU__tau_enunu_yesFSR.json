@@ -27,6 +27,5 @@
         {"variable" : "mass", "title" : "m(e nutau_{2})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0},
         {"variable" : "mass", "title" : "m(nue nutau_{2})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0}
     ],
-    "outfile" : "TAULNUNU__tau_enunu_yesFSR.root",
-    "reference" : "RefTAULNUNU__tau_enunu_yesFSR.root"
+    "outfile" : "TAULNUNU__tau_enunu_yesFSR.root"
 }

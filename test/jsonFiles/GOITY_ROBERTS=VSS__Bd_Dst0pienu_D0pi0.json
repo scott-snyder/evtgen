@@ -37,6 +37,5 @@
         {"variable" : "cosTheta_daug1", "title" : "cosTheta(#it{pi}^{0})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "phi_daug1", "title" : "phi(#it{pi}^{0})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "GOITY_ROBERTS=VSS__Bd_Dst0pienu_D0pi0.root",
-    "reference" : "RefGOITY_ROBERTS=VSS__Bd_Dst0pienu_D0pi0.root"
+    "outfile" : "GOITY_ROBERTS=VSS__Bd_Dst0pienu_D0pi0.root"
 }

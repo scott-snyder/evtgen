@@ -34,6 +34,5 @@
         {"variable" : "phi", "title" : "phi(pi2+)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180},
         {"variable" : "phi", "title" : "phi(pi2-)", "d1" : 4, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180}
     ],
-    "outfile" : "PHSP__Bd_pipipipi.root",
-    "reference" : "RefPHSP__Bd_pipipipi.root"
+    "outfile" : "PHSP__Bd_pipipipi.root"
 }

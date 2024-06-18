@@ -25,6 +25,5 @@
         {"variable" : "phi_daug1", "title" : "phi(rho)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
         {"variable" : "phi_daug1", "title" : "phi(pi2)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "STS_CP=TVS_PWAVE__Bd_a2pi_rho0pi.root",
-    "reference" : "RefSTS_CP=TVS_PWAVE__Bd_a2pi_rho0pi.root"
+    "outfile" : "STS_CP=TVS_PWAVE__Bd_a2pi_rho0pi.root"
 }

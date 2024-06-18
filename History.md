@@ -11,6 +11,10 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+19 June 2024 Thomas Latham
+* D120: Remove "reference" field from JSON test files.
+  Instead simply prepend "Ref/" to output ROOT file name.
+
 22 May 2024 Fernando Abudinen
 * D118: Removed obsolete `ISR` attribute for photons. It was redundant as it was supposed to be
   the contrary of the `FSR` attribute. It was never used and could lead to confusion.

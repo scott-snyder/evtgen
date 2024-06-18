@@ -23,6 +23,5 @@
 	{"variable" : "phi", "title" : "phi2", "d1" : 2, "d2" : 0, "nbins" : 50, "xmin" : -180.0, "xmax" : 180.0},
 	{"variable" : "phi", "title" : "phi3", "d1" : 3, "d2" : 0, "nbins" : 50, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "PHI_DALITZ__phi_pipipi0.root",
-    "reference" : "RefPHI_DALITZ__phi_pipipi0.root"
+    "outfile" : "PHI_DALITZ__phi_pipipi0.root"
 }

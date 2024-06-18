@@ -31,6 +31,5 @@
 	{"variable" : "cosTheta_daug1", "title" : "cosTheta(J/psi)", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "phi_daug1", "title" : "phi(J/psi)", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "BC_TMN=TVP__Bc_chic2munu_gammaJpsi.root",
-    "reference" : "RefBC_TMN=TVP__Bc_chic2munu_gammaJpsi.root"
+    "outfile" : "BC_TMN=TVP__Bc_chic2munu_gammaJpsi.root"
 }

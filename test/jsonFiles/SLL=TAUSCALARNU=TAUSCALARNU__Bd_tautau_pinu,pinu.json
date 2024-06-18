@@ -48,6 +48,5 @@
 	{"variable" : "cosTheta_daug2", "title" : "cosTheta(#nu)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "phi_daug2", "title" : "phi(#nu)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180}
     ],
-    "outfile" : "SLL=TAUSCALARNU=TAUSCALARNU__Bd_tautau_pinu,pinu.root",
-    "reference" : "RefSLL=TAUSCALARNU=TAUSCALARNU__Bd_tautau_pinu,pinu.root"
+    "outfile" : "SLL=TAUSCALARNU=TAUSCALARNU__Bd_tautau_pinu,pinu.root"
 }

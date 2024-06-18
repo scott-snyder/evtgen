@@ -244,11 +244,6 @@ class JsonFileChecker :
             print(f'ERROR : ROOT file name mis-match : {self.jsonFileNameBase}.root from JSON filename, {rootFileName} in JSON field')
             return False
 
-        refFileName = self.j['reference']
-        if refFileName != 'Ref'+self.jsonFileNameBase+'.root' :
-            print(f'ERROR : reference file name mis-match : Ref{self.jsonFileNameBase}.root from JSON filename, {refFileName} in JSON field')
-            return False
-
         return True
 
 

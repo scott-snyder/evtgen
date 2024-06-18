@@ -24,6 +24,5 @@
         {"variable" : "mass_daug1", "title" : "m(rho nutau_{2})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.7, "xmax" : 1.9},
         {"variable" : "mass_daug1", "title" : "m(rho)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0}
     ],
-    "outfile" : "SLN=TAUVECTORNU__Bu_taunu_rhonu.root",
-    "reference" : "RefSLN=TAUVECTORNU__Bu_taunu_rhonu.root"
+    "outfile" : "SLN=TAUVECTORNU__Bu_taunu_rhonu.root"
 }

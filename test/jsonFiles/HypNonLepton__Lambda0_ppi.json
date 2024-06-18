@@ -14,6 +14,5 @@
 	{"variable" : "phi", "title" : "phi(p)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
 	{"variable" : "phi", "title" : "phi(#pi)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "HypNonLepton__Lambda0_ppi.root",
-    "reference" : "RefHypNonLepton__Lambda0_ppi.root"
+    "outfile" : "HypNonLepton__Lambda0_ppi.root"
 }

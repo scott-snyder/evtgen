@@ -33,6 +33,5 @@
         {"variable" : "cosTheta_daug1", "title" : "cosTheta(#it{#pi})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "phi_daug1", "title" : "phi(#it{#pi})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "SLPOLE=VSS__D+_Kst0enu_Kpi.root",
-    "reference" : "RefSLPOLE=VSS__D+_Kst0enu_Kpi.root"
+    "outfile" : "SLPOLE=VSS__D+_Kst0enu_Kpi.root"
 }

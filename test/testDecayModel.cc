@@ -51,9 +51,10 @@ TestDecayModel::TestDecayModel( const json& config ) : m_config{ config }
 
 bool TestDecayModel::checkMandatoryFields()
 {
-    const std::array<std::string, 8> mandatoryFields{
-        "parent",  "daughters", "models",    "parameters",
-        "outfile", "events",    "reference", "histograms" };
+    const std::array<std::string, 7> mandatoryFields{ "parent",    "daughters",
+                                                      "models",    "parameters",
+                                                      "outfile",   "events",
+                                                      "histograms" };
     const std::array<std::string, 7> mandatoryHistoFields{
         "title", "variable", "d1", "d2", "nbins", "xmin", "xmax" };
     const std::array<std::string, 6> extra2DHistoFields{ "variableY", "d1Y",
@@ -144,15 +145,11 @@ bool TestDecayModel::run()
 
     const auto outFileStrSize =
         m_config.at( "outfile" ).get<std::string>().size() - 5;
-    const auto refFileStrSize =
-        m_config.at( "reference" ).get<std::string>().size() - 5;
 
     const auto outFileName =
         m_config.at( "outfile" ).get<std::string>().substr( 0, outFileStrSize ) +
         fileNameEnd;
-    const auto refFileName =
-        m_config.at( "reference" ).get<std::string>().substr( 0, refFileStrSize ) +
-        fileNameEnd;
+    const auto refFileName = "Ref/" + outFileName;
 
     const auto debugFlag{ ( m_config.contains( "debug_flag" ) &&
                             m_config.at( "debug_flag" ).is_boolean() )

@@ -13,6 +13,5 @@
 	{"variable" : "massSq", "title" : "Dalitz m^{2}(#pi^{+} #pi^{0}) vs m^{2}(#pi^{+} #pi^{0})", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 0.0, "xmax" : 30.0, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 3, "nbinsY" : 50, "ymin" : 0.0, "ymax" : 30.0},
         {"variable" : "mPrime", "title" : "sqDalitz", "d1" : 1, "d2" : 2, "nbins" : 25, "xmin" : 0.0, "xmax" : 1.00, "variableY" : "thetaPrime", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 25, "ymin" : 0.0, "ymax" : 1.0}
     ],
-    "outfile" :"CB3PI-P00__Bu_pipi0pi0.root",
-    "reference" : "RefCB3PI-P00__Bu_pipi0pi0.root"
+    "outfile" :"CB3PI-P00__Bu_pipi0pi0.root"
 }

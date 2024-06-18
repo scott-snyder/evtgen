@@ -41,6 +41,5 @@
         {"variable" : "cosHel_daug2", "title" : "cosHel23", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "cosHel_daug2", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "BTOKD3P=PTO3P=PTO3P__Bu_KD0D0bar_K0spipi,K0spipi.root",
-    "reference" : "RefBTOKD3P=PTO3P=PTO3P__Bu_KD0D0bar_K0spipi,K0spipi.root"
+    "outfile" : "BTOKD3P=PTO3P=PTO3P__Bu_KD0D0bar_K0spipi,K0spipi.root"
 }

@@ -24,6 +24,5 @@
         {"variable" : "mPrime", "title" : "sqDalitz", "d1" : 1, "d2" : 2, "nbins" : 25, "xmin" : 0.0, "xmax" : 1.00, "variableY" : "thetaPrime", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 25, "ymin" : 0.0, "ymax" : 1.0}
 
     ],
-    "outfile" : "VUB_NLO__Bd_Xumunu.root",
-    "reference" : "RefVUB_NLO__Bd_Xumunu.root"
+    "outfile" : "VUB_NLO__Bd_Xumunu.root"
 }

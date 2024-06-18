@@ -29,6 +29,5 @@
 	{"variable" : "p_daug2", "title" : "p(e)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.5},
 	{"variable" : "p_daug2", "title" : "p(anti-nu_e)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.5}
     ],
-    "outfile" : "VSS=BTO2PI_CP_ISO=ISGW2__Upsilon4S_BdBdbar_pipi,Denue.root",
-    "reference" : "RefVSS=BTO2PI_CP_ISO=ISGW2__Upsilon4S_BdBdbar_pipi,Denue.root"
+    "outfile" : "VSS=BTO2PI_CP_ISO=ISGW2__Upsilon4S_BdBdbar_pipi,Denue.root"
 }

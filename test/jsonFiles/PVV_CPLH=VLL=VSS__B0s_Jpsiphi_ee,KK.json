@@ -21,6 +21,5 @@
 	{"variable" : "p_daug1", "title" : "p(e)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 1.0, "xmax" : 1.8},
 	{"variable" : "p_daug2", "title" : "p(K)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 0.3}
     ],
-    "outfile" : "PVV_CPLH=VLL=VSS__B0s_Jpsiphi_ee,KK.root",
-    "reference" : "RefPVV_CPLH=VLL=VSS__B0s_Jpsiphi_ee,KK.root"
+    "outfile" : "PVV_CPLH=VLL=VSS__B0s_Jpsiphi_ee,KK.root"
 }

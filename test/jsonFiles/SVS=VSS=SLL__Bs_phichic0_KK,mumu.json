@@ -31,6 +31,5 @@
         {"variable" : "phi_daug2", "title" : "phi(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
         {"variable" : "phi_daug2", "title" : "phi(mu-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "SVS=VSS=SLL__Bs_phichic0_KK,mumu.root",
-    "reference" : "RefSVS=VSS=SLL__Bs_phichic0_KK,mumu.root"
+    "outfile" : "SVS=VSS=SLL__Bs_phichic0_KK,mumu.root"
 }

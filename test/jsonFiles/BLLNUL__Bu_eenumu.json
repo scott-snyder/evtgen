@@ -34,6 +34,5 @@
         {"variable" : "phi", "title" : "phi(nu_mu)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180},
         {"variable" : "phi", "title" : "phi(mu+)", "d1" : 4, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180}
     ],
-    "outfile" : "BLLNUL__Bu_eenumu.root",
-    "reference" : "RefBLLNUL__Bu_eenumu.root"
+    "outfile" : "BLLNUL__Bu_eenumu.root"
 }

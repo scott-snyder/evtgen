@@ -23,6 +23,5 @@
         {"variable" : "cosHelTau", "title" : "cosHelTau(nutau_{2})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "mass_daug1", "title" : "m(pi nutau_{2})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 1.7, "xmax" : 1.9}
     ],
-    "outfile" : "SLN=TAUSCALARNU__Bu_taunu_pinu.root",
-    "reference" : "RefSLN=TAUSCALARNU__Bu_taunu_pinu.root"
+    "outfile" : "SLN=TAUSCALARNU__Bu_taunu_pinu.root"
 }

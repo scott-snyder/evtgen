@@ -9,6 +9,5 @@
     "histograms" : [
   {"variable" : "lifetime", "title" : "tau", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 10.0}
     ],
-    "outfile" : "PHSPDECAYTIMECUT__Bu_JpsiK+.root",
-    "reference" : "RefPHSPDECAYTIMECUT__Bu_JpsiK+.root"
+    "outfile" : "PHSPDECAYTIMECUT__Bu_JpsiK+.root"
 }

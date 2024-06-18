@@ -23,6 +23,5 @@
 	{"variable" : "p_daug1", "title" : "p(D+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.6, "xmax" : 2.0},
 	{"variable" : "p_daug1", "title" : "p(D-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.6, "xmax" : 2.0}
     ],
-    "outfile" : "VECTORISR=VSS__Upsilon4S_psi4160gamma_DD.root",
-    "reference" : "RefVECTORISR=VSS__Upsilon4S_psi4160gamma_DD.root"
+    "outfile" : "VECTORISR=VSS__Upsilon4S_psi4160gamma_DD.root"
 }

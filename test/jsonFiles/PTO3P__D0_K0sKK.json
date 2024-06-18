@@ -21,6 +21,5 @@
         {"variable" : "cosHel", "title" : "cosHel23", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "cosHel", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "PTO3P__D0_K0sKK.root",
-    "reference" : "RefPTO3P__D0_K0sKK.root"
+    "outfile" : "PTO3P__D0_K0sKK.root"
 }

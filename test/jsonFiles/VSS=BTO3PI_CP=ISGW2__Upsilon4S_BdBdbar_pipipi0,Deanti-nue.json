@@ -18,6 +18,5 @@
         {"variable" : "lifetime_daug1", "title" : "tau(#pi^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 200000.0},
         {"variable" : "lifetime_daug1", "title" : "tau(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 200000.0}
     ],
-    "outfile" :"VSS=BTO3PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipi0,Deanti-nue.root",
-    "reference" : "RefVSS=BTO3PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipi0,Deanti-nue.root"
+    "outfile" :"VSS=BTO3PI_CP=ISGW2__Upsilon4S_BdBdbar_pipipi0,Deanti-nue.root"
 }

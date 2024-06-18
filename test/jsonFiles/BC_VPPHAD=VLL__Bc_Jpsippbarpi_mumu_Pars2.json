@@ -33,6 +33,5 @@
 	{"variable" : "cosTheta_daug1", "title" : "cosTheta(mu-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "phi_daug1", "title" : "phi(mu-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "BC_VPPHAD=VLL__Bc_Jpsippbarpi_mumu_Pars2.root",
-    "reference" : "RefBC_VPPHAD=VLL__Bc_Jpsippbarpi_mumu_Pars2.root"
+    "outfile" : "BC_VPPHAD=VLL__Bc_Jpsippbarpi_mumu_Pars2.root"
 }

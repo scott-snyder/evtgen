@@ -12,6 +12,5 @@
 	{"variable" : "p", "title" : "pi Mtm",  "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 2.0, "xmax" : 3.0},
 	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0}
     ],
-    "outfile" : "SSD_DirectCP__Bd_K+pi-.root",
-    "reference" : "RefSSD_DirectCP__Bd_K+pi-.root"
+    "outfile" : "SSD_DirectCP__Bd_K+pi-.root"
 }

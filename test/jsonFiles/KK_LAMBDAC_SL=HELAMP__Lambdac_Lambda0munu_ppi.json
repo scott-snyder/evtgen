@@ -17,6 +17,5 @@
         {"variable" : "cosHel", "title" : "cosHel(p,#Lambda^{0})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "decayangle_daug1", "title" : "decayAngle(#Lambda^{0},p,#pi^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.0, "xmax" : 180.0}
     ],
-    "outfile" : "KK_LAMBDAC_SL=HELAMP__Lambdac_Lambda0munu_ppi.root",
-    "reference" : "RefKK_LAMBDAC_SL=HELAMP__Lambdac_Lambda0munu_ppi.root"
+    "outfile" : "KK_LAMBDAC_SL=HELAMP__Lambdac_Lambda0munu_ppi.root"
 }

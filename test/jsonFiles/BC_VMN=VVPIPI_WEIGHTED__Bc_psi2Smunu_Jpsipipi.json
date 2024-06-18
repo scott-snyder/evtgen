@@ -35,6 +35,5 @@
 	{"variable" : "cosTheta_daug1", "title" : "cosTheta(pi-)", "d1" : 3, "d2" : 0, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
 	{"variable" : "phi_daug1", "title" : "phi(pi-)", "d1" : 3, "d2" : 0, "nbins": 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "BC_VMN=VVPIPI_WEIGHTED__Bc_psi2Smunu_Jpsipipi.root",
-    "reference" : "RefBC_VMN=VVPIPI_WEIGHTED__Bc_psi2Smunu_Jpsipipi.root"
+    "outfile" : "BC_VMN=VVPIPI_WEIGHTED__Bc_psi2Smunu_Jpsipipi.root"
 }

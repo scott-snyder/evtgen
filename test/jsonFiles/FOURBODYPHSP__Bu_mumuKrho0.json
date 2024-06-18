@@ -45,6 +45,5 @@
         {"variable" : "decayangle", "title" : "theta3(K+,rho0)", "d1" : 3, "d2" : 4, "nbins" : 100, "xmin" : 0.0, "xmax" : 200.0},
         {"variable" : "chi", "title" : "chi(mu+,mu-,K+,rho0)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 360.0}
     ],
-    "outfile" : "FOURBODYPHSP__Bu_mumuKrho0.root",
-    "reference" : "RefFOURBODYPHSP__Bu_mumuKrho0.root"
+    "outfile" : "FOURBODYPHSP__Bu_mumuKrho0.root"
 }

@@ -28,6 +28,5 @@
         {"variable" : "mass_daug1", "title" : "m(mu nutau)", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0},
         {"variable" : "mass_daug1", "title" : "m(numu nutau)", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.25, "xmax" : 2.0}
     ],
-    "outfile" : "SLN=TAULNUNU__Bu_taunu_mununu.root",
-    "reference" : "RefSLN=TAULNUNU__Bu_taunu_mununu.root"
+    "outfile" : "SLN=TAULNUNU__Bu_taunu_mununu.root"
 }

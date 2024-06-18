@@ -24,6 +24,5 @@
         {"variable" : "cosTheta_daug1", "title" : "cosTheta(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "phi_daug1", "title" : "phi(pi+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "VSP_PWAVE=PHSP__Dst0_D0gamma_Kpi.root",
-    "reference" : "RefVSP_PWAVE=PHSP__Dst0_D0gamma_Kpi.root"
+    "outfile" : "VSP_PWAVE=PHSP__Dst0_D0gamma_Kpi.root"
 }

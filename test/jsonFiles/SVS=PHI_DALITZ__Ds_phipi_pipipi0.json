@@ -33,6 +33,5 @@
 	{"variable" : "phi_daug1", "title" : "phi1_2", "d1" : 2, "d2" : 0, "nbins" : 50, "xmin" : -180.0, "xmax" : 180.0},
 	{"variable" : "phi_daug1", "title" : "phi1_3", "d1" : 3, "d2" : 0, "nbins" : 50, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "SVS=PHI_DALITZ__Ds_phipi_pipipi0.root",
-    "reference" : "RefSVS=PHI_DALITZ__Ds_phipi_pipipi0.root"
+    "outfile" : "SVS=PHI_DALITZ__Ds_phipi_pipipi0.root"
 }

@@ -26,6 +26,5 @@
         {"variable" : "cosTheta_daug2", "title" : "cosTheta(gamma)", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "phi_daug2", "title" : "phi(gamma)", "d1" : 2, "d2" : 0, "nbins": 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" :"BTOXSETAP=SVP_HELAMP__Bu_Xsuetap_rho0gamma.root",
-    "reference" : "RefBTOXSETAP=SVP_HELAMP__Bu_Xsuetap_rho0gamma.root"
+    "outfile" :"BTOXSETAP=SVP_HELAMP__Bu_Xsuetap_rho0gamma.root"
 }

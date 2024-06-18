@@ -28,6 +28,5 @@
         {"variable" : "cosTheta", "title" : "cosTheta(p^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "cosTheta", "title" : "cosTheta(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "PHSP__Lambda0_ppi_yesFSR.root",
-    "reference" : "RefPHSP__Lambda0_ppi_yesFSR.root"
+    "outfile" : "PHSP__Lambda0_ppi_yesFSR.root"
 }

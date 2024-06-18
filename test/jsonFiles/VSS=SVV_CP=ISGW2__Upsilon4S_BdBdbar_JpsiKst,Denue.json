@@ -28,6 +28,5 @@
 	{"variable" : "p_daug2", "title" : "p(e-)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0},
 	{"variable" : "p_daug2", "title" : "p(anti-nu_e)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 3.0}
     ],
-    "outfile" : "VSS=SVV_CP=ISGW2__Upsilon4S_BdBdbar_JpsiKst,Denue.root",
-    "reference" : "RefVSS=SVV_CP=ISGW2__Upsilon4S_BdBdbar_JpsiKst,Denue.root"
+    "outfile" : "VSS=SVV_CP=ISGW2__Upsilon4S_BdBdbar_JpsiKst,Denue.root"
 }

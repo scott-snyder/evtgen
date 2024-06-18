@@ -29,6 +29,5 @@
         {"variable" : "phi", "title" : "phi(mu+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180},
         {"variable" : "phi", "title" : "phi(mu-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180}
     ],
-    "outfile" : "BSTOGLLMNT__Bs_gammamumu.root",
-    "reference" : "RefBSTOGLLMNT__Bs_gammamumu.root"
+    "outfile" : "BSTOGLLMNT__Bs_gammamumu.root"
 }

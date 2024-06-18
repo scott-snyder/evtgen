@@ -17,6 +17,5 @@
 	{"variable" : "phi", "title" : "phi(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0},
 	{"variable" : "cosTheta", "title" : "cosTheta(gamma)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "BTOXSGAMMA__Bd_Xsdgamma.root",
-    "reference" : "RefBTOXSGAMMA__Bd_Xsdgamma.root"
+    "outfile" : "BTOXSGAMMA__Bd_Xsdgamma.root"
 }

@@ -28,6 +28,5 @@
         {"variable" : "cosTheta", "title" : "cosTheta(#pi^{+})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "cosTheta", "title" : "cosTheta(#pi^{-})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0}
     ],
-    "outfile" : "PHSP__D0_pipi_yesFSR.root",
-    "reference" : "RefPHSP__D0_pipi_yesFSR.root"
+    "outfile" : "PHSP__D0_pipi_yesFSR.root"
 }

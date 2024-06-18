@@ -32,6 +32,5 @@
         {"variable" : "cosTheta_daug1", "title" : "cosTheta(pi0)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "phi_daug1", "title" : "phi(pi0)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "BTOSLLMS=VSS__Bu_rhomumu_pipi0.root",
-    "reference" : "RefBTOSLLMS=VSS__Bu_rhomumu_pipi0.root"
+    "outfile" : "BTOSLLMS=VSS__Bu_rhomumu_pipi0.root"
 }

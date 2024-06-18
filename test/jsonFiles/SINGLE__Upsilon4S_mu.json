@@ -12,6 +12,5 @@
         {"variable" : "cosTheta", "title" : "cosTheta(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
         {"variable" : "phi", "title" : "phi(mu+)", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180.0}
     ],
-    "outfile" : "SINGLE__Upsilon4S_mu.root",
-    "reference" : "RefSINGLE__Upsilon4S_mu.root"
+    "outfile" : "SINGLE__Upsilon4S_mu.root"
 }
