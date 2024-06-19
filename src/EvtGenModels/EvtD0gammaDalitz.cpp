@@ -119,7 +119,7 @@ void EvtD0gammaDalitz::decay( EvtParticle* part )
     EvtParticle* parent =
         part->getParent();    // If there are no mistakes, should be B+ or B-.
     if ( parent != nullptr &&
-         EvtDecayTable::getInstance()->getDecayFunc( parent )->getName() ==
+         EvtDecayTable::getInstance().getDecayFunc( parent )->getName() ==
              "BTODDALITZCPK" ) {
         EvtId parId = parent->getId();
         if ( ( parId == m_BP ) || ( parId == m_BM ) || ( parId == m_B0 ) ||
@@ -134,24 +134,25 @@ void EvtD0gammaDalitz::decay( EvtParticle* part )
 
     // Read the D decay parameters from the B decay model.
     // Gamma angle in rad.
-    double gamma = EvtDecayTable::getInstance()->getDecayFunc( parent )->getArg(
-        0 );
+    const double gamma =
+        EvtDecayTable::getInstance().getDecayFunc( parent )->getArg( 0 );
     // Strong phase in rad.
-    double delta = EvtDecayTable::getInstance()->getDecayFunc( parent )->getArg(
-        1 );
+    const double delta =
+        EvtDecayTable::getInstance().getDecayFunc( parent )->getArg( 1 );
     // Ratio between B->D0K and B->D0barK
-    double rB = EvtDecayTable::getInstance()->getDecayFunc( parent )->getArg( 2 );
+    const double rB =
+        EvtDecayTable::getInstance().getDecayFunc( parent )->getArg( 2 );
 
     // Same structure for all of these decays.
     part->initializePhaseSpace( getNDaug(), getDaugs() );
-    EvtVector4R pA = part->getDaug( m_d1 )->getP4();
-    EvtVector4R pB = part->getDaug( m_d2 )->getP4();
-    EvtVector4R pC = part->getDaug( m_d3 )->getP4();
+    const EvtVector4R pA = part->getDaug( m_d1 )->getP4();
+    const EvtVector4R pB = part->getDaug( m_d2 )->getP4();
+    const EvtVector4R pC = part->getDaug( m_d3 )->getP4();
 
     // Squared invariant masses.
-    double mSqAB = ( pA + pB ).mass2();
-    double mSqAC = ( pA + pC ).mass2();
-    double mSqBC = ( pB + pC ).mass2();
+    const double mSqAB = ( pA + pB ).mass2();
+    const double mSqAC = ( pA + pC ).mass2();
+    const double mSqBC = ( pB + pC ).mass2();
 
     EvtComplex amp( 1.0, 0.0 );
 

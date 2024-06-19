@@ -55,13 +55,9 @@ EvtDecayTable::~EvtDecayTable()
     m_decaytable.clear();
 }
 
-EvtDecayTable* EvtDecayTable::getInstance()
+EvtDecayTable& EvtDecayTable::getInstance()
 {
-    static thread_local EvtDecayTable* theDecayTable = nullptr;
-
-    if ( !theDecayTable ) {
-        theDecayTable = new EvtDecayTable();
-    }
+    static thread_local EvtDecayTable theDecayTable;
 
     return theDecayTable;
 }

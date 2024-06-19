@@ -313,7 +313,7 @@ void EvtPythiaEngine::createDaughterEvtParticles( EvtParticle* theParent )
 
         int pythiaModeInt = *modeIter;
 
-        EvtDecayBase* decayModel = EvtDecayTable::getInstance()->findDecayModel(
+        EvtDecayBase* decayModel = EvtDecayTable::getInstance().findDecayModel(
             aliasInt, pythiaModeInt );
 
         if ( decayModel != nullptr ) {
@@ -453,7 +453,8 @@ void EvtPythiaEngine::updateParticleLists()
         // Get the list of all possible decays for the particle, using the alias integer.
         // If the particle is not actually an alias, aliasInt = idInt.
 
-        bool hasPythiaDecays = EvtDecayTable::getInstance()->hasPythia( aliasInt );
+        const bool hasPythiaDecays = EvtDecayTable::getInstance().hasPythia(
+            aliasInt );
 
         if ( hasPythiaDecays ) {
             const bool isAlias = particleId.isAlias();
@@ -524,7 +525,7 @@ void EvtPythiaEngine::updatePythiaDecayTable( Pythia8::Pythia& thePythiaGenerato
     // Since we do not want to implement CP violation here, just use the same branching
     // fractions for particle and anti-particle modes.
 
-    int nModes = EvtDecayTable::getInstance()->getNModes( aliasInt );
+    const int nModes = EvtDecayTable::getInstance().getNModes( aliasInt );
     int iMode( 0 );
 
     bool firstMode( true );
@@ -540,7 +541,7 @@ void EvtPythiaEngine::updatePythiaDecayTable( Pythia8::Pythia& thePythiaGenerato
     // Loop over the decay modes for this particle
     for ( iMode = 0; iMode < nModes; iMode++ ) {
         EvtDecayBase* decayModel =
-            EvtDecayTable::getInstance()->findDecayModel( aliasInt, iMode );
+            EvtDecayTable::getInstance().findDecayModel( aliasInt, iMode );
 
         if ( decayModel != nullptr ) {
             int nDaug = decayModel->getNDaug();

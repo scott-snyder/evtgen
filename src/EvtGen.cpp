@@ -54,7 +54,7 @@ EvtGen::~EvtGen()
     //the destruction of objects that it depends on, e.g., EvtPDL.
 
     if ( getenv( "EVTINFO" ) ) {
-        EvtDecayTable::getInstance()->printSummary();
+        EvtDecayTable::getInstance().printSummary();
     }
 }
 
@@ -110,9 +110,9 @@ void EvtGen::initialize( const std::string& decayName, std::istream& pdtTable,
     EvtPDL::readPDT( pdtTable );
 
     if ( useXml ) {
-        EvtDecayTable::getInstance()->readXMLDecayFile( decayName, false );
+        EvtDecayTable::getInstance().readXMLDecayFile( decayName, false );
     } else {
-        EvtDecayTable::getInstance()->readDecayFile( decayName, false );
+        EvtDecayTable::getInstance().readDecayFile( decayName, false );
     }
 
     m_mixingType = mixingType;
@@ -146,9 +146,9 @@ void EvtGen::readUDecay( const std::string& uDecayName, bool useXml )
         indec.open( uDecayName );
         if ( indec ) {
             if ( useXml ) {
-                EvtDecayTable::getInstance()->readXMLDecayFile( uDecayName, true );
+                EvtDecayTable::getInstance().readXMLDecayFile( uDecayName, true );
             } else {
-                EvtDecayTable::getInstance()->readDecayFile( uDecayName, true );
+                EvtDecayTable::getInstance().readDecayFile( uDecayName, true );
             }
         } else {
             EvtGenReport( EVTGEN_INFO, "EvtGen" )

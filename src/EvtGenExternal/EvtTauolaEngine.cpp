@@ -114,7 +114,7 @@ void EvtTauolaEngine::setUpPossibleTauModes()
             int aliasInt = particleId.getAlias();
 
             // Get the list of decay modes for this tau particle (alias)
-            int nModes = EvtDecayTable::getInstance()->getNModes( aliasInt );
+            const int nModes = EvtDecayTable::getInstance().getNModes( aliasInt );
             int iMode( 0 ), iTauMode( 0 );
 
             // Vector to store tau mode branching fractions.
@@ -133,8 +133,7 @@ void EvtTauolaEngine::setUpPossibleTauModes()
             // Loop through each decay mode
             for ( iMode = 0; iMode < nModes; iMode++ ) {
                 EvtDecayBase* decayModel =
-                    EvtDecayTable::getInstance()->findDecayModel( aliasInt,
-                                                                  iMode );
+                    EvtDecayTable::getInstance().findDecayModel( aliasInt, iMode );
                 if ( decayModel ) {
                     // Check that the decay model name matches TAUOLA
                     std::string modelName = decayModel->getName();

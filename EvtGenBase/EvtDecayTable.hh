@@ -34,7 +34,7 @@ class EvtId;
 
 class EvtDecayTable {
   public:
-    static EvtDecayTable* getInstance();
+    static EvtDecayTable& getInstance();
 
     int getNMode( int ipar ) const;
 

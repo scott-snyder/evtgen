@@ -375,7 +375,7 @@ void EvtParticle::initDecay( bool useMinMass )
     }
 
     EvtDecayBase* decayer;
-    decayer = EvtDecayTable::getInstance()->getDecayFunc( p );
+    decayer = EvtDecayTable::getInstance().getDecayFunc( p );
 
     if ( decayer ) {
         p->makeDaughters( decayer->nRealDaughters(), decayer->getDaugs() );
@@ -450,7 +450,7 @@ void EvtParticle::decay()
     //}
 
     EvtDecayBase* decayer;
-    decayer = EvtDecayTable::getInstance()->getDecayFunc( p );
+    decayer = EvtDecayTable::getInstance().getDecayFunc( p );
     //  if ( decayer ) {
     //    EvtGenReport(EVTGEN_INFO,"EvtGen") << "calling decay for " << EvtPDL::name(p->getId()) << " " << p->mass() << " " << p->getP4() << " " << p->getNDaug() << " " << p << endl;
     //    EvtGenReport(EVTGEN_INFO,"EvtGen") << "NDaug= " << decayer->getNDaug() << endl;
@@ -493,7 +493,7 @@ void EvtParticle::decay()
     if ( m_ndaug == 1 &&
          ( thisId == BS0 || thisId == BSB || thisId == BD0 || thisId == BDB ) ) {
         p = p->getDaug( 0 );
-        decayer = EvtDecayTable::getInstance()->getDecayFunc( p );
+        decayer = EvtDecayTable::getInstance().getDecayFunc( p );
     }
     //now we have accepted a set of masses - time
     if ( decayer != nullptr ) {
