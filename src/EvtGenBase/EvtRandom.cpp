@@ -51,6 +51,18 @@ double EvtRandom::random()
     return m_randomEngine->random();
 }
 
+void EvtRandom::setSeed( unsigned int seed )
+{
+    if ( m_randomEngine == nullptr ) {
+        EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+            << "No random engine available in "
+            << "EvtRandom::random()." << endl;
+        ::abort();
+    }
+
+    m_randomEngine->setSeed( seed );
+}
+
 // Random number routine to generate numbers between
 // min and max.  By djl on July 27, 1995.
 double EvtRandom::Flat( double min, double max )

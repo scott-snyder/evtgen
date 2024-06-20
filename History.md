@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+20 June 2024 Fernando Abudinen
+* D121: Introduced function `setSeed` to set seed for random number engines.
+
 19 June 2024 Thomas Latham
 * D120: Remove "reference" field from JSON test files.
   Instead simply prepend "Ref/" to output ROOT file name.

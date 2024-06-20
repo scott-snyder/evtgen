@@ -29,7 +29,9 @@ class EvtMTRandomEngine : public EvtRandomEngine {
   public:
     EvtMTRandomEngine( unsigned int seed = 1430957218 );
 
-    virtual double random();
+    virtual double random() override;
+
+    virtual void setSeed( unsigned int seed ) override;
 
   private:
     std::mt19937 m_engine;

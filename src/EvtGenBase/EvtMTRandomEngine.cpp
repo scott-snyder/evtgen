@@ -37,3 +37,8 @@ double EvtMTRandomEngine::random()
 {
     return m_distribution( m_engine );
 }
+
+void EvtMTRandomEngine::setSeed( unsigned int seed )
+{
+    m_engine.seed( seed );
+}

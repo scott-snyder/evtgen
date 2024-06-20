@@ -31,6 +31,8 @@ class EvtSimpleRandomEngine : public EvtRandomEngine {
 
     double random() override;
 
+    void setSeed( unsigned int seed ) override;
+
   private:
     unsigned long int m_next;
 };

@@ -34,6 +34,8 @@ class EvtRandom {
 
     static double random();
 
+    static void setSeed( unsigned int seed );
+
     //This class does not take ownership of the random engine;
     //the caller needs to make sure that the engine is not
     //destroyed.

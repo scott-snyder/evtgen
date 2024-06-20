@@ -457,6 +457,8 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
             std::cout << "Event " << nEvents - i << std::endl;
         }
 
+        EvtRandom::setSeed( i );
+
         // Initial 4-momentum and particle
         EvtVector4R pInit( EvtPDL::getMass( parId ), 0.0, 0.0, 0.0 );
         EvtParticle* parent{ nullptr };
