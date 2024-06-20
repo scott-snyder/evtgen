@@ -85,14 +85,14 @@ void EvtTensorParticle::init( EvtId part_n, const EvtVector4R& p4,
 
 EvtTensor4C EvtTensorParticle::epsTensorParent( int i ) const
 {
-    assert( i >= 0 && i < m_eps.size() );
+    assert( i >= 0 && static_cast<std::size_t>( i ) < m_eps.size() );
 
     return boostTo( m_eps[i], this->getP4() );
 }
 
 EvtTensor4C EvtTensorParticle::epsTensor( int i ) const
 {
-    assert( i >= 0 && i < m_eps.size() );
+    assert( i >= 0 && static_cast<std::size_t>( i ) < m_eps.size() );
     return m_eps[i];
 }
 

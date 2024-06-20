@@ -214,7 +214,6 @@ void EvtBtoXsll::decay( EvtParticle* p )
     double ml = mass[1];
     double pb( 0. );
 
-    int im = 0;
     static int nmsg = 0;
     double xhadronMass = -999.0;
 
@@ -230,8 +229,6 @@ void EvtBtoXsll::decay( EvtParticle* p )
     // (JETSET gets caught in an infinite loop)
     // so we choose a lightly larger value for the threshold
     while ( xhadronMass < m_mxmin ) {
-        im++;
-
         // Apply Fermi motion and determine effective b-quark mass
 
         // Old BaBar MC parameters
@@ -375,8 +372,6 @@ void EvtBtoXsll::decay( EvtParticle* p )
 
         p4xhadron = p4s + p4q;
         xhadronMass = p4xhadron.mass();
-
-        //    cout << "Xs mass = " << xhadronMass << " trial " << im << endl;
     }
 
     // initialize the decay products

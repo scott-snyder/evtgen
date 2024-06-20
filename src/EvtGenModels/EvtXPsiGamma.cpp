@@ -116,16 +116,16 @@ void EvtXPsiGamma::initProbMax()
     rho.setDiag( parent.getSpinStates() );
 
     // Momentum of daughters in parent's frame
-    const double m_parent = EvtPDL::getMass( getParentId() );
+    const double parentMass = EvtPDL::getMass( getParentId() );
 
     // The daughter CMS momentum pstar (and thus the phase space) is larger if the mass of the daughters is lower.
     // Thus the probability is maximal for the minimal resonance mass for rho0 and omega resonances.
     // For photons the minimal mass is always zero.
-    const double m_1 = EvtPDL::getMinMass( getDaug( 0 ) );
+    const double d1Mass = EvtPDL::getMinMass( getDaug( 0 ) );
 
-    const double m_2 = EvtPDL::getMass( getDaug( 1 ) );
+    const double d2Mass = EvtPDL::getMass( getDaug( 1 ) );
 
-    const double pstar = calcPstar( m_parent, m_1, m_2 );
+    const double pstar = calcPstar( parentMass, d1Mass, d2Mass );
 
     EvtVector4R p4_1, p4_2;
 
@@ -137,10 +137,10 @@ void EvtXPsiGamma::initProbMax()
     for ( int i = 0; i <= nsteps; i++ ) {
         const double theta = i * EvtConst::pi / nsteps;
 
-        p4_1.set( sqrt( pow( pstar, 2 ) + pow( m_1, 2 ) ), 0,
+        p4_1.set( sqrt( pow( pstar, 2 ) + pow( d1Mass, 2 ) ), 0,
                   +pstar * sin( theta ), +pstar * cos( theta ) );
 
-        p4_2.set( sqrt( pow( pstar, 2 ) + pow( m_2, 2 ) ), 0,
+        p4_2.set( sqrt( pow( pstar, 2 ) + pow( d2Mass, 2 ) ), 0,
                   -pstar * sin( theta ), -pstar * cos( theta ) );
 
         child1->init( getDaug( 0 ), p4_1 );
@@ -260,11 +260,13 @@ void EvtXPsiGamma::calcAmp( EvtParticle& parent, EvtAmp& amp )
     }
 }
 
-double EvtXPsiGamma::calcPstar( double m_parent, double m_1, double m_2 ) const
+double EvtXPsiGamma::calcPstar( double parentMass, double d1Mass,
+                                double d2Mass ) const
 {
-    const double pstar = sqrt( pow( m_parent, 2 ) - pow( ( m_1 + m_2 ), 2 ) ) *
-                         sqrt( pow( m_parent, 2 ) - pow( ( m_2 - m_1 ), 2 ) ) /
-                         ( 2 * m_parent );
+    const double pstar =
+        sqrt( pow( parentMass, 2 ) - pow( ( d1Mass + d2Mass ), 2 ) ) *
+        sqrt( pow( parentMass, 2 ) - pow( ( d2Mass - d1Mass ), 2 ) ) /
+        ( 2 * parentMass );
 
     return pstar;
 }

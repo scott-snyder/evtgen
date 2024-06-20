@@ -579,12 +579,6 @@ double* EvtDecayBase::getArgs()
 double EvtDecayBase::getArg( unsigned int j )
 {
     // Verify string
-
-    if ( getParentId().getId() == 25 ) {
-        int i = 0;
-        ++i;
-    }
-
     const char* str = m_args[j].c_str();
     int i = 0;
     while ( str[i] != 0 ) {

@@ -40,13 +40,13 @@ class EvtVectorParticle : public EvtParticle {
                const EvtVector4C&, const EvtVector4C& );
     EvtVector4C epsParent( int i ) const override
     {
-        assert( i >= 0 && i < m_eps.size() );
+        assert( i >= 0 && static_cast<std::size_t>( i ) < m_eps.size() );
 
         return boostTo( m_eps[i], this->getP4() );
     }
     EvtVector4C eps( int i ) const override
     {
-        assert( i >= 0 && i < m_eps.size() );
+        assert( i >= 0 && static_cast<std::size_t>( i ) < m_eps.size() );
 
         return m_eps[i];
     }

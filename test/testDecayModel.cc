@@ -1115,27 +1115,27 @@ double TestDecayModel::getValue( const EvtParticle* parent,
                 const EvtParticle* daug3 = res->getDaug( 2 );
 
                 // 4-momenta in base parent P lab frame
-                const EvtVector4R pRes{ res->getP4Lab() };
-                const EvtVector4R p4{ bac != nullptr ? bac->getP4Lab()
-                                                     : EvtVector4R() };
-                const EvtVector4R p1{ daug1 != nullptr ? daug1->getP4Lab()
-                                                       : EvtVector4R() };
-                const EvtVector4R p3{ daug3 != nullptr ? daug3->getP4Lab()
-                                                       : EvtVector4R() };
+                const EvtVector4R p4_Res{ res->getP4Lab() };
+                const EvtVector4R p4_p4{ bac != nullptr ? bac->getP4Lab()
+                                                        : EvtVector4R() };
+                const EvtVector4R p4_p1{ daug1 != nullptr ? daug1->getP4Lab()
+                                                          : EvtVector4R() };
+                const EvtVector4R p4_p3{ daug3 != nullptr ? daug3->getP4Lab()
+                                                          : EvtVector4R() };
 
                 // Boost 4-vector for resonance frame
-                const EvtVector4R boost{ pRes.get( 0 ), -pRes.get( 1 ),
-                                         -pRes.get( 2 ), -pRes.get( 3 ) };
+                const EvtVector4R boost{ p4_Res.get( 0 ), -p4_Res.get( 1 ),
+                                         -p4_Res.get( 2 ), -p4_Res.get( 3 ) };
 
                 // Momentum of p1 and p3 in resonance frame
-                const EvtVector4R p1Res{ boostTo( p1, boost ) };
-                const EvtVector4R p3Res{ boostTo( p3, boost ) };
+                const EvtVector4R p1Res{ boostTo( p4_p1, boost ) };
+                const EvtVector4R p3Res{ boostTo( p4_p3, boost ) };
 
                 // Plane normal vector (just uses 3-momentum components)
                 const EvtVector4R norm{ p3Res.cross( p1Res ) };
 
                 // Momentum of p4 in resonance frame
-                const EvtVector4R p4Res{ boostTo( p4, boost ) };
+                const EvtVector4R p4Res{ boostTo( p4_p4, boost ) };
 
                 // Cosine of the angle between the normal and p4 in the resonance frame
                 const double normMag{ norm.d3mag() };
@@ -1155,23 +1155,23 @@ double TestDecayModel::getValue( const EvtParticle* parent,
             const EvtParticle* daug3 = selectedParent->getDaug( 2 );
 
             // 4-momenta in base parent frame
-            const EvtVector4R p1{ daug1 != nullptr ? daug1->getP4Lab()
-                                                   : EvtVector4R() };
-            const EvtVector4R p2{ daug2 != nullptr ? daug2->getP4Lab()
-                                                   : EvtVector4R() };
-            const EvtVector4R p3{ daug3 != nullptr ? daug3->getP4Lab()
-                                                   : EvtVector4R() };
+            const EvtVector4R p4_p1{ daug1 != nullptr ? daug1->getP4Lab()
+                                                      : EvtVector4R() };
+            const EvtVector4R p4_p2{ daug2 != nullptr ? daug2->getP4Lab()
+                                                      : EvtVector4R() };
+            const EvtVector4R p4_p3{ daug3 != nullptr ? daug3->getP4Lab()
+                                                      : EvtVector4R() };
 
             // p1 + p2
-            const EvtVector4R p12{ p1 + p2 };
+            const EvtVector4R p12{ p4_p1 + p4_p2 };
 
             // Boost 4-vector for p12 frame
             const EvtVector4R boost{ p12.get( 0 ), -p12.get( 1 ), -p12.get( 2 ),
                                      -p12.get( 3 ) };
 
             // Momentum of p1 & p3 in p12 frame
-            const EvtVector4R p1_12{ boostTo( p1, boost ) };
-            const EvtVector4R p3_12{ boostTo( p3, boost ) };
+            const EvtVector4R p1_12{ boostTo( p4_p1, boost ) };
+            const EvtVector4R p3_12{ boostTo( p4_p3, boost ) };
 
             // Cosine of angle between p1 & p3 in p12 frame
             const double p1_12Mag{ p1_12.d3mag() };

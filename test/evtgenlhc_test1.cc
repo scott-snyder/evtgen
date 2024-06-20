@@ -4298,7 +4298,7 @@ void runBtoXsgamma( int nevent, EvtGen& myGenerator )
         //tuple->column("genergy", genergy);
         //HTValOrderedVector<int> XDaugId, XDaugNephewId;
         //HTValOrderedVector<float> XsDaugMass, XsDaugNephewMass;
-        int nTot( 0 );
+        //int nTot( 0 );
         for ( int i = 0; i < Xsmulti; i++ ) {
             EvtParticle* XsDaug = Xs->getDaug( i );
             //EvtVector4R p4XsDaug = XsDaug->getP4Lab();
@@ -4311,7 +4311,7 @@ void runBtoXsgamma( int nevent, EvtGen& myGenerator )
                  EvtPDL::getStdHep( XsDaugId ) == 310 ||
                  EvtPDL::getStdHep( XsDaugId ) == 111 ||
                  abs( EvtPDL::getStdHep( XsDaugId ) ) == 211 || Daumulti == 0 ) {
-                nTot++;
+                //nTot++;
                 //EvtVector4R p4XsDaugNephew = XsDaug->getP4Lab();
                 //EvtId XsDaugNephewId =XsDaug->getId() ;
                 //XDaugNephewId.push_back(EvtPDL::getStdHep(XsDaugId));
@@ -4328,13 +4328,13 @@ void runBtoXsgamma( int nevent, EvtGen& myGenerator )
                          EvtPDL::getStdHep( XsDaugNephewId ) == 310 ||
                          EvtPDL::getStdHep( XsDaugNephewId ) == 111 ||
                          abs( EvtPDL::getStdHep( XsDaugNephewId ) ) == 211 ) {
-                        nTot++;
+                        //nTot++;
                         //EvtVector4R p4XsDaugNephew = XsDaugNephew->getP4Lab();
                         //XDaugNephewId.push_back(EvtPDL::getStdHep(XsDaugNephewId));
                         //XsDaugNephewMass.push_back( p4XsDaugNephew.mass());
                     } else {
                         for ( int g = 0; g < Nephmulti; g++ ) {
-                            nTot++;
+                            //nTot++;
                             //EvtParticle *XsDaugNephewNephew = XsDaugNephew->getDaug(g);
                             //EvtVector4R p4XsDaugNephewNephew = XsDaugNephewNephew->getP4Lab();
                             //EvtId XsDaugNephewNephewId = XsDaugNephewNephew->getId();

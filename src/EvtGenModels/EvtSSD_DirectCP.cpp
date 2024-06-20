@@ -111,13 +111,13 @@ void EvtSSD_DirectCP::initProbMax()
         rho.setDiag( parent.getSpinStates() );
 
         // Momentum of daughters in parent's frame
-        const double m_parent = EvtPDL::getMass( getParentId() );
-        const double m_sd = EvtPDL::getMass( getDaug( scalarDaughterIndex ) );
-        const double m_nd = EvtPDL::getMass( getDaug( nonScalarDaughterIndex ) );
+        const double parentMass = EvtPDL::getMass( getParentId() );
+        const double sdMass = EvtPDL::getMass( getDaug( scalarDaughterIndex ) );
+        const double ndMass = EvtPDL::getMass( getDaug( nonScalarDaughterIndex ) );
         const double pstar =
-            sqrt( pow( m_parent, 2 ) - pow( ( m_sd + m_nd ), 2 ) ) *
-            sqrt( pow( m_parent, 2 ) - pow( ( m_nd - m_sd ), 2 ) ) /
-            ( 2 * m_parent );
+            sqrt( pow( parentMass, 2 ) - pow( ( sdMass + ndMass ), 2 ) ) *
+            sqrt( pow( parentMass, 2 ) - pow( ( ndMass - sdMass ), 2 ) ) /
+            ( 2 * parentMass );
 
         EvtVector4R p4_sd, p4_nd;
 
@@ -129,10 +129,10 @@ void EvtSSD_DirectCP::initProbMax()
         for ( int i = 0; i <= nsteps; i++ ) {
             const double theta = i * EvtConst::pi / nsteps;
 
-            p4_sd.set( sqrt( pow( pstar, 2 ) + pow( m_sd, 2 ) ), 0,
+            p4_sd.set( sqrt( pow( pstar, 2 ) + pow( sdMass, 2 ) ), 0,
                        +pstar * sin( theta ), +pstar * cos( theta ) );
 
-            p4_nd.set( sqrt( pow( pstar, 2 ) + pow( m_nd, 2 ) ), 0,
+            p4_nd.set( sqrt( pow( pstar, 2 ) + pow( ndMass, 2 ) ), 0,
                        -pstar * sin( theta ), -pstar * cos( theta ) );
 
             scalarDaughter->init( getDaug( scalarDaughterIndex ), p4_sd );

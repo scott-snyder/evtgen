@@ -284,20 +284,6 @@ void EvtVPHOtoVISRHi::decay( EvtParticle* p )
     if ( sigma < 0 )
         sigma = 0.0;
 
-    //   static double sigmax=sigma;
-    //   if (sigma>sigmax){
-    //      sigmax=sigma;
-    //   }
-
-    static int count = 0;
-
-    count++;
-
-    //   if (count%10000==0){
-    //      std::cout << "sigma :"<<sigma<<std::endl;
-    //      std::cout << "sigmax:"<<sigmax<<std::endl;
-    //   }
-
     double norm = sqrt( sigma );
 
     //  EvtParticle* d=p->getDaug(0);

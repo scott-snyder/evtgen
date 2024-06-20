@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+20 June 2024 Thomas Latham
+* D122: Fix compilation warnings under gcc13 and clang16
+
 20 June 2024 Fernando Abudinen
 * D121: Introduced function `setSeed` to set seed for random number engines.
 
