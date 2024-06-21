@@ -21,7 +21,6 @@
 #ifndef EvtWNPI_HH
 #define EvtWNPI_HH
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 #include "EvtGenBase/EvtVector4R.hh"

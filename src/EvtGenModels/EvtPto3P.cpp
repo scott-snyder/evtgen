@@ -21,7 +21,6 @@
 #include "EvtGenModels/EvtPto3P.hh"
 
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtPto3PAmpFactory.hh"
 using namespace EvtCyclic3;
 

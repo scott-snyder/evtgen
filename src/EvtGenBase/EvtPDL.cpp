@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtId.hh"
 #include "EvtGenBase/EvtPartProp.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <cstring>

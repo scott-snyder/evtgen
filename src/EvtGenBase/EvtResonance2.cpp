@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtConst.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <cmath>

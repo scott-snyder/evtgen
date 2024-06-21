@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtModel.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include "EvtGenModels/EvtBBScalar.hh"
 #include "EvtGenModels/EvtBLLNuL.hh"

@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtPoint1D.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <stdio.h>
 
 EvtPoint1D::EvtPoint1D() :

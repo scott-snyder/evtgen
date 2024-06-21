@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtPropBreitWigner.hh"
 
 #include "EvtGenBase/EvtConst.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <math.h>
 

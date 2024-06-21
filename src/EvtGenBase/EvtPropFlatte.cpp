@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtPropFlatte.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <iostream>
 #include <math.h>
 using std::cout;

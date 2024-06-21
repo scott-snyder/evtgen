@@ -21,7 +21,6 @@
 #include "EvtGenModels/EvtBtoXsgammaFermiUtil.hh"
 
 #include "EvtGenBase/EvtConst.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include "EvtGenModels/EvtBtoXsgammaRootFinder.hh"

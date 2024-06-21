@@ -22,7 +22,6 @@
 #define EVTAMP_HH
 
 #include "EvtGenBase/EvtComplex.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 class EvtSpinDensity;
 class EvtId;

@@ -20,7 +20,6 @@
 
 #include "EvtGenModels/EvtBtoXsgammaFlatEnergy.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 

@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtRaritaSchwinger.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 using std::endl;
 using std::ostream;
 

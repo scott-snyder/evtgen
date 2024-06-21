@@ -20,7 +20,6 @@
 
 #include "EvtGenModels/EvtBtoXsgammaFixedMass.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include "EvtGenModels/EvtBtoXsgamma.hh"

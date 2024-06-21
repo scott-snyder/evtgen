@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtStdHep.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
 #include <iomanip>

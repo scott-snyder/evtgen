@@ -20,7 +20,6 @@
 
 #include "EvtGenModels/EvtPFermi.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <math.h>

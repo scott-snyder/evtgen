@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtDiracSpinor.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"

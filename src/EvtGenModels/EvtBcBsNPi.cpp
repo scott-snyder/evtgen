@@ -20,7 +20,6 @@
 
 #include "EvtGenModels/EvtBcBsNPi.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 
 EvtBcBsNPi::EvtBcBsNPi()

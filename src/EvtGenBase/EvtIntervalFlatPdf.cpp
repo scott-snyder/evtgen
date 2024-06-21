@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtIntervalFlatPdf.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRandom.hh"
 
 #include <assert.h>

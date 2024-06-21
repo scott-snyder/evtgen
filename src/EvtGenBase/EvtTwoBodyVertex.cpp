@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtTwoBodyVertex.hh"
 
 #include "EvtGenBase/EvtMacros.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <assert.h>
 #include <cmath>

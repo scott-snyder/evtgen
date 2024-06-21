@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtVector3R.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <iostream>
 #include <math.h>
 using std::ostream;

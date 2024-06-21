@@ -25,7 +25,6 @@
 #include "EvtGenBase/EvtIdSet.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include "EvtGenModels/EvtBaryonPCRFF.hh"

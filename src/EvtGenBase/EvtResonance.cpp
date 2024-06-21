@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtConst.hh"
 #include "EvtGenBase/EvtKine.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 

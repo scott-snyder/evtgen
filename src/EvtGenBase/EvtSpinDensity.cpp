@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtSpinDensity.hh"
 
 #include "EvtGenBase/EvtComplex.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <assert.h>

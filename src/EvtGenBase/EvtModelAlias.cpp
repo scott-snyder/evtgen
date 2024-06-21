@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtModelAlias.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 EvtModelAlias::EvtModelAlias( std::string alias, std::string model,
                               std::vector<std::string> args ) :
 

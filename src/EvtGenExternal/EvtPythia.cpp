@@ -24,7 +24,6 @@
 #include "EvtGenBase/EvtId.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtSpinDensity.hh"
 
 #include "EvtGenModels/EvtAbsExternalGen.hh"

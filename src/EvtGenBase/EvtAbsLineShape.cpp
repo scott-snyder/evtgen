@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtPropBreitWigner.hh"
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"

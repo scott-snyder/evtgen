@@ -28,7 +28,6 @@
 #include "EvtGenBase/EvtParser.hh"
 #include "EvtGenBase/EvtParserXml.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRadCorr.hh"
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"

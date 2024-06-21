@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtMassAmp.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 EvtMassAmp::EvtMassAmp( const EvtPropBreitWignerRel& prop,
                         const EvtTwoBodyVertex& vd ) :
     EvtAmplitude<EvtPoint1D>(),

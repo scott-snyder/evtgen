@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtId.hh"
 
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <iostream>
 using std::ostream;

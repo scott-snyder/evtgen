@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtOrthogVector.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <ctype.h>
 #include <fstream>
 #include <iostream>

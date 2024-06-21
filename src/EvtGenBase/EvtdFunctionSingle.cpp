@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtdFunctionSingle.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <assert.h>
 #include <iostream>
 #include <math.h>
@@ -74,10 +72,10 @@ void EvtdFunctionSingle::init( int j, int m1, int m2 )
     }
 }
 
-double EvtdFunctionSingle::d( int j, int m1, int m2, double theta )
+double EvtdFunctionSingle::d( [[maybe_unused]] int j, int m1, int m2,
+                              double theta )
 {
     assert( j == m_j );
-    UNUSED( j );
     assert( m1 == m_m1 );
     assert( m2 == m_m2 );
 

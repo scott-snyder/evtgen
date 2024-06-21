@@ -22,7 +22,6 @@
 #define EVTDECAYBASE_HH
 
 #include "EvtGenBase/EvtId.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 
 #include <stdlib.h>

@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtVector4R.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector3R.hh"
 #include "EvtGenBase/EvtVector4C.hh"

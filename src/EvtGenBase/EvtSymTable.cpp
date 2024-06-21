@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtSymTable.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <ctype.h>

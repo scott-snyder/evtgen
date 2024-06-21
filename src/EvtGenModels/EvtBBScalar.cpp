@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtDiracSpinor.hh"
 #include "EvtGenBase/EvtGammaMatrix.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtSpinType.hh"
 #include "EvtGenBase/EvtTensor4C.hh"
 

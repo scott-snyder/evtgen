@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtDecayMode.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParser.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <assert.h>
 #include <math.h>
@@ -146,7 +145,7 @@ void EvtMultiChannelParser::parse( const std::vector<std::string>& v )
     assert( isKeyword( v[2] ) );
 
     while ( i < v.size() ) {
-        size_t i0 = i;
+        [[maybe_unused]] size_t i0 = i;
 
         // Switch to conjugate amplitudes after keyword
         if ( v[i] == std::string( "CONJUGATE" ) ) {
@@ -187,7 +186,6 @@ void EvtMultiChannelParser::parse( const std::vector<std::string>& v )
         }
 
         assert( i > i0 );
-        UNUSED( i0 );
     }
 
     printf( "PARSING SUCCESSFUL\n" );

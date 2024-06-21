@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtSpinType.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 int EvtSpinType::getSpin2( spintype stype )

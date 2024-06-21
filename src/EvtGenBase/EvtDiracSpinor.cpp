@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtGammaMatrix.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtTensor4C.hh"
 #include "EvtGenBase/EvtVector4C.hh"

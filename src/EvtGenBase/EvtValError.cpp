@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtValError.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <assert.h>
 #include <iostream>
 #include <math.h>

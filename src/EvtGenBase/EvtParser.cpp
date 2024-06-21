@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtParser.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <fstream>

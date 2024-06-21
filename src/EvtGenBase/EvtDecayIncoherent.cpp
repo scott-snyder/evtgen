@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtDecayBase.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRadCorr.hh"
 #include "EvtGenBase/EvtReport.hh"
 

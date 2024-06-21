@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtDecayMode.hh"
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtTwoBodyVertex.hh"
 
 #include <assert.h>

@@ -21,7 +21,6 @@
 #include "EvtGenModels/EvtSLBKPoleFF.hh"    //modified
 
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <math.h>

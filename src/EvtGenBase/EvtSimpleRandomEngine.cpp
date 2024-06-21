@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtSimpleRandomEngine.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <iostream>
 #include <math.h>
 #include <stdio.h>

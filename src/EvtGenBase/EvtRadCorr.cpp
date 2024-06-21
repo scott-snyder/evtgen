@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtRadCorr.hh"
 
 #include "EvtGenBase/EvtAbsRadCorr.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <iostream>

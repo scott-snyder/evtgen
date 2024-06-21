@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtConst.hh"
 #include "EvtGenBase/EvtDalitzCoord.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRandom.hh"
 
 #include <math.h>

@@ -24,7 +24,6 @@
 #include "EvtGenBase/EvtIdSet.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRaritaSchwinger.hh"
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtTensor4C.hh"

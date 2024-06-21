@@ -21,7 +21,6 @@
 #include "EvtGenModels/EvtbTosllAliFF.hh"
 
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <math.h>
 

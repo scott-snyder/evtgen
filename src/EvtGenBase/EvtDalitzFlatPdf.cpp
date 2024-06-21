@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtDalitzFlatPdf.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 EvtDalitzFlatPdf::EvtDalitzFlatPdf( const EvtDalitzPlot& dp ) :
     EvtPdf<EvtDalitzPoint>(), m_dp( dp )
 {

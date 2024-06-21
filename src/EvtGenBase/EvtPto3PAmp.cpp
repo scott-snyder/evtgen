@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtComplex.hh"
 #include "EvtGenBase/EvtCyclic3.hh"
 #include "EvtGenBase/EvtDalitzCoord.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtdFunction.hh"
 

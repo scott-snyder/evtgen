@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtCyclic3.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <assert.h>
 #include <iostream>
 #include <string.h>
@@ -80,16 +78,17 @@ Index EvtCyclic3::permute( Index i, Perm p )
     return A;
 }
 
-Perm EvtCyclic3::permutation( Index i1, Index i2, Index i3 )
+Perm EvtCyclic3::permutation( Index i1, Index i2, [[maybe_unused]] Index i3 )
 {
     assert( i1 != i2 && i2 != i3 && i3 != i1 );
-    UNUSED( i3 );
+
     if ( i1 == A )
         return ( i2 == B ) ? ABC : ACB;
     if ( i1 == B )
         return ( i2 == C ) ? BCA : BAC;
     if ( i1 == C )
         return ( i2 == A ) ? CAB : CBA;
+
     assert( 0 );
     return ABC;
 }

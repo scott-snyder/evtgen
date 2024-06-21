@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtReport.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 using std::cerr;
 using std::cout;
 using std::endl;

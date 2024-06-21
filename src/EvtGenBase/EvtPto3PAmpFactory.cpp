@@ -30,7 +30,6 @@
 #include "EvtGenBase/EvtLASSAmp.hh"
 #include "EvtGenBase/EvtNonresonantAmp.hh"
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtPropBreitWigner.hh"
 #include "EvtGenBase/EvtPropBreitWignerRel.hh"
 #include "EvtGenBase/EvtPropFlatte.hh"

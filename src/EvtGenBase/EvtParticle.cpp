@@ -29,7 +29,6 @@
 #include "EvtGenBase/EvtNeutrinoParticle.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticleFactory.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtPhotonParticle.hh"
 #include "EvtGenBase/EvtRadCorr.hh"
 #include "EvtGenBase/EvtRandom.hh"

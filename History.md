@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+21 June 2024 Thomas Latham
+* D123: Removed `EvtPatches.hh`. Removed unused `clock_t` typedef and redundant `UNUSED` macro.
+
 20 June 2024 Thomas Latham
 * D122: Fix compilation warnings under gcc13 and clang16
 

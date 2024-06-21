@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtAbsLineShape.hh"
 #include "EvtGenBase/EvtFlatLineShape.hh"
 #include "EvtGenBase/EvtManyDeltaFuncLineShape.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRelBreitWignerBarrierFact.hh"
 
 #include <ctype.h>

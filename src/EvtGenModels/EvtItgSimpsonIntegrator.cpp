@@ -20,8 +20,6 @@
 
 #include "EvtGenModels/EvtItgSimpsonIntegrator.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 //-------------
 // C Headers --
 //-------------

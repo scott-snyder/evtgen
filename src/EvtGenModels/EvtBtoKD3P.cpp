@@ -25,7 +25,6 @@
 #include "EvtGenBase/EvtDecayTable.hh"
 #include "EvtGenBase/EvtId.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 

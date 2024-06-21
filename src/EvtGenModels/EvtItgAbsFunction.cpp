@@ -20,8 +20,6 @@
 
 #include "EvtGenModels/EvtItgAbsFunction.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 //-------------
 // C Headers --
 //-------------

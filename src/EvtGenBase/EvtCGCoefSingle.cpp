@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtCGCoefSingle.hh"
 
 #include "EvtGenBase/EvtOrthogVector.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <assert.h>
 #include <iostream>
@@ -112,20 +111,18 @@ void EvtCGCoefSingle::init( int j1, int j2 )
     }
 }
 
-double EvtCGCoefSingle::coef( int J, int M, int j1, int j2, int m1, int m2 )
+double EvtCGCoefSingle::coef( int J, int M, [[maybe_unused]] int j1,
+                              [[maybe_unused]] int j2, int m1, int m2 )
 {
     assert( j1 == m_j1 );
-    UNUSED( j1 );
     assert( j2 == m_j2 );
-    UNUSED( j2 );
 
     return cg( J, M, m1, m2 );
 }
 
-double& EvtCGCoefSingle::cg( int J, int M, int m1, int m2 )
+double& EvtCGCoefSingle::cg( int J, int M, int m1, [[maybe_unused]] int m2 )
 {
     assert( M == m1 + m2 );
-    UNUSED( m2 );
     assert( abs( M ) <= J );
     assert( J <= m_Jmax );
     assert( J >= m_Jmin );

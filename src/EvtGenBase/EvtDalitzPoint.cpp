@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtDalitzPoint.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>

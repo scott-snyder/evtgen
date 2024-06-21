@@ -20,8 +20,6 @@
 
 #include "EvtGenBase/EvtPropGounarisSakurai.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 #include <math.h>
 
 EvtPropGounarisSakurai::EvtPropGounarisSakurai( EvtDalitzPlot* dp,

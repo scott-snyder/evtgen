@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtVector4C.hh"
 
 #include "EvtGenBase/EvtComplex.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <assert.h>
 #include <iostream>

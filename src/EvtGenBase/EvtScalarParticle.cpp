@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtScalarParticle.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
 #include <iostream>

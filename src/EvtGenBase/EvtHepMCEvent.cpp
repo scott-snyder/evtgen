@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 EvtHepMCEvent::EvtHepMCEvent() :
     m_theEvent( nullptr ), m_translation( 0.0, 0.0, 0.0, 0.0 )

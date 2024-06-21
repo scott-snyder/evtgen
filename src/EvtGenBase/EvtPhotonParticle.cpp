@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtPhotonParticle.hh"
 
 #include "EvtGenBase/EvtComplex.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4C.hh"
 

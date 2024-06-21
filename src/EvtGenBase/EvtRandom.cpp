@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtRandom.hh"
 
 #include "EvtGenBase/EvtConst.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRandomEngine.hh"
 #include "EvtGenBase/EvtReport.hh"
 

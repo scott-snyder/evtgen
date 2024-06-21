@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtDecayBase.hh"
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include "EvtGenModels/EvtAbsExternalGen.hh"
 

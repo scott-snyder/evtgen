@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtTensor3C.hh"
 
 #include "EvtGenBase/EvtComplex.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector3C.hh"
 

@@ -25,7 +25,6 @@
 #include "EvtGenBase/EvtParser.hh"
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtParticleDecayList.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtRandom.hh"
 #include "EvtGenBase/EvtReport.hh"
 

@@ -22,7 +22,6 @@
 #define EVTIDSET_HH
 
 #include "EvtGenBase/EvtId.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <initializer_list>
 #include <set>

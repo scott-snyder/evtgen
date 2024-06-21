@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtHighSpinParticle.hh"
 
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtSpinDensity.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 #include "EvtGenBase/EvtdFunction.hh"

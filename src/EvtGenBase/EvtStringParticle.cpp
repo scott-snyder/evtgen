@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtStringParticle.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 

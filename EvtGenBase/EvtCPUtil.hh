@@ -22,7 +22,6 @@
 #define EVTCPUTIL_HH
 
 #include "EvtGenBase/EvtComplex.hh"
-#include "EvtGenBase/EvtPatches.hh"
 class EvtParticle;
 class EvtId;
 

@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtIdSet.hh"
 
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <initializer_list>
 #include <set>

@@ -22,7 +22,6 @@
 
 #include "EvtGenBase/EvtConst.hh"
 #include "EvtGenBase/EvtDiLog.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <math.h>
 

@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtdFunction.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtdFunctionSingle.hh"
 
 #include <assert.h>

@@ -24,7 +24,6 @@
 #include "EvtGenBase/EvtIntervalFlatPdf.hh"
 #include "EvtGenBase/EvtMassAmp.hh"
 #include "EvtGenBase/EvtPDL.hh"
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtPredGen.hh"
 #include "EvtGenBase/EvtPropBreitWignerRel.hh"
 #include "EvtGenBase/EvtSpinType.hh"

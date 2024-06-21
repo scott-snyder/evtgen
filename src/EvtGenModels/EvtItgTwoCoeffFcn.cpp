@@ -20,8 +20,6 @@
 
 #include "EvtGenModels/EvtItgTwoCoeffFcn.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
-
 //-------------
 // C Headers --
 //-------------

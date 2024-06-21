@@ -20,7 +20,6 @@
 
 #include "EvtGenBase/EvtBlattWeisskopf.hh"
 
-#include "EvtGenBase/EvtPatches.hh"
 #include "EvtGenBase/EvtReport.hh"
 
 #include <assert.h>

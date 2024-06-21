@@ -21,7 +21,6 @@
 #include "EvtGenBase/EvtVector3C.hh"
 
 #include "EvtGenBase/EvtComplex.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 #include <iostream>
 #include <math.h>

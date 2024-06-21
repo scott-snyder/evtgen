@@ -21,7 +21,6 @@
 #include "EvtGenModels/EvtBToDiBaryonlnupQCDFF.hh"
 
 #include "EvtGenBase/EvtParticle.hh"
-#include "EvtGenBase/EvtPatches.hh"
 
 EvtBToDiBaryonlnupQCDFF::EvtBToDiBaryonlnupQCDFF() : m_DPars(), m_nDPars( 0 )
 {
