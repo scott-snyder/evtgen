@@ -37,6 +37,13 @@ EvtPDL& EvtPDL::getInstance()
     return theInstance;
 }
 
+void EvtPDL::reset()
+{
+    m_firstAlias = std::numeric_limits<std::size_t>::max();
+    m_partlist.clear();
+    m_particleNameLookup.clear();
+}
+
 void EvtPDL::read( const std::string& fname )
 {
     std::ifstream pdtIn( fname );
@@ -51,6 +58,8 @@ void EvtPDL::read( const std::string& fname )
 
 void EvtPDL::readPDT( std::istream& indec )
 {
+    getInstance().reset();
+
     char cmnd[100];
     char xxxx[100];
 
