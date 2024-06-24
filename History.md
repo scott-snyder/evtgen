@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+24 June 2024 John Back
+* D124: Add EvtD0ToKspipi DP model, courtesy of Camille Normand (LHCb).
+
 21 June 2024 Thomas Latham
 * D123: Removed `EvtPatches.hh`. Removed unused `clock_t` typedef and redundant `UNUSED` macro.
 

@@ -124,7 +124,7 @@ class EvtDalitzReso final {
 
     EvtDalitzReso* clone() const { return new EvtDalitzReso( *this ); }
 
-    EvtComplex evaluate( const EvtDalitzPoint& p );
+    EvtComplex evaluate( const EvtDalitzPoint& p ) const;
 
     void set_fd( double R ) { m_vd.set_f( R ); }
     void set_fb( double R ) { m_vb.set_f( R ); }
@@ -135,36 +135,39 @@ class EvtDalitzReso final {
     }
 
   private:
-    EvtComplex psFactor( double& ma, double& mb, double& m );
-    EvtComplex psFactor( double& ma1, double& mb1, double& ma2, double& mb2,
-                         double& m );
-    EvtComplex propGauss( const double& m0, const double& s0, const double& m );
+    EvtComplex psFactor( const double& ma, const double& mb,
+                         const double& m ) const;
+    EvtComplex psFactor( const double& ma1, const double& mb1, const double& ma2,
+                         const double& mb2, const double& m ) const;
+    EvtComplex propGauss( const double& m0, const double& s0,
+                          const double& m ) const;
     EvtComplex propBreitWigner( const double& m0, const double& g0,
-                                const double& m );
+                                const double& m ) const;
     EvtComplex propBreitWignerRel( const double& m0, const double& g0,
-                                   const double& m );
+                                   const double& m ) const;
     EvtComplex propBreitWignerRel( const double& m0, const EvtComplex& g0,
-                                   const double& m );
+                                   const double& m ) const;
     EvtComplex propBreitWignerRelCoupled( const double& m0, const EvtComplex& g1,
-                                          const EvtComplex& g2, const double& m );
+                                          const EvtComplex& g2,
+                                          const double& m ) const;
     EvtComplex propGounarisSakurai( const double& m0, const double& g0,
                                     const double& k0, const double& m,
-                                    const double& g, const double& k );
+                                    const double& g, const double& k ) const;
     inline double GS_f( const double& m0, const double& g0, const double& k0,
-                        const double& m, const double& k );
-    inline double GS_h( const double& m, const double& k );
-    inline double GS_dhods( const double& m0, const double& k0 );
-    inline double GS_d( const double& m0, const double& k0 );
+                        const double& m, const double& k ) const;
+    inline double GS_h( const double& m, const double& k ) const;
+    inline double GS_dhods( const double& m0, const double& k0 ) const;
+    inline double GS_d( const double& m0, const double& k0 ) const;
 
     EvtComplex numerator( const EvtDalitzPoint& p, const EvtTwoBodyKine& vb,
-                          const EvtTwoBodyKine& vd );
-    double angDep( const EvtDalitzPoint& p );
-    EvtComplex mixFactor( EvtComplex prop, EvtComplex prop_mix );
-    EvtComplex Fvector( double s, int index );
-    EvtComplex lass( double s );
-    EvtComplex flatte( const double& m );
+                          const EvtTwoBodyKine& vd ) const;
+    double angDep( const EvtDalitzPoint& p ) const;
+    EvtComplex mixFactor( EvtComplex prop, EvtComplex prop_mix ) const;
+    EvtComplex Fvector( double s, int index ) const;
+    EvtComplex lass( double s ) const;
+    EvtComplex flatte( const double& m ) const;
 
-    inline EvtComplex sqrtCplx( double in )
+    inline EvtComplex sqrtCplx( double in ) const
     {
         return ( in > 0 ) ? EvtComplex( sqrt( in ), 0 )
                           : EvtComplex( 0, sqrt( -in ) );

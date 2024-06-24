@@ -1,0 +1,29 @@
+{
+    "parent" : "D0",
+    "daughters" : ["K_S0", "pi+", "pi-"],
+    "models" : ["D0TOKSPIPI"],
+    "parameters" : [[]],
+    "extras" : ["noFSR"],
+    "events" : 5000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "parMass", "title" : "m(D^{0})", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 1.8, "xmax" : 2.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(K^{0}_{S})", "d1" : 1, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(#pi^{+})", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosTheta", "title" : "cosTheta(#pi^{-})", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "mass", "title" : "m(K^{0}_{S} #pi^{+})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.5, "xmax" : 1.8},
+        {"variable" : "mass", "title" : "m(K^{0}_{S} #pi^{-})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.5, "xmax" : 1.8},
+        {"variable" : "mass", "title" : "m(#pi^{+} #pi^{-})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.2, "xmax" : 1.5},
+        {"variable" : "massSq", "title" : "m^{2}(K^{0}_{S} #pi^{+})", "d1" : 1, "d2" : 2, "nbins" : 150, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "massSq", "title" : "m^{2}(K^{0}_{S} #pi^{-})", "d1" : 1, "d2" : 3, "nbins" : 150, "xmin" : 0.0, "xmax" : 3.0},
+        {"variable" : "massSq", "title" : "m^{2}(#pi^{+} #pi^{-})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.0, "xmax" : 2.0},
+        {"variable" : "massSq", "title" : "Dalitz m^{2}(K^{0}_{S} #pi^{+}) vs m^{2}(K^{0}_{S} #pi^{-})", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 0.0, "xmax" : 3.1, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 3, "nbinsY" : 50, "ymin" : 0.0, "ymax" : 3.1},
+        {"variable" : "massSq", "title" : "Dalitz m^{2}(#pi^{+} #pi^{-}) vs m^{2}(K^{0}_{S} #pi^{+})", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : 0.0, "xmax" : 2.0, "variableY" : "massSq", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 50, "ymin" : 0.0, "ymax" : 3.1},
+        {"variable" : "mPrime", "title" : "sqDalitz", "d1" : 1, "d2" : 2, "nbins" : 25, "xmin" : 0.0, "xmax" : 1.00, "variableY" : "thetaPrime", "d1Y" : 1, "d2Y" : 2, "nbinsY" : 25, "ymin" : 0.0, "ymax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosHel(D^{0},K^{0}_{S})", "d1" : 1, "d2" : 0, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+	{"variable" : "cosHel", "title" : "cosHel12", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel23", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel13", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0}
+    ],
+    "outfile" : "D0TOKSPIPI__D0_KS0pipi.root"
+}

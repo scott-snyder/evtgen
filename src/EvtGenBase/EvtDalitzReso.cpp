@@ -323,7 +323,7 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, EvtCyclic3::Pair pairRes,
     m_spin = EvtSpinType::SCALAR;
 }
 
-EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x )
+EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x ) const
 {
     double m = sqrt( x.q( m_pairRes ) );
 
@@ -349,10 +349,12 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x )
     EvtComplex amp( 1.0, 0.0 );
 
     if ( fabs( m_dp.bigM() - x.bigM() ) > 0.000001 ) {
-        m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
-                                 x.bigM(), m_spin );
-        m_vb.set_f( m_f_b );
+        EvtGenReport( EVTGEN_WARNING, "EvtGen" )
+            << "Warning in EvtDalitzReso::evaluate."
+            << "The mass of the mother has changed from " << m_dp.bigM()
+            << " to " << x.bigM() << ". " << std::endl;
     }
+
     EvtTwoBodyKine vb( m, x.m( EvtCyclic3::other( m_pairRes ) ), x.bigM() );
     EvtTwoBodyKine vd( m_massFirst, m_massSecond, m );
 
@@ -381,61 +383,76 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x )
             switch ( m_coupling2 ) {
                 case PicPic: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
+                    static const double mPic = EvtPDL::getMass(
+                        EvtPDL::getId( "pi+" ) );
                     G2 = m_g2 * m_g2 * psFactor( mPic, mPic, m );
                     break;
                 }
                 case PizPiz: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mPiz = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
+                    static const double mPiz = EvtPDL::getMass(
+                        EvtPDL::getId( "pi0" ) );
                     G2 = m_g2 * m_g2 * psFactor( mPiz, mPiz, m );
                     break;
                 }
                 case PiPi: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
-                    static double mPiz = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
+                    static const double mPic = EvtPDL::getMass(
+                        EvtPDL::getId( "pi+" ) );
+                    static const double mPiz = EvtPDL::getMass(
+                        EvtPDL::getId( "pi0" ) );
                     G2 = m_g2 * m_g2 * psFactor( mPic, mPic, mPiz, mPiz, m );
                     break;
                 }
                 case KcKc: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mKc = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
+                    static const double mKc = EvtPDL::getMass(
+                        EvtPDL::getId( "K+" ) );
                     G2 = m_g2 * m_g2 * psFactor( mKc, mKc, m );
                     break;
                 }
                 case KzKz: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mKz = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
+                    static const double mKz = EvtPDL::getMass(
+                        EvtPDL::getId( "K0" ) );
                     G2 = m_g2 * m_g2 * psFactor( mKz, mKz, m );
                     break;
                 }
                 case KK: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mKc = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
-                    static double mKz = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
+                    static const double mKc = EvtPDL::getMass(
+                        EvtPDL::getId( "K+" ) );
+                    static const double mKz = EvtPDL::getMass(
+                        EvtPDL::getId( "K0" ) );
                     G2 = m_g2 * m_g2 * psFactor( mKc, mKc, mKz, mKz, m );
                     break;
                 }
                 case EtaPic: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mEta = EvtPDL::getMass( EvtPDL::getId( "eta" ) );
-                    static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
+                    static const double mEta = EvtPDL::getMass(
+                        EvtPDL::getId( "eta" ) );
+                    static const double mPic = EvtPDL::getMass(
+                        EvtPDL::getId( "pi+" ) );
                     G2 = m_g2 * m_g2 * psFactor( mEta, mPic, m );
                     break;
                 }
                 case EtaPiz: {
                     G1 = m_g1 * m_g1 * psFactor( m_massFirst, m_massSecond, m );
-                    static double mEta = EvtPDL::getMass( EvtPDL::getId( "eta" ) );
-                    static double mPiz = EvtPDL::getMass( EvtPDL::getId( "pi0" ) );
+                    static const double mEta = EvtPDL::getMass(
+                        EvtPDL::getId( "eta" ) );
+                    static const double mPiz = EvtPDL::getMass(
+                        EvtPDL::getId( "pi0" ) );
                     G2 = m_g2 * m_g2 * psFactor( mEta, mPiz, m );
                     break;
                 }
                 case PicPicKK: {
-                    static double mPic = EvtPDL::getMass( EvtPDL::getId( "pi+" ) );
+                    static const double mPic = EvtPDL::getMass(
+                        EvtPDL::getId( "pi+" ) );
                     G1 = m_g1 * psFactor( mPic, mPic, m );
-                    static double mKc = EvtPDL::getMass( EvtPDL::getId( "K+" ) );
-                    static double mKz = EvtPDL::getMass( EvtPDL::getId( "K0" ) );
+                    static const double mKc = EvtPDL::getMass(
+                        EvtPDL::getId( "K+" ) );
+                    static const double mKz = EvtPDL::getMass(
+                        EvtPDL::getId( "K0" ) );
                     G2 = m_g2 * psFactor( mKc, mKc, mKz, mKz, m );
                     break;
                 }
@@ -476,7 +493,8 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x )
     return amp;
 }
 
-EvtComplex EvtDalitzReso::psFactor( double& ma, double& mb, double& m )
+EvtComplex EvtDalitzReso::psFactor( const double& ma, const double& mb,
+                                    const double& m ) const
 {
     if ( m > ( ma + mb ) ) {
         EvtTwoBodyKine vd( ma, mb, m );
@@ -490,14 +508,15 @@ EvtComplex EvtDalitzReso::psFactor( double& ma, double& mb, double& m )
     }
 }
 
-EvtComplex EvtDalitzReso::psFactor( double& ma1, double& mb1, double& ma2,
-                                    double& mb2, double& m )
+EvtComplex EvtDalitzReso::psFactor( const double& ma1, const double& mb1,
+                                    const double& ma2, const double& mb2,
+                                    const double& m ) const
 {
     return 0.5 * ( psFactor( ma1, mb1, m ) + psFactor( ma2, mb2, m ) );
 }
 
 EvtComplex EvtDalitzReso::propGauss( const double& m0, const double& s0,
-                                     const double& m )
+                                     const double& m ) const
 {
     // Gaussian
     double gauss = 1. / sqrt( EvtConst::twoPi ) / s0 *
@@ -506,14 +525,14 @@ EvtComplex EvtDalitzReso::propGauss( const double& m0, const double& s0,
 }
 
 EvtComplex EvtDalitzReso::propBreitWigner( const double& m0, const double& g0,
-                                           const double& m )
+                                           const double& m ) const
 {
     // non-relativistic BW
     return sqrt( g0 / EvtConst::twoPi ) / ( m - m0 - EvtComplex( 0.0, g0 / 2. ) );
 }
 
-EvtComplex EvtDalitzReso::propBreitWignerRel( const double& m0,
-                                              const double& g0, const double& m )
+EvtComplex EvtDalitzReso::propBreitWignerRel( const double& m0, const double& g0,
+                                              const double& m ) const
 {
     // relativistic BW with real width
     return 1. / ( m0 * m0 - m * m - EvtComplex( 0., m0 * g0 ) );
@@ -521,7 +540,7 @@ EvtComplex EvtDalitzReso::propBreitWignerRel( const double& m0,
 
 EvtComplex EvtDalitzReso::propBreitWignerRel( const double& m0,
                                               const EvtComplex& g0,
-                                              const double& m )
+                                              const double& m ) const
 {
     // relativistic BW with complex width
     return 1. / ( m0 * m0 - m * m - EvtComplex( 0., m0 ) * g0 );
@@ -530,15 +549,16 @@ EvtComplex EvtDalitzReso::propBreitWignerRel( const double& m0,
 EvtComplex EvtDalitzReso::propBreitWignerRelCoupled( const double& m0,
                                                      const EvtComplex& g1,
                                                      const EvtComplex& g2,
-                                                     const double& m )
+                                                     const double& m ) const
 {
     // relativistic coupled BW
     return 1. / ( m0 * m0 - m * m - ( g1 + g2 ) );
 }
 
-EvtComplex EvtDalitzReso::propGounarisSakurai( const double& m0, const double& g0,
-                                               const double& k0, const double& m,
-                                               const double& g, const double& k )
+EvtComplex EvtDalitzReso::propGounarisSakurai( const double& m0,
+                                               const double& g0, const double& k0,
+                                               const double& m, const double& g,
+                                               const double& k ) const
 {
     // Gounaris-Sakurai parameterization of pi+pi- P wave. PRD, Vol61, 112002. PRL, Vol21, 244.
     // Expressions taken from BAD637v4, after fixing the imaginary part of the BW denominator: i M_R Gamma_R(s) --> i sqrt(s) Gamma_R(s)
@@ -549,7 +569,7 @@ EvtComplex EvtDalitzReso::propGounarisSakurai( const double& m0, const double& g
 
 inline double EvtDalitzReso::GS_f( const double& m0, const double& g0,
                                    const double& k0, const double& m,
-                                   const double& k )
+                                   const double& k ) const
 {
     // m: sqrt(s)
     // m0: nominal resonance mass
@@ -560,19 +580,19 @@ inline double EvtDalitzReso::GS_f( const double& m0, const double& g0,
              ( m0 * m0 - m * m ) * k0 * k0 * GS_dhods( m0, k0 ) );
 }
 
-inline double EvtDalitzReso::GS_h( const double& m, const double& k )
+inline double EvtDalitzReso::GS_h( const double& m, const double& k ) const
 {
     return 2. / EvtConst::pi * k / m *
            log( ( m + 2. * k ) / ( 2. * m_massFirst ) );
 }
 
-inline double EvtDalitzReso::GS_dhods( const double& m0, const double& k0 )
+inline double EvtDalitzReso::GS_dhods( const double& m0, const double& k0 ) const
 {
     return GS_h( m0, k0 ) * ( 0.125 / ( k0 * k0 ) - 0.5 / ( m0 * m0 ) ) +
            0.5 / ( EvtConst::pi * m0 * m0 );
 }
 
-inline double EvtDalitzReso::GS_d( const double& m0, const double& k0 )
+inline double EvtDalitzReso::GS_d( const double& m0, const double& k0 ) const
 {
     return 3. / EvtConst::pi * m_massFirst * m_massFirst / ( k0 * k0 ) *
                log( ( m0 + 2. * k0 ) / ( 2. * m_massFirst ) ) +
@@ -582,7 +602,7 @@ inline double EvtDalitzReso::GS_d( const double& m0, const double& k0 )
 
 EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
                                      const EvtTwoBodyKine& vb,
-                                     const EvtTwoBodyKine& vd )
+                                     const EvtTwoBodyKine& vd ) const
 {
     EvtComplex ret( 0., 0. );
 
@@ -657,7 +677,7 @@ EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
     return ret;
 }
 
-double EvtDalitzReso::angDep( const EvtDalitzPoint& x )
+double EvtDalitzReso::angDep( const EvtDalitzPoint& x ) const
 {
     // Angular dependece for factorizable amplitudes
     // unphysical cosines indicate we are in big trouble
@@ -673,14 +693,14 @@ double EvtDalitzReso::angDep( const EvtDalitzPoint& x )
                             acos( cosTh ) );
 }
 
-EvtComplex EvtDalitzReso::mixFactor( EvtComplex prop, EvtComplex prop_mix )
+EvtComplex EvtDalitzReso::mixFactor( EvtComplex prop, EvtComplex prop_mix ) const
 {
     double Delta = m_delta_mix * ( m_m0 + m_m0_mix );
     return 1 / ( 1 - Delta * Delta * prop * prop_mix ) *
            ( 1 + m_amp_mix * Delta * prop_mix );
 }
 
-EvtComplex EvtDalitzReso::Fvector( double s, int index )
+EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
 {
     assert( index >= 1 && index <= 6 );
 
@@ -965,7 +985,7 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index )
 
     //This is not correct!
     //(1-ipK) != (1-iKp)
-    static EvtMatrix<EvtComplex> mat;
+    static thread_local EvtMatrix<EvtComplex> mat;
     mat.setRange(
         5 );    // Try to do in only the first time. DEFINE ALLOCATION IN CONSTRUCTOR.
 
@@ -1010,7 +1030,7 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index )
 }
 
 //replace Breit-Wigner with LASS
-EvtComplex EvtDalitzReso::lass( double s )
+EvtComplex EvtDalitzReso::lass( double s ) const
 {
     EvtTwoBodyKine vd( m_massFirst, m_massSecond, sqrt( s ) );
     double q = vd.p();
@@ -1045,7 +1065,7 @@ EvtComplex EvtDalitzReso::lass( double s )
     return T;
 }
 
-EvtComplex EvtDalitzReso::flatte( const double& m )
+EvtComplex EvtDalitzReso::flatte( const double& m ) const
 {
     EvtComplex w;
 
