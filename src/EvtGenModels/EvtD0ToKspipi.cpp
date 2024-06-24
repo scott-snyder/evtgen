@@ -207,7 +207,7 @@ void EvtD0ToKspipi::initResonances()
     const double LASS_r = -33.799002116066454;
     const EvtDalitzReso Kstar0_1430LASS = EvtDalitzReso(
         DP, AB, 1.440549945739415, 0.192611512914605, LASS_a, LASS_r, LASS_F,
-        LASS_phi_F, LASS_R, LASS_phi_R, false, -1.0 );
+        LASS_phi_F, LASS_R, LASS_phi_R, -1.0, false );
     const EvtComplex Kstar0_1430Coeff( -0.386469884688245, 2.330315087713914 );
     m_resonances.push_back( std::make_pair( Kstar0_1430LASS, Kstar0_1430Coeff ) );
 
@@ -238,7 +238,7 @@ void EvtD0ToKspipi::initResonances()
     // K*0(1430)+ DCS LASS
     const EvtDalitzReso Kstar0_1430_DCSLASS = EvtDalitzReso(
         DP, AC, 1.440549945739415, 0.192611512914605, LASS_a, LASS_r, LASS_F,
-        LASS_phi_F, LASS_R, LASS_phi_R, false, -1.0 );
+        LASS_phi_F, LASS_R, LASS_phi_R, -1.0, false );
     const EvtComplex Kstar0_1430_DCSCoeff( -0.101484805664368, 0.032368302993344 );
     m_resonances.push_back(
         std::make_pair( Kstar0_1430_DCSLASS, Kstar0_1430_DCSCoeff ) );
