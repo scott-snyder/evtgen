@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+1 July 2024 Fernando Abudinen
+* D125: Removed `EventHandler` in `EvtSherpaPhotons` interface to reduce initialisation overhead.
+
 24 June 2024 John Back
 * D124: Add EvtD0ToKspipi DP model, courtesy of Camille Normand (LHCb).
 

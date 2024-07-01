@@ -30,7 +30,6 @@
 #include "ATOOLS/Org/MyStrStream.H"
 #include "ATOOLS/Phys/Particle.H"
 #include "SHERPA/Initialization/Initialization_Handler.H"
-#include "SHERPA/Single_Events/Event_Handler.H"
 #include "SHERPA/SoftPhysics/Soft_Photon_Handler.H"
 
 #include <cstring>
@@ -114,7 +113,6 @@ void EvtSherpaPhotons::initialise()
     // Create instance and initialise Sherpa.
     m_sherpaGen = std::make_unique<SHERPA::Sherpa>();
     m_sherpaGen->InitializeTheRun( argv.size(), &argv[0] );
-    m_sherpaGen->InitializeTheEventHandler();
 
     m_gammaId = EvtPDL::getId( m_photonType );
     m_gammaPDG = EvtPDL::getStdHep( m_gammaId );
@@ -204,11 +202,8 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
         return;
     }
 
-    ATOOLS::Blob_List* blobs = m_sherpaGen->GetEventHandler()->GetBlobs();
-
-    // Use the hadron decay flag always.
-    // Internally, Sherpa handles tau decays in the same way as hadron decays.
-    ATOOLS::Blob* blob = blobs->AddBlob( ATOOLS::btp::Hadron_Decay );
+    // Create a blob.
+    std::unique_ptr<ATOOLS::Blob> blob = std::make_unique<ATOOLS::Blob>();
 
     // Tell Sherpa that the blob needs FSR (that is extra QED)
     blob->SetStatus( ATOOLS::blob_status::needs_extraQED );
@@ -259,7 +254,7 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
         inithandler->GetSoftPhotonHandler();
 
     // Simulate the radiation
-    softphotonhandler->AddRadiation( blob );
+    softphotonhandler->AddRadiation( blob.get() );
 
     // Get number of final-state particles
     const int nFinal( blob->NOutP() );
