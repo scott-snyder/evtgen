@@ -35,18 +35,40 @@
 using std::endl;
 
 // Mutex PHOTOS as it is not thread safe.
+bool EvtPHOTOS::m_initialised = false;
 std::mutex EvtPHOTOS::m_photos_mutex;
 
 EvtPHOTOS::EvtPHOTOS( const std::string& photonType, const bool useEvtGenRandom,
                       const double infraredCutOff,
                       const double maxWtInterference ) :
+    m_useEvtGenRandom{ useEvtGenRandom },
+    m_infraredCutOff{ infraredCutOff },
+    m_maxWtInterference{ maxWtInterference },
     m_photonType{ photonType }
+{
+}
+
+void EvtPHOTOS::initialise()
 {
     m_photos_mutex.lock();
 
+    m_gammaId = EvtPDL::getId( m_photonType );
+    if ( m_gammaId == EvtId( -1, -1 ) ) {
+        EvtGenReport( EVTGEN_INFO, "EvtGen" )
+            << "Error in EvtPHOTOS. Do not recognise the photon type "
+            << m_photonType << ". Setting this to \"gamma\". " << endl;
+        m_gammaId = EvtPDL::getId( "gamma" );
+    }
+    m_gammaPDG = EvtPDL::getStdHep( m_gammaId );
+
+    if ( m_initialised ) {
+        m_photos_mutex.unlock();
+        return;
+    }
+
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Setting up PHOTOS." << endl;
 
-    if ( useEvtGenRandom ) {
+    if ( m_useEvtGenRandom ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Using EvtGen random number engine also for Photos++" << endl;
 
@@ -62,14 +84,14 @@ EvtPHOTOS::EvtPHOTOS( const std::string& photonType, const bool useEvtGenRandom,
     * This must be done after exponentiation! Keep the cut at 1e-7, i.e. 0.1 keV at the 1 GeV scale,
     * which is appropriate for B decays
     */
-    Photospp::Photos::setInfraredCutOff( infraredCutOff );
+    Photospp::Photos::setInfraredCutOff( m_infraredCutOff );
 
     Photospp::Photos::setInterference( true );
 
     /* Increase the maximum possible value of the interference weight
      * corresponding to 2^n, where n = number of charges (+,-).
      */
-    Photospp::Photos::maxWtInterference( maxWtInterference );
+    Photospp::Photos::maxWtInterference( m_maxWtInterference );
 
 #ifdef EVTGEN_PHOTOS_NEWLIBS
     // This turns off/on virtual photons splitting into l+l-
@@ -77,27 +99,9 @@ EvtPHOTOS::EvtPHOTOS( const std::string& photonType, const bool useEvtGenRandom,
     Photospp::Photos::setPairEmission( false );
 #endif
 
-    m_photos_mutex.unlock();
-}
-
-void EvtPHOTOS::initialise()
-{
-    if ( m_initialised ) {
-        return;
-    }
-    m_gammaId = EvtPDL::getId( m_photonType );
-
-    if ( m_gammaId == EvtId( -1, -1 ) ) {
-        EvtGenReport( EVTGEN_INFO, "EvtGen" )
-            << "Error in EvtPHOTOS. Do not recognise the photon type "
-            << m_photonType << ". Setting this to \"gamma\". " << endl;
-        m_gammaId = EvtPDL::getId( "gamma" );
-    }
-
-    m_gammaPDG = EvtPDL::getStdHep( m_gammaId );
-    m_mPhoton = EvtPDL::getMeanMass( m_gammaId );
-
     m_initialised = true;
+
+    m_photos_mutex.unlock();
 }
 
 void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )

@@ -67,14 +67,21 @@ class EvtPHOTOS : public EvtAbsRadCorr {
 
     int getNumberOfPhotons( const GenVertexPtr theVertex ) const;
 
+    // Use EvtGen's random number generator
+    bool m_useEvtGenRandom = true;
+
+    // Default settings for PHOTOS
+    // Minimum photon Energy (infrared cut-off).
+    double m_infraredCutOff = 1.0e-7;
+    // Maximum value of the interference weight
+    double m_maxWtInterference = 64.0;
+
     // Default photon type, id, pdg number and mass
     std::string m_photonType = "gamma";
     EvtId m_gammaId = EvtId( -1, -1 );
-    int m_gammaPDG = 22;
-    double m_mPhoton = 0.0;
+    long int m_gammaPDG = 22;
 
-    bool m_initialised = false;
-
+    static bool m_initialised;
     static std::mutex m_photos_mutex;
 };
 

@@ -55,9 +55,6 @@ class EvtSherpaPhotons : public EvtAbsRadCorr {
     // Updates the particle properties table of Sherpa
     void updateParticleLists();
 
-    // The Sherpa instance.
-    std::unique_ptr<SHERPA::Sherpa> m_sherpaGen;
-
     // Vector containing the configuration strings for Sherpa
     // INIT_ONLY=6 intialises the Sherpa objects without launching simulation.
     std::vector<std::string> m_configs{ "Sherpa", "INIT_ONLY=6" };
@@ -78,7 +75,11 @@ class EvtSherpaPhotons : public EvtAbsRadCorr {
     const std::string m_photonType = "gamma";
     EvtId m_gammaId = EvtId( -1, -1 );
     long int m_gammaPDG = 22;
-    bool m_initialised = false;
+
+    // The Sherpa instance.
+    static std::unique_ptr<SHERPA::Sherpa> m_sherpaGen;
+    static bool m_initialised;
+    static std::mutex m_sherpa_mutex;
 };
 
 #endif

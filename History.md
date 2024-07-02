@@ -11,6 +11,13 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+3 July 2024 Fernando Abudinen
+* D126: Fix FSR initialisation for thread safety.
+  - Modified PHOTOS and Sherpa instances to become global static members
+    and made sure that they are initialised only once.
+  - Made sure that calls to these instances are mutexed.
+  - Made sure that all interface class members are initialised for each thread.
+
 1 July 2024 Fernando Abudinen
 * D125: Removed `EventHandler` in `EvtSherpaPhotons` interface to reduce initialisation overhead.
 
