@@ -54,13 +54,13 @@ EvtSherpaPhotons::EvtSherpaPhotons( const bool useEvtGenRandom,
 
 void EvtSherpaPhotons::initialise()
 {
-    m_sherpa_mutex.lock();
+    // Sherpa initialisation is not thread safe, so we mutex it
+    const std::lock_guard<std::mutex> lock( m_sherpa_mutex );
 
     m_gammaId = EvtPDL::getId( m_photonType );
     m_gammaPDG = EvtPDL::getStdHep( m_gammaId );
 
     if ( m_initialised ) {
-        m_sherpa_mutex.unlock();
         return;
     }
 
@@ -127,8 +127,6 @@ void EvtSherpaPhotons::initialise()
     this->updateParticleLists();
 
     m_initialised = true;
-
-    m_sherpa_mutex.unlock();
 }
 
 std::vector<char*> EvtSherpaPhotons::addParameters()
@@ -257,17 +255,18 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
         blob->AddToOutParticles( daughter_part );
     }
 
-    m_sherpa_mutex.lock();
+    {
+        // AddRadiation function is not yet thread_safe, so we mutex it
+        const std::lock_guard<std::mutex> lock( m_sherpa_mutex );
 
-    const SHERPA::Initialization_Handler* inithandler =
-        m_sherpaGen->GetInitHandler();
-    SHERPA::Soft_Photon_Handler* softphotonhandler =
-        inithandler->GetSoftPhotonHandler();
+        const SHERPA::Initialization_Handler* inithandler =
+            m_sherpaGen->GetInitHandler();
+        SHERPA::Soft_Photon_Handler* softphotonhandler =
+            inithandler->GetSoftPhotonHandler();
 
-    // Simulate the radiation
-    softphotonhandler->AddRadiation( blob.get() );
-
-    m_sherpa_mutex.unlock();
+        // Simulate the radiation
+        softphotonhandler->AddRadiation( blob.get() );
+    }
 
     // Get number of final-state particles
     const int nFinal( blob->NOutP() );

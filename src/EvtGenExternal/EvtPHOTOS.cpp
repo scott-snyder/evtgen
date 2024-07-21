@@ -50,7 +50,7 @@ EvtPHOTOS::EvtPHOTOS( const std::string& photonType, const bool useEvtGenRandom,
 
 void EvtPHOTOS::initialise()
 {
-    m_photos_mutex.lock();
+    const std::lock_guard<std::mutex> lock( m_photos_mutex );
 
     m_gammaId = EvtPDL::getId( m_photonType );
     if ( m_gammaId == EvtId( -1, -1 ) ) {
@@ -62,7 +62,6 @@ void EvtPHOTOS::initialise()
     m_gammaPDG = EvtPDL::getStdHep( m_gammaId );
 
     if ( m_initialised ) {
-        m_photos_mutex.unlock();
         return;
     }
 
@@ -100,8 +99,6 @@ void EvtPHOTOS::initialise()
 #endif
 
     m_initialised = true;
-
-    m_photos_mutex.unlock();
 }
 
 void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )
@@ -153,20 +150,19 @@ void EvtPHOTOS::doRadCorr( EvtParticle* theParticle )
         }
     }
 
-    m_photos_mutex.lock();
-
-    /* Now pass the event to Photos for processing
+    {
+        const std::lock_guard<std::mutex> lock( m_photos_mutex );
+        /* Now pass the event to Photos for processing
      * Create a Photos event object */
 #ifdef EVTGEN_HEPMC3
-    Photospp::PhotosHepMC3Event photosEvent( theEvent.get() );
+        Photospp::PhotosHepMC3Event photosEvent( theEvent.get() );
 #else
-    Photospp::PhotosHepMCEvent photosEvent( theEvent.get() );
+        Photospp::PhotosHepMCEvent photosEvent( theEvent.get() );
 #endif
 
-    // Run the Photos algorithm
-    photosEvent.process();
-
-    m_photos_mutex.unlock();
+        // Run the Photos algorithm
+        photosEvent.process();
+    }
 
     // Find the number of (outgoing) photons in the event
     const int nPhotons = this->getNumberOfPhotons( theVertex );

@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+1 Aug 2024 Fernando Abudinen
+* D127: Improve FSR mutexing by using `std::lock_guard`.
+
 3 July 2024 Fernando Abudinen
 * D126: Fix FSR initialisation for thread safety.
   - Modified PHOTOS and Sherpa instances to become global static members
