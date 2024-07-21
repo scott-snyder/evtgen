@@ -23,8 +23,6 @@
 
 #include "EvtGenBase/EvtDecayIncoherent.hh"
 
-#include <mutex>
-
 class EvtParticle;
 class EvtAbsExternalGen;
 class EvtDecayBase;
@@ -44,8 +42,6 @@ class EvtTauola final : public EvtDecayIncoherent {
 
   private:
     EvtAbsExternalGen* m_tauolaEngine = nullptr;
-
-    static std::mutex m_engine_mutex;
 };
 
 #endif

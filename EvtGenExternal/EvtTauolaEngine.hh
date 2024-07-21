@@ -43,8 +43,7 @@
 #endif
 #include "EvtGenBase/EvtHepMCEvent.hh"
 
-#include <map>
-#include <vector>
+#include <mutex>
 
 // Description: Interface to the TAUOLA external generator
 
@@ -58,24 +57,28 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
 
   protected:
   private:
-    GenParticlePtr createGenParticle( EvtParticle* theParticle );
+    GenParticlePtr createGenParticle( const EvtParticle* theParticle ) const;
 
     void setUpPossibleTauModes();
     void setOtherParameters();
 
-    int getModeInt( EvtDecayBase* decayModel );
+    int getModeInt( EvtDecayBase* decayModel ) const;
 
     void decayTauEvent( EvtParticle* tauParticle );
 
-    bool m_initialised{ false };
+    bool m_useEvtGenRandom{ true };
+
     // PDG standard code integer ID for tau particle
-    int m_tauPDG{ 15 };
+    static constexpr int m_tauPDG{ 15 };
     // Number of possible decay modes in Tauola
-    int m_nTauolaModes{ 22 };
+    static constexpr int m_nTauolaModes{ 22 };
     // Neutral and charged spin propagator choices
-    int m_neutPropType{ 0 };
-    int m_posPropType{ 0 };
-    int m_negPropType{ 0 };
+    static int m_neutPropType;
+    static int m_posPropType;
+    static int m_negPropType;
+
+    static bool m_initialised;
+    static std::mutex m_tauola_mutex;
 };
 
 #endif

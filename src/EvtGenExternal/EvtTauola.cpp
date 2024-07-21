@@ -31,8 +31,6 @@
 #include <iostream>
 #include <string>
 
-std::mutex EvtTauola::m_engine_mutex;
-
 std::string EvtTauola::getName() const
 {
     return "TAUOLA";
@@ -58,8 +56,6 @@ void EvtTauola::decay( EvtParticle* p )
     // This should only create the full Tauola engine once, and all clones will
     // point to the same engine.
 
-    m_engine_mutex.lock();
-
     if ( !m_tauolaEngine ) {
         m_tauolaEngine = EvtExternalGenFactory::getInstance().getGenerator(
             EvtExternalGenFactory::GenId::TauolaGenId );
@@ -68,6 +64,4 @@ void EvtTauola::decay( EvtParticle* p )
     if ( m_tauolaEngine ) {
         m_tauolaEngine->doDecay( p );
     }
-
-    m_engine_mutex.unlock();
 }
