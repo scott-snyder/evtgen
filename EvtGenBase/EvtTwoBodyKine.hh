@@ -42,7 +42,7 @@ class EvtTwoBodyKine {
     inline double mA() const { return _mA; }
     inline double mB() const { return _mB; }
     inline double mAB() const { return _mAB; }
-    double m( Index i ) const;
+    double m( Index i = AB ) const;
 
     // Momentum of the other two particles in the
     // rest-frame of particle i.

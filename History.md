@@ -11,6 +11,10 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-02-03
 
+6 Sep 2024 Tom Latham
+* Fix bug in EvtDalitzReso introduced in D119 which affected decays of
+  particles with a natural width
+
 12 Aug 2024 Tom Latham
 * Fix bug in EvtTensorParticle::rotateToHelicityBasis whereby rotations of
   different particles compounded rather than being independent.

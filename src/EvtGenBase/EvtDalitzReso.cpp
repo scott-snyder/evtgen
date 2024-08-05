@@ -77,12 +77,6 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairAng, Pair pairRe
     m_scaleByMOverQ( false ),
     m_alpha( 0. )
 {
-    m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
-                             m_dp.bigM(), m_spin );
-    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
-    m_vb.set_f(
-        m_f_b );    // Default values for Blatt-Weisskopf factors are 0.0 and 1.5.
-    m_vd.set_f( m_f_d );
     assert( m_typeN != K_MATRIX && m_typeN != K_MATRIX_I &&
             m_typeN != K_MATRIX_II );    // single BW cannot be K-matrix
 }
@@ -126,11 +120,6 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairAng, Pair pairRe
     m_scaleByMOverQ( false ),
     m_alpha( 0. )
 {
-    m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
-                             m_dp.bigM(), m_spin );
-    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
-    m_vb.set_f( 0.0 );    // Default values for Blatt-Weisskopf factors.
-    m_vd.set_f( 1.5 );
     // single BW (with electromagnetic mixing) cannot be K-matrix
     assert( m_typeN != K_MATRIX && m_typeN != K_MATRIX_I &&
             m_typeN != K_MATRIX_II );
@@ -175,11 +164,6 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairAng,
     m_scaleByMOverQ( false ),
     m_alpha( 0. )
 {
-    m_vb = EvtTwoBodyVertex( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
-                             m_dp.bigM(), m_spin );
-    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
-    m_vb.set_f( 0.0 );    // Default values for Blatt-Weisskopf factors.
-    m_vd.set_f( 1.5 );
     assert( m_coupling2 != Undefined );
     assert( m_typeN != K_MATRIX && m_typeN != K_MATRIX_I &&
             m_typeN != K_MATRIX_II );    // coupled BW cannot be K-matrix
@@ -282,8 +266,6 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, Pair pairRes, double m0,
     m_alpha( 0. )
 {
     m_spin = EvtSpinType::SCALAR;
-    m_vd = EvtTwoBodyVertex( m_massFirst, m_massSecond, m_m0, m_spin );
-    m_vd.set_f( 1.5 );    // Default values for Blatt-Weisskopf factors.
 }
 
 //Flatte
@@ -326,38 +308,40 @@ EvtDalitzReso::EvtDalitzReso( const EvtDalitzPlot& dp, EvtCyclic3::Pair pairRes,
 
 EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x ) const
 {
-    double m = sqrt( x.q( m_pairRes ) );
-
     if ( m_typeN == NON_RES )
         return EvtComplex( 1.0, 0.0 );
 
+    const double s = x.q( m_pairRes );
+    const double m = sqrt( s );
+
     if ( m_typeN == NON_RES_LIN )
-        return m * m;
+        return s;
 
     if ( m_typeN == NON_RES_EXP )
-        return exp( -m_alpha * m * m );
+        return exp( -m_alpha * s );
 
     // do use always hash table (speed up fitting)
     if ( m_typeN == K_MATRIX || m_typeN == K_MATRIX_I || m_typeN == K_MATRIX_II )
-        return Fvector( m * m, m_kmatrix_index );
-
-    if ( m_typeN == LASS )
-        return lass( m * m );
+        return Fvector( s, m_kmatrix_index );
 
     if ( m_typeN == FLATTE )
-        return flatte( m );
+        return flatte( s );
+
+    EvtTwoBodyVertex vd( m_massFirst, m_massSecond, m_m0, m_spin );
+    vd.set_f( m_f_d );
+
+    const EvtTwoBodyKine kd( m_massFirst, m_massSecond, m );
+
+    if ( m_typeN == LASS )
+        return lass( kd, vd );
 
     EvtComplex amp( 1.0, 0.0 );
 
-    if ( fabs( m_dp.bigM() - x.bigM() ) > 0.000001 ) {
-        EvtGenReport( EVTGEN_WARNING, "EvtGen" )
-            << "Warning in EvtDalitzReso::evaluate."
-            << "The mass of the mother has changed from " << m_dp.bigM()
-            << " to " << x.bigM() << ". " << std::endl;
-    }
+    EvtTwoBodyVertex vb( m_m0, m_dp.m( EvtCyclic3::other( m_pairRes ) ),
+                         x.bigM(), m_spin );
+    vb.set_f( m_f_b );
 
-    EvtTwoBodyKine vb( m, x.m( EvtCyclic3::other( m_pairRes ) ), x.bigM() );
-    EvtTwoBodyKine vd( m_massFirst, m_massSecond, m );
+    const EvtTwoBodyKine kb( m, x.m( EvtCyclic3::other( m_pairRes ) ), x.bigM() );
 
     EvtComplex prop( 0, 0 );
     if ( m_typeN == NBW ) {
@@ -367,13 +351,13 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x ) const
     } else {
         if ( m_coupling2 == Undefined ) {
             // single BW
-            double g = ( m_g0 <= 0. || m_vd.pD() <= 0. )
-                           ? -m_g0
-                           : m_g0 * m_vd.widthFactor( vd );    // running width
+            const double g = ( m_g0 <= 0. || vd.pD() <= 0. )
+                                 ? -m_g0
+                                 : m_g0 * vd.widthFactor( kd );    // running width
             if ( m_typeN == GS_CLEO || m_typeN == GS_CLEO_ZEMACH ) {
                 // Gounaris-Sakurai (GS)
-                prop = propGounarisSakurai( m_m0, fabs( m_g0 ), m_vd.pD(), m, g,
-                                            vd.p() );
+                prop = propGounarisSakurai( m_m0, fabs( m_g0 ), vd.pD(), m, g,
+                                            kd.p() );
             } else {
                 // standard relativistic BW
                 prop = propBreitWignerRel( m_m0, g, m );
@@ -472,11 +456,11 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x ) const
     amp *= prop;
 
     // Compute form-factors (Blatt-Weisskopf penetration factor)
-    amp *= m_vb.formFactor( vb );
-    amp *= m_vd.formFactor( vd );
+    amp *= vb.formFactor( kb );
+    amp *= vd.formFactor( kd );
 
     // Compute numerator (angular distribution)
-    amp *= numerator( x, vb, vd );
+    amp *= numerator( x, vb, vd, kb, kd );
 
     // Compute electromagnetic mass mixing factor
     if ( m_m0_mix > 0. ) {
@@ -485,7 +469,7 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x ) const
             prop_mix = propBreitWigner( m_m0_mix, m_g0_mix, m );
         } else {
             assert( m_g1 < 0. );    // running width only
-            double g_mix = m_g0_mix * m_vd.widthFactor( vd );
+            const double g_mix = m_g0_mix * vd.widthFactor( kd );
             prop_mix = propBreitWignerRel( m_m0_mix, g_mix, m );
         }
         amp *= mixFactor( prop, prop_mix );
@@ -494,72 +478,72 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x ) const
     return amp;
 }
 
-EvtComplex EvtDalitzReso::psFactor( const double& ma, const double& mb,
-                                    const double& m ) const
+EvtComplex EvtDalitzReso::psFactor( const double ma, const double mb,
+                                    const double m ) const
 {
     if ( m > ( ma + mb ) ) {
-        EvtTwoBodyKine vd( ma, mb, m );
-        return EvtComplex( 0, 2 * vd.p() / m );
+        const EvtTwoBodyKine kd( ma, mb, m );
+        return EvtComplex( 0, 2 * kd.p() / m );
     } else {
         // analytical continuation
-        double s = m * m;
-        double phaseFactor_analyticalCont =
+        const double s = m * m;
+        const double phaseFactor_analyticalCont =
             -0.5 * ( sqrt( 4 * ma * ma / s - 1 ) + sqrt( 4 * mb * mb / s - 1 ) );
         return EvtComplex( phaseFactor_analyticalCont, 0 );
     }
 }
 
-EvtComplex EvtDalitzReso::psFactor( const double& ma1, const double& mb1,
-                                    const double& ma2, const double& mb2,
-                                    const double& m ) const
+EvtComplex EvtDalitzReso::psFactor( const double ma1, const double mb1,
+                                    const double ma2, const double mb2,
+                                    const double m ) const
 {
     return 0.5 * ( psFactor( ma1, mb1, m ) + psFactor( ma2, mb2, m ) );
 }
 
-EvtComplex EvtDalitzReso::propGauss( const double& m0, const double& s0,
-                                     const double& m ) const
+EvtComplex EvtDalitzReso::propGauss( const double m0, const double s0,
+                                     const double m ) const
 {
     // Gaussian
-    double gauss = 1. / sqrt( EvtConst::twoPi ) / s0 *
-                   exp( -( m - m0 ) * ( m - m0 ) / 2. / ( s0 * s0 ) );
+    const double gauss = 1. / sqrt( EvtConst::twoPi ) / s0 *
+                         exp( -( m - m0 ) * ( m - m0 ) / 2. / ( s0 * s0 ) );
     return EvtComplex( gauss, 0. );
 }
 
-EvtComplex EvtDalitzReso::propBreitWigner( const double& m0, const double& g0,
-                                           const double& m ) const
+EvtComplex EvtDalitzReso::propBreitWigner( const double m0, const double g0,
+                                           const double m ) const
 {
     // non-relativistic BW
     return sqrt( g0 / EvtConst::twoPi ) / ( m - m0 - EvtComplex( 0.0, g0 / 2. ) );
 }
 
-EvtComplex EvtDalitzReso::propBreitWignerRel( const double& m0, const double& g0,
-                                              const double& m ) const
+EvtComplex EvtDalitzReso::propBreitWignerRel( const double m0, const double g0,
+                                              const double m ) const
 {
     // relativistic BW with real width
     return 1. / ( m0 * m0 - m * m - EvtComplex( 0., m0 * g0 ) );
 }
 
-EvtComplex EvtDalitzReso::propBreitWignerRel( const double& m0,
+EvtComplex EvtDalitzReso::propBreitWignerRel( const double m0,
                                               const EvtComplex& g0,
-                                              const double& m ) const
+                                              const double m ) const
 {
     // relativistic BW with complex width
     return 1. / ( m0 * m0 - m * m - EvtComplex( 0., m0 ) * g0 );
 }
 
-EvtComplex EvtDalitzReso::propBreitWignerRelCoupled( const double& m0,
+EvtComplex EvtDalitzReso::propBreitWignerRelCoupled( const double m0,
                                                      const EvtComplex& g1,
                                                      const EvtComplex& g2,
-                                                     const double& m ) const
+                                                     const double m ) const
 {
     // relativistic coupled BW
     return 1. / ( m0 * m0 - m * m - ( g1 + g2 ) );
 }
 
-EvtComplex EvtDalitzReso::propGounarisSakurai( const double& m0,
-                                               const double& g0, const double& k0,
-                                               const double& m, const double& g,
-                                               const double& k ) const
+EvtComplex EvtDalitzReso::propGounarisSakurai( const double m0, const double g0,
+                                               const double k0, const double m,
+                                               const double g,
+                                               const double k ) const
 {
     // Gounaris-Sakurai parameterization of pi+pi- P wave. PRD, Vol61, 112002. PRL, Vol21, 244.
     // Expressions taken from BAD637v4, after fixing the imaginary part of the BW denominator: i M_R Gamma_R(s) --> i sqrt(s) Gamma_R(s)
@@ -568,9 +552,9 @@ EvtComplex EvtDalitzReso::propGounarisSakurai( const double& m0,
              GS_f( m0, g0, k0, m, k ) );
 }
 
-inline double EvtDalitzReso::GS_f( const double& m0, const double& g0,
-                                   const double& k0, const double& m,
-                                   const double& k ) const
+inline double EvtDalitzReso::GS_f( const double m0, const double g0,
+                                   const double k0, const double m,
+                                   const double k ) const
 {
     // m: sqrt(s)
     // m0: nominal resonance mass
@@ -581,19 +565,19 @@ inline double EvtDalitzReso::GS_f( const double& m0, const double& g0,
              ( m0 * m0 - m * m ) * k0 * k0 * GS_dhods( m0, k0 ) );
 }
 
-inline double EvtDalitzReso::GS_h( const double& m, const double& k ) const
+inline double EvtDalitzReso::GS_h( const double m, const double k ) const
 {
     return 2. / EvtConst::pi * k / m *
            log( ( m + 2. * k ) / ( 2. * m_massFirst ) );
 }
 
-inline double EvtDalitzReso::GS_dhods( const double& m0, const double& k0 ) const
+inline double EvtDalitzReso::GS_dhods( const double m0, const double k0 ) const
 {
     return GS_h( m0, k0 ) * ( 0.125 / ( k0 * k0 ) - 0.5 / ( m0 * m0 ) ) +
            0.5 / ( EvtConst::pi * m0 * m0 );
 }
 
-inline double EvtDalitzReso::GS_d( const double& m0, const double& k0 ) const
+inline double EvtDalitzReso::GS_d( const double m0, const double k0 ) const
 {
     return 3. / EvtConst::pi * m_massFirst * m_massFirst / ( k0 * k0 ) *
                log( ( m0 + 2. * k0 ) / ( 2. * m_massFirst ) ) +
@@ -602,8 +586,10 @@ inline double EvtDalitzReso::GS_d( const double& m0, const double& k0 ) const
 }
 
 EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
-                                     const EvtTwoBodyKine& vb,
-                                     const EvtTwoBodyKine& vd ) const
+                                     const EvtTwoBodyVertex& vb,
+                                     const EvtTwoBodyVertex& vd,
+                                     const EvtTwoBodyKine& kb,
+                                     const EvtTwoBodyKine& kd ) const
 {
     EvtComplex ret( 0., 0. );
 
@@ -614,13 +600,13 @@ EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
 
     // Standard relativistic Zemach propagator
     else if ( RBW_ZEMACH == m_typeN ) {
-        ret = m_vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB ) * angDep( x );
+        ret = vd.phaseSpaceFactor( kd, EvtTwoBodyKine::AB ) * angDep( x );
     }
 
     // Standard relativistic Zemach propagator
     else if ( RBW_ZEMACH2 == m_typeN ) {
-        ret = m_vd.phaseSpaceFactor( vd, EvtTwoBodyKine::AB ) *
-              m_vb.phaseSpaceFactor( vb, EvtTwoBodyKine::AB ) * angDep( x );
+        ret = vd.phaseSpaceFactor( kd, EvtTwoBodyKine::AB ) *
+              vb.phaseSpaceFactor( kb, EvtTwoBodyKine::AB ) * angDep( x );
         if ( m_spin == EvtSpinType::VECTOR ) {
             ret *= -4.;
         } else if ( m_spin == EvtSpinType::TENSOR ) {
@@ -638,38 +624,38 @@ EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
     else if ( ( RBW_CLEO == m_typeN ) || ( GS_CLEO == m_typeN ) ||
               ( RBW_CLEO_ZEMACH == m_typeN ) || ( GS_CLEO_ZEMACH == m_typeN ) ||
               ( GAUSS_CLEO == m_typeN ) || ( GAUSS_CLEO_ZEMACH == m_typeN ) ) {
-        Index iA = other( m_pairAng );                // A = other(BC)
-        Index iB = common( m_pairRes, m_pairAng );    // B = common(AB,BC)
-        Index iC = other( m_pairRes );                // C = other(AB)
+        const Index iA = other( m_pairAng );                // A = other(BC)
+        const Index iB = common( m_pairRes, m_pairAng );    // B = common(AB,BC)
+        const Index iC = other( m_pairRes );                // C = other(AB)
 
-        double M = x.bigM();
-        double mA = x.m( iA );
-        double mB = x.m( iB );
-        double mC = x.m( iC );
-        double qAB = x.q( combine( iA, iB ) );
-        double qBC = x.q( combine( iB, iC ) );
-        double qCA = x.q( combine( iC, iA ) );
+        const double M = x.bigM();
+        const double mA = x.m( iA );
+        const double mB = x.m( iB );
+        const double mC = x.m( iC );
+        const double qAB = x.q( combine( iA, iB ) );
+        const double qBC = x.q( combine( iB, iC ) );
+        const double qCA = x.q( combine( iC, iA ) );
 
-        double M2 = M * M;
-        double m02 = ( ( RBW_CLEO_ZEMACH == m_typeN ) ||
-                       ( GS_CLEO_ZEMACH == m_typeN ) ||
-                       ( GAUSS_CLEO_ZEMACH == m_typeN ) )
-                         ? qAB
-                         : m_m0 * m_m0;
-        double mA2 = mA * mA;
-        double mB2 = mB * mB;
-        double mC2 = mC * mC;
+        const double M2 = M * M;
+        const double m02 = ( ( RBW_CLEO_ZEMACH == m_typeN ) ||
+                             ( GS_CLEO_ZEMACH == m_typeN ) ||
+                             ( GAUSS_CLEO_ZEMACH == m_typeN ) )
+                               ? qAB
+                               : m_m0 * m_m0;
+        const double mA2 = mA * mA;
+        const double mB2 = mB * mB;
+        const double mC2 = mC * mC;
 
         if ( m_spin == EvtSpinType::SCALAR )
             ret = EvtComplex( 1., 0. );
         else if ( m_spin == EvtSpinType::VECTOR ) {
             ret = qCA - qBC + ( M2 - mC2 ) * ( mB2 - mA2 ) / m02;
         } else if ( m_spin == EvtSpinType::TENSOR ) {
-            double x1 = qBC - qCA + ( M2 - mC2 ) * ( mA2 - mB2 ) / m02;
-            double x2 = M2 - mC2;
-            double x3 = qAB - 2 * M2 - 2 * mC2 + x2 * x2 / m02;
-            double x4 = mA2 - mB2;
-            double x5 = qAB - 2 * mB2 - 2 * mA2 + x4 * x4 / m02;
+            const double x1 = qBC - qCA + ( M2 - mC2 ) * ( mA2 - mB2 ) / m02;
+            const double x2 = M2 - mC2;
+            const double x3 = qAB - 2 * M2 - 2 * mC2 + x2 * x2 / m02;
+            const double x4 = mA2 - mB2;
+            const double x5 = qAB - 2 * mB2 - 2 * mA2 + x4 * x4 / m02;
             ret = x1 * x1 - x3 * x5 / 3.;
         } else
             assert( 0 );
@@ -682,7 +668,7 @@ double EvtDalitzReso::angDep( const EvtDalitzPoint& x ) const
 {
     // Angular dependece for factorizable amplitudes
     // unphysical cosines indicate we are in big trouble
-    double cosTh = x.cosTh(
+    const double cosTh = x.cosTh(
         m_pairAng, m_pairRes );    // angle between common(reso,ang) and other(reso)
     if ( fabs( cosTh ) > 1. ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "cosTh " << cosTh << std::endl;
@@ -694,14 +680,15 @@ double EvtDalitzReso::angDep( const EvtDalitzPoint& x ) const
                             acos( cosTh ) );
 }
 
-EvtComplex EvtDalitzReso::mixFactor( EvtComplex prop, EvtComplex prop_mix ) const
+EvtComplex EvtDalitzReso::mixFactor( const EvtComplex& prop,
+                                     const EvtComplex& prop_mix ) const
 {
-    double Delta = m_delta_mix * ( m_m0 + m_m0_mix );
+    const double Delta = m_delta_mix * ( m_m0 + m_m0_mix );
     return 1 / ( 1 - Delta * Delta * prop * prop_mix ) *
            ( 1 + m_amp_mix * Delta * prop_mix );
 }
 
-EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
+EvtComplex EvtDalitzReso::Fvector( const double s, const int index ) const
 {
     assert( index >= 1 && index <= 6 );
 
@@ -717,11 +704,11 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
     double g[5][5];    // Coupling constants. The first index is the pole index. The second index is the decay channel
     double ma[5];      // Pole masses. The unit is in GeV
 
-    int solution = ( m_typeN == K_MATRIX )
-                       ? 3
-                       : ( ( m_typeN == K_MATRIX_I )
-                               ? 1
-                               : ( ( m_typeN == K_MATRIX_II ) ? 2 : 0 ) );
+    const int solution = ( m_typeN == K_MATRIX )
+                             ? 3
+                             : ( ( m_typeN == K_MATRIX_I )
+                                     ? 1
+                                     : ( ( m_typeN == K_MATRIX_II ) ? 2 : 0 ) );
     if ( solution == 0 ) {
         std::cout << "EvtDalitzReso::Fvector() error. Kmatrix solution incorrectly chosen ! "
                   << std::endl;
@@ -857,10 +844,10 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
     double f[5][5];
 
     //Initalize the mass of the resonance
-    double mpi = 0.13957;
-    double mK = 0.493677;      //using charged K value
-    double meta = 0.54775;     //using PDG value
-    double metap = 0.95778;    //using PDG value
+    const double mpi = 0.13957;
+    const double mK = 0.493677;      //using charged K value
+    const double meta = 0.54775;     //using PDG value
+    const double metap = 0.95778;    //using PDG value
 
     //Initialize the matrix to value zero
     EvtComplex K[5][5];
@@ -879,8 +866,8 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
         s_scatt = -5.0;
     else if ( solution == 2 )
         s_scatt = -5.0;
-    double sa = 1.0;
-    double sa_0 = -0.15;
+    const double sa = 1.0;
+    const double sa_0 = -0.15;
     if ( solution == 3 ) {
         f[0][0] = 0.23399;    // f^scatt
         f[0][1] = 0.15044;
@@ -922,10 +909,10 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
     //using the A&S 4pi phase space Factor:
     //Shit, not continue
     if ( s <= 1 ) {
-        double real = 1.2274 + .00370909 / ( s * s ) - .111203 / s -
-                      6.39017 * s + 16.8358 * s * s - 21.8845 * s * s * s +
-                      11.3153 * s * s * s * s;
-        double cont32 = sqrt( 1.0 - ( 16.0 * mpi * mpi ) );
+        const double real = 1.2274 + .00370909 / ( s * s ) - .111203 / s -
+                            6.39017 * s + 16.8358 * s * s -
+                            21.8845 * s * s * s + 11.3153 * s * s * s * s;
+        const double cont32 = sqrt( 1.0 - ( 16.0 * mpi * mpi ) );
         rho[2] = EvtComplex( cont32 * real, 0 );
     } else
         rho[2] = EvtComplex( sqrt( 1. - 16. * mpi * mpi / s ), 0 );
@@ -954,8 +941,8 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
     for ( int i = 0; i < 5; i++ ) {
         for ( int j = 0; j < 5; j++ ) {
             for ( int pole_index = 0; pole_index < 5; pole_index++ ) {
-                double A = g[pole_index][i] * g[pole_index][j];
-                double B = ma[pole_index] * ma[pole_index] - s;
+                const double A = g[pole_index][i] * g[pole_index][j];
+                const double B = ma[pole_index] * ma[pole_index] - s;
 
                 if ( fabs( B ) < PRECISION )
                     K[i][j] += EvtComplex( A, 0 );
@@ -968,8 +955,8 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
     //now add the SVT part
     for ( int i = 0; i < 5; i++ ) {
         for ( int j = 0; j < 5; j++ ) {
-            double C = f[i][j] * ( 1.0 - s_scatt );
-            double D = ( s - s_scatt );
+            const double C = f[i][j] * ( 1.0 - s_scatt );
+            const double D = ( s - s_scatt );
             K[i][j] += EvtComplex( C / D, 0 ) * smallTerm;
         }
     }
@@ -978,8 +965,8 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
     //Include the Alder zero term:
     for ( int i = 0; i < 5; i++ ) {
         for ( int j = 0; j < 5; j++ ) {
-            double E = ( s - ( sa * mpi * mpi * 0.5 ) ) * ( 1.0 - sa_0 );
-            double F = ( s - sa_0 );
+            const double E = ( s - ( sa * mpi * mpi * 0.5 ) ) * ( 1.0 - sa_0 );
+            const double F = ( s - sa_0 );
             K[i][j] *= EvtComplex( E / F, 0 );
         }
     }
@@ -1008,8 +995,8 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
     if ( index <= 5 ) {
         //this calculates the beta_idx Factors
         for ( int j = 0; j < 5; j++ ) {    // sum for 5 channel
-            EvtComplex top = U1j[j] * g[index - 1][j];
-            double bottom = ma[index - 1] * ma[index - 1] - s;
+            const EvtComplex top = U1j[j] * g[index - 1][j];
+            const double bottom = ma[index - 1] * ma[index - 1] - s;
 
             if ( fabs( bottom ) < PRECISION )
                 value += top;
@@ -1031,20 +1018,21 @@ EvtComplex EvtDalitzReso::Fvector( double s, int index ) const
 }
 
 //replace Breit-Wigner with LASS
-EvtComplex EvtDalitzReso::lass( double s ) const
+EvtComplex EvtDalitzReso::lass( const EvtTwoBodyKine& kd,
+                                const EvtTwoBodyVertex& vd ) const
 {
-    EvtTwoBodyKine vd( m_massFirst, m_massSecond, sqrt( s ) );
-    double q = vd.p();
-    double GammaM = m_g0 * m_vd.widthFactor( vd );    // running width;
+    const double m = kd.m();
+    const double q = kd.p();
+    const double GammaM = m_g0 * vd.widthFactor( kd );    // running width;
 
     //calculate the background phase motion
-    double cot_deltaB = 1.0 / ( m_a * q ) + 0.5 * m_r * q;
-    double deltaB = atan( 1.0 / cot_deltaB );
-    double totalB = deltaB + m_phiB;
+    const double cot_deltaB = 1.0 / ( m_a * q ) + 0.5 * m_r * q;
+    const double deltaB = atan( 1.0 / cot_deltaB );
+    const double totalB = deltaB + m_phiB;
 
     //calculate the resonant phase motion
-    double deltaR = atan( ( m_m0 * GammaM / ( m_m0 * m_m0 - s ) ) );
-    double totalR = deltaR + m_phiR;
+    const double deltaR = atan( ( m_m0 * GammaM / ( m_m0 * m_m0 - m * m ) ) );
+    const double totalR = deltaR + m_phiR;
 
     //sum them up
     EvtComplex bkgB, resT;
@@ -1055,32 +1043,31 @@ EvtComplex EvtDalitzReso::lass( double s ) const
            EvtComplex( cos( 2 * totalB ), sin( 2 * totalB ) );
 
     EvtComplex T;
-    if ( m_cutoff > 0 && sqrt( s ) > m_cutoff )
+    if ( m_cutoff > 0 && m > m_cutoff )
         T = resT;
     else
         T = bkgB + resT;
 
     if ( m_scaleByMOverQ )
-        T *= ( sqrt( s ) / q );
+        T *= ( m / q );
 
     return T;
 }
 
-EvtComplex EvtDalitzReso::flatte( const double& m ) const
+EvtComplex EvtDalitzReso::flatte( const double s ) const
 {
     EvtComplex w;
 
-    for ( vector<EvtFlatteParam>::const_iterator param = m_flatteParams.begin();
-          param != m_flatteParams.end(); ++param ) {
-        double m1 = ( *param ).m1();
-        double m2 = ( *param ).m2();
-        double g = ( *param ).g();
+    for ( const auto& param : m_flatteParams ) {
+        const double m1 = param.m1();
+        const double m2 = param.m2();
+        const double g = param.g();
         w += ( g * g *
-               sqrtCplx( ( 1 - ( ( m1 - m2 ) * ( m1 - m2 ) ) / ( m * m ) ) *
-                         ( 1 - ( ( m1 + m2 ) * ( m1 + m2 ) ) / ( m * m ) ) ) );
+               sqrtCplx( ( 1 - ( ( m1 - m2 ) * ( m1 - m2 ) ) / ( s ) ) *
+                         ( 1 - ( ( m1 + m2 ) * ( m1 + m2 ) ) / ( s ) ) ) );
     }
 
-    EvtComplex denom = m_m0 * m_m0 - m * m - EvtComplex( 0, 1 ) * w;
+    const EvtComplex denom = m_m0 * m_m0 - s - EvtComplex( 0, 1 ) * w;
 
     return EvtComplex( 1.0, 0.0 ) / denom;
 }
