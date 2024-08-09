@@ -1,0 +1,22 @@
+{
+    "parent" : "B+",
+    "daughters" : ["c", "anti-s", "anti-u", "u"],
+    "models" : ["PYTHIA"],
+    "parameters" : [["23"]],
+    "extras" : ["noFSR"],
+    "do_conjugate_decay" : [true],
+    "events" : 100000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 2, "xmin" : 0.0, "xmax" : 2.0},
+        {"variable" : "lifetime", "title" : "tau", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 5.0},
+	{"variable" : "nDaug", "title" : "nDaug",  "d1" : 0, "d2" : 0, "nbins" : 10, "xmin" : 2.0, "xmax" : 12.0},
+	{"variable" : "id_perDaughter", "title" : "StdHep ID", "d1" : 0, "d2" : 0, "nbins" : 12, "xmin" : -5000.0, "xmax" : 5000.0},
+	{"variable" : "particleType_perDaughter", "title" : "Particle type", "d1" : 0, "d2" : 0, "nbins" : 12, "xmin" : 0, "xmax" : 12.0},
+        {"variable" : "p_isPion_perDaughter", "title" : "Momentum of pions", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 2.5},
+        {"variable" : "p_isKaon_perDaughter", "title" : "Momentum of kaons", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 2.5},
+        {"variable" : "p_isDmeson_perDaughter", "title" : "Momentum of D mesons", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 2.5},
+        {"variable" : "p_isBaryon_perDaughter", "title" : "Momentum of light and strange baryons", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 2.5},
+        {"variable" : "p_isOther_perDaughter", "title" : "Momentum of other particles", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 2.5}
+    ],
+    "outfile" : "PYTHIA__Bu_canti-santi-uu.root"
+}

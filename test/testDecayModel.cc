@@ -517,6 +517,8 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
         const std::string fsrStr = "_FSRPhotons";
         const std::string ewStr = "_EnergyWeight";
 
+        const std::string perDaughter = "_perDaughter";
+
         // Store information
         for ( auto& [info, hist] : m_1DhistVect ) {
             if ( !hist ) {
@@ -524,24 +526,59 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
             }
 
             const std::string varName = info.getName();
+            std::string reducedVarName = varName;
+
             const std::string::size_type findFSRstr = varName.find( fsrStr );
 
-            // If the variable name does not have the substring '_FSRPhotons', then add an entry per event and continue
-            if ( findFSRstr == std::string::npos ) {
+            const std::string::size_type findPerDaugStr = varName.find(
+                perDaughter );
+
+            // If the variable name does not have the substrings '_perDaughter' and '_FSRPhotons', then add an entry per event and continue
+            if ( findFSRstr == std::string::npos &&
+                 findPerDaugStr == std::string::npos ) {
                 const double value{
                     getValue( parent, varName, info.getd1(), info.getd2() ) };
 
                 hist->Fill( value );
                 continue;
             }
+            // If the variable name has the substring '_perDaughter' and does not have the substring '_FSRPhotons', then add an entry per daughter and continue
+            else if ( findFSRstr == std::string::npos ) {
+                reducedVarName.erase( findPerDaugStr, perDaughter.length() );
+
+                // Figure out whether the variable indicates to be saved for a requested particle type
+                const std::string::size_type findIsStr = reducedVarName.find(
+                    "_is" );
+                const std::string requestedType = findIsStr == std::string::npos
+                                                      ? ""
+                                                      : reducedVarName.substr(
+                                                            findIsStr + 3 );
+
+                if ( !requestedType.empty() ) {
+                    reducedVarName.erase( findIsStr,
+                                          reducedVarName.length() - findIsStr );
+                }
+
+                for ( int iDaug{ 0 }; iDaug < (int)parent->getNDaug(); iDaug++ ) {
+                    const double value{
+                        getValue( parent, reducedVarName, iDaug + 1, 0 ) };
+
+                    const int partGroup = getPartGroup(
+                        parent->getDaug( iDaug )->getPDGId() );
+
+                    if ( requestedType.empty() ||
+                         isPartType( partGroup, requestedType ) ) {
+                        hist->Fill( value );
+                    }
+                }
+                continue;
+            }
 
             // If otherwise the variable contains the substring '_FSRPhotons', then add an entry per photon
-
             if ( leadingChargedDaughter == -1 ) {
                 leadingChargedDaughter = findChargedDaugtherWithMaxE( parent );
             }
 
-            std::string reducedVarName = varName;
             reducedVarName.erase( findFSRstr, fsrStr.length() );
 
             const std::string::size_type findEwStr = reducedVarName.find( ewStr );
@@ -677,6 +714,15 @@ double TestDecayModel::getValue( const EvtParticle* parent,
         } else {
             value = selectedParent->getPDGId();
         }
+    } else if ( !selectedVarName.compare( "particleType" ) ) {
+        if ( par1 ) {
+            value = getPartGroup( par1->getPDGId() );
+        } else {
+            value = getPartGroup( selectedParent->getPDGId() );
+        }
+    } else if ( !selectedVarName.compare( "nDaug" ) ) {
+        // Number of daughters
+        value = sel_NDaugMax;
 
     } else if ( !selectedVarName.compare( "parMass" ) ) {
         // Parent invariant mass
@@ -1335,6 +1381,56 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
     }
 
     refFile->Close();
+}
+
+int TestDecayModel::getPartGroup( const int PDGId ) const
+{
+    int group( -1 );
+
+    const int absPDGId = std::abs( PDGId );
+
+    if ( absPDGId >= 11 && absPDGId <= 16 ) {
+        group = 0;    // leptons
+    } else if ( absPDGId == 22 ) {
+        group = 1;    // photon
+    } else if ( absPDGId == 211 ) {
+        group = 2;    // pi+-
+    } else if ( absPDGId == 111 ) {
+        group = 3;    // pi0
+    } else if ( absPDGId == 321 ) {
+        group = 4;    // K+-
+    } else if ( absPDGId == 311 || absPDGId == 130 || absPDGId == 310 ) {
+        group = 5;    // K0
+    } else if ( absPDGId == 411 ) {
+        group = 6;    // D+-
+    } else if ( absPDGId == 421 ) {
+        group = 7;    // D0
+    } else if ( absPDGId == 2212 || absPDGId == 2112 || absPDGId == 2224 ||
+                absPDGId == 2214 || absPDGId == 2114 || absPDGId == 1114 ) {
+        group = 8;    // light baryons
+    } else if ( absPDGId >= 3112 && absPDGId <= 3334 ) {
+        group = 9;    // strange baryons
+    } else if ( absPDGId != 0 ) {
+        group = 10;    // other particles
+    }
+
+    return group;
+}
+
+bool TestDecayModel::isPartType( const int group,
+                                 const std::string& particleType ) const
+{
+    if ( ( !particleType.compare( "LeptonOrPhoton" ) &&
+           ( group == 0 || group == 1 ) ) ||
+         ( !particleType.compare( "Pion" ) && ( group == 2 || group == 3 ) ) ||
+         ( !particleType.compare( "Kaon" ) && ( group == 4 || group == 5 ) ) ||
+         ( !particleType.compare( "Dmeson" ) && ( group == 6 || group == 7 ) ) ||
+         ( !particleType.compare( "Baryon" ) && ( group == 8 || group == 9 ) ) ||
+         ( !particleType.compare( "Other" ) && group == 10 ) ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 double TestDecayModel::getCosAcoplanarityAngle( const EvtParticle* selectedParent,

@@ -91,6 +91,10 @@ class TestDecayModel {
 
     void compareHistos( const std::string& refFileName ) const;
 
+    int getPartGroup( const int PDGId ) const;
+
+    bool isPartType( const int group, const std::string& particleType ) const;
+
     double getCosAcoplanarityAngle( const EvtParticle* selectedParent,
                                     const int sel_NDaugMax, const int d1,
                                     const int d2 ) const;

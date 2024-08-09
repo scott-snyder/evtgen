@@ -11,6 +11,11 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+9 Aug 2024 Fernando Abudinen
+* D129: Added tests for PYTHIA interface
+  - Introduced new tests for decays with PYTHIA.
+  - Converted preexisting tests to json format based on new testing framework.
+
 1 Aug 2024 Fernando Abudinen
 * D127: Improve FSR mutexing by using `std::lock_guard`.
 
