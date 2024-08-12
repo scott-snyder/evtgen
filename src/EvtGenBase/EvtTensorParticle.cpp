@@ -144,11 +144,11 @@ EvtSpinDensity EvtTensorParticle::rotateToHelicityBasis( double alpha,
 {
     EvtTensor4C es[5];
 
-    static EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
-                              EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
-    static EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
-    static EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
-                               EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
+                       EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
+    EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
+                        EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
 
     eplus.applyRotateEuler( alpha, beta, gamma );
     ezero.applyRotateEuler( alpha, beta, gamma );

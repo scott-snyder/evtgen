@@ -9,6 +9,13 @@ https://phab.hepforge.org/Tabc
 https://phab.hepforge.org/Dxyz
 
 ===
+## R02-02-03
+
+12 Aug 2024 Tom Latham
+* Fix bug in EvtTensorParticle::rotateToHelicityBasis whereby rotations of
+  different particles compounded rather than being independent.
+
+===
 ## R02-02-02
 
 17 Jun 2024 John Back
