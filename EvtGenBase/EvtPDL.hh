@@ -31,14 +31,10 @@
 #include <string>
 #include <vector>
 
-const int SPIN_NAME_LENGTH = 100;
-
 class EvtPDL final {
   public:
-    EvtPDL();
-
-    void read( const std::string& fname );
-    void readPDT( std::istream& data );
+    static void read( const std::string& fname );
+    static void readPDT( std::istream& data );
 
     static double getMeanMass( EvtId i );
     static double getMass( EvtId i );
@@ -82,18 +78,19 @@ class EvtPDL final {
     static void setPWForBirthL( EvtId i, int spin, EvtId par, EvtId othD );
 
   private:
-    void setUpConstsPdt();
+    EvtPDL() = default;
+    EvtPDL( const EvtPDL& ) = delete;
+    EvtPDL( EvtPDL&& ) = delete;
+    EvtPDL& operator=( const EvtPDL& ) = delete;
+    EvtPDL& operator=( EvtPDL&& ) = delete;
 
-    static unsigned int m_firstAlias;
-    static int m_nentries;
+    static EvtPDL& getInstance();
 
-    static std::vector<EvtPartProp>& partlist()
-    {
-        static std::vector<EvtPartProp> s_partlist;
-        return s_partlist;
-    }
+    std::size_t m_firstAlias;
 
-    static std::map<std::string, int> m_particleNameLookup;
+    std::vector<EvtPartProp> m_partlist;
+
+    std::map<std::string, int> m_particleNameLookup;
 
 };    // EvtPDL.h
 

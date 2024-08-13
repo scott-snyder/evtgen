@@ -11,6 +11,12 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+14 Aug 2024 Fernando Abudinen
+* D128: Improvements in EvtId and EvtPDL.
+  - Modernisation of EvtId class improving Boolean functions.
+  - Conversion of EvtPDL into thread-local singleton.
+  - Propagation of changes in EvtPDL to EvtGen initialisation.
+
 9 Aug 2024 Fernando Abudinen
 * D129: Added tests for PYTHIA interface
   - Introduced new tests for decays with PYTHIA.

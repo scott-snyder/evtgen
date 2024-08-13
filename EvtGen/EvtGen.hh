@@ -21,8 +21,6 @@
 #ifndef EVTGEN_HH
 #define EVTGEN_HH
 
-#include "EvtGenBase/EvtPDL.hh"
-
 #include <iostream>
 #include <list>
 
@@ -66,7 +64,6 @@ class EvtGen {
                      const std::list<EvtDecayBase*>* extraModels = nullptr,
                      int mixingType = 1, bool useXml = false );
 
-    EvtPDL m_pdl;
     int m_mixingType;
 };
 

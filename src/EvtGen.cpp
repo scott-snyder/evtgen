@@ -107,7 +107,7 @@ void EvtGen::initialize( const std::string& decayName, std::istream& pdtTable,
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << "Main decay file name  :" << decayName << endl;
 
-    m_pdl.readPDT( pdtTable );
+    EvtPDL::readPDT( pdtTable );
 
     if ( useXml ) {
         EvtDecayTable::getInstance()->readXMLDecayFile( decayName, false );

@@ -31,20 +31,10 @@
 
 using std::endl;
 
-static int first = 1;
-
-unsigned int EvtPDL::m_firstAlias;
-int EvtPDL::m_nentries;
-
-std::map<std::string, int> EvtPDL::m_particleNameLookup;
-
-EvtPDL::EvtPDL()
+EvtPDL& EvtPDL::getInstance()
 {
-    if ( first != 0 ) {
-        first = 0;
-        m_nentries = 0;
-        m_firstAlias = 999999;
-    }
+    static thread_local EvtPDL theInstance;
+    return theInstance;
 }
 
 void EvtPDL::read( const std::string& fname )
@@ -74,6 +64,7 @@ void EvtPDL::readPDT( std::istream& indec )
     double ctau;
     int lundkc;
     EvtId i;
+    std::size_t nentries = 0;
 
     indec.seekg( 0, std::ios::beg );
 
@@ -108,7 +99,7 @@ void EvtPDL::readPDT( std::istream& indec )
                 indec >> ctau;
                 indec >> lundkc;
 
-                i = EvtId( m_nentries, m_nentries );
+                i = EvtId( nentries, nentries );
 
                 EvtPartProp tmp;
 
@@ -150,8 +141,8 @@ void EvtPDL::readPDT( std::istream& indec )
                 tmp.setStdHep( stdhepid );
                 tmp.setLundKC( lundkc );
                 tmp.setName( pname );
-                if ( m_particleNameLookup.find( std::string( pname ) ) !=
-                     m_particleNameLookup.end() ) {
+                if ( getInstance().m_particleNameLookup.find( std::string(
+                         pname ) ) != getInstance().m_particleNameLookup.end() ) {
                     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
                         << "The particle name:" << pname
                         << " is already defined." << endl;
@@ -159,14 +150,14 @@ void EvtPDL::readPDT( std::istream& indec )
                         << "Will terminate execution.";
                     ::abort();
                 }
-                m_particleNameLookup[std::string( pname )] = m_nentries;
+                getInstance().m_particleNameLookup[std::string( pname )] = nentries;
                 tmp.setctau( ctau );
                 tmp.setChg3( chg3 );
 
                 tmp.initLineShape( mass, pwidth, pmaxwidth );
 
-                partlist().push_back( tmp );
-                m_nentries++;
+                getInstance().m_partlist.push_back( tmp );
+                nentries++;
             }
 
             // if find a set read information and discard it
@@ -180,8 +171,6 @@ void EvtPDL::readPDT( std::istream& indec )
         }
 
     } while ( strcmp( cmnd, "end" ) );
-
-    setUpConstsPdt();
 }
 
 void EvtPDL::aliasChgConj( EvtId a, EvtId abar )
@@ -196,17 +185,16 @@ void EvtPDL::aliasChgConj( EvtId a, EvtId abar )
         ::abort();
     }
 
-    partlist()[a.getAlias()].setIdChgConj( abar );
-    partlist()[abar.getAlias()].setIdChgConj( a );
+    getInstance().m_partlist[a.getAlias()].setIdChgConj( abar );
+    getInstance().m_partlist[abar.getAlias()].setIdChgConj( a );
 }
 
 EvtId EvtPDL::chargeConj( EvtId id )
 {
-    //  EvtId idchg=partlist()[id.getAlias()].getIdChgConj();
     int index = id.getAlias();
     EvtId idchg;
     if ( index > -1 ) {
-        idchg = partlist()[id.getAlias()].getIdChgConj();
+        idchg = getInstance().m_partlist[id.getAlias()].getIdChgConj();
     }
 
     if ( idchg != EvtId( -1, -1 ) )
@@ -215,7 +203,7 @@ EvtId EvtPDL::chargeConj( EvtId id )
     if ( id.getId() != id.getAlias() ) {
         if ( chargeConj( EvtId( id.getId(), id.getId() ) ) ==
              EvtId( id.getId(), id.getId() ) ) {
-            partlist()[id.getAlias()].setIdChgConj( id );
+            getInstance().m_partlist[id.getAlias()].setIdChgConj( id );
             return id;
         }
     }
@@ -228,22 +216,24 @@ EvtId EvtPDL::chargeConj( EvtId id )
         ::abort();
     }
 
-    for ( size_t i = 0; i < partlist().size(); i++ ) {
-        if ( partlist()[i].getStdHep() == -partlist()[id.getId()].getStdHep() ) {
-            partlist()[id.getId()].setIdChgConj( partlist()[i].getId() );
-            return partlist()[i].getId();
+    for ( size_t i = 0; i < getInstance().m_partlist.size(); i++ ) {
+        if ( getInstance().m_partlist[i].getStdHep() ==
+             -getInstance().m_partlist[id.getId()].getStdHep() ) {
+            getInstance().m_partlist[id.getId()].setIdChgConj(
+                getInstance().m_partlist[i].getId() );
+            return getInstance().m_partlist[i].getId();
         }
     }
 
-    partlist()[id.getId()].setIdChgConj( id );
+    getInstance().m_partlist[id.getId()].setIdChgConj( id );
     return id;
 }
 
 EvtId EvtPDL::evtIdFromStdHep( int stdhep )
 {
-    for ( size_t i = 0; i < partlist().size(); i++ ) {
-        if ( partlist()[i].getStdHep() == stdhep )
-            return partlist()[i].getId();
+    for ( size_t i = 0; i < getInstance().m_partlist.size(); i++ ) {
+        if ( getInstance().m_partlist[i].getStdHep() == stdhep )
+            return getInstance().m_partlist[i].getId();
     }
 
     return EvtId( -1, -1 );
@@ -251,9 +241,10 @@ EvtId EvtPDL::evtIdFromStdHep( int stdhep )
 
 void EvtPDL::alias( EvtId num, const std::string& newname )
 {
-    if ( m_firstAlias < partlist().size() ) {
-        for ( size_t i = m_firstAlias; i < partlist().size(); i-- ) {
-            if ( newname == partlist()[i].getName() ) {
+    if ( getInstance().m_firstAlias < getInstance().m_partlist.size() ) {
+        for ( size_t i = getInstance().m_firstAlias;
+              i < getInstance().m_partlist.size(); i-- ) {
+            if ( newname == getInstance().m_partlist[i].getName() ) {
                 EvtGenReport( EVTGEN_WARNING, "EvtGen" )
                     << "Redefining alias:" << newname.c_str()
                     << " will be ignored!" << endl;
@@ -261,37 +252,33 @@ void EvtPDL::alias( EvtId num, const std::string& newname )
             }
         }
     } else {
-        m_firstAlias = partlist().size();
+        getInstance().m_firstAlias = getInstance().m_partlist.size();
     }
 
-    partlist().push_back( partlist()[num.getId()] );
-    int entry = partlist().size() - 1;
-    partlist()[entry].setName( newname );
-    if ( m_particleNameLookup.find( std::string( newname ) ) !=
-         m_particleNameLookup.end() ) {
+    getInstance().m_partlist.push_back( getInstance().m_partlist[num.getId()] );
+    int entry = getInstance().m_partlist.size() - 1;
+    getInstance().m_partlist[entry].setName( newname );
+    if ( getInstance().m_particleNameLookup.find( std::string( newname ) ) !=
+         getInstance().m_particleNameLookup.end() ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "The particle name:" << newname << " is already defined." << endl;
         EvtGenReport( EVTGEN_ERROR, "EvtGen" ) << "Will terminate execution.";
         ::abort();
     }
-    m_particleNameLookup[std::string( newname )] = entry;
-    partlist()[entry].setId( EvtId( num.getId(), entry ) );
+    getInstance().m_particleNameLookup[std::string( newname )] = entry;
+    getInstance().m_partlist[entry].setId( EvtId( num.getId(), entry ) );
     //Lange - Dec7, 2003. Unset the charge conjugate.
-    partlist()[entry].setIdChgConj( EvtId( -1, -1 ) );
+    getInstance().m_partlist[entry].setIdChgConj( EvtId( -1, -1 ) );
 }
 
 EvtId EvtPDL::getId( const std::string& name )
 {
-    std::map<std::string, int>::iterator it = m_particleNameLookup.find(
-        std::string( name ) );
-    if ( it == m_particleNameLookup.end() )
+    std::map<std::string, int>::iterator it =
+        getInstance().m_particleNameLookup.find( std::string( name ) );
+    if ( it == getInstance().m_particleNameLookup.end() )
         return EvtId( -1, -1 );
 
-    return partlist()[it->second].getId();
-}
-
-void EvtPDL::setUpConstsPdt()
-{
+    return getInstance().m_partlist[it->second].getId();
 }
 
 // Function to get EvtId from LundKC ( == Pythia Hep Code , KF )
@@ -299,9 +286,9 @@ EvtId EvtPDL::evtIdFromLundKC( int pythiaId )
 {
     unsigned int i;
 
-    for ( i = 0; i < partlist().size(); i++ ) {
-        if ( partlist()[i].getLundKC() == pythiaId )
-            return partlist()[i].getId();
+    for ( i = 0; i < getInstance().m_partlist.size(); i++ ) {
+        if ( getInstance().m_partlist[i].getLundKC() == pythiaId )
+            return getInstance().m_partlist[i].getId();
     }
 
     return EvtId( -1, -1 );
@@ -309,138 +296,140 @@ EvtId EvtPDL::evtIdFromLundKC( int pythiaId )
 
 double EvtPDL::getMeanMass( EvtId i )
 {
-    return partlist()[i.getId()].getMass();
+    return getInstance().m_partlist[i.getId()].getMass();
 }
 
 double EvtPDL::getMass( EvtId i )
 {
-    return partlist()[i.getId()].rollMass();
+    return getInstance().m_partlist[i.getId()].rollMass();
 }
 
 double EvtPDL::getRandMass( EvtId i, EvtId* parId, int nDaug, EvtId* dauId,
                             EvtId* othDaugId, double maxMass, double* dauMasses )
 {
-    return partlist()[i.getId()].getRandMass( parId, nDaug, dauId, othDaugId,
-                                              maxMass, dauMasses );
+    return getInstance().m_partlist[i.getId()].getRandMass( parId, nDaug, dauId,
+                                                            othDaugId, maxMass,
+                                                            dauMasses );
 }
 
 double EvtPDL::getMassProb( EvtId i, double mass, double massPar, int nDaug,
                             double* massDau )
 {
-    return partlist()[i.getId()].getMassProb( mass, massPar, nDaug, massDau );
+    return getInstance().m_partlist[i.getId()].getMassProb( mass, massPar,
+                                                            nDaug, massDau );
 }
 
 double EvtPDL::getMaxMass( EvtId i )
 {
-    return partlist()[i.getId()].getMassMax();
+    return getInstance().m_partlist[i.getId()].getMassMax();
 }
 
 double EvtPDL::getMinMass( EvtId i )
 {
-    return partlist()[i.getId()].getMassMin();
+    return getInstance().m_partlist[i.getId()].getMassMin();
 }
 
 double EvtPDL::getMaxRange( EvtId i )
 {
-    return partlist()[i.getId()].getMaxRange();
+    return getInstance().m_partlist[i.getId()].getMaxRange();
 }
 
 double EvtPDL::getWidth( EvtId i )
 {
-    return partlist()[i.getId()].getWidth();
+    return getInstance().m_partlist[i.getId()].getWidth();
 }
 
 double EvtPDL::getctau( EvtId i )
 {
-    return partlist()[i.getId()].getctau();
+    return getInstance().m_partlist[i.getId()].getctau();
 }
 
 int EvtPDL::getStdHep( EvtId id )
 {
-    return partlist()[id.getId()].getStdHep();
+    return getInstance().m_partlist[id.getId()].getStdHep();
 }
 
 int EvtPDL::getLundKC( EvtId id )
 {
-    return partlist()[id.getId()].getLundKC();
+    return getInstance().m_partlist[id.getId()].getLundKC();
 }
 
 int EvtPDL::chg3( EvtId i )
 {
-    return partlist()[i.getId()].getChg3();
+    return getInstance().m_partlist[i.getId()].getChg3();
 }
 
 EvtSpinType::spintype EvtPDL::getSpinType( EvtId i )
 {
-    return partlist()[i.getId()].getSpinType();
+    return getInstance().m_partlist[i.getId()].getSpinType();
 }
 
 std::string EvtPDL::name( EvtId i )
 {
-    return partlist()[i.getAlias()].getName();
+    return getInstance().m_partlist[i.getAlias()].getName();
 }
 
 size_t EvtPDL::entries()
 {
-    return partlist().size();
+    return getInstance().m_partlist.size();
 }
 
 EvtId EvtPDL::getEntry( int i )
 {
-    return partlist()[i].getId();
+    return getInstance().m_partlist[i].getId();
 }
 
 void EvtPDL::reSetMass( EvtId i, double mass )
 {
-    partlist()[i.getId()].reSetMass( mass );
+    getInstance().m_partlist[i.getId()].reSetMass( mass );
 }
 
 void EvtPDL::reSetWidth( EvtId i, double width )
 {
-    partlist()[i.getId()].reSetWidth( width );
+    getInstance().m_partlist[i.getId()].reSetWidth( width );
 }
 
 void EvtPDL::reSetMassMin( EvtId i, double mass )
 {
-    partlist()[i.getId()].reSetMassMin( mass );
+    getInstance().m_partlist[i.getId()].reSetMassMin( mass );
 }
 
 void EvtPDL::reSetMassMax( EvtId i, double mass )
 {
-    partlist()[i.getId()].reSetMassMax( mass );
+    getInstance().m_partlist[i.getId()].reSetMassMax( mass );
 }
 
 void EvtPDL::reSetBlatt( EvtId i, double blatt )
 {
-    partlist()[i.getId()].reSetBlatt( blatt );
+    getInstance().m_partlist[i.getId()].reSetBlatt( blatt );
 }
 
 void EvtPDL::reSetBlattBirth( EvtId i, double blatt )
 {
-    partlist()[i.getId()].reSetBlattBirth( blatt );
+    getInstance().m_partlist[i.getId()].reSetBlattBirth( blatt );
 }
 
 void EvtPDL::includeBirthFactor( EvtId i, bool yesno )
 {
-    partlist()[i.getId()].includeBirthFactor( yesno );
+    getInstance().m_partlist[i.getId()].includeBirthFactor( yesno );
 }
 
 void EvtPDL::includeDecayFactor( EvtId i, bool yesno )
 {
-    partlist()[i.getId()].includeDecayFactor( yesno );
+    getInstance().m_partlist[i.getId()].includeDecayFactor( yesno );
 }
 
 void EvtPDL::changeLS( EvtId i, std::string& newLS )
 {
-    partlist()[i.getId()].newLineShape( newLS );
+    getInstance().m_partlist[i.getId()].newLineShape( newLS );
 }
 
 void EvtPDL::setPWForDecay( EvtId i, int spin, EvtId d1, EvtId d2 )
 {
-    partlist()[i.getId()].setPWForDecay( spin, d1, d2 );
+    getInstance().m_partlist[i.getId()].setPWForDecay( spin, d1, d2 );
 }
 
 void EvtPDL::setPWForBirthL( EvtId i, int spin, EvtId par, EvtId othD )
 {
-    partlist()[i.getId()].setPWForBirthL( spin, par, othD );
+    getInstance().m_partlist[i.getId()].setPWForBirthL( spin, par, othD );
 }

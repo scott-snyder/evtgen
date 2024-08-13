@@ -23,16 +23,14 @@
 #include "EvtGenBase/EvtPDL.hh"
 
 #include <iostream>
-using std::ostream;
 
-ostream& operator<<( ostream& s, const EvtId& id )
+std::ostream& operator<<( std::ostream& s, const EvtId& id )
 {
     s << "(Id=" << id.m_id << " Alias=" << id.m_alias << ")";
-
     return s;
 }
 
-int EvtId::isConjugate( const EvtId& id ) const
+bool EvtId::isConjugate( const EvtId& id ) const
 {
     return EvtPDL::getStdHep( *this ) == -EvtPDL::getStdHep( id );
 }
