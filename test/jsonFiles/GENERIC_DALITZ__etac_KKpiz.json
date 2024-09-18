@@ -1,0 +1,16 @@
+{
+    "parent" : "eta_c",
+    "daughters" : ["K+", "K-", "pi0"],
+    "models" : ["GENERIC_DALITZ"],
+    "parameters" : [["../validation/DalitzFiles/EtacDalitzDecays.xml"]],
+    "extras" : ["noFSR"],
+    "events" : 10000,
+    "histograms" : [
+	{"variable" : "prob", "title" : "Probability", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.0, "xmax" : 1.0},
+	{"variable" : "parMass", "title" : "m(#eta_{c})", "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 2.9, "xmax" : 3.1},
+	{"variable" : "mass", "title" : "m(K^{+} K^{-})", "d1" : 1, "d2" : 2, "nbins" : 100, "xmin" : 0.9, "xmax" : 3.0},
+        {"variable" : "mass", "title" : "m(K^{+} #pi^{0})", "d1" : 1, "d2" : 3, "nbins" : 100, "xmin" : 0.6, "xmax" : 3.0},
+        {"variable" : "mass", "title" : "m(K^{-} #pi^{0})", "d1" : 2, "d2" : 3, "nbins" : 100, "xmin" : 0.6, "xmax" : 3.0}
+    ],
+    "outfile" : "GENERIC_DALITZ__etac_KKpiz.root"
+}

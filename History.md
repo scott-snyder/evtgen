@@ -11,6 +11,12 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+18 Sep 2024 Thomas Latham
+* D130: Fix recently introduced bug in EvtDalitzReso for parent with significant natural width
+  - Add a test for eta\_c -> K+ K- pi0 under GENERIC\_DALITZ model
+  - Modify code to restore correct behaviour
+  - Make other general improvements to EvtDalitzReso class
+
 14 Aug 2024 Fernando Abudinen
 * D128: Improvements in EvtId and EvtPDL.
   - Modernisation of EvtId class improving Boolean functions.

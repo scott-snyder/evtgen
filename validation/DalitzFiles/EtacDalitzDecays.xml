@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="DECAY.XSL" type="text/xsl" ?>
+<data>
+
+  <dalitzDecay particle="eta_c" daughters="K+ K- pi0" probMax="270000.0">
+    <resonance ampFactorReal="1.0" mag="1.0" phase="45.0" mass="0.980" width="0.050" spin="0" daughterPair="1" shape="Flatte"/>
+    <resonance ampFactorReal="1.0" mag="1.0" phase="0.0" mass="1.019461" width="0.004249" spin="1" daughterPair="1" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="4.0" BlattWeisskopfFactorResonance="4.0"/>
+    <resonance ampFactorReal="1.0" mag="1.0" phase="90.0" mass="0.89167" width="0.0514" spin="1" daughterPair="2" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="4.0" BlattWeisskopfFactorResonance="4.0"/>
+    <resonance ampFactorReal="1.0" mag="1.0" phase="90.0" mass="1.425" width="0.270" spin="0" daughterPair="2" shape="LASS"/>
+    <resonance ampFactorReal="1.0" mag="1.0" phase="90.0" mass="0.89167" width="0.0514" spin="1" daughterPair="3" shape="RBW_CLEO_ZEMACH" BlattWeisskopfFactorParent="4.0" BlattWeisskopfFactorResonance="4.0"/>
+    <resonance ampFactorReal="1.0" mag="1.0" phase="90.0" mass="1.425" width="0.270" spin="0" daughterPair="3" shape="LASS"/>
+  </dalitzDecay>
+</data>

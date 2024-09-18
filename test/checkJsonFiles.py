@@ -84,6 +84,7 @@ class JsonFileChecker :
         'phi' : [ 'phi' ],
         'eta' : [ 'eta' ],
         'eta\'' : [ 'etap', 'etapr', 'etaprime' ],
+        'eta_c' : [ 'etac' ],
         'e+' : [ 'e', 'ep', 'e+' ],
         'e-' : [ 'e', 'em', 'e-' ],
         'mu+' : [ 'mu', 'mup', 'mu+' ],
