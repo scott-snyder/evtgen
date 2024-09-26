@@ -539,8 +539,9 @@ TestHistos TestDecayModel::runDecayBody( const std::size_t firstEvent,
     if ( !initialised ) {
         bool convertPythiaCodes( false );
         bool useEvtGenRandom( true );
+        bool seedTauolaFortran( true );
         EvtExternalGenList genList( convertPythiaCodes, "", "gamma",
-                                    useEvtGenRandom );
+                                    useEvtGenRandom, seedTauolaFortran );
         switch ( m_config.fsrGenerator ) {
             case FSRGenerator::PHOTOS:
                 radCorrEngine = genList.getPhotosModel();

@@ -49,7 +49,7 @@
 
 class EvtTauolaEngine : public EvtAbsExternalGen {
   public:
-    EvtTauolaEngine( bool useEvtGenRandom = true );
+    EvtTauolaEngine( bool useEvtGenRandom = true, bool seedTauolaFortran = true );
 
     bool doDecay( EvtParticle* theMother ) override;
 
@@ -67,6 +67,7 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
     void decayTauEvent( EvtParticle* tauParticle );
 
     bool m_useEvtGenRandom{ true };
+    bool m_seedTauolaFortran{ true };
 
     // PDG standard code integer ID for tau particle
     static constexpr int m_tauPDG{ 15 };

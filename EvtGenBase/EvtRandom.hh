@@ -34,7 +34,9 @@ class EvtRandom {
 
     static double random();
 
-    static void setSeed( unsigned int seed );
+    static void setSeed( unsigned long int seed );
+
+    static unsigned long int lastSeed();
 
     //This class does not take ownership of the random engine;
     //the caller needs to make sure that the engine is not

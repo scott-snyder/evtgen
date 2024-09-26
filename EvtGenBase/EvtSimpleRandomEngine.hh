@@ -31,7 +31,9 @@ class EvtSimpleRandomEngine : public EvtRandomEngine {
 
     double random() override;
 
-    void setSeed( unsigned int seed ) override;
+    void setSeed( unsigned long int seed ) override;
+
+    unsigned long int lastSeed() const override { return m_next; }
 
   private:
     unsigned long int m_next;

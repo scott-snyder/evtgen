@@ -35,6 +35,7 @@
 #include <array>
 #include <cmath>
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -48,8 +49,8 @@ int EvtTauolaEngine::m_negPropType = 0;
 bool EvtTauolaEngine::m_initialised = false;
 std::mutex EvtTauolaEngine::m_tauola_mutex;
 
-EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom ) :
-    m_useEvtGenRandom{ useEvtGenRandom }
+EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom, bool seedTauolaFortran ) :
+    m_useEvtGenRandom{ useEvtGenRandom }, m_seedTauolaFortran{ seedTauolaFortran }
 {
 }
 
@@ -448,6 +449,15 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
 
     {
         const std::lock_guard<std::mutex> lock( m_tauola_mutex );
+
+        if ( m_useEvtGenRandom && m_seedTauolaFortran ) {
+            static thread_local auto lastSeed{
+                std::numeric_limits<unsigned long int>::max() };
+            if ( lastSeed != EvtRandom::lastSeed() ) {
+                lastSeed = EvtRandom::lastSeed();
+                Tauolapp::Tauola::setSeed( lastSeed, 0, 0 );
+            }
+        }
 
         // Now pass the event to Tauola for processing
         // Create a Tauola event object

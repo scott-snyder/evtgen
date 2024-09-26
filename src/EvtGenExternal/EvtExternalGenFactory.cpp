@@ -72,15 +72,16 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
 #endif
 
 #ifdef EVTGEN_TAUOLA
-void EvtExternalGenFactory::defineTauolaGenerator( bool useEvtGenRandom )
+void EvtExternalGenFactory::defineTauolaGenerator( bool useEvtGenRandom,
+                                                   bool seedTauolaFortran )
 {
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Defining EvtTauolaEngine." << endl;
 
-    m_extGenMap[GenId::TauolaGenId] = std::make_unique<EvtTauolaEngine>(
-        useEvtGenRandom );
+    m_extGenMap[GenId::TauolaGenId] =
+        std::make_unique<EvtTauolaEngine>( useEvtGenRandom, seedTauolaFortran );
 }
 #else
-void EvtExternalGenFactory::defineTauolaGenerator( bool )
+void EvtExternalGenFactory::defineTauolaGenerator( bool, bool )
 {
 }
 #endif

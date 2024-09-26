@@ -31,7 +31,8 @@
 EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
                                         std::string pythiaXmlDir,
                                         std::string photonType,
-                                        bool useEvtGenRandom ) :
+                                        bool useEvtGenRandom,
+                                        bool seedTauolaFortran ) :
     m_photonType{ photonType }, m_useEvtGenRandom{ useEvtGenRandom }
 {
     // Instantiate the external generator factory
@@ -50,7 +51,7 @@ EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
     extFactory.definePythiaGenerator( pythiaXmlDir, convertPythiaCodes,
                                       useEvtGenRandom );
 
-    extFactory.defineTauolaGenerator( useEvtGenRandom );
+    extFactory.defineTauolaGenerator( useEvtGenRandom, seedTauolaFortran );
 }
 
 EvtExternalGenList::~EvtExternalGenList()

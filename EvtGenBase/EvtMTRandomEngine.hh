@@ -27,17 +27,18 @@
 
 class EvtMTRandomEngine : public EvtRandomEngine {
   public:
-    EvtMTRandomEngine( unsigned int seed = 1430957218 );
+    EvtMTRandomEngine( unsigned long int seed = 1430957218 );
 
-    virtual double random() override;
+    double random() override;
 
-    virtual void setSeed( unsigned int seed ) override;
+    void setSeed( unsigned long int seed ) override;
+
+    unsigned long int lastSeed() const override { return m_lastSeed; }
 
   private:
     std::mt19937 m_engine;
-
-    typedef std::uniform_real_distribution<double> URDist;
-    URDist m_distribution;
+    std::uniform_real_distribution<double> m_distribution;
+    unsigned long int m_lastSeed;
 };
 
 #endif
