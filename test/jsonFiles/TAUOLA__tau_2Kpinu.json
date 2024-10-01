@@ -1,0 +1,28 @@
+{
+    "parent" : "tau-",
+    "daughters" : [" "],
+    "models" : ["TAUOLA"],
+    "parameters" : [["14"]],
+    "extras" : ["noFSR"],    
+    "do_conjugate_decay" : [true],
+    "events" : 10000,
+    "histograms" : [
+        {"variable" : "prob", "title" : "Prob",  "d1" : 0, "d2" : 0, "nbins" : 100, "xmin" : 0.8, "xmax" : 1.2},
+        {"variable" : "nDaug", "title" : "nDaug",  "d1" : 0, "d2" : 0, "nbins" : 2, "xmin" : 4.0, "xmax" : 6.0},
+	{"variable" : "id_perDaughter", "title" : "StdHep ID", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : -350.0, "xmax" : 350.0},
+        {"variable" : "particleType_perDaughter", "title" : "Particle type", "d1" : 0, "d2" : 0, "nbins" : 12, "xmin" : 0, "xmax" : 12.0},
+        {"variable" : "p_isLeptonOrPhoton_perDaughter", "title" : "Momentum of leptons, #gamma", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 0.9},
+	{"variable" : "p_isPion_perDaughter", "title" : "Momentum of pions", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 0.9},
+	{"variable" : "p_isKaon_perDaughter", "title" : "Momentum of kaons", "d1" : 0, "d2" : 0, "nbins" : 50, "xmin" : 0.0, "xmax" : 0.9},
+        {"variable" : "cosTheta", "title" : "cosTheta(nu)", "d1" : 1, "d2" : 0, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosTheta", "title" : "cosTheta(K1)", "d1" : 2, "d2" : 0, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "cosHel", "title" : "cosHel(K,K)", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : -1.0, "xmax" : 1.0},
+        {"variable" : "mass", "title" : "m(K1 nu)", "d1" : 1, "d2" : 2, "nbins" : 50, "xmin" : 0, "xmax" : 1.7},
+        {"variable" : "mass", "title" : "m(nu K2)", "d1" : 1, "d2" : 3, "nbins" : 50, "xmin" : 0, "xmax" : 1.7},
+        {"variable" : "mass", "title" : "m(K+ K-)", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : 0, "xmax" : 1.7},
+        {"variable" : "mass", "title" : "m(K2 pi)", "d1" : 3, "d2" : 4, "nbins" : 50, "xmin" : 0, "xmax" : 1.7},
+        {"variable" : "mass3", "title" : "m(K+ K- pi)", "d1" : 2, "d2" : 3, "nbins" : 50, "xmin" : 1.05, "xmax" : 1.75}, 	
+        {"variable" : "phi", "title" : "phi(nu)", "d1" : 1, "d2" : 0, "nbins" : 50, "xmin" : -180.0, "xmax" : 180}	
+    ],
+    "outfile" : "TAUOLA__tau_2Kpinu.root"
+}

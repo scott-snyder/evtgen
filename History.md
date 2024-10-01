@@ -11,6 +11,11 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+1 Oct 2024 Fernando Abudinen
+* D131: Tauola tests
+  - Translated TAUOLA tests in validation to new json format
+  - Covered all 22 supported TAUOLA models
+
 18 Sep 2024 Thomas Latham
 * D130: Fix recently introduced bug in EvtDalitzReso for parent with significant natural width
   - Add a test for eta\_c -> K+ K- pi0 under GENERIC\_DALITZ model
