@@ -11,6 +11,16 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+4 Oct 2024 Heather Ratcliffe, Thomas Latham, Fernando Abudinen
+* D132: Introduce thread safety
+  - Protect statics: make them const or thread\_local
+  - Improve const-correctness of many functions
+  - Make thread\_local the RNG, particle property table, external factory, decay tables, and sym tables
+  - Add explicit mutexing to non-thread-safe externals (Sherpa, Tauola, Photos)
+  - Propagate the EvtGen seed to the Fortran RNG in Tauola
+  - Some fixes to EvtBtoXsEtap and EvtBtoXsgamma
+  - Reorganise test code for multi-threading
+
 1 Oct 2024 Fernando Abudinen
 * D131: Tauola tests
   - Translated TAUOLA tests in validation to new json format
