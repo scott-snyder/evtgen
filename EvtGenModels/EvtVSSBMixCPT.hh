@@ -32,14 +32,14 @@
 
 class EvtVSSBMixCPT : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void decay( EvtParticle* p ) override;
     void init() override;
     void initProbMax() override;
 
-    int nRealDaughters() override { return 2; }
+    int nRealDaughters() const override { return 2; }
 
     std::string getParamName( int i ) override;
     std::string getParamDefault( int i ) override;

@@ -28,12 +28,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtBtoKpiCPiso::getName()
+std::string EvtBtoKpiCPiso::getName() const
 {
     return "BTOKPI_CP_ISO";
 }
 
-EvtDecayBase* EvtBtoKpiCPiso::clone()
+EvtDecayBase* EvtBtoKpiCPiso::clone() const
 {
     return new EvtBtoKpiCPiso;
 }
@@ -55,13 +55,13 @@ void EvtBtoKpiCPiso::initProbMax()
     //this might need to be revised
 
     //added by Lange Jan4,2000
-    static EvtId PI0 = EvtPDL::getId( "pi0" );
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi-" );
-    static EvtId K0 = EvtPDL::getId( "K0" );
-    static EvtId KB = EvtPDL::getId( "anti-K0" );
-    static EvtId KP = EvtPDL::getId( "K+" );
-    static EvtId KM = EvtPDL::getId( "K-" );
+    static const EvtId PI0 = EvtPDL::getId( "pi0" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId PIM = EvtPDL::getId( "pi-" );
+    static const EvtId K0 = EvtPDL::getId( "K0" );
+    static const EvtId KB = EvtPDL::getId( "anti-K0" );
+    static const EvtId KP = EvtPDL::getId( "K+" );
+    static const EvtId KM = EvtPDL::getId( "K-" );
 
     if ( ( ( getDaug( 0 ) == PI0 ) && ( getDaug( 1 ) == KP ) ) ||
          ( ( getDaug( 0 ) == KP ) && ( getDaug( 1 ) == PI0 ) ) ) {
@@ -116,13 +116,13 @@ void EvtBtoKpiCPiso::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
     //added by Lange Jan4,2000
-    static EvtId PI0 = EvtPDL::getId( "pi0" );
-    static EvtId PIP = EvtPDL::getId( "pi+" );
-    static EvtId PIM = EvtPDL::getId( "pi-" );
-    static EvtId K0 = EvtPDL::getId( "K0" );
-    static EvtId KB = EvtPDL::getId( "anti-K0" );
-    static EvtId KP = EvtPDL::getId( "K+" );
-    static EvtId KM = EvtPDL::getId( "K-" );
+    static const EvtId PI0 = EvtPDL::getId( "pi0" );
+    static const EvtId PIP = EvtPDL::getId( "pi+" );
+    static const EvtId PIM = EvtPDL::getId( "pi-" );
+    static const EvtId K0 = EvtPDL::getId( "K0" );
+    static const EvtId KB = EvtPDL::getId( "anti-K0" );
+    static const EvtId KP = EvtPDL::getId( "K+" );
+    static const EvtId KM = EvtPDL::getId( "K-" );
 
     EvtComplex A;
     EvtComplex U, Ubar, V, Vbar, W, Wbar;

@@ -94,26 +94,26 @@ void EvtSLBKPoleFF::getvectorff( EvtId parent, EvtId /*daught*/, double t,
     double mb2 = mb * mb;
 
     //modified-begin
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
-    static EvtId BP = EvtPDL::getId( "B+" );
-    static EvtId BM = EvtPDL::getId( "B-" );
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId BP = EvtPDL::getId( "B+" );
+    static const EvtId BM = EvtPDL::getId( "B-" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
 
-    static EvtId B0S = EvtPDL::getId( "B*0" );
-    static EvtId BPMS = EvtPDL::getId( "B*+" );
-    static EvtId BS0S = EvtPDL::getId( "B_s*0" );
+    static const EvtId B0S = EvtPDL::getId( "B*0" );
+    static const EvtId BPMS = EvtPDL::getId( "B*+" );
+    static const EvtId BS0S = EvtPDL::getId( "B_s*0" );
 
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
-    static EvtId DP = EvtPDL::getId( "D+" );
-    static EvtId DM = EvtPDL::getId( "D-" );
-    static EvtId DSP = EvtPDL::getId( "D_s+" );
-    static EvtId DSM = EvtPDL::getId( "D_s-" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId DP = EvtPDL::getId( "D+" );
+    static const EvtId DM = EvtPDL::getId( "D-" );
+    static const EvtId DSP = EvtPDL::getId( "D_s+" );
+    static const EvtId DSM = EvtPDL::getId( "D_s-" );
 
-    static EvtId D0S = EvtPDL::getId( "D*0" );
-    static EvtId DPMS = EvtPDL::getId( "D*+" );
-    static EvtId DSPMS = EvtPDL::getId( "D_s*+" );
+    static const EvtId D0S = EvtPDL::getId( "D*0" );
+    static const EvtId DPMS = EvtPDL::getId( "D*+" );
+    static const EvtId DSPMS = EvtPDL::getId( "D_s*+" );
 
     double mass_star = 0.0;
     double mass_star2 = 0.0;

@@ -34,7 +34,7 @@ class EvtParticleDecay {
 
     ~EvtParticleDecay()
     {
-        if ( m_decay != nullptr )
+        if ( m_decay )
             delete m_decay;
     }
 
@@ -42,12 +42,12 @@ class EvtParticleDecay {
 
     void setDecayModel( EvtDecayBase* decay ) { m_decay = decay; }
     EvtDecayBase* getDecayModel() { return m_decay; }
-    double getBrfrSum() { return m_brfrsum; }
+    double getBrfrSum() const { return m_brfrsum; }
     void setBrfrSum( double brfrsum ) { m_brfrsum = brfrsum; }
-    double getMassMin() { return m_massmin; }
+    double getMassMin() const { return m_massmin; }
     void setMassMin( double massmin ) { m_massmin = massmin; }
 
-    void printSummary();
+    void printSummary() const;
 
   private:
     EvtDecayBase* m_decay;

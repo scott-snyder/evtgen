@@ -38,18 +38,223 @@
 #include "EvtGenExternal/EvtExternalGenList.hh"
 #endif
 
+#include "TROOT.h"
+
+#include "tbb/tbb.h"
+
+#include <chrono>
 #include <fstream>
+#include <future>
 #include <iostream>
 #include <list>
 #include <memory>
 
 using nlohmann::json;
 
-TestDecayModel::TestDecayModel( const json& config ) : m_config{ config }
+std::once_flag TestDecayModel::m_createDecFile_threadlock;
+
+TestHistos::TestHistos( const std::string& parentName, const json& config )
+{
+    // Histogram information
+    const std::size_t nHistos{ config.size() };
+
+    m_1DhistVect.reserve( nHistos );
+    m_2DhistVect.reserve( nHistos );
+
+    for ( const auto& hInfo : config ) {
+        const auto varTitle{ hInfo.at( "title" ).get<std::string>() };
+
+        const auto varName{ hInfo.at( "variable" ).get<std::string>() };
+        // Integer values that define what particles need to be used
+        // for invariant mass combinations or helicity angles etc
+        const auto d1{ hInfo.at( "d1" ).get<int>() };
+        const auto d2{ hInfo.at( "d2" ).get<int>() };
+
+        const auto nBins{ hInfo.at( "nbins" ).get<int>() };
+        const auto xmin{ hInfo.at( "xmin" ).get<double>() };
+        const auto xmax{ hInfo.at( "xmax" ).get<double>() };
+
+        std::string histName( varName.c_str() );
+        if ( d1 != 0 ) {
+            histName += "_";
+            histName += std::to_string( d1 );
+        }
+        if ( d2 != 0 ) {
+            histName += "_";
+            histName += std::to_string( d2 );
+        }
+
+        if ( !hInfo.contains( "variableY" ) ) {
+            auto hist = std::make_unique<TH1D>( histName.c_str(),
+                                                varTitle.c_str(), nBins, xmin,
+                                                xmax );
+            m_1DhistVect.emplace_back(
+                std::make_pair( HistInfo{ varName, d1, d2 }, std::move( hist ) ) );
+        } else {
+            const auto varNameY{ hInfo.at( "variableY" ).get<std::string>() };
+            const auto d1Y{ hInfo.at( "d1Y" ).get<int>() };
+            const auto d2Y{ hInfo.at( "d2Y" ).get<int>() };
+
+            const auto nBinsY{ hInfo.at( "nbinsY" ).get<int>() };
+            const auto ymin{ hInfo.at( "ymin" ).get<double>() };
+            const auto ymax{ hInfo.at( "ymax" ).get<double>() };
+
+            histName += "_";
+            histName += varNameY;
+            if ( d1Y != 0 ) {
+                histName += "_";
+                histName += std::to_string( d1Y );
+            }
+            if ( d2Y != 0 ) {
+                histName += "_";
+                histName += std::to_string( d2Y );
+            }
+            auto hist = std::make_unique<TH2D>( histName.c_str(),
+                                                varTitle.c_str(), nBins, xmin,
+                                                xmax, nBinsY, ymin, ymax );
+            m_2DhistVect.emplace_back(
+                std::make_pair( HistInfo{ varName, d1, d2, varNameY, d1Y, d2Y },
+                                std::move( hist ) ) );
+        }
+    }
+
+    // Add a mixed/unmixed histogram
+    // Useful for the case where the parent is a neutral K, D or B
+    const std::array<std::string, 14> parentsThatMix{
+        "B_s0", "anti-B_s0", "B_s0L",   "B_s0H", "B0",      "anti-B0", "B0L",
+        "B0H",  "D0",        "anti-D0", "K0",    "anti-K0", "K_S0",    "K_L0" };
+    if ( std::find( parentsThatMix.begin(), parentsThatMix.end(), parentName ) !=
+         parentsThatMix.end() ) {
+        const std::string varTitle{ parentName + " mixed" };
+        m_mixedHist = std::make_unique<TH1D>( "mixed", varTitle.c_str(), 2, 0.0,
+                                              2.0 );
+        // TODO maybe set bin labels?
+    }
+}
+
+TestHistos::TestHistos( const TestHistos& rhs )
+{
+    m_1DhistVect.reserve( rhs.m_1DhistVect.size() );
+    for ( auto& [info, hist] : rhs.m_1DhistVect ) {
+        auto newHist = std::unique_ptr<TH1>{ static_cast<TH1*>( hist->Clone() ) };
+        m_1DhistVect.push_back( std::make_pair( info, std::move( newHist ) ) );
+    }
+
+    m_2DhistVect.reserve( rhs.m_2DhistVect.size() );
+    for ( auto& [info, hist] : rhs.m_2DhistVect ) {
+        auto newHist = std::unique_ptr<TH2>{ static_cast<TH2*>( hist->Clone() ) };
+        m_2DhistVect.push_back( std::make_pair( info, std::move( newHist ) ) );
+    }
+
+    if ( rhs.m_mixedHist ) {
+        m_mixedHist.reset( static_cast<TH1*>( rhs.m_mixedHist->Clone() ) );
+    }
+}
+
+TestHistos::TestHistos( TestHistos&& rhs ) noexcept
+{
+    this->swap( rhs );
+}
+
+TestHistos& TestHistos::operator=( const TestHistos& rhs )
+{
+    TestHistos tmp{ rhs };
+    this->swap( tmp );
+    return *this;
+}
+
+TestHistos& TestHistos::operator=( TestHistos&& rhs ) noexcept
+{
+    this->swap( rhs );
+    return *this;
+}
+
+void TestHistos::swap( TestHistos& rhs ) noexcept
+{
+    m_1DhistVect.swap( rhs.m_1DhistVect );
+    m_2DhistVect.swap( rhs.m_2DhistVect );
+    std::swap( m_mixedHist, rhs.m_mixedHist );
+}
+
+void TestHistos::add( const TestHistos& rhs )
+{
+    // handle the special case where we have been default constructed and the rhs has not
+    if ( m_1DhistVect.empty() && m_2DhistVect.empty() && !m_mixedHist ) {
+        ( *this ) = rhs;
+        return;
+    }
+
+    // TODO - should really check that the sets of histograms are the same between left and right
+
+    const std::size_t n1DHists{ rhs.m_1DhistVect.size() };
+    for ( std::size_t i{ 0 }; i < n1DHists; ++i ) {
+        m_1DhistVect[i].second->Add( rhs.m_1DhistVect[i].second.get() );
+    }
+
+    const std::size_t n2DHists{ rhs.m_2DhistVect.size() };
+    for ( std::size_t i{ 0 }; i < n2DHists; ++i ) {
+        m_2DhistVect[i].second->Add( rhs.m_2DhistVect[i].second.get() );
+    }
+
+    if ( m_mixedHist && rhs.m_mixedHist ) {
+        m_mixedHist->Add( rhs.m_mixedHist.get() );
+    }
+}
+
+void TestHistos::normalise()
+{
+    for ( auto& [_, hist] : m_1DhistVect ) {
+        const double area{ hist->Integral() };
+        if ( area > 0.0 ) {
+            hist->Scale( 1.0 / area );
+        }
+    }
+    for ( auto& [_, hist] : m_2DhistVect ) {
+        const double area{ hist->Integral() };
+        if ( area > 0.0 ) {
+            hist->Scale( 1.0 / area );
+        }
+    }
+    if ( m_mixedHist ) {
+        const double area{ m_mixedHist->Integral() };
+        if ( area > 0.0 ) {
+            m_mixedHist->Scale( 1.0 / area );
+        }
+    }
+}
+
+void TestHistos::save( TFile* outputFile )
+{
+    outputFile->cd();
+
+    for ( auto& [info, hist] : m_1DhistVect ) {
+        hist->SetDirectory( outputFile );
+        hist->Write();
+        hist.release();
+    }
+
+    for ( auto& [info, hist] : m_2DhistVect ) {
+        hist->SetDirectory( outputFile );
+        hist->Write();
+        hist.release();
+    }
+
+    if ( m_mixedHist ) {
+        m_mixedHist->SetDirectory( outputFile );
+        m_mixedHist->Write();
+        m_mixedHist.release();
+    }
+}
+
+TestDecayModel::TestDecayModel( const json& config ) :
+    m_config{ checkMandatoryFields( config )
+                  ? readConfig( config )
+                  : throw std::runtime_error{
+                        "ERROR : json does not contain all required fields" } }
 {
 }
 
-bool TestDecayModel::checkMandatoryFields()
+bool TestDecayModel::checkMandatoryFields( const json& config )
 {
     const std::array<std::string, 7> mandatoryFields{ "parent",    "daughters",
                                                       "models",    "parameters",
@@ -64,14 +269,14 @@ bool TestDecayModel::checkMandatoryFields()
     bool allMandatoryFields{ true };
 
     for ( const auto& field : mandatoryFields ) {
-        if ( !m_config.contains( field ) ) {
+        if ( !config.contains( field ) ) {
             std::cerr << "ERROR : json does not contain required field: " << field
                       << std::endl;
             allMandatoryFields = false;
             continue;
         }
         if ( field == "histograms" ) {
-            const json& jHistos{ m_config.at( "histograms" ) };
+            const json& jHistos{ config.at( "histograms" ) };
             for ( const auto& hInfo : jHistos ) {
                 for ( const auto& hField : mandatoryHistoFields ) {
                     if ( !hInfo.contains( hField ) ) {
@@ -98,196 +303,320 @@ bool TestDecayModel::checkMandatoryFields()
     return allMandatoryFields;
 }
 
-bool TestDecayModel::run()
+TestConfig TestDecayModel::readConfig( const json& config )
 {
-    // Check that we have, and then get all the mandatory fields first
-    if ( !checkMandatoryFields() ) {
-        std::cerr << "ERROR : json does not contain all mandatory fields - dumping config for debugging:\n";
-        std::cerr << m_config << std::endl;
-        return false;
-    }
+    TestConfig cfg;
 
-    const auto parentName{ m_config.at( "parent" ).get<std::string>() };
-    const auto daughterNames{
-        m_config.at( "daughters" ).get<std::vector<std::string>>() };
-    const auto modelNames{
-        m_config.at( "models" ).get<std::vector<std::string>>() };
-    const auto modelParameters{
-        m_config.at( "parameters" ).get<std::vector<std::vector<std::string>>>() };
-    const auto nEvents{ m_config.at( "events" ).get<int>() };
+    // Get all the mandatory fields first
+    cfg.parentName = config.at( "parent" ).get<std::string>();
+    cfg.daughterNames = config.at( "daughters" ).get<std::vector<std::string>>();
+    cfg.modelNames = config.at( "models" ).get<std::vector<std::string>>();
+    cfg.modelParameters =
+        config.at( "parameters" ).get<std::vector<std::vector<std::string>>>();
+    cfg.nEvents = config.at( "events" ).get<std::size_t>();
+
+    // Histogram information
+    cfg.testHistograms = TestHistos{ cfg.parentName, config.at( "histograms" ) };
 
     // Then check for optional fields, setting default values if not present
 
-    const auto grandDaughterNames{
-        ( m_config.contains( "grand_daughters" ) &&
-          m_config.at( "grand_daughters" ).is_array() )
-            ? m_config.at( "grand_daughters" )
-                  .get<std::vector<std::vector<std::string>>>()
-            : std::vector<std::vector<std::string>>{} };
+    if ( config.contains( "grand_daughters" ) &&
+         config.at( "grand_daughters" ).is_array() ) {
+        cfg.grandDaughterNames = config.at( "grand_daughters" )
+                                     .get<std::vector<std::vector<std::string>>>();
+    }
 
-    const auto extraCommands{
-        ( m_config.contains( "extras" ) && m_config.at( "extras" ).is_array() )
-            ? m_config.at( "extras" ).get<std::vector<std::string>>()
-            : std::vector<std::string>{} };
+    if ( config.contains( "extras" ) && config.at( "extras" ).is_array() ) {
+        cfg.extraCommands = config.at( "extras" ).get<std::vector<std::string>>();
+    }
+
+    // Set the number of threads to use, 1 by default
+    cfg.nThreads = 1;
+    if ( config.contains( "threads" ) ) {
+        cfg.nThreads = config.at( "threads" ).get<std::size_t>();
+    }
 
     // Set the FSR generator. Use PHOTOS by default.
-    const auto fsrGenerator{
-        ( m_config.contains( "fsr_generator" ) )
-            ? m_config.at( "fsr_generator" ).get<std::string>()
-            : "PHOTOS" };
+    cfg.fsrGenerator = FSRGenerator::PHOTOS;
+    if ( config.contains( "fsr_generator" ) ) {
+        cfg.fsrGenerator = config.at( "fsr_generator" ).get<FSRGenerator>();
+    }
 
-    // Set reference and output file names, insert fsrGenerator name if FSR simulation is not deactivated
-    const bool noFSR = std::find( extraCommands.begin(), extraCommands.end(),
-                                  "noFSR" ) != extraCommands.end();
+    // Set the type of threading to use, stdlib by default
+    cfg.threadModel = ThreadModel::StdLib;
+    if ( config.contains( "thread_model" ) ) {
+        cfg.threadModel = config.at( "thread_model" ).get<ThreadModel>();
+    }
 
-    const std::string fileNameEnd = noFSR ? ".root"
-                                          : "_" + fsrGenerator + ".root";
+    // Set the RNG seed base (defaults to zero), to which the event number is added
+    cfg.rngSeed = 0;
+    if ( config.contains( "rng_seed" ) ) {
+        cfg.rngSeed = config.at( "rng_seed" ).get<std::size_t>();
+    }
 
-    const auto outFileStrSize =
-        m_config.at( "outfile" ).get<std::string>().size() - 5;
+    // Set reference and output file names
+    // Insert fsrGenerator name if FSR simulation is not deactivated
+    const bool noFSR = std::find( cfg.extraCommands.begin(),
+                                  cfg.extraCommands.end(),
+                                  "noFSR" ) != cfg.extraCommands.end();
 
-    const auto outFileName =
-        m_config.at( "outfile" ).get<std::string>().substr( 0, outFileStrSize ) +
+    const std::string fileNameEnd =
+        noFSR ? ".root" : "_" + to_string( cfg.fsrGenerator ) + ".root";
+
+    const auto outFileStrSize = config.at( "outfile" ).get<std::string>().size() -
+                                5;
+
+    cfg.outFileName =
+        config.at( "outfile" ).get<std::string>().substr( 0, outFileStrSize ) +
         fileNameEnd;
-    const auto refFileName = "Ref/" + outFileName;
+    cfg.refFileName = "Ref/" + cfg.outFileName;
+    cfg.decFileName = cfg.outFileName.substr( 0, cfg.outFileName.size() - 5 ) +
+                      ".dec";
 
-    const auto debugFlag{ ( m_config.contains( "debug_flag" ) &&
-                            m_config.at( "debug_flag" ).is_boolean() )
-                              ? m_config.at( "debug_flag" ).get<bool>()
-                              : false };
+    cfg.debugFlag = ( config.contains( "debug_flag" ) &&
+                      config.at( "debug_flag" ).is_boolean() )
+                        ? config.at( "debug_flag" ).get<bool>()
+                        : false;
 
-    std::vector<bool> doConjDecay;
-    if ( m_config.contains( "do_conjugate_decay" ) &&
-         m_config.at( "do_conjugate_decay" ).is_array() ) {
-        doConjDecay = m_config.at( "do_conjugate_decay" ).get<std::vector<bool>>();
+    if ( config.contains( "do_conjugate_decay" ) &&
+         config.at( "do_conjugate_decay" ).is_array() ) {
+        cfg.doConjDecay =
+            config.at( "do_conjugate_decay" ).get<std::vector<bool>>();
     }
-    if ( doConjDecay.size() != modelNames.size() ) {
-        doConjDecay.resize( modelNames.size(), false );
+    if ( cfg.doConjDecay.size() != cfg.modelNames.size() ) {
+        cfg.doConjDecay.resize( cfg.modelNames.size(), false );
     }
 
+    return cfg;
+}
+
+void TestDecayModel::run()
+{
+    TestHistos theHistos;
+
+    const auto start{ std::chrono::steady_clock::now() };
+
+    if ( m_config.nThreads > 1 ) {
+        // Run multi-threaded using the specified thread model
+        switch ( m_config.threadModel ) {
+            case ThreadModel::StdLib:
+                theHistos = runStdThreads();
+                break;
+            case ThreadModel::TBB:
+                theHistos = runTBBThreads();
+                break;
+        }
+    } else {
+        // Run in the main thread
+        theHistos = runDecayBody( 0, m_config.nEvents );
+    }
+
+    const auto end{ std::chrono::steady_clock::now() };
+    const std::chrono::duration<double, std::milli> elapsed_ms{ ( end - start ) };
+    const std::chrono::duration<double, std::milli> elapsed_ms_per_event{
+        elapsed_ms / m_config.nEvents };
+
+    std::cout << "Took " << elapsed_ms.count() << " ms to generate "
+              << m_config.nEvents << " events using " << m_config.nThreads
+              << " " << to_string( m_config.threadModel ) << " threads ("
+              << elapsed_ms_per_event.count() << " ms per event)" << std::endl;
+
+    // Normalise histograms.
+    theHistos.normalise();
+
+    // Compare with reference histograms
+    compareHistos( theHistos, m_config.refFileName );
+
+    // Create the root output file and write the histograms to it
+    // Only save the mixed/unmixed histogram for neutral K, D, B
+    std::unique_ptr<TFile> outFile{
+        TFile::Open( m_config.outFileName.c_str(), "recreate" ) };
+    theHistos.save( outFile.get() );
+    outFile->Close();
+    std::cout << "Created output file: " << m_config.outFileName.c_str()
+              << std::endl;
+}
+
+TestHistos TestDecayModel::runStdThreads() const
+{
+    // Determine the number of threads and the number of events per thread
+    const std::size_t nThreads{ std::min( m_config.nThreads, m_config.nEvents ) };
+    const std::size_t nEventsPerThread{ ( m_config.nEvents % nThreads )
+                                            ? m_config.nEvents / nThreads + 1
+                                            : m_config.nEvents / nThreads };
+
+    // Create the store for the results from each thread
+    std::vector<std::future<TestHistos>> allHistos;
+    allHistos.reserve( nThreads );
+
+    // Launch the threads
+    std::size_t firstEvent{ 0 };
+    std::size_t nEvents{ nEventsPerThread };
+
+    for ( std::size_t iThread{ 0 }; iThread < nThreads; ++iThread ) {
+        // The last thread may need to generate slightly fewer events to get the required total
+        if ( ( firstEvent + nEvents ) >= m_config.nEvents ) {
+            nEvents = m_config.nEvents - firstEvent;
+        }
+
+        std::cout << "Thread " << iThread << " will generate " << nEvents
+                  << " events" << std::endl;
+
+        allHistos.emplace_back(
+            std::async( std::launch::async, [this, firstEvent, nEvents]() {
+                return runDecayBody( firstEvent, nEvents );
+            } ) );
+
+        firstEvent += nEvents;
+    }
+
+    // Now wait for each thread to finish
+    bool complete{ false };
+    do {
+        // Set the flag to completed and set it back if we find incomplete threads
+        complete = true;
+        for ( auto& future : allHistos ) {
+            auto status = future.wait_for( std::chrono::seconds( 10 ) );
+            if ( status != std::future_status::ready ) {
+                complete = false;
+            }
+        }
+    } while ( !complete );
+
+    // Accumulate the histograms from all threads
+    TestHistos theHistos{ allHistos[0].get() };
+    for ( std::size_t iThread{ 1 }; iThread < nThreads; ++iThread ) {
+        theHistos.add( allHistos[iThread].get() );
+    }
+
+    return theHistos;
+}
+
+TestHistos TestDecayModel::runTBBThreads() const
+{
+    tbb::global_control gc{ tbb::global_control::parameter::max_allowed_parallelism,
+                            m_config.nThreads };
+
+    TestHistos init;
+
+    return tbb::parallel_reduce(
+        tbb::blocked_range<std::size_t>( 0, m_config.nEvents ), init,
+        [this]( const tbb::blocked_range<std::size_t>& range,
+                const TestHistos& init ) -> TestHistos {
+            std::cout << "Thread "
+                      << tbb::this_task_arena::current_thread_index()
+                      << " will generate " << range.size()
+                      << " events: " << range.begin() << " - " << range.end()
+                      << std::endl;
+            TestHistos tmp{ init };
+            tmp.add( runDecayBody( range.begin(), range.size() ) );
+            return tmp;
+        },
+        []( const TestHistos& lhs, const TestHistos& rhs ) -> TestHistos {
+            TestHistos tmp{ lhs };
+            tmp.add( rhs );
+            return tmp;
+        } );
+}
+
+TestHistos TestDecayModel::runDecayBody( const std::size_t firstEvent,
+                                         const std::size_t nEvents ) const
+{
     // Initialise the EvtGen object and hence the EvtPDL tables
     // The EvtGen object is used by generateEvents, while the
     // latter are also used within createDecFile
 
     // Define the random number generator
-    auto randomEngine{ std::make_unique<EvtMTRandomEngine>() };
+    static thread_local auto randomEngine{ std::make_unique<EvtMTRandomEngine>() };
 
-    EvtAbsRadCorr* radCorrEngine{ nullptr };
+    // TODO - need to streamline the extra models stuff
+    static thread_local EvtAbsRadCorr* radCorrEngine{ nullptr };
     std::list<EvtDecayBase*> extraModels;
 
+    static thread_local bool initialised{ false };
+
 #ifdef EVTGEN_EXTERNAL
-    bool convertPythiaCodes( false );
-    bool useEvtGenRandom( true );
-    EvtExternalGenList genList( convertPythiaCodes, "", "gamma", useEvtGenRandom );
-    if ( fsrGenerator == "PHOTOS" ) {
-        radCorrEngine = genList.getPhotosModel();
-    } else if ( fsrGenerator == "SherpaPhotons1" ) {
-        radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 1, 0 );
-    } else if ( fsrGenerator == "SherpaPhotons20" ) {
-        radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 2, 0 );
-    } else if ( fsrGenerator == "SherpaPhotons21" ) {
-        radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 2, 1 );
-    } else {
-        std::cerr << "ERROR: The option fsr_generator = '" << fsrGenerator
-                  << "' is not supported. " << std::endl;
-        return false;
+    if ( !initialised ) {
+        bool convertPythiaCodes( false );
+        bool useEvtGenRandom( true );
+        bool seedTauolaFortran( true );
+        EvtExternalGenList genList( convertPythiaCodes, "", "gamma",
+                                    useEvtGenRandom, seedTauolaFortran );
+        switch ( m_config.fsrGenerator ) {
+            case FSRGenerator::PHOTOS:
+                radCorrEngine = genList.getPhotosModel();
+                break;
+            case FSRGenerator::SherpaPhotons1:
+                radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 1, 0 );
+                break;
+            case FSRGenerator::SherpaPhotons20:
+                radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 2, 0 );
+                break;
+            case FSRGenerator::SherpaPhotons21:
+                radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 2, 1 );
+                break;
+        }
+        extraModels = genList.getListOfModels();
     }
-    extraModels = genList.getListOfModels();
 #endif
 
-    EvtGen theGen( "../DECAY.DEC", "../evt.pdl", randomEngine.get(),
-                   radCorrEngine, &extraModels );
+    static thread_local EvtGen theGen{ "../DECAY.DEC", "../evt.pdl",
+                                       randomEngine.get(), radCorrEngine,
+                                       &extraModels };
 
-    /*! Creates a decay file based on json file input. */
-    const std::string decFileName{
-        outFileName.substr( 0, outFileName.size() - 5 ) };
-    const std::string decFile{ createDecFile( parentName, daughterNames,
-                                              grandDaughterNames, modelNames,
-                                              modelParameters, doConjDecay,
-                                              extraCommands, decFileName ) };
+    // Creates a decay file based on json file input
+    // We don't want this to be called by every thread!
+    std::call_once( m_createDecFile_threadlock, [this]() { createDecFile(); } );
 
-    /*! Define the root output file and histograms to be saved. */
-    std::unique_ptr<TFile> outFile{
-        TFile::Open( outFileName.c_str(), "recreate" ) };
-    defineHistos( outFile.get() );
-
-    /*!  Generate events and fill histograms. */
-    generateEvents( theGen, decFile, parentName, doConjDecay[0], nEvents,
-                    debugFlag );
-
-    // Normalize histograms.
-    for ( auto& [_, hist] : m_1DhistVect ) {
-        const double area{ hist->Integral() };
-        if ( area > 0.0 ) {
-            hist->Scale( 1.0 / area );
-        }
-    }
-    for ( auto& [_, hist] : m_2DhistVect ) {
-        const double area{ hist->Integral() };
-        if ( area > 0.0 ) {
-            hist->Scale( 1.0 / area );
-        }
+    // Read the decay file
+    if ( !initialised ) {
+        theGen.readUDecay( m_config.decFileName.c_str() );
+        initialised = true;
     }
 
-    /*! Compare with reference histograms. */
-    compareHistos( refFileName );
+    // Define the histograms to be saved
+    TestHistos theHistos{ m_config.testHistograms };
 
-    // Write output.
-    outFile->cd();
-    for ( auto& [_, hist] : m_1DhistVect ) {
-        hist->Write();
-    }
-    for ( auto& [_, hist] : m_2DhistVect ) {
-        hist->Write();
-    }
-    if ( m_mixedHist ) {
-        m_mixedHist->Write();
-    }
-    outFile->Close();
-    std::cout << "Created output file: " << outFileName.c_str() << std::endl;
+    // Generate events and fill histograms
+    generateEvents( theGen, theHistos, firstEvent, nEvents );
 
-    return true;
+    return theHistos;
 }
 
-std::string TestDecayModel::createDecFile(
-    const std::string& parent, const std::vector<std::string>& daughterNames,
-    const std::vector<std::vector<std::string>>& grandDaughterNames,
-    const std::vector<std::string>& modelNames,
-    const std::vector<std::vector<std::string>>& parameters,
-    const std::vector<bool>& doConjDecay,
-    const std::vector<std::string>& extras, const std::string decFileName ) const
+void TestDecayModel::createDecFile() const
 {
     // Create (or overwrite) the decay file
-    std::string decName( decFileName + ".dec" );
-    std::ofstream decFile;
-    decFile.open( decName.c_str() );
+    std::ofstream decFile{ m_config.decFileName };
 
     // Create daughter aliases if needed
     std::vector<std::string> aliasPrefix;
-    for ( long unsigned int daughter_index{ 0 };
-          daughter_index < daughterNames.size(); daughter_index++ ) {
-        if ( !grandDaughterNames.empty() &&
-             !grandDaughterNames[daughter_index].empty() ) {
-            decFile << "Alias My" << daughterNames[daughter_index] << " "
-                    << daughterNames[daughter_index] << std::endl;
-            if ( doConjDecay[daughter_index + 1] ) {
+    for ( std::size_t daughter_index{ 0 };
+          daughter_index < m_config.daughterNames.size(); daughter_index++ ) {
+        if ( !m_config.grandDaughterNames.empty() &&
+             !m_config.grandDaughterNames[daughter_index].empty() ) {
+            decFile << "Alias My" << m_config.daughterNames[daughter_index] << " "
+                    << m_config.daughterNames[daughter_index] << std::endl;
+            if ( m_config.doConjDecay[daughter_index + 1] ) {
                 const EvtId daugID{
-                    EvtPDL::getId( daughterNames[daughter_index] ) };
+                    EvtPDL::getId( m_config.daughterNames[daughter_index] ) };
                 const EvtId daugConjID{ EvtPDL::chargeConj( daugID ) };
                 const std::string conjName{ daugConjID.getName() };
                 std::string conjName_Alias{ daugConjID.getName() };
-                if ( std::find( std::begin( daughterNames ),
-                                std::end( daughterNames ), daugConjID.getName() ) !=
-                     std::end( daughterNames ) ) {
+                if ( std::find( std::begin( m_config.daughterNames ),
+                                std::end( m_config.daughterNames ),
+                                daugConjID.getName() ) !=
+                     std::end( m_config.daughterNames ) ) {
                     conjName_Alias = conjName_Alias + "_" + daughter_index;
                 }
                 decFile << "Alias My" << conjName_Alias << " " << conjName
                         << std::endl;
-                decFile << "ChargeConj My" << daughterNames[daughter_index]
-                        << "  My" << conjName_Alias << std::endl;
-            } else if ( doConjDecay[0] ) {
-                decFile << "ChargeConj My" << daughterNames[daughter_index]
-                        << "  My" << daughterNames[daughter_index] << std::endl;
+                decFile << "ChargeConj My"
+                        << m_config.daughterNames[daughter_index] << "  My"
+                        << conjName_Alias << std::endl;
+            } else if ( m_config.doConjDecay[0] ) {
+                decFile << "ChargeConj My"
+                        << m_config.daughterNames[daughter_index] << "  My"
+                        << m_config.daughterNames[daughter_index] << std::endl;
             }
             aliasPrefix.push_back( "My" );
         } else {
@@ -295,61 +624,64 @@ std::string TestDecayModel::createDecFile(
         }
     }
 
-    for ( const auto& iExtra : extras ) {
+    for ( const auto& iExtra : m_config.extraCommands ) {
         decFile << iExtra << std::endl;
     }
 
     // Parent decay
-    decFile << "Decay " << parent << std::endl;
+    decFile << "Decay " << m_config.parentName << std::endl;
     decFile << "1.0";
 
-    for ( long unsigned int daughter_index{ 0 };
-          daughter_index < daughterNames.size(); daughter_index++ ) {
+    for ( std::size_t daughter_index{ 0 };
+          daughter_index < m_config.daughterNames.size(); daughter_index++ ) {
         decFile << " " << aliasPrefix[daughter_index]
-                << daughterNames[daughter_index];
+                << m_config.daughterNames[daughter_index];
     }
 
-    decFile << " " << modelNames[0];
+    decFile << " " << m_config.modelNames[0];
 
-    for ( const auto& par : parameters[0] ) {
+    for ( const auto& par : m_config.modelParameters[0] ) {
         decFile << " " << par;
     }
 
     decFile << ";" << std::endl;
     decFile << "Enddecay" << std::endl;
-    if ( doConjDecay[0] ) {
-        EvtId parID{ EvtPDL::getId( parent ) };
+    if ( m_config.doConjDecay[0] ) {
+        EvtId parID{ EvtPDL::getId( m_config.parentName ) };
         EvtId parConjID{ EvtPDL::chargeConj( parID ) };
         decFile << "CDecay " << parConjID.getName() << std::endl;
     }
 
     // Daughter decays into granddaughters
-    for ( long unsigned int daughter_index{ 0 };
-          daughter_index < grandDaughterNames.size(); daughter_index++ ) {
-        if ( grandDaughterNames[daughter_index].empty() )
+    for ( std::size_t daughter_index{ 0 };
+          daughter_index < m_config.grandDaughterNames.size(); daughter_index++ ) {
+        if ( m_config.grandDaughterNames[daughter_index].empty() )
             continue;
         decFile << "Decay " << aliasPrefix[daughter_index]
-                << daughterNames[daughter_index] << std::endl;
+                << m_config.daughterNames[daughter_index] << std::endl;
         decFile << "1.0";
-        for ( long unsigned int grandDaughter_index{ 0 };
-              grandDaughter_index < grandDaughterNames[daughter_index].size();
+        for ( std::size_t grandDaughter_index{ 0 };
+              grandDaughter_index <
+              m_config.grandDaughterNames[daughter_index].size();
               grandDaughter_index++ ) {
             decFile << " "
-                    << grandDaughterNames[daughter_index][grandDaughter_index];
+                    << m_config.grandDaughterNames[daughter_index][grandDaughter_index];
         }
-        decFile << " " << modelNames[daughter_index + 1];
-        for ( const auto& par : parameters[daughter_index + 1] ) {
+        decFile << " " << m_config.modelNames[daughter_index + 1];
+        for ( const auto& par : m_config.modelParameters[daughter_index + 1] ) {
             decFile << " " << par;
         }
         decFile << ";" << std::endl;
         decFile << "Enddecay" << std::endl;
-        if ( doConjDecay[daughter_index + 1] ) {
-            EvtId daugID{ EvtPDL::getId( daughterNames[daughter_index] ) };
+        if ( m_config.doConjDecay[daughter_index + 1] ) {
+            EvtId daugID{
+                EvtPDL::getId( m_config.daughterNames[daughter_index] ) };
             EvtId daugConjID{ EvtPDL::chargeConj( daugID ) };
             std::string conjName_Alias{ daugConjID.getName() };
-            if ( std::find( std::begin( daughterNames ),
-                            std::end( daughterNames ), daugConjID.getName() ) !=
-                 std::end( daughterNames ) ) {
+            if ( std::find( std::begin( m_config.daughterNames ),
+                            std::end( m_config.daughterNames ),
+                            daugConjID.getName() ) !=
+                 std::end( m_config.daughterNames ) ) {
                 conjName_Alias = conjName_Alias + "_" + daughter_index;
             }
             decFile << "CDecay " << aliasPrefix[daughter_index]
@@ -360,104 +692,24 @@ std::string TestDecayModel::createDecFile(
     decFile << "End" << std::endl;
 
     decFile.close();
-
-    return decName;
 }
 
-void TestDecayModel::defineHistos( TFile* outFile )
+void TestDecayModel::generateEvents( EvtGen& theGen, TestHistos& theHistos,
+                                     const std::size_t firstEvent,
+                                     const std::size_t nEvents ) const
 {
-    // Histogram information
-    const json& jHistos{ m_config.at( "histograms" ) };
-    const size_t nHistos{ jHistos.size() };
-
-    m_1DhistVect.reserve( nHistos );
-    m_2DhistVect.reserve( nHistos );
-
-    for ( const auto& hInfo : jHistos ) {
-        const auto varTitle{ hInfo.at( "title" ).get<std::string>() };
-
-        const auto varName{ hInfo.at( "variable" ).get<std::string>() };
-        // Integer values that define what particles need to be used
-        // for invariant mass combinations or helicity angles etc
-        const auto d1{ hInfo.at( "d1" ).get<int>() };
-        const auto d2{ hInfo.at( "d2" ).get<int>() };
-
-        const auto nBins{ hInfo.at( "nbins" ).get<int>() };
-        const auto xmin{ hInfo.at( "xmin" ).get<double>() };
-        const auto xmax{ hInfo.at( "xmax" ).get<double>() };
-
-        std::string histName( varName.c_str() );
-        if ( d1 != 0 ) {
-            histName += "_";
-            histName += std::to_string( d1 );
-        }
-        if ( d2 != 0 ) {
-            histName += "_";
-            histName += std::to_string( d2 );
-        }
-
-        if ( !hInfo.contains( "variableY" ) ) {
-            TH1* hist{ new TH1D{ histName.c_str(), varTitle.c_str(), nBins,
-                                 xmin, xmax } };
-            hist->SetDirectory( outFile );
-            m_1DhistVect.emplace_back(
-                std::make_pair( TestInfo( varName, d1, d2 ), hist ) );
-            continue;
-        } else {
-            const auto varNameY{ hInfo.at( "variableY" ).get<std::string>() };
-            const auto d1Y{ hInfo.at( "d1Y" ).get<int>() };
-            const auto d2Y{ hInfo.at( "d2Y" ).get<int>() };
-
-            const auto nBinsY{ hInfo.at( "nbinsY" ).get<int>() };
-            const auto ymin{ hInfo.at( "ymin" ).get<double>() };
-            const auto ymax{ hInfo.at( "ymax" ).get<double>() };
-
-            histName += "_";
-            histName += varNameY;
-            if ( d1Y != 0 ) {
-                histName += "_";
-                histName += std::to_string( d1Y );
-            }
-            if ( d2Y != 0 ) {
-                histName += "_";
-                histName += std::to_string( d2Y );
-            }
-            TH2* hist{ new TH2D{ histName.c_str(), varTitle.c_str(), nBins,
-                                 xmin, xmax, nBinsY, ymin, ymax } };
-            hist->SetDirectory( outFile );
-            m_2DhistVect.emplace_back( std::make_pair(
-                TestInfo( varName, d1, d2, varNameY, d1Y, d2Y ), hist ) );
-        }
-    }
-
-    // For the case where the parent is either a neutral B or D add a mixed/unmixed histogram
-    const auto parentName{ m_config.at( "parent" ).get<std::string>() };
-    const int parentID{ abs( EvtPDL::getStdHep( EvtPDL::getId( parentName ) ) ) };
-    if ( parentID == 511 || parentID == 531 || parentID == 421 ) {
-        const std::string varTitle{ parentName + " mixed" };
-        m_mixedHist = new TH1D{ "mixed", varTitle.c_str(), 2, 0.0, 2.0 };
-        // TODO maybe set bin labels?
-        m_mixedHist->SetDirectory( outFile );
-    }
-}
-
-void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
-                                     const std::string& parentName,
-                                     const bool doConjDecay, const int nEvents,
-                                     const bool debug_flag )
-{
-    // Read the decay file
-    theGen.readUDecay( decFile.c_str() );
-
     // Generate the decays
-    EvtId parId{ EvtPDL::getId( parentName.c_str() ) };
-    EvtId conjId{ doConjDecay ? EvtPDL::chargeConj( parId ) : parId };
-    for ( int i{ 0 }; i < nEvents; i++ ) {
+    const EvtId parId{ EvtPDL::getId( m_config.parentName.c_str() ) };
+    const EvtId conjId{ m_config.doConjDecay[0] ? EvtPDL::chargeConj( parId )
+                                                : parId };
+
+    for ( std::size_t i{ firstEvent }; i < ( firstEvent + nEvents ); i++ ) {
         if ( i % 1000 == 0 ) {
-            std::cout << "Event " << nEvents - i << std::endl;
+            std::cout << "Event " << firstEvent + nEvents - i << std::endl;
         }
 
-        EvtRandom::setSeed( i );
+        // seed the RNG based on the event number
+        EvtRandom::setSeed( m_config.rngSeed + i );
 
         // Initial 4-momentum and particle
         EvtVector4R pInit( EvtPDL::getMass( parId ), 0.0, 0.0, 0.0 );
@@ -472,23 +724,24 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
 
         // Check for mixing (and fill histogram)
         EvtParticle* prodParent{ nullptr };
-        if ( m_mixedHist ) {
+        TH1* mixedHist{ theHistos.getMixedHist() };
+        if ( mixedHist ) {
             if ( parent->getNDaug() == 1 ) {
                 prodParent = parent;
                 parent = prodParent->getDaug( 0 );
 
-                m_mixedHist->Fill( 1 );
+                mixedHist->Fill( 1 );
             } else {
-                m_mixedHist->Fill( 0 );
+                mixedHist->Fill( 0 );
             }
         }
 
         // To debug
 
-        if ( debug_flag ) {
+        if ( m_config.debugFlag ) {
             std::cout << "Parent PDG code: " << parent->getPDGId()
                       << " has daughters " << parent->getNDaug() << std::endl;
-            for ( size_t iDaughter{ 0 }; iDaughter < parent->getNDaug();
+            for ( std::size_t iDaughter{ 0 }; iDaughter < parent->getNDaug();
                   iDaughter++ ) {
                 std::cout << "Parent PDG code of daughter " << iDaughter
                           << " : " << parent->getDaug( iDaughter )->getPDGId()
@@ -496,7 +749,7 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
                           << parent->getDaug( iDaughter )->getNDaug()
                           << std::endl;
 
-                for ( size_t iGrandDaughter{ 0 };
+                for ( std::size_t iGrandDaughter{ 0 };
                       iGrandDaughter < parent->getDaug( iDaughter )->getNDaug();
                       iGrandDaughter++ ) {
                     std::cout << "Parent PDG code of grand daughter "
@@ -520,7 +773,7 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
         const std::string perDaughter = "_perDaughter";
 
         // Store information
-        for ( auto& [info, hist] : m_1DhistVect ) {
+        for ( auto& [info, hist] : theHistos.get1DHistos() ) {
             if ( !hist ) {
                 continue;
             }
@@ -576,7 +829,7 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
 
             // If otherwise the variable contains the substring '_FSRPhotons', then add an entry per photon
             if ( leadingChargedDaughter == -1 ) {
-                leadingChargedDaughter = findChargedDaugtherWithMaxE( parent );
+                leadingChargedDaughter = findChargedDaughterWithMaxE( parent );
             }
 
             reducedVarName.erase( findFSRstr, fsrStr.length() );
@@ -607,19 +860,23 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
             }
         }
 
-        for ( auto& [info, hist] : m_2DhistVect ) {
+        for ( auto& [info, hist] : theHistos.get2DHistos() ) {
             if ( !hist ) {
                 continue;
             }
 
-            const double valueX{ getValue( parent, info.getName(), info.getd1(),
-                                           info.getd2() ) };
-            const double valueY{ getValue( parent, info.getName( 2 ),
-                                           info.getd1( 2 ), info.getd2( 2 ) ) };
+            const double valueX{ getValue( parent,
+                                           info.getName( HistInfo::Axis::X ),
+                                           info.getd1( HistInfo::Axis::X ),
+                                           info.getd2( HistInfo::Axis::X ) ) };
+            const double valueY{ getValue( parent,
+                                           info.getName( HistInfo::Axis::Y ),
+                                           info.getd1( HistInfo::Axis::Y ),
+                                           info.getd2( HistInfo::Axis::Y ) ) };
             hist->Fill( valueX, valueY );
         }
 
-        if ( debug_flag ) {
+        if ( m_config.debugFlag ) {
             if ( prodParent ) {
                 prodParent->printTree();
             } else {
@@ -636,7 +893,7 @@ void TestDecayModel::generateEvents( EvtGen& theGen, const std::string& decFile,
     }
 }
 
-int TestDecayModel::findChargedDaugtherWithMaxE( const EvtParticle* parent ) const
+int TestDecayModel::findChargedDaughterWithMaxE( const EvtParticle* parent ) const
 {
     /* This function returns the index of the charged daughter with the highest energy 
      * following the sign convention below. */
@@ -1290,8 +1547,8 @@ double TestDecayModel::getValue( const EvtParticle* parent,
 
         double nFSRPhotons{ 0 };
 
-        for ( size_t iDaughter{ 0 }; iDaughter < selectedParent->getNDaug();
-              iDaughter++ ) {
+        for ( std::size_t iDaughter{ 0 };
+              iDaughter < selectedParent->getNDaug(); iDaughter++ ) {
             const EvtParticle* iDaug = selectedParent->getDaug( iDaughter );
 
             if ( iDaug->getAttribute( "FSR" ) == 1 )
@@ -1305,8 +1562,8 @@ double TestDecayModel::getValue( const EvtParticle* parent,
 
         double totalFSREnergy{ 0 };
 
-        for ( size_t iDaughter{ 0 }; iDaughter < selectedParent->getNDaug();
-              iDaughter++ ) {
+        for ( std::size_t iDaughter{ 0 };
+              iDaughter < selectedParent->getNDaug(); iDaughter++ ) {
             const EvtParticle* iDaug = selectedParent->getDaug( iDaughter );
 
             if ( iDaug->getAttribute( "FSR" ) == 1 )
@@ -1322,7 +1579,8 @@ double TestDecayModel::getValue( const EvtParticle* parent,
     return value;
 }
 
-void TestDecayModel::compareHistos( const std::string& refFileName ) const
+void TestDecayModel::compareHistos( const TestHistos& theHistos,
+                                    const std::string& refFileName ) const
 {
     // Compare histograms with the same name, calculating the chi-squared
     std::unique_ptr<TFile> refFile{ TFile::Open( refFileName.c_str(), "read" ) };
@@ -1334,7 +1592,9 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
 
     // TODO - should we plot the (signed) chisq histogram? and save it as pdf/png?
 
-    for ( auto& [_, hist] : m_1DhistVect ) {
+    // TODO - add comparison of mixedHist
+
+    for ( auto& [_, hist] : theHistos.get1DHistos() ) {
         const std::string histName{ hist->GetName() };
         // Get equivalent reference histogram
         const TH1* refHist{
@@ -1345,7 +1605,7 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
             int nDof{ 0 };
             int iGood{ 0 };
             const double pValue{
-                refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
+                refHist->Chi2TestX( hist.get(), chiSq, nDof, iGood, "WW" ) };
             const double integral{ refHist->Integral() };
             std::cout << "Histogram " << histName << " chiSq/nDof = " << chiSq
                       << "/" << nDof << ", pValue = " << pValue
@@ -1357,7 +1617,7 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
         }
     }
 
-    for ( auto& [_, hist] : m_2DhistVect ) {
+    for ( auto& [_, hist] : theHistos.get2DHistos() ) {
         const std::string histName{ hist->GetName() };
         // Get equivalent reference histogram
         const TH2* refHist{
@@ -1368,7 +1628,7 @@ void TestDecayModel::compareHistos( const std::string& refFileName ) const
             int nDof{ 0 };
             int iGood{ 0 };
             const double pValue{
-                refHist->Chi2TestX( hist, chiSq, nDof, iGood, "WW" ) };
+                refHist->Chi2TestX( hist.get(), chiSq, nDof, iGood, "WW" ) };
             const double integral{ refHist->Integral() };
             std::cout << "Histogram " << histName << " chiSq/nDof = " << chiSq
                       << "/" << nDof << ", pValue = " << pValue
@@ -1524,33 +1784,46 @@ double TestDecayModel::getCosAcoplanarityAngle( const EvtParticle* selectedParen
 
 int main( int argc, char* argv[] )
 {
-    if ( argc != 2 && argc != 3 ) {
-        std::cerr << "Expecting at least one argument: json input file."
-                  << "\nOne additional argument supported for fsrGenerator"
+    if ( argc < 2 || argc > 3 ) {
+        std::cerr << "Expecting at least one argument: test configuration json file"
+                  << "\nAdditional argument supported for: general configuration json file"
                   << std::endl;
         return 1;
     }
 
-    /*! Load input file in json format. */
-    json config;
-    std::ifstream inputStr{ argv[1] };
-    inputStr >> config;
-    inputStr.close();
+    // Tweak ROOT behaviour
+    ROOT::EnableThreadSafety();
+    TH1::AddDirectory( kFALSE );
 
-    if ( argc == 3 ) {
-        config["fsr_generator"] = argv[2];
+    // Load input file in json format
+    const std::string testConfigFileName{ argv[1] };
+    const std::string generalConfigFileName{
+        ( argc > 2 ) ? argv[2] : "jsonFiles/config/default.json" };
+
+    json generalConfig;
+    json testConfig;
+
+    {
+        std::ifstream inputStr{ generalConfigFileName };
+        inputStr >> generalConfig;
     }
 
-    bool allOK{ true };
-    if ( config.is_array() ) {
-        for ( const auto& cc : config ) {
+    {
+        std::ifstream inputStr{ testConfigFileName };
+        inputStr >> testConfig;
+    }
+
+    if ( testConfig.is_array() ) {
+        for ( auto& cc : testConfig ) {
+            cc.merge_patch( generalConfig );
             TestDecayModel test{ cc };
-            allOK &= test.run();
+            test.run();
         }
     } else {
-        TestDecayModel test{ config };
-        allOK &= test.run();
+        testConfig.merge_patch( generalConfig );
+        TestDecayModel test{ testConfig };
+        test.run();
     }
 
-    return allOK ? 0 : 1;
+    return 0;
 }

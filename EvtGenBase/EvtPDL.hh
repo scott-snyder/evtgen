@@ -27,6 +27,7 @@
 #include "EvtGenBase/EvtStringHash.hh"
 
 #include <iosfwd>
+#include <limits>
 #include <map>
 #include <string>
 #include <vector>
@@ -86,7 +87,9 @@ class EvtPDL final {
 
     static EvtPDL& getInstance();
 
-    std::size_t m_firstAlias;
+    void reset();
+
+    std::size_t m_firstAlias{ std::numeric_limits<std::size_t>::max() };
 
     std::vector<EvtPartProp> m_partlist;
 

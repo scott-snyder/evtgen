@@ -37,22 +37,22 @@ void EvtLb2BaryonlnuFF::getdiracff( EvtId parent, EvtId daught, double q2,
                                     double* g3 )
 {
     // Define Event IDs for Lb and p, N+ and Lc+ states
-    static EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
-    static EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
-    static EvtId PRO = EvtPDL::getId( "p+" );
-    static EvtId PROB = EvtPDL::getId( "anti-p-" );
-    static EvtId N1440 = EvtPDL::getId( "N(1440)+" );
-    static EvtId N1440B = EvtPDL::getId( "anti-N(1440)-" );
-    static EvtId N1535 = EvtPDL::getId( "N(1535)+" );
-    static EvtId N1535B = EvtPDL::getId( "anti-N(1535)-" );
-    static EvtId N1650 = EvtPDL::getId( "N(1650)+" );
-    static EvtId N1650B = EvtPDL::getId( "anti-N(1650)-" );
-    static EvtId N1710 = EvtPDL::getId( "N(1710)+" );
-    static EvtId N1710B = EvtPDL::getId( "anti-N(1710)-" );
-    static EvtId LAMCP = EvtPDL::getId( "Lambda_c+" );
-    static EvtId LAMCM = EvtPDL::getId( "anti-Lambda_c-" );
-    static EvtId LAMC1P = EvtPDL::getId( "Lambda_c(2593)+" );
-    static EvtId LAMC1M = EvtPDL::getId( "anti-Lambda_c(2593)-" );
+    static const EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
+    static const EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
+    static const EvtId PRO = EvtPDL::getId( "p+" );
+    static const EvtId PROB = EvtPDL::getId( "anti-p-" );
+    static const EvtId N1440 = EvtPDL::getId( "N(1440)+" );
+    static const EvtId N1440B = EvtPDL::getId( "anti-N(1440)-" );
+    static const EvtId N1535 = EvtPDL::getId( "N(1535)+" );
+    static const EvtId N1535B = EvtPDL::getId( "anti-N(1535)-" );
+    static const EvtId N1650 = EvtPDL::getId( "N(1650)+" );
+    static const EvtId N1650B = EvtPDL::getId( "anti-N(1650)-" );
+    static const EvtId N1710 = EvtPDL::getId( "N(1710)+" );
+    static const EvtId N1710B = EvtPDL::getId( "anti-N(1710)-" );
+    static const EvtId LAMCP = EvtPDL::getId( "Lambda_c+" );
+    static const EvtId LAMCM = EvtPDL::getId( "anti-Lambda_c-" );
+    static const EvtId LAMC1P = EvtPDL::getId( "Lambda_c(2593)+" );
+    static const EvtId LAMC1M = EvtPDL::getId( "anti-Lambda_c(2593)-" );
 
     double F1, F2, F3, G1, G2, G3;
 
@@ -239,20 +239,20 @@ void EvtLb2BaryonlnuFF::getraritaff( EvtId parent, EvtId daught, double q2,
                                      double* f4, double* g1, double* g2,
                                      double* g3, double* g4 )
 {
-    static EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
-    static EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
-    static EvtId N1520 = EvtPDL::getId( "N(1520)+" );
-    static EvtId N1520B = EvtPDL::getId( "anti-N(1520)-" );
-    static EvtId N1720 = EvtPDL::getId( "N(1720)+" );
-    static EvtId N1720B = EvtPDL::getId( "anti-N(1720)-" );
-    static EvtId N1700 = EvtPDL::getId( "N(1700)+" );
-    static EvtId N1700B = EvtPDL::getId( "anti-N(1700)-" );
-    static EvtId N1900 = EvtPDL::getId( "N(1900)+" );
-    static EvtId N1900B = EvtPDL::getId( "anti-N(1900)-" );
-    static EvtId N1875 = EvtPDL::getId( "N(1875)+" );
-    static EvtId N1875B = EvtPDL::getId( "anti-N(1875)-" );
-    static EvtId LAMC2P = EvtPDL::getId( "Lambda_c(2625)+" );
-    static EvtId LAMC2M = EvtPDL::getId( "anti-Lambda_c(2625)-" );
+    static const EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
+    static const EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
+    static const EvtId N1520 = EvtPDL::getId( "N(1520)+" );
+    static const EvtId N1520B = EvtPDL::getId( "anti-N(1520)-" );
+    static const EvtId N1720 = EvtPDL::getId( "N(1720)+" );
+    static const EvtId N1720B = EvtPDL::getId( "anti-N(1720)-" );
+    static const EvtId N1700 = EvtPDL::getId( "N(1700)+" );
+    static const EvtId N1700B = EvtPDL::getId( "anti-N(1700)-" );
+    static const EvtId N1900 = EvtPDL::getId( "N(1900)+" );
+    static const EvtId N1900B = EvtPDL::getId( "anti-N(1900)-" );
+    static const EvtId N1875 = EvtPDL::getId( "N(1875)+" );
+    static const EvtId N1875B = EvtPDL::getId( "anti-N(1875)-" );
+    static const EvtId LAMC2P = EvtPDL::getId( "Lambda_c(2625)+" );
+    static const EvtId LAMC2M = EvtPDL::getId( "anti-Lambda_c(2625)-" );
 
     double F1, F2, F3, F4, G1, G2, G3, G4;
 

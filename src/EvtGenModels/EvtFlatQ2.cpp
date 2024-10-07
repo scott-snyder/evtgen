@@ -45,12 +45,12 @@ double lambda( double q, double m1, double m2 )
     return L;
 }
 
-std::string EvtFlatQ2::getName()
+std::string EvtFlatQ2::getName() const
 {
     return "FLATQ2";
 }
 
-EvtDecayBase* EvtFlatQ2::clone()
+EvtDecayBase* EvtFlatQ2::clone() const
 {
     return new EvtFlatQ2;
 }

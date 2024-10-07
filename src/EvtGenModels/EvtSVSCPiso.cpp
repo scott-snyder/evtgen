@@ -33,12 +33,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSVSCPiso::getName()
+std::string EvtSVSCPiso::getName() const
 {
     return "SVS_CP_ISO";
 }
 
-EvtDecayBase* EvtSVSCPiso::clone()
+EvtDecayBase* EvtSVSCPiso::clone() const
 {
     return new EvtSVSCPiso;
 }
@@ -103,8 +103,8 @@ void EvtSVSCPiso::initProbMax()
 void EvtSVSCPiso::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

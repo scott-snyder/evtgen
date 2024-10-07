@@ -27,12 +27,12 @@
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtReport.hh"
 
-std::string EvtDToKpienu::getName()
+std::string EvtDToKpienu::getName() const
 {
     return "DToKpienu";
 }
 
-EvtDecayBase* EvtDToKpienu::clone()
+EvtDecayBase* EvtDToKpienu::clone() const
 {
     return new EvtDToKpienu;
 }

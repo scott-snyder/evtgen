@@ -34,12 +34,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtHQET2::getName()
+std::string EvtHQET2::getName() const
 {
     return "HQET2";
 }
 
-EvtDecayBase* EvtHQET2::clone()
+EvtDecayBase* EvtHQET2::clone() const
 {
     return new EvtHQET2;
 }

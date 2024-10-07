@@ -33,12 +33,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtISGW::getName()
+std::string EvtISGW::getName() const
 {
     return "ISGW";
 }
 
-EvtDecayBase* EvtISGW::clone()
+EvtDecayBase* EvtISGW::clone() const
 {
     return new EvtISGW;
 }

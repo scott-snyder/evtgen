@@ -43,14 +43,13 @@
 #endif
 #include "EvtGenBase/EvtHepMCEvent.hh"
 
-#include <map>
-#include <vector>
+#include <mutex>
 
 // Description: Interface to the TAUOLA external generator
 
 class EvtTauolaEngine : public EvtAbsExternalGen {
   public:
-    EvtTauolaEngine( bool useEvtGenRandom = true );
+    EvtTauolaEngine( bool useEvtGenRandom = true, bool seedTauolaFortran = true );
 
     bool doDecay( EvtParticle* theMother ) override;
 
@@ -58,18 +57,29 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
 
   protected:
   private:
-    bool m_initialised;
-    int m_tauPDG, m_nTauolaModes;
-    int m_neutPropType, m_posPropType, m_negPropType;
-
-    GenParticlePtr createGenParticle( EvtParticle* theParticle );
+    GenParticlePtr createGenParticle( const EvtParticle* theParticle ) const;
 
     void setUpPossibleTauModes();
     void setOtherParameters();
 
-    int getModeInt( EvtDecayBase* decayModel );
+    int getModeInt( EvtDecayBase* decayModel ) const;
 
     void decayTauEvent( EvtParticle* tauParticle );
+
+    bool m_useEvtGenRandom{ true };
+    bool m_seedTauolaFortran{ true };
+
+    // PDG standard code integer ID for tau particle
+    static constexpr int m_tauPDG{ 15 };
+    // Number of possible decay modes in Tauola
+    static constexpr int m_nTauolaModes{ 22 };
+    // Neutral and charged spin propagator choices
+    static int m_neutPropType;
+    static int m_posPropType;
+    static int m_negPropType;
+
+    static bool m_initialised;
+    static std::mutex m_tauola_mutex;
 };
 
 #endif

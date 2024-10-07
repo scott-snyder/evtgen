@@ -30,12 +30,12 @@
 #include <cmath>
 #include <string>
 
-std::string EvtFlatSqDalitz::getName()
+std::string EvtFlatSqDalitz::getName() const
 {
     return "FLATSQDALITZ";
 }
 
-EvtDecayBase* EvtFlatSqDalitz::clone()
+EvtDecayBase* EvtFlatSqDalitz::clone() const
 {
     return new EvtFlatSqDalitz;
 }

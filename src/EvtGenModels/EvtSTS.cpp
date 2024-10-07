@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSTS::getName()
+std::string EvtSTS::getName() const
 {
     return "STS";
 }
 
-EvtDecayBase* EvtSTS::clone()
+EvtDecayBase* EvtSTS::clone() const
 {
     return new EvtSTS;
 }

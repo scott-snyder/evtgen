@@ -41,12 +41,12 @@ using std::endl;
 void EvtSemiLeptonicBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
                                         EvtSemiLeptonicFF* FormFactors )
 {
-    static EvtId EM = EvtPDL::getId( "e-" );
-    static EvtId MUM = EvtPDL::getId( "mu-" );
-    static EvtId TAUM = EvtPDL::getId( "tau-" );
-    static EvtId EP = EvtPDL::getId( "e+" );
-    static EvtId MUP = EvtPDL::getId( "mu+" );
-    static EvtId TAUP = EvtPDL::getId( "tau+" );
+    static const EvtId EM = EvtPDL::getId( "e-" );
+    static const EvtId MUM = EvtPDL::getId( "mu-" );
+    static const EvtId TAUM = EvtPDL::getId( "tau-" );
+    static const EvtId EP = EvtPDL::getId( "e+" );
+    static const EvtId MUP = EvtPDL::getId( "mu+" );
+    static const EvtId TAUP = EvtPDL::getId( "tau+" );
 
     //Add the lepton and neutrino 4 momenta to find q2
 
@@ -373,25 +373,25 @@ void EvtSemiLeptonicBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
                                         EvtComplex r10, EvtComplex r11 )
 {
     //  Leptons
-    static EvtId EM = EvtPDL::getId( "e-" );
-    static EvtId MUM = EvtPDL::getId( "mu-" );
-    static EvtId TAUM = EvtPDL::getId( "tau-" );
+    static const EvtId EM = EvtPDL::getId( "e-" );
+    static const EvtId MUM = EvtPDL::getId( "mu-" );
+    static const EvtId TAUM = EvtPDL::getId( "tau-" );
     //  Anti-Leptons
-    static EvtId EP = EvtPDL::getId( "e+" );
-    static EvtId MUP = EvtPDL::getId( "mu+" );
-    static EvtId TAUP = EvtPDL::getId( "tau+" );
+    static const EvtId EP = EvtPDL::getId( "e+" );
+    static const EvtId MUP = EvtPDL::getId( "mu+" );
+    static const EvtId TAUP = EvtPDL::getId( "tau+" );
 
     //  Baryons
-    static EvtId LAMCP = EvtPDL::getId( "Lambda_c+" );
-    static EvtId LAMC1P = EvtPDL::getId( "Lambda_c(2593)+" );
-    static EvtId LAMC2P = EvtPDL::getId( "Lambda_c(2625)+" );
-    static EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
+    static const EvtId LAMCP = EvtPDL::getId( "Lambda_c+" );
+    static const EvtId LAMC1P = EvtPDL::getId( "Lambda_c(2593)+" );
+    static const EvtId LAMC2P = EvtPDL::getId( "Lambda_c(2625)+" );
+    static const EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
 
     // Anti-Baryons
-    static EvtId LAMCM = EvtPDL::getId( "anti-Lambda_c-" );
-    static EvtId LAMC1M = EvtPDL::getId( "anti-Lambda_c(2593)-" );
-    static EvtId LAMC2M = EvtPDL::getId( "anti-Lambda_c(2625)-" );
-    static EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
+    static const EvtId LAMCM = EvtPDL::getId( "anti-Lambda_c-" );
+    static const EvtId LAMC1M = EvtPDL::getId( "anti-Lambda_c(2593)-" );
+    static const EvtId LAMC2M = EvtPDL::getId( "anti-Lambda_c(2625)-" );
+    static const EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
 
     // Set the spin density matrix of the parent baryon
     EvtSpinDensity rho;

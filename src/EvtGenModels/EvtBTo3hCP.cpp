@@ -566,7 +566,7 @@ void EvtBTo3hCP::generateSqMasses_Kpipi( double& m12, double& m13, double& m23,
   C Phase_space to .true.
   C Note that in that case, the generation is no longer correct.
   */
-    static bool phaseSpace = false;
+    static const bool phaseSpace = false;
 
     double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq + 2 * sqrt( m1sq * m2sq );
@@ -634,7 +634,7 @@ void EvtBTo3hCP::generateSqMasses_3pi( double& m12, double& m13, double& m23,
   C Phase_space to .true.
   C Note that in that case, the generation is no longer correct.
   */
-    static bool phaseSpace = false;
+    static const bool phaseSpace = false;
 
     double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq;
@@ -697,7 +697,7 @@ void EvtBTo3hCP::generateSqMasses_3piMPP( double& m12, double& m13, double& m23,
   C Phase_space to .true.
   C Note that in that case, the generation is no longer correct.
   */
-    static bool phaseSpace = false;
+    static const bool phaseSpace = false;
 
     double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq;
@@ -750,7 +750,7 @@ void EvtBTo3hCP::generateSqMasses_3piP00( double& m12, double& m13, double& m23,
   C Phase_space to .true.
   C Note that in that case, the generation is no longer correct.
   */
-    static bool phaseSpace = false;
+    static const bool phaseSpace = false;
 
     double max_m12 = square( m_M_B );
     double min_m12 = m1sq + m2sq;

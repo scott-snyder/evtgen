@@ -375,8 +375,8 @@ void Evtbs2llGammaAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
     EvtTensor4C ltc21, ltc22;    // the leptonic tensor current
 
     // B - and barB - mesons descriptors
-    static EvtIdSet bmesons{ "anti-B0", "anti-B_s0" };
-    static EvtIdSet bbarmesons{ "B0", "B_s0" };
+    static const EvtIdSet bmesons{ "anti-B0", "anti-B_s0" };
+    static const EvtIdSet bbarmesons{ "B0", "B_s0" };
 
     EvtId parentID = parent->getId();
 

@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtTauVectornu::getName()
+std::string EvtTauVectornu::getName() const
 {
     return "TAUVECTORNU";
 }
 
-EvtDecayBase* EvtTauVectornu::clone()
+EvtDecayBase* EvtTauVectornu::clone() const
 {
     return new EvtTauVectornu;
 }
@@ -60,7 +60,7 @@ void EvtTauVectornu::initProbMax()
 
 void EvtTauVectornu::decay( EvtParticle* p )
 {
-    static EvtId TAUM = EvtPDL::getId( "tau-" );
+    static const EvtId TAUM = EvtPDL::getId( "tau-" );
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
     EvtParticle *v, *nut;

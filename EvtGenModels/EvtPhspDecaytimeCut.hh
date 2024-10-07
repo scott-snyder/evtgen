@@ -31,9 +31,9 @@ class EvtParticle;
 
 class EvtPhspDecaytimeCut : public EvtDecayIncoherent {
   public:
-    std::string getName() override;
+    std::string getName() const override;
 
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     void initProbMax() override;
 

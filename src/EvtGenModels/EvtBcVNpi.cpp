@@ -36,12 +36,12 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-std::string EvtBcVNpi::getName()
+std::string EvtBcVNpi::getName() const
 {
     return "BC_VNPI";
 }
 
-EvtDecayBase* EvtBcVNpi::clone()
+EvtDecayBase* EvtBcVNpi::clone() const
 {
     return new EvtBcVNpi;
 }

@@ -47,8 +47,6 @@ class EvtPythiaEngine : public EvtAbsExternalGen {
     EvtPythiaEngine( std::string xmlDir = "./xmldoc",
                      bool convertPhysCodes = false, bool useEvtGenRandom = true );
 
-    virtual ~EvtPythiaEngine();
-
     bool doDecay( EvtParticle* theMother ) override;
 
     void initialise() override;
@@ -58,10 +56,13 @@ class EvtPythiaEngine : public EvtAbsExternalGen {
     void updateParticleLists();
     void updatePhysicsParameters();
 
-    void createPythiaParticle( EvtId& particleId, int PDGCode );
     bool validPDGCode( int PDGCode );
-    void updatePythiaDecayTable( EvtId& particleId, int aliasInt, int PDGCode );
-    void storeDaughterInfo( EvtParticle* theParticle, int startInt );
+    void createPythiaParticle( Pythia8::Pythia& thePythiaGenerator,
+                               EvtId& particleId, int PDGCode );
+    void updatePythiaDecayTable( Pythia8::Pythia& thePythiaGenerator,
+                                 EvtId& particleId, int aliasInt, int PDGCode );
+    void storeDaughterInfo( Pythia8::Event& theEvent, EvtParticle* theParticle,
+                            int startInt );
 
     void clearDaughterVectors();
     void clearPythiaModeMap();
@@ -70,19 +71,20 @@ class EvtPythiaEngine : public EvtAbsExternalGen {
 
     int getModeInt( EvtDecayBase* decayModel );
 
+    bool m_convertPhysCodes;
+    // Specify if we are going to use the random number generator (engine) from EvtGen for Pythia 8.
+    bool m_useEvtGenRandom;
+    bool m_initialised{ false };
+
     std::unique_ptr<Pythia8::Pythia> m_genericPythiaGen;
     std::unique_ptr<Pythia8::Pythia> m_aliasPythiaGen;
-    Pythia8::Pythia* m_thePythiaGenerator;
+
+    std::shared_ptr<EvtPythiaRandom> m_evtgenRandom;
 
     std::vector<int> m_daugPDGVector;
     std::vector<EvtVector4R> m_daugP4Vector;
 
-    typedef std::map<int, std::vector<int>> PythiaModeMap;
-    PythiaModeMap m_pythiaModeMap;
-
-    bool m_convertPhysCodes, m_initialised, m_useEvtGenRandom;
-
-    std::shared_ptr<EvtPythiaRandom> m_evtgenRandom;
+    std::map<int, std::vector<int>> m_pythiaModeMap;
 
     std::map<int, int> m_addedPDGCodes;
 };

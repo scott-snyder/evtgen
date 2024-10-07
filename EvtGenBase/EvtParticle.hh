@@ -148,21 +148,21 @@ class EvtParticle {
   * adds them to the parent. Note that momentum
   * is left uninitialized, this is _only_ creation.
   */
-    void makeDaughters( size_t ndaug, EvtId* id );
+    void makeDaughters( size_t ndaug, const EvtId* id );
 
     /**
   * Creates the daughters in the list of ids and 
   * adds them to the parent. Note that momentum
   * is left uninitialized, this is _only_ creation.
   */
-    void makeDaughters( size_t ndaug, std::vector<EvtId> idVector );
+    void makeDaughters( size_t ndaug, const std::vector<EvtId> idVector );
 
     /**
   * Similar to the routine above except that here 
   * momentum is generated according to phase space 
   * daughters are filled with this momentum.
   */
-    double initializePhaseSpace( size_t numdaughter, EvtId* daughters,
+    double initializePhaseSpace( size_t numdaughter, const EvtId* daughters,
                                  bool forceResetMasses = false,
                                  double poleSize = -1., int whichTwo1 = 0,
                                  int whichTwo2 = 1 );

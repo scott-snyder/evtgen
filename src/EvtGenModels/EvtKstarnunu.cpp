@@ -32,12 +32,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtKstarnunu::getName()
+std::string EvtKstarnunu::getName() const
 {
     return "KSTARNUNU";
 }
 
-EvtDecayBase* EvtKstarnunu::clone()
+EvtDecayBase* EvtKstarnunu::clone() const
 {
     return new EvtKstarnunu;
 }
@@ -65,12 +65,12 @@ void EvtKstarnunu::initProbMax()
 
 void EvtKstarnunu::decay( EvtParticle* p )
 {
-    static EvtId NUE = EvtPDL::getId( "nu_e" );
-    static EvtId NUM = EvtPDL::getId( "nu_mu" );
-    static EvtId NUT = EvtPDL::getId( "nu_tau" );
-    static EvtId NUEB = EvtPDL::getId( "anti-nu_e" );
-    static EvtId NUMB = EvtPDL::getId( "anti-nu_mu" );
-    static EvtId NUTB = EvtPDL::getId( "anti-nu_tau" );
+    static const EvtId NUE = EvtPDL::getId( "nu_e" );
+    static const EvtId NUM = EvtPDL::getId( "nu_mu" );
+    static const EvtId NUT = EvtPDL::getId( "nu_tau" );
+    static const EvtId NUEB = EvtPDL::getId( "anti-nu_e" );
+    static const EvtId NUMB = EvtPDL::getId( "anti-nu_mu" );
+    static const EvtId NUTB = EvtPDL::getId( "anti-nu_tau" );
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 

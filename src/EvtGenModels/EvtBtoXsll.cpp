@@ -34,12 +34,12 @@
 #include <stdlib.h>
 using std::endl;
 
-std::string EvtBtoXsll::getName()
+std::string EvtBtoXsll::getName() const
 {
     return "BTOXSLL";
 }
 
-EvtDecayBase* EvtBtoXsll::clone()
+EvtDecayBase* EvtBtoXsll::clone() const
 {
     return new EvtBtoXsll;
 }
@@ -213,7 +213,8 @@ void EvtBtoXsll::decay( EvtParticle* p )
     double ml = mass[1];
     double pb( 0. );
 
-    static int nmsg = 0;
+    static thread_local int nmsg = 0;
+
     double xhadronMass = -999.0;
 
     EvtVector4R p4xhadron;

@@ -31,7 +31,9 @@ class EvtRandomEngine {
 
     virtual double random() = 0;
 
-    virtual void setSeed( unsigned int seed ) = 0;
+    virtual void setSeed( unsigned long int seed ) = 0;
+
+    virtual unsigned long int lastSeed() const = 0;
 
   private:
 };

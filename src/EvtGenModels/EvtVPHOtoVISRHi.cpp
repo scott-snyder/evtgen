@@ -33,12 +33,12 @@
 
 using std::endl;
 
-std::string EvtVPHOtoVISRHi::getName()
+std::string EvtVPHOtoVISRHi::getName() const
 {
     return "VPHOTOVISRHI";
 }
 
-EvtDecayBase* EvtVPHOtoVISRHi::clone()
+EvtDecayBase* EvtVPHOtoVISRHi::clone() const
 {
     return new EvtVPHOtoVISRHi;
 }
@@ -71,18 +71,18 @@ void EvtVPHOtoVISRHi::decay( EvtParticle* p )
     if ( getNArg() == 1 )
         power = getArg( 0 );
     // define particle names
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
-    static EvtId DP = EvtPDL::getId( "D+" );
-    static EvtId DM = EvtPDL::getId( "D-" );
-    static EvtId DSM = EvtPDL::getId( "D_s-" );
-    static EvtId DSP = EvtPDL::getId( "D_s+" );
-    static EvtId DSMS = EvtPDL::getId( "D_s*-" );
-    static EvtId DSPS = EvtPDL::getId( "D_s*+" );
-    static EvtId D0S = EvtPDL::getId( "D*0" );
-    static EvtId D0BS = EvtPDL::getId( "anti-D*0" );
-    static EvtId DPS = EvtPDL::getId( "D*+" );
-    static EvtId DMS = EvtPDL::getId( "D*-" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId DP = EvtPDL::getId( "D+" );
+    static const EvtId DM = EvtPDL::getId( "D-" );
+    static const EvtId DSM = EvtPDL::getId( "D_s-" );
+    static const EvtId DSP = EvtPDL::getId( "D_s+" );
+    static const EvtId DSMS = EvtPDL::getId( "D_s*-" );
+    static const EvtId DSPS = EvtPDL::getId( "D_s*+" );
+    static const EvtId D0S = EvtPDL::getId( "D*0" );
+    static const EvtId D0BS = EvtPDL::getId( "anti-D*0" );
+    static const EvtId DPS = EvtPDL::getId( "D*+" );
+    static const EvtId DMS = EvtPDL::getId( "D*-" );
     // setup some parameters
     double w = p->mass();
     double s = w * w;

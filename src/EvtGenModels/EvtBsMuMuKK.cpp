@@ -37,12 +37,12 @@ const double pi = EvtConst::pi;
 const EvtComplex I = EvtComplex( 0.0, 1.0 );
 const double sq2 = sqrt( 2.0 );
 
-std::string EvtBsMuMuKK::getName()
+std::string EvtBsMuMuKK::getName() const
 {
     return "BS_MUMUKK";
 }
 
-EvtDecayBase* EvtBsMuMuKK::clone()
+EvtDecayBase* EvtBsMuMuKK::clone() const
 {
     return new EvtBsMuMuKK;
 }
@@ -552,47 +552,50 @@ double EvtBsMuMuKK::Integral( const double Gamma0, const double m0, const int JR
                               const int JB, const double q0, const double M_KK_ll,
                               const double M_KK_ul, const int fcntype ) const
 {
-    int bins = 1000;
-    double bin_width = ( M_KK_ul - M_KK_ll ) / static_cast<double>( bins );
+    const int bins = 1000;
+    const double bin_width = ( M_KK_ul - M_KK_ll ) / static_cast<double>( bins );
+    const double sumMKpKm2 = pow( m_MKp + m_MKm, 2 );
+    const double diffMKpKm2 = pow( m_MKp - m_MKm, 2 );
+    const double MBs2 = pow( m_MBs, 2 );
+
     EvtComplex integral( 0.0, 0.0 );
-    double sumMKpKm2 = pow( m_MKp + m_MKm, 2 );
-    double diffMKpKm2 = pow( m_MKp - m_MKm, 2 );
-    double MBs2 = pow( m_MBs, 2 );
 
     for ( int i = 0; i < bins; i++ ) {
-        double M_KK_i = M_KK_ll + static_cast<double>( i ) * bin_width;
-        double M_KK_f = M_KK_ll + static_cast<double>( i + 1 ) * bin_width;
-        double M_KK_i_sq = M_KK_i * M_KK_i;
-        double M_KK_f_sq = M_KK_f * M_KK_f;
+        const double M_KK_i = M_KK_ll + static_cast<double>( i ) * bin_width;
+        const double M_KK_f = M_KK_ll + static_cast<double>( i + 1 ) * bin_width;
+        const double M_KK_i_sq = M_KK_i * M_KK_i;
+        const double M_KK_f_sq = M_KK_f * M_KK_f;
 
-        double p3Kp_KK_CMS_i = sqrt( ( M_KK_i_sq - sumMKpKm2 ) *
-                                     ( M_KK_i_sq - diffMKpKm2 ) ) /
-                               ( 2.0 * M_KK_i );
-        double p3Kp_KK_CMS_f = sqrt( ( M_KK_f_sq - sumMKpKm2 ) *
-                                     ( M_KK_f_sq - diffMKpKm2 ) ) /
-                               ( 2.0 * M_KK_f );
+        const double p3Kp_KK_CMS_i = sqrt( ( M_KK_i_sq - sumMKpKm2 ) *
+                                           ( M_KK_i_sq - diffMKpKm2 ) ) /
+                                     ( 2.0 * M_KK_i );
+        const double p3Kp_KK_CMS_f = sqrt( ( M_KK_f_sq - sumMKpKm2 ) *
+                                           ( M_KK_f_sq - diffMKpKm2 ) ) /
+                                     ( 2.0 * M_KK_f );
 
-        double p3Jpsi_Bs_CMS_i = sqrt( ( MBs2 - pow( M_KK_i + m_MJpsi, 2 ) ) *
-                                       ( MBs2 - pow( M_KK_i - m_MJpsi, 2 ) ) ) /
-                                 ( 2.0 * m_MBs );
-        double p3Jpsi_Bs_CMS_f = sqrt( ( MBs2 - pow( M_KK_f + m_MJpsi, 2 ) ) *
-                                       ( MBs2 - pow( M_KK_f - m_MJpsi, 2 ) ) ) /
-                                 ( 2.0 * m_MBs );
+        const double p3Jpsi_Bs_CMS_i =
+            sqrt( ( MBs2 - pow( M_KK_i + m_MJpsi, 2 ) ) *
+                  ( MBs2 - pow( M_KK_i - m_MJpsi, 2 ) ) ) /
+            ( 2.0 * m_MBs );
+        const double p3Jpsi_Bs_CMS_f =
+            sqrt( ( MBs2 - pow( M_KK_f + m_MJpsi, 2 ) ) *
+                  ( MBs2 - pow( M_KK_f - m_MJpsi, 2 ) ) ) /
+            ( 2.0 * m_MBs );
 
-        double f_PHSP_i = sqrt( p3Kp_KK_CMS_i * p3Jpsi_Bs_CMS_i );
-        double f_PHSP_f = sqrt( p3Kp_KK_CMS_f * p3Jpsi_Bs_CMS_f );
+        const double f_PHSP_i = sqrt( p3Kp_KK_CMS_i * p3Jpsi_Bs_CMS_i );
+        const double f_PHSP_f = sqrt( p3Kp_KK_CMS_f * p3Jpsi_Bs_CMS_f );
 
-        double f_MBF_KK_i = pow( p3Kp_KK_CMS_i, JR );
-        double f_MBF_KK_f = pow( p3Kp_KK_CMS_f, JR );
+        const double f_MBF_KK_i = pow( p3Kp_KK_CMS_i, JR );
+        const double f_MBF_KK_f = pow( p3Kp_KK_CMS_f, JR );
 
-        double f_MBF_Bs_i = pow( p3Jpsi_Bs_CMS_i, JB );
-        double f_MBF_Bs_f = pow( p3Jpsi_Bs_CMS_f, JB );
+        const double f_MBF_Bs_i = pow( p3Jpsi_Bs_CMS_i, JB );
+        const double f_MBF_Bs_f = pow( p3Jpsi_Bs_CMS_f, JB );
 
-        double X_JR_i = X_J( JR, p3Kp_KK_CMS_i, 0 );
-        double X_JR_f = X_J( JR, p3Kp_KK_CMS_f, 0 );
+        const double X_JR_i = X_J( JR, p3Kp_KK_CMS_i, 0 );
+        const double X_JR_f = X_J( JR, p3Kp_KK_CMS_f, 0 );
 
-        double X_JB_i = X_J( JB, p3Jpsi_Bs_CMS_i, 1 );
-        double X_JB_f = X_J( JB, p3Jpsi_Bs_CMS_f, 1 );
+        const double X_JB_i = X_J( JB, p3Jpsi_Bs_CMS_i, 1 );
+        const double X_JB_f = X_J( JB, p3Jpsi_Bs_CMS_f, 1 );
 
         EvtComplex fcn_i( 1.0, 0.0 ), fcn_f( 1.0, 0.0 );
 
@@ -605,12 +608,12 @@ double EvtBsMuMuKK::Integral( const double Gamma0, const double m0, const int JR
             fcn_f = Breit_Wigner( Gamma0, m0, M_KK_f, JR, q0, p3Kp_KK_CMS_f );
         }
 
-        EvtComplex a_i = f_PHSP_i * f_MBF_KK_i * f_MBF_Bs_i * X_JR_i * X_JB_i *
-                         fcn_i;
-        EvtComplex a_st_i = conj( a_i );
-        EvtComplex a_f = f_PHSP_f * f_MBF_KK_f * f_MBF_Bs_f * X_JR_f * X_JB_f *
-                         fcn_f;
-        EvtComplex a_st_f = conj( a_f );
+        const EvtComplex a_i = f_PHSP_i * f_MBF_KK_i * f_MBF_Bs_i * X_JR_i *
+                               X_JB_i * fcn_i;
+        const EvtComplex a_st_i = conj( a_i );
+        const EvtComplex a_f = f_PHSP_f * f_MBF_KK_f * f_MBF_Bs_f * X_JR_f *
+                               X_JB_f * fcn_f;
+        const EvtComplex a_st_f = conj( a_f );
 
         integral += 0.5 * bin_width * ( a_i * a_st_i + a_f * a_st_f );
     }

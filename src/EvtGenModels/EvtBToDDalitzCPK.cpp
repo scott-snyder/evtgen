@@ -35,14 +35,14 @@
 //=============================================================================
 // Name of the model
 //=============================================================================
-std::string EvtBToDDalitzCPK::getName()
+std::string EvtBToDDalitzCPK::getName() const
 {
     return "BTODDALITZCPK";
 }
 //=============================================================================
 // Clone method
 //=============================================================================
-EvtBToDDalitzCPK* EvtBToDDalitzCPK::clone()
+EvtBToDDalitzCPK* EvtBToDDalitzCPK::clone() const
 {
     return new EvtBToDDalitzCPK;
 }
@@ -60,16 +60,16 @@ void EvtBToDDalitzCPK::init()
     // B+/-   -> K+/- D0/bar
     // B0/bar -> K*0/bar D0/bar
     // and nothing else ...
-    static EvtId BP = EvtPDL::getId( "B+" );
-    static EvtId BM = EvtPDL::getId( "B-" );
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
-    static EvtId KP = EvtPDL::getId( "K+" );
-    static EvtId KM = EvtPDL::getId( "K-" );
-    static EvtId KS = EvtPDL::getId( "K*0" );
-    static EvtId KSB = EvtPDL::getId( "anti-K*0" );
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId BP = EvtPDL::getId( "B+" );
+    static const EvtId BM = EvtPDL::getId( "B-" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId KP = EvtPDL::getId( "K+" );
+    static const EvtId KM = EvtPDL::getId( "K-" );
+    static const EvtId KS = EvtPDL::getId( "K*0" );
+    static const EvtId KSB = EvtPDL::getId( "anti-K*0" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
 
     m_flag = 0;
 

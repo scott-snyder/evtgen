@@ -42,13 +42,13 @@ EvtbTosllMSExt::~EvtbTosllMSExt()
 }
 
 // The module name specification
-std::string EvtbTosllMSExt::getName()
+std::string EvtbTosllMSExt::getName() const
 {
     return "BTOSLLMSEXT";
 }
 
 // The implementation of the clone() method
-EvtDecayBase* EvtbTosllMSExt::clone()
+EvtDecayBase* EvtbTosllMSExt::clone() const
 {
     return new EvtbTosllMSExt;
 }

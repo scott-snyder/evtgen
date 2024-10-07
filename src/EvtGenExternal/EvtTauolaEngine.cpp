@@ -32,36 +32,60 @@
 #include "Tauola/Log.h"
 #include "Tauola/Tauola.h"
 
+#include <array>
 #include <cmath>
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <sstream>
 #include <string>
 
 using std::endl;
 
-EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom )
+// Mutex Tauola as it is not thread safe.
+int EvtTauolaEngine::m_neutPropType = 0;
+int EvtTauolaEngine::m_posPropType = 0;
+int EvtTauolaEngine::m_negPropType = 0;
+bool EvtTauolaEngine::m_initialised = false;
+std::mutex EvtTauolaEngine::m_tauola_mutex;
+
+EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom, bool seedTauolaFortran ) :
+    m_useEvtGenRandom{ useEvtGenRandom }, m_seedTauolaFortran{ seedTauolaFortran }
 {
-    // PDG standard code integer ID for tau particle
-    m_tauPDG = 15;
-    // Number of possible decay modes in Tauola
-    m_nTauolaModes = 22;
+}
+
+void EvtTauolaEngine::initialise()
+{
+    const std::lock_guard<std::mutex> lock( m_tauola_mutex );
+
+    // Set up all possible tau decay modes.
+    // This should be done just before the first doDecay() call,
+    // since we want to make sure that any decay.dec files are processed
+    // first to get lists of particle modes and their alias definitions
+    // (for creating EvtParticles with the right history information).
+
+    if ( m_initialised ) {
+        return;
+    }
 
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Setting up TAUOLA." << endl;
 
     // These three lines are not really necessary since they are the default.
     // But they are here so that we know what the initial conditions are.
-    Tauolapp::Tauola::setDecayingParticle( m_tauPDG );    // tau PDG code
-    Tauolapp::Tauola::setSameParticleDecayMode(
-        Tauolapp::Tauola::All );    // all modes allowed
-    Tauolapp::Tauola::setOppositeParticleDecayMode(
-        Tauolapp::Tauola::All );    // all modes allowed
 
-    // Limit the number of warnings printed out. Can't choose zero here, unfortunately
+    // tau PDG code
+    Tauolapp::Tauola::setDecayingParticle( m_tauPDG );
+    // all modes allowed
+    Tauolapp::Tauola::setSameParticleDecayMode( Tauolapp::Tauola::All );
+    // all modes allowed
+    Tauolapp::Tauola::setOppositeParticleDecayMode( Tauolapp::Tauola::All );
+
+    // Limit the number of warnings printed out.
+    // Can't choose zero here, unfortunately.
     Tauolapp::Log::SetWarningLimit( 1 );
 
     // Initial the Tauola external generator
-    if ( useEvtGenRandom == true ) {
+    if ( m_useEvtGenRandom ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "Using EvtGen random number engine also for Tauola++" << endl;
 
@@ -74,30 +98,11 @@ EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom )
 
     Tauolapp::Tauola::initialize();
 
-    // Initialise various default parameters
-    // Neutral and charged spin propagator choices
-    m_neutPropType = 0;
-    m_posPropType = 0;
-    m_negPropType = 0;
-
     // Set-up possible decay modes _after_ we have read the (user) decay file
-    m_initialised = false;
-}
+    this->setUpPossibleTauModes();
+    this->setOtherParameters();
 
-void EvtTauolaEngine::initialise()
-{
-    // Set up all possible tau decay modes.
-    // This should be done just before the first doDecay() call,
-    // since we want to make sure that any decay.dec files are processed
-    // first to get lists of particle modes and their alias definitions
-    // (for creating EvtParticles with the right history information).
-
-    if ( m_initialised == false ) {
-        this->setUpPossibleTauModes();
-        this->setOtherParameters();
-
-        m_initialised = true;
-    }
+    m_initialised = true;
 }
 
 void EvtTauolaEngine::setUpPossibleTauModes()
@@ -111,47 +116,39 @@ void EvtTauolaEngine::setUpPossibleTauModes()
     // separately (via selecting a random number and comparing it to be less than
     // the cumulative BF) for each event.
 
-    int nPDL = EvtPDL::entries();
-    int iPDL( 0 );
+    const int nPDL = EvtPDL::entries();
 
     bool gotAnyTauolaModes( false );
 
-    for ( iPDL = 0; iPDL < nPDL; iPDL++ ) {
-        EvtId particleId = EvtPDL::getEntry( iPDL );
-        int PDGId = EvtPDL::getStdHep( particleId );
+    for ( int iPDL = 0; iPDL < nPDL; iPDL++ ) {
+        const EvtId particleId = EvtPDL::getEntry( iPDL );
+        const int PDGId = EvtPDL::getStdHep( particleId );
 
         if ( abs( PDGId ) == m_tauPDG && gotAnyTauolaModes == false ) {
-            int aliasInt = particleId.getAlias();
+            const int aliasInt = particleId.getAlias();
 
             // Get the list of decay modes for this tau particle (alias)
-            int nModes = EvtDecayTable::getInstance()->getNModes( aliasInt );
-            int iMode( 0 ), iTauMode( 0 );
+            const int nModes = EvtDecayTable::getInstance().getNModes( aliasInt );
 
             // Vector to store tau mode branching fractions.
             // The size of this vector equals the total number of possible
             // Tauola decay modes. Initialise all BFs to zero.
-            std::vector<double> tauolaModeBFs( m_nTauolaModes );
-
-            for ( iTauMode = 0; iTauMode < m_nTauolaModes; iTauMode++ ) {
-                tauolaModeBFs[iTauMode] = 0.0;
-            }
+            std::vector<double> tauolaModeBFs;
+            tauolaModeBFs.assign( m_nTauolaModes, 0.0 );
 
             double totalTauModeBF( 0.0 );
 
             int nNonTauolaModes( 0 );
 
             // Loop through each decay mode
-            for ( iMode = 0; iMode < nModes; iMode++ ) {
+            for ( int iMode = 0; iMode < nModes; iMode++ ) {
                 EvtDecayBase* decayModel =
-                    EvtDecayTable::getInstance()->findDecayModel( aliasInt,
-                                                                  iMode );
+                    EvtDecayTable::getInstance().findDecayModel( aliasInt, iMode );
                 if ( decayModel ) {
                     // Check that the decay model name matches TAUOLA
                     std::string modelName = decayModel->getName();
                     if ( modelName == "TAUOLA" ) {
-                        if ( gotAnyTauolaModes == false ) {
-                            gotAnyTauolaModes = true;
-                        }
+                        gotAnyTauolaModes = true;
 
                         // Extract the decay mode integer type and branching fraction
                         double BF = decayModel->getBranchingFraction();
@@ -165,10 +162,8 @@ void EvtTauolaEngine::setUpPossibleTauModes()
                     } else {
                         nNonTauolaModes++;
                     }
-
                 }    // Decay mode exists
-
-            }    // Loop over decay models
+            }        // Loop over decay models
 
             if ( gotAnyTauolaModes == true && nNonTauolaModes > 0 ) {
                 EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -184,7 +179,7 @@ void EvtTauolaEngine::setUpPossibleTauModes()
                     << "Setting TAUOLA BF modes using the definitions for the particle "
                     << EvtPDL::name( particleId ) << endl;
 
-                for ( iTauMode = 0; iTauMode < m_nTauolaModes; iTauMode++ ) {
+                for ( int iTauMode = 0; iTauMode < m_nTauolaModes; iTauMode++ ) {
                     tauolaModeBFs[iTauMode] /= totalTauModeBF;
                     double modeBF = tauolaModeBFs[iTauMode];
                     EvtGenReport( EVTGEN_INFO, "EvtGen" )
@@ -197,13 +192,11 @@ void EvtTauolaEngine::setUpPossibleTauModes()
                     << "Any other TAUOLA BF modes for other tau particle decay mode definitions will be ignored!"
                     << endl;
             }
-
         }    // Got tau particle and have yet to get a TAUOLA mode
-
-    }    // Loop through PDL entries
+    }        // Loop through PDL entries
 }
 
-int EvtTauolaEngine::getModeInt( EvtDecayBase* decayModel )
+int EvtTauolaEngine::getModeInt( EvtDecayBase* decayModel ) const
 {
     int modeInt( 0 );
 
@@ -282,22 +275,16 @@ void EvtTauolaEngine::setOtherParameters()
 
     // 4) TauolaBRi, where i = 1,2,3,4: Redefine sub-channel branching fractions using the setTaukle
     // function, after initialized() has been called. Default values = 0.5, 0.5, 0.5 and 0.6667
-    int j( 1 );
-    std::vector<double> BRVect;
-    BRVect.push_back( 0.5 );
-    BRVect.push_back( 0.5 );
-    BRVect.push_back( 0.5 );
-    BRVect.push_back( 0.6667 );
-
-    for ( j = 1; j < 5; j++ ) {
+    std::array<double, 4> BRVect{ 0.5, 0.5, 0.5, 0.6667 };
+    for ( int j = 0; j < 4; j++ ) {
         std::ostringstream o;
-        o << j;
+        o << j + 1;
         std::string BRName = "TauolaBR" + o.str();
         std::string stringBR = EvtSymTable::get( BRName, iErr );
 
         // If the definition name is not found, get() just returns the first argument string
         if ( stringBR != BRName ) {
-            BRVect[j - 1] = std::atof( stringBR.c_str() );
+            BRVect[j] = std::atof( stringBR.c_str() );
         }
     }
 
@@ -322,11 +309,11 @@ void EvtTauolaEngine::setOtherParameters()
 
 bool EvtTauolaEngine::doDecay( EvtParticle* tauParticle )
 {
-    if ( m_initialised == false ) {
+    if ( !m_initialised ) {
         this->initialise();
     }
 
-    if ( tauParticle == nullptr ) {
+    if ( !tauParticle ) {
         return false;
     }
 
@@ -460,16 +447,29 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
         tauMap[singleTau] = tauParticle;
     }
 
-    // Now pass the event to Tauola for processing
-    // Create a Tauola event object
+    {
+        const std::lock_guard<std::mutex> lock( m_tauola_mutex );
+
+        if ( m_useEvtGenRandom && m_seedTauolaFortran ) {
+            static thread_local auto lastSeed{
+                std::numeric_limits<unsigned long int>::max() };
+            if ( lastSeed != EvtRandom::lastSeed() ) {
+                lastSeed = EvtRandom::lastSeed();
+                Tauolapp::Tauola::setSeed( lastSeed, 0, 0 );
+            }
+        }
+
+        // Now pass the event to Tauola for processing
+        // Create a Tauola event object
 #ifdef EVTGEN_HEPMC3
-    Tauolapp::TauolaHepMC3Event tauolaEvent( theEvent.get() );
+        Tauolapp::TauolaHepMC3Event tauolaEvent( theEvent.get() );
 #else
-    Tauolapp::TauolaHepMCEvent tauolaEvent( theEvent.get() );
+        Tauolapp::TauolaHepMCEvent tauolaEvent( theEvent.get() );
 #endif
 
-    // Run the Tauola algorithm
-    tauolaEvent.decayTaus();
+        // Run the Tauola algorithm
+        tauolaEvent.decayTaus();
+    }
 
     // Loop over all tau particles in the HepMC event and create their EvtParticle daughters.
     // Store all final "stable" descendent particles as the tau daughters, i.e.
@@ -570,7 +570,7 @@ void EvtTauolaEngine::decayTauEvent( EvtParticle* tauParticle )
     theEvent->clear();
 }
 
-GenParticlePtr EvtTauolaEngine::createGenParticle( EvtParticle* theParticle )
+GenParticlePtr EvtTauolaEngine::createGenParticle( const EvtParticle* theParticle ) const
 {
     // Method to create an HepMC::GenParticle version of the given EvtParticle.
     if ( theParticle == nullptr ) {

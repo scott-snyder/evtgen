@@ -33,12 +33,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtSVSCPLH::getName()
+std::string EvtSVSCPLH::getName() const
 {
     return "SVS_CPLH";
 }
 
-EvtDecayBase* EvtSVSCPLH::clone()
+EvtDecayBase* EvtSVSCPLH::clone() const
 {
     return new EvtSVSCPLH;
 }
@@ -54,7 +54,7 @@ void EvtSVSCPLH::init()
     checkSpinDaughter( 0, EvtSpinType::VECTOR );
     checkSpinDaughter( 1, EvtSpinType::SCALAR );
 
-    static double ctau = EvtPDL::getctau( EvtPDL::getId( "B0" ) );
+    static const double ctau = EvtPDL::getctau( EvtPDL::getId( "B0" ) );
 
     // hbar/s
     m_dm = getArg( 0 );
@@ -93,8 +93,8 @@ void EvtSVSCPLH::decay( EvtParticle* p )
 {
     p->initializePhaseSpace( getNDaug(), getDaugs() );
 
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

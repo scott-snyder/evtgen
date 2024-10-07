@@ -35,8 +35,8 @@ class EvtParticle;
 
 class EvtBaryonPCR : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtBaryonPCR* clone() override;
+    std::string getName() const override;
+    EvtBaryonPCR* clone() const override;
 
     void decay( EvtParticle* p ) override;
     void initProbMax() override;

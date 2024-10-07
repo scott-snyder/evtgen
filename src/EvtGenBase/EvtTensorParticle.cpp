@@ -97,31 +97,31 @@ EvtTensor4C EvtTensorParticle::epsTensor( int i ) const
 
 EvtSpinDensity EvtTensorParticle::rotateToHelicityBasis() const
 {
-    static EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
-                              EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
-    static EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
-    static EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
-                               EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    static const EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
+                                    EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    static const EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
+    static const EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
+                                     EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
 
-    static EvtTensor4C dPpp( EvtGenFunctions::directProd( eplus, eplus ) );
-    static EvtTensor4C dPp0( EvtGenFunctions::directProd( eplus, ezero ) );
-    static EvtTensor4C dP0p( EvtGenFunctions::directProd( ezero, eplus ) );
-    static EvtTensor4C dPpm( EvtGenFunctions::directProd( eplus, eminus ) );
-    static EvtTensor4C dP00( EvtGenFunctions::directProd( ezero, ezero ) );
-    static EvtTensor4C dPmp( EvtGenFunctions::directProd( eminus, eplus ) );
-    static EvtTensor4C dPmm( EvtGenFunctions::directProd( eminus, eminus ) );
-    static EvtTensor4C dPm0( EvtGenFunctions::directProd( eminus, ezero ) );
-    static EvtTensor4C dP0m( EvtGenFunctions::directProd( ezero, eminus ) );
+    static const EvtTensor4C dPpp( EvtGenFunctions::directProd( eplus, eplus ) );
+    static const EvtTensor4C dPp0( EvtGenFunctions::directProd( eplus, ezero ) );
+    static const EvtTensor4C dP0p( EvtGenFunctions::directProd( ezero, eplus ) );
+    static const EvtTensor4C dPpm( EvtGenFunctions::directProd( eplus, eminus ) );
+    static const EvtTensor4C dP00( EvtGenFunctions::directProd( ezero, ezero ) );
+    static const EvtTensor4C dPmp( EvtGenFunctions::directProd( eminus, eplus ) );
+    static const EvtTensor4C dPmm( EvtGenFunctions::directProd( eminus, eminus ) );
+    static const EvtTensor4C dPm0( EvtGenFunctions::directProd( eminus, ezero ) );
+    static const EvtTensor4C dP0m( EvtGenFunctions::directProd( ezero, eminus ) );
 
-    static EvtTensor4C es0( conj( dPpp ) );
-    static EvtTensor4C es1(
+    static const EvtTensor4C es0( conj( dPpp ) );
+    static const EvtTensor4C es1(
         conj( ( 1 / sqrt( 2.0 ) ) * dPp0 + ( 1 / sqrt( 2.0 ) ) * dP0p ) );
-    static EvtTensor4C es2( conj( ( 1 / sqrt( 6.0 ) ) * dPpm +
-                                  ( 2 / sqrt( 6.0 ) ) * dP00 +
-                                  ( 1 / sqrt( 6.0 ) ) * dPmp ) );
-    static EvtTensor4C es3(
+    static const EvtTensor4C es2( conj( ( 1 / sqrt( 6.0 ) ) * dPpm +
+                                        ( 2 / sqrt( 6.0 ) ) * dP00 +
+                                        ( 1 / sqrt( 6.0 ) ) * dPmp ) );
+    static const EvtTensor4C es3(
         conj( ( 1 / sqrt( 2.0 ) ) * dPm0 + ( 1 / sqrt( 2.0 ) ) * dP0m ) );
-    static EvtTensor4C es4( conj( dPmm ) );
+    static const EvtTensor4C es4( conj( dPmm ) );
 
     EvtSpinDensity R;
     R.setDim( 5 );
@@ -142,11 +142,11 @@ EvtSpinDensity EvtTensorParticle::rotateToHelicityBasis( double alpha,
 {
     EvtTensor4C es[5];
 
-    static EvtVector4C eplus( 0.0, -1.0 / sqrt( 2.0 ),
-                              EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
-    static EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
-    static EvtVector4C eminus( 0.0, 1.0 / sqrt( 2.0 ),
-                               EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    static thread_local EvtVector4C eplus(
+        0.0, -1.0 / sqrt( 2.0 ), EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
+    static thread_local EvtVector4C ezero( 0.0, 0.0, 0.0, 1.0 );
+    static thread_local EvtVector4C eminus(
+        0.0, 1.0 / sqrt( 2.0 ), EvtComplex( 0.0, -1.0 / sqrt( 2.0 ) ), 0.0 );
 
     eplus.applyRotateEuler( alpha, beta, gamma );
     ezero.applyRotateEuler( alpha, beta, gamma );

@@ -31,11 +31,12 @@
 EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
                                         std::string pythiaXmlDir,
                                         std::string photonType,
-                                        bool useEvtGenRandom ) :
+                                        bool useEvtGenRandom,
+                                        bool seedTauolaFortran ) :
     m_photonType{ photonType }, m_useEvtGenRandom{ useEvtGenRandom }
 {
     // Instantiate the external generator factory
-    EvtExternalGenFactory* extFactory = EvtExternalGenFactory::getInstance();
+    EvtExternalGenFactory& extFactory = EvtExternalGenFactory::getInstance();
 
     if ( pythiaXmlDir.size() < 1 ) {
         // If we have no string defined, check the value of the
@@ -47,10 +48,10 @@ EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
         }
     }
 
-    extFactory->definePythiaGenerator( pythiaXmlDir, convertPythiaCodes,
-                                       useEvtGenRandom );
+    extFactory.definePythiaGenerator( pythiaXmlDir, convertPythiaCodes,
+                                      useEvtGenRandom );
 
-    extFactory->defineTauolaGenerator( useEvtGenRandom );
+    extFactory.defineTauolaGenerator( useEvtGenRandom, seedTauolaFortran );
 }
 
 EvtExternalGenList::~EvtExternalGenList()

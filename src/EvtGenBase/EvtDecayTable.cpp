@@ -55,18 +55,14 @@ EvtDecayTable::~EvtDecayTable()
     m_decaytable.clear();
 }
 
-EvtDecayTable* EvtDecayTable::getInstance()
+EvtDecayTable& EvtDecayTable::getInstance()
 {
-    static EvtDecayTable* theDecayTable = nullptr;
-
-    if ( !theDecayTable ) {
-        theDecayTable = new EvtDecayTable();
-    }
+    static thread_local EvtDecayTable theDecayTable;
 
     return theDecayTable;
 }
 
-int EvtDecayTable::getNMode( int ipar )
+int EvtDecayTable::getNMode( int ipar ) const
 {
     return m_decaytable[ipar].getNMode();
 }
@@ -76,7 +72,7 @@ EvtDecayBase* EvtDecayTable::getDecay( int ipar, int imode )
     return m_decaytable[ipar].getDecayModel( imode );
 }
 
-void EvtDecayTable::printSummary()
+void EvtDecayTable::printSummary() const
 {
     for ( size_t i = 0; i < EvtPDL::entries(); i++ ) {
         m_decaytable[i].printSummary();
@@ -1476,13 +1472,13 @@ void EvtDecayTable::readXMLDecayFile( const std::string dec_name, bool verbose )
     }
 }
 
-bool EvtDecayTable::stringToBoolean( std::string valStr )
+bool EvtDecayTable::stringToBoolean( std::string valStr ) const
 {
     return ( valStr == "true" || valStr == "1" || valStr == "on" ||
              valStr == "yes" );
 }
 
-void EvtDecayTable::checkParticle( std::string particle )
+void EvtDecayTable::checkParticle( std::string particle ) const
 {
     if ( EvtPDL::getId( particle ) == EvtId( -1, -1 ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -1513,13 +1509,13 @@ EvtDecayBase* EvtDecayTable::findDecayModel( int aliasInt, int modeInt )
     return theModel;
 }
 
-bool EvtDecayTable::hasPythia( EvtId id )
+bool EvtDecayTable::hasPythia( EvtId id ) const
 {
     bool hasPythia = this->hasPythia( id.getAlias() );
     return hasPythia;
 }
 
-bool EvtDecayTable::hasPythia( int aliasInt )
+bool EvtDecayTable::hasPythia( int aliasInt ) const
 {
     bool hasPythia( false );
     if ( aliasInt >= 0 && aliasInt < (int)EvtPDL::entries() ) {
@@ -1529,13 +1525,13 @@ bool EvtDecayTable::hasPythia( int aliasInt )
     return hasPythia;
 }
 
-int EvtDecayTable::getNModes( EvtId id )
+int EvtDecayTable::getNModes( EvtId id ) const
 {
     int nModes = this->getNModes( id.getAlias() );
     return nModes;
 }
 
-int EvtDecayTable::getNModes( int aliasInt )
+int EvtDecayTable::getNModes( int aliasInt ) const
 {
     int nModes( 0 );
 
@@ -1547,7 +1543,7 @@ int EvtDecayTable::getNModes( int aliasInt )
 }
 
 int EvtDecayTable::findChannel( EvtId parent, std::string model, int ndaug,
-                                EvtId* daugs, int narg, std::string* args )
+                                EvtId* daugs, int narg, std::string* args ) const
 {
     int i, j, right;
     EvtId daugs_scratch[50];
@@ -1612,7 +1608,7 @@ int EvtDecayTable::findChannel( EvtId parent, std::string model, int ndaug,
     return -1;
 }
 
-int EvtDecayTable::inChannelList( EvtId parent, int ndaug, EvtId* daugs )
+int EvtDecayTable::inChannelList( EvtId parent, int ndaug, EvtId* daugs ) const
 {
     int i, j, k;
     EvtId daugs_scratch[MAX_DAUG];
@@ -1663,7 +1659,7 @@ int EvtDecayTable::inChannelList( EvtId parent, int ndaug, EvtId* daugs )
 }
 
 std::vector<std::string> EvtDecayTable::splitString( std::string& theString,
-                                                     std::string& splitter )
+                                                     std::string& splitter ) const
 {
     // Code from STLplus
     std::vector<std::string> result;

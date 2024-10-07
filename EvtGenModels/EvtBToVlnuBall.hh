@@ -34,8 +34,8 @@ class EvtParticle;
 
 class EvtBToVlnuBall : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtBToVlnuBall* clone() override;
+    std::string getName() const override;
+    EvtBToVlnuBall* clone() const override;
 
     void decay( EvtParticle* p ) override;
     void initProbMax() override;

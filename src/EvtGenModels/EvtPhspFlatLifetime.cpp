@@ -32,7 +32,7 @@
 //==============================================================================
 // Return the name of the model
 //==============================================================================
-std::string EvtPhspFlatLifetime::getName()
+std::string EvtPhspFlatLifetime::getName() const
 {
     return "PHSPFLATLIFETIME";
 }
@@ -40,7 +40,7 @@ std::string EvtPhspFlatLifetime::getName()
 //==============================================================================
 // Copy the model
 //==============================================================================
-EvtDecayBase* EvtPhspFlatLifetime::clone()
+EvtDecayBase* EvtPhspFlatLifetime::clone() const
 {
     return new EvtPhspFlatLifetime;
 }

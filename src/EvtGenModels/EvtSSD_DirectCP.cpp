@@ -34,12 +34,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSSD_DirectCP::getName()
+std::string EvtSSD_DirectCP::getName() const
 {
     return "SSD_DirectCP";
 }
 
-EvtDecayBase* EvtSSD_DirectCP::clone()
+EvtDecayBase* EvtSSD_DirectCP::clone() const
 {
     return new EvtSSD_DirectCP;
 }

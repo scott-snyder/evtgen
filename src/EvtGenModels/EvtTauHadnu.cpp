@@ -34,12 +34,12 @@
 
 using namespace std;
 
-std::string EvtTauHadnu::getName()
+std::string EvtTauHadnu::getName() const
 {
     return "TAUHADNU";
 }
 
-EvtDecayBase* EvtTauHadnu::clone()
+EvtDecayBase* EvtTauHadnu::clone() const
 {
     return new EvtTauHadnu;
 }
@@ -113,7 +113,7 @@ void EvtTauHadnu::initProbMax()
 
 void EvtTauHadnu::decay( EvtParticle* p )
 {
-    static EvtId TAUM = EvtPDL::getId( "tau-" );
+    static const EvtId TAUM = EvtPDL::getId( "tau-" );
 
     EvtIdSet thePis{ "pi+", "pi-", "pi0" };
     EvtIdSet theKs{ "K+", "K-" };

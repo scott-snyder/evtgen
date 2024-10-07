@@ -26,8 +26,7 @@ class EvtParticle;
 
 class EvtRadCorr {
   public:
-    EvtRadCorr();
-    ~EvtRadCorr();
+    EvtRadCorr() = delete;
 
     static void doRadCorr( EvtParticle* p );
 
@@ -42,7 +41,7 @@ class EvtRadCorr {
     static void setNormalRadCorr();
 
   private:
-    static EvtAbsRadCorr* m_fsrEngine;
+    static thread_local EvtAbsRadCorr* m_fsrEngine;
     static bool m_alwaysRadCorr;
     static bool m_neverRadCorr;
 };

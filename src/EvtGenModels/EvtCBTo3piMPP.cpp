@@ -29,12 +29,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtCBTo3piMPP::getName()
+std::string EvtCBTo3piMPP::getName() const
 {
     return "CB3PI-MPP";
 }
 
-EvtCBTo3piMPP* EvtCBTo3piMPP::clone()
+EvtCBTo3piMPP* EvtCBTo3piMPP::clone() const
 {
     return new EvtCBTo3piMPP;
 }
@@ -69,8 +69,8 @@ void EvtCBTo3piMPP::initProbMax()
 void EvtCBTo3piMPP::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId BM = EvtPDL::getId( "B-" );
-    static EvtId BP = EvtPDL::getId( "B+" );
+    static const EvtId BM = EvtPDL::getId( "B-" );
+    static const EvtId BP = EvtPDL::getId( "B+" );
 
     EvtParticle *pi1, *pi2, *pi3;
 

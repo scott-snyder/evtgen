@@ -36,12 +36,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtVectorIsr::getName()
+std::string EvtVectorIsr::getName() const
 {
     return "VECTORISR";
 }
 
-EvtDecayBase* EvtVectorIsr::clone()
+EvtDecayBase* EvtVectorIsr::clone() const
 {
     return new EvtVectorIsr;
 }
@@ -85,7 +85,7 @@ void EvtVectorIsr::decay( EvtParticle* p )
     //the elctron mass
     double electMass = EvtPDL::getMeanMass( EvtPDL::getId( "e-" ) );
 
-    static EvtId gammaId = EvtPDL::getId( "gamma" );
+    static const EvtId gammaId = EvtPDL::getId( "gamma" );
 
     EvtParticle* phi;
     EvtParticle* gamma;

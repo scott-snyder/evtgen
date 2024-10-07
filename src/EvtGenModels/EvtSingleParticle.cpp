@@ -30,12 +30,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtSingleParticle::getName()
+std::string EvtSingleParticle::getName() const
 {
     return "SINGLE";
 }
 
-EvtDecayBase* EvtSingleParticle::clone()
+EvtDecayBase* EvtSingleParticle::clone() const
 {
     return new EvtSingleParticle();
 }

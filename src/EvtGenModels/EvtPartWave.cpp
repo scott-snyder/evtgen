@@ -36,12 +36,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtPartWave::getName()
+std::string EvtPartWave::getName() const
 {
     return "PARTWAVE";
 }
 
-EvtDecayBase* EvtPartWave::clone()
+EvtDecayBase* EvtPartWave::clone() const
 {
     return new EvtPartWave;
 }

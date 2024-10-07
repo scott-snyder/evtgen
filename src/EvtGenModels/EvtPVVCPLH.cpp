@@ -34,12 +34,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtPVVCPLH::getName()
+std::string EvtPVVCPLH::getName() const
 {
     return "PVV_CPLH";
 }
 
-EvtDecayBase* EvtPVVCPLH::clone()
+EvtDecayBase* EvtPVVCPLH::clone() const
 {
     return new EvtPVVCPLH;
 }
@@ -68,8 +68,8 @@ void EvtPVVCPLH::initProbMax()
 void EvtPVVCPLH::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
 
     //This is only to get tag-ID
     //Mixing is not relevant
@@ -89,9 +89,11 @@ void EvtPVVCPLH::decay( EvtParticle* p )
     //The double exponent will be taken care of later, by the amplitudes
     //Tristan
 
-    static double Gamma = EvtConst::c / ( EvtPDL::getctau( BS0 ) );
-    static double deltaGamma = EvtCPUtil::getInstance()->getDeltaGamma( BS0 );
-    static double ctauLong = EvtConst::c / ( Gamma - fabs( deltaGamma ) / 2 );
+    static const double Gamma = EvtConst::c / ( EvtPDL::getctau( BS0 ) );
+    static const double deltaGamma = EvtCPUtil::getInstance()->getDeltaGamma(
+        BS0 );
+    static const double ctauLong = EvtConst::c /
+                                   ( Gamma - fabs( deltaGamma ) / 2 );
     // if dG>0: tauLong=tauH(CP-odd) is then largest
 
     //This overrules the lifetimes made in OtherB
@@ -119,7 +121,7 @@ void EvtPVVCPLH::decay( EvtParticle* p )
     //deltaMs is no argument anymore
     //Tristan
 
-    static double deltaMs = EvtCPUtil::getInstance()->getDeltaM( BS0 );
+    static const double deltaMs = EvtCPUtil::getInstance()->getDeltaM( BS0 );
 
     EvtComplex cG0P, cG1P, cG1M;
 
@@ -181,8 +183,8 @@ bool EvtPVVCPLH::isBsMixed( EvtParticle* p )
     if ( !( p->getParent() ) )
         return false;
 
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
 
     if ( ( p->getId() != BS0 ) && ( p->getId() != BSB ) )
         return false;

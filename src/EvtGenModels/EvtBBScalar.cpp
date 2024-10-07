@@ -70,12 +70,12 @@ EvtBBScalar::EvtBBScalar() :
     m_f0Map.insert( make_pair( string( "pi" ), dummy ) );
 }
 
-std::string EvtBBScalar::getName()
+std::string EvtBBScalar::getName() const
 {
     return "B_TO_2BARYON_SCALAR";
 }
 
-EvtBBScalar* EvtBBScalar::clone()
+EvtBBScalar* EvtBBScalar::clone() const
 {
     return new EvtBBScalar;
 }

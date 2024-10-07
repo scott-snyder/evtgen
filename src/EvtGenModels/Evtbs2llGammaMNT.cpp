@@ -40,13 +40,13 @@ Evtbs2llGammaMNT::~Evtbs2llGammaMNT()
 }
 
 // The module name specification
-std::string Evtbs2llGammaMNT::getName()
+std::string Evtbs2llGammaMNT::getName() const
 {
     return "BSTOGLLMNT";
 }
 
-// The implementation of the clone() method
-EvtDecayBase* Evtbs2llGammaMNT::clone()
+// The implementation of the clone() const method
+EvtDecayBase* Evtbs2llGammaMNT::clone() const
 {
     return new Evtbs2llGammaMNT;
 }

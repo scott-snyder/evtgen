@@ -29,12 +29,12 @@
 #include "EvtGenBase/EvtSpinType.hh"
 #include "EvtGenBase/EvtVector4R.hh"
 
-std::string EvtBToDiBaryonlnupQCD::getName()
+std::string EvtBToDiBaryonlnupQCD::getName() const
 {
     return "BToDiBaryonlnupQCD";
 }
 
-EvtDecayBase* EvtBToDiBaryonlnupQCD::clone()
+EvtDecayBase* EvtBToDiBaryonlnupQCD::clone() const
 {
     return new EvtBToDiBaryonlnupQCD;
 }
@@ -149,18 +149,20 @@ void EvtBToDiBaryonlnupQCD::initProbMax()
         // baryon that can be any (excited) state. They all have lower
         // maximum probabilities compared to the default pp mode in order
         // to improve accept/reject generation efficiency
-        static EvtIdSet BMesons{ "B-", "B+" };
-        static EvtIdSet Delta{ "Delta+", "anti-Delta-" };
-        static EvtIdSet LambdaC{ "Lambda_c+", "anti-Lambda_c-" };
-        static EvtIdSet LambdaC1{ "Lambda_c(2593)+", "anti-Lambda_c(2593)-" };
-        static EvtIdSet LambdaC2{ "Lambda_c(2625)+", "anti-Lambda_c(2625)-" };
-        static EvtIdSet N1440{ "N(1440)+", "anti-N(1440)-" };
-        static EvtIdSet N1520{ "N(1520)+", "anti-N(1520)-" };
-        static EvtIdSet N1535{ "N(1535)+", "anti-N(1535)-" };
-        static EvtIdSet N1650{ "N(1650)+", "anti-N(1650)-" };
-        static EvtIdSet N1700{ "N(1700)+", "anti-N(1700)-" };
-        static EvtIdSet N1710{ "N(1710)+", "anti-N(1710)-" };
-        static EvtIdSet N1720{ "N(1720)+", "anti-N(1720)-" };
+        static const EvtIdSet BMesons{ "B-", "B+" };
+        static const EvtIdSet Delta{ "Delta+", "anti-Delta-" };
+        static const EvtIdSet LambdaC{ "Lambda_c+", "anti-Lambda_c-" };
+        static const EvtIdSet LambdaC1{ "Lambda_c(2593)+",
+                                        "anti-Lambda_c(2593)-" };
+        static const EvtIdSet LambdaC2{ "Lambda_c(2625)+",
+                                        "anti-Lambda_c(2625)-" };
+        static const EvtIdSet N1440{ "N(1440)+", "anti-N(1440)-" };
+        static const EvtIdSet N1520{ "N(1520)+", "anti-N(1520)-" };
+        static const EvtIdSet N1535{ "N(1535)+", "anti-N(1535)-" };
+        static const EvtIdSet N1650{ "N(1650)+", "anti-N(1650)-" };
+        static const EvtIdSet N1700{ "N(1700)+", "anti-N(1700)-" };
+        static const EvtIdSet N1710{ "N(1710)+", "anti-N(1710)-" };
+        static const EvtIdSet N1720{ "N(1720)+", "anti-N(1720)-" };
 
         EvtId parId = getParentId();
         EvtId bar1Id = getDaug( 0 );

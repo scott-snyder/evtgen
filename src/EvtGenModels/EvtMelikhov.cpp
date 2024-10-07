@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtMelikhov::getName()
+std::string EvtMelikhov::getName() const
 {
     return "MELIKHOV";
 }
 
-EvtDecayBase* EvtMelikhov::clone()
+EvtDecayBase* EvtMelikhov::clone() const
 {
     return new EvtMelikhov;
 }

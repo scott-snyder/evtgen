@@ -33,25 +33,12 @@
 #include <cmath>
 #include <iostream>
 
-EvtPythia::EvtPythia()
-{
-    // Set the Pythia engine to a null pointer at first.
-    // When we do the decay, we retrieve the pointer to the Pythia engine
-    // and use that for all decays. All clones will use the same Pythia engine.
-    m_pythiaEngine = nullptr;
-}
-
-EvtPythia::~EvtPythia()
-{
-    m_commandList.clear();
-}
-
-std::string EvtPythia::getName()
+std::string EvtPythia::getName() const
 {
     return "PYTHIA";
 }
 
-EvtDecayBase* EvtPythia::clone()
+EvtDecayBase* EvtPythia::clone() const
 {
     return new EvtPythia();
 }
@@ -77,8 +64,8 @@ void EvtPythia::decay( EvtParticle* p )
     // This should only create the full Pythia engine once, and all clones will point to the same engine.
 
     if ( !m_pythiaEngine ) {
-        m_pythiaEngine = EvtExternalGenFactory::getInstance()->getGenerator(
-            EvtExternalGenFactory::PythiaGenId );
+        m_pythiaEngine = EvtExternalGenFactory::getInstance().getGenerator(
+            EvtExternalGenFactory::GenId::PythiaGenId );
     }
 
     if ( m_pythiaEngine ) {
@@ -99,7 +86,7 @@ void EvtPythia::fixPolarisations( EvtParticle* p )
     int nDaug = p->getNDaug();
     int i( 0 );
 
-    static EvtId Jpsi = EvtPDL::getId( "J/psi" );
+    static const EvtId Jpsi = EvtPDL::getId( "J/psi" );
 
     for ( i = 0; i < nDaug; i++ ) {
         EvtParticle* theDaug = p->getDaug( i );

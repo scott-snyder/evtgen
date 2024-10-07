@@ -28,12 +28,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtEtaDalitz::getName()
+std::string EvtEtaDalitz::getName() const
 {
     return "ETA_DALITZ";
 }
 
-EvtDecayBase* EvtEtaDalitz::clone()
+EvtDecayBase* EvtEtaDalitz::clone() const
 {
     return new EvtEtaDalitz;
 }

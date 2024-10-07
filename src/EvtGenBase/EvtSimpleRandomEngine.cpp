@@ -32,7 +32,7 @@ double EvtSimpleRandomEngine::random()
     return ( temp + 1.0 ) / 32769.0;
 }
 
-void EvtSimpleRandomEngine::setSeed( unsigned int seed )
+void EvtSimpleRandomEngine::setSeed( unsigned long int seed )
 {
     m_next = seed;
 }

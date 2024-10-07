@@ -35,12 +35,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtSSDCP::getName()
+std::string EvtSSDCP::getName() const
 {
     return "SSD_CP";
 }
 
-EvtDecayBase* EvtSSDCP::clone()
+EvtDecayBase* EvtSSDCP::clone() const
 {
     return new EvtSSDCP;
 }
@@ -177,11 +177,11 @@ void EvtSSDCP::initProbMax()
 
 void EvtSSDCP::decay( EvtParticle* p )
 {
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
-    static EvtId B0s = EvtPDL::getId( "B_s0" );
-    static EvtId B0Bs = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId B0s = EvtPDL::getId( "B_s0" );
+    static const EvtId B0Bs = EvtPDL::getId( "anti-B_s0" );
 
     double t;
     EvtId other_b;

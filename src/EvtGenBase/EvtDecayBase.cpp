@@ -205,8 +205,8 @@ void EvtDecayBase::initProbMax()
 
 }    //initProbMax
 
-void EvtDecayBase::saveDecayInfo( EvtId ipar, int ndaug, EvtId* daug, int narg,
-                                  std::vector<std::string>& args,
+void EvtDecayBase::saveDecayInfo( EvtId ipar, int ndaug, const EvtId* daug,
+                                  int narg, std::vector<std::string>& args,
                                   std::string name, double brfr )
 {
     int i;
@@ -419,8 +419,8 @@ void EvtDecayBase::findMass( EvtParticle* p )
     p->setMass( mass );
 }
 
-void EvtDecayBase::findMasses( EvtParticle* p, int ndaugs, EvtId daugs[10],
-                               double masses[10] )
+void EvtDecayBase::findMasses( EvtParticle* p, int ndaugs,
+                               const EvtId daugs[10], double masses[10] )
 {
     int i;
     double mass_sum;

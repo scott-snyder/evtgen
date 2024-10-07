@@ -46,25 +46,21 @@ EvtDalitzTable::~EvtDalitzTable()
     m_readFiles.clear();
 }
 
-EvtDalitzTable* EvtDalitzTable::getInstance( const std::string dec_name,
-                                             bool verbose )
+const EvtDalitzTable& EvtDalitzTable::getInstance( const std::string dec_name,
+                                                   bool verbose )
 {
-    static EvtDalitzTable* theDalitzTable = nullptr;
+    static thread_local EvtDalitzTable theDalitzTable;
 
-    if ( theDalitzTable == nullptr ) {
-        theDalitzTable = new EvtDalitzTable();
-    }
-
-    if ( !theDalitzTable->fileHasBeenRead( dec_name ) ) {
-        theDalitzTable->readXMLDecayFile( dec_name, verbose );
+    if ( !theDalitzTable.fileHasBeenRead( dec_name ) ) {
+        theDalitzTable.readXMLDecayFile( dec_name, verbose );
     }
 
     return theDalitzTable;
 }
 
-bool EvtDalitzTable::fileHasBeenRead( const std::string dec_name )
+bool EvtDalitzTable::fileHasBeenRead( const std::string dec_name ) const
 {
-    std::vector<std::string>::iterator i = m_readFiles.begin();
+    std::vector<std::string>::const_iterator i = m_readFiles.begin();
     for ( ; i != m_readFiles.end(); i++ ) {
         if ( ( *i ).compare( dec_name ) == 0 ) {
             return true;
@@ -429,7 +425,7 @@ void EvtDalitzTable::readXMLDecayFile( const std::string dec_name, bool verbose 
     }
 }
 
-void EvtDalitzTable::checkParticle( std::string particle )
+void EvtDalitzTable::checkParticle( std::string particle ) const
 {
     if ( EvtPDL::getId( particle ) == EvtId( -1, -1 ) ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -487,11 +483,14 @@ void EvtDalitzTable::copyDecay( EvtId parent, EvtId* daughters, EvtId copy,
         << "Did not find dalitz decays for particle:" << copy << "\n";
 }
 
-std::vector<EvtDalitzDecayInfo> EvtDalitzTable::getDalitzTable( const EvtId& parent )
+std::vector<EvtDalitzDecayInfo> EvtDalitzTable::getDalitzTable(
+    const EvtId& parent ) const
 {
     std::vector<EvtDalitzDecayInfo> table;
-    if ( m_dalitztable.find( parent ) != m_dalitztable.end() ) {
-        table = m_dalitztable[parent];
+
+    auto iter = m_dalitztable.find( parent );
+    if ( iter != m_dalitztable.end() ) {
+        table = iter->second;
     }
 
     if ( table.empty() ) {

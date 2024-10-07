@@ -32,9 +32,9 @@ class EvtParticle;
 
 class EvtVectorIsr : public EvtDecayIncoherent {
   public:
-    std::string getName() override;
+    std::string getName() const override;
 
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     void decay( EvtParticle* p ) override;
 

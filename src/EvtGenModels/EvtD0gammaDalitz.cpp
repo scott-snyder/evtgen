@@ -54,12 +54,12 @@ const EvtCyclic3::Pair& EvtD0gammaDalitz::m_AB = EvtCyclic3::AB;
 const EvtCyclic3::Pair& EvtD0gammaDalitz::m_AC = EvtCyclic3::AC;
 const EvtCyclic3::Pair& EvtD0gammaDalitz::m_BC = EvtCyclic3::BC;
 
-std::string EvtD0gammaDalitz::getName()
+std::string EvtD0gammaDalitz::getName() const
 {
     return "D0GAMMADALITZ";
 }
 
-EvtDecayBase* EvtD0gammaDalitz::clone()
+EvtDecayBase* EvtD0gammaDalitz::clone() const
 {
     return new EvtD0gammaDalitz;
 }
@@ -119,7 +119,7 @@ void EvtD0gammaDalitz::decay( EvtParticle* part )
     EvtParticle* parent =
         part->getParent();    // If there are no mistakes, should be B+ or B-.
     if ( parent != nullptr &&
-         EvtDecayTable::getInstance()->getDecayFunc( parent )->getName() ==
+         EvtDecayTable::getInstance().getDecayFunc( parent )->getName() ==
              "BTODDALITZCPK" ) {
         EvtId parId = parent->getId();
         if ( ( parId == m_BP ) || ( parId == m_BM ) || ( parId == m_B0 ) ||
@@ -134,24 +134,25 @@ void EvtD0gammaDalitz::decay( EvtParticle* part )
 
     // Read the D decay parameters from the B decay model.
     // Gamma angle in rad.
-    double gamma = EvtDecayTable::getInstance()->getDecayFunc( parent )->getArg(
-        0 );
+    const double gamma =
+        EvtDecayTable::getInstance().getDecayFunc( parent )->getArg( 0 );
     // Strong phase in rad.
-    double delta = EvtDecayTable::getInstance()->getDecayFunc( parent )->getArg(
-        1 );
+    const double delta =
+        EvtDecayTable::getInstance().getDecayFunc( parent )->getArg( 1 );
     // Ratio between B->D0K and B->D0barK
-    double rB = EvtDecayTable::getInstance()->getDecayFunc( parent )->getArg( 2 );
+    const double rB =
+        EvtDecayTable::getInstance().getDecayFunc( parent )->getArg( 2 );
 
     // Same structure for all of these decays.
     part->initializePhaseSpace( getNDaug(), getDaugs() );
-    EvtVector4R pA = part->getDaug( m_d1 )->getP4();
-    EvtVector4R pB = part->getDaug( m_d2 )->getP4();
-    EvtVector4R pC = part->getDaug( m_d3 )->getP4();
+    const EvtVector4R pA = part->getDaug( m_d1 )->getP4();
+    const EvtVector4R pB = part->getDaug( m_d2 )->getP4();
+    const EvtVector4R pC = part->getDaug( m_d3 )->getP4();
 
     // Squared invariant masses.
-    double mSqAB = ( pA + pB ).mass2();
-    double mSqAC = ( pA + pC ).mass2();
-    double mSqBC = ( pB + pC ).mass2();
+    const double mSqAB = ( pA + pB ).mass2();
+    const double mSqAC = ( pA + pC ).mass2();
+    const double mSqBC = ( pB + pC ).mass2();
 
     EvtComplex amp( 1.0, 0.0 );
 
@@ -196,32 +197,34 @@ EvtComplex EvtD0gammaDalitz::dalitzKsPiPi( const EvtDalitzPoint& point ) const
 
     // This corresponds to relativistic Breit-Wigner distributions. Not K-matrix.
     // Defining resonances.
-    static EvtDalitzReso KStarm( plot, m_BC, m_AC, m_VECTOR, 0.893606,
-                                 0.0463407, m_RBW );
-    static EvtDalitzReso KStarp( plot, m_BC, m_AB, m_VECTOR, 0.893606,
-                                 0.0463407, m_RBW );
-    static EvtDalitzReso rho0( plot, m_AC, m_BC, m_VECTOR, 0.7758, 0.1464, m_GS );
-    static EvtDalitzReso omega( plot, m_AC, m_BC, m_VECTOR, 0.78259, 0.00849,
-                                m_RBW );
-    static EvtDalitzReso f0_980( plot, m_AC, m_BC, m_SCALAR, 0.975, 0.044, m_RBW );
-    static EvtDalitzReso f0_1370( plot, m_AC, m_BC, m_SCALAR, 1.434, 0.173,
-                                  m_RBW );
-    static EvtDalitzReso f2_1270( plot, m_AC, m_BC, m_TENSOR, 1.2754, 0.1851,
-                                  m_RBW );
-    static EvtDalitzReso K0Starm_1430( plot, m_BC, m_AC, m_SCALAR, 1.459, 0.175,
+    static const EvtDalitzReso KStarm( plot, m_BC, m_AC, m_VECTOR, 0.893606,
+                                       0.0463407, m_RBW );
+    static const EvtDalitzReso KStarp( plot, m_BC, m_AB, m_VECTOR, 0.893606,
+                                       0.0463407, m_RBW );
+    static const EvtDalitzReso rho0( plot, m_AC, m_BC, m_VECTOR, 0.7758, 0.1464,
+                                     m_GS );
+    static const EvtDalitzReso omega( plot, m_AC, m_BC, m_VECTOR, 0.78259,
+                                      0.00849, m_RBW );
+    static const EvtDalitzReso f0_980( plot, m_AC, m_BC, m_SCALAR, 0.975, 0.044,
                                        m_RBW );
-    static EvtDalitzReso K0Starp_1430( plot, m_BC, m_AB, m_SCALAR, 1.459, 0.175,
-                                       m_RBW );
-    static EvtDalitzReso K2Starm_1430( plot, m_BC, m_AC, m_TENSOR, 1.4256,
-                                       0.0985, m_RBW );
-    static EvtDalitzReso K2Starp_1430( plot, m_BC, m_AB, m_TENSOR, 1.4256,
-                                       0.0985, m_RBW );
-    static EvtDalitzReso sigma( plot, m_AC, m_BC, m_SCALAR, 0.527699, 0.511861,
-                                m_RBW );
-    static EvtDalitzReso sigma2( plot, m_AC, m_BC, m_SCALAR, 1.03327, 0.0987890,
-                                 m_RBW );
-    static EvtDalitzReso KStarm_1680( plot, m_BC, m_AC, m_VECTOR, 1.677, 0.205,
-                                      m_RBW );
+    static const EvtDalitzReso f0_1370( plot, m_AC, m_BC, m_SCALAR, 1.434,
+                                        0.173, m_RBW );
+    static const EvtDalitzReso f2_1270( plot, m_AC, m_BC, m_TENSOR, 1.2754,
+                                        0.1851, m_RBW );
+    static const EvtDalitzReso K0Starm_1430( plot, m_BC, m_AC, m_SCALAR, 1.459,
+                                             0.175, m_RBW );
+    static const EvtDalitzReso K0Starp_1430( plot, m_BC, m_AB, m_SCALAR, 1.459,
+                                             0.175, m_RBW );
+    static const EvtDalitzReso K2Starm_1430( plot, m_BC, m_AC, m_TENSOR, 1.4256,
+                                             0.0985, m_RBW );
+    static const EvtDalitzReso K2Starp_1430( plot, m_BC, m_AB, m_TENSOR, 1.4256,
+                                             0.0985, m_RBW );
+    static const EvtDalitzReso sigma( plot, m_AC, m_BC, m_SCALAR, 0.527699,
+                                      0.511861, m_RBW );
+    static const EvtDalitzReso sigma2( plot, m_AC, m_BC, m_SCALAR, 1.03327,
+                                       0.0987890, m_RBW );
+    static const EvtDalitzReso KStarm_1680( plot, m_BC, m_AC, m_VECTOR, 1.677,
+                                            0.205, m_RBW );
 
     // Adding terms to the amplitude with their corresponding amplitude and phase terms.
     amp += EvtComplex( .848984, .893618 );
@@ -248,25 +251,26 @@ EvtComplex EvtD0gammaDalitz::dalitzKsKK( const EvtDalitzPoint& point ) const
     static const EvtDalitzPlot plot( m_mKs, m_mK, m_mK, m_mD0 );
 
     // Defining resonances.
-    static EvtDalitzReso a00_980( plot, m_AC, m_BC, m_SCALAR, 0.999, m_RBW,
-                                  .550173, .324, m_EtaPic );
-    static EvtDalitzReso phi( plot, m_AC, m_BC, m_VECTOR, 1.01943, .00459319,
-                              m_RBW );
-    static EvtDalitzReso a0p_980( plot, m_AC, m_AB, m_SCALAR, 0.999, m_RBW,
-                                  .550173, .324, m_EtaPic );
-    static EvtDalitzReso f0_1370( plot, m_AC, m_BC, m_SCALAR, 1.350, .265, m_RBW );
-    static EvtDalitzReso a0m_980( plot, m_AB, m_AC, m_SCALAR, 0.999, m_RBW,
-                                  .550173, .324, m_EtaPic );
-    static EvtDalitzReso f0_980( plot, m_AC, m_BC, m_SCALAR, 0.965, m_RBW, .695,
-                                 .165, m_PicPicKK );
-    static EvtDalitzReso f2_1270( plot, m_AC, m_BC, m_TENSOR, 1.2754, .1851,
-                                  m_RBW );
-    static EvtDalitzReso a00_1450( plot, m_AC, m_BC, m_SCALAR, 1.474, .265,
-                                   m_RBW );
-    static EvtDalitzReso a0p_1450( plot, m_AC, m_AB, m_SCALAR, 1.474, .265,
-                                   m_RBW );
-    static EvtDalitzReso a0m_1450( plot, m_AB, m_AC, m_SCALAR, 1.474, .265,
-                                   m_RBW );
+    static const EvtDalitzReso a00_980( plot, m_AC, m_BC, m_SCALAR, 0.999,
+                                        m_RBW, .550173, .324, m_EtaPic );
+    static const EvtDalitzReso phi( plot, m_AC, m_BC, m_VECTOR, 1.01943,
+                                    .00459319, m_RBW );
+    static const EvtDalitzReso a0p_980( plot, m_AC, m_AB, m_SCALAR, 0.999,
+                                        m_RBW, .550173, .324, m_EtaPic );
+    static const EvtDalitzReso f0_1370( plot, m_AC, m_BC, m_SCALAR, 1.350, .265,
+                                        m_RBW );
+    static const EvtDalitzReso a0m_980( plot, m_AB, m_AC, m_SCALAR, 0.999,
+                                        m_RBW, .550173, .324, m_EtaPic );
+    static const EvtDalitzReso f0_980( plot, m_AC, m_BC, m_SCALAR, 0.965, m_RBW,
+                                       .695, .165, m_PicPicKK );
+    static const EvtDalitzReso f2_1270( plot, m_AC, m_BC, m_TENSOR, 1.2754,
+                                        .1851, m_RBW );
+    static const EvtDalitzReso a00_1450( plot, m_AC, m_BC, m_SCALAR, 1.474,
+                                         .265, m_RBW );
+    static const EvtDalitzReso a0p_1450( plot, m_AC, m_AB, m_SCALAR, 1.474,
+                                         .265, m_RBW );
+    static const EvtDalitzReso a0m_1450( plot, m_AB, m_AC, m_SCALAR, 1.474,
+                                         .265, m_RBW );
 
     // Adding terms to the amplitude with their corresponding amplitude and phase terms.
     EvtComplex amp( 0., 0. );    // Phase space amplitude.

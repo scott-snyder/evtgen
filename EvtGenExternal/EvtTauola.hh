@@ -29,21 +29,19 @@ class EvtDecayBase;
 
 // Description: Use the Tauola external generator for tau decays
 
-class EvtTauola : public EvtDecayIncoherent {
+class EvtTauola final : public EvtDecayIncoherent {
   public:
-    std::string getName() override;
+    std::string getName() const override;
 
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     void initProbMax() override;
     void init() override;
 
     void decay( EvtParticle* p ) override;
 
-  protected:
-    EvtAbsExternalGen* m_tauolaEngine = nullptr;
-
   private:
+    EvtAbsExternalGen* m_tauolaEngine = nullptr;
 };
 
 #endif

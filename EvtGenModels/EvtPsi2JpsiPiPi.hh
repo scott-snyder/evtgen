@@ -36,8 +36,8 @@ class EvtPsi2JpsiPiPi : public EvtDecayAmp {
   public:
     EvtPsi2JpsiPiPi();
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
     void initProbMax() override;
     void init() override;
     void decay( EvtParticle* p ) override;

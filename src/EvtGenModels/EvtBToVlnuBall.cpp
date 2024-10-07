@@ -34,12 +34,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtBToVlnuBall::getName()
+std::string EvtBToVlnuBall::getName() const
 {
     return "BTOVLNUBALL";
 }
 
-EvtBToVlnuBall* EvtBToVlnuBall::clone()
+EvtBToVlnuBall* EvtBToVlnuBall::clone() const
 {
     return new EvtBToVlnuBall;
 }

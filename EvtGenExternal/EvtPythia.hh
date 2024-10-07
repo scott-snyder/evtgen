@@ -34,14 +34,13 @@ class EvtDecayBase;
 // Class to handle generic phase space decays not done
 // in other decay models.
 
-class EvtPythia : public EvtDecayIncoherent {
+class EvtPythia final : public EvtDecayIncoherent {
   public:
-    EvtPythia();
-    ~EvtPythia();
+    EvtPythia() = default;
 
-    std::string getName() override;
+    std::string getName() const override;
 
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     void initProbMax() override;
 
@@ -52,11 +51,11 @@ class EvtPythia : public EvtDecayIncoherent {
     std::string commandName() override;
     void command( std::string ) override;
 
-  protected:
-    EvtAbsExternalGen* m_pythiaEngine;
-
   private:
     void fixPolarisations( EvtParticle* p );
+
+    EvtAbsExternalGen* m_pythiaEngine{ nullptr };
+
     std::vector<std::string> m_commandList;
 };
 

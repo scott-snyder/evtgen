@@ -34,12 +34,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtbTosllBall::getName()
+std::string EvtbTosllBall::getName() const
 {
     return "BTOSLLBALL";
 }
 
-EvtDecayBase* EvtbTosllBall::clone()
+EvtDecayBase* EvtbTosllBall::clone() const
 {
     return new EvtbTosllBall;
 }

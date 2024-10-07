@@ -41,7 +41,7 @@ EvtCPUtil::EvtCPUtil( int mixingType )
 
 EvtCPUtil* EvtCPUtil::getInstance()
 {
-    static EvtCPUtil* theCPUtil = nullptr;
+    static thread_local EvtCPUtil* theCPUtil = nullptr;
 
     if ( !theCPUtil ) {
         theCPUtil = new EvtCPUtil( 1 );
@@ -153,16 +153,16 @@ void EvtCPUtil::OtherCoherentB( EvtParticle* p, double& t, EvtId& otherb,
                                 double probB0 )
 {
     //Can not call this recursively!!!
-    static int entryCount = 0;
+    static thread_local int entryCount = 0;
     entryCount++;
 
     //added by Lange Jan4,2000
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
-    static EvtId BS = EvtPDL::getId( "B_s0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS = EvtPDL::getId( "B_s0" );
 
-    static EvtId UPS4S = EvtPDL::getId( "Upsilon(4S)" );
+    static const EvtId UPS4S = EvtPDL::getId( "Upsilon(4S)" );
 
     int isB0 = EvtRandom::Flat( 0.0, 1.0 ) < probB0;
 
@@ -294,8 +294,8 @@ bool EvtCPUtil::isBsMixed( EvtParticle* p )
     if ( !( p->getParent() ) )
         return false;
 
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
 
     if ( ( p->getId() != BS0 ) && ( p->getId() != BSB ) )
         return false;
@@ -312,8 +312,8 @@ bool EvtCPUtil::isB0Mixed( EvtParticle* p )
     if ( !( p->getParent() ) )
         return false;
 
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     if ( ( p->getId() != B0 ) && ( p->getId() != B0B ) )
         return false;
@@ -371,18 +371,18 @@ void EvtCPUtil::OtherIncoherentB( EvtParticle* p, double& t, EvtId& otherb,
 //============================================================================
 void EvtCPUtil::OtherB( EvtParticle* p, double& t, EvtId& otherb )
 {
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId UPS4 = EvtPDL::getId( "Upsilon(4S)" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId UPS4 = EvtPDL::getId( "Upsilon(4S)" );
 
     if ( p->getId() == BS0 || p->getId() == BSB ) {
-        static double ctauL = EvtPDL::getctau( EvtPDL::getId( "B_s0L" ) );
-        static double ctauH = EvtPDL::getctau( EvtPDL::getId( "B_s0H" ) );
-        static double ctau = ctauL < ctauH ? ctauH : ctauL;
+        static const double ctauL = EvtPDL::getctau( EvtPDL::getId( "B_s0L" ) );
+        static const double ctauH = EvtPDL::getctau( EvtPDL::getId( "B_s0H" ) );
+        static const double ctau = ctauL < ctauH ? ctauH : ctauL;
         t = -log( EvtRandom::Flat() ) * ctau;
         EvtParticle* parent = p->getParent();
         if ( parent != nullptr &&
@@ -403,9 +403,9 @@ void EvtCPUtil::OtherB( EvtParticle* p, double& t, EvtId& otherb )
     }
 
     if ( p->getId() == D0 || p->getId() == D0B ) {
-        static double ctauL = EvtPDL::getctau( EvtPDL::getId( "D0L" ) );
-        static double ctauH = EvtPDL::getctau( EvtPDL::getId( "D0H" ) );
-        static double ctau = ctauL < ctauH ? ctauH : ctauL;
+        static const double ctauL = EvtPDL::getctau( EvtPDL::getId( "D0L" ) );
+        static const double ctauH = EvtPDL::getctau( EvtPDL::getId( "D0H" ) );
+        static const double ctau = ctauL < ctauH ? ctauH : ctauL;
         t = -log( EvtRandom::Flat() ) * ctau;
         EvtParticle* parent = p->getParent();
         if ( parent != nullptr &&
@@ -474,16 +474,16 @@ void EvtCPUtil::incoherentMix( const EvtId id, double& t, int& mix )
     EvtId lId = EvtPDL::getId( lname );
     EvtId hId = EvtPDL::getId( hname );
 
-    double ctauL = EvtPDL::getctau( lId );
-    double ctauH = EvtPDL::getctau( hId );
+    const double ctauL = EvtPDL::getctau( lId );
+    const double ctauH = EvtPDL::getctau( hId );
 
     // Bug Fixed: Corrected the average as gamma is the relevent parameter
-    double ctau = 2.0 * ( ctauL * ctauH ) / ( ctauL + ctauH );
+    const double ctau = 2.0 * ( ctauL * ctauH ) / ( ctauL + ctauH );
     //double ctau=0.5*(ctauL+ctauH);
 
     // Bug Fixed: ctau definition changed above
     //double y=(ctauH-ctauL)/(2*ctau);
-    double y = ( ctauH - ctauL ) / ( ctauH + ctauL );
+    const double y = ( ctauH - ctauL ) / ( ctauH + ctauL );
 
     //deltam and qoverp defined in DECAY.DEC
 
@@ -511,7 +511,7 @@ void EvtCPUtil::incoherentMix( const EvtId id, double& t, int& mix )
     double prob;
 
     // Find the longest of the two lifetimes
-    double ctaulong = ctauL <= ctauH ? ctauH : ctauL;
+    const double ctaulong = ctauL <= ctauH ? ctauH : ctauL;
 
     // Bug fixed: Ensure cosine argument is dimensionless so /ctau
     do {

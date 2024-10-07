@@ -34,12 +34,12 @@
 #include <iostream>
 #include <stdlib.h>
 
-std::string EvtSVPHelCPMix::getName()
+std::string EvtSVPHelCPMix::getName() const
 {
     return "SVPHELCPMIX";
 }
 
-EvtDecayBase* EvtSVPHelCPMix::clone()
+EvtDecayBase* EvtSVPHelCPMix::clone() const
 {
     return new EvtSVPHelCPMix;
 }
@@ -63,8 +63,8 @@ void EvtSVPHelCPMix::initProbMax()
 
 void EvtSVPHelCPMix::decay( EvtParticle* p )
 {
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    //static EvtId BSB = EvtPDL::getId("anti-B_s0");
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    //static const EvtId BSB = EvtPDL::getId("anti-B_s0");
 
     //Flavour tagging of the initial state. Note that flavour mixing has already been applied out of this model
     //Initial_state == 0 (Bs at the initial state) and Initial_state == 1 (Anti-Bs in the initial state)
@@ -84,11 +84,12 @@ void EvtSVPHelCPMix::decay( EvtParticle* p )
         }
     }
 
-    static EvtId BSH = EvtPDL::getId( "B_s0H" );
-    static double ctauH = EvtPDL::getctau( BSH );
-    static double gammaH = 1.0 / ctauH;
+    static const EvtId BSH = EvtPDL::getId( "B_s0H" );
+    static const double ctauH = EvtPDL::getctau( BSH );
+    static const double gammaH = 1.0 / ctauH;
 
-    static double deltaGamma = EvtCPUtil::getInstance()->getDeltaGamma( BS0 );
+    static const double deltaGamma = EvtCPUtil::getInstance()->getDeltaGamma(
+        BS0 );
 
     //Here we're gonna generate and set the "envelope" lifetime, so we take the longest living component (for positive deltaGamma: tauH)
     //t is initialized following a e^(gammaH*t) lifetime distribution. When computing the amplitudes a factor e^(gammaH*t/2) should be substracted.
@@ -100,7 +101,7 @@ void EvtSVPHelCPMix::decay( EvtParticle* p )
         p->setLifetime( t );
     }
 
-    static double deltaMs = EvtCPUtil::getInstance()->getDeltaM( BS0 );
+    static const double deltaMs = EvtCPUtil::getInstance()->getDeltaM( BS0 );
     double mt = exp( -std::max( 0.0, deltaGamma ) * t / ( 2.0 * EvtConst::c ) );
     double pt = exp( +std::min( 0.0, deltaGamma ) * t / ( 2.0 * EvtConst::c ) );
 

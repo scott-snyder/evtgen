@@ -37,23 +37,23 @@
 
 class EvtDalitzTable {
   public:
-    static EvtDalitzTable* getInstance( const std::string dec_name = "",
-                                        bool verbose = true );
+    static const EvtDalitzTable& getInstance( const std::string dec_name = "",
+                                              bool verbose = true );
 
-    bool fileHasBeenRead( const std::string dec_name );
-    void readXMLDecayFile( const std::string dec_name, bool verbose = true );
-    void checkParticle( std::string particle );
-
-    void addDecay( EvtId parent, const EvtDalitzDecayInfo& dec );
-    void copyDecay( EvtId parent, EvtId* daughters, EvtId copy, EvtId* copyd );
-
-    std::vector<EvtDalitzDecayInfo> getDalitzTable( const EvtId& parent );
+    std::vector<EvtDalitzDecayInfo> getDalitzTable( const EvtId& parent ) const;
 
   protected:
     EvtDalitzTable();
     ~EvtDalitzTable();
 
   private:
+    bool fileHasBeenRead( const std::string dec_name ) const;
+    void readXMLDecayFile( const std::string dec_name, bool verbose = true );
+    void checkParticle( std::string particle ) const;
+
+    void addDecay( EvtId parent, const EvtDalitzDecayInfo& dec );
+    void copyDecay( EvtId parent, EvtId* daughters, EvtId copy, EvtId* copyd );
+
     EvtDalitzReso getResonance( std::string shape, EvtDalitzPlot dp,
                                 EvtCyclic3::Pair angPair,
                                 EvtCyclic3::Pair resPair,

@@ -35,12 +35,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtBtoXsgamma::getName()
+std::string EvtBtoXsgamma::getName() const
 {
     return "BTOXSGAMMA";
 }
 
-EvtDecayBase* EvtBtoXsgamma::clone()
+EvtDecayBase* EvtBtoXsgamma::clone() const
 {
     return new EvtBtoXsgamma;
 }
@@ -57,12 +57,18 @@ void EvtBtoXsgamma::init()
     // check that at least one b->sg model has been selected
     if ( getNArg() == 0 ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
-            << "EvtBtoXsgamma generator expected "
+            << EvtBtoXsgamma::getName().c_str() << " generator expected "
             << " at least 1 argument but found: " << getNArg() << endl;
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
             << "Will terminate execution!" << endl;
         ::abort();
     }
+
+    // check that there are only two daughters
+    checkNDaug( 2 );
+
+    // check that second daughter has photon spin
+    checkSpinDaughter( 1, EvtSpinType::PHOTON );
 }
 
 void EvtBtoXsgamma::initProbMax()
@@ -104,14 +110,14 @@ void EvtBtoXsgamma::decay( EvtParticle* p )
     double m_b;
     int i;
     p->makeDaughters( getNDaug(), getDaugs() );
-    EvtParticle* pdaug[MAX_DAUG];
+    EvtParticle* pdaug[2];
 
     for ( i = 0; i < getNDaug(); i++ ) {
         pdaug[i] = p->getDaug( i );
     }
 
-    static EvtVector4R p4[MAX_DAUG];
-    static double mass[MAX_DAUG];
+    EvtVector4R p4[2];
+    double mass[2];
 
     m_b = p->mass();
 

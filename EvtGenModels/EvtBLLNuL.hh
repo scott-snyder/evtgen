@@ -38,8 +38,8 @@ class EvtBLLNuL : public EvtDecayAmp {
   public:
     EvtBLLNuL();
 
-    virtual std::string getName() override;
-    virtual EvtDecayBase* clone() override;
+    virtual std::string getName() const override;
+    virtual EvtDecayBase* clone() const override;
 
     virtual void init() override;
     virtual void initProbMax() override;

@@ -30,12 +30,12 @@
 
 #include <iostream>
 
-std::string EvtBcVPPHad::getName()
+std::string EvtBcVPPHad::getName() const
 {
     return "BC_VPPHAD";
 }
 
-EvtDecayBase* EvtBcVPPHad::clone()
+EvtDecayBase* EvtBcVPPHad::clone() const
 {
     return new EvtBcVPPHad;
 }

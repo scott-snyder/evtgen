@@ -321,7 +321,7 @@ EvtTensor3C EvtGenFunctions::eps( const EvtVector3R& v )
 
 const EvtTensor3C& EvtTensor3C::id()
 {
-    static EvtTensor3C identity( 1.0, 1.0, 1.0 );
+    static const EvtTensor3C identity( 1.0, 1.0, 1.0 );
 
     return identity;
 }

@@ -35,12 +35,12 @@ EvtSLDiBaryonAmp::EvtSLDiBaryonAmp( const EvtBToDiBaryonlnupQCDFF& formFactors )
 
 void EvtSLDiBaryonAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp ) const
 {
-    static EvtId EM = EvtPDL::getId( "e-" );
-    static EvtId MUM = EvtPDL::getId( "mu-" );
-    static EvtId TAUM = EvtPDL::getId( "tau-" );
-    static EvtId EP = EvtPDL::getId( "e+" );
-    static EvtId MUP = EvtPDL::getId( "mu+" );
-    static EvtId TAUP = EvtPDL::getId( "tau+" );
+    static const EvtId EM = EvtPDL::getId( "e-" );
+    static const EvtId MUM = EvtPDL::getId( "mu-" );
+    static const EvtId TAUM = EvtPDL::getId( "tau-" );
+    static const EvtId EP = EvtPDL::getId( "e+" );
+    static const EvtId MUP = EvtPDL::getId( "mu+" );
+    static const EvtId TAUP = EvtPDL::getId( "tau+" );
 
     // The amplitude assumes B- -> p+ p- l- nubar ordering
     // i.e. the B- decay is the "particle" mode
@@ -419,18 +419,18 @@ int EvtSLDiBaryonAmp::getBaryonParity( const EvtId& id ) const
     int parity( 1 );
 
     // List of baryons with parity = +1
-    static EvtIdSet posParity{ "p+",
-                               "Delta+",
-                               "Lambda_c+",
-                               "anti-Lambda_c(2593)-",
-                               "anti-Lambda_c(2625)-",
-                               "N(1440)+",
-                               "anti-N(1520)-",
-                               "anti-N(1535)-",
-                               "anti-N(1650)-",
-                               "anti-N(1700)-",
-                               "N(1710)+",
-                               "N(1720)+" };
+    static const EvtIdSet posParity{ "p+",
+                                     "Delta+",
+                                     "Lambda_c+",
+                                     "anti-Lambda_c(2593)-",
+                                     "anti-Lambda_c(2625)-",
+                                     "N(1440)+",
+                                     "anti-N(1520)-",
+                                     "anti-N(1535)-",
+                                     "anti-N(1650)-",
+                                     "anti-N(1700)-",
+                                     "N(1710)+",
+                                     "N(1720)+" };
 
     // If the baryon id is not in the list, set the parity to -1
     if ( !posParity.contains( id ) ) {

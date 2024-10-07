@@ -34,19 +34,19 @@
 void EvtSemiLeptonicTensorAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
                                         EvtSemiLeptonicFF* FormFactors )
 {
-    static EvtId EM = EvtPDL::getId( "e-" );
-    static EvtId MUM = EvtPDL::getId( "mu-" );
-    static EvtId TAUM = EvtPDL::getId( "tau-" );
-    static EvtId EP = EvtPDL::getId( "e+" );
-    static EvtId MUP = EvtPDL::getId( "mu+" );
-    static EvtId TAUP = EvtPDL::getId( "tau+" );
+    static const EvtId EM = EvtPDL::getId( "e-" );
+    static const EvtId MUM = EvtPDL::getId( "mu-" );
+    static const EvtId TAUM = EvtPDL::getId( "tau-" );
+    static const EvtId EP = EvtPDL::getId( "e+" );
+    static const EvtId MUP = EvtPDL::getId( "mu+" );
+    static const EvtId TAUP = EvtPDL::getId( "tau+" );
 
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
-    static EvtId DP = EvtPDL::getId( "D+" );
-    static EvtId DM = EvtPDL::getId( "D-" );
-    static EvtId DSM = EvtPDL::getId( "D_s-" );
-    static EvtId DSP = EvtPDL::getId( "D_s+" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId DP = EvtPDL::getId( "D+" );
+    static const EvtId DM = EvtPDL::getId( "D-" );
+    static const EvtId DSM = EvtPDL::getId( "D_s-" );
+    static const EvtId DSP = EvtPDL::getId( "D_s+" );
 
     //Add the lepton and neutrino 4 momenta to find q2
 

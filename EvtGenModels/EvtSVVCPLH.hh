@@ -29,8 +29,8 @@ class EvtSVVCPLH : public EvtDecayAmp {
   public:
     EvtSVVCPLH() {}
 
-    std::string getName() override;
-    EvtDecayBase* clone() override;
+    std::string getName() const override;
+    EvtDecayBase* clone() const override;
 
     void initProbMax() override;
     void init() override;

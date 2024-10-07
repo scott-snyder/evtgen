@@ -34,10 +34,10 @@ class EvtDecayBase {
   public:
     //These pure virtual methods has to be implemented
     //by any derived class
-    virtual std::string getName() = 0;
+    virtual std::string getName() const = 0;
     virtual void decay( EvtParticle* p ) = 0;
     virtual void makeDecay( EvtParticle* p, bool recursive = true ) = 0;
-    virtual EvtDecayBase* clone() = 0;
+    virtual EvtDecayBase* clone() const = 0;
 
     //These virtual methods can be implemented by the
     //derived class to implement nontrivial functionality.
@@ -62,7 +62,7 @@ class EvtDecayBase {
     void disableCheckQ() { m_chkCharge = false; };
     void checkQ();
     int getNDaug() const { return m_ndaug; }
-    EvtId* getDaugs() { return m_daug.data(); }
+    const EvtId* getDaugs() const { return m_daug.data(); }
     EvtId getDaug( int i ) const { return m_daug[i]; }
     int getNArg() const { return m_narg; }
     bool getFSR() const { return m_fsr; }
@@ -80,14 +80,14 @@ class EvtDecayBase {
     bool summary() const { return m_summary; }
     bool verbose() const { return m_verbose; }
 
-    void saveDecayInfo( EvtId ipar, int ndaug, EvtId* daug, int narg,
+    void saveDecayInfo( EvtId ipar, int ndaug, const EvtId* daug, int narg,
                         std::vector<std::string>& args, std::string name,
                         double brfr );
     void printSummary() const;
     void printInfo() const;
 
     //Does not really belong here but I don't have a better place.
-    static void findMasses( EvtParticle* p, int ndaugs, EvtId daugs[10],
+    static void findMasses( EvtParticle* p, int ndaugs, const EvtId daugs[10],
                             double masses[10] );
     static void findMass( EvtParticle* p );
     static double findMaxMass( EvtParticle* p );
@@ -104,11 +104,14 @@ class EvtDecayBase {
 
     // lange - some models can take more daughters
     // than they really have to fool aliases (VSSBMIX for example)
-    virtual int nRealDaughters() { return m_ndaug; }
+    virtual int nRealDaughters() const { return m_ndaug; }
 
   protected:
     bool m_daugsDecayedByParentModel;
-    bool daugsDecayedByParentModel() { return m_daugsDecayedByParentModel; }
+    bool daugsDecayedByParentModel() const
+    {
+        return m_daugsDecayedByParentModel;
+    }
 
   private:
     std::vector<double> m_storedArgs;

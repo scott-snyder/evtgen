@@ -44,12 +44,12 @@
 using std::cout;
 using std::endl;
 
-std::string EvtVubBLNPHybrid::getName()
+std::string EvtVubBLNPHybrid::getName() const
 {
     return "VUB_BLNPHYBRID";
 }
 
-EvtDecayBase* EvtVubBLNPHybrid::clone()
+EvtDecayBase* EvtVubBLNPHybrid::clone() const
 {
     return new EvtVubBLNPHybrid;
 }

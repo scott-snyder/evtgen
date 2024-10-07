@@ -30,12 +30,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtVSPPwave::getName()
+std::string EvtVSPPwave::getName() const
 {
     return "VSP_PWAVE";
 }
 
-EvtDecayBase* EvtVSPPwave::clone()
+EvtDecayBase* EvtVSPPwave::clone() const
 {
     return new EvtVSPPwave;
 }

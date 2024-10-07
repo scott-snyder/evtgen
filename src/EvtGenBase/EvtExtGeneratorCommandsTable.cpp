@@ -32,7 +32,7 @@ EvtExtGeneratorCommandsTable::~EvtExtGeneratorCommandsTable()
 
 EvtExtGeneratorCommandsTable* EvtExtGeneratorCommandsTable::getInstance()
 {
-    static EvtExtGeneratorCommandsTable* theCommandMap = nullptr;
+    static thread_local EvtExtGeneratorCommandsTable* theCommandMap = nullptr;
 
     if ( !theCommandMap ) {
         theCommandMap = new EvtExtGeneratorCommandsTable();

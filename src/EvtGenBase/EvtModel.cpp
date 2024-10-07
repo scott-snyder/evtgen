@@ -37,7 +37,7 @@
 #include <string>
 using std::fstream;
 
-EvtModel* EvtModel::m_instance = nullptr;
+thread_local EvtModel* EvtModel::m_instance = nullptr;
 
 EvtModel::EvtModel()
 {

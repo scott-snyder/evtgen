@@ -37,13 +37,13 @@
 #include <stdlib.h>
 
 // The module name specification
-std::string EvtRareLbToLll::getName()
+std::string EvtRareLbToLll::getName() const
 {
     return "RareLbToLll";
 }
 
-// The implementation of the clone() method
-EvtDecayBase* EvtRareLbToLll::clone()
+// The implementation of the clone() const method
+EvtDecayBase* EvtRareLbToLll::clone() const
 {
     return new EvtRareLbToLll;
 }

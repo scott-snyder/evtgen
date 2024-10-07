@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtVSSMix::getName()
+std::string EvtVSSMix::getName() const
 {
     return "VSS_MIX";
 }
 
-EvtDecayBase* EvtVSSMix::clone()
+EvtDecayBase* EvtVSSMix::clone() const
 {
     return new EvtVSSMix;
 }
@@ -61,8 +61,8 @@ void EvtVSSMix::initProbMax()
 void EvtVSSMix::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     p->initializePhaseSpace( getNDaug(), getDaugs() );
     EvtParticle *s1, *s2;

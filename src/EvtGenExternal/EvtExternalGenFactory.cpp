@@ -33,29 +33,9 @@
 #include <iostream>
 using std::endl;
 
-EvtExternalGenFactory::EvtExternalGenFactory()
+EvtExternalGenFactory& EvtExternalGenFactory::getInstance()
 {
-    m_extGenMap.clear();
-}
-
-EvtExternalGenFactory::~EvtExternalGenFactory()
-{
-    ExtGenMap::iterator iter;
-    for ( iter = m_extGenMap.begin(); iter != m_extGenMap.end(); ++iter ) {
-        EvtAbsExternalGen* theGenerator = iter->second;
-        delete theGenerator;
-    }
-
-    m_extGenMap.clear();
-}
-
-EvtExternalGenFactory* EvtExternalGenFactory::getInstance()
-{
-    static EvtExternalGenFactory* theFactory = nullptr;
-
-    if ( theFactory == nullptr ) {
-        theFactory = new EvtExternalGenFactory();
-    }
+    static thread_local EvtExternalGenFactory theFactory;
 
     return theFactory;
 }
@@ -66,8 +46,6 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string xmlDir,
                                                    bool convertPhysCodes,
                                                    bool useEvtGenRandom )
 {
-    GenId genId = EvtExternalGenFactory::PythiaGenId;
-
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << "Defining EvtPythiaEngine: data tables defined in " << xmlDir << endl;
     if ( convertPhysCodes == true ) {
@@ -84,9 +62,8 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string xmlDir,
             << "Using EvtGen random engine for Pythia 8 as well" << endl;
     }
 
-    EvtAbsExternalGen* pythiaGenerator =
-        new EvtPythiaEngine( xmlDir, convertPhysCodes, useEvtGenRandom );
-    m_extGenMap[genId] = pythiaGenerator;
+    m_extGenMap[GenId::PythiaGenId] = std::make_unique<EvtPythiaEngine>(
+        xmlDir, convertPhysCodes, useEvtGenRandom );
 }
 #else
 void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
@@ -95,46 +72,41 @@ void EvtExternalGenFactory::definePythiaGenerator( std::string, bool, bool )
 #endif
 
 #ifdef EVTGEN_TAUOLA
-void EvtExternalGenFactory::defineTauolaGenerator( bool useEvtGenRandom )
+void EvtExternalGenFactory::defineTauolaGenerator( bool useEvtGenRandom,
+                                                   bool seedTauolaFortran )
 {
-    GenId genId = EvtExternalGenFactory::TauolaGenId;
-
     EvtGenReport( EVTGEN_INFO, "EvtGen" ) << "Defining EvtTauolaEngine." << endl;
 
-    EvtAbsExternalGen* tauolaGenerator = new EvtTauolaEngine( useEvtGenRandom );
-    m_extGenMap[genId] = tauolaGenerator;
+    m_extGenMap[GenId::TauolaGenId] =
+        std::make_unique<EvtTauolaEngine>( useEvtGenRandom, seedTauolaFortran );
 }
 #else
-void EvtExternalGenFactory::defineTauolaGenerator( bool )
+void EvtExternalGenFactory::defineTauolaGenerator( bool, bool )
 {
 }
 #endif
 
-EvtAbsExternalGen* EvtExternalGenFactory::getGenerator( GenId genId )
+EvtAbsExternalGen* EvtExternalGenFactory::getGenerator( const GenId genId )
 {
-    EvtAbsExternalGen* theGenerator( nullptr );
+    ExtGenMap::iterator iter = m_extGenMap.find( genId );
 
-    ExtGenMap::iterator iter;
-
-    if ( ( iter = m_extGenMap.find( genId ) ) != m_extGenMap.end() ) {
-        // Retrieve the external generator engine
-        theGenerator = iter->second;
-
-    } else {
+    if ( iter == m_extGenMap.end() ) {
         EvtGenReport( EVTGEN_INFO, "EvtGen" )
             << "EvtAbsExternalGen::getGenerator: could not find generator for genId = "
-            << genId << endl;
+            //FIXME C++23 use std::to_underlying
+            << static_cast<std::underlying_type_t<GenId>>( genId ) << endl;
+        return nullptr;
     }
 
-    return theGenerator;
+    // Retrieve the external generator engine
+    auto& theGenerator = iter->second;
+    return theGenerator.get();
 }
 
 void EvtExternalGenFactory::initialiseAllGenerators()
 {
-    ExtGenMap::iterator iter;
-    for ( iter = m_extGenMap.begin(); iter != m_extGenMap.end(); ++iter ) {
-        EvtAbsExternalGen* theGenerator = iter->second;
-        if ( theGenerator != nullptr ) {
+    for ( auto& [id, theGenerator] : m_extGenMap ) {
+        if ( theGenerator ) {
             theGenerator->initialise();
         }
     }

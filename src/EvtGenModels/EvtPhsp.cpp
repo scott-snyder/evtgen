@@ -28,12 +28,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtPhsp::getName()
+std::string EvtPhsp::getName() const
 {
     return "PHSP";
 }
 
-EvtDecayBase* EvtPhsp::clone()
+EvtDecayBase* EvtPhsp::clone() const
 {
     return new EvtPhsp;
 }

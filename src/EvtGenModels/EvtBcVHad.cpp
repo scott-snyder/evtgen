@@ -33,12 +33,12 @@
 
 #include <iostream>
 
-std::string EvtBcVHad::getName()
+std::string EvtBcVHad::getName() const
 {
     return "BC_VHAD";
 }
 
-EvtDecayBase* EvtBcVHad::clone()
+EvtDecayBase* EvtBcVHad::clone() const
 {
     return new EvtBcVHad;
 }

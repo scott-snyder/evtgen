@@ -36,8 +36,8 @@ EvtComplex EvtAmpA2( const EvtVector4R& p4pi1, const EvtVector4R& p4pi2,
                      const EvtVector4R& p4pi3, const EvtVector4R& p4pi4 )
 {
     //added by Lange Jan4,2000
-    static EvtId A2M = EvtPDL::getId( "a_2-" );
-    static EvtId RHO0 = EvtPDL::getId( "rho0" );
+    static const EvtId A2M = EvtPDL::getId( "a_2-" );
+    static const EvtId RHO0 = EvtPDL::getId( "rho0" );
 
     EvtVector4R p4a2, p4rho, p4b;
 
@@ -97,8 +97,8 @@ EvtComplex EvtAmpA1( const EvtVector4R& p4pi1, const EvtVector4R& p4pi2,
                      const EvtVector4R& p4pi3, const EvtVector4R& p4pi4 )
 {
     //added by Lange Jan4,2000
-    static EvtId A1M = EvtPDL::getId( "a_1-" );
-    static EvtId RHO0 = EvtPDL::getId( "rho0" );
+    static const EvtId A1M = EvtPDL::getId( "a_1-" );
+    static const EvtId RHO0 = EvtPDL::getId( "rho0" );
 
     EvtVector4R p4a1, p4rho, p4b;
 
@@ -146,12 +146,12 @@ EvtComplex EvtAmpA1( const EvtVector4R& p4pi1, const EvtVector4R& p4pi2,
                       vb.get( 3 ) * vpi.get( 3 ) );
 }
 
-std::string EvtBTo4piCP::getName()
+std::string EvtBTo4piCP::getName() const
 {
     return "BTO4PI_CP";
 }
 
-EvtBTo4piCP* EvtBTo4piCP::clone()
+EvtBTo4piCP* EvtBTo4piCP::clone() const
 {
     return new EvtBTo4piCP;
 }
@@ -178,8 +178,8 @@ void EvtBTo4piCP::init()
 void EvtBTo4piCP::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

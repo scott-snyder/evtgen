@@ -46,12 +46,12 @@ EvtBcBsStarNPi::EvtBcBsStarNPi()
     m_FV_c2 = 0.069;
 }
 
-std::string EvtBcBsStarNPi::getName()
+std::string EvtBcBsStarNPi::getName() const
 {
     return "BC_BSSTAR_NPI";
 }
 
-EvtBcBsStarNPi* EvtBcBsStarNPi::clone()
+EvtBcBsStarNPi* EvtBcBsStarNPi::clone() const
 {
     return new EvtBcBsStarNPi;
 }

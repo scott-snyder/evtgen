@@ -36,8 +36,8 @@ class EvtBcBsNPi : public EvtBcToNPi {
     void init() override;
     void initProbMax() override;
 
-    std::string getName() override;
-    EvtBcBsNPi* clone() override;
+    std::string getName() const override;
+    EvtBcBsNPi* clone() const override;
 };
 
 #endif

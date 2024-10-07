@@ -31,12 +31,12 @@
 #include <iostream>
 #include <string>
 
-std::string EvtTauola::getName()
+std::string EvtTauola::getName() const
 {
     return "TAUOLA";
 }
 
-EvtDecayBase* EvtTauola::clone()
+EvtDecayBase* EvtTauola::clone() const
 {
     return new EvtTauola();
 }
@@ -57,8 +57,8 @@ void EvtTauola::decay( EvtParticle* p )
     // point to the same engine.
 
     if ( !m_tauolaEngine ) {
-        m_tauolaEngine = EvtExternalGenFactory::getInstance()->getGenerator(
-            EvtExternalGenFactory::TauolaGenId );
+        m_tauolaEngine = EvtExternalGenFactory::getInstance().getGenerator(
+            EvtExternalGenFactory::GenId::TauolaGenId );
     }
 
     if ( m_tauolaEngine ) {

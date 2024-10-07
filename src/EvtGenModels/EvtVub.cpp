@@ -33,12 +33,12 @@
 #include <string>
 using std::endl;
 
-std::string EvtVub::getName()
+std::string EvtVub::getName() const
 {
     return "VUB";
 }
 
-EvtDecayBase* EvtVub::clone()
+EvtDecayBase* EvtVub::clone() const
 {
     return new EvtVub;
 }
@@ -146,9 +146,6 @@ void EvtVub::init()
         m_pf[index] /= m_pf[m_pf.size() - 1];
     }
 
-    //  static EvtHepRandomEngine myEngine;
-
-    //  _pFermi = new RandGeneral(myEngine,pf,aSize,0);
     m_dGamma = std::make_unique<EvtVubdGamma>( m_alphas );
 
     // check that there are 3 daughters

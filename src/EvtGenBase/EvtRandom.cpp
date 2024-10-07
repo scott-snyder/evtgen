@@ -31,7 +31,7 @@
 
 using std::endl;
 
-EvtRandomEngine* EvtRandom::m_randomEngine = nullptr;
+thread_local EvtRandomEngine* EvtRandom::m_randomEngine = nullptr;
 
 void EvtRandom::setRandomEngine( EvtRandomEngine* randomEngine )
 {
@@ -50,7 +50,7 @@ double EvtRandom::random()
     return m_randomEngine->random();
 }
 
-void EvtRandom::setSeed( unsigned int seed )
+void EvtRandom::setSeed( unsigned long int seed )
 {
     if ( m_randomEngine == nullptr ) {
         EvtGenReport( EVTGEN_ERROR, "EvtGen" )
@@ -60,6 +60,18 @@ void EvtRandom::setSeed( unsigned int seed )
     }
 
     m_randomEngine->setSeed( seed );
+}
+
+unsigned long int EvtRandom::lastSeed()
+{
+    if ( m_randomEngine == nullptr ) {
+        EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+            << "No random engine available in "
+            << "EvtRandom::random()." << endl;
+        ::abort();
+    }
+
+    return m_randomEngine->lastSeed();
 }
 
 // Random number routine to generate numbers between

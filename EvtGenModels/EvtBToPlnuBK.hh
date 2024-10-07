@@ -34,8 +34,8 @@ class EvtParticle;
 
 class EvtBToPlnuBK : public EvtDecayAmp {
   public:
-    std::string getName() override;
-    EvtBToPlnuBK* clone() override;
+    std::string getName() const override;
+    EvtBToPlnuBK* clone() const override;
 
     void init() override;
     void initProbMax() override;

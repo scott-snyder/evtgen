@@ -1,0 +1,5 @@
+{
+    "threads" : 1,
+    "thread_model" : "StdLib",
+    "fsr_generator" : "PHOTOS"
+}

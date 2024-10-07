@@ -48,12 +48,12 @@ EvtLb2plnuLCSR::~EvtLb2plnuLCSR()
     m_calcamp = nullptr;
 }
 
-std::string EvtLb2plnuLCSR::getName()
+std::string EvtLb2plnuLCSR::getName() const
 {
     return "Lb2plnuLCSR";
 }
 
-EvtDecayBase* EvtLb2plnuLCSR::clone()
+EvtDecayBase* EvtLb2plnuLCSR::clone() const
 {
     return new EvtLb2plnuLCSR;
 }
@@ -61,9 +61,9 @@ EvtDecayBase* EvtLb2plnuLCSR::clone()
 void EvtLb2plnuLCSR::decay( EvtParticle* p )
 {
     //This is a kludge to avoid warnings because the K_2* mass becomes to large.
-    static EvtIdSet regenerateMasses{ "K_2*+", "K_2*-", "K_2*0", "anti-K_2*0",
-                                      "K_1+",  "K_1-",  "K_10",  "anti-K_10",
-                                      "D'_1+", "D'_1-", "D'_10", "anti-D'_10" };
+    static const EvtIdSet regenerateMasses{
+        "K_2*+", "K_2*-",     "K_2*0", "anti-K_2*0", "K_1+",  "K_1-",
+        "K_10",  "anti-K_10", "D'_1+", "D'_1-",      "D'_10", "anti-D'_10" };
 
     if ( regenerateMasses.contains( getDaug( 0 ) ) ) {
         p->resetFirstOrNot();
@@ -81,10 +81,10 @@ void EvtLb2plnuLCSR::decay( EvtParticle* p )
 
 void EvtLb2plnuLCSR::initProbMax()
 {
-    static EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
-    static EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
-    static EvtId PRO = EvtPDL::getId( "p+" );
-    static EvtId PROB = EvtPDL::getId( "anti-p-" );
+    static const EvtId LAMB = EvtPDL::getId( "Lambda_b0" );
+    static const EvtId LAMBB = EvtPDL::getId( "anti-Lambda_b0" );
+    static const EvtId PRO = EvtPDL::getId( "p+" );
+    static const EvtId PROB = EvtPDL::getId( "anti-p-" );
 
     EvtId parnum, barnum;
 

@@ -34,12 +34,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSVVNONCPEIGEN::getName()
+std::string EvtSVVNONCPEIGEN::getName() const
 {
     return "SVV_NONCPEIGEN";
 }
 
-EvtDecayBase* EvtSVVNONCPEIGEN::clone()
+EvtDecayBase* EvtSVVNONCPEIGEN::clone() const
 {
     return new EvtSVVNONCPEIGEN;
 }
@@ -94,8 +94,8 @@ void EvtSVVNONCPEIGEN::initProbMax()
 void EvtSVVNONCPEIGEN::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

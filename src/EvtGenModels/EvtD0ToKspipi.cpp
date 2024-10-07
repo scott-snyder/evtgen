@@ -8,12 +8,12 @@
 
 #include <iostream>
 
-std::string EvtD0ToKspipi::getName()
+std::string EvtD0ToKspipi::getName() const
 {
     return "D0TOKSPIPI";
 }
 
-EvtDecayBase* EvtD0ToKspipi::clone()
+EvtDecayBase* EvtD0ToKspipi::clone() const
 {
     return new EvtD0ToKspipi;
 }
@@ -87,7 +87,7 @@ void EvtD0ToKspipi::decay( EvtParticle* p )
     // Check if the D is from a B+- -> D0 K+- decay with the appropriate model
     EvtParticle* parent = p->getParent();
     EvtDecayBase* decayFun = ( parent != nullptr )
-                                 ? EvtDecayTable::getInstance()->getDecayFunc(
+                                 ? EvtDecayTable::getInstance().getDecayFunc(
                                        parent )
                                  : nullptr;
     if ( parent != nullptr && decayFun != nullptr &&

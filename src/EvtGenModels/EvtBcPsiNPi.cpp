@@ -46,12 +46,12 @@ EvtBcPsiNPi::EvtBcPsiNPi()
     m_FV_c2 = 0.0015;
 }
 
-std::string EvtBcPsiNPi::getName()
+std::string EvtBcPsiNPi::getName() const
 {
     return "BC_PSI_NPI";
 }
 
-EvtBcPsiNPi* EvtBcPsiNPi::clone()
+EvtBcPsiNPi* EvtBcPsiNPi::clone() const
 {
     return new EvtBcPsiNPi;
 }

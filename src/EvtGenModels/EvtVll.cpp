@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtVll::getName()
+std::string EvtVll::getName() const
 {
     return "VLL";
 }
 
-EvtDecayBase* EvtVll::clone()
+EvtDecayBase* EvtVll::clone() const
 {
     return new EvtVll;
 }

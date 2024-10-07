@@ -34,13 +34,13 @@
 using std::endl;
 
 //------------------------------------------------------------------
-EvtDecayBase* EvtBtoKD3P::clone()
+EvtDecayBase* EvtBtoKD3P::clone() const
 {
     return new EvtBtoKD3P();
 }
 
 //------------------------------------------------------------------
-std::string EvtBtoKD3P::getName()
+std::string EvtBtoKD3P::getName() const
 {
     return "BTOKD3P";
 }
@@ -92,15 +92,15 @@ void EvtBtoKD3P::decay( EvtParticle* p )
     // Get the D daughter particle and the decay models of the allowed
     // and suppressed D modes:
     EvtParticle* theD = p->getDaug( D1IND );
-    EvtPto3P* model1 =
-        (EvtPto3P*)( EvtDecayTable::getInstance()->getDecayFunc( theD ) );
+    EvtPto3P* model1 = dynamic_cast<EvtPto3P*>(
+        EvtDecayTable::getInstance().getDecayFunc( theD ) );
 
     // For the suppressed mode, re-initialize theD as the suppressed D alias.
     // First set the id, then re-initialize (since it matches the expected id)
     theD->setId( getDaug( D2IND ) );
     theD->init( getDaug( D2IND ), theD->getP4() );
-    EvtPto3P* model2 =
-        (EvtPto3P*)( EvtDecayTable::getInstance()->getDecayFunc( theD ) );
+    EvtPto3P* model2 = dynamic_cast<EvtPto3P*>(
+        EvtDecayTable::getInstance().getDecayFunc( theD ) );
 
     // on the first call:
     if ( false == m_decayedOnce ) {
@@ -124,8 +124,8 @@ void EvtBtoKD3P::decay( EvtParticle* p )
             assert( 0 );
         }
 
-        EvtId* daugs1 = model1->getDaugs();
-        EvtId* daugs2 = model2->getDaugs();
+        const EvtId* daugs1 = model1->getDaugs();
+        const EvtId* daugs2 = model2->getDaugs();
 
         bool idMatch = true;
         int d;

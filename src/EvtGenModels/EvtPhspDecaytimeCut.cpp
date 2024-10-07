@@ -29,12 +29,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtPhspDecaytimeCut::getName()
+std::string EvtPhspDecaytimeCut::getName() const
 {
     return "PHSPDECAYTIMECUT";
 }
 
-EvtDecayBase* EvtPhspDecaytimeCut::clone()
+EvtDecayBase* EvtPhspDecaytimeCut::clone() const
 {
     return new EvtPhspDecaytimeCut;
 }

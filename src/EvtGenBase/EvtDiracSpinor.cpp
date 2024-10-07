@@ -262,7 +262,7 @@ EvtComplex EvtLeptonPCurrent( const EvtDiracSpinor& d, const EvtDiracSpinor& dp 
 
     // no conjugate here; done in the multiplication
     // yes this is stupid and fooled me to for a long time (ryd)
-    static EvtGammaMatrix m = EvtGammaMatrix::g0() * EvtGammaMatrix::g5();
+    static const EvtGammaMatrix m = EvtGammaMatrix::g0() * EvtGammaMatrix::g5();
     temp = d * ( m * dp );
 
     return temp;
@@ -274,22 +274,22 @@ EvtTensor4C EvtLeptonTCurrent( const EvtDiracSpinor& d, const EvtDiracSpinor& dp
     temp.zero();
     EvtComplex i2( 0, 0.5 );
 
-    static EvtGammaMatrix mat01 =
+    static const EvtGammaMatrix mat01 =
         EvtGammaMatrix::g0() * ( EvtGammaMatrix::g0() * EvtGammaMatrix::g1() -
                                  EvtGammaMatrix::g1() * EvtGammaMatrix::g0() );
-    static EvtGammaMatrix mat02 =
+    static const EvtGammaMatrix mat02 =
         EvtGammaMatrix::g0() * ( EvtGammaMatrix::g0() * EvtGammaMatrix::g2() -
                                  EvtGammaMatrix::g2() * EvtGammaMatrix::g0() );
-    static EvtGammaMatrix mat03 =
+    static const EvtGammaMatrix mat03 =
         EvtGammaMatrix::g0() * ( EvtGammaMatrix::g0() * EvtGammaMatrix::g3() -
                                  EvtGammaMatrix::g3() * EvtGammaMatrix::g0() );
-    static EvtGammaMatrix mat12 =
+    static const EvtGammaMatrix mat12 =
         EvtGammaMatrix::g0() * ( EvtGammaMatrix::g1() * EvtGammaMatrix::g2() -
                                  EvtGammaMatrix::g2() * EvtGammaMatrix::g1() );
-    static EvtGammaMatrix mat13 =
+    static const EvtGammaMatrix mat13 =
         EvtGammaMatrix::g0() * ( EvtGammaMatrix::g1() * EvtGammaMatrix::g3() -
                                  EvtGammaMatrix::g3() * EvtGammaMatrix::g1() );
-    static EvtGammaMatrix mat23 =
+    static const EvtGammaMatrix mat23 =
         EvtGammaMatrix::g0() * ( EvtGammaMatrix::g2() * EvtGammaMatrix::g3() -
                                  EvtGammaMatrix::g3() * EvtGammaMatrix::g2() );
 
@@ -327,7 +327,7 @@ EvtDiracSpinor operator*( const EvtComplex& c, const EvtDiracSpinor& d )
 EvtDiracSpinor EvtDiracSpinor::adjoint() const
 {
     EvtDiracSpinor d = this->conj();    // first conjugate, then multiply with gamma0
-    EvtGammaMatrix g0 = EvtGammaMatrix::g0();
+    const EvtGammaMatrix g0 = EvtGammaMatrix::g0();
     EvtDiracSpinor result;    // automatically initialized to 0
 
     for ( int i = 0; i < 4; ++i )

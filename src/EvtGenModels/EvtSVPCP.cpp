@@ -36,12 +36,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSVPCP::getName()
+std::string EvtSVPCP::getName() const
 {
     return "SVP_CP";
 }
 
-EvtDecayBase* EvtSVPCP::clone()
+EvtDecayBase* EvtSVPCP::clone() const
 {
     return new EvtSVPCP;
 }
@@ -65,8 +65,8 @@ void EvtSVPCP::init()
 
 void EvtSVPCP::decay( EvtParticle* p )
 {
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

@@ -313,14 +313,14 @@ void EvtParticle::initDecay( bool useMinMass )
 
     //Will include effects of mixing here
     //added by Lange Jan4,2000
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
-    static EvtId BD0 = EvtPDL::getId( "B0" );
-    static EvtId BDB = EvtPDL::getId( "anti-B0" );
-    static EvtId D0 = EvtPDL::getId( "D0" );
-    static EvtId D0B = EvtPDL::getId( "anti-D0" );
-    static EvtId U4S = EvtPDL::getId( "Upsilon(4S)" );
-    static EvtIdSet borUps{ BS0, BSB, BD0, BDB, U4S };
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BD0 = EvtPDL::getId( "B0" );
+    static const EvtId BDB = EvtPDL::getId( "anti-B0" );
+    static const EvtId D0 = EvtPDL::getId( "D0" );
+    static const EvtId D0B = EvtPDL::getId( "anti-D0" );
+    static const EvtId U4S = EvtPDL::getId( "Upsilon(4S)" );
+    static const EvtIdSet borUps{ BS0, BSB, BD0, BDB, U4S };
 
     //only makes sense if there is no parent particle which is a B or an Upsilon
     bool hasBorUps = false;
@@ -375,7 +375,7 @@ void EvtParticle::initDecay( bool useMinMass )
     }
 
     EvtDecayBase* decayer;
-    decayer = EvtDecayTable::getInstance()->getDecayFunc( p );
+    decayer = EvtDecayTable::getInstance().getDecayFunc( p );
 
     if ( decayer ) {
         p->makeDaughters( decayer->nRealDaughters(), decayer->getDaugs() );
@@ -450,7 +450,7 @@ void EvtParticle::decay()
     //}
 
     EvtDecayBase* decayer;
-    decayer = EvtDecayTable::getInstance()->getDecayFunc( p );
+    decayer = EvtDecayTable::getInstance().getDecayFunc( p );
     //  if ( decayer ) {
     //    EvtGenReport(EVTGEN_INFO,"EvtGen") << "calling decay for " << EvtPDL::name(p->getId()) << " " << p->mass() << " " << p->getP4() << " " << p->getNDaug() << " " << p << endl;
     //    EvtGenReport(EVTGEN_INFO,"EvtGen") << "NDaug= " << decayer->getNDaug() << endl;
@@ -480,10 +480,10 @@ void EvtParticle::decay()
         return;
     }
 
-    static EvtId BS0 = EvtPDL::getId( "B_s0" );
-    static EvtId BSB = EvtPDL::getId( "anti-B_s0" );
-    static EvtId BD0 = EvtPDL::getId( "B0" );
-    static EvtId BDB = EvtPDL::getId( "anti-B0" );
+    static const EvtId BS0 = EvtPDL::getId( "B_s0" );
+    static const EvtId BSB = EvtPDL::getId( "anti-B_s0" );
+    static const EvtId BD0 = EvtPDL::getId( "B0" );
+    static const EvtId BDB = EvtPDL::getId( "anti-B0" );
     // static EvtId D0=EvtPDL::getId("D0");
     // static EvtId D0B=EvtPDL::getId("anti-D0");
 
@@ -493,7 +493,7 @@ void EvtParticle::decay()
     if ( m_ndaug == 1 &&
          ( thisId == BS0 || thisId == BSB || thisId == BD0 || thisId == BDB ) ) {
         p = p->getDaug( 0 );
-        decayer = EvtDecayTable::getInstance()->getDecayFunc( p );
+        decayer = EvtDecayTable::getInstance().getDecayFunc( p );
     }
     //now we have accepted a set of masses - time
     if ( decayer != nullptr ) {
@@ -1097,7 +1097,8 @@ void init_string( EvtParticle** part )
     *part = new EvtStringParticle;
 }
 
-double EvtParticle::initializePhaseSpace( size_t numdaughter, EvtId* daughters,
+double EvtParticle::initializePhaseSpace( size_t numdaughter,
+                                          const EvtId* daughters,
                                           bool forceDaugMassReset,
                                           double poleSize, int whichTwo1,
                                           int whichTwo2 )
@@ -1107,8 +1108,8 @@ double EvtParticle::initializePhaseSpace( size_t numdaughter, EvtId* daughters,
     //lange
     //  this->makeDaughters(numdaughter,daughters);
 
-    static EvtVector4R p4[100];
-    static double mass[100];
+    static thread_local EvtVector4R p4[100];
+    static thread_local double mass[100];
 
     m_b = this->mass();
 
@@ -1231,7 +1232,7 @@ void EvtParticle::makeDaughters( size_t ndaugstore, std::vector<EvtId> idVector 
     delete[] idArray;
 }
 
-void EvtParticle::makeDaughters( size_t ndaugstore, EvtId* id )
+void EvtParticle::makeDaughters( size_t ndaugstore, const EvtId* id )
 {
     if ( m_channel < 0 ) {
         setChannel( 0 );

@@ -31,12 +31,12 @@
 #include <stdlib.h>
 #include <string>
 
-std::string EvtSSSCPT::getName()
+std::string EvtSSSCPT::getName() const
 {
     return "SSS_CPT";
 }
 
-EvtDecayBase* EvtSSSCPT::clone()
+EvtDecayBase* EvtSSSCPT::clone() const
 {
     return new EvtSSSCPT;
 }
@@ -74,8 +74,8 @@ void EvtSSSCPT::initProbMax()
 void EvtSSSCPT::decay( EvtParticle* p )
 {
     //added by Lange Jan4,2000
-    static EvtId B0 = EvtPDL::getId( "B0" );
-    static EvtId B0B = EvtPDL::getId( "anti-B0" );
+    static const EvtId B0 = EvtPDL::getId( "B0" );
+    static const EvtId B0B = EvtPDL::getId( "anti-B0" );
 
     double t;
     EvtId other_b;

@@ -52,7 +52,7 @@ class EvtParticle;
 
 class EvtBtoKD3P : public EvtDecayAmp {
   public:
-    EvtDecayBase* clone() override;
+    EvtDecayBase* clone() const override;
 
     // Initialize model
     void init() override;
@@ -60,9 +60,9 @@ class EvtBtoKD3P : public EvtDecayAmp {
     void decay( EvtParticle* p ) override;
 
     // we really have two daughters, although three are listed in the .dec file:
-    int nRealDaughters() override { return 2; }
+    int nRealDaughters() const override { return 2; }
 
-    std::string getName() override;
+    std::string getName() const override;
 
   protected:
     // parameters:

@@ -35,7 +35,7 @@ class EvtTwoBodyKine {
     };
 
     EvtTwoBodyKine();
-    EvtTwoBodyKine( double mA, double mB, double mAB );
+    EvtTwoBodyKine( const double mA, const double mB, const double mAB );
 
     // Accessors
 
