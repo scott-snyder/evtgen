@@ -52,7 +52,7 @@ if (ROOT_FOUND AND nlohmann_json_FOUND AND Threads_FOUND AND TBB_FOUND)
     # install the decay files, macros, scripts, etc.
     install(DIRECTORY exampleFiles DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/test)
     install(DIRECTORY jsonFiles DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/test)
-    install(FILES do_tests runTests.py makeSrcDepsJson makeModelsJson
+    install(FILES do_tests runMany1evtJobs.py runTests.py makeSrcDepsJson makeModelsJson
         DESTINATION ${CMAKE_INSTALL_DATADIR}/EvtGen/test
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 else()

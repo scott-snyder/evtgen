@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R02-0X-00
 
+7 Oct 2024 Thomas Latham
+* D133: Fix bug in rotation to helicity basis for tensor particles
+
 4 Oct 2024 Heather Ratcliffe, Thomas Latham, Fernando Abudinen
 * D132: Introduce thread safety
   - Protect statics: make them const or thread\_local
