@@ -174,10 +174,10 @@ void EvtBCVFF::getvectorff( EvtId, EvtId, double t, double, double* a1f,
         } else if ( m_whichfit == 2 ) {
             // form factors from Ebert, hep-ph/0306306
             double ratio = q2 / m_MBc / m_MBc;
-            double const fV_0 = 0.202, fV_a = 1.38, fV_b = 1.31;
-            double const fA2_0 = 0.22, fA2_a = 2.44, fA2_b = -1.21;
-            double const fA0_0 = 0.144, fA0_a = 1.18, fA0_b = 1.39;
-            double const fA1_0 = 0.174, fA1_a = 1.69, fA1_b = -0.219;
+            const double fV_0 = 0.202, fV_a = 1.38, fV_b = 1.31;
+            const double fA2_0 = 0.22, fA2_a = 2.44, fA2_b = -1.21;
+            const double fA0_0 = 0.144, fA0_a = 1.18, fA0_b = 1.39;
+            const double fA1_0 = 0.174, fA1_a = 1.69, fA1_b = -0.219;
 
             *vf = fV_0 / ( 1 - fV_a * ratio - fV_b * ratio * ratio );
             *a2f = fA2_0 / ( 1 - fA2_a * ratio - fA2_b * ratio * ratio );

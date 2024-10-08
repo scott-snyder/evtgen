@@ -55,7 +55,6 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
 
     void initialise() override;
 
-  protected:
   private:
     GenParticlePtr createGenParticle( const EvtParticle* theParticle ) const;
 

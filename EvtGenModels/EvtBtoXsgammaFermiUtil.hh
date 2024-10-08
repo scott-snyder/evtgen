@@ -37,7 +37,7 @@ class EvtBtoXsgammaFermiUtil final {
     static double FermiExpFunc( double var, const std::vector<double>& coeffs );
 
     //Gaussian function and its helper functions
-    static double FermiGaussFunc( double, std::vector<double> const& coeffs );
+    static double FermiGaussFunc( double, const std::vector<double>& coeffs );
     static double FermiGaussFuncRoot( double, double, double,
                                       std::vector<double>& coeffs );
     static double FermiGaussRootFcnA( double, const std::vector<double>& coeffs1,
@@ -51,7 +51,7 @@ class EvtBtoXsgammaFermiUtil final {
     static double BesselK1( double );
     static double FermiRomanFuncRoot( double, double );
     static double FermiRomanRootFcnA( double );
-    static double FermiRomanFunc( double, std::vector<double> const& coeffs );
+    static double FermiRomanFunc( double, const std::vector<double>& coeffs );
 };
 
 #endif

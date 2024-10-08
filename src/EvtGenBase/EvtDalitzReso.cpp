@@ -351,8 +351,8 @@ EvtComplex EvtDalitzReso::evaluate( const EvtDalitzPoint& x ) const
         if ( m_coupling2 == Undefined ) {
             // single BW
             const double g = ( m_g0 <= 0. || vd.pD() <= 0. )
-                                 ? -m_g0
-                                 : m_g0 * vd.widthFactor( kd );    // running width
+                               ? -m_g0
+                               : m_g0 * vd.widthFactor( kd );    // running width
             if ( m_typeN == GS_CLEO || m_typeN == GS_CLEO_ZEMACH ) {
                 // Gounaris-Sakurai (GS)
                 prop = propGounarisSakurai( m_m0, fabs( m_g0 ), vd.pD(), m, g,
@@ -639,8 +639,8 @@ EvtComplex EvtDalitzReso::numerator( const EvtDalitzPoint& x,
         const double m02 = ( ( RBW_CLEO_ZEMACH == m_typeN ) ||
                              ( GS_CLEO_ZEMACH == m_typeN ) ||
                              ( GAUSS_CLEO_ZEMACH == m_typeN ) )
-                               ? qAB
-                               : m_m0 * m_m0;
+                             ? qAB
+                             : m_m0 * m_m0;
         const double mA2 = mA * mA;
         const double mB2 = mB * mB;
         const double mC2 = mC * mC;
@@ -704,10 +704,10 @@ EvtComplex EvtDalitzReso::Fvector( const double s, const int index ) const
     double ma[5];      // Pole masses. The unit is in GeV
 
     const int solution = ( m_typeN == K_MATRIX )
-                             ? 3
-                             : ( ( m_typeN == K_MATRIX_I )
-                                     ? 1
-                                     : ( ( m_typeN == K_MATRIX_II ) ? 2 : 0 ) );
+                           ? 3
+                           : ( ( m_typeN == K_MATRIX_I )
+                                   ? 1
+                                   : ( ( m_typeN == K_MATRIX_II ) ? 2 : 0 ) );
     if ( solution == 0 ) {
         std::cout << "EvtDalitzReso::Fvector() error. Kmatrix solution incorrectly chosen ! "
                   << std::endl;

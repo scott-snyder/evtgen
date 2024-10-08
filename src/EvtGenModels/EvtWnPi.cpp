@@ -79,7 +79,7 @@ EvtVector4C EvtWnPi::WCurrent( EvtVector4R q1, EvtVector4R q2, EvtVector4R q3,
 // a1 -> pi+ pi+ pi- BW
 EvtComplex EvtWnPi::BWa( EvtVector4R q )
 {
-    double const _mA1 = 1.26, _GA1 = 0.4;
+    const double _mA1 = 1.26, _GA1 = 0.4;
     EvtComplex I( 0, 1 );
     double Q2 = q.mass2();
     double GA1 = _GA1 * pi3G( Q2 ) / pi3G( _mA1 * _mA1 );
@@ -89,7 +89,7 @@ EvtComplex EvtWnPi::BWa( EvtVector4R q )
 
 EvtComplex EvtWnPi::BWf( EvtVector4R q )
 {
-    double const mf = 0.8, Gf = 0.6;
+    const double mf = 0.8, Gf = 0.6;
     EvtComplex I( 0, 1 );
     double Q2 = q.mass2();
     return mf * mf / ( mf * mf - Q2 - I * mf * Gf );

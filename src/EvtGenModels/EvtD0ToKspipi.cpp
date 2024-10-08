@@ -87,9 +87,8 @@ void EvtD0ToKspipi::decay( EvtParticle* p )
     // Check if the D is from a B+- -> D0 K+- decay with the appropriate model
     EvtParticle* parent = p->getParent();
     EvtDecayBase* decayFun = ( parent != nullptr )
-                                 ? EvtDecayTable::getInstance().getDecayFunc(
-                                       parent )
-                                 : nullptr;
+                               ? EvtDecayTable::getInstance().getDecayFunc( parent )
+                               : nullptr;
     if ( parent != nullptr && decayFun != nullptr &&
          decayFun->getName() == "BTODDALITZCPK" ) {
         const EvtId parId = parent->getId();

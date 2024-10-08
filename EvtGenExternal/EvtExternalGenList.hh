@@ -48,7 +48,6 @@ class EvtExternalGenList {
                                           const int mode = 2,
                                           const int useME = 0 );
 
-  protected:
   private:
     std::string m_photonType;
 

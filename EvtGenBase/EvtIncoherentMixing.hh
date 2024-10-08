@@ -81,7 +81,6 @@ class EvtIncoherentMixing {
     static void enableFlip();
     static void disableFlip();
 
-  protected:
   private:
     static bool m_doB0Mixing;
     static bool m_doBsMixing;

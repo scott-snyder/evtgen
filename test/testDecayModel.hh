@@ -78,9 +78,8 @@ enum class ThreadModel
         static const std::pair<ENUM_TYPE, BasicJsonType> m[] = __VA_ARGS__;       \
         auto it = std::find_if(                                                   \
             std::begin( m ), std::end( m ),                                       \
-            [e]( const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair ) -> bool {   \
-                return ej_pair.first == e;                                        \
-            } );                                                                  \
+            [e]( const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair ) -> bool     \
+            { return ej_pair.first == e; } );                                     \
         if ( it == std::end( m ) ) {                                              \
             throw std::runtime_error{                                             \
                 "ERROR in conversion to JSON, invalid state for " #ENUM_TYPE };   \
@@ -95,9 +94,8 @@ enum class ThreadModel
         static const std::pair<ENUM_TYPE, BasicJsonType> m[] = __VA_ARGS__;       \
         auto it = std::find_if(                                                   \
             std::begin( m ), std::end( m ),                                       \
-            [&j]( const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair ) -> bool {  \
-                return ej_pair.second == j;                                       \
-            } );                                                                  \
+            [&j]( const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair ) -> bool    \
+            { return ej_pair.second == j; } );                                    \
         if ( it == std::end( m ) ) {                                              \
             throw std::runtime_error{                                             \
                 "ERROR in conversion from JSON, invalid state for " #ENUM_TYPE }; \
@@ -117,17 +115,17 @@ enum class ThreadModel
 
 CUSTOM_NLOHMANN_JSON_SERIALIZE_ENUM(
     FSRGenerator, {
-                      { FSRGenerator::PHOTOS, "PHOTOS" },
-                      { FSRGenerator::SherpaPhotons1, "SherpaPhotons1" },
-                      { FSRGenerator::SherpaPhotons20, "SherpaPhotons20" },
-                      { FSRGenerator::SherpaPhotons21, "SherpaPhotons21" },
-                  } )
+                      {         FSRGenerator::PHOTOS,          "PHOTOS"},
+                      { FSRGenerator::SherpaPhotons1,  "SherpaPhotons1"},
+                      {FSRGenerator::SherpaPhotons20, "SherpaPhotons20"},
+                      {FSRGenerator::SherpaPhotons21, "SherpaPhotons21"},
+} )
 
 CUSTOM_NLOHMANN_JSON_SERIALIZE_ENUM( ThreadModel,
                                      {
-                                         { ThreadModel::StdLib, "StdLib" },
-                                         { ThreadModel::TBB, "TBB" },
-                                     } )
+                                         {ThreadModel::StdLib, "StdLib"},
+                                         {   ThreadModel::TBB,    "TBB"},
+} )
 
 //! \endcond
 
@@ -156,7 +154,12 @@ class HistInfo {
     /// Constructor for 2D histogram
     HistInfo( const std::string& nameX, const int d1X, const int d2X,
               const std::string& nameY, const int d1Y, const int d2Y ) :
-        m_nameX{ nameX }, m_nameY{ nameY }, m_d1X{ d1X }, m_d2X{ d2X }, m_d1Y{ d1Y }, m_d2Y{ d2Y }
+        m_nameX{ nameX },
+        m_nameY{ nameY },
+        m_d1X{ d1X },
+        m_d2X{ d2X },
+        m_d1Y{ d1Y },
+        m_d2Y{ d2Y }
     {
     }
 
