@@ -145,8 +145,13 @@ build_legacy_gcc_opt:
   extends:
     - .production_os_image
     - .lcg_setup
-  dependencies:
-    - build_gcc_dbg
+  needs:
+    - job: build_gcc_dbg
+      artifacts: true
+  script:
+    - cd install/share/EvtGen/test
+    - test ${#CHANGED_FILES} -eq 0 && echo "No files have changed, no need to run tests" && exit 0
+    - ./runTests.py Models.json SrcDeps.json $CHANGED_FILES
   artifacts:
     paths:
       - install/share/EvtGen/test
@@ -163,24 +168,24 @@ test_on_push_to_master:
     - .test_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "master"'
-  script:
-    - cd install/share/EvtGen/test
-    - git diff --numstat $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | awk '{print $NF}' | xargs ./runTests.py Models.json SrcDeps.json
+  before_script:
+    - !reference [.lcg_setup, before_script]
+    - CHANGED_FILES=`git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA`
 
 test_on_push_to_branch:
   extends:
     - .test_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"'
-  script:
-    - cd install/share/EvtGen/test
-    - git diff --numstat origin/master...$CI_COMMIT_SHA | awk '{print $NF}' | xargs ./runTests.py Models.json SrcDeps.json
+  before_script:
+    - !reference [.lcg_setup, before_script]
+    - CHANGED_FILES=`git diff --name-only origin/master...$CI_COMMIT_SHA`
 
 test_on_schedule:
   extends:
     - .test_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == "master"'
-  script:
-    - cd install/share/EvtGen/test
-    - git diff --numstat `git tag --list 'R*' | tail -n 1` $CI_COMMIT_SHA | awk '{print $NF}' | xargs ./runTests.py Models.json SrcDeps.json
+  before_script:
+    - !reference [.lcg_setup, before_script]
+    - CHANGED_FILES=`git tag --list 'R[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]' | tail -n 1 | xargs -I{} git diff --name-only {} $CI_COMMIT_SHA`
