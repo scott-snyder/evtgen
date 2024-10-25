@@ -9,7 +9,10 @@ https://phab.hepforge.org/Tabc
 https://phab.hepforge.org/Dxyz
 
 ===
-## R03-00-00-beta1
+## R03-00-00-betaX
+
+25 Oct 2024 Thomas Latham
+* Fixes, updates and improvements to setupEvtGen script
 
 7 Oct 2024 Thomas Latham
 * D133: Fix bug in rotation to helicity basis for tensor particles
