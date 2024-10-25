@@ -25,7 +25,10 @@
 #include <iostream>
 
 EvtMTRandomEngine::EvtMTRandomEngine( unsigned long int seed ) :
-    m_engine{ seed }, m_distribution{ 0.0, 1.0 }, m_lastSeed{ seed }
+    // static_cast needed to avoid narrowing errors on macOS
+    m_engine{ static_cast<std::mt19937::result_type>( seed ) },
+    m_distribution{ 0.0, 1.0 },
+    m_lastSeed{ seed }
 {
     EvtGenReport( EVTGEN_INFO, "EvtMTRandomEngine" )
         << "Mersenne-Twister random number generator with seed = " << seed
