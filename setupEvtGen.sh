@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ########################################################################
-# Copyright 1998-2020 CERN for the benefit of the EvtGen authors       #
+# Copyright 1998-2024 CERN for the benefit of the EvtGen authors       #
 #                                                                      #
 # This file is part of EvtGen.                                         #
 #                                                                      #
@@ -42,7 +42,7 @@
 INSTALL_PREFIX="/usr/local"
 
 # EvtGen version or tag number (or branch name)
-VERSION="R02-02-00"
+VERSION="R03-00-00-beta1"
 
 # EvtGen git URL
 # HepForge main repo
