@@ -271,19 +271,19 @@ void EvtFourBodyPhsp::decay( EvtParticle* parent )
             m_daughterMasses[i] = daughter->mass();
         }
         cM12Min = m_m12Min > ( m_daughterMasses[0] + m_daughterMasses[1] )
-                      ? m_m12Min
-                      : m_daughterMasses[0] + m_daughterMasses[1];
+                    ? m_m12Min
+                    : m_daughterMasses[0] + m_daughterMasses[1];
         cM12Max = m_m12Max <
                           ( mMother - m_daughterMasses[2] - m_daughterMasses[3] )
-                      ? m_m12Max
-                      : mMother - m_daughterMasses[2] - m_daughterMasses[3];
+                    ? m_m12Max
+                    : mMother - m_daughterMasses[2] - m_daughterMasses[3];
         cM34Min = m_m34Min > ( m_daughterMasses[2] + m_daughterMasses[3] )
-                      ? m_m34Min
-                      : m_daughterMasses[2] + m_daughterMasses[3];
+                    ? m_m34Min
+                    : m_daughterMasses[2] + m_daughterMasses[3];
         cM34Max = m_m34Max <
                           ( mMother - m_daughterMasses[0] - m_daughterMasses[1] )
-                      ? m_m34Max
-                      : mMother - m_daughterMasses[0] - m_daughterMasses[1];
+                    ? m_m34Max
+                    : mMother - m_daughterMasses[0] - m_daughterMasses[1];
         cShape = determineBoundaryShape( cM12Min, cM12Max, cM34Max, mMother );
     }
 

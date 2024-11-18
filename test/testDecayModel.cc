@@ -375,8 +375,8 @@ TestConfig TestDecayModel::readConfig( const json& config )
 
     cfg.debugFlag = ( config.contains( "debug_flag" ) &&
                       config.at( "debug_flag" ).is_boolean() )
-                        ? config.at( "debug_flag" ).get<bool>()
-                        : false;
+                      ? config.at( "debug_flag" ).get<bool>()
+                      : false;
 
     if ( config.contains( "do_conjugate_decay" ) &&
          config.at( "do_conjugate_decay" ).is_array() ) {
@@ -463,9 +463,8 @@ TestHistos TestDecayModel::runStdThreads() const
                   << " events" << std::endl;
 
         allHistos.emplace_back(
-            std::async( std::launch::async, [this, firstEvent, nEvents]() {
-                return runDecayBody( firstEvent, nEvents );
-            } ) );
+            std::async( std::launch::async, [this, firstEvent, nEvents]()
+                        { return runDecayBody( firstEvent, nEvents ); } ) );
 
         firstEvent += nEvents;
     }
@@ -502,7 +501,8 @@ TestHistos TestDecayModel::runTBBThreads() const
     return tbb::parallel_reduce(
         tbb::blocked_range<std::size_t>( 0, m_config.nEvents ), init,
         [this]( const tbb::blocked_range<std::size_t>& range,
-                const TestHistos& init ) -> TestHistos {
+                const TestHistos& init ) -> TestHistos
+        {
             std::cout << "Thread "
                       << tbb::this_task_arena::current_thread_index()
                       << " will generate " << range.size()
@@ -512,7 +512,8 @@ TestHistos TestDecayModel::runTBBThreads() const
             tmp.add( runDecayBody( range.begin(), range.size() ) );
             return tmp;
         },
-        []( const TestHistos& lhs, const TestHistos& rhs ) -> TestHistos {
+        []( const TestHistos& lhs, const TestHistos& rhs ) -> TestHistos
+        {
             TestHistos tmp{ lhs };
             tmp.add( rhs );
             return tmp;
@@ -803,9 +804,9 @@ void TestDecayModel::generateEvents( EvtGen& theGen, TestHistos& theHistos,
                 const std::string::size_type findIsStr = reducedVarName.find(
                     "_is" );
                 const std::string requestedType = findIsStr == std::string::npos
-                                                      ? ""
-                                                      : reducedVarName.substr(
-                                                            findIsStr + 3 );
+                                                    ? ""
+                                                    : reducedVarName.substr(
+                                                          findIsStr + 3 );
 
                 if ( !requestedType.empty() ) {
                     reducedVarName.erase( findIsStr,
@@ -1520,8 +1521,8 @@ double TestDecayModel::getValue( const EvtParticle* parent,
                                     : 0.0;
         } else {
             value = parent != nullptr
-                        ? parent->getLifetime() * 1e12 / EvtConst::c
-                        : 0.0;
+                      ? parent->getLifetime() * 1e12 / EvtConst::c
+                      : 0.0;
         }
 
     } else if ( !selectedVarName.compare( "deltaT" ) ) {
@@ -1540,8 +1541,8 @@ double TestDecayModel::getValue( const EvtParticle* parent,
                                                   : EvtVector4R() };
         const double p{ p1_lab.d3mag() };
         value = p > 0.0
-                    ? 1e12 * vtxPos.d3mag() * p1_lab.mass() / ( p * EvtConst::c )
-                    : 0.0;
+                  ? 1e12 * vtxPos.d3mag() * p1_lab.mass() / ( p * EvtConst::c )
+                  : 0.0;
     } else if ( !selectedVarName.compare( "nFSRPhotons" ) ) {
         // Loop over all daughters and get number of FSR photons
 

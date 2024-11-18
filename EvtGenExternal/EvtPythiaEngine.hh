@@ -51,7 +51,6 @@ class EvtPythiaEngine : public EvtAbsExternalGen {
 
     void initialise() override;
 
-  protected:
   private:
     void updateParticleLists();
     void updatePhysicsParameters();

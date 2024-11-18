@@ -113,11 +113,11 @@ void Evtbs2llGammaISRFSRAmp::CalcAmp( EvtParticle* parent, EvtAmp& amp,
     EvtParticle* lepMinus = nullptr;
 
     lepPlus = ( charge1 > charge2 )
-                  ? parent->getDaug( il1 )
-                  : parent->getDaug( il2 );    // positive charged
+                ? parent->getDaug( il1 )
+                : parent->getDaug( il2 );    // positive charged
     lepMinus = ( charge1 < charge2 )
-                   ? parent->getDaug( il1 )
-                   : parent->getDaug( il2 );    // negative charged
+                 ? parent->getDaug( il1 )
+                 : parent->getDaug( il2 );    // negative charged
 
     EvtVector4R p = parent->getP4Restframe();    // B-meson momentum in the B-rest frame
     EvtVector4R k =

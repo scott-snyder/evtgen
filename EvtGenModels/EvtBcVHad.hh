@@ -74,11 +74,21 @@ class EvtBcVHad : public EvtDecayAmp {
     std::unique_ptr<EvtBCVFF2> m_FFModel;
     std::unique_ptr<EvtWHad> m_WCurr;
 
-    std::array<int, 4> m_iPiPlus = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iPiMinus = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iPiZero = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iKPlus = { { -1, -1, -1, -1 } };
-    std::array<int, 4> m_iKMinus = { { -1, -1, -1, -1 } };
+    std::array<int, 4> m_iPiPlus = {
+        {-1, -1, -1, -1}
+    };
+    std::array<int, 4> m_iPiMinus = {
+        {-1, -1, -1, -1}
+    };
+    std::array<int, 4> m_iPiZero = {
+        {-1, -1, -1, -1}
+    };
+    std::array<int, 4> m_iKPlus = {
+        {-1, -1, -1, -1}
+    };
+    std::array<int, 4> m_iKMinus = {
+        {-1, -1, -1, -1}
+    };
 };
 
 #endif

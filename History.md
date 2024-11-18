@@ -11,6 +11,11 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R03-00-00-betaX
 
+18 Nov 2024 Thomas Latham
+* Update CI to use LCG\_105 on el9 with gcc13/clang16 by default
+  - Also update CI to avoid spurious failure of test stage
+  - Update clang-format config to clang16 and apply resulting changes
+
 25 Oct 2024 Thomas Latham
 * Fixes, updates and improvements to setupEvtGen script
 

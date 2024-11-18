@@ -88,8 +88,8 @@ void EvtBCSFF::getscalarff( EvtId /*p*/, EvtId /*d*/, double t, double /*mass*/,
             }
         } else if ( m_whichfit == 2 ) {    // FF from Ebert:2003cn, Fig 9
             double ratio = q2 / m_MBc / m_MBc;
-            double const fPlus_0 = 0.143, fPlus_a = 0.7, fPlus_b = 2.13;
-            double const f0_0 = 0.136, f0_a = 1.63, f0_b = -0.139;
+            const double fPlus_0 = 0.143, fPlus_a = 0.7, fPlus_b = 2.13;
+            const double f0_0 = 0.136, f0_a = 1.63, f0_b = -0.139;
             *fpf = fPlus_0 / ( 1 - fPlus_a * ratio - fPlus_b * ratio * ratio );
             *f0f = f0_0 / ( 1 - f0_a * ratio - f0_b * ratio * ratio );
             return;

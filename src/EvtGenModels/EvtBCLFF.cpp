@@ -72,7 +72,8 @@ void EvtBCLFF::getscalarff( EvtId parent, EvtId daughter, double t, double,
     const auto N_fpf = bplus.size();
     const auto N_f0f = bzero.size();
 
-    auto z = [tplus, tzero]( decltype( t ) q2 ) {
+    auto z = [tplus, tzero]( decltype( t ) q2 )
+    {
         const auto term1 = std::sqrt( tplus - q2 );
         const auto term2 = std::sqrt( tplus - tzero );
         return ( term1 - term2 ) / ( term1 + term2 );
@@ -133,13 +134,15 @@ void EvtBCLFF::getvectorff( EvtId parent, EvtId daughter, double t, double,
     const std::array<double, 3> V{ m_BCLFFCoefficients[8], m_BCLFFCoefficients[9],
                                    m_BCLFFCoefficients[10] };
 
-    auto z = [tplus, tzero]( decltype( t ) q2 ) {
+    auto z = [tplus, tzero]( decltype( t ) q2 )
+    {
         const auto term1 = std::sqrt( tplus - q2 );
         const auto term2 = std::sqrt( tplus - tzero );
         return ( term1 - term2 ) / ( term1 + term2 );
     };
 
-    auto sum = [&z]( decltype( t ) q2, std::array<double, 3> par ) {
+    auto sum = [&z]( decltype( t ) q2, std::array<double, 3> par )
+    {
         double tot = 0.0;
         for ( unsigned int n = 0; n < par.size(); ++n ) {
             tot += par[n] * std::pow( z( q2 ) - z( 0.0 ), n );
@@ -147,7 +150,8 @@ void EvtBCLFF::getvectorff( EvtId parent, EvtId daughter, double t, double,
         return tot;
     };
 
-    auto kaellen = [mB, mM]( decltype( t ) q2 ) {
+    auto kaellen = [mB, mM]( decltype( t ) q2 )
+    {
         return ( ( mB + mM ) * ( mB + mM ) - q2 ) *
                ( ( mB - mM ) * ( mB - mM ) - q2 );
     };

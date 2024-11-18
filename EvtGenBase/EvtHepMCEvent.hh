@@ -107,7 +107,6 @@ class EvtHepMCEvent {
     // Find out the decay vertex position for the given EvtParticle.
     FourVector getVertexCoord( EvtParticle* theParticle );
 
-  protected:
   private:
     // Delete the event structure (called by destructor)
     void deleteEvent();

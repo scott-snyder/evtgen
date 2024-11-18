@@ -718,8 +718,8 @@ void EvtDDalitz::decay( EvtParticle* p )
         double pi180inv = 1.0 / EvtConst::radToDegrees;
         amp = EvtComplex( -3.98 * cos( 57.3 * pi180inv ),
                           -3.98 * sin( 57.3 * pi180inv ) ) +
-              ( DppipipiRes11.resAmpl() - DppipipiRes12.resAmpl() )    //spin1
-              + ( DppipipiRes21.resAmpl() + DppipipiRes22.resAmpl() ) +
+              ( DppipipiRes11.resAmpl() - DppipipiRes12.resAmpl() ) +    //spin1
+              ( DppipipiRes21.resAmpl() + DppipipiRes22.resAmpl() ) +
               ( DppipipiRes31.resAmpl() + DppipipiRes32.resAmpl() ) +
               ( DppipipiRes41.resAmpl() + DppipipiRes42.resAmpl() ) +
               ( DppipipiRes51.resAmpl() + DppipipiRes52.resAmpl() ) +
@@ -754,8 +754,8 @@ void EvtDDalitz::decay( EvtParticle* p )
         double pi180inv = 1.0 / EvtConst::radToDegrees;
         amp = EvtComplex( -0.723 * cos( 181. * pi180inv ),
                           -0.723 * sin( 181. * pi180inv ) ) +
-              ( DspipipiRes11.resAmpl() - DspipipiRes12.resAmpl() )    //spin1
-              + ( DspipipiRes21.resAmpl() + DspipipiRes22.resAmpl() ) +
+              ( DspipipiRes11.resAmpl() - DspipipiRes12.resAmpl() ) +    //spin1
+              ( DspipipiRes21.resAmpl() + DspipipiRes22.resAmpl() ) +
               ( DspipipiRes31.resAmpl() + DspipipiRes32.resAmpl() ) +
               ( DspipipiRes41.resAmpl() + DspipipiRes42.resAmpl() ) +
               ( DspipipiRes51.resAmpl() - DspipipiRes52.resAmpl() );    //spin1
