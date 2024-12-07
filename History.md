@@ -11,6 +11,13 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R03-00-00-betaX
 
+3 Dec 2024 Fernando Abudinen
+* D134: Add support for Sherpa 3
+  - Modified EvtSherpaPhotons interface to support both Sherpa 2 and 3 releases
+  - Introduced finalise function inside EvtSherpaPhotons class to control the order of static destruction
+  - Updated CI to pick Sherpa 3, use Sherpa 2 for legacy builds
+  - Updated setupEvtGen for Sherpa 3
+
 2 Dec 2024 Thomas Latham
 * Remove or convert C headers to C++ equivalents
 

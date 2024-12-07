@@ -28,9 +28,14 @@
 #include "EvtGenBase/EvtVector4R.hh"
 
 #include "ATOOLS/Org/MyStrStream.H"
+#include "ATOOLS/Phys/Flavour.H"
+#ifdef EVTGEN_SHERPA3
+#include "ATOOLS/Phys/KF_Table.H"
+#else
+#include "ATOOLS/Org/Data_Reader.H"
+#endif
+#include "ATOOLS/Phys/Blob.H"
 #include "ATOOLS/Phys/Particle.H"
-#include "SHERPA/Initialization/Initialization_Handler.H"
-#include "SHERPA/SoftPhysics/Soft_Photon_Handler.H"
 
 #include <cstring>
 #include <iostream>
@@ -38,9 +43,10 @@
 
 using std::endl;
 
-std::unique_ptr<SHERPA::Sherpa> EvtSherpaPhotons::m_sherpaGen;
-bool EvtSherpaPhotons::m_initialised = false;
 std::mutex EvtSherpaPhotons::m_sherpa_mutex;
+std::unique_ptr<SHERPA::Sherpa> EvtSherpaPhotons::m_sherpaGen;
+std::unique_ptr<PHOTONS::Photons> EvtSherpaPhotons::m_photonsGen;
+bool EvtSherpaPhotons::m_initialised = false;
 
 EvtSherpaPhotons::EvtSherpaPhotons( const bool useEvtGenRandom,
                                     const double infraredCutOff, const int mode,
@@ -64,65 +70,105 @@ void EvtSherpaPhotons::initialise()
         return;
     }
 
+#ifdef EVTGEN_SHERPA3
+    const std::string equal_string = ":";
+    const std::string yfs_prefix = "YFS:\n";
+    const std::string mode_string = m_mode == 2
+                                      ? "Full"
+                                      : ( m_mode == 1 ? "Soft" : "None" );
+
+    // Beam parameters are necessary in Sherpa 3 for initialisation
+    // Otherwise m_s (CMS energy) is nan in YFS_Base and creates SegFault
+    // This has no impact on PHOTONS++. USING LHC values below.
+    m_configs.push_back( "BEAMS:2212" );
+    m_configs.push_back( "BEAM_ENERGIES:7000" );
+
+#else
+    const std::string equal_string = "=";
+    const std::string yfs_prefix = "YFS_";
+    const std::string mode_string = ATOOLS::ToString( m_mode );
+#endif
+
+    // INIT_ONLY=6 intialises the Sherpa objects without launching simulation.
+    m_configs.push_back( "INIT_ONLY" + equal_string + "6" );
+
     EvtGenReport( EVTGEN_INFO, "EvtGen" )
         << "Setting up Sherpa PHOTONS++ generator for FSR." << endl;
 
-    /* Specify whether we are going to use EvtGen's random number generator 
+    /* Specify whether we are going to use EvtGen's random number generator
      * (via EvtSherpaRandom interface) for Sherpa's PHOTONS++ simulation. */
     if ( m_useEvtGenRandom ) {
-        m_configs.push_back( "SHERPA_LDADD=EvtGenExternal" );
-        m_configs.push_back( "EXTERNAL_RNG=EvtSherpaRandom" );
+        m_configs.push_back( "SHERPA_LDADD" + equal_string + "EvtGenExternal" );
+        m_configs.push_back( "EXTERNAL_RNG" + equal_string + "EvtSherpaRandom" );
     }
 
     /*
      * Internal PHOTONS++ settings.
-     * Documentation at 
+     * Documentation at
      * https://sherpa.hepforge.org/doc/Sherpa.html#QED-Corrections
      */
 
     /*
-     * YFS_IR_CUTOFF sets the infrared cut-off which serves as a 
+     * YFS_IR_CUTOFF sets the infrared cut-off which serves as a
      * minimum photon energy in this frame for explicit photon generation.
      * The default is YFS_IR_CUTOFF = 1E-3 (GeV) but we set it to 1E-7 to equalize
      * with the cutoff used for PHOTOS.
      */
-    m_configs.push_back( "YFS_IR_CUTOFF=" + ATOOLS::ToString( m_infraredCutOff ) );
+    m_configs.push_back( yfs_prefix + "IR_CUTOFF" + equal_string +
+                         ATOOLS::ToString( m_infraredCutOff ) );
 
     /*
-     * The keyword YFS_MODE = [0,1,2] determines the mode of operation. 
-     * YFS_MODE = 0 switches Photons off. 
-     * YFS_MODE = 1 sets the mode to "soft only", meaning soft emissions will be 
-     * treated correctly to all orders but no hard emission corrections will be included. 
-     * YFS_MODE = 2 these hard emission corrections will also be included up to 
-     * first order in alpha_QED. This is the default setting in Sherpa. 
+     * The keyword YFS_MODE = [0,1,2] determines the mode of operation.
+     * YFS_MODE = 0 switches Photons off.
+     * YFS_MODE = 1 sets the mode to "soft only", meaning soft emissions will be
+     * treated correctly to all orders but no hard emission corrections will be included.
+     * YFS_MODE = 2 these hard emission corrections will also be included up to
+     * first order in alpha_QED. This is the default setting in Sherpa.
      */
-
-    m_configs.push_back( "YFS_MODE=" + ATOOLS::ToString( m_mode ) );
+    m_configs.push_back( yfs_prefix + "MODE" + equal_string + mode_string );
 
     /*
-     * The switch YFS_USE_ME = [0,1] tells Photons how to correct hard emissions to 
-     * first order in alpha_QED. If YFS_USE_ME = 0, then Photons will use collinearly 
-     * approximated real emission matrix elements. Virtual emission matrix elements of 
-     * order alpha_QED are ignored. If, however, YFS_USE_ME=1, then exact real and/or 
-     * virtual emission matrix elements are used wherever possible. 
-     * These are presently available for V->FF, V->SS, S->FF, S->SS, S->Slnu, 
-     * S->Vlnu type decays, Z->FF decays and leptonic tau and W decays. For all other 
-     * decay types general collinearly approximated matrix elements are used. 
-     * In both approaches all hadrons are treated as point-like objects. 
+     * The switch YFS_USE_ME = [0,1] tells Photons how to correct hard emissions to
+     * first order in alpha_QED. If YFS_USE_ME = 0, then Photons will use collinearly
+     * approximated real emission matrix elements. Virtual emission matrix elements of
+     * order alpha_QED are ignored. If, however, YFS_USE_ME=1, then exact real and/or
+     * virtual emission matrix elements are used wherever possible.
+     * These are presently available for V->FF, V->SS, S->FF, S->SS, S->Slnu,
+     * S->Vlnu type decays, Z->FF decays and leptonic tau and W decays. For all other
+     * decay types general collinearly approximated matrix elements are used.
+     * In both approaches all hadrons are treated as point-like objects.
      * The default setting is YFS_USE_ME = 1. This switch is only effective if YFS_MODE = 2.
      */
-    m_configs.push_back( "YFS_USE_ME=" + ATOOLS::ToString( m_useME ) );
+    m_configs.push_back( yfs_prefix + "USE_ME" + equal_string +
+                         ATOOLS::ToString( m_useME ) );
 
-    // TODO: Virtual photon splitting into l+l- will be part of ME corrections from Sherpa 3.0.0 on,
-    // Once released, this should be switched off by default or
-    // taken into account while retrieving the event.
+#ifdef EVTGEN_SHERPA3
+    // Virtual photon splitting is part of ME corrections from Sherpa 3.0.0 on,
+    // We switch this off below.
+    // Support for photon splitting should be implemented for all FSR plug-ins,
+    // taking into account produced pairs while retrieving the event.
+    m_configs.push_back( yfs_prefix + "PHOTON_SPLITTER_MODE" + equal_string +
+                         ATOOLS::ToString( 0 ) );
+#endif
 
     // Set up run-time arguments for Sherpa.
     std::vector<char*> argv = this->addParameters();
 
     // Create instance and initialise Sherpa.
+#ifdef EVTGEN_SHERPA3
+    m_sherpaGen = std::make_unique<SHERPA::Sherpa>( argv.size(), &argv[0] );
+    m_sherpaGen->InitializeTheRun();
+    // Create the PHOTONS++ instance
+    m_photonsGen = std::make_unique<PHOTONS::Photons>();
+#else
     m_sherpaGen = std::make_unique<SHERPA::Sherpa>();
     m_sherpaGen->InitializeTheRun( argv.size(), &argv[0] );
+    // Create the PHOTONS++ instance
+    // Needs to create and pass a Data_reader object as in the Soft_Photon_Handler
+    std::unique_ptr<ATOOLS::Data_Reader> dataread =
+        std::make_unique<ATOOLS::Data_Reader>( " ", ";", "!", "=" );
+    m_photonsGen = std::make_unique<PHOTONS::Photons>( dataread.get() );
+#endif
 
     this->updateParticleLists();
 
@@ -148,9 +194,9 @@ std::vector<char*> EvtSherpaPhotons::addParameters()
 
 void EvtSherpaPhotons::updateParticleLists()
 {
-    /* Use the EvtGen decay and pdl tables (decay/user.dec and evt.pdl) 
-     * to update Sherpa's KF_Table which contains all defined particles 
-     * and their properties. 
+    /* Use the EvtGen decay and pdl tables (decay/user.dec and evt.pdl)
+     * to update Sherpa's KF_Table which contains all defined particles
+     * and their properties.
      * Loop over all entries in the EvtPDL particle data table.
     */
     const int nPDL = EvtPDL::entries();
@@ -190,8 +236,15 @@ void EvtSherpaPhotons::updateParticleLists()
         // Create new entry in the KF_Table. The 0 and 1 in the constructor below
         // stand for m_on = 0 and m_stable = 1. These properties are irrelevant
         // for final-state radiation and set to default values.
+#ifdef EVTGEN_SHERPA3
+        const double radius{ 0.0 };
+        ATOOLS::s_kftable[particleCode] =
+            new ATOOLS::Particle_Info( particleCode, mass, radius, width,
+                                       charge, spin, 0, 1, idName, idName );
+#else
         ATOOLS::s_kftable[particleCode] = new ATOOLS::Particle_Info(
             particleCode, mass, width, charge, spin, 0, 1, idName, idName );
+#endif
     }
 }
 
@@ -212,9 +265,6 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
     // Create a blob.
     std::unique_ptr<ATOOLS::Blob> blob = std::make_unique<ATOOLS::Blob>();
 
-    // Tell Sherpa that the blob needs FSR (that is extra QED)
-    blob->SetStatus( ATOOLS::blob_status::needs_extraQED );
-
     // Create mother particle and add it to blob
     ATOOLS::Flavour mother_flav( EvtPDL::getStdHep( theParticle->getId() ) );
     mother_flav.SetStable( false );
@@ -222,14 +272,16 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
     const ATOOLS::Vec4D mother_mom( motherM0, 0., 0., 0. );
 
     // Add mother to blob with m_number=-1. The m_number will start from 0 for daughters.
-    ATOOLS::Particle* mother_part = new ATOOLS::Particle( -1, mother_flav,
-                                                          mother_mom );
+    std::unique_ptr<ATOOLS::Particle> mother_part =
+        std::make_unique<ATOOLS::Particle>( -1, mother_flav, mother_mom );
     mother_part->SetFinalMass( motherM0 );
     mother_part->SetStatus( ATOOLS::part_status::decayed );
     // Set m_info="I" (initial) for mother. The m_info will be "F" (final) for daughters.
     mother_part->SetInfo( 'I' );
 
-    blob->AddToInParticles( mother_part );
+    blob->AddToInParticles( mother_part.get() );
+
+    mother_part.release();
 
     // Add daughters to the blob
     for ( int iDaug = 0; iDaug < nDaughters; iDaug++ ) {
@@ -245,27 +297,25 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
 
         const ATOOLS::Vec4D daughter_mom( daugE, daugPx, daugPy, daugPz );
 
-        ATOOLS::Particle* daughter_part =
-            new ATOOLS::Particle( iDaug, daughter_flav, daughter_mom );
+        std::unique_ptr<ATOOLS::Particle> daughter_part =
+            std::make_unique<ATOOLS::Particle>( iDaug, daughter_flav,
+                                                daughter_mom );
         daughter_part->SetFinalMass( daugM0 );
 
         daughter_part->SetStatus( ATOOLS::part_status::active );
         daughter_part->SetInfo( 'F' );
 
-        blob->AddToOutParticles( daughter_part );
+        blob->AddToOutParticles( daughter_part.get() );
+
+        daughter_part.release();
     }
 
     {
         // AddRadiation function is not yet thread_safe, so we mutex it
         const std::lock_guard<std::mutex> lock( m_sherpa_mutex );
 
-        const SHERPA::Initialization_Handler* inithandler =
-            m_sherpaGen->GetInitHandler();
-        SHERPA::Soft_Photon_Handler* softphotonhandler =
-            inithandler->GetSoftPhotonHandler();
-
         // Simulate the radiation
-        softphotonhandler->AddRadiation( blob.get() );
+        m_photonsGen->AddRadiation( blob.get() );
     }
 
     // Get number of final-state particles
@@ -298,6 +348,22 @@ void EvtSherpaPhotons::doRadCorr( EvtParticle* theParticle )
             }
         }
     }
+}
+
+void EvtSherpaPhotons::finalise()
+{
+    // Mutex this since Sherpa instances are static
+    const std::lock_guard<std::mutex> lock( m_sherpa_mutex );
+
+    if ( !m_initialised ) {
+        return;
+    }
+
+    // We explicitly destroy the static instances to make sure that this occurs in the right order.
+    // This is needed due to the static destruction order fiasco.
+    m_photonsGen.reset();
+    m_sherpaGen.reset();
+    m_initialised = false;
 }
 
 #endif

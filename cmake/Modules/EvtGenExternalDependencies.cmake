@@ -33,9 +33,6 @@ set(SHERPA_ROOT_DIR "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Location of Sherpa ins
 # of HepMC we're working with
 if(EVTGEN_HEPMC3)
     find_package(HepMC3 REQUIRED PATHS ${HEPMC3_ROOT_DIR})
-    if(EVTGEN_PYTHIA)
-        find_package(Pythia8 REQUIRED)
-    endif()
     if(EVTGEN_PHOTOS)
         # From version 3.64 Photos has HepMC3 support
         find_package(Photos++ REQUIRED COMPONENTS pp ppHepMC3)
@@ -44,14 +41,8 @@ if(EVTGEN_HEPMC3)
         # From version 1.1.8 Tauola has HepMC3 support
         find_package(Tauola++ REQUIRED COMPONENTS Fortran CxxInterface HepMC3)
     endif()
-    if(EVTGEN_SHERPA)
-        find_package(Sherpa 2.0.0 REQUIRED)
-    endif()
 else()
     find_package(HepMC2 REQUIRED)
-    if(EVTGEN_PYTHIA)
-        find_package(Pythia8 REQUIRED)
-    endif()
     if(EVTGEN_PHOTOS)
         # Photos has different library structures for versions before and after 3.58
         # so we need to search for either option: pp+ppHepMC or CxxInterface+Fortran
@@ -61,7 +52,15 @@ else()
         # Older versions of Tauola don't have the HepMC component, the HepMC2 interface is in CxxInterface
         find_package(Tauola++ REQUIRED COMPONENTS Fortran CxxInterface OPTIONAL_COMPONENTS HepMC)
     endif()
-    if(EVTGEN_SHERPA)
-        find_package(Sherpa 2.0.0 REQUIRED)
+endif()
+
+if(EVTGEN_PYTHIA)
+    find_package(Pythia8 REQUIRED)
+endif()
+if(EVTGEN_SHERPA)
+    if(EVTGEN_SHERPA3)
+        find_package(SHERPA-MC 3.0.0 CONFIG REQUIRED)
+    else()
+        find_package(Sherpa 2.0.0 MODULE REQUIRED)
     endif()
 endif()

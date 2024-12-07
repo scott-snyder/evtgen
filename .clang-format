@@ -80,7 +80,7 @@ IncludeCategories:
     Priority:        4
   - Regex:           '^"(HepMC|HepMC3)/'
     Priority:        5
-  - Regex:           '^"(Pythia8|Photos|Tauola|SHERPA|ATOOLS)/'
+  - Regex:           '^"(Pythia8|Photos|Tauola|SHERPA|ATOOLS|PHOTONS\+\+)/'
     Priority:        6
   - Regex:           '^"T[[:alnum:]]+\.h"'
     Priority:        7

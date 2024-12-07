@@ -68,9 +68,13 @@ HEPMC3TAR="$HEPMC3PKG.tar.gz"
 HEPMCBASEURL="https://hepmc.web.cern.ch/hepmc/releases"
 if [ "$HEPMCMAJORVERSION" -lt "3" ]
 then
+    USEHEPMC3="OFF"
     HEPMCURL=$HEPMCBASEURL/$HEPMC2TAR
+    HEPMCTAR=$HEPMC2TAR
 else
+    USEHEPMC3="ON"
     HEPMCURL=$HEPMCBASEURL/$HEPMC3TAR
+    HEPMCTAR=$HEPMC3TAR
 fi
 
 # Pythia version number with no decimal points, e.g. 8310 corresponds to version 8.310
@@ -102,7 +106,15 @@ TAUOLAURL="$TAUOLABASEURL/$TAUOLADIR/$TAUOLATAR"
 
 # Sherpa version number
 USESHERPA="ON"
-SHERPAVER="2.2.16"
+SHERPAMAJORVERSION="3"
+if [ "$SHERPAMAJORVERSION" -lt "3" ]
+then
+    USESHERPA3="OFF"
+    SHERPAVER="2.2.16"
+else
+    USESHERPA3="ON"
+    SHERPAVER="3.0.0"
+fi
 SHERPAPKG="sherpa-v$SHERPAVER"
 SHERPATAR="$SHERPAPKG.tar.gz"
 SHERPABASEURL="https://gitlab.com/sherpa-team/sherpa/-/archive"
@@ -190,12 +202,7 @@ fi
 cd $BUILD_BASE/sources
 
 echo Extracting external dependencies
-if [ "$HEPMCMAJORVERSION" -lt "3" ]
-then
-    tar -xzf $BUILD_BASE/tarfiles/$HEPMC2TAR
-else
-    tar -xzf $BUILD_BASE/tarfiles/$HEPMC3TAR
-fi
+tar -xzf $BUILD_BASE/tarfiles/$HEPMCTAR
 if [ $USEPYTHIA == "ON" ]
 then
     tar -xzf $BUILD_BASE/tarfiles/$PYTHIATAR
@@ -314,35 +321,34 @@ fi
 
 if [ $USESHERPA == "ON" ]
 then
-    echo Installing Sherpa from $BUILD_BASE/sources/$SHERPAPKG
-    cd $BUILD_BASE/sources/$SHERPAPKG
-    autoreconf -i
-    ./configure --with-sqlite3=install --prefix=$INSTALL_PREFIX
-    make $BUILDARGS
-    make install
+    echo Installing Sherpa $SHERPAMAJORVERSION from $BUILD_BASE/sources/$SHERPAPKG
+    if [ "$SHERPAMAJORVERSION" -lt "3" ]
+    then
+        cd $BUILD_BASE/sources/$SHERPAPKG
+        autoreconf -i
+        ./configure --with-sqlite3=install --prefix=$INSTALL_PREFIX
+        make $BUILDARGS
+        make install
+    else
+        mkdir -p $BUILD_BASE/builds/Sherpa
+        cd $BUILD_BASE/builds/Sherpa
+        $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX $BUILD_BASE/sources/$SHERPAPKG
+        $CMAKE --build .
+        $CMAKE --install .
+    fi
 fi
 
 echo Installing EvtGen from $BUILD_BASE/sources/evtgen
 mkdir -p $BUILD_BASE/builds/evtgen
 cd $BUILD_BASE/builds/evtgen
-if [ "$HEPMCMAJORVERSION" -lt "3" ]
-then
-    $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_HEPMC3:BOOL=OFF        -DHEPMC2_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_PYTHIA:BOOL=$USEPYTHIA -DPYTHIA8_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_PHOTOS:BOOL=$USEPHOTOS -DPHOTOSPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_TAUOLA:BOOL=$USETAUOLA -DTAUOLAPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_SHERPA:BOOL=$USESHERPA -DSHERPA_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           $BUILD_BASE/sources/evtgen
-else
-    $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_HEPMC3:BOOL=ON         -DHEPMC3_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_PYTHIA:BOOL=$USEPYTHIA -DPYTHIA8_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_PHOTOS:BOOL=$USEPHOTOS -DPHOTOSPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_TAUOLA:BOOL=$USETAUOLA -DTAUOLAPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           -DEVTGEN_SHERPA:BOOL=$USESHERPA -DSHERPA_ROOT_DIR:PATH=$INSTALL_PREFIX \
-           $BUILD_BASE/sources/evtgen
-fi
+$CMAKE -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX \
+       -DEVTGEN_HEPMC3:BOOL=$USEHEPMC3 -DHEPMC${HEPMCMAJORVERSION}_ROOT_DIR:PATH=$INSTALL_PREFIX \
+       -DEVTGEN_PYTHIA:BOOL=$USEPYTHIA -DPYTHIA8_ROOT_DIR:PATH=$INSTALL_PREFIX \
+       -DEVTGEN_PHOTOS:BOOL=$USEPHOTOS -DPHOTOSPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
+       -DEVTGEN_TAUOLA:BOOL=$USETAUOLA -DTAUOLAPP_ROOT_DIR:PATH=$INSTALL_PREFIX \
+       -DEVTGEN_SHERPA:BOOL=$USESHERPA -DSHERPA_ROOT_DIR:PATH=$INSTALL_PREFIX \
+       -DEVTGEN_SHERPA3:BOOL=$USESHERPA3 \
+       $BUILD_BASE/sources/evtgen
 make $BUILDARGS
 make install
 

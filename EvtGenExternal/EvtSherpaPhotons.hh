@@ -28,6 +28,7 @@
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
 
+#include "PHOTONS++/Main/Photons.H"
 #include "SHERPA/Main/Sherpa.H"
 
 #include <string>
@@ -48,6 +49,9 @@ class EvtSherpaPhotons : public EvtAbsRadCorr {
 
     void doRadCorr( EvtParticle* p ) override;
 
+    // This function is needed to control the deletion of the static instances of Sherpa and PHOTONS++
+    static void finalise();
+
   private:
     // Provides vector of pointers to the configuration strings for Sherpa
     std::vector<char*> addParameters();
@@ -56,8 +60,7 @@ class EvtSherpaPhotons : public EvtAbsRadCorr {
     void updateParticleLists();
 
     // Vector containing the configuration strings for Sherpa
-    // INIT_ONLY=6 intialises the Sherpa objects without launching simulation.
-    std::vector<std::string> m_configs{ "Sherpa", "INIT_ONLY=6" };
+    std::vector<std::string> m_configs{ "Sherpa" };
 
     // Use EvtGen's random number generator
     bool m_useEvtGenRandom = true;
@@ -76,10 +79,17 @@ class EvtSherpaPhotons : public EvtAbsRadCorr {
     EvtId m_gammaId = EvtId( -1, -1 );
     long int m_gammaPDG = 22;
 
-    // The Sherpa instance.
-    static std::unique_ptr<SHERPA::Sherpa> m_sherpaGen;
-    static bool m_initialised;
+    // Mutex to serialise all access to the shared Sherpa objects
     static std::mutex m_sherpa_mutex;
+
+    // The Sherpa instance
+    static std::unique_ptr<SHERPA::Sherpa> m_sherpaGen;
+
+    // The PHOTONS++ instance
+    static std::unique_ptr<PHOTONS::Photons> m_photonsGen;
+
+    // Flag whether initialisation has been performed
+    static bool m_initialised;
 };
 
 #endif

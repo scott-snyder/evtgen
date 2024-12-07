@@ -36,6 +36,7 @@
 
 #ifdef EVTGEN_EXTERNAL
 #include "EvtGenExternal/EvtExternalGenList.hh"
+#include "EvtGenExternal/EvtSherpaPhotons.hh"
 #endif
 
 #include "TROOT.h"
@@ -412,6 +413,17 @@ void TestDecayModel::run()
         // Run in the main thread
         theHistos = runDecayBody( 0, m_config.nEvents );
     }
+
+#ifdef EVTGEN_SHERPA
+    // The Sherpa and PHOTONS++ instances are static global instances inside EvtGen
+    // as they are not thread safe (they are mutexed). From Sherpa 3.0.0 on,
+    // the internal Sherpa settings are also a static global instance.
+    // Because of the static destruction order fiasco,
+    // we need to control the order in which the static instances are destroyed.
+    // This is done by hand inside the function below. If the function below is not called,
+    // a SegFault occurs at the end of the program execution when using Sherpa for FSR.
+    EvtSherpaPhotons::finalise();
+#endif
 
     const auto end{ std::chrono::steady_clock::now() };
     const std::chrono::duration<double, std::milli> elapsed_ms{ ( end - start ) };
