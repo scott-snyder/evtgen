@@ -46,7 +46,9 @@ class EvtExternalGenFactory final {
     void definePythiaGenerator( std::string xmlDir, bool convertPhysCodes,
                                 bool useEvtGenRandom = true );
     void defineTauolaGenerator( bool useEvtGenRandom = true,
-                                bool seedTauolaFortran = true );
+                                bool seedTauolaFortran = true,
+                                bool useTauolaRadiation = false,
+                                double infraredCutOffTauola = 1.0e-7 );
 
     //methods to add configuration commands to the pythia generators
     //void addPythiaCommand( std::string generator, std::string module, std::string param, std::string value);

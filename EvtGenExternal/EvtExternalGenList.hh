@@ -35,7 +35,9 @@ class EvtExternalGenList {
                         std::string pythiaXmlDir = "",
                         std::string photonType = "gamma",
                         bool useEvtGenRandom = true,
-                        bool seedTauolaFortran = true );
+                        bool seedTauolaFortran = true,
+                        bool useTauolaRadiation = false,
+                        double infraredCutOffTauola = 1.0e-7 );
 
     virtual ~EvtExternalGenList();
 

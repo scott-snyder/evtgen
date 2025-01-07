@@ -49,7 +49,9 @@
 
 class EvtTauolaEngine : public EvtAbsExternalGen {
   public:
-    EvtTauolaEngine( bool useEvtGenRandom = true, bool seedTauolaFortran = true );
+    EvtTauolaEngine( bool useEvtGenRandom = true, bool seedTauolaFortran = true,
+                     bool useTauolaRadiation = false,
+                     double infraredCutOffTauola = 1.0e-7 );
 
     bool doDecay( EvtParticle* theMother ) override;
 
@@ -67,6 +69,10 @@ class EvtTauolaEngine : public EvtAbsExternalGen {
 
     bool m_useEvtGenRandom{ true };
     bool m_seedTauolaFortran{ true };
+
+    // Arguments to steer radiation in leptonic tau decays
+    bool m_useTauolaRadiation{ false };
+    double m_infraredCutOffTauola{ 1.0e-7 };
 
     // PDG standard code integer ID for tau particle
     static constexpr int m_tauPDG{ 15 };

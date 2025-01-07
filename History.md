@@ -11,6 +11,10 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R03-00-00-betaX
 
+7 Dec 2025 Fernando Abudinen
+* D135: Control radiation corrections in TAUOLA
+  - Introduced arguments to switch on/off TAUOLA FSR for leptonic decays and control photon cut-off.
+
 3 Dec 2024 Fernando Abudinen
 * D134: Add support for Sherpa 3
   - Modified EvtSherpaPhotons interface to support both Sherpa 2 and 3 releases

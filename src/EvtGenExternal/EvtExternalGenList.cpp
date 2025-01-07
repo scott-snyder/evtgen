@@ -28,11 +28,10 @@
 #include "EvtGenExternal/EvtSherpaPhotons.hh"
 #include "EvtGenExternal/EvtTauola.hh"
 
-EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
-                                        std::string pythiaXmlDir,
-                                        std::string photonType,
-                                        bool useEvtGenRandom,
-                                        bool seedTauolaFortran ) :
+EvtExternalGenList::EvtExternalGenList(
+    bool convertPythiaCodes, std::string pythiaXmlDir, std::string photonType,
+    bool useEvtGenRandom, bool seedTauolaFortran, bool useTauolaRadiation,
+    double infraredCutOffTauola ) :
     m_photonType{ photonType }, m_useEvtGenRandom{ useEvtGenRandom }
 {
     // Instantiate the external generator factory
@@ -51,7 +50,8 @@ EvtExternalGenList::EvtExternalGenList( bool convertPythiaCodes,
     extFactory.definePythiaGenerator( pythiaXmlDir, convertPythiaCodes,
                                       useEvtGenRandom );
 
-    extFactory.defineTauolaGenerator( useEvtGenRandom, seedTauolaFortran );
+    extFactory.defineTauolaGenerator( useEvtGenRandom, seedTauolaFortran,
+                                      useTauolaRadiation, infraredCutOffTauola );
 }
 
 EvtExternalGenList::~EvtExternalGenList()

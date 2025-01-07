@@ -49,8 +49,13 @@ int EvtTauolaEngine::m_negPropType = 0;
 bool EvtTauolaEngine::m_initialised = false;
 std::mutex EvtTauolaEngine::m_tauola_mutex;
 
-EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom, bool seedTauolaFortran ) :
-    m_useEvtGenRandom{ useEvtGenRandom }, m_seedTauolaFortran{ seedTauolaFortran }
+EvtTauolaEngine::EvtTauolaEngine( bool useEvtGenRandom, bool seedTauolaFortran,
+                                  bool useTauolaRadiation,
+                                  double infraredCutOffTauola ) :
+    m_useEvtGenRandom{ useEvtGenRandom },
+    m_seedTauolaFortran{ seedTauolaFortran },
+    m_useTauolaRadiation{ useTauolaRadiation },
+    m_infraredCutOffTauola{ infraredCutOffTauola }
 {
 }
 
@@ -91,6 +96,12 @@ void EvtTauolaEngine::initialise()
 
         Tauolapp::Tauola::setRandomGenerator( EvtRandom::Flat );
     }
+
+    // Switch for radiation in leptonic tau decays
+    Tauolapp::Tauola::setRadiation( m_useTauolaRadiation );
+
+    // Cut-Off parameter of radiation. Above that value photon is explicitly generated.
+    Tauolapp::Tauola::setRadiationCutOff( m_infraredCutOffTauola );
 
     // Use the BaBar-tuned chiral current calculations by default. Can be changed using the
     // TauolaCurrentOption keyword in decay files
