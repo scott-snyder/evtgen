@@ -120,7 +120,7 @@ void EvtBtoXsll::init()
     m_mq = 0.;
     m_pf = 0.41;
     m_mxmin = 1.1;
-    if ( getNArg() == 4 ) {
+    if ( getNArg() >= 4 ) {
         // b-quark mass
         m_mb = getArg( 0 );
         // s-quark mass
@@ -129,9 +129,11 @@ void EvtBtoXsll::init()
         m_mq = getArg( 2 );
         // Fermi motion parameter
         m_pf = getArg( 3 );
-    }
-    if ( getNArg() == 5 ) {
-        m_mxmin = getArg( 4 );
+
+        if ( getNArg() == 5 ) {
+            // Cutoff of Xs mass
+            m_mxmin = getArg( 4 );
+        }
     }
 
     m_calcprob = std::make_unique<EvtBtoXsllUtil>();

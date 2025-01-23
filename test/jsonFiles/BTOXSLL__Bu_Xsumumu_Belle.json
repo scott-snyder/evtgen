@@ -2,7 +2,7 @@
     "parent" : "B+",
     "daughters" : ["Xsu", "mu+", "mu-"],
     "models" : ["BTOXSLL"],
-    "parameters" : [["4.8", "0.2", "0.0", "0.41", "1.1"]],
+    "parameters" : [["4.65", "0.2", "0.0", "0.461"]],
     "extras" : ["Define dm_incohMix_B0 0", "noFSR"],
     "events" : 10000,
     "histograms" : [
@@ -28,5 +28,5 @@
         {"variable" : "phi", "title" : "phi(mu+)", "d1" : 2, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180},
         {"variable" : "phi", "title" : "phi(mu-)", "d1" : 3, "d2" : 0, "nbins" : 100, "xmin" : -180.0, "xmax" : 180}
     ],
-    "outfile" :"BTOXSLL__Bu_Xsumumu.root"
+    "outfile" :"BTOXSLL__Bu_Xsumumu_Belle.root"
 }

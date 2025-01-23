@@ -129,6 +129,8 @@ class JsonFileChecker :
             'cuts',
             'CLEO',
             'BaBar',
+            'Belle',
+            'Belle2',
             'Longitudinal',
             'Transverse',
             'tree',

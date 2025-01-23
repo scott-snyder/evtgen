@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R03-00-00-betaX
 
+23 Jan 2025 Fernando Abudinen
+* D136: Fixed bug with 5th input parameter of BTOXSLL model
+
 7 Dec 2025 Fernando Abudinen
 * D135: Control radiation corrections in TAUOLA
   - Introduced arguments to switch on/off TAUOLA FSR for leptonic decays and control photon cut-off.
