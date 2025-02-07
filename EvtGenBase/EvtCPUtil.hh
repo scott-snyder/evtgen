@@ -48,9 +48,6 @@ class EvtCPUtil {
                        EvtComplex Abarfbar, double deltam, double beta,
                        int flip, double& fract );
 
-    // Mark Whitehead 7/12/2009
-    // Add required lines from EvtIncoherentMixing.hh to fix CPV
-
     // Functions to check if a B has mixed (comes from a B)
     bool isB0Mixed( EvtParticle* );
     bool isBsMixed( EvtParticle* );

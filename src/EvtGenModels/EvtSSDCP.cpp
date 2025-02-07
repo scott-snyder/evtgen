@@ -23,7 +23,6 @@
 #include "EvtGenBase/EvtCPUtil.hh"
 #include "EvtGenBase/EvtConst.hh"
 #include "EvtGenBase/EvtGenKine.hh"
-#include "EvtGenBase/EvtIncoherentMixing.hh"
 #include "EvtGenBase/EvtPDL.hh"
 #include "EvtGenBase/EvtParticle.hh"
 #include "EvtGenBase/EvtRandom.hh"
@@ -208,7 +207,6 @@ void EvtSSDCP::decay( EvtParticle* p )
     EvtComplex amp;
 
     EvtCPUtil::getInstance()->OtherB( p, t, other_b, 0.5 );    // t is c*Dt (mm)
-    //  EvtIncoherentMixing::OtherB( p , t , other_b , 0.5 ) ;
 
     //if (flip) t=-t;
 
