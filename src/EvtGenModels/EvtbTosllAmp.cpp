@@ -1,6 +1,6 @@
 
 /***********************************************************************
-* Copyright 1998-2020 CERN for the benefit of the EvtGen authors       *
+* Copyright 1998-2025 CERN for the benefit of the EvtGen authors       *
 *                                                                      *
 * This file is part of EvtGen.                                         *
 *                                                                      *
@@ -650,8 +650,8 @@ double EvtbTosllAmp::dGdsdupProb( double mb, double ms, double ml, double s,
 
     double c9c9plusc10c10 = pow( abs( c9eff ), 2 ) + pow( abs( c10eff ), 2 );
     c9c9plusc10c10 *= pow( eta9, 2 );
-    double c9c9minusc10c10 = pow( abs( c9eff ), 2 ) - pow( abs( c10eff ), 2 );
-    c9c9minusc10c10 *= pow( eta9, 2 );
+    //double c9c9minusc10c10 = pow( abs( c9eff ), 2 ) - pow( abs( c10eff ), 2 );
+    //c9c9minusc10c10 *= pow( eta9, 2 );
     double c7c10 = abs( c7eff ) * real( c10eff );
     c7c10 *= eta7;
     c7c10 *= eta9;
