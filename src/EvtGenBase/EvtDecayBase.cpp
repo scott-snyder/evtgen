@@ -1,6 +1,6 @@
 
 /***********************************************************************
-* Copyright 1998-2020 CERN for the benefit of the EvtGen authors       *
+* Copyright 1998-2025 CERN for the benefit of the EvtGen authors       *
 *                                                                      *
 * This file is part of EvtGen.                                         *
 *                                                                      *
@@ -604,11 +604,6 @@ double* EvtDecayBase::getArgs()
 double EvtDecayBase::getArg( unsigned int j )
 {
     // Verify string
-
-    if ( getParentId().getId() == 25 ) {
-        int i = 0;
-        ++i;
-    }
 
     const char* str = _args[j].c_str();
     int i = 0;
