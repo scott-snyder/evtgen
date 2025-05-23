@@ -27,6 +27,7 @@
 #include "EvtGenExternal/EvtPythia.hh"
 #include "EvtGenExternal/EvtSherpaPhotons.hh"
 #include "EvtGenExternal/EvtTauola.hh"
+#include "EvtGenExternal/EvtVinciaQED.hh"
 
 EvtExternalGenList::EvtExternalGenList(
     bool convertPythiaCodes, std::string pythiaXmlDir, std::string photonType,
@@ -43,14 +44,16 @@ EvtExternalGenList::EvtExternalGenList(
         // xmldoc Pythia directory
         char* pythiaDataDir = getenv( "PYTHIA8DATA" );
         if ( pythiaDataDir != nullptr ) {
-            pythiaXmlDir = pythiaDataDir;
+            m_pythiaXmlDir = pythiaDataDir;
         }
+    } else {
+        m_pythiaXmlDir = pythiaXmlDir;
     }
 
-    extFactory.definePythiaGenerator( pythiaXmlDir, convertPythiaCodes,
-                                      useEvtGenRandom );
+    extFactory.definePythiaGenerator( m_pythiaXmlDir, convertPythiaCodes,
+                                      m_useEvtGenRandom );
 
-    extFactory.defineTauolaGenerator( useEvtGenRandom, seedTauolaFortran,
+    extFactory.defineTauolaGenerator( m_useEvtGenRandom, seedTauolaFortran,
                                       useTauolaRadiation, infraredCutOffTauola );
 }
 
@@ -99,6 +102,32 @@ EvtAbsRadCorr* EvtExternalGenList::getSherpaPhotonsModel(
         << " Sherpa's PHOTONS++ generator has been called for FSR simulation, but Sherpa was not switched on during compilation."
         << std::endl;
 
+    EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+        << " The simulation will be generated without FSR." << std::endl;
+
+    return new EvtNoRadCorr{};
+}
+#endif
+
+#ifdef EVTGEN_VINCIA
+EvtAbsRadCorr* EvtExternalGenList::getVinciaQEDModel( const double infraredCutOff )
+{
+    // Define the VinciaQED model.
+    EvtVinciaQED* vinciaQEDModel =
+        new EvtVinciaQED( m_pythiaXmlDir, m_useEvtGenRandom, infraredCutOff );
+    return vinciaQEDModel;
+}
+#else
+EvtAbsRadCorr* EvtExternalGenList::getVinciaQEDModel( const double /*infraredCutOff*/ )
+{
+    EvtGenReport( EVTGEN_ERROR, "EvtGen" )
+        << " Vincia QED shower has been called for FSR simulation, but it is switched off,"
+#ifdef EVTGEN_PYTHIA
+        << " because the used Pythia8 version does not support Vincia for FSR."
+#else
+        << " because Pythia was not switched on during compilation."
+#endif
+        << std::endl;
     EvtGenReport( EVTGEN_ERROR, "EvtGen" )
         << " The simulation will be generated without FSR." << std::endl;
 

@@ -11,6 +11,14 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R03-00-00-betaX
 
+6 May 2025 Fernando Abudinen
+* D138: Introduced interface to Vincia QED shower for final-state radiation simulation
+  - Modified EvtExternalGenList to support new EvtGen-Vincia interface.
+  - Add support for VinciaQED in testing module.
+  - Added EVTGEN\_VINCIA flag to switch on only for relevant Pythia versions.
+  - Specify Vincia support for Pythia release 8.313 onwards.
+  - Added EvtNoRadCorr to case when Vincia is called but not supported.
+
 23 Jan 2025 Fernando Abudinen
 * D136: Fixed bug with 5th input parameter of BTOXSLL model
 

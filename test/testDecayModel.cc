@@ -570,6 +570,8 @@ TestHistos TestDecayModel::runDecayBody( const std::size_t firstEvent,
             case FSRGenerator::SherpaPhotons21:
                 radCorrEngine = genList.getSherpaPhotonsModel( 1e-7, 2, 1 );
                 break;
+            case FSRGenerator::VinciaQED:
+                radCorrEngine = genList.getVinciaQEDModel( 1.0e-7 );
         }
         extraModels = genList.getListOfModels();
     }

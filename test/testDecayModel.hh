@@ -46,7 +46,8 @@ enum class FSRGenerator
     PHOTOS,            ///< PHOTOS generator
     SherpaPhotons1,    ///< Sherpa Photons generator, mode 1
     SherpaPhotons20,    ///< Sherpa Photons generator, mode 2, exact ME calculations off
-    SherpaPhotons21    ///< Sherpa Photons generator, mode 2, exact ME calculations on
+    SherpaPhotons21,    ///< Sherpa Photons generator, mode 2, exact ME calculations on
+    VinciaQED           ///< Vincia QED shower generator
 };
 
 /**
@@ -119,6 +120,7 @@ CUSTOM_NLOHMANN_JSON_SERIALIZE_ENUM(
                       { FSRGenerator::SherpaPhotons1,  "SherpaPhotons1"},
                       {FSRGenerator::SherpaPhotons20, "SherpaPhotons20"},
                       {FSRGenerator::SherpaPhotons21, "SherpaPhotons21"},
+                      {      FSRGenerator::VinciaQED,       "VinciaQED"},
 } )
 
 CUSTOM_NLOHMANN_JSON_SERIALIZE_ENUM( ThreadModel,
