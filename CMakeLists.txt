@@ -1,6 +1,6 @@
 
 ########################################################################
-# Copyright 1998-2020 CERN for the benefit of the EvtGen authors       #
+# Copyright 1998-2025 CERN for the benefit of the EvtGen authors       #
 #                                                                      #
 # This file is part of EvtGen.                                         #
 #                                                                      #
@@ -162,3 +162,12 @@ install(
     NAMESPACE "EvtGen::"
     DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/cmake
     )
+
+# By default, the generated Target file will set up the include paths for
+# our libraries using INTERFACE_INCLUDE_DIRECTORIES, meaning that they
+# will be included using -isystem rather than -I.  However, this can hide
+# warnings.  Adjust the behavior to use -I instead.
+set_target_properties( EvtGen PROPERTIES EXPORT_NO_SYSTEM ON )
+set_target_properties( EvtGenStatic PROPERTIES EXPORT_NO_SYSTEM ON )
+set_target_properties( EvtGenExternal PROPERTIES EXPORT_NO_SYSTEM ON )
+set_target_properties( EvtGenExternalStatic PROPERTIES EXPORT_NO_SYSTEM ON )
