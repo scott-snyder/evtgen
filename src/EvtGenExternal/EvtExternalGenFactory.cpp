@@ -84,7 +84,7 @@ void EvtExternalGenFactory::defineTauolaGenerator( bool useEvtGenRandom,
         infraredCutOffTauola );
 }
 #else
-void EvtExternalGenFactory::defineTauolaGenerator( bool, bool )
+void EvtExternalGenFactory::defineTauolaGenerator( bool, bool, bool, double )
 {
 }
 #endif

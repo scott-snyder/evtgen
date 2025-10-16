@@ -11,6 +11,9 @@ https://phab.hepforge.org/Dxyz
 ===
 ## R03-00-00-betaX
 
+16 Oct 2025 Fernando Abudinen
+* D139: Fixed compilation bug when TAUOLA OFF introduced in D135.
+
 6 May 2025 Fernando Abudinen
 * D138: Introduced interface to Vincia QED shower for final-state radiation simulation
   - Modified EvtExternalGenList to support new EvtGen-Vincia interface.
