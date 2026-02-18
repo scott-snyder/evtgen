@@ -1,23 +1,15 @@
 {
   "version": 5,
-  "prev": "6a6cc40bdc530895034a41fb8b3927ec93b08a07",
-  "head": "466b07301335a7eb9c6869c558e9acd1e45b3d3b",
+  "prev": "70a00e13325d503db97f060efc478aef6519566d",
+  "head": "d788d04948ab18b3d441cc7e521eb9867ad56421",
   "applied": [
-    "clang",
-    "newdel",
     "nosystem"
   ],
   "unapplied": [],
   "hidden": [],
   "patches": {
-    "clang": {
-      "oid": "66ce44d2368e7f2bc299e9d64705b36ca14b6283"
-    },
-    "newdel": {
-      "oid": "93165b1bf9837f2b0e70a6809b7f65406b9b29c2"
-    },
     "nosystem": {
-      "oid": "466b07301335a7eb9c6869c558e9acd1e45b3d3b"
+      "oid": "d788d04948ab18b3d441cc7e521eb9867ad56421"
     }
   }
 }

@@ -1,8 +1,0 @@
-Bottom: ae8c4a3ac86ea0f66b4cc7bd9d1fa7c5c8351818
-Top:    ae8c4a3ac86ea0f66b4cc7bd9d1fa7c5c8351818
-Author: sss <sss@karma>
-Date:   2026-02-18 16:16:06 -0500
-
-Fix clang warnings.
-
-Unused variables.
