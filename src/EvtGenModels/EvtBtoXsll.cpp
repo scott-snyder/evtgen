@@ -1,6 +1,6 @@
 
 /***********************************************************************
-* Copyright 1998-2025 CERN for the benefit of the EvtGen authors       *
+* Copyright 1998-2020 CERN for the benefit of the EvtGen authors       *
 *                                                                      *
 * This file is part of EvtGen.                                         *
 *                                                                      *
