@@ -1,0 +1,6 @@
+Bottom: b980ec934f607dd51b1fb38219b5bcfc00b3460d
+Top:    b980ec934f607dd51b1fb38219b5bcfc00b3460d
+Author: sss <sss@karma>
+Date:   2026-02-28 22:53:38 -0500
+
+Fix compilation warnings.
