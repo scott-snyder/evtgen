@@ -155,9 +155,9 @@ void EvtVPHOtoVISR::decay( EvtParticle* p )
         sigmax = sigma;
     }
 
-    static int count = 0;
+    //static int count = 0;
 
-    count++;
+    //count++;
 
     //if (count%10000==0){
     //  std::cout << "sigma :"<<sigma<<std::endl;
