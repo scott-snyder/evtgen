@@ -445,9 +445,8 @@ void EvtIdSet::append( const EvtIdSet set1 )
 {
     int combLen = _numInList + set1.sizeOfSet();
     int uniqueLen = 0;
-    EvtId* combSet;
 
-    combSet = new EvtId[combLen];
+    std::vector<EvtId> combSet (combLen);
 
     int i;
     for ( i = 0; i < combLen; i++ ) {
@@ -476,8 +475,6 @@ void EvtIdSet::append( const EvtIdSet set1 )
         for ( i = 0; i < _numInList; i++ ) {
             _list[i] = combSet[i];
         }
-
-        delete combSet;
     }
 }
 
